@@ -1,0 +1,882 @@
+"""Recovery-tool contract tests using disposable repositories only."""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import re
+import subprocess
+import sys
+import tempfile
+import time
+import unittest
+from unittest.mock import patch
+from pathlib import Path
+
+REPO = Path(__file__).resolve().parents[1]
+PREFLIGHT = REPO / "scripts" / "agent_preflight.py"
+CHECKPOINT = REPO / "scripts" / "agent_checkpoint.py"
+CHECKPOINT_ID = "cp-fixture-0001"
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(REPO / "scripts"))
+import agent_preflight
+
+REQUIRED_FILES = [
+    "AGENTS.md",
+    "README.md",
+    "docs/01-foundation/ROADMAP.md",
+    "atari-videochess-rl-roadmap.html",
+    "docs/01-foundation/REQUIREMENTS.md",
+    "docs/01-foundation/PROJECT_OVERVIEW.md",
+    "docs/02-management/EXECUTION_PLAN.md",
+    "docs/02-management/RISK_REGISTER.md",
+    "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md",
+    "docs/05-operations/SETUP.md",
+    "docs/06-quality/ACCEPTANCE_CRITERIA.md",
+    "docs/06-quality/TEST_STRATEGY.md",
+    ".agents/PLANS.md",
+    ".agents/state/PROJECT_STATE.yaml",
+    ".agents/state/SESSION_HANDOFF.md",
+    ".agents/state/BLOCKERS.md",
+    ".agents/state/VERIFIED_FINDINGS.md",
+    ".agents/tasks/BACKLOG.yaml",
+    ".agents/plans/G1-consistency-hardening.md",
+    ".agents/plans/M00-bootstrap.md",
+    ".agents/evidence/G1-hardening-verification.md",
+    "scripts/agent_preflight.py",
+    "scripts/agent_checkpoint.py",
+    "tests/test_agent_context.py",
+]
+
+
+def write_json(path: Path, value: object) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
+
+
+def file_hash(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def canonical_json_hash(value: object) -> str:
+    payload = json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def git(root: Path, *args: str) -> str:
+    env = os.environ.copy()
+    env["GIT_OPTIONAL_LOCKS"] = "0"
+    return subprocess.run(
+        ["git", "-C", str(root), *args],
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    ).stdout.strip()
+
+
+def status_entries(root: Path) -> list[str]:
+    result = subprocess.run(
+        ["git", "-C", str(root), "status", "--porcelain=v1", "--untracked-files=all"],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return sorted(line for line in result.stdout.splitlines() if line)
+
+
+def status_hash(entries: list[str]) -> str:
+    payload = "\n".join(entries) + ("\n" if entries else "")
+    return hashlib.sha256(payload.encode()).hexdigest()
+
+
+def commit_all(root: Path, message: str) -> None:
+    subprocess.run(["git", "-C", str(root), "add", "-A"], check=True, capture_output=True, text=True)
+    subprocess.run(
+        ["git", "-C", str(root), "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", message],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+
+def make_fixture(root: Path) -> None:
+    root.mkdir(parents=True, exist_ok=True)
+    git(root, "init", "-q", "-b", "main")
+    subprocess.run(
+        ["git", "-C", str(root), "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "--allow-empty", "-qm", "fixture"],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+    for rel in REQUIRED_FILES:
+        path = root / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        if rel.endswith(".yaml"):
+            path.write_text("{}\n", encoding="utf-8")
+        elif rel == ".agents/state/SESSION_HANDOFF.md":
+            path.write_text(f"<!-- checkpoint-id: {CHECKPOINT_ID} -->\n# Handoff\n", encoding="utf-8")
+        elif rel == ".agents/state/BLOCKERS.md":
+            path.write_text("# Active Blockers\nNo active blockers.\n", encoding="utf-8")
+        elif rel == "docs/01-foundation/REQUIREMENTS.md":
+            path.write_text("# Requirements\n## 6. Open approvals and evidence needed\n| O-01 | Assignment/instructor rules | User approval |\n", encoding="utf-8")
+        elif rel == "docs/06-quality/ACCEPTANCE_CRITERIA.md":
+            path.write_text("# Criteria\n| ID | Pass condition | Evidence |\n|---|---|---|\n| G1-01 | Inventory is audited. | File list. |\n| G1-02 | Mapping is recorded. | ADR. |\n| M0-01 | M0 passes. | Evidence. |\n", encoding="utf-8")
+        elif rel == "AGENTS.md":
+            path.write_text("# Agent rules\nSee [requirements](docs/01-foundation/REQUIREMENTS.md).\n", encoding="utf-8")
+        else:
+            path.write_text(f"# Fixture: {rel}\n", encoding="utf-8")
+    (root / "chat_history.md").write_text("private conversation fixture\n", encoding="utf-8")
+    (root / ".env").write_text("placeholder fixture only\n", encoding="utf-8")
+
+    roman = ("I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX")
+    roadmap = "# Fixture Roadmap\n\n" + "\n\n".join(f"## {item}. Section {item}" for item in roman) + "\n"
+    (root / "docs/01-foundation/ROADMAP.md").write_text(roadmap, encoding="utf-8")
+    source_html = f'<details class="source-archive"><summary>source</summary><pre>{roadmap}</pre></details><script id="rawArchive" type="text/plain">{roadmap}</script>'
+    (root / "atari-videochess-rl-roadmap.html").write_text(source_html, encoding="utf-8")
+
+    backlog = {
+        "format": "JSON-compatible YAML 1.2",
+        "schema_version": 2,
+        "project_id": "atari-videochess-rl",
+        "tasks": [
+            {
+                "id": "G1-001",
+                "title": "Fixture audit",
+                "milestone": "G1",
+                "status": "done",
+                "next_action": "",
+                "depends_on": [],
+                "requires_user_gate_approval": None,
+                "acceptance_criteria_ids": ["G1-01"],
+                "blocker_ids": [],
+            "evidence": [{
+                "kind": "file", "path": "README.md", "detail": "Fixture evidence.",
+                "provenance": {
+                    "status": "verified", "executed_at_utc": None,
+                    "recorded_at_utc": "2026-10-14T00:00:00Z", "exit_code": None,
+                    "git_revision": git(root, "rev-parse", "HEAD"), "log_path": None
+                }
+            }],
+            },
+            {
+                "id": "M0-001",
+                "title": "Technical bootstrap",
+                "milestone": "M0",
+                "status": "pending",
+                "next_action": "Wait for explicit G1 user approval before M0.",
+                "depends_on": ["G1-001"],
+                "requires_user_gate_approval": "G1",
+                "acceptance_criteria_ids": ["M0-01"],
+                "blocker_ids": [],
+                "evidence": [],
+            },
+        ],
+    }
+    write_json(root / ".agents/tasks/BACKLOG.yaml", backlog)
+
+    paths = status_entries(root)
+    repo_hashes = {
+        rel: file_hash(root / rel)
+        for rel in REQUIRED_FILES
+        if rel != ".agents/state/PROJECT_STATE.yaml"
+    }
+    state = {
+        "format": "JSON-compatible YAML 1.2",
+        "schema_version": 2,
+        "project_id": "atari-videochess-rl",
+        "governance": {
+            "current_gate": "G1",
+            "gate_status": "ready_for_user_review",
+            "approved_gates": ["G0"],
+            "next_governance_gate": "G2",
+            "user_authorized_g1": True,
+            "next_user_action": "Review G1 before M0.",
+        },
+        "engineering": {
+            "active_milestone": None,
+            "next_milestone": "M0",
+            "next_milestone_status": "pending_user_approval",
+            "start_authorized": False,
+            "hold_reason": "G1 approval is required.",
+        },
+        "task_refs": {"active_task_id": None, "next_task_id": "M0-001"},
+        "active_blocker_ids": [],
+        "last_checkpoint": {
+            "id": CHECKPOINT_ID,
+            "created_at_utc": "2026-10-14T00:00:00Z",
+            "git": {
+                "branch": "main",
+                "head": git(root, "rev-parse", "HEAD"),
+                "status_entries": paths,
+                "status_sha256": status_hash(paths),
+                "repo_file_hashes": repo_hashes,
+                "unhashed_large_files": [],
+                "unreadable_files": [],
+                "artifact_dirs_requiring_manifest": [],
+                "excluded_directories": [".git"],
+                "excluded_symlink_files": 0,
+            },
+        },
+        "g1_baseline": {
+            "verified_at_utc": "2026-10-14T00:00:00Z",
+            "branch": "main",
+            "head": git(root, "rev-parse", "HEAD"),
+            "status_entries": paths,
+            "preserved_sha256": {"README.md": file_hash(root / "README.md")},
+            "g1_expected_modified_sha256": {},
+            "comparison_policy": "Historical baseline only; compare current drift with last_checkpoint.git.",
+        },
+    }
+    state["g1_baseline"]["baseline_sha256"] = canonical_json_hash(state["g1_baseline"])
+    write_json(root / ".agents/state/PROJECT_STATE.yaml", state)
+
+
+class AgentContextRecoveryTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.temp = tempfile.TemporaryDirectory()
+        self.root = Path(self.temp.name) / "repo"
+        make_fixture(self.root)
+
+    def tearDown(self) -> None:
+        self.temp.cleanup()
+
+    def run_script(self, path: Path, *args: str) -> subprocess.CompletedProcess[str]:
+        return subprocess.run(
+            [sys.executable, str(path), "--repo", str(self.root), *args],
+            capture_output=True,
+            text=True,
+        )
+
+    def test_preflight_recovers_project_state_without_conversation(self) -> None:
+        result = self.run_script(PREFLIGHT)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("G1", result.stdout)
+        self.assertIn("M0", result.stdout)
+        self.assertIn("G1-001", result.stdout)
+        self.assertIn("O-01", result.stdout)
+        self.assertIn("Assignment/instructor rules", result.stdout)
+        self.assertIn("ADR-0001-governance-crosswalk-and-file-priorities.md", result.stdout)
+        self.assertIn("Next task acceptance criteria: M0-01", result.stdout)
+        self.assertIn("not started", result.stdout.lower())
+        payload = json.loads(self.run_script(PREFLIGHT, "--json").stdout)
+        self.assertTrue(payload["summary"]["roadmap_source"]["matches"])
+        self.assertEqual(payload["summary"]["roadmap_source"]["roman_sections"], 19)
+
+    def test_preflight_discovers_every_documented_acceptance_criterion(self) -> None:
+        document = (REPO / "docs/06-quality/ACCEPTANCE_CRITERIA.md").read_text(encoding="utf-8")
+        expected = set(re.findall(r"(?m)^\|\s*((?:G[0-5]|M[0-7])-\d{2})\s*\|", document))
+        expected.update(re.findall(r"(?m)^\s*-\s+\*\*((?:G[0-5]|M[0-7])-\d{2}):\*\*", document))
+        result = subprocess.run(
+            [sys.executable, str(PREFLIGHT), "--repo", str(REPO), "--json"],
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        payload = json.loads(result.stdout)
+        self.assertEqual(set(payload["summary"]["acceptance_criteria_ids"]), expected)
+        self.assertEqual(len(expected), 51)
+
+    def test_future_milestone_bullet_criteria_are_valid_task_references(self) -> None:
+        criteria = self.root / "docs/06-quality/ACCEPTANCE_CRITERIA.md"
+        added_bullets = "\n".join(f"- **M{milestone}-01:** Future milestone {milestone} acceptance fixture." for milestone in range(2, 8))
+        criteria.write_text(criteria.read_text(encoding="utf-8") + "\n" + added_bullets + "\n", encoding="utf-8")
+        backlog_path = self.root / ".agents/tasks/BACKLOG.yaml"
+        backlog = json.loads(backlog_path.read_text(encoding="utf-8"))
+        previous = "G1-001"
+        for milestone in range(2, 8):
+            task_id = f"M{milestone}-001"
+            backlog["tasks"].append({
+                "id": task_id, "title": f"Future milestone M{milestone} fixture", "milestone": f"M{milestone}", "status": "pending",
+                "next_action": "Wait for its milestone gate.", "depends_on": [previous],
+                "requires_user_gate_approval": None, "acceptance_criteria_ids": [f"M{milestone}-01"],
+                "blocker_ids": [], "evidence": []
+            })
+            previous = task_id
+        write_json(backlog_path, backlog)
+        result = self.run_script(PREFLIGHT, "--json")
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        payload = json.loads(result.stdout)
+        for milestone in range(2, 8):
+            self.assertIn(f"M{milestone}-01", payload["summary"]["acceptance_criteria_ids"])
+
+    def test_dry_run_with_partial_recovery_does_not_mutate_files(self) -> None:
+        partial = self.root / ".agents/state/.PROJECT_STATE.yaml.tmp-interrupted"
+        partial.write_text("{partial", encoding="utf-8")
+        old = time.time() - 7200
+        os.utime(partial, (old, old))
+        before_status = status_entries(self.root)
+        before_files = {
+            path.relative_to(self.root).as_posix(): (path.read_bytes(), path.stat().st_mtime_ns)
+            for path in self.root.rglob("*")
+            if path.is_file()
+        }
+        source_cache = REPO / "scripts/__pycache__"
+        before_source_cache = None if not source_cache.exists() else {
+            path.relative_to(REPO).as_posix(): (path.read_bytes(), path.stat().st_mtime_ns)
+            for path in source_cache.rglob("*") if path.is_file()
+        }
+
+        result = self.run_script(CHECKPOINT, "--dry-run", "--recover-partials")
+
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertTrue(partial.is_file(), "dry-run must preserve stale partial files")
+        after_files = {
+            path.relative_to(self.root).as_posix(): (path.read_bytes(), path.stat().st_mtime_ns)
+            for path in self.root.rglob("*")
+            if path.is_file()
+        }
+        self.assertEqual(after_files, before_files)
+        after_source_cache = None if not source_cache.exists() else {
+            path.relative_to(REPO).as_posix(): (path.read_bytes(), path.stat().st_mtime_ns)
+            for path in source_cache.rglob("*") if path.is_file()
+        }
+        self.assertEqual(after_source_cache, before_source_cache)
+        self.assertEqual(status_entries(self.root), before_status)
+
+    def test_checkpoint_is_consistent_after_one_run_from_clean_worktree(self) -> None:
+        commit_all(self.root, "clean fixture")
+        self.assertEqual(status_entries(self.root), [])
+        baseline_before = json.loads((self.root / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))["g1_baseline"]
+
+        checkpoint = self.run_script(CHECKPOINT)
+        self.assertEqual(checkpoint.returncode, 0, checkpoint.stderr + checkpoint.stdout)
+        self.assertIn("Post-checkpoint preflight: PASS", checkpoint.stdout)
+        state = json.loads((self.root / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
+        portable = state["last_checkpoint"]["portable_git"]
+        self.assertIn("README.md", portable["tracked_manifest"])
+        self.assertNotIn(".agents/state/PROJECT_STATE.yaml", portable["tracked_manifest"])
+        self.assertNotIn(".agents/state/SESSION_HANDOFF.md", portable["tracked_manifest"])
+        self.assertNotIn("chat_history.md", portable["tracked_manifest"])
+        self.assertNotIn(".env", portable["tracked_manifest"])
+        self.assertIn(CHECKPOINT_ID, [item["id"] for item in state["checkpoint_history"]])
+        self.assertEqual(state["g1_baseline"], baseline_before)
+        after = self.run_script(PREFLIGHT)
+        self.assertEqual(after.returncode, 0, after.stderr + after.stdout)
+        self.assertNotIn("GIT_SNAPSHOT_DRIFT", after.stdout)
+        self.assertNotIn("WORKTREE_CONTENT_DRIFT", after.stdout)
+
+    def test_staging_checkpoint_control_files_does_not_create_snapshot_drift(self) -> None:
+        commit_all(self.root, "checkpoint control fixture")
+        checkpoint = self.run_script(CHECKPOINT)
+        self.assertEqual(checkpoint.returncode, 0, checkpoint.stderr + checkpoint.stdout)
+        git(self.root, "add", ".agents/state/PROJECT_STATE.yaml", ".agents/state/SESSION_HANDOFF.md")
+
+        result = self.run_script(PREFLIGHT, "--json")
+
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        report = json.loads(result.stdout)
+        self.assertNotIn("GIT_SNAPSHOT_DRIFT", {item["code"] for item in report["warnings"]})
+        self.assertTrue(report["summary"]["git_snapshot_matches"])
+
+    def test_tracked_content_drift_is_detected_without_a_status_path_change(self) -> None:
+        commit_all(self.root, "tracked fixture")
+        first = self.run_script(CHECKPOINT)
+        self.assertEqual(first.returncode, 0, first.stderr + first.stdout)
+        note = self.root / "README.md"
+        note.write_text("tracked change one\n", encoding="utf-8")
+        checkpoint = self.run_script(CHECKPOINT)
+        self.assertEqual(checkpoint.returncode, 0, checkpoint.stderr + checkpoint.stdout)
+        status_before_content_edit = status_entries(self.root)
+        note.write_text("tracked change two\n", encoding="utf-8")
+        self.assertEqual(status_entries(self.root), status_before_content_edit)
+
+        result = self.run_script(PREFLIGHT)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("WORKTREE_CONTENT_DRIFT", result.stdout)
+
+    def test_large_files_and_artifact_directories_are_reported_once_and_separately(self) -> None:
+        (self.root / "oversized-checkpoint.bin").write_bytes(b"x" * (2 * 1024 * 1024 + 1))
+        artifact = self.root / "artifacts/run-17/model.bin"
+        artifact.parent.mkdir(parents=True)
+        artifact.write_bytes(b"model payload")
+
+        result = self.run_script(PREFLIGHT, "--json")
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        payload = json.loads(result.stdout)
+        codes = [item["code"] for item in payload["warnings"]]
+        self.assertEqual(codes.count("WORKTREE_LARGE_FILES_UNHASHED"), 1)
+        summary = payload["summary"]
+        self.assertIn("oversized-checkpoint.bin", summary["unhashed_large_files"])
+        self.assertIn("artifacts", summary["artifact_dirs_requiring_manifest"])
+        self.assertNotIn("artifacts/run-17/model.bin", summary["repo_file_hashes"])
+
+    def test_git_ignored_zip_is_still_content_hashed(self) -> None:
+        (self.root / ".gitignore").write_text("*.zip\n", encoding="utf-8")
+        archive = self.root / "atari-videochess-rl-documentation-g1.zip"
+        archive.write_bytes(b"documentation archive fixture")
+        result = self.run_script(PREFLIGHT, "--json")
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        payload = json.loads(result.stdout)
+        self.assertNotIn("documentation-g1.zip", "\n".join(payload["summary"]["live_git_status_entries"]))
+        self.assertIn("atari-videochess-rl-documentation-g1.zip", payload["summary"]["repo_file_hashes"])
+
+    def test_ignored_cache_generation_does_not_create_source_content_drift(self) -> None:
+        commit_all(self.root, "cache fixture")
+        checkpoint = self.run_script(CHECKPOINT)
+        self.assertEqual(checkpoint.returncode, 0, checkpoint.stderr + checkpoint.stdout)
+        for cache_dir in (self.root / "scripts/__pycache__", self.root / "tests/__pycache__"):
+            cache_dir.mkdir(parents=True, exist_ok=True)
+            (cache_dir / "generated.pyc").write_bytes(b"ordinary ignored cache output")
+
+        result = self.run_script(PREFLIGHT, "--json")
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        report = json.loads(result.stdout)
+        warning_codes = {warning["code"] for warning in report["warnings"]}
+        self.assertNotIn("WORKTREE_CONTENT_DRIFT", warning_codes)
+        self.assertNotIn("WORKTREE_HASH_INVENTORY_DRIFT", warning_codes)
+        self.assertTrue(report["summary"]["repo_content_matches"])
+
+    @unittest.skipIf(os.environ.get("ATARI_VIDEOCHESS_SKIP_CLONE_RECOVERY_TEST") == "1", "avoid recursive clean-clone test invocation")
+    def test_clean_clone_recovers_portable_baseline_without_local_artifacts(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp = Path(temp_dir)
+            source = temp / "approved-baseline"
+            clone = temp / "clean-clone"
+            source.mkdir()
+            git(source, "init", "-q", "-b", "main")
+
+            inventory_record = REPO / ".agents/evidence/G1-portability-consistency-verification.md"
+            record = inventory_record.read_text(encoding="utf-8")
+            section = record.split("## Approved baseline inventory", 1)[1].split("## Explicit exclusions", 1)[0]
+            baseline_files = re.findall(r"^- `([^`]+)`$", section, flags=re.MULTILINE)
+            self.assertGreater(len(baseline_files), 20)
+            self.assertNotIn("chat_history.md", baseline_files)
+            self.assertNotIn("atari-videochess-rl-documentation-g1.zip", baseline_files)
+            self.assertNotIn("main.py", baseline_files)
+
+            for rel in baseline_files:
+                destination = source / rel
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                destination.write_bytes((REPO / rel).read_bytes())
+
+            git(source, "add", "--all")
+            subprocess.run(
+                ["git", "-C", str(source), "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "approved baseline"],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            subprocess.run(
+                ["git", "clone", "--quiet", str(source), str(clone)],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+
+            def clone_preflight(repo: Path = clone) -> subprocess.CompletedProcess[str]:
+                return subprocess.run(
+                    [sys.executable, str(repo / "scripts/agent_preflight.py"), "--repo", str(repo), "--json"],
+                    capture_output=True,
+                    text=True,
+                )
+
+            self.assertFalse((clone / "chat_history.md").exists())
+            self.assertFalse((clone / "atari-videochess-rl-documentation-g1.zip").exists())
+            self.assertFalse((clone / "atari-videochess-rl-documentation-g1-finalization.zip").exists())
+            self.assertFalse((clone / "main.py").exists())
+            self.assertFalse((clone / "scripts/__pycache__").exists())
+            self.assertFalse((clone / "tests/__pycache__").exists())
+
+            result = clone_preflight()
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            report = json.loads(result.stdout)
+            summary = report["summary"]
+            state = json.loads((clone / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
+            backlog = json.loads((clone / ".agents/tasks/BACKLOG.yaml").read_text(encoding="utf-8"))
+            tasks = {task["id"]: task for task in backlog["tasks"]}
+            self.assertIsNone(agent_preflight._git_workspace_id(clone))
+            self.assertEqual(summary["git_snapshot_mode"], "portable_commit_transition")
+            self.assertTrue(summary["portable_baseline_matches"])
+            self.assertEqual(state["governance"]["current_gate"], "G1")
+            self.assertEqual(state["governance"]["gate_status"], "approved")
+            self.assertEqual(state["governance"]["approved_gates"], ["G0", "G1"])
+            self.assertEqual(summary["open_approval_ids"], [f"O-{index:02d}" for index in range(1, 9)])
+            self.assertEqual(state["task_refs"]["next_task_id"], "M0-001")
+            self.assertEqual(tasks["M0-001"]["status"], "pending")
+            self.assertIn("G1-008", tasks["M0-001"]["depends_on"])
+            self.assertFalse(state["engineering"]["start_authorized"])
+            self.assertIsNone(state["engineering"]["active_milestone"])
+            self.assertEqual(summary["next_user_action"], state["governance"]["next_user_action"])
+            warning_codes = {warning["code"] for warning in report["warnings"]}
+            self.assertNotIn("GIT_SNAPSHOT_DRIFT", warning_codes)
+            self.assertNotIn("WORKTREE_CONTENT_DRIFT", warning_codes)
+            self.assertTrue(summary["git_snapshot_matches"])
+            self.assertTrue(summary["repo_content_matches"])
+
+            clone_env = os.environ.copy()
+            clone_env["ATARI_VIDEOCHESS_SKIP_CLONE_RECOVERY_TEST"] = "1"
+            clone_tests = subprocess.run(
+                [sys.executable, "-m", "unittest", "discover", "-s", "tests", "-v"],
+                cwd=clone,
+                env=clone_env,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(clone_tests.returncode, 0, clone_tests.stdout + clone_tests.stderr)
+            nested_test_output = clone_tests.stdout + clone_tests.stderr
+            self.assertRegex(nested_test_output, r"Ran [1-9][0-9]* tests?")
+            self.assertIn("OK", nested_test_output)
+
+            legacy_clone = temp / "legacy-clone"
+            subprocess.run(
+                ["git", "clone", "--quiet", str(source), str(legacy_clone)],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            legacy_state_path = legacy_clone / ".agents/state/PROJECT_STATE.yaml"
+            legacy_state = json.loads(legacy_state_path.read_text(encoding="utf-8"))
+            legacy_state["last_checkpoint"].pop("portable_git", None)
+            legacy_state["last_checkpoint"].pop("workspace_id", None)
+            legacy_state["last_checkpoint"]["git"].pop("scope", None)
+            legacy_state.pop("checkpoint_history", None)
+            write_json(legacy_state_path, legacy_state)
+            git(legacy_clone, "add", ".agents/state/PROJECT_STATE.yaml")
+            subprocess.run(
+                ["git", "-C", str(legacy_clone), "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "legacy checkpoint format"],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            legacy_result = clone_preflight(legacy_clone)
+            self.assertEqual(legacy_result.returncode, 0, legacy_result.stderr + legacy_result.stdout)
+            legacy_report = json.loads(legacy_result.stdout)
+            self.assertEqual(legacy_report["summary"]["git_snapshot_mode"], "legacy_portable_commit_transition")
+            legacy_codes = {warning["code"] for warning in legacy_report["warnings"]}
+            self.assertNotIn("GIT_SNAPSHOT_DRIFT", legacy_codes)
+            self.assertNotIn("WORKTREE_CONTENT_DRIFT", legacy_codes)
+            self.assertTrue(legacy_report["summary"]["repo_content_matches"])
+
+            for cache_dir in (clone / "scripts/__pycache__", clone / "tests/__pycache__"):
+                cache_dir.mkdir(parents=True, exist_ok=True)
+                (cache_dir / "generated.pyc").write_bytes(b"ordinary ignored cache output")
+            cached = clone_preflight()
+            self.assertEqual(cached.returncode, 0, cached.stderr + cached.stdout)
+            cached_report = json.loads(cached.stdout)
+            cached_codes = {warning["code"] for warning in cached_report["warnings"]}
+            self.assertNotIn("WORKTREE_CONTENT_DRIFT", cached_codes)
+            self.assertNotIn("WORKTREE_HASH_INVENTORY_DRIFT", cached_codes)
+            self.assertTrue(cached_report["summary"]["repo_content_matches"])
+
+            overview = clone / "docs/01-foundation/PROJECT_OVERVIEW.md"
+            overview.write_text(overview.read_text(encoding="utf-8") + "\nTracked edit fixture.\n", encoding="utf-8")
+            modified = clone_preflight()
+            self.assertEqual(modified.returncode, 0, modified.stderr + modified.stdout)
+            modified_report = json.loads(modified.stdout)
+            modified_codes = {warning["code"] for warning in modified_report["warnings"]}
+            self.assertIn("WORKTREE_CONTENT_DRIFT", modified_codes)
+            self.assertFalse(modified_report["summary"]["repo_content_matches"])
+
+    def test_preflight_reports_files_it_could_not_hash(self) -> None:
+        with patch.object(agent_preflight, "_sha_file", side_effect=PermissionError("fixture read denial")):
+            report = agent_preflight.build_report(self.root)
+        self.assertTrue(report["ok"], report["errors"])
+        self.assertIn("README.md", report["summary"]["unreadable_files"])
+        self.assertIn("WORKTREE_UNREADABLE_FILES", [warning["code"] for warning in report["warnings"]])
+
+    def test_historical_baseline_is_not_recompared_to_current_files(self) -> None:
+        (self.root / "README.md").write_text("an authorized later edit\n", encoding="utf-8")
+
+        result = self.run_script(PREFLIGHT)
+
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertNotIn("BASELINE_FILE_CHANGED", result.stdout)
+        self.assertIn("WORKTREE_CONTENT_DRIFT", result.stdout)
+
+    def test_historical_baseline_checksum_detects_record_mutation(self) -> None:
+        state_path = self.root / ".agents/state/PROJECT_STATE.yaml"
+        state = json.loads(state_path.read_text(encoding="utf-8"))
+        state["g1_baseline"]["head"] = "a" * 40
+        write_json(state_path, state)
+        result = self.run_script(PREFLIGHT)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("G1_BASELINE_INTEGRITY", result.stdout + result.stderr)
+
+    def test_preflight_rejects_invalid_state_schema(self) -> None:
+        (self.root / ".agents/state/PROJECT_STATE.yaml").write_text("{\"schema_version\": 99}\n", encoding="utf-8")
+        result = self.run_script(PREFLIGHT)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("STATE_SCHEMA", result.stdout + result.stderr)
+
+    def test_preflight_reports_malformed_git_snapshot_without_crashing(self) -> None:
+        path = self.root / ".agents/state/PROJECT_STATE.yaml"
+        state = json.loads(path.read_text(encoding="utf-8"))
+        state["last_checkpoint"]["git"] = []
+        write_json(path, state)
+        result = self.run_script(PREFLIGHT)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("STATE_SCHEMA", result.stdout + result.stderr)
+        self.assertNotIn("Traceback", result.stdout + result.stderr)
+
+    def test_preflight_reports_malformed_task_status_without_crashing(self) -> None:
+        path = self.root / ".agents/tasks/BACKLOG.yaml"
+        backlog = json.loads(path.read_text(encoding="utf-8"))
+        backlog["tasks"][0]["status"] = []
+        write_json(path, backlog)
+        result = self.run_script(PREFLIGHT)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("TASK_SCHEMA", result.stdout + result.stderr)
+        self.assertNotIn("Traceback", result.stdout + result.stderr)
+
+    def test_m0_cannot_be_authorized_before_g1_approval(self) -> None:
+        path = self.root / ".agents/state/PROJECT_STATE.yaml"
+        state = json.loads(path.read_text(encoding="utf-8"))
+        state["engineering"]["start_authorized"] = True
+        write_json(path, state)
+        result = self.run_script(PREFLIGHT)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("STATE_SCHEMA", result.stdout + result.stderr)
+
+    def test_g1_cannot_be_ready_with_incomplete_g1_tasks(self) -> None:
+        path = self.root / ".agents/state/PROJECT_STATE.yaml"
+        state = json.loads(path.read_text(encoding="utf-8"))
+        state["governance"]["gate_status"] = "ready_for_user_review"
+        write_json(path, state)
+        backlog_path = self.root / ".agents/tasks/BACKLOG.yaml"
+        backlog = json.loads(backlog_path.read_text(encoding="utf-8"))
+        backlog["tasks"].append({
+            "id": "G1-002", "title": "Pending G1 work", "milestone": "G1", "status": "pending",
+            "next_action": "Complete G1 evidence.",
+            "depends_on": ["G1-001"], "requires_user_gate_approval": None,
+            "acceptance_criteria_ids": ["G1-02"], "blocker_ids": [], "evidence": []
+        })
+        write_json(backlog_path, backlog)
+        result = self.run_script(PREFLIGHT)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("G1_REVIEW_INCOMPLETE", result.stdout + result.stderr)
+
+    def test_preflight_finds_broken_markdown_link(self) -> None:
+        (self.root / "AGENTS.md").write_text("[missing](absent.md)\n", encoding="utf-8")
+        result = self.run_script(PREFLIGHT)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("LINK_BROKEN", result.stdout + result.stderr)
+
+    def test_preflight_detects_roadmap_source_mismatch(self) -> None:
+        path = self.root / "docs/01-foundation/ROADMAP.md"
+        path.write_text(path.read_text(encoding="utf-8") + "\nchanged\n", encoding="utf-8")
+        result = self.run_script(PREFLIGHT)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("ROADMAP_SOURCE_MISMATCH", result.stdout + result.stderr)
+
+    def test_preflight_rejects_dependency_cycle(self) -> None:
+        path = self.root / ".agents/tasks/BACKLOG.yaml"
+        backlog = json.loads(path.read_text(encoding="utf-8"))
+        backlog["tasks"][0]["depends_on"] = ["M0-001"]
+        write_json(path, backlog)
+        result = self.run_script(PREFLIGHT)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("DEPENDENCY_CYCLE", result.stdout + result.stderr)
+
+    def test_blocked_task_must_reference_an_active_blocker(self) -> None:
+        path = self.root / ".agents/tasks/BACKLOG.yaml"
+        backlog = json.loads(path.read_text(encoding="utf-8"))
+        backlog["tasks"][1]["status"] = "blocked"
+        backlog["tasks"][1]["blocker_ids"] = ["BLK-999"]
+        write_json(path, backlog)
+        result = self.run_script(PREFLIGHT)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("TASK_BLOCKER_MISMATCH", result.stdout + result.stderr)
+
+    def test_state_blocker_index_must_match_active_blocker_records(self) -> None:
+        path = self.root / ".agents/tasks/BACKLOG.yaml"
+        backlog = json.loads(path.read_text(encoding="utf-8"))
+        backlog["tasks"][1]["status"] = "blocked"
+        backlog["tasks"][1]["blocker_ids"] = ["BLK-001"]
+        write_json(path, backlog)
+        blocker_path = self.root / ".agents/state/BLOCKERS.md"
+        blocker_path.write_text("# Active Blockers\n## BLK-001 — Fixture blocker\n- **Status:** `active`\n", encoding="utf-8")
+        result = self.run_script(PREFLIGHT)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("BLOCKER_STATE_MISMATCH", result.stdout + result.stderr)
+
+    def test_preflight_reports_dirty_worktree_and_checkpoint_refreshes_it(self) -> None:
+        (self.root / "operator-note.txt").write_text("preserve me\n", encoding="utf-8")
+        backlog_before = (self.root / ".agents/tasks/BACKLOG.yaml").read_bytes()
+        before = self.run_script(PREFLIGHT)
+        self.assertEqual(before.returncode, 0, before.stderr + before.stdout)
+        self.assertIn("GIT_SNAPSHOT_DRIFT", before.stdout)
+        checkpoint = self.run_script(CHECKPOINT)
+        self.assertEqual(checkpoint.returncode, 0, checkpoint.stderr + checkpoint.stdout)
+        self.assertTrue((self.root / "operator-note.txt").is_file())
+        self.assertEqual((self.root / ".agents/tasks/BACKLOG.yaml").read_bytes(), backlog_before)
+        after = self.run_script(PREFLIGHT)
+        self.assertEqual(after.returncode, 0, after.stderr + after.stdout)
+        self.assertNotIn("GIT_SNAPSHOT_DRIFT", after.stdout)
+
+    def test_preflight_detects_content_change_inside_existing_dirty_path(self) -> None:
+        note = self.root / "operator-note.txt"
+        note.write_text("initial\n", encoding="utf-8")
+        first_checkpoint = self.run_script(CHECKPOINT)
+        self.assertEqual(first_checkpoint.returncode, 0, first_checkpoint.stderr + first_checkpoint.stdout)
+        note.write_text("changed without changing the Git status path\n", encoding="utf-8")
+        before = self.run_script(PREFLIGHT)
+        self.assertEqual(before.returncode, 0, before.stderr + before.stdout)
+        self.assertIn("WORKTREE_CONTENT_DRIFT", before.stdout)
+        second_checkpoint = self.run_script(CHECKPOINT)
+        self.assertEqual(second_checkpoint.returncode, 0, second_checkpoint.stderr + second_checkpoint.stdout)
+        after = self.run_script(PREFLIGHT)
+        self.assertEqual(after.returncode, 0, after.stderr + after.stdout)
+        self.assertNotIn("WORKTREE_CONTENT_DRIFT", after.stdout)
+
+    def test_checkpoint_repairs_stale_handoff_pointer(self) -> None:
+        handoff = self.root / ".agents/state/SESSION_HANDOFF.md"
+        handoff.write_text("<!-- checkpoint-id: stale-id -->\n# Handoff\n", encoding="utf-8")
+        before = self.run_script(PREFLIGHT)
+        self.assertIn("HANDOFF_STALE", before.stdout)
+        checkpoint = self.run_script(CHECKPOINT)
+        self.assertEqual(checkpoint.returncode, 0, checkpoint.stderr + checkpoint.stdout)
+        state = json.loads((self.root / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
+        self.assertNotIn("chat_history.md", state["last_checkpoint"]["git"]["repo_file_hashes"])
+        self.assertNotIn(".env", state["last_checkpoint"]["git"]["repo_file_hashes"])
+        after = self.run_script(PREFLIGHT)
+        self.assertEqual(after.returncode, 0, after.stderr + after.stdout)
+        self.assertNotIn("HANDOFF_STALE", after.stdout)
+
+    def test_partial_state_file_is_detected_and_recovered(self) -> None:
+        partial = self.root / ".agents/state/.PROJECT_STATE.yaml.tmp-interrupted"
+        partial.write_text("{partial", encoding="utf-8")
+        old = time.time() - 7200
+        os.utime(partial, (old, old))
+        before = self.run_script(PREFLIGHT)
+        self.assertIn("PARTIAL_WRITE", before.stdout)
+        checkpoint = self.run_script(CHECKPOINT, "--recover-partials")
+        self.assertEqual(checkpoint.returncode, 0, checkpoint.stderr + checkpoint.stdout)
+        self.assertFalse(partial.exists())
+        after = self.run_script(PREFLIGHT)
+        self.assertEqual(after.returncode, 0, after.stderr + after.stdout)
+        self.assertNotIn("PARTIAL_WRITE", after.stdout)
+
+    def test_completed_task_requires_existing_evidence(self) -> None:
+        path = self.root / ".agents/tasks/BACKLOG.yaml"
+        backlog = json.loads(path.read_text(encoding="utf-8"))
+        backlog["tasks"][0]["evidence"] = [{"kind": "file", "path": "missing-evidence.txt", "detail": "absent"}]
+        write_json(path, backlog)
+        result = self.run_script(PREFLIGHT)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("TASK_EVIDENCE_MISSING", result.stdout + result.stderr)
+
+    def test_verified_command_evidence_requires_timestamp_revision_exit_and_log(self) -> None:
+        path = self.root / ".agents/tasks/BACKLOG.yaml"
+        backlog = json.loads(path.read_text(encoding="utf-8"))
+        backlog["tasks"][0]["evidence"] = [{
+            "kind": "command", "command": "python3 -m unittest", "result": "PASS",
+            "provenance": {
+                "status": "verified", "recorded_at_utc": None, "exit_code": None,
+                "git_revision": None, "log_path": None
+            }
+        }]
+        write_json(path, backlog)
+        result = self.run_script(PREFLIGHT)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("TASK_EVIDENCE_PROVENANCE", result.stdout + result.stderr)
+
+    def test_verified_command_evidence_with_provenance_passes(self) -> None:
+        path = self.root / ".agents/tasks/BACKLOG.yaml"
+        backlog = json.loads(path.read_text(encoding="utf-8"))
+        log = self.root / "test-output.log"
+        log.write_text("Command: python3 -m unittest\nResult: PASS: 1 test.\nExit code: 0\n", encoding="utf-8")
+        backlog["tasks"][0]["evidence"] = [{
+            "kind": "command", "command": "python3 -m unittest", "result": "PASS: 1 test.",
+            "provenance": {
+                "status": "verified", "executed_at_utc": "2026-10-14T00:00:00Z",
+                "recorded_at_utc": "2026-10-14T00:00:01Z", "exit_code": 0,
+                "git_revision": git(self.root, "rev-parse", "HEAD"), "log_path": "test-output.log"
+            }
+        }]
+        write_json(path, backlog)
+        result = self.run_script(PREFLIGHT, "--json")
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+
+    def test_verified_command_evidence_must_match_retained_log(self) -> None:
+        path = self.root / ".agents/tasks/BACKLOG.yaml"
+        backlog = json.loads(path.read_text(encoding="utf-8"))
+        (self.root / "test-output.log").write_text("Command: another command\nResult: stale output\nExit code: 0\n", encoding="utf-8")
+        backlog["tasks"][0]["evidence"] = [{
+            "kind": "command", "command": "python3 -m unittest", "result": "PASS: 1 test.",
+            "provenance": {
+                "status": "verified", "executed_at_utc": "2026-10-14T00:00:00Z",
+                "recorded_at_utc": "2026-10-14T00:00:01Z", "exit_code": 0,
+                "git_revision": git(self.root, "rev-parse", "HEAD"), "log_path": "test-output.log"
+            }
+        }]
+        write_json(path, backlog)
+        result = self.run_script(PREFLIGHT)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("TASK_EVIDENCE_LOG_MISMATCH", result.stdout + result.stderr)
+
+    def test_manual_session_evidence_requires_sanitized_record_and_revision(self) -> None:
+        path = self.root / ".agents/tasks/BACKLOG.yaml"
+        backlog = json.loads(path.read_text(encoding="utf-8"))
+        manual_log = self.root / ".agents/evidence/manual-recovery.md"
+        manual_log.parent.mkdir(parents=True, exist_ok=True)
+        manual_log.write_text("Result: Independent session recovered the required state.\n", encoding="utf-8")
+        backlog["tasks"][0]["evidence"] = [{
+            "kind": "finding", "finding_id": "G1-10", "result": "Independent session recovered the required state.",
+            "provenance": {
+                "status": "manual_verified", "executed_at_utc": "2026-10-14T00:00:00Z",
+                "recorded_at_utc": "2026-10-14T00:00:01Z", "exit_code": None,
+                "git_revision": git(self.root, "rev-parse", "HEAD"), "log_path": ".agents/evidence/manual-recovery.md"
+            }
+        }]
+        write_json(path, backlog)
+        result = self.run_script(PREFLIGHT, "--json")
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+
+    def test_done_task_cannot_rely_only_on_historical_unverified_evidence(self) -> None:
+        path = self.root / ".agents/tasks/BACKLOG.yaml"
+        backlog = json.loads(path.read_text(encoding="utf-8"))
+        backlog["tasks"][0]["evidence"][0]["provenance"]["status"] = "historical_unverified"
+        backlog["tasks"][0]["evidence"][0]["provenance"].update({
+            "executed_at_utc": None, "recorded_at_utc": None, "git_revision": None
+        })
+        write_json(path, backlog)
+        result = self.run_script(PREFLIGHT)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("TASK_EVIDENCE_UNVERIFIED", result.stdout + result.stderr)
+
+    def test_json_output_is_machine_readable_and_paths_are_portable(self) -> None:
+        result = self.run_script(PREFLIGHT, "--json")
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        payload = json.loads(result.stdout)
+        self.assertEqual(payload["summary"]["current_gate"], "G1")
+        state_text = (self.root / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8")
+        self.assertNotIn(str(self.root), state_text)
+
+    def test_project_context_can_be_recovered_without_chat_history(self) -> None:
+        overview = (REPO / "docs/01-foundation/PROJECT_OVERVIEW.md").read_text(encoding="utf-8")
+        requirements = (REPO / "docs/01-foundation/REQUIREMENTS.md").read_text(encoding="utf-8")
+        self.assertIn("ALE `VideoChess-v5`", overview)
+        self.assertIn("Supervised pretraining", overview)
+        self.assertIn("Simulator RL", overview)
+        self.assertIn("Atari evaluation", overview)
+        self.assertIn("must not be part of the agent's inference path", requirements)
+        self.assertIn("O-01", requirements)
+        self.assertIn("O-08", requirements)
+        state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
+        backlog = json.loads((REPO / ".agents/tasks/BACKLOG.yaml").read_text(encoding="utf-8"))
+        result = subprocess.run([sys.executable, str(PREFLIGHT), "--repo", str(REPO), "--json"], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        report = json.loads(result.stdout)
+        summary = report["summary"]
+        self.assertEqual(summary["current_gate"], state["governance"]["current_gate"])
+        self.assertEqual(summary["next_task_id"], state["task_refs"]["next_task_id"])
+        self.assertEqual(summary["next_milestone"], state["engineering"]["next_milestone"])
+        self.assertEqual(summary["next_milestone_status"], state["engineering"]["next_milestone_status"])
+        self.assertFalse(summary["engineering_start_authorized"])
+        self.assertEqual(summary["next_user_action"], state["governance"]["next_user_action"])
+        next_task = next(task for task in backlog["tasks"] if task["id"] == state["task_refs"]["next_task_id"])
+        self.assertEqual(summary["next_task_acceptance_criteria_ids"], next_task["acceptance_criteria_ids"])
+        self.assertEqual(summary["task_ids_by_status"]["done"], sorted(task["id"] for task in backlog["tasks"] if task["status"] == "done"))
+        self.assertEqual(summary["open_approval_ids"], [f"O-{index:02d}" for index in range(1, 9)])
+        self.assertIn("docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md", summary["decision_refs"])
+        self.assertTrue(summary["roadmap_source"]["matches"])
+        self.assertTrue(summary["git_snapshot_matches"])
+        self.assertTrue(summary["repo_content_matches"])
+        self.assertEqual(len(summary["task_ids_by_status"]["done"]), sum(1 for task in backlog["tasks"] if task["status"] == "done"))
+
+
+if __name__ == "__main__":
+    unittest.main()

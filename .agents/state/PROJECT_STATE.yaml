@@ -1,0 +1,1999 @@
+{
+  "format": "JSON-compatible YAML 1.2",
+  "schema_version": 2,
+  "project_id": "atari-videochess-rl",
+  "governance": {
+    "current_gate": "G1",
+    "gate_status": "approved",
+    "approved_gates": [
+      "G0",
+      "G1"
+    ],
+    "next_governance_gate": "G2",
+    "user_authorized_g1": true,
+    "next_user_action": "Explicitly authorize M0-001 to begin M0. Until then, M0 remains pending and unauthorized; M1 remains not started and gated on M0, and O-01 through O-08 remain unresolved."
+  },
+  "engineering": {
+    "active_milestone": null,
+    "next_milestone": "M0",
+    "next_milestone_status": "pending_user_approval",
+    "start_authorized": false,
+    "hold_reason": "M0 is next and remains pending explicit authorization; M1 depends on M0."
+  },
+  "task_refs": {
+    "active_task_id": null,
+    "next_task_id": "M0-001"
+  },
+  "last_checkpoint": {
+    "id": "cp-c410173e-20261014T171401950621Z",
+    "created_at_utc": "2026-10-14T17:14:01Z",
+    "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
+    "git": {
+      "scope": "workspace",
+      "branch": "initial-idea",
+      "head": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+      "status_entries": [
+        "?? main.py",
+        "A  .agents/PLANS.md",
+        "A  .agents/evidence/G1-10-recovery-verification.md",
+        "A  .agents/evidence/G1-git-baseline-verification.md",
+        "A  .agents/evidence/G1-hardening-verification.md",
+        "A  .agents/evidence/G1-portability-consistency-verification.md",
+        "A  .agents/plans/G1-consistency-hardening.md",
+        "A  .agents/plans/M00-bootstrap.md",
+        "A  .agents/state/BLOCKERS.md",
+        "A  .agents/state/VERIFIED_FINDINGS.md",
+        "A  .agents/tasks/BACKLOG.yaml",
+        "A  .python-version",
+        "A  AGENTS.md",
+        "A  atari-videochess-rl-roadmap.html",
+        "A  docs/01-foundation/PROJECT_OVERVIEW.md",
+        "A  docs/01-foundation/REQUIREMENTS.md",
+        "A  docs/01-foundation/ROADMAP.md",
+        "A  docs/02-management/EXECUTION_PLAN.md",
+        "A  docs/02-management/RISK_REGISTER.md",
+        "A  docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md",
+        "A  docs/05-operations/SETUP.md",
+        "A  docs/06-quality/ACCEPTANCE_CRITERIA.md",
+        "A  docs/06-quality/TEST_STRATEGY.md",
+        "A  pyproject.toml",
+        "A  scripts/agent_checkpoint.py",
+        "A  scripts/agent_preflight.py",
+        "A  tests/test_agent_context.py",
+        "AM .agents/state/PROJECT_STATE.yaml",
+        "AM .agents/state/SESSION_HANDOFF.md",
+        "M  .gitignore"
+      ],
+      "status_sha256": "bc2141c41df4b189f0eb8744fe494b8b380b2ebcef8e868fe26e07b3b1fac3cd",
+      "repo_file_hashes": {
+        ".gitignore": "74815f194c8eb707e57483eebc2461e1f4936ae940519adf8c7a59d1708c5abb",
+        ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+        "AGENTS.md": "67b95433e69a38ed51aa24f1643288dae7535cf0f1c5e7c840e7707a47538ad4",
+        "README.md": "b56bd7410a2c90c559ad5fd52a6a78065bee4d2d54856d6677af4b0200746dce",
+        "atari-videochess-rl-documentation-g1-finalization.zip": "e0715e62d96ccb537ca56edb8769ad9dee5a87a752841ee2f4e26afbf88092eb",
+        "atari-videochess-rl-documentation-g1-portable.zip": "d27dc738ca92f349a4d4ec010bcb9768f8c7bad378f6e6cb62bc572241259c6c",
+        "atari-videochess-rl-documentation-g1.zip": "92b3b71e7ad9345ea1eb9a576dd7f3466b5110f9c3c82ca178e90259dd0d0cd2",
+        "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+        "main.py": "c101b2abfee28217d24a7c550eda37cffe548adfc9149244646199108361c0fe",
+        "pyproject.toml": "862241bf5bbf4b600235a9ebad643fb74b7b1d3734359da6cdee5d47f2007606",
+        ".agents/PLANS.md": "ed50b3ccc51cbe29123630c5069ab2d00f7428751ca67f1e64bd15558bd044d2",
+        ".agents/evidence/G1-10-recovery-verification.md": "39e05a96034d4eaa4f22f0dec72670afacbd9b48bcfcc41ed81f8a718d3a5f65",
+        ".agents/evidence/G1-git-baseline-verification.md": "13772b3438b30d440baac4caeeceb564017a5216ea9409d7b9412390d4b96f65",
+        ".agents/evidence/G1-hardening-verification.md": "0963f26840d2c393525fd10bba32f13e5ff3a51210a87d3d731b2ba96bd09380",
+        ".agents/evidence/G1-portability-consistency-verification.md": "f1fa95b9c2e7415ff0ff8a9e452920f7c8a29c77ea3ce3fabfc77fb744b7ad0e",
+        ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
+        ".agents/plans/M00-bootstrap.md": "cb9aa665f9cd15dacf694e1c2bad64ca02e3e9a6dc1152009e66c15868169561",
+        ".agents/state/BLOCKERS.md": "301af9e870486b9c6a05afd7dcf90c78aaa5c1b6a9d61b337566473074c46c56",
+        ".agents/state/SESSION_HANDOFF.md": "94dfd63e8f3704f371a9475d4cf6de2a5da20ae4ff27bdda89cde13df577f349",
+        ".agents/state/VERIFIED_FINDINGS.md": "8c94c5fe195a11febebee463f71b636bf223635dfab988baacd723c3e426430e",
+        ".agents/tasks/BACKLOG.yaml": "a0dad9de815247bb61d7e333d3802e14d585e44ae28ae5fc14e0badc65f3ba7e",
+        "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
+        "docs/01-foundation/REQUIREMENTS.md": "105564b561057261d4e5b706c8863ac689498a6328a679fc3af3619edcfbc400",
+        "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
+        "docs/02-management/EXECUTION_PLAN.md": "1076861827bba220428826470dc5b25504f6378e6b50e0be02edc550a63ac29e",
+        "docs/02-management/RISK_REGISTER.md": "2d3a3fef7062377c6479048992bae3e3ec0a9cc880a883bb1e57f24473c00ab8",
+        "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
+        "docs/05-operations/SETUP.md": "dd73acc0283be82c4df85da29c04e7f8149e5f952ac7ac2c3011bdf470341c1b",
+        "docs/06-quality/ACCEPTANCE_CRITERIA.md": "395741bc505bbc0c0dd3fcb63187f198303e538c064da32fc58c9389e93373a5",
+        "docs/06-quality/TEST_STRATEGY.md": "a83cc782f012d63b9f6efcf012ddf6f0d403bc2c74ab3bf09950b9549c0c47f4",
+        "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
+        "scripts/agent_preflight.py": "7f24cf19f659603f2d96907eae790f1df07ff8212cfc321db2f4c47e641f026e",
+        "tests/test_agent_context.py": "b3856f2caa1df25af3a15d2d91af655af8301b760b881c3b64520d9f7270366f"
+      },
+      "unhashed_large_files": [],
+      "unreadable_files": [],
+      "artifact_dirs_requiring_manifest": [],
+      "excluded_directories": [
+        ".git",
+        "scripts/__pycache__",
+        "tests/__pycache__"
+      ],
+      "excluded_symlink_files": 0
+    },
+    "portable_git": {
+      "format_version": 1,
+      "tracked_manifest": {
+        ".agents/PLANS.md": {
+          "mode": "100644",
+          "object_id": "1c1b78d477af82837465daf21c1de62c32c07c84"
+        },
+        ".agents/evidence/G1-10-recovery-verification.md": {
+          "mode": "100644",
+          "object_id": "6ff27d51b9cf51803d8ca8c863066253ae6297bc"
+        },
+        ".agents/evidence/G1-git-baseline-verification.md": {
+          "mode": "100644",
+          "object_id": "c3c79107166243fe35ae2d8e9f270b8a46e0ffe9"
+        },
+        ".agents/evidence/G1-hardening-verification.md": {
+          "mode": "100644",
+          "object_id": "949549fa06ad46bc3076ac462e7ccba7cdc70fbf"
+        },
+        ".agents/evidence/G1-portability-consistency-verification.md": {
+          "mode": "100644",
+          "object_id": "5120604c17c3a481431701154d2783058ff78dcd"
+        },
+        ".agents/plans/G1-consistency-hardening.md": {
+          "mode": "100644",
+          "object_id": "a371486eaf564cf62503c6a2de683888e09b3b9d"
+        },
+        ".agents/plans/M00-bootstrap.md": {
+          "mode": "100644",
+          "object_id": "45df5955381a9f4faad53329239433b0088fe69b"
+        },
+        ".agents/state/BLOCKERS.md": {
+          "mode": "100644",
+          "object_id": "ed81d04c6e105f100aa70b1b70d1044ae6d455b9"
+        },
+        ".agents/state/VERIFIED_FINDINGS.md": {
+          "mode": "100644",
+          "object_id": "b0de856beef6bd414c47516006fe65ee7bb1bb33"
+        },
+        ".agents/tasks/BACKLOG.yaml": {
+          "mode": "100644",
+          "object_id": "96585253904fc0ee14e8197aba350fcd38e4af7e"
+        },
+        ".gitignore": {
+          "mode": "100644",
+          "object_id": "14017febe137a55df5749d47168ff8e5e1afe711"
+        },
+        ".python-version": {
+          "mode": "100644",
+          "object_id": "e4fba2183587225f216eeada4c78dfab6b2e65f5"
+        },
+        "AGENTS.md": {
+          "mode": "100644",
+          "object_id": "35e1ff5f0eac819ec306a3640796f8a3e32ed542"
+        },
+        "README.md": {
+          "mode": "100644",
+          "object_id": "c64740f9ac205eaac873da341d5c9079bc4b09f4"
+        },
+        "atari-videochess-rl-roadmap.html": {
+          "mode": "100644",
+          "object_id": "78f34984b1f10c9921974a96c8648112876017fa"
+        },
+        "docs/01-foundation/PROJECT_OVERVIEW.md": {
+          "mode": "100644",
+          "object_id": "6131db7cb1ebe66ed6f903c2cde0dcec64ec1795"
+        },
+        "docs/01-foundation/REQUIREMENTS.md": {
+          "mode": "100644",
+          "object_id": "463968ecf67c405ac66580d2f83b8e5a6358d681"
+        },
+        "docs/01-foundation/ROADMAP.md": {
+          "mode": "100644",
+          "object_id": "3d6517b186feb24fb95702fffefc1a568266bf37"
+        },
+        "docs/02-management/EXECUTION_PLAN.md": {
+          "mode": "100644",
+          "object_id": "829dbffcbfdfbd02541a02b8011a170fa7f98205"
+        },
+        "docs/02-management/RISK_REGISTER.md": {
+          "mode": "100644",
+          "object_id": "489ef9a0ee129697b8cfccc064de96070ac04f55"
+        },
+        "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
+          "mode": "100644",
+          "object_id": "97db1a054605b8aa3c94697a75f2ebf1d80d3e5e"
+        },
+        "docs/05-operations/SETUP.md": {
+          "mode": "100644",
+          "object_id": "947e0ca5a18ba2ada3feee53b93ceb7d99c341be"
+        },
+        "docs/06-quality/ACCEPTANCE_CRITERIA.md": {
+          "mode": "100644",
+          "object_id": "47e4cb03e6067424f07f6fa2c543869a5e96c3f2"
+        },
+        "docs/06-quality/TEST_STRATEGY.md": {
+          "mode": "100644",
+          "object_id": "3dda3ecb97e09d0048c3952b7cf7aa40d0ac2a8f"
+        },
+        "pyproject.toml": {
+          "mode": "100644",
+          "object_id": "4a5ba949f4f194d7206bbcdddca0eabfd35a0b9e"
+        },
+        "scripts/agent_checkpoint.py": {
+          "mode": "100644",
+          "object_id": "6f4f0ca28dbc837dce01ab788903c2e43a58b1d8"
+        },
+        "scripts/agent_preflight.py": {
+          "mode": "100644",
+          "object_id": "322932885074db6e8dc5a098a90dd96de393e760"
+        },
+        "tests/test_agent_context.py": {
+          "mode": "100644",
+          "object_id": "f634e7830e8aba96f79f7be6c8c5d60e698febaf"
+        }
+      },
+      "manifest_sha256": "f46c6458b1714a28908a6879e99fd9fb918b3d05dc7d97aa05f941c21441b924",
+      "state_sha256": "4422f3c70dbb6ac2ef7c3faba087595c8986eafec3b23832405919b9e310ed6f",
+      "handoff_sha256": "94dfd63e8f3704f371a9475d4cf6de2a5da20ae4ff27bdda89cde13df577f349"
+    }
+  },
+  "g1_baseline": {
+    "verified_at_utc": "2026-10-14T12:55:49Z",
+    "branch": "initial-idea",
+    "head": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+    "status_entries": [
+      "?? .python-version",
+      "?? AGENTS.md",
+      "?? atari-videochess-rl-roadmap.html",
+      "?? chat_history.md",
+      "?? docs/01-foundation/REQUIREMENTS.md",
+      "?? docs/01-foundation/ROADMAP.md",
+      "?? main.py",
+      "?? pyproject.toml"
+    ],
+    "preserved_sha256": {
+      ".gitignore": "114f3cdc2057d610cbc810f69cbc4f195acec0cd15dd54e9b154cf5f6657fc24",
+      "README.md": "b56bd7410a2c90c559ad5fd52a6a78065bee4d2d54856d6677af4b0200746dce",
+      ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+      "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+      "main.py": "c101b2abfee28217d24a7c550eda37cffe548adfc9149244646199108361c0fe",
+      "pyproject.toml": "174a8c9aac3378f287b32a1212793029de5ce8a2422ed9ade8775300036d35e8",
+      "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf"
+    },
+    "g1_expected_modified_sha256": {
+      "AGENTS.md": "6466b560a194e5eb559316471f160257bde75f6e8e95af76d7168234a9ce7037",
+      "docs/01-foundation/REQUIREMENTS.md": "5ffd986adc963b9ed48b9852d4168bded4a82a088903269b54d93b035691a2f4"
+    },
+    "comparison_policy": "Historical baseline only; current drift is compared with last_checkpoint.git.",
+    "baseline_sha256": "47b912a660741fe834a53479c2fc065392b1a3bcaa0dbd1d670433a671fa1493"
+  },
+  "active_blocker_ids": [],
+  "updated_at_utc": "2026-10-14T16:40:32Z",
+  "checkpoint_history": [
+    {
+      "id": "cp-c410173e-20261014T154924847559Z",
+      "created_at_utc": "2026-10-14T15:49:24Z",
+      "workspace_id": null,
+      "workspace_git": {
+        "branch": "initial-idea",
+        "head": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+        "status_entries": [
+          "?? .agents/state/PROJECT_STATE.yaml",
+          "?? .agents/state/SESSION_HANDOFF.md",
+          "?? main.py",
+          "A  .agents/PLANS.md",
+          "A  .agents/evidence/G1-10-recovery-verification.md",
+          "A  .agents/evidence/G1-git-baseline-verification.md",
+          "A  .agents/evidence/G1-hardening-verification.md",
+          "A  .agents/plans/G1-consistency-hardening.md",
+          "A  .agents/plans/M00-bootstrap.md",
+          "A  .agents/state/BLOCKERS.md",
+          "A  .agents/state/VERIFIED_FINDINGS.md",
+          "A  .agents/tasks/BACKLOG.yaml",
+          "A  .python-version",
+          "A  AGENTS.md",
+          "A  atari-videochess-rl-roadmap.html",
+          "A  docs/01-foundation/PROJECT_OVERVIEW.md",
+          "A  docs/01-foundation/REQUIREMENTS.md",
+          "A  docs/01-foundation/ROADMAP.md",
+          "A  docs/02-management/EXECUTION_PLAN.md",
+          "A  docs/02-management/RISK_REGISTER.md",
+          "A  docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md",
+          "A  docs/05-operations/SETUP.md",
+          "A  docs/06-quality/ACCEPTANCE_CRITERIA.md",
+          "A  docs/06-quality/TEST_STRATEGY.md",
+          "A  pyproject.toml",
+          "A  scripts/agent_checkpoint.py",
+          "A  scripts/agent_preflight.py",
+          "A  tests/test_agent_context.py",
+          "M  .gitignore"
+        ],
+        "status_sha256": "5b0a2540e19e16ff5cff868cdd9b60706cf7ffd84a9e77b932dcd8d429cecb58",
+        "repo_file_hashes": {
+          ".gitignore": "74815f194c8eb707e57483eebc2461e1f4936ae940519adf8c7a59d1708c5abb",
+          ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+          "AGENTS.md": "81d54a9352e76f1e3f96a9a833db55cbb3e72c5660eba7a4e7ec6bd9437e85d5",
+          "README.md": "b56bd7410a2c90c559ad5fd52a6a78065bee4d2d54856d6677af4b0200746dce",
+          "atari-videochess-rl-documentation-g1.zip": "92b3b71e7ad9345ea1eb9a576dd7f3466b5110f9c3c82ca178e90259dd0d0cd2",
+          "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+          "main.py": "c101b2abfee28217d24a7c550eda37cffe548adfc9149244646199108361c0fe",
+          "pyproject.toml": "862241bf5bbf4b600235a9ebad643fb74b7b1d3734359da6cdee5d47f2007606",
+          ".agents/PLANS.md": "0413665aac30f2e6688040c421b9857e13b0014023a4ac9f2e4608841efdc3cb",
+          ".agents/evidence/G1-10-recovery-verification.md": "39e05a96034d4eaa4f22f0dec72670afacbd9b48bcfcc41ed81f8a718d3a5f65",
+          ".agents/evidence/G1-git-baseline-verification.md": "6c6fc4341dbd2c98686bc0b99e53bbd4a4c61c156c109dbf464a2ef457f62e93",
+          ".agents/evidence/G1-hardening-verification.md": "0963f26840d2c393525fd10bba32f13e5ff3a51210a87d3d731b2ba96bd09380",
+          ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
+          ".agents/plans/M00-bootstrap.md": "cb9aa665f9cd15dacf694e1c2bad64ca02e3e9a6dc1152009e66c15868169561",
+          ".agents/state/BLOCKERS.md": "1300bfb8cc01b863d2140bc92b462df43529676f40d70bf9472b90d5121a0d99",
+          ".agents/state/SESSION_HANDOFF.md": "1f3c94f5bead41144c341af3ff9e1ef54f4e8f31c4e8c25ebdad95edddb97614",
+          ".agents/state/VERIFIED_FINDINGS.md": "de05804735bfa3e6bc862b0f0ce3dcd9d19e1c1346e59bab328e0b49cf07f40e",
+          ".agents/tasks/BACKLOG.yaml": "5cbf413a9d821fffb7bd6212ddd336e285b0517c821605d415e90163c099fa6e",
+          "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
+          "docs/01-foundation/REQUIREMENTS.md": "5a4a7091b0bee4513dff4a05ed4c5f0a7ee513e61a392830de1cf8135e8c8989",
+          "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
+          "docs/02-management/EXECUTION_PLAN.md": "f7ac5b84e140a08cd599b00c9ec4d7ae97989dd85164d8cd92bc95446df426e1",
+          "docs/02-management/RISK_REGISTER.md": "2d3a3fef7062377c6479048992bae3e3ec0a9cc880a883bb1e57f24473c00ab8",
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
+          "docs/05-operations/SETUP.md": "dd73acc0283be82c4df85da29c04e7f8149e5f952ac7ac2c3011bdf470341c1b",
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": "67551f53343a1bdb72b9b3cc350108c1142058d9a98a98aaa2f28d7cb32ba927",
+          "docs/06-quality/TEST_STRATEGY.md": "b91856796a3aaf3e1cd42fba65768563c36ac406cb32b9517eac5b43009131fd",
+          "scripts/agent_checkpoint.py": "0b93920fe187821ffa73a83380aae85697a29c504cde428e294cca9f6ececb80",
+          "scripts/agent_preflight.py": "e1105cbb592b739982cea379f656e3f3f856a90a18bf69bc05590105068fa7a7",
+          "tests/test_agent_context.py": "d58286681ffaee25afa21146dd9e3235f0ba023caf05332806c177ad9b2118cd"
+        },
+        "unhashed_large_files": [],
+        "unreadable_files": [],
+        "artifact_dirs_requiring_manifest": [],
+        "excluded_directories": [
+          ".git",
+          "scripts/__pycache__",
+          "tests/__pycache__"
+        ],
+        "excluded_symlink_files": 0
+      },
+      "portable_git": null
+    },
+    {
+      "id": "cp-c410173e-20261014T164616792305Z",
+      "created_at_utc": "2026-10-14T16:46:16Z",
+      "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
+      "workspace_git": {
+        "scope": "workspace",
+        "branch": "initial-idea",
+        "head": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+        "status_entries": [
+          "?? main.py",
+          "A  .agents/PLANS.md",
+          "A  .agents/evidence/G1-10-recovery-verification.md",
+          "A  .agents/evidence/G1-git-baseline-verification.md",
+          "A  .agents/evidence/G1-hardening-verification.md",
+          "A  .agents/evidence/G1-portability-consistency-verification.md",
+          "A  .agents/plans/G1-consistency-hardening.md",
+          "A  .agents/plans/M00-bootstrap.md",
+          "A  .agents/state/BLOCKERS.md",
+          "A  .agents/state/VERIFIED_FINDINGS.md",
+          "A  .agents/tasks/BACKLOG.yaml",
+          "A  .python-version",
+          "A  AGENTS.md",
+          "A  atari-videochess-rl-roadmap.html",
+          "A  docs/01-foundation/PROJECT_OVERVIEW.md",
+          "A  docs/01-foundation/REQUIREMENTS.md",
+          "A  docs/01-foundation/ROADMAP.md",
+          "A  docs/02-management/EXECUTION_PLAN.md",
+          "A  docs/02-management/RISK_REGISTER.md",
+          "A  docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md",
+          "A  docs/05-operations/SETUP.md",
+          "A  docs/06-quality/ACCEPTANCE_CRITERIA.md",
+          "A  docs/06-quality/TEST_STRATEGY.md",
+          "A  pyproject.toml",
+          "A  scripts/agent_checkpoint.py",
+          "A  scripts/agent_preflight.py",
+          "A  tests/test_agent_context.py",
+          "AM .agents/state/PROJECT_STATE.yaml",
+          "AM .agents/state/SESSION_HANDOFF.md",
+          "M  .gitignore"
+        ],
+        "status_sha256": "bc2141c41df4b189f0eb8744fe494b8b380b2ebcef8e868fe26e07b3b1fac3cd",
+        "repo_file_hashes": {
+          ".gitignore": "74815f194c8eb707e57483eebc2461e1f4936ae940519adf8c7a59d1708c5abb",
+          ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+          "AGENTS.md": "e48ba69158e94adc91346dbbead86cf01f7f3fbbfee69dd2c75172fe981c5d72",
+          "README.md": "b56bd7410a2c90c559ad5fd52a6a78065bee4d2d54856d6677af4b0200746dce",
+          "atari-videochess-rl-documentation-g1-finalization.zip": "e0715e62d96ccb537ca56edb8769ad9dee5a87a752841ee2f4e26afbf88092eb",
+          "atari-videochess-rl-documentation-g1.zip": "92b3b71e7ad9345ea1eb9a576dd7f3466b5110f9c3c82ca178e90259dd0d0cd2",
+          "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+          "main.py": "c101b2abfee28217d24a7c550eda37cffe548adfc9149244646199108361c0fe",
+          "pyproject.toml": "862241bf5bbf4b600235a9ebad643fb74b7b1d3734359da6cdee5d47f2007606",
+          ".agents/PLANS.md": "ed50b3ccc51cbe29123630c5069ab2d00f7428751ca67f1e64bd15558bd044d2",
+          ".agents/evidence/G1-10-recovery-verification.md": "39e05a96034d4eaa4f22f0dec72670afacbd9b48bcfcc41ed81f8a718d3a5f65",
+          ".agents/evidence/G1-git-baseline-verification.md": "13772b3438b30d440baac4caeeceb564017a5216ea9409d7b9412390d4b96f65",
+          ".agents/evidence/G1-hardening-verification.md": "0963f26840d2c393525fd10bba32f13e5ff3a51210a87d3d731b2ba96bd09380",
+          ".agents/evidence/G1-portability-consistency-verification.md": "53899c2a715cdfe465768619ffc1cc7475f60cdc55f0c2d443fd356089481198",
+          ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
+          ".agents/plans/M00-bootstrap.md": "cb9aa665f9cd15dacf694e1c2bad64ca02e3e9a6dc1152009e66c15868169561",
+          ".agents/state/BLOCKERS.md": "301af9e870486b9c6a05afd7dcf90c78aaa5c1b6a9d61b337566473074c46c56",
+          ".agents/state/SESSION_HANDOFF.md": "e4d0ce913019e8c6641e137b8cc47b5171aedf0c6676c2d324a3c3802db64ae5",
+          ".agents/state/VERIFIED_FINDINGS.md": "1fa810c0ecc6c3abf844b7f61ea220c4f24ab52243616591cb317dcbdd01699b",
+          ".agents/tasks/BACKLOG.yaml": "a0dad9de815247bb61d7e333d3802e14d585e44ae28ae5fc14e0badc65f3ba7e",
+          "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
+          "docs/01-foundation/REQUIREMENTS.md": "105564b561057261d4e5b706c8863ac689498a6328a679fc3af3619edcfbc400",
+          "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
+          "docs/02-management/EXECUTION_PLAN.md": "1076861827bba220428826470dc5b25504f6378e6b50e0be02edc550a63ac29e",
+          "docs/02-management/RISK_REGISTER.md": "2d3a3fef7062377c6479048992bae3e3ec0a9cc880a883bb1e57f24473c00ab8",
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
+          "docs/05-operations/SETUP.md": "dd73acc0283be82c4df85da29c04e7f8149e5f952ac7ac2c3011bdf470341c1b",
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": "67551f53343a1bdb72b9b3cc350108c1142058d9a98a98aaa2f28d7cb32ba927",
+          "docs/06-quality/TEST_STRATEGY.md": "7f45c2807a67a20c634be840497c9376a24429593f6e5f3e8bc36ac455cca98a",
+          "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
+          "scripts/agent_preflight.py": "76fdda65fa46b06e70f9eae102a6a43575340e804b33be84c4f33d3ac7a71e99",
+          "tests/test_agent_context.py": "97b7c1d3c222c62b65c4151d1828f78f3a1d995b23fbb24abbbd4e07588a668f"
+        },
+        "unhashed_large_files": [],
+        "unreadable_files": [],
+        "artifact_dirs_requiring_manifest": [],
+        "excluded_directories": [
+          ".git",
+          "scripts/__pycache__",
+          "tests/__pycache__"
+        ],
+        "excluded_symlink_files": 0
+      },
+      "portable_git": {
+        "format_version": 1,
+        "tracked_manifest": {
+          ".agents/PLANS.md": {
+            "mode": "100644",
+            "object_id": "1c1b78d477af82837465daf21c1de62c32c07c84"
+          },
+          ".agents/evidence/G1-10-recovery-verification.md": {
+            "mode": "100644",
+            "object_id": "6ff27d51b9cf51803d8ca8c863066253ae6297bc"
+          },
+          ".agents/evidence/G1-git-baseline-verification.md": {
+            "mode": "100644",
+            "object_id": "c3c79107166243fe35ae2d8e9f270b8a46e0ffe9"
+          },
+          ".agents/evidence/G1-hardening-verification.md": {
+            "mode": "100644",
+            "object_id": "949549fa06ad46bc3076ac462e7ccba7cdc70fbf"
+          },
+          ".agents/evidence/G1-portability-consistency-verification.md": {
+            "mode": "100644",
+            "object_id": "0b913647dbab642204b81fec825013f9da70f167"
+          },
+          ".agents/plans/G1-consistency-hardening.md": {
+            "mode": "100644",
+            "object_id": "a371486eaf564cf62503c6a2de683888e09b3b9d"
+          },
+          ".agents/plans/M00-bootstrap.md": {
+            "mode": "100644",
+            "object_id": "45df5955381a9f4faad53329239433b0088fe69b"
+          },
+          ".agents/state/BLOCKERS.md": {
+            "mode": "100644",
+            "object_id": "ed81d04c6e105f100aa70b1b70d1044ae6d455b9"
+          },
+          ".agents/state/VERIFIED_FINDINGS.md": {
+            "mode": "100644",
+            "object_id": "fa136537032180dd1bb1b68ff6ff3fc94bddd954"
+          },
+          ".agents/tasks/BACKLOG.yaml": {
+            "mode": "100644",
+            "object_id": "96585253904fc0ee14e8197aba350fcd38e4af7e"
+          },
+          ".gitignore": {
+            "mode": "100644",
+            "object_id": "14017febe137a55df5749d47168ff8e5e1afe711"
+          },
+          ".python-version": {
+            "mode": "100644",
+            "object_id": "e4fba2183587225f216eeada4c78dfab6b2e65f5"
+          },
+          "AGENTS.md": {
+            "mode": "100644",
+            "object_id": "ab23ea5ff1db995b560b4463b886877bb073073c"
+          },
+          "README.md": {
+            "mode": "100644",
+            "object_id": "c64740f9ac205eaac873da341d5c9079bc4b09f4"
+          },
+          "atari-videochess-rl-roadmap.html": {
+            "mode": "100644",
+            "object_id": "78f34984b1f10c9921974a96c8648112876017fa"
+          },
+          "docs/01-foundation/PROJECT_OVERVIEW.md": {
+            "mode": "100644",
+            "object_id": "6131db7cb1ebe66ed6f903c2cde0dcec64ec1795"
+          },
+          "docs/01-foundation/REQUIREMENTS.md": {
+            "mode": "100644",
+            "object_id": "463968ecf67c405ac66580d2f83b8e5a6358d681"
+          },
+          "docs/01-foundation/ROADMAP.md": {
+            "mode": "100644",
+            "object_id": "3d6517b186feb24fb95702fffefc1a568266bf37"
+          },
+          "docs/02-management/EXECUTION_PLAN.md": {
+            "mode": "100644",
+            "object_id": "829dbffcbfdfbd02541a02b8011a170fa7f98205"
+          },
+          "docs/02-management/RISK_REGISTER.md": {
+            "mode": "100644",
+            "object_id": "489ef9a0ee129697b8cfccc064de96070ac04f55"
+          },
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
+            "mode": "100644",
+            "object_id": "97db1a054605b8aa3c94697a75f2ebf1d80d3e5e"
+          },
+          "docs/05-operations/SETUP.md": {
+            "mode": "100644",
+            "object_id": "947e0ca5a18ba2ada3feee53b93ceb7d99c341be"
+          },
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": {
+            "mode": "100644",
+            "object_id": "c6ddc279dae2db6b784ae95a6b84c13e218e4293"
+          },
+          "docs/06-quality/TEST_STRATEGY.md": {
+            "mode": "100644",
+            "object_id": "a8dfc10c1f19d0585c0d1b0246b9d3d33719b890"
+          },
+          "pyproject.toml": {
+            "mode": "100644",
+            "object_id": "4a5ba949f4f194d7206bbcdddca0eabfd35a0b9e"
+          },
+          "scripts/agent_checkpoint.py": {
+            "mode": "100644",
+            "object_id": "6f4f0ca28dbc837dce01ab788903c2e43a58b1d8"
+          },
+          "scripts/agent_preflight.py": {
+            "mode": "100644",
+            "object_id": "7267e2ef26fe483a37eec206ff81128eedd327b6"
+          },
+          "tests/test_agent_context.py": {
+            "mode": "100644",
+            "object_id": "589502afa80f0880d0e51203565feec08c8fca21"
+          }
+        },
+        "manifest_sha256": "e0eb88754e113a92a9bdcf48da0ce0feb74bb1d07620e17d33a37c12a09d66da",
+        "state_sha256": "e916f8a82ae7594ddc32a0125dd60b68ae842fa5cb66b6f297d7e1fc1c26036d",
+        "handoff_sha256": "e4d0ce913019e8c6641e137b8cc47b5171aedf0c6676c2d324a3c3802db64ae5"
+      }
+    },
+    {
+      "id": "cp-c410173e-20261014T164733109181Z",
+      "created_at_utc": "2026-10-14T16:47:33Z",
+      "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
+      "workspace_git": {
+        "scope": "workspace",
+        "branch": "initial-idea",
+        "head": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+        "status_entries": [
+          "?? main.py",
+          "A  .agents/PLANS.md",
+          "A  .agents/evidence/G1-10-recovery-verification.md",
+          "A  .agents/evidence/G1-git-baseline-verification.md",
+          "A  .agents/evidence/G1-hardening-verification.md",
+          "A  .agents/evidence/G1-portability-consistency-verification.md",
+          "A  .agents/plans/G1-consistency-hardening.md",
+          "A  .agents/plans/M00-bootstrap.md",
+          "A  .agents/state/BLOCKERS.md",
+          "A  .agents/state/VERIFIED_FINDINGS.md",
+          "A  .agents/tasks/BACKLOG.yaml",
+          "A  .python-version",
+          "A  AGENTS.md",
+          "A  atari-videochess-rl-roadmap.html",
+          "A  docs/01-foundation/PROJECT_OVERVIEW.md",
+          "A  docs/01-foundation/REQUIREMENTS.md",
+          "A  docs/01-foundation/ROADMAP.md",
+          "A  docs/02-management/EXECUTION_PLAN.md",
+          "A  docs/02-management/RISK_REGISTER.md",
+          "A  docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md",
+          "A  docs/05-operations/SETUP.md",
+          "A  docs/06-quality/ACCEPTANCE_CRITERIA.md",
+          "A  docs/06-quality/TEST_STRATEGY.md",
+          "A  pyproject.toml",
+          "A  scripts/agent_checkpoint.py",
+          "A  scripts/agent_preflight.py",
+          "A  tests/test_agent_context.py",
+          "AM .agents/state/PROJECT_STATE.yaml",
+          "AM .agents/state/SESSION_HANDOFF.md",
+          "M  .gitignore"
+        ],
+        "status_sha256": "bc2141c41df4b189f0eb8744fe494b8b380b2ebcef8e868fe26e07b3b1fac3cd",
+        "repo_file_hashes": {
+          ".gitignore": "74815f194c8eb707e57483eebc2461e1f4936ae940519adf8c7a59d1708c5abb",
+          ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+          "AGENTS.md": "e48ba69158e94adc91346dbbead86cf01f7f3fbbfee69dd2c75172fe981c5d72",
+          "README.md": "b56bd7410a2c90c559ad5fd52a6a78065bee4d2d54856d6677af4b0200746dce",
+          "atari-videochess-rl-documentation-g1-finalization.zip": "e0715e62d96ccb537ca56edb8769ad9dee5a87a752841ee2f4e26afbf88092eb",
+          "atari-videochess-rl-documentation-g1.zip": "92b3b71e7ad9345ea1eb9a576dd7f3466b5110f9c3c82ca178e90259dd0d0cd2",
+          "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+          "main.py": "c101b2abfee28217d24a7c550eda37cffe548adfc9149244646199108361c0fe",
+          "pyproject.toml": "862241bf5bbf4b600235a9ebad643fb74b7b1d3734359da6cdee5d47f2007606",
+          ".agents/PLANS.md": "ed50b3ccc51cbe29123630c5069ab2d00f7428751ca67f1e64bd15558bd044d2",
+          ".agents/evidence/G1-10-recovery-verification.md": "39e05a96034d4eaa4f22f0dec72670afacbd9b48bcfcc41ed81f8a718d3a5f65",
+          ".agents/evidence/G1-git-baseline-verification.md": "13772b3438b30d440baac4caeeceb564017a5216ea9409d7b9412390d4b96f65",
+          ".agents/evidence/G1-hardening-verification.md": "0963f26840d2c393525fd10bba32f13e5ff3a51210a87d3d731b2ba96bd09380",
+          ".agents/evidence/G1-portability-consistency-verification.md": "53899c2a715cdfe465768619ffc1cc7475f60cdc55f0c2d443fd356089481198",
+          ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
+          ".agents/plans/M00-bootstrap.md": "cb9aa665f9cd15dacf694e1c2bad64ca02e3e9a6dc1152009e66c15868169561",
+          ".agents/state/BLOCKERS.md": "301af9e870486b9c6a05afd7dcf90c78aaa5c1b6a9d61b337566473074c46c56",
+          ".agents/state/SESSION_HANDOFF.md": "2c17cf2cfbc51bb029116d6ea967edf2936458fd6fa3044cd05a56e1aecd3340",
+          ".agents/state/VERIFIED_FINDINGS.md": "1fa810c0ecc6c3abf844b7f61ea220c4f24ab52243616591cb317dcbdd01699b",
+          ".agents/tasks/BACKLOG.yaml": "a0dad9de815247bb61d7e333d3802e14d585e44ae28ae5fc14e0badc65f3ba7e",
+          "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
+          "docs/01-foundation/REQUIREMENTS.md": "105564b561057261d4e5b706c8863ac689498a6328a679fc3af3619edcfbc400",
+          "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
+          "docs/02-management/EXECUTION_PLAN.md": "1076861827bba220428826470dc5b25504f6378e6b50e0be02edc550a63ac29e",
+          "docs/02-management/RISK_REGISTER.md": "2d3a3fef7062377c6479048992bae3e3ec0a9cc880a883bb1e57f24473c00ab8",
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
+          "docs/05-operations/SETUP.md": "dd73acc0283be82c4df85da29c04e7f8149e5f952ac7ac2c3011bdf470341c1b",
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": "67551f53343a1bdb72b9b3cc350108c1142058d9a98a98aaa2f28d7cb32ba927",
+          "docs/06-quality/TEST_STRATEGY.md": "7f45c2807a67a20c634be840497c9376a24429593f6e5f3e8bc36ac455cca98a",
+          "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
+          "scripts/agent_preflight.py": "c7e3f611f9e94235f5a55f89014d644e7dd7fc8d89f868f335b5fad01a984617",
+          "tests/test_agent_context.py": "54a09a17e2e8f07a35d11fd1e603821183f939d97335552c9660d756afa21e8c"
+        },
+        "unhashed_large_files": [],
+        "unreadable_files": [],
+        "artifact_dirs_requiring_manifest": [],
+        "excluded_directories": [
+          ".git",
+          "scripts/__pycache__",
+          "tests/__pycache__"
+        ],
+        "excluded_symlink_files": 0
+      },
+      "portable_git": {
+        "format_version": 1,
+        "tracked_manifest": {
+          ".agents/PLANS.md": {
+            "mode": "100644",
+            "object_id": "1c1b78d477af82837465daf21c1de62c32c07c84"
+          },
+          ".agents/evidence/G1-10-recovery-verification.md": {
+            "mode": "100644",
+            "object_id": "6ff27d51b9cf51803d8ca8c863066253ae6297bc"
+          },
+          ".agents/evidence/G1-git-baseline-verification.md": {
+            "mode": "100644",
+            "object_id": "c3c79107166243fe35ae2d8e9f270b8a46e0ffe9"
+          },
+          ".agents/evidence/G1-hardening-verification.md": {
+            "mode": "100644",
+            "object_id": "949549fa06ad46bc3076ac462e7ccba7cdc70fbf"
+          },
+          ".agents/evidence/G1-portability-consistency-verification.md": {
+            "mode": "100644",
+            "object_id": "0b913647dbab642204b81fec825013f9da70f167"
+          },
+          ".agents/plans/G1-consistency-hardening.md": {
+            "mode": "100644",
+            "object_id": "a371486eaf564cf62503c6a2de683888e09b3b9d"
+          },
+          ".agents/plans/M00-bootstrap.md": {
+            "mode": "100644",
+            "object_id": "45df5955381a9f4faad53329239433b0088fe69b"
+          },
+          ".agents/state/BLOCKERS.md": {
+            "mode": "100644",
+            "object_id": "ed81d04c6e105f100aa70b1b70d1044ae6d455b9"
+          },
+          ".agents/state/VERIFIED_FINDINGS.md": {
+            "mode": "100644",
+            "object_id": "fa136537032180dd1bb1b68ff6ff3fc94bddd954"
+          },
+          ".agents/tasks/BACKLOG.yaml": {
+            "mode": "100644",
+            "object_id": "96585253904fc0ee14e8197aba350fcd38e4af7e"
+          },
+          ".gitignore": {
+            "mode": "100644",
+            "object_id": "14017febe137a55df5749d47168ff8e5e1afe711"
+          },
+          ".python-version": {
+            "mode": "100644",
+            "object_id": "e4fba2183587225f216eeada4c78dfab6b2e65f5"
+          },
+          "AGENTS.md": {
+            "mode": "100644",
+            "object_id": "ab23ea5ff1db995b560b4463b886877bb073073c"
+          },
+          "README.md": {
+            "mode": "100644",
+            "object_id": "c64740f9ac205eaac873da341d5c9079bc4b09f4"
+          },
+          "atari-videochess-rl-roadmap.html": {
+            "mode": "100644",
+            "object_id": "78f34984b1f10c9921974a96c8648112876017fa"
+          },
+          "docs/01-foundation/PROJECT_OVERVIEW.md": {
+            "mode": "100644",
+            "object_id": "6131db7cb1ebe66ed6f903c2cde0dcec64ec1795"
+          },
+          "docs/01-foundation/REQUIREMENTS.md": {
+            "mode": "100644",
+            "object_id": "463968ecf67c405ac66580d2f83b8e5a6358d681"
+          },
+          "docs/01-foundation/ROADMAP.md": {
+            "mode": "100644",
+            "object_id": "3d6517b186feb24fb95702fffefc1a568266bf37"
+          },
+          "docs/02-management/EXECUTION_PLAN.md": {
+            "mode": "100644",
+            "object_id": "829dbffcbfdfbd02541a02b8011a170fa7f98205"
+          },
+          "docs/02-management/RISK_REGISTER.md": {
+            "mode": "100644",
+            "object_id": "489ef9a0ee129697b8cfccc064de96070ac04f55"
+          },
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
+            "mode": "100644",
+            "object_id": "97db1a054605b8aa3c94697a75f2ebf1d80d3e5e"
+          },
+          "docs/05-operations/SETUP.md": {
+            "mode": "100644",
+            "object_id": "947e0ca5a18ba2ada3feee53b93ceb7d99c341be"
+          },
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": {
+            "mode": "100644",
+            "object_id": "c6ddc279dae2db6b784ae95a6b84c13e218e4293"
+          },
+          "docs/06-quality/TEST_STRATEGY.md": {
+            "mode": "100644",
+            "object_id": "a8dfc10c1f19d0585c0d1b0246b9d3d33719b890"
+          },
+          "pyproject.toml": {
+            "mode": "100644",
+            "object_id": "4a5ba949f4f194d7206bbcdddca0eabfd35a0b9e"
+          },
+          "scripts/agent_checkpoint.py": {
+            "mode": "100644",
+            "object_id": "6f4f0ca28dbc837dce01ab788903c2e43a58b1d8"
+          },
+          "scripts/agent_preflight.py": {
+            "mode": "100644",
+            "object_id": "0465eb3e17ab805d8435b2b280219660142c187d"
+          },
+          "tests/test_agent_context.py": {
+            "mode": "100644",
+            "object_id": "4b9baa1ff94ec04ae3e5b405802d132b8d8da701"
+          }
+        },
+        "manifest_sha256": "c17f743e7dedf8ec3f781d1415cf7b09873413745d0cecb8ff0256dcf305b0dd",
+        "state_sha256": "54e52a90eed7995fc18e7fc1d86fecd213c031e0525d89239938316e27c2df11",
+        "handoff_sha256": "2c17cf2cfbc51bb029116d6ea967edf2936458fd6fa3044cd05a56e1aecd3340"
+      }
+    },
+    {
+      "id": "cp-c410173e-20261014T164847068490Z",
+      "created_at_utc": "2026-10-14T16:48:47Z",
+      "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
+      "workspace_git": {
+        "scope": "workspace",
+        "branch": "initial-idea",
+        "head": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+        "status_entries": [
+          "?? main.py",
+          "A  .agents/PLANS.md",
+          "A  .agents/evidence/G1-10-recovery-verification.md",
+          "A  .agents/evidence/G1-git-baseline-verification.md",
+          "A  .agents/evidence/G1-hardening-verification.md",
+          "A  .agents/evidence/G1-portability-consistency-verification.md",
+          "A  .agents/plans/G1-consistency-hardening.md",
+          "A  .agents/plans/M00-bootstrap.md",
+          "A  .agents/state/BLOCKERS.md",
+          "A  .agents/state/VERIFIED_FINDINGS.md",
+          "A  .agents/tasks/BACKLOG.yaml",
+          "A  .python-version",
+          "A  AGENTS.md",
+          "A  atari-videochess-rl-roadmap.html",
+          "A  docs/01-foundation/PROJECT_OVERVIEW.md",
+          "A  docs/01-foundation/REQUIREMENTS.md",
+          "A  docs/01-foundation/ROADMAP.md",
+          "A  docs/02-management/EXECUTION_PLAN.md",
+          "A  docs/02-management/RISK_REGISTER.md",
+          "A  docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md",
+          "A  docs/05-operations/SETUP.md",
+          "A  docs/06-quality/ACCEPTANCE_CRITERIA.md",
+          "A  docs/06-quality/TEST_STRATEGY.md",
+          "A  pyproject.toml",
+          "A  scripts/agent_checkpoint.py",
+          "A  scripts/agent_preflight.py",
+          "A  tests/test_agent_context.py",
+          "AM .agents/state/PROJECT_STATE.yaml",
+          "AM .agents/state/SESSION_HANDOFF.md",
+          "M  .gitignore"
+        ],
+        "status_sha256": "bc2141c41df4b189f0eb8744fe494b8b380b2ebcef8e868fe26e07b3b1fac3cd",
+        "repo_file_hashes": {
+          ".gitignore": "74815f194c8eb707e57483eebc2461e1f4936ae940519adf8c7a59d1708c5abb",
+          ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+          "AGENTS.md": "67b95433e69a38ed51aa24f1643288dae7535cf0f1c5e7c840e7707a47538ad4",
+          "README.md": "b56bd7410a2c90c559ad5fd52a6a78065bee4d2d54856d6677af4b0200746dce",
+          "atari-videochess-rl-documentation-g1-finalization.zip": "e0715e62d96ccb537ca56edb8769ad9dee5a87a752841ee2f4e26afbf88092eb",
+          "atari-videochess-rl-documentation-g1.zip": "92b3b71e7ad9345ea1eb9a576dd7f3466b5110f9c3c82ca178e90259dd0d0cd2",
+          "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+          "main.py": "c101b2abfee28217d24a7c550eda37cffe548adfc9149244646199108361c0fe",
+          "pyproject.toml": "862241bf5bbf4b600235a9ebad643fb74b7b1d3734359da6cdee5d47f2007606",
+          ".agents/PLANS.md": "ed50b3ccc51cbe29123630c5069ab2d00f7428751ca67f1e64bd15558bd044d2",
+          ".agents/evidence/G1-10-recovery-verification.md": "39e05a96034d4eaa4f22f0dec72670afacbd9b48bcfcc41ed81f8a718d3a5f65",
+          ".agents/evidence/G1-git-baseline-verification.md": "13772b3438b30d440baac4caeeceb564017a5216ea9409d7b9412390d4b96f65",
+          ".agents/evidence/G1-hardening-verification.md": "0963f26840d2c393525fd10bba32f13e5ff3a51210a87d3d731b2ba96bd09380",
+          ".agents/evidence/G1-portability-consistency-verification.md": "53899c2a715cdfe465768619ffc1cc7475f60cdc55f0c2d443fd356089481198",
+          ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
+          ".agents/plans/M00-bootstrap.md": "cb9aa665f9cd15dacf694e1c2bad64ca02e3e9a6dc1152009e66c15868169561",
+          ".agents/state/BLOCKERS.md": "301af9e870486b9c6a05afd7dcf90c78aaa5c1b6a9d61b337566473074c46c56",
+          ".agents/state/SESSION_HANDOFF.md": "19dc352fb860a494c0ddb3c69a7d926026a3ba140d7c0b0a9362017142a4e874",
+          ".agents/state/VERIFIED_FINDINGS.md": "1fa810c0ecc6c3abf844b7f61ea220c4f24ab52243616591cb317dcbdd01699b",
+          ".agents/tasks/BACKLOG.yaml": "a0dad9de815247bb61d7e333d3802e14d585e44ae28ae5fc14e0badc65f3ba7e",
+          "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
+          "docs/01-foundation/REQUIREMENTS.md": "105564b561057261d4e5b706c8863ac689498a6328a679fc3af3619edcfbc400",
+          "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
+          "docs/02-management/EXECUTION_PLAN.md": "1076861827bba220428826470dc5b25504f6378e6b50e0be02edc550a63ac29e",
+          "docs/02-management/RISK_REGISTER.md": "2d3a3fef7062377c6479048992bae3e3ec0a9cc880a883bb1e57f24473c00ab8",
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
+          "docs/05-operations/SETUP.md": "dd73acc0283be82c4df85da29c04e7f8149e5f952ac7ac2c3011bdf470341c1b",
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": "395741bc505bbc0c0dd3fcb63187f198303e538c064da32fc58c9389e93373a5",
+          "docs/06-quality/TEST_STRATEGY.md": "a83cc782f012d63b9f6efcf012ddf6f0d403bc2c74ab3bf09950b9549c0c47f4",
+          "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
+          "scripts/agent_preflight.py": "197cb900852ffd988a68ba97df758c5de6357a1de70af41176d1bd3ddd7ff326",
+          "tests/test_agent_context.py": "54a09a17e2e8f07a35d11fd1e603821183f939d97335552c9660d756afa21e8c"
+        },
+        "unhashed_large_files": [],
+        "unreadable_files": [],
+        "artifact_dirs_requiring_manifest": [],
+        "excluded_directories": [
+          ".git",
+          "scripts/__pycache__",
+          "tests/__pycache__"
+        ],
+        "excluded_symlink_files": 0
+      },
+      "portable_git": {
+        "format_version": 1,
+        "tracked_manifest": {
+          ".agents/PLANS.md": {
+            "mode": "100644",
+            "object_id": "1c1b78d477af82837465daf21c1de62c32c07c84"
+          },
+          ".agents/evidence/G1-10-recovery-verification.md": {
+            "mode": "100644",
+            "object_id": "6ff27d51b9cf51803d8ca8c863066253ae6297bc"
+          },
+          ".agents/evidence/G1-git-baseline-verification.md": {
+            "mode": "100644",
+            "object_id": "c3c79107166243fe35ae2d8e9f270b8a46e0ffe9"
+          },
+          ".agents/evidence/G1-hardening-verification.md": {
+            "mode": "100644",
+            "object_id": "949549fa06ad46bc3076ac462e7ccba7cdc70fbf"
+          },
+          ".agents/evidence/G1-portability-consistency-verification.md": {
+            "mode": "100644",
+            "object_id": "0b913647dbab642204b81fec825013f9da70f167"
+          },
+          ".agents/plans/G1-consistency-hardening.md": {
+            "mode": "100644",
+            "object_id": "a371486eaf564cf62503c6a2de683888e09b3b9d"
+          },
+          ".agents/plans/M00-bootstrap.md": {
+            "mode": "100644",
+            "object_id": "45df5955381a9f4faad53329239433b0088fe69b"
+          },
+          ".agents/state/BLOCKERS.md": {
+            "mode": "100644",
+            "object_id": "ed81d04c6e105f100aa70b1b70d1044ae6d455b9"
+          },
+          ".agents/state/VERIFIED_FINDINGS.md": {
+            "mode": "100644",
+            "object_id": "fa136537032180dd1bb1b68ff6ff3fc94bddd954"
+          },
+          ".agents/tasks/BACKLOG.yaml": {
+            "mode": "100644",
+            "object_id": "96585253904fc0ee14e8197aba350fcd38e4af7e"
+          },
+          ".gitignore": {
+            "mode": "100644",
+            "object_id": "14017febe137a55df5749d47168ff8e5e1afe711"
+          },
+          ".python-version": {
+            "mode": "100644",
+            "object_id": "e4fba2183587225f216eeada4c78dfab6b2e65f5"
+          },
+          "AGENTS.md": {
+            "mode": "100644",
+            "object_id": "35e1ff5f0eac819ec306a3640796f8a3e32ed542"
+          },
+          "README.md": {
+            "mode": "100644",
+            "object_id": "c64740f9ac205eaac873da341d5c9079bc4b09f4"
+          },
+          "atari-videochess-rl-roadmap.html": {
+            "mode": "100644",
+            "object_id": "78f34984b1f10c9921974a96c8648112876017fa"
+          },
+          "docs/01-foundation/PROJECT_OVERVIEW.md": {
+            "mode": "100644",
+            "object_id": "6131db7cb1ebe66ed6f903c2cde0dcec64ec1795"
+          },
+          "docs/01-foundation/REQUIREMENTS.md": {
+            "mode": "100644",
+            "object_id": "463968ecf67c405ac66580d2f83b8e5a6358d681"
+          },
+          "docs/01-foundation/ROADMAP.md": {
+            "mode": "100644",
+            "object_id": "3d6517b186feb24fb95702fffefc1a568266bf37"
+          },
+          "docs/02-management/EXECUTION_PLAN.md": {
+            "mode": "100644",
+            "object_id": "829dbffcbfdfbd02541a02b8011a170fa7f98205"
+          },
+          "docs/02-management/RISK_REGISTER.md": {
+            "mode": "100644",
+            "object_id": "489ef9a0ee129697b8cfccc064de96070ac04f55"
+          },
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
+            "mode": "100644",
+            "object_id": "97db1a054605b8aa3c94697a75f2ebf1d80d3e5e"
+          },
+          "docs/05-operations/SETUP.md": {
+            "mode": "100644",
+            "object_id": "947e0ca5a18ba2ada3feee53b93ceb7d99c341be"
+          },
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": {
+            "mode": "100644",
+            "object_id": "47e4cb03e6067424f07f6fa2c543869a5e96c3f2"
+          },
+          "docs/06-quality/TEST_STRATEGY.md": {
+            "mode": "100644",
+            "object_id": "3dda3ecb97e09d0048c3952b7cf7aa40d0ac2a8f"
+          },
+          "pyproject.toml": {
+            "mode": "100644",
+            "object_id": "4a5ba949f4f194d7206bbcdddca0eabfd35a0b9e"
+          },
+          "scripts/agent_checkpoint.py": {
+            "mode": "100644",
+            "object_id": "6f4f0ca28dbc837dce01ab788903c2e43a58b1d8"
+          },
+          "scripts/agent_preflight.py": {
+            "mode": "100644",
+            "object_id": "2cbda2b14cded1abdc5a00d194c24a7095150283"
+          },
+          "tests/test_agent_context.py": {
+            "mode": "100644",
+            "object_id": "4b9baa1ff94ec04ae3e5b405802d132b8d8da701"
+          }
+        },
+        "manifest_sha256": "ae0fc7ab36e23083e852fe3eef5a60cac6de6bd4ba2f18cccc82cfebc0250326",
+        "state_sha256": "2a06879d531986aaeccedcf8b5bd9a753c5a9228e27464bf9f305a33421e2739",
+        "handoff_sha256": "19dc352fb860a494c0ddb3c69a7d926026a3ba140d7c0b0a9362017142a4e874"
+      }
+    },
+    {
+      "id": "cp-c410173e-20261014T164930002566Z",
+      "created_at_utc": "2026-10-14T16:49:30Z",
+      "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
+      "workspace_git": {
+        "scope": "workspace",
+        "branch": "initial-idea",
+        "head": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+        "status_entries": [
+          "?? main.py",
+          "A  .agents/PLANS.md",
+          "A  .agents/evidence/G1-10-recovery-verification.md",
+          "A  .agents/evidence/G1-git-baseline-verification.md",
+          "A  .agents/evidence/G1-hardening-verification.md",
+          "A  .agents/evidence/G1-portability-consistency-verification.md",
+          "A  .agents/plans/G1-consistency-hardening.md",
+          "A  .agents/plans/M00-bootstrap.md",
+          "A  .agents/state/BLOCKERS.md",
+          "A  .agents/state/VERIFIED_FINDINGS.md",
+          "A  .agents/tasks/BACKLOG.yaml",
+          "A  .python-version",
+          "A  AGENTS.md",
+          "A  atari-videochess-rl-roadmap.html",
+          "A  docs/01-foundation/PROJECT_OVERVIEW.md",
+          "A  docs/01-foundation/REQUIREMENTS.md",
+          "A  docs/01-foundation/ROADMAP.md",
+          "A  docs/02-management/EXECUTION_PLAN.md",
+          "A  docs/02-management/RISK_REGISTER.md",
+          "A  docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md",
+          "A  docs/05-operations/SETUP.md",
+          "A  docs/06-quality/ACCEPTANCE_CRITERIA.md",
+          "A  docs/06-quality/TEST_STRATEGY.md",
+          "A  pyproject.toml",
+          "A  scripts/agent_checkpoint.py",
+          "A  scripts/agent_preflight.py",
+          "A  tests/test_agent_context.py",
+          "AM .agents/state/PROJECT_STATE.yaml",
+          "AM .agents/state/SESSION_HANDOFF.md",
+          "M  .gitignore"
+        ],
+        "status_sha256": "bc2141c41df4b189f0eb8744fe494b8b380b2ebcef8e868fe26e07b3b1fac3cd",
+        "repo_file_hashes": {
+          ".gitignore": "74815f194c8eb707e57483eebc2461e1f4936ae940519adf8c7a59d1708c5abb",
+          ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+          "AGENTS.md": "67b95433e69a38ed51aa24f1643288dae7535cf0f1c5e7c840e7707a47538ad4",
+          "README.md": "b56bd7410a2c90c559ad5fd52a6a78065bee4d2d54856d6677af4b0200746dce",
+          "atari-videochess-rl-documentation-g1-finalization.zip": "e0715e62d96ccb537ca56edb8769ad9dee5a87a752841ee2f4e26afbf88092eb",
+          "atari-videochess-rl-documentation-g1.zip": "92b3b71e7ad9345ea1eb9a576dd7f3466b5110f9c3c82ca178e90259dd0d0cd2",
+          "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+          "main.py": "c101b2abfee28217d24a7c550eda37cffe548adfc9149244646199108361c0fe",
+          "pyproject.toml": "862241bf5bbf4b600235a9ebad643fb74b7b1d3734359da6cdee5d47f2007606",
+          ".agents/PLANS.md": "ed50b3ccc51cbe29123630c5069ab2d00f7428751ca67f1e64bd15558bd044d2",
+          ".agents/evidence/G1-10-recovery-verification.md": "39e05a96034d4eaa4f22f0dec72670afacbd9b48bcfcc41ed81f8a718d3a5f65",
+          ".agents/evidence/G1-git-baseline-verification.md": "13772b3438b30d440baac4caeeceb564017a5216ea9409d7b9412390d4b96f65",
+          ".agents/evidence/G1-hardening-verification.md": "0963f26840d2c393525fd10bba32f13e5ff3a51210a87d3d731b2ba96bd09380",
+          ".agents/evidence/G1-portability-consistency-verification.md": "53899c2a715cdfe465768619ffc1cc7475f60cdc55f0c2d443fd356089481198",
+          ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
+          ".agents/plans/M00-bootstrap.md": "cb9aa665f9cd15dacf694e1c2bad64ca02e3e9a6dc1152009e66c15868169561",
+          ".agents/state/BLOCKERS.md": "301af9e870486b9c6a05afd7dcf90c78aaa5c1b6a9d61b337566473074c46c56",
+          ".agents/state/SESSION_HANDOFF.md": "25512de439231a8b2f12d36e09ce029801641e32a9edfad36b65e3c58a6e3d0e",
+          ".agents/state/VERIFIED_FINDINGS.md": "1fa810c0ecc6c3abf844b7f61ea220c4f24ab52243616591cb317dcbdd01699b",
+          ".agents/tasks/BACKLOG.yaml": "a0dad9de815247bb61d7e333d3802e14d585e44ae28ae5fc14e0badc65f3ba7e",
+          "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
+          "docs/01-foundation/REQUIREMENTS.md": "105564b561057261d4e5b706c8863ac689498a6328a679fc3af3619edcfbc400",
+          "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
+          "docs/02-management/EXECUTION_PLAN.md": "1076861827bba220428826470dc5b25504f6378e6b50e0be02edc550a63ac29e",
+          "docs/02-management/RISK_REGISTER.md": "2d3a3fef7062377c6479048992bae3e3ec0a9cc880a883bb1e57f24473c00ab8",
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
+          "docs/05-operations/SETUP.md": "dd73acc0283be82c4df85da29c04e7f8149e5f952ac7ac2c3011bdf470341c1b",
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": "395741bc505bbc0c0dd3fcb63187f198303e538c064da32fc58c9389e93373a5",
+          "docs/06-quality/TEST_STRATEGY.md": "a83cc782f012d63b9f6efcf012ddf6f0d403bc2c74ab3bf09950b9549c0c47f4",
+          "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
+          "scripts/agent_preflight.py": "7f24cf19f659603f2d96907eae790f1df07ff8212cfc321db2f4c47e641f026e",
+          "tests/test_agent_context.py": "b7bf2ad8acd9c9b2f122b18c6404c172825fe92153c12a145b48dda25461e861"
+        },
+        "unhashed_large_files": [],
+        "unreadable_files": [],
+        "artifact_dirs_requiring_manifest": [],
+        "excluded_directories": [
+          ".git",
+          "scripts/__pycache__",
+          "tests/__pycache__"
+        ],
+        "excluded_symlink_files": 0
+      },
+      "portable_git": {
+        "format_version": 1,
+        "tracked_manifest": {
+          ".agents/PLANS.md": {
+            "mode": "100644",
+            "object_id": "1c1b78d477af82837465daf21c1de62c32c07c84"
+          },
+          ".agents/evidence/G1-10-recovery-verification.md": {
+            "mode": "100644",
+            "object_id": "6ff27d51b9cf51803d8ca8c863066253ae6297bc"
+          },
+          ".agents/evidence/G1-git-baseline-verification.md": {
+            "mode": "100644",
+            "object_id": "c3c79107166243fe35ae2d8e9f270b8a46e0ffe9"
+          },
+          ".agents/evidence/G1-hardening-verification.md": {
+            "mode": "100644",
+            "object_id": "949549fa06ad46bc3076ac462e7ccba7cdc70fbf"
+          },
+          ".agents/evidence/G1-portability-consistency-verification.md": {
+            "mode": "100644",
+            "object_id": "0b913647dbab642204b81fec825013f9da70f167"
+          },
+          ".agents/plans/G1-consistency-hardening.md": {
+            "mode": "100644",
+            "object_id": "a371486eaf564cf62503c6a2de683888e09b3b9d"
+          },
+          ".agents/plans/M00-bootstrap.md": {
+            "mode": "100644",
+            "object_id": "45df5955381a9f4faad53329239433b0088fe69b"
+          },
+          ".agents/state/BLOCKERS.md": {
+            "mode": "100644",
+            "object_id": "ed81d04c6e105f100aa70b1b70d1044ae6d455b9"
+          },
+          ".agents/state/VERIFIED_FINDINGS.md": {
+            "mode": "100644",
+            "object_id": "fa136537032180dd1bb1b68ff6ff3fc94bddd954"
+          },
+          ".agents/tasks/BACKLOG.yaml": {
+            "mode": "100644",
+            "object_id": "96585253904fc0ee14e8197aba350fcd38e4af7e"
+          },
+          ".gitignore": {
+            "mode": "100644",
+            "object_id": "14017febe137a55df5749d47168ff8e5e1afe711"
+          },
+          ".python-version": {
+            "mode": "100644",
+            "object_id": "e4fba2183587225f216eeada4c78dfab6b2e65f5"
+          },
+          "AGENTS.md": {
+            "mode": "100644",
+            "object_id": "35e1ff5f0eac819ec306a3640796f8a3e32ed542"
+          },
+          "README.md": {
+            "mode": "100644",
+            "object_id": "c64740f9ac205eaac873da341d5c9079bc4b09f4"
+          },
+          "atari-videochess-rl-roadmap.html": {
+            "mode": "100644",
+            "object_id": "78f34984b1f10c9921974a96c8648112876017fa"
+          },
+          "docs/01-foundation/PROJECT_OVERVIEW.md": {
+            "mode": "100644",
+            "object_id": "6131db7cb1ebe66ed6f903c2cde0dcec64ec1795"
+          },
+          "docs/01-foundation/REQUIREMENTS.md": {
+            "mode": "100644",
+            "object_id": "463968ecf67c405ac66580d2f83b8e5a6358d681"
+          },
+          "docs/01-foundation/ROADMAP.md": {
+            "mode": "100644",
+            "object_id": "3d6517b186feb24fb95702fffefc1a568266bf37"
+          },
+          "docs/02-management/EXECUTION_PLAN.md": {
+            "mode": "100644",
+            "object_id": "829dbffcbfdfbd02541a02b8011a170fa7f98205"
+          },
+          "docs/02-management/RISK_REGISTER.md": {
+            "mode": "100644",
+            "object_id": "489ef9a0ee129697b8cfccc064de96070ac04f55"
+          },
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
+            "mode": "100644",
+            "object_id": "97db1a054605b8aa3c94697a75f2ebf1d80d3e5e"
+          },
+          "docs/05-operations/SETUP.md": {
+            "mode": "100644",
+            "object_id": "947e0ca5a18ba2ada3feee53b93ceb7d99c341be"
+          },
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": {
+            "mode": "100644",
+            "object_id": "47e4cb03e6067424f07f6fa2c543869a5e96c3f2"
+          },
+          "docs/06-quality/TEST_STRATEGY.md": {
+            "mode": "100644",
+            "object_id": "3dda3ecb97e09d0048c3952b7cf7aa40d0ac2a8f"
+          },
+          "pyproject.toml": {
+            "mode": "100644",
+            "object_id": "4a5ba949f4f194d7206bbcdddca0eabfd35a0b9e"
+          },
+          "scripts/agent_checkpoint.py": {
+            "mode": "100644",
+            "object_id": "6f4f0ca28dbc837dce01ab788903c2e43a58b1d8"
+          },
+          "scripts/agent_preflight.py": {
+            "mode": "100644",
+            "object_id": "322932885074db6e8dc5a098a90dd96de393e760"
+          },
+          "tests/test_agent_context.py": {
+            "mode": "100644",
+            "object_id": "df7ef1aeaa7719e073a7b8f065ac4b9036f29e01"
+          }
+        },
+        "manifest_sha256": "d9dae39d3d29905acc0e5852b6f041f252245515168f461a7befbfd13c1b9bd2",
+        "state_sha256": "fb2a883c63d36c2fbe2cfe201c3d34364df3ba33f71af6757e393747a8bf96d3",
+        "handoff_sha256": "25512de439231a8b2f12d36e09ce029801641e32a9edfad36b65e3c58a6e3d0e"
+      }
+    },
+    {
+      "id": "cp-c410173e-20261014T165001139792Z",
+      "created_at_utc": "2026-10-14T16:50:01Z",
+      "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
+      "workspace_git": {
+        "scope": "workspace",
+        "branch": "initial-idea",
+        "head": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+        "status_entries": [
+          "?? main.py",
+          "A  .agents/PLANS.md",
+          "A  .agents/evidence/G1-10-recovery-verification.md",
+          "A  .agents/evidence/G1-git-baseline-verification.md",
+          "A  .agents/evidence/G1-hardening-verification.md",
+          "A  .agents/evidence/G1-portability-consistency-verification.md",
+          "A  .agents/plans/G1-consistency-hardening.md",
+          "A  .agents/plans/M00-bootstrap.md",
+          "A  .agents/state/BLOCKERS.md",
+          "A  .agents/state/VERIFIED_FINDINGS.md",
+          "A  .agents/tasks/BACKLOG.yaml",
+          "A  .python-version",
+          "A  AGENTS.md",
+          "A  atari-videochess-rl-roadmap.html",
+          "A  docs/01-foundation/PROJECT_OVERVIEW.md",
+          "A  docs/01-foundation/REQUIREMENTS.md",
+          "A  docs/01-foundation/ROADMAP.md",
+          "A  docs/02-management/EXECUTION_PLAN.md",
+          "A  docs/02-management/RISK_REGISTER.md",
+          "A  docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md",
+          "A  docs/05-operations/SETUP.md",
+          "A  docs/06-quality/ACCEPTANCE_CRITERIA.md",
+          "A  docs/06-quality/TEST_STRATEGY.md",
+          "A  pyproject.toml",
+          "A  scripts/agent_checkpoint.py",
+          "A  scripts/agent_preflight.py",
+          "A  tests/test_agent_context.py",
+          "AM .agents/state/PROJECT_STATE.yaml",
+          "AM .agents/state/SESSION_HANDOFF.md",
+          "M  .gitignore"
+        ],
+        "status_sha256": "bc2141c41df4b189f0eb8744fe494b8b380b2ebcef8e868fe26e07b3b1fac3cd",
+        "repo_file_hashes": {
+          ".gitignore": "74815f194c8eb707e57483eebc2461e1f4936ae940519adf8c7a59d1708c5abb",
+          ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+          "AGENTS.md": "67b95433e69a38ed51aa24f1643288dae7535cf0f1c5e7c840e7707a47538ad4",
+          "README.md": "b56bd7410a2c90c559ad5fd52a6a78065bee4d2d54856d6677af4b0200746dce",
+          "atari-videochess-rl-documentation-g1-finalization.zip": "e0715e62d96ccb537ca56edb8769ad9dee5a87a752841ee2f4e26afbf88092eb",
+          "atari-videochess-rl-documentation-g1.zip": "92b3b71e7ad9345ea1eb9a576dd7f3466b5110f9c3c82ca178e90259dd0d0cd2",
+          "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+          "main.py": "c101b2abfee28217d24a7c550eda37cffe548adfc9149244646199108361c0fe",
+          "pyproject.toml": "862241bf5bbf4b600235a9ebad643fb74b7b1d3734359da6cdee5d47f2007606",
+          ".agents/PLANS.md": "ed50b3ccc51cbe29123630c5069ab2d00f7428751ca67f1e64bd15558bd044d2",
+          ".agents/evidence/G1-10-recovery-verification.md": "39e05a96034d4eaa4f22f0dec72670afacbd9b48bcfcc41ed81f8a718d3a5f65",
+          ".agents/evidence/G1-git-baseline-verification.md": "13772b3438b30d440baac4caeeceb564017a5216ea9409d7b9412390d4b96f65",
+          ".agents/evidence/G1-hardening-verification.md": "0963f26840d2c393525fd10bba32f13e5ff3a51210a87d3d731b2ba96bd09380",
+          ".agents/evidence/G1-portability-consistency-verification.md": "53899c2a715cdfe465768619ffc1cc7475f60cdc55f0c2d443fd356089481198",
+          ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
+          ".agents/plans/M00-bootstrap.md": "cb9aa665f9cd15dacf694e1c2bad64ca02e3e9a6dc1152009e66c15868169561",
+          ".agents/state/BLOCKERS.md": "301af9e870486b9c6a05afd7dcf90c78aaa5c1b6a9d61b337566473074c46c56",
+          ".agents/state/SESSION_HANDOFF.md": "6a599086b6f769731b183c1dd21617dbdb3f916bdeb0a7d6d8de2d6b959f0708",
+          ".agents/state/VERIFIED_FINDINGS.md": "1fa810c0ecc6c3abf844b7f61ea220c4f24ab52243616591cb317dcbdd01699b",
+          ".agents/tasks/BACKLOG.yaml": "a0dad9de815247bb61d7e333d3802e14d585e44ae28ae5fc14e0badc65f3ba7e",
+          "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
+          "docs/01-foundation/REQUIREMENTS.md": "105564b561057261d4e5b706c8863ac689498a6328a679fc3af3619edcfbc400",
+          "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
+          "docs/02-management/EXECUTION_PLAN.md": "1076861827bba220428826470dc5b25504f6378e6b50e0be02edc550a63ac29e",
+          "docs/02-management/RISK_REGISTER.md": "2d3a3fef7062377c6479048992bae3e3ec0a9cc880a883bb1e57f24473c00ab8",
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
+          "docs/05-operations/SETUP.md": "dd73acc0283be82c4df85da29c04e7f8149e5f952ac7ac2c3011bdf470341c1b",
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": "395741bc505bbc0c0dd3fcb63187f198303e538c064da32fc58c9389e93373a5",
+          "docs/06-quality/TEST_STRATEGY.md": "a83cc782f012d63b9f6efcf012ddf6f0d403bc2c74ab3bf09950b9549c0c47f4",
+          "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
+          "scripts/agent_preflight.py": "7f24cf19f659603f2d96907eae790f1df07ff8212cfc321db2f4c47e641f026e",
+          "tests/test_agent_context.py": "b3856f2caa1df25af3a15d2d91af655af8301b760b881c3b64520d9f7270366f"
+        },
+        "unhashed_large_files": [],
+        "unreadable_files": [],
+        "artifact_dirs_requiring_manifest": [],
+        "excluded_directories": [
+          ".git",
+          "scripts/__pycache__",
+          "tests/__pycache__"
+        ],
+        "excluded_symlink_files": 0
+      },
+      "portable_git": {
+        "format_version": 1,
+        "tracked_manifest": {
+          ".agents/PLANS.md": {
+            "mode": "100644",
+            "object_id": "1c1b78d477af82837465daf21c1de62c32c07c84"
+          },
+          ".agents/evidence/G1-10-recovery-verification.md": {
+            "mode": "100644",
+            "object_id": "6ff27d51b9cf51803d8ca8c863066253ae6297bc"
+          },
+          ".agents/evidence/G1-git-baseline-verification.md": {
+            "mode": "100644",
+            "object_id": "c3c79107166243fe35ae2d8e9f270b8a46e0ffe9"
+          },
+          ".agents/evidence/G1-hardening-verification.md": {
+            "mode": "100644",
+            "object_id": "949549fa06ad46bc3076ac462e7ccba7cdc70fbf"
+          },
+          ".agents/evidence/G1-portability-consistency-verification.md": {
+            "mode": "100644",
+            "object_id": "0b913647dbab642204b81fec825013f9da70f167"
+          },
+          ".agents/plans/G1-consistency-hardening.md": {
+            "mode": "100644",
+            "object_id": "a371486eaf564cf62503c6a2de683888e09b3b9d"
+          },
+          ".agents/plans/M00-bootstrap.md": {
+            "mode": "100644",
+            "object_id": "45df5955381a9f4faad53329239433b0088fe69b"
+          },
+          ".agents/state/BLOCKERS.md": {
+            "mode": "100644",
+            "object_id": "ed81d04c6e105f100aa70b1b70d1044ae6d455b9"
+          },
+          ".agents/state/VERIFIED_FINDINGS.md": {
+            "mode": "100644",
+            "object_id": "fa136537032180dd1bb1b68ff6ff3fc94bddd954"
+          },
+          ".agents/tasks/BACKLOG.yaml": {
+            "mode": "100644",
+            "object_id": "96585253904fc0ee14e8197aba350fcd38e4af7e"
+          },
+          ".gitignore": {
+            "mode": "100644",
+            "object_id": "14017febe137a55df5749d47168ff8e5e1afe711"
+          },
+          ".python-version": {
+            "mode": "100644",
+            "object_id": "e4fba2183587225f216eeada4c78dfab6b2e65f5"
+          },
+          "AGENTS.md": {
+            "mode": "100644",
+            "object_id": "35e1ff5f0eac819ec306a3640796f8a3e32ed542"
+          },
+          "README.md": {
+            "mode": "100644",
+            "object_id": "c64740f9ac205eaac873da341d5c9079bc4b09f4"
+          },
+          "atari-videochess-rl-roadmap.html": {
+            "mode": "100644",
+            "object_id": "78f34984b1f10c9921974a96c8648112876017fa"
+          },
+          "docs/01-foundation/PROJECT_OVERVIEW.md": {
+            "mode": "100644",
+            "object_id": "6131db7cb1ebe66ed6f903c2cde0dcec64ec1795"
+          },
+          "docs/01-foundation/REQUIREMENTS.md": {
+            "mode": "100644",
+            "object_id": "463968ecf67c405ac66580d2f83b8e5a6358d681"
+          },
+          "docs/01-foundation/ROADMAP.md": {
+            "mode": "100644",
+            "object_id": "3d6517b186feb24fb95702fffefc1a568266bf37"
+          },
+          "docs/02-management/EXECUTION_PLAN.md": {
+            "mode": "100644",
+            "object_id": "829dbffcbfdfbd02541a02b8011a170fa7f98205"
+          },
+          "docs/02-management/RISK_REGISTER.md": {
+            "mode": "100644",
+            "object_id": "489ef9a0ee129697b8cfccc064de96070ac04f55"
+          },
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
+            "mode": "100644",
+            "object_id": "97db1a054605b8aa3c94697a75f2ebf1d80d3e5e"
+          },
+          "docs/05-operations/SETUP.md": {
+            "mode": "100644",
+            "object_id": "947e0ca5a18ba2ada3feee53b93ceb7d99c341be"
+          },
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": {
+            "mode": "100644",
+            "object_id": "47e4cb03e6067424f07f6fa2c543869a5e96c3f2"
+          },
+          "docs/06-quality/TEST_STRATEGY.md": {
+            "mode": "100644",
+            "object_id": "3dda3ecb97e09d0048c3952b7cf7aa40d0ac2a8f"
+          },
+          "pyproject.toml": {
+            "mode": "100644",
+            "object_id": "4a5ba949f4f194d7206bbcdddca0eabfd35a0b9e"
+          },
+          "scripts/agent_checkpoint.py": {
+            "mode": "100644",
+            "object_id": "6f4f0ca28dbc837dce01ab788903c2e43a58b1d8"
+          },
+          "scripts/agent_preflight.py": {
+            "mode": "100644",
+            "object_id": "322932885074db6e8dc5a098a90dd96de393e760"
+          },
+          "tests/test_agent_context.py": {
+            "mode": "100644",
+            "object_id": "f634e7830e8aba96f79f7be6c8c5d60e698febaf"
+          }
+        },
+        "manifest_sha256": "732ac898ccee03c8c467e72175968355ca8837568c21692195d10cb7e88f76fa",
+        "state_sha256": "cafa7d8a21eb507aa6745f54ced91bda2053494ff559b98be83ea23784cfdfde",
+        "handoff_sha256": "6a599086b6f769731b183c1dd21617dbdb3f916bdeb0a7d6d8de2d6b959f0708"
+      }
+    },
+    {
+      "id": "cp-c410173e-20261014T165123322710Z",
+      "created_at_utc": "2026-10-14T16:51:23Z",
+      "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
+      "workspace_git": {
+        "scope": "workspace",
+        "branch": "initial-idea",
+        "head": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+        "status_entries": [
+          "?? main.py",
+          "A  .agents/PLANS.md",
+          "A  .agents/evidence/G1-10-recovery-verification.md",
+          "A  .agents/evidence/G1-git-baseline-verification.md",
+          "A  .agents/evidence/G1-hardening-verification.md",
+          "A  .agents/evidence/G1-portability-consistency-verification.md",
+          "A  .agents/plans/G1-consistency-hardening.md",
+          "A  .agents/plans/M00-bootstrap.md",
+          "A  .agents/state/BLOCKERS.md",
+          "A  .agents/state/VERIFIED_FINDINGS.md",
+          "A  .agents/tasks/BACKLOG.yaml",
+          "A  .python-version",
+          "A  AGENTS.md",
+          "A  atari-videochess-rl-roadmap.html",
+          "A  docs/01-foundation/PROJECT_OVERVIEW.md",
+          "A  docs/01-foundation/REQUIREMENTS.md",
+          "A  docs/01-foundation/ROADMAP.md",
+          "A  docs/02-management/EXECUTION_PLAN.md",
+          "A  docs/02-management/RISK_REGISTER.md",
+          "A  docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md",
+          "A  docs/05-operations/SETUP.md",
+          "A  docs/06-quality/ACCEPTANCE_CRITERIA.md",
+          "A  docs/06-quality/TEST_STRATEGY.md",
+          "A  pyproject.toml",
+          "A  scripts/agent_checkpoint.py",
+          "A  scripts/agent_preflight.py",
+          "A  tests/test_agent_context.py",
+          "AM .agents/state/PROJECT_STATE.yaml",
+          "AM .agents/state/SESSION_HANDOFF.md",
+          "M  .gitignore"
+        ],
+        "status_sha256": "bc2141c41df4b189f0eb8744fe494b8b380b2ebcef8e868fe26e07b3b1fac3cd",
+        "repo_file_hashes": {
+          ".gitignore": "74815f194c8eb707e57483eebc2461e1f4936ae940519adf8c7a59d1708c5abb",
+          ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+          "AGENTS.md": "67b95433e69a38ed51aa24f1643288dae7535cf0f1c5e7c840e7707a47538ad4",
+          "README.md": "b56bd7410a2c90c559ad5fd52a6a78065bee4d2d54856d6677af4b0200746dce",
+          "atari-videochess-rl-documentation-g1-finalization.zip": "e0715e62d96ccb537ca56edb8769ad9dee5a87a752841ee2f4e26afbf88092eb",
+          "atari-videochess-rl-documentation-g1.zip": "92b3b71e7ad9345ea1eb9a576dd7f3466b5110f9c3c82ca178e90259dd0d0cd2",
+          "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+          "main.py": "c101b2abfee28217d24a7c550eda37cffe548adfc9149244646199108361c0fe",
+          "pyproject.toml": "862241bf5bbf4b600235a9ebad643fb74b7b1d3734359da6cdee5d47f2007606",
+          ".agents/PLANS.md": "ed50b3ccc51cbe29123630c5069ab2d00f7428751ca67f1e64bd15558bd044d2",
+          ".agents/evidence/G1-10-recovery-verification.md": "39e05a96034d4eaa4f22f0dec72670afacbd9b48bcfcc41ed81f8a718d3a5f65",
+          ".agents/evidence/G1-git-baseline-verification.md": "13772b3438b30d440baac4caeeceb564017a5216ea9409d7b9412390d4b96f65",
+          ".agents/evidence/G1-hardening-verification.md": "0963f26840d2c393525fd10bba32f13e5ff3a51210a87d3d731b2ba96bd09380",
+          ".agents/evidence/G1-portability-consistency-verification.md": "53899c2a715cdfe465768619ffc1cc7475f60cdc55f0c2d443fd356089481198",
+          ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
+          ".agents/plans/M00-bootstrap.md": "cb9aa665f9cd15dacf694e1c2bad64ca02e3e9a6dc1152009e66c15868169561",
+          ".agents/state/BLOCKERS.md": "301af9e870486b9c6a05afd7dcf90c78aaa5c1b6a9d61b337566473074c46c56",
+          ".agents/state/SESSION_HANDOFF.md": "6cf683180ba2f3c375c84f5dc6809f434d8fe1a9db72bd6a1d52903cc9f08127",
+          ".agents/state/VERIFIED_FINDINGS.md": "8c94c5fe195a11febebee463f71b636bf223635dfab988baacd723c3e426430e",
+          ".agents/tasks/BACKLOG.yaml": "a0dad9de815247bb61d7e333d3802e14d585e44ae28ae5fc14e0badc65f3ba7e",
+          "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
+          "docs/01-foundation/REQUIREMENTS.md": "105564b561057261d4e5b706c8863ac689498a6328a679fc3af3619edcfbc400",
+          "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
+          "docs/02-management/EXECUTION_PLAN.md": "1076861827bba220428826470dc5b25504f6378e6b50e0be02edc550a63ac29e",
+          "docs/02-management/RISK_REGISTER.md": "2d3a3fef7062377c6479048992bae3e3ec0a9cc880a883bb1e57f24473c00ab8",
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
+          "docs/05-operations/SETUP.md": "dd73acc0283be82c4df85da29c04e7f8149e5f952ac7ac2c3011bdf470341c1b",
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": "395741bc505bbc0c0dd3fcb63187f198303e538c064da32fc58c9389e93373a5",
+          "docs/06-quality/TEST_STRATEGY.md": "a83cc782f012d63b9f6efcf012ddf6f0d403bc2c74ab3bf09950b9549c0c47f4",
+          "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
+          "scripts/agent_preflight.py": "7f24cf19f659603f2d96907eae790f1df07ff8212cfc321db2f4c47e641f026e",
+          "tests/test_agent_context.py": "b3856f2caa1df25af3a15d2d91af655af8301b760b881c3b64520d9f7270366f"
+        },
+        "unhashed_large_files": [],
+        "unreadable_files": [],
+        "artifact_dirs_requiring_manifest": [],
+        "excluded_directories": [
+          ".git",
+          "scripts/__pycache__",
+          "tests/__pycache__"
+        ],
+        "excluded_symlink_files": 0
+      },
+      "portable_git": {
+        "format_version": 1,
+        "tracked_manifest": {
+          ".agents/PLANS.md": {
+            "mode": "100644",
+            "object_id": "1c1b78d477af82837465daf21c1de62c32c07c84"
+          },
+          ".agents/evidence/G1-10-recovery-verification.md": {
+            "mode": "100644",
+            "object_id": "6ff27d51b9cf51803d8ca8c863066253ae6297bc"
+          },
+          ".agents/evidence/G1-git-baseline-verification.md": {
+            "mode": "100644",
+            "object_id": "c3c79107166243fe35ae2d8e9f270b8a46e0ffe9"
+          },
+          ".agents/evidence/G1-hardening-verification.md": {
+            "mode": "100644",
+            "object_id": "949549fa06ad46bc3076ac462e7ccba7cdc70fbf"
+          },
+          ".agents/evidence/G1-portability-consistency-verification.md": {
+            "mode": "100644",
+            "object_id": "0b913647dbab642204b81fec825013f9da70f167"
+          },
+          ".agents/plans/G1-consistency-hardening.md": {
+            "mode": "100644",
+            "object_id": "a371486eaf564cf62503c6a2de683888e09b3b9d"
+          },
+          ".agents/plans/M00-bootstrap.md": {
+            "mode": "100644",
+            "object_id": "45df5955381a9f4faad53329239433b0088fe69b"
+          },
+          ".agents/state/BLOCKERS.md": {
+            "mode": "100644",
+            "object_id": "ed81d04c6e105f100aa70b1b70d1044ae6d455b9"
+          },
+          ".agents/state/VERIFIED_FINDINGS.md": {
+            "mode": "100644",
+            "object_id": "b0de856beef6bd414c47516006fe65ee7bb1bb33"
+          },
+          ".agents/tasks/BACKLOG.yaml": {
+            "mode": "100644",
+            "object_id": "96585253904fc0ee14e8197aba350fcd38e4af7e"
+          },
+          ".gitignore": {
+            "mode": "100644",
+            "object_id": "14017febe137a55df5749d47168ff8e5e1afe711"
+          },
+          ".python-version": {
+            "mode": "100644",
+            "object_id": "e4fba2183587225f216eeada4c78dfab6b2e65f5"
+          },
+          "AGENTS.md": {
+            "mode": "100644",
+            "object_id": "35e1ff5f0eac819ec306a3640796f8a3e32ed542"
+          },
+          "README.md": {
+            "mode": "100644",
+            "object_id": "c64740f9ac205eaac873da341d5c9079bc4b09f4"
+          },
+          "atari-videochess-rl-roadmap.html": {
+            "mode": "100644",
+            "object_id": "78f34984b1f10c9921974a96c8648112876017fa"
+          },
+          "docs/01-foundation/PROJECT_OVERVIEW.md": {
+            "mode": "100644",
+            "object_id": "6131db7cb1ebe66ed6f903c2cde0dcec64ec1795"
+          },
+          "docs/01-foundation/REQUIREMENTS.md": {
+            "mode": "100644",
+            "object_id": "463968ecf67c405ac66580d2f83b8e5a6358d681"
+          },
+          "docs/01-foundation/ROADMAP.md": {
+            "mode": "100644",
+            "object_id": "3d6517b186feb24fb95702fffefc1a568266bf37"
+          },
+          "docs/02-management/EXECUTION_PLAN.md": {
+            "mode": "100644",
+            "object_id": "829dbffcbfdfbd02541a02b8011a170fa7f98205"
+          },
+          "docs/02-management/RISK_REGISTER.md": {
+            "mode": "100644",
+            "object_id": "489ef9a0ee129697b8cfccc064de96070ac04f55"
+          },
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
+            "mode": "100644",
+            "object_id": "97db1a054605b8aa3c94697a75f2ebf1d80d3e5e"
+          },
+          "docs/05-operations/SETUP.md": {
+            "mode": "100644",
+            "object_id": "947e0ca5a18ba2ada3feee53b93ceb7d99c341be"
+          },
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": {
+            "mode": "100644",
+            "object_id": "47e4cb03e6067424f07f6fa2c543869a5e96c3f2"
+          },
+          "docs/06-quality/TEST_STRATEGY.md": {
+            "mode": "100644",
+            "object_id": "3dda3ecb97e09d0048c3952b7cf7aa40d0ac2a8f"
+          },
+          "pyproject.toml": {
+            "mode": "100644",
+            "object_id": "4a5ba949f4f194d7206bbcdddca0eabfd35a0b9e"
+          },
+          "scripts/agent_checkpoint.py": {
+            "mode": "100644",
+            "object_id": "6f4f0ca28dbc837dce01ab788903c2e43a58b1d8"
+          },
+          "scripts/agent_preflight.py": {
+            "mode": "100644",
+            "object_id": "322932885074db6e8dc5a098a90dd96de393e760"
+          },
+          "tests/test_agent_context.py": {
+            "mode": "100644",
+            "object_id": "f634e7830e8aba96f79f7be6c8c5d60e698febaf"
+          }
+        },
+        "manifest_sha256": "f71046133d19ea4e2ec16a77796bb43e5d26b85c85092241721fb77a8b720346",
+        "state_sha256": "fd860f78df2b7891bb7f542729e8b62153065e7e0922616c7bd6b194d960d930",
+        "handoff_sha256": "6cf683180ba2f3c375c84f5dc6809f434d8fe1a9db72bd6a1d52903cc9f08127"
+      }
+    },
+    {
+      "id": "cp-c410173e-20261014T165238186543Z",
+      "created_at_utc": "2026-10-14T16:52:38Z",
+      "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
+      "workspace_git": {
+        "scope": "workspace",
+        "branch": "initial-idea",
+        "head": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+        "status_entries": [
+          "?? main.py",
+          "A  .agents/PLANS.md",
+          "A  .agents/evidence/G1-10-recovery-verification.md",
+          "A  .agents/evidence/G1-git-baseline-verification.md",
+          "A  .agents/evidence/G1-hardening-verification.md",
+          "A  .agents/evidence/G1-portability-consistency-verification.md",
+          "A  .agents/plans/G1-consistency-hardening.md",
+          "A  .agents/plans/M00-bootstrap.md",
+          "A  .agents/state/BLOCKERS.md",
+          "A  .agents/state/VERIFIED_FINDINGS.md",
+          "A  .agents/tasks/BACKLOG.yaml",
+          "A  .python-version",
+          "A  AGENTS.md",
+          "A  atari-videochess-rl-roadmap.html",
+          "A  docs/01-foundation/PROJECT_OVERVIEW.md",
+          "A  docs/01-foundation/REQUIREMENTS.md",
+          "A  docs/01-foundation/ROADMAP.md",
+          "A  docs/02-management/EXECUTION_PLAN.md",
+          "A  docs/02-management/RISK_REGISTER.md",
+          "A  docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md",
+          "A  docs/05-operations/SETUP.md",
+          "A  docs/06-quality/ACCEPTANCE_CRITERIA.md",
+          "A  docs/06-quality/TEST_STRATEGY.md",
+          "A  pyproject.toml",
+          "A  scripts/agent_checkpoint.py",
+          "A  scripts/agent_preflight.py",
+          "A  tests/test_agent_context.py",
+          "AM .agents/state/PROJECT_STATE.yaml",
+          "AM .agents/state/SESSION_HANDOFF.md",
+          "M  .gitignore"
+        ],
+        "status_sha256": "bc2141c41df4b189f0eb8744fe494b8b380b2ebcef8e868fe26e07b3b1fac3cd",
+        "repo_file_hashes": {
+          ".gitignore": "74815f194c8eb707e57483eebc2461e1f4936ae940519adf8c7a59d1708c5abb",
+          ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+          "AGENTS.md": "67b95433e69a38ed51aa24f1643288dae7535cf0f1c5e7c840e7707a47538ad4",
+          "README.md": "b56bd7410a2c90c559ad5fd52a6a78065bee4d2d54856d6677af4b0200746dce",
+          "atari-videochess-rl-documentation-g1-finalization.zip": "e0715e62d96ccb537ca56edb8769ad9dee5a87a752841ee2f4e26afbf88092eb",
+          "atari-videochess-rl-documentation-g1.zip": "92b3b71e7ad9345ea1eb9a576dd7f3466b5110f9c3c82ca178e90259dd0d0cd2",
+          "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+          "main.py": "c101b2abfee28217d24a7c550eda37cffe548adfc9149244646199108361c0fe",
+          "pyproject.toml": "862241bf5bbf4b600235a9ebad643fb74b7b1d3734359da6cdee5d47f2007606",
+          ".agents/PLANS.md": "ed50b3ccc51cbe29123630c5069ab2d00f7428751ca67f1e64bd15558bd044d2",
+          ".agents/evidence/G1-10-recovery-verification.md": "39e05a96034d4eaa4f22f0dec72670afacbd9b48bcfcc41ed81f8a718d3a5f65",
+          ".agents/evidence/G1-git-baseline-verification.md": "13772b3438b30d440baac4caeeceb564017a5216ea9409d7b9412390d4b96f65",
+          ".agents/evidence/G1-hardening-verification.md": "0963f26840d2c393525fd10bba32f13e5ff3a51210a87d3d731b2ba96bd09380",
+          ".agents/evidence/G1-portability-consistency-verification.md": "bf203cc44d56d912904882042da1ae9e2133dc26d7a4a6a3b9cf16150b13f9d5",
+          ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
+          ".agents/plans/M00-bootstrap.md": "cb9aa665f9cd15dacf694e1c2bad64ca02e3e9a6dc1152009e66c15868169561",
+          ".agents/state/BLOCKERS.md": "301af9e870486b9c6a05afd7dcf90c78aaa5c1b6a9d61b337566473074c46c56",
+          ".agents/state/SESSION_HANDOFF.md": "88edfd92788f3de1579d6ae3351420c00898d352bb6f5ae243b10f39f7011c2e",
+          ".agents/state/VERIFIED_FINDINGS.md": "8c94c5fe195a11febebee463f71b636bf223635dfab988baacd723c3e426430e",
+          ".agents/tasks/BACKLOG.yaml": "a0dad9de815247bb61d7e333d3802e14d585e44ae28ae5fc14e0badc65f3ba7e",
+          "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
+          "docs/01-foundation/REQUIREMENTS.md": "105564b561057261d4e5b706c8863ac689498a6328a679fc3af3619edcfbc400",
+          "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
+          "docs/02-management/EXECUTION_PLAN.md": "1076861827bba220428826470dc5b25504f6378e6b50e0be02edc550a63ac29e",
+          "docs/02-management/RISK_REGISTER.md": "2d3a3fef7062377c6479048992bae3e3ec0a9cc880a883bb1e57f24473c00ab8",
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
+          "docs/05-operations/SETUP.md": "dd73acc0283be82c4df85da29c04e7f8149e5f952ac7ac2c3011bdf470341c1b",
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": "395741bc505bbc0c0dd3fcb63187f198303e538c064da32fc58c9389e93373a5",
+          "docs/06-quality/TEST_STRATEGY.md": "a83cc782f012d63b9f6efcf012ddf6f0d403bc2c74ab3bf09950b9549c0c47f4",
+          "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
+          "scripts/agent_preflight.py": "7f24cf19f659603f2d96907eae790f1df07ff8212cfc321db2f4c47e641f026e",
+          "tests/test_agent_context.py": "b3856f2caa1df25af3a15d2d91af655af8301b760b881c3b64520d9f7270366f"
+        },
+        "unhashed_large_files": [],
+        "unreadable_files": [],
+        "artifact_dirs_requiring_manifest": [],
+        "excluded_directories": [
+          ".git",
+          "scripts/__pycache__",
+          "tests/__pycache__"
+        ],
+        "excluded_symlink_files": 0
+      },
+      "portable_git": {
+        "format_version": 1,
+        "tracked_manifest": {
+          ".agents/PLANS.md": {
+            "mode": "100644",
+            "object_id": "1c1b78d477af82837465daf21c1de62c32c07c84"
+          },
+          ".agents/evidence/G1-10-recovery-verification.md": {
+            "mode": "100644",
+            "object_id": "6ff27d51b9cf51803d8ca8c863066253ae6297bc"
+          },
+          ".agents/evidence/G1-git-baseline-verification.md": {
+            "mode": "100644",
+            "object_id": "c3c79107166243fe35ae2d8e9f270b8a46e0ffe9"
+          },
+          ".agents/evidence/G1-hardening-verification.md": {
+            "mode": "100644",
+            "object_id": "949549fa06ad46bc3076ac462e7ccba7cdc70fbf"
+          },
+          ".agents/evidence/G1-portability-consistency-verification.md": {
+            "mode": "100644",
+            "object_id": "93b3a26b44772a93d15209c162511372e9951d3f"
+          },
+          ".agents/plans/G1-consistency-hardening.md": {
+            "mode": "100644",
+            "object_id": "a371486eaf564cf62503c6a2de683888e09b3b9d"
+          },
+          ".agents/plans/M00-bootstrap.md": {
+            "mode": "100644",
+            "object_id": "45df5955381a9f4faad53329239433b0088fe69b"
+          },
+          ".agents/state/BLOCKERS.md": {
+            "mode": "100644",
+            "object_id": "ed81d04c6e105f100aa70b1b70d1044ae6d455b9"
+          },
+          ".agents/state/VERIFIED_FINDINGS.md": {
+            "mode": "100644",
+            "object_id": "b0de856beef6bd414c47516006fe65ee7bb1bb33"
+          },
+          ".agents/tasks/BACKLOG.yaml": {
+            "mode": "100644",
+            "object_id": "96585253904fc0ee14e8197aba350fcd38e4af7e"
+          },
+          ".gitignore": {
+            "mode": "100644",
+            "object_id": "14017febe137a55df5749d47168ff8e5e1afe711"
+          },
+          ".python-version": {
+            "mode": "100644",
+            "object_id": "e4fba2183587225f216eeada4c78dfab6b2e65f5"
+          },
+          "AGENTS.md": {
+            "mode": "100644",
+            "object_id": "35e1ff5f0eac819ec306a3640796f8a3e32ed542"
+          },
+          "README.md": {
+            "mode": "100644",
+            "object_id": "c64740f9ac205eaac873da341d5c9079bc4b09f4"
+          },
+          "atari-videochess-rl-roadmap.html": {
+            "mode": "100644",
+            "object_id": "78f34984b1f10c9921974a96c8648112876017fa"
+          },
+          "docs/01-foundation/PROJECT_OVERVIEW.md": {
+            "mode": "100644",
+            "object_id": "6131db7cb1ebe66ed6f903c2cde0dcec64ec1795"
+          },
+          "docs/01-foundation/REQUIREMENTS.md": {
+            "mode": "100644",
+            "object_id": "463968ecf67c405ac66580d2f83b8e5a6358d681"
+          },
+          "docs/01-foundation/ROADMAP.md": {
+            "mode": "100644",
+            "object_id": "3d6517b186feb24fb95702fffefc1a568266bf37"
+          },
+          "docs/02-management/EXECUTION_PLAN.md": {
+            "mode": "100644",
+            "object_id": "829dbffcbfdfbd02541a02b8011a170fa7f98205"
+          },
+          "docs/02-management/RISK_REGISTER.md": {
+            "mode": "100644",
+            "object_id": "489ef9a0ee129697b8cfccc064de96070ac04f55"
+          },
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
+            "mode": "100644",
+            "object_id": "97db1a054605b8aa3c94697a75f2ebf1d80d3e5e"
+          },
+          "docs/05-operations/SETUP.md": {
+            "mode": "100644",
+            "object_id": "947e0ca5a18ba2ada3feee53b93ceb7d99c341be"
+          },
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": {
+            "mode": "100644",
+            "object_id": "47e4cb03e6067424f07f6fa2c543869a5e96c3f2"
+          },
+          "docs/06-quality/TEST_STRATEGY.md": {
+            "mode": "100644",
+            "object_id": "3dda3ecb97e09d0048c3952b7cf7aa40d0ac2a8f"
+          },
+          "pyproject.toml": {
+            "mode": "100644",
+            "object_id": "4a5ba949f4f194d7206bbcdddca0eabfd35a0b9e"
+          },
+          "scripts/agent_checkpoint.py": {
+            "mode": "100644",
+            "object_id": "6f4f0ca28dbc837dce01ab788903c2e43a58b1d8"
+          },
+          "scripts/agent_preflight.py": {
+            "mode": "100644",
+            "object_id": "322932885074db6e8dc5a098a90dd96de393e760"
+          },
+          "tests/test_agent_context.py": {
+            "mode": "100644",
+            "object_id": "f634e7830e8aba96f79f7be6c8c5d60e698febaf"
+          }
+        },
+        "manifest_sha256": "541f6737f0fea0a68515ac6ab363e63d2390368ae22f59c5db38ddead1c13973",
+        "state_sha256": "686ea1168013347e31b22e5d72d239528d096571e6788ec70f7c9027025e9f04",
+        "handoff_sha256": "88edfd92788f3de1579d6ae3351420c00898d352bb6f5ae243b10f39f7011c2e"
+      }
+    },
+    {
+      "id": "cp-c410173e-20261014T165342813734Z",
+      "created_at_utc": "2026-10-14T16:53:42Z",
+      "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
+      "workspace_git": {
+        "scope": "workspace",
+        "branch": "initial-idea",
+        "head": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+        "status_entries": [
+          "?? main.py",
+          "A  .agents/PLANS.md",
+          "A  .agents/evidence/G1-10-recovery-verification.md",
+          "A  .agents/evidence/G1-git-baseline-verification.md",
+          "A  .agents/evidence/G1-hardening-verification.md",
+          "A  .agents/evidence/G1-portability-consistency-verification.md",
+          "A  .agents/plans/G1-consistency-hardening.md",
+          "A  .agents/plans/M00-bootstrap.md",
+          "A  .agents/state/BLOCKERS.md",
+          "A  .agents/state/VERIFIED_FINDINGS.md",
+          "A  .agents/tasks/BACKLOG.yaml",
+          "A  .python-version",
+          "A  AGENTS.md",
+          "A  atari-videochess-rl-roadmap.html",
+          "A  docs/01-foundation/PROJECT_OVERVIEW.md",
+          "A  docs/01-foundation/REQUIREMENTS.md",
+          "A  docs/01-foundation/ROADMAP.md",
+          "A  docs/02-management/EXECUTION_PLAN.md",
+          "A  docs/02-management/RISK_REGISTER.md",
+          "A  docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md",
+          "A  docs/05-operations/SETUP.md",
+          "A  docs/06-quality/ACCEPTANCE_CRITERIA.md",
+          "A  docs/06-quality/TEST_STRATEGY.md",
+          "A  pyproject.toml",
+          "A  scripts/agent_checkpoint.py",
+          "A  scripts/agent_preflight.py",
+          "A  tests/test_agent_context.py",
+          "AM .agents/state/PROJECT_STATE.yaml",
+          "AM .agents/state/SESSION_HANDOFF.md",
+          "M  .gitignore"
+        ],
+        "status_sha256": "bc2141c41df4b189f0eb8744fe494b8b380b2ebcef8e868fe26e07b3b1fac3cd",
+        "repo_file_hashes": {
+          ".gitignore": "74815f194c8eb707e57483eebc2461e1f4936ae940519adf8c7a59d1708c5abb",
+          ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+          "AGENTS.md": "67b95433e69a38ed51aa24f1643288dae7535cf0f1c5e7c840e7707a47538ad4",
+          "README.md": "b56bd7410a2c90c559ad5fd52a6a78065bee4d2d54856d6677af4b0200746dce",
+          "atari-videochess-rl-documentation-g1-finalization.zip": "e0715e62d96ccb537ca56edb8769ad9dee5a87a752841ee2f4e26afbf88092eb",
+          "atari-videochess-rl-documentation-g1.zip": "92b3b71e7ad9345ea1eb9a576dd7f3466b5110f9c3c82ca178e90259dd0d0cd2",
+          "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+          "main.py": "c101b2abfee28217d24a7c550eda37cffe548adfc9149244646199108361c0fe",
+          "pyproject.toml": "862241bf5bbf4b600235a9ebad643fb74b7b1d3734359da6cdee5d47f2007606",
+          ".agents/PLANS.md": "ed50b3ccc51cbe29123630c5069ab2d00f7428751ca67f1e64bd15558bd044d2",
+          ".agents/evidence/G1-10-recovery-verification.md": "39e05a96034d4eaa4f22f0dec72670afacbd9b48bcfcc41ed81f8a718d3a5f65",
+          ".agents/evidence/G1-git-baseline-verification.md": "13772b3438b30d440baac4caeeceb564017a5216ea9409d7b9412390d4b96f65",
+          ".agents/evidence/G1-hardening-verification.md": "0963f26840d2c393525fd10bba32f13e5ff3a51210a87d3d731b2ba96bd09380",
+          ".agents/evidence/G1-portability-consistency-verification.md": "f1fa95b9c2e7415ff0ff8a9e452920f7c8a29c77ea3ce3fabfc77fb744b7ad0e",
+          ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
+          ".agents/plans/M00-bootstrap.md": "cb9aa665f9cd15dacf694e1c2bad64ca02e3e9a6dc1152009e66c15868169561",
+          ".agents/state/BLOCKERS.md": "301af9e870486b9c6a05afd7dcf90c78aaa5c1b6a9d61b337566473074c46c56",
+          ".agents/state/SESSION_HANDOFF.md": "07c7ca21d9aa6fb89005ada4b138af1f2bb716cd0018ce9e78a2305ed70a6611",
+          ".agents/state/VERIFIED_FINDINGS.md": "8c94c5fe195a11febebee463f71b636bf223635dfab988baacd723c3e426430e",
+          ".agents/tasks/BACKLOG.yaml": "a0dad9de815247bb61d7e333d3802e14d585e44ae28ae5fc14e0badc65f3ba7e",
+          "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
+          "docs/01-foundation/REQUIREMENTS.md": "105564b561057261d4e5b706c8863ac689498a6328a679fc3af3619edcfbc400",
+          "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
+          "docs/02-management/EXECUTION_PLAN.md": "1076861827bba220428826470dc5b25504f6378e6b50e0be02edc550a63ac29e",
+          "docs/02-management/RISK_REGISTER.md": "2d3a3fef7062377c6479048992bae3e3ec0a9cc880a883bb1e57f24473c00ab8",
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
+          "docs/05-operations/SETUP.md": "dd73acc0283be82c4df85da29c04e7f8149e5f952ac7ac2c3011bdf470341c1b",
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": "395741bc505bbc0c0dd3fcb63187f198303e538c064da32fc58c9389e93373a5",
+          "docs/06-quality/TEST_STRATEGY.md": "a83cc782f012d63b9f6efcf012ddf6f0d403bc2c74ab3bf09950b9549c0c47f4",
+          "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
+          "scripts/agent_preflight.py": "7f24cf19f659603f2d96907eae790f1df07ff8212cfc321db2f4c47e641f026e",
+          "tests/test_agent_context.py": "b3856f2caa1df25af3a15d2d91af655af8301b760b881c3b64520d9f7270366f"
+        },
+        "unhashed_large_files": [],
+        "unreadable_files": [],
+        "artifact_dirs_requiring_manifest": [],
+        "excluded_directories": [
+          ".git",
+          "scripts/__pycache__",
+          "tests/__pycache__"
+        ],
+        "excluded_symlink_files": 0
+      },
+      "portable_git": {
+        "format_version": 1,
+        "tracked_manifest": {
+          ".agents/PLANS.md": {
+            "mode": "100644",
+            "object_id": "1c1b78d477af82837465daf21c1de62c32c07c84"
+          },
+          ".agents/evidence/G1-10-recovery-verification.md": {
+            "mode": "100644",
+            "object_id": "6ff27d51b9cf51803d8ca8c863066253ae6297bc"
+          },
+          ".agents/evidence/G1-git-baseline-verification.md": {
+            "mode": "100644",
+            "object_id": "c3c79107166243fe35ae2d8e9f270b8a46e0ffe9"
+          },
+          ".agents/evidence/G1-hardening-verification.md": {
+            "mode": "100644",
+            "object_id": "949549fa06ad46bc3076ac462e7ccba7cdc70fbf"
+          },
+          ".agents/evidence/G1-portability-consistency-verification.md": {
+            "mode": "100644",
+            "object_id": "5120604c17c3a481431701154d2783058ff78dcd"
+          },
+          ".agents/plans/G1-consistency-hardening.md": {
+            "mode": "100644",
+            "object_id": "a371486eaf564cf62503c6a2de683888e09b3b9d"
+          },
+          ".agents/plans/M00-bootstrap.md": {
+            "mode": "100644",
+            "object_id": "45df5955381a9f4faad53329239433b0088fe69b"
+          },
+          ".agents/state/BLOCKERS.md": {
+            "mode": "100644",
+            "object_id": "ed81d04c6e105f100aa70b1b70d1044ae6d455b9"
+          },
+          ".agents/state/VERIFIED_FINDINGS.md": {
+            "mode": "100644",
+            "object_id": "b0de856beef6bd414c47516006fe65ee7bb1bb33"
+          },
+          ".agents/tasks/BACKLOG.yaml": {
+            "mode": "100644",
+            "object_id": "96585253904fc0ee14e8197aba350fcd38e4af7e"
+          },
+          ".gitignore": {
+            "mode": "100644",
+            "object_id": "14017febe137a55df5749d47168ff8e5e1afe711"
+          },
+          ".python-version": {
+            "mode": "100644",
+            "object_id": "e4fba2183587225f216eeada4c78dfab6b2e65f5"
+          },
+          "AGENTS.md": {
+            "mode": "100644",
+            "object_id": "35e1ff5f0eac819ec306a3640796f8a3e32ed542"
+          },
+          "README.md": {
+            "mode": "100644",
+            "object_id": "c64740f9ac205eaac873da341d5c9079bc4b09f4"
+          },
+          "atari-videochess-rl-roadmap.html": {
+            "mode": "100644",
+            "object_id": "78f34984b1f10c9921974a96c8648112876017fa"
+          },
+          "docs/01-foundation/PROJECT_OVERVIEW.md": {
+            "mode": "100644",
+            "object_id": "6131db7cb1ebe66ed6f903c2cde0dcec64ec1795"
+          },
+          "docs/01-foundation/REQUIREMENTS.md": {
+            "mode": "100644",
+            "object_id": "463968ecf67c405ac66580d2f83b8e5a6358d681"
+          },
+          "docs/01-foundation/ROADMAP.md": {
+            "mode": "100644",
+            "object_id": "3d6517b186feb24fb95702fffefc1a568266bf37"
+          },
+          "docs/02-management/EXECUTION_PLAN.md": {
+            "mode": "100644",
+            "object_id": "829dbffcbfdfbd02541a02b8011a170fa7f98205"
+          },
+          "docs/02-management/RISK_REGISTER.md": {
+            "mode": "100644",
+            "object_id": "489ef9a0ee129697b8cfccc064de96070ac04f55"
+          },
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
+            "mode": "100644",
+            "object_id": "97db1a054605b8aa3c94697a75f2ebf1d80d3e5e"
+          },
+          "docs/05-operations/SETUP.md": {
+            "mode": "100644",
+            "object_id": "947e0ca5a18ba2ada3feee53b93ceb7d99c341be"
+          },
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": {
+            "mode": "100644",
+            "object_id": "47e4cb03e6067424f07f6fa2c543869a5e96c3f2"
+          },
+          "docs/06-quality/TEST_STRATEGY.md": {
+            "mode": "100644",
+            "object_id": "3dda3ecb97e09d0048c3952b7cf7aa40d0ac2a8f"
+          },
+          "pyproject.toml": {
+            "mode": "100644",
+            "object_id": "4a5ba949f4f194d7206bbcdddca0eabfd35a0b9e"
+          },
+          "scripts/agent_checkpoint.py": {
+            "mode": "100644",
+            "object_id": "6f4f0ca28dbc837dce01ab788903c2e43a58b1d8"
+          },
+          "scripts/agent_preflight.py": {
+            "mode": "100644",
+            "object_id": "322932885074db6e8dc5a098a90dd96de393e760"
+          },
+          "tests/test_agent_context.py": {
+            "mode": "100644",
+            "object_id": "f634e7830e8aba96f79f7be6c8c5d60e698febaf"
+          }
+        },
+        "manifest_sha256": "f46c6458b1714a28908a6879e99fd9fb918b3d05dc7d97aa05f941c21441b924",
+        "state_sha256": "395bf80751585131b652e5304f4bfa0013e93b649dafb550914c72b94317ae6d",
+        "handoff_sha256": "07c7ca21d9aa6fb89005ada4b138af1f2bb716cd0018ce9e78a2305ed70a6611"
+      }
+    }
+  ]
+}

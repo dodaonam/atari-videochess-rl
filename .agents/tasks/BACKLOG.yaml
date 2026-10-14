@@ -1,0 +1,790 @@
+{
+  "format": "JSON-compatible YAML 1.2",
+  "schema_version": 2,
+  "project_id": "atari-videochess-rl",
+  "tasks": [
+    {
+      "id": "G1-001",
+      "title": "Audit the existing worktree and preserve the G1-start baseline",
+      "milestone": "G1",
+      "status": "done",
+      "depends_on": [],
+      "requires_user_gate_approval": null,
+      "blocker_ids": [],
+      "evidence": [
+        {
+          "kind": "file",
+          "path": ".agents/state/PROJECT_STATE.yaml",
+          "detail": "g1_baseline records branch, HEAD, initial status entries, and source hashes.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "git status --porcelain=v1 --untracked-files=all",
+          "result": "PASS: initial status captured before G1 edits.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "README.md",
+          "detail": "Existing tracked README audited and preserved.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/state/PROJECT_STATE.yaml",
+          "detail": "G1-start branch/head/status and preservation hashes are retained as historical baseline evidence and checksum-validated.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-14T14:41:57Z",
+            "exit_code": null,
+            "git_revision": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+            "log_path": null
+          }
+        }
+      ],
+      "acceptance_criteria_ids": [
+        "G1-01"
+      ],
+      "next_action": ""
+    },
+    {
+      "id": "G1-002",
+      "title": "Update the approved G0 documents for G1 and record the governance decision",
+      "milestone": "G1",
+      "status": "done",
+      "depends_on": [
+        "G1-001"
+      ],
+      "requires_user_gate_approval": null,
+      "blocker_ids": [],
+      "evidence": [
+        {
+          "kind": "file",
+          "path": "AGENTS.md",
+          "detail": "G1 source hierarchy, recovery, gates, scope, and constraints.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "docs/01-foundation/REQUIREMENTS.md",
+          "detail": "G0 approval, open O-01–O-08 approvals, and resolved G1 governance decisions.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md",
+          "detail": "Canonical G/M crosswalk and P0/P1/P2 decision.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "docs/02-management/EXECUTION_PLAN.md",
+          "detail": "Canonical milestone mapping and fixed inventory.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md",
+          "detail": "Canonical G/M crosswalk and P0/P1/P2 disposition reviewed against the execution plan.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-14T14:41:57Z",
+            "exit_code": null,
+            "git_revision": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+            "log_path": null
+          }
+        }
+      ],
+      "acceptance_criteria_ids": [
+        "G1-02"
+      ],
+      "next_action": ""
+    },
+    {
+      "id": "G1-003",
+      "title": "Create the remaining P0 execution, acceptance, and persistent-state files",
+      "milestone": "G1",
+      "status": "done",
+      "depends_on": [
+        "G1-001",
+        "G1-002"
+      ],
+      "requires_user_gate_approval": null,
+      "blocker_ids": [],
+      "evidence": [
+        {
+          "kind": "file",
+          "path": "docs/06-quality/ACCEPTANCE_CRITERIA.md",
+          "detail": "G0/G1 and M0–M7 acceptance criteria.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/PLANS.md",
+          "detail": "Plan, task, and recovery rules.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/state/PROJECT_STATE.yaml",
+          "detail": "Canonical phase and Git snapshot schema.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/state/SESSION_HANDOFF.md",
+          "detail": "Pointer-only handoff with checkpoint ID.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/tasks/BACKLOG.yaml",
+          "detail": "Canonical task IDs, dependencies, statuses, acceptance, and evidence.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/state/PROJECT_STATE.yaml",
+          "detail": "Current governance/task pointer and live checkpoint schema reviewed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-14T14:41:57Z",
+            "exit_code": null,
+            "git_revision": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/tasks/BACKLOG.yaml",
+          "detail": "Task dependencies, statuses, criteria references, and evidence provenance reviewed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-14T14:41:57Z",
+            "exit_code": null,
+            "git_revision": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+            "log_path": null
+          }
+        }
+      ],
+      "acceptance_criteria_ids": [
+        "G1-03"
+      ],
+      "next_action": ""
+    },
+    {
+      "id": "G1-004",
+      "title": "Create P1 bootstrap material and audit the existing README",
+      "milestone": "G1",
+      "status": "done",
+      "depends_on": [
+        "G1-001",
+        "G1-002"
+      ],
+      "requires_user_gate_approval": null,
+      "blocker_ids": [],
+      "evidence": [
+        {
+          "kind": "file",
+          "path": "README.md",
+          "detail": "Audited and preserved unchanged.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "docs/01-foundation/PROJECT_OVERVIEW.md",
+          "detail": "Project summary and evidence tracks.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "docs/02-management/RISK_REGISTER.md",
+          "detail": "Source-derived risks; none reported as observed failures.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "docs/05-operations/SETUP.md",
+          "detail": "M0 runbook only; no setup executed.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "docs/06-quality/TEST_STRATEGY.md",
+          "detail": "G1 and future milestone test layers.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/state/BLOCKERS.md",
+          "detail": "Canonical blocker policy and current G1 status.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/state/VERIFIED_FINDINGS.md",
+          "detail": "Audit baseline and source integrity facts.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/plans/M00-bootstrap.md",
+          "detail": "M0 plan only; not executed.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "scripts/agent_preflight.py",
+          "detail": "G1 recovery preflight.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "scripts/agent_checkpoint.py",
+          "detail": "Atomic Git snapshot/handoff checkpoint.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "README.md",
+          "detail": "Existing README remains preserved; original G1-start SHA-256 is retained in the baseline.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-14T14:41:57Z",
+            "exit_code": null,
+            "git_revision": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "docs/01-foundation/PROJECT_OVERVIEW.md",
+          "detail": "Project objective and the three learning/evaluation evidence tracks reviewed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-14T14:41:57Z",
+            "exit_code": null,
+            "git_revision": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+            "log_path": null
+          }
+        }
+      ],
+      "acceptance_criteria_ids": [
+        "G1-01"
+      ],
+      "next_action": ""
+    },
+    {
+      "id": "G1-005",
+      "title": "Implement and test repository preflight and atomic checkpoint scripts",
+      "milestone": "G1",
+      "status": "done",
+      "depends_on": [
+        "G1-002",
+        "G1-003"
+      ],
+      "requires_user_gate_approval": null,
+      "blocker_ids": [],
+      "evidence": [
+        {
+          "kind": "file",
+          "path": "tests/test_agent_context.py",
+          "detail": "Recovery, schema, link, task, blocker, Git drift, handoff, and partial-write tests.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 -m unittest discover -s tests -v",
+          "result": "PASS: 16 tests passed.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "PASS: schemas, links, task graph, blockers, approvals, and current G1 gate validated; expected pre-checkpoint Git drift was reported.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "scripts/agent_preflight.py",
+          "detail": "Preflight schema, acceptance parser, provenance validation, and recovery checks reviewed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-14T14:41:57Z",
+            "exit_code": null,
+            "git_revision": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "scripts/agent_checkpoint.py",
+          "detail": "Checkpoint write ordering, read-only dry-run, and post-write snapshot reviewed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-14T14:41:57Z",
+            "exit_code": null,
+            "git_revision": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 -m unittest discover -s tests -v",
+          "result": "PASS: 33 tests passed; exit code 0.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-14T14:47:24Z",
+            "recorded_at_utc": "2026-10-14T14:48:15Z",
+            "exit_code": 0,
+            "git_revision": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+            "log_path": ".agents/evidence/G1-hardening-verification.md"
+          }
+        }
+      ],
+      "acceptance_criteria_ids": [
+        "G1-03",
+        "G1-04",
+        "G1-05",
+        "G1-06",
+        "G1-07"
+      ],
+      "next_action": ""
+    },
+    {
+      "id": "G1-006",
+      "title": "Simulate recovery without conversation history and reconcile the final state",
+      "milestone": "G1",
+      "status": "done",
+      "depends_on": [
+        "G1-003",
+        "G1-004",
+        "G1-005"
+      ],
+      "requires_user_gate_approval": null,
+      "blocker_ids": [],
+      "evidence": [
+        {
+          "kind": "file",
+          "path": ".agents/state/VERIFIED_FINDINGS.md",
+          "detail": "FND-005 records the conversation-free recovery result.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "tests/test_agent_context.py",
+          "detail": "The fresh-process recovery test reads objective/constraints, current state, task, approvals, decision, acceptance IDs, and Git snapshot without reading chat history.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 -m unittest discover -s tests -v",
+          "result": "PASS: 16 tests passed, including conversation-free recovery and dirty-worktree/content-drift cases.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/state/PROJECT_STATE.yaml",
+          "detail": "The initial package recorded G1 as ready for review; the consistency audit reopened G1. Current gate/task status is authoritative in PROJECT_STATE.yaml.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/state/SESSION_HANDOFF.md",
+          "detail": "Pointer-only handoff is refreshed by the final checkpoint.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "tests/test_agent_context.py",
+          "detail": "Recovery contract exercises a separate Python process without reading chat history; this is distinct from manual Codex-session acceptance G1-10.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-14T14:41:57Z",
+            "exit_code": null,
+            "git_revision": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 -m unittest discover -s tests -v",
+          "result": "PASS: 33 tests passed; exit code 0.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-14T14:47:24Z",
+            "recorded_at_utc": "2026-10-14T14:48:15Z",
+            "exit_code": 0,
+            "git_revision": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+            "log_path": ".agents/evidence/G1-hardening-verification.md"
+          }
+        }
+      ],
+      "acceptance_criteria_ids": [
+        "G1-08"
+      ],
+      "next_action": ""
+    },
+    {
+      "id": "M0-001",
+      "title": "Technical project bootstrap",
+      "milestone": "M0",
+      "status": "pending",
+      "depends_on": [
+        "G1-008"
+      ],
+      "requires_user_gate_approval": "G1",
+      "blocker_ids": [],
+      "evidence": [],
+      "acceptance_criteria_ids": [
+        "M0-01",
+        "M0-02",
+        "M0-03",
+        "M0-04"
+      ],
+      "next_action": "G1 is approved. M0 remains pending explicit user authorization; follow PROJECT_STATE.yaml and latest direct user instructions before starting.",
+      "plan_ref": ".agents/plans/M00-bootstrap.md"
+    },
+    {
+      "id": "G1-007",
+      "title": "Harden context automation and reconcile G1 audit findings",
+      "milestone": "G1",
+      "status": "done",
+      "depends_on": [
+        "G1-006"
+      ],
+      "requires_user_gate_approval": null,
+      "blocker_ids": [],
+      "evidence": [
+        {
+          "kind": "command",
+          "command": "python3 -m unittest discover -s tests -v",
+          "result": "PASS: 33 tests passed; exit code 0.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-14T14:47:24Z",
+            "recorded_at_utc": "2026-10-14T14:48:15Z",
+            "exit_code": 0,
+            "git_revision": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+            "log_path": ".agents/evidence/G1-hardening-verification.md"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "Agent context preflight: PASS",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-14T14:47:43Z",
+            "recorded_at_utc": "2026-10-14T14:48:15Z",
+            "exit_code": 0,
+            "git_revision": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+            "log_path": ".agents/evidence/G1-hardening-verification.md"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/G1-hardening-verification.md",
+          "detail": "Retained cross-file consistency matrix and full test/preflight output.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-14T14:48:15Z",
+            "exit_code": null,
+            "git_revision": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+            "log_path": null
+          }
+        }
+      ],
+      "acceptance_criteria_ids": [
+        "G1-02",
+        "G1-03",
+        "G1-04",
+        "G1-05",
+        "G1-06",
+        "G1-07"
+      ],
+      "next_action": "",
+      "plan_ref": ".agents/plans/G1-consistency-hardening.md"
+    },
+    {
+      "id": "G1-008",
+      "title": "Run independent Codex-session recovery acceptance and request G1 review",
+      "milestone": "G1",
+      "status": "done",
+      "depends_on": [
+        "G1-007"
+      ],
+      "requires_user_gate_approval": null,
+      "blocker_ids": [],
+      "evidence": [
+        {
+          "kind": "finding",
+          "finding_id": "G1-10",
+          "result": "PASS: In the new Codex session presented for this task, the project objective, current task, exact next action, blockers, open confirmations, and Git state were recovered from repository files and live Git; `chat_history.md` and prior agent context were not consulted.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-14T15:17:39Z",
+            "recorded_at_utc": "2026-10-14T15:18:25Z",
+            "exit_code": null,
+            "git_revision": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+            "log_path": ".agents/evidence/G1-10-recovery-verification.md"
+          }
+        },
+        {
+          "kind": "finding",
+          "finding_id": "G1-09",
+          "result": "PASS: G1 is `ready_for_user_review`, G1 is not approved, and M0/M1 remain not started and unauthorized pending explicit user approval.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-14T15:17:39Z",
+            "recorded_at_utc": "2026-10-14T15:18:25Z",
+            "exit_code": null,
+            "git_revision": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+            "log_path": ".agents/evidence/G1-10-recovery-verification.md"
+          }
+        },
+        {
+          "kind": "finding",
+          "finding_id": "G1-APPROVAL",
+          "result": "User explicitly approved G1 on 2026-10-14 after G1-10 was accepted. This record documents G1 approval only; it did not authorize a commit or M0/M1 work at the time.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-14T15:37:31Z",
+            "recorded_at_utc": "2026-10-14T15:37:31Z",
+            "exit_code": null,
+            "git_revision": "c410173ecccc3178ea41b4202ce6a4a437f9aafe",
+            "log_path": ".agents/evidence/G1-git-baseline-verification.md"
+          }
+        }
+      ],
+      "acceptance_criteria_ids": [
+        "G1-10",
+        "G1-09"
+      ],
+      "next_action": "",
+      "plan_ref": ".agents/plans/G1-consistency-hardening.md"
+    }
+  ],
+  "updated_at_utc": "2026-10-14T16:40:32Z"
+}

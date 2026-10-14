@@ -218,3 +218,42 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Conversation exports and documentation bundles
+/chat_history.md
+*documentation*.zip
+
+# Local secrets and credentials
+.env*
+!.env.example
+/credentials/
+**/credentials.json
+**/*-credentials.json
+**/*service-account*.json
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+
+# Local datasets, generated runs, and private model artifacts
+/data/
+/datasets/
+/artifacts/
+/runs/
+/checkpoints/
+/models/
+*.pt
+*.pth
+*.ckpt
+*.onnx
+
+# Temporary files
+*.tmp
+*.tmp-*
+*.temp
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
