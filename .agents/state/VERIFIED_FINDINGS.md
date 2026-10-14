@@ -56,4 +56,27 @@
 - **Status:** verified 2026-10-14
 - **Finding:** The checkpoint now separates an index-based portable tracked manifest and semantic-state/handoff checksums from workspace-local Git status and file observations. A real commit-and-clone regression verifies state recovery without chat history, ignored archives, `main.py`, or caches; tracked changes remain detectable.
 - **Evidence:** `.agents/evidence/G1-portability-consistency-verification.md` and `tests/test_agent_context.py::test_clean_clone_recovers_portable_baseline_without_local_artifacts`.
-- **Impact:** Clean checkouts can recover canonical project state without inheriting local workspace-only artifacts. M0 remains pending explicit authorization.
+- **Impact:** Clean checkouts can recover canonical project state without inheriting local workspace-only artifacts. M0 was pending explicit authorization when this finding was recorded; later authorization is recorded in `.agents/evidence/M0-authorization.md`.
+
+## FND-009 — M0 local bootstrap and remaining M1 prerequisites
+
+- **Status:** verified 2026-10-15
+- **Finding:** On Ubuntu 24.04.5 with system Python 3.12.3 and `uv` 0.9.26, the project lock installed Gymnasium 1.4.0, ALE-Py 0.11.2, python-chess 1.11.2, and CPU-only PyTorch 2.14.1+cpu in `.venv`. Five M0 smoke checks and the full 41-test suite passed. Stockfish 19 passed a UCI readiness ping only. Colab CLI 0.7.4 version/help checks passed; no remote session or runtime was used.
+- **Evidence:** `.agents/evidence/M0-001-verification.md`; `tests/test_m0_smoke.py`; `uv.lock`.
+- **Impact:** M0 bootstrap is complete and user-accepted; baseline commit preparation remains pending. M1 has not started. The installed ALE-Py 0.11.2 package includes and resolves `video_chess.bin`; Gymnasium registration and construction without reset are distinct verified checks, and neither establishes gameplay behavior. The ROM absence concern is cleared; O-05 remains open for RAM mapping, modes, difficulty, evaluation settings, and assignment/runtime permissions. Colab authentication/entitlement, O-01–O-08, and permitted Stockfish roles remain unresolved.
+
+
+## FND-010 — M0 final technical verification
+
+- **Status:** verified 2026-10-14; M0 user-accepted 2026-10-15
+- **Finding:** The full 62-test context/export/M0 suite and locked dependency check passed. ALE-Py 0.11.2 contains and resolves the packaged VideoChess ROM under `video_chess`; Gymnasium registration and construction without reset also passed. Historical G1 recovery, current-HEAD recovery, and synthetic G1-to-G2/M1/M2 clone transitions passed. Stockfish 19 archive, executable, and license hashes are reproducible from the pinned official release/source tag.
+- **Evidence:** `.agents/evidence/M0-final-technical-verification.md`; `.agents/evidence/M0-001-verification.md`; `tests/test_agent_context.py`; `tests/test_m0_smoke.py`; `docs/05-operations/SETUP.md`.
+- **Impact:** M0-01 through M0-04 are user-accepted. M1 remains unstarted and requires separate explicit authorization. O-01 through O-08 remain unresolved; O-05 is partially informed by local ROM evidence but remains open for runtime/evaluation details.
+
+
+## FND-011 — M0 user acceptance
+
+- **Status:** user-accepted 2026-10-15
+- **Finding:** The user explicitly accepted M0-001 and M0-01 through M0-04 based on the final technical verification evidence; this approval does not authorize a commit, push, or M1.
+- **Evidence:** `.agents/evidence/M0-acceptance.md`; `.agents/evidence/M0-final-technical-verification.md`.
+- **Impact:** M0 is accepted. G2 remains in progress; M1 is still unauthorized pending separate user approval.

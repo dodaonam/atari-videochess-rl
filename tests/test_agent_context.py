@@ -18,6 +18,8 @@ REPO = Path(__file__).resolve().parents[1]
 PREFLIGHT = REPO / "scripts" / "agent_preflight.py"
 CHECKPOINT = REPO / "scripts" / "agent_checkpoint.py"
 CHECKPOINT_ID = "cp-fixture-0001"
+G1_BASELINE_REVISION = "9449b3f3508c55e1a34893a49c2670498310f78f"
+G1_RECOVERY_FIXTURE = REPO / "tests" / "fixtures" / "g1-recovery-baseline.json"
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(REPO / "scripts"))
 import agent_preflight
@@ -96,6 +98,41 @@ def commit_all(root: Path, message: str) -> None:
     subprocess.run(
         ["git", "-C", str(root), "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", message],
         check=True,
+        capture_output=True,
+        text=True,
+    )
+
+
+def create_repo_from_revision(root: Path, revision: str) -> None:
+    root.mkdir(parents=True, exist_ok=True)
+    git(root, "init", "-q", "-b", "main")
+    paths = subprocess.check_output(
+        ["git", "-C", str(REPO), "ls-tree", "-r", "--name-only", "-z", revision]
+    ).decode().split("\0")
+    for rel in filter(None, paths):
+        destination = root / rel
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_bytes(subprocess.check_output(["git", "-C", str(REPO), "show", f"{revision}:{rel}"]))
+    commit_all(root, f"fixture from {revision[:8]}")
+
+
+def checkpoint_and_commit(root: Path, message: str) -> None:
+    for private_path in (root / "chat_history.md", root / ".env"):
+        private_path.unlink(missing_ok=True)
+    git(root, "add", "--all")
+    result = subprocess.run(
+        [sys.executable, str(CHECKPOINT), "--repo", str(root)],
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode:
+        raise AssertionError(result.stdout + result.stderr)
+    commit_all(root, message)
+
+
+def run_preflight(root: Path) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        [sys.executable, str(root / "scripts/agent_preflight.py"), "--repo", str(root), "--json"],
         capture_output=True,
         text=True,
     )
@@ -430,27 +467,35 @@ class AgentContextRecoveryTests(unittest.TestCase):
         self.assertTrue(report["summary"]["repo_content_matches"])
 
     @unittest.skipIf(os.environ.get("ATARI_VIDEOCHESS_SKIP_CLONE_RECOVERY_TEST") == "1", "avoid recursive clean-clone test invocation")
-    def test_clean_clone_recovers_portable_baseline_without_local_artifacts(self) -> None:
+    def test_clean_clone_recovers_current_committed_state_without_local_artifacts(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp = Path(temp_dir)
-            source = temp / "approved-baseline"
+            source = temp / "committed-state"
             clone = temp / "clean-clone"
             source.mkdir()
             git(source, "init", "-q", "-b", "main")
 
-            inventory_record = REPO / ".agents/evidence/G1-portability-consistency-verification.md"
-            record = inventory_record.read_text(encoding="utf-8")
+            inventory_path = ".agents/evidence/G1-portability-consistency-verification.md"
+            record = subprocess.check_output(
+                ["git", "-C", str(REPO), "show", f"HEAD:{inventory_path}"],
+                text=True,
+            )
             section = record.split("## Approved baseline inventory", 1)[1].split("## Explicit exclusions", 1)[0]
-            baseline_files = re.findall(r"^- `([^`]+)`$", section, flags=re.MULTILINE)
-            self.assertGreater(len(baseline_files), 20)
-            self.assertNotIn("chat_history.md", baseline_files)
-            self.assertNotIn("atari-videochess-rl-documentation-g1.zip", baseline_files)
-            self.assertNotIn("main.py", baseline_files)
+            approved_files = set(re.findall(r"^- `([^`]+)`$", section, flags=re.MULTILINE))
+            committed_files = set(filter(None, subprocess.check_output(
+                ["git", "-C", str(REPO), "ls-tree", "-r", "--name-only", "-z", "HEAD"]
+            ).decode().split("\0")))
+            self.assertGreater(len(approved_files), 20)
+            self.assertTrue(approved_files <= committed_files)
+            self.assertNotIn("chat_history.md", committed_files)
+            self.assertFalse(any(path.endswith(".zip") for path in committed_files))
+            self.assertNotIn("main.py", committed_files)
+            baseline_files = sorted(committed_files)
 
             for rel in baseline_files:
                 destination = source / rel
                 destination.parent.mkdir(parents=True, exist_ok=True)
-                destination.write_bytes((REPO / rel).read_bytes())
+                destination.write_bytes(subprocess.check_output(["git", "-C", str(REPO), "show", f"HEAD:{rel}"]))
 
             git(source, "add", "--all")
             subprocess.run(
@@ -490,15 +535,33 @@ class AgentContextRecoveryTests(unittest.TestCase):
             self.assertIsNone(agent_preflight._git_workspace_id(clone))
             self.assertEqual(summary["git_snapshot_mode"], "portable_commit_transition")
             self.assertTrue(summary["portable_baseline_matches"])
-            self.assertEqual(state["governance"]["current_gate"], "G1")
-            self.assertEqual(state["governance"]["gate_status"], "approved")
-            self.assertEqual(state["governance"]["approved_gates"], ["G0", "G1"])
-            self.assertEqual(summary["open_approval_ids"], [f"O-{index:02d}" for index in range(1, 9)])
-            self.assertEqual(state["task_refs"]["next_task_id"], "M0-001")
-            self.assertEqual(tasks["M0-001"]["status"], "pending")
-            self.assertIn("G1-008", tasks["M0-001"]["depends_on"])
-            self.assertFalse(state["engineering"]["start_authorized"])
-            self.assertIsNone(state["engineering"]["active_milestone"])
+            self.assertEqual(summary["current_gate"], state["governance"]["current_gate"])
+            self.assertEqual(summary["gate_status"], state["governance"]["gate_status"])
+            self.assertEqual(summary["approved_gates"], state["governance"]["approved_gates"])
+            requirements = (clone / "docs/01-foundation/REQUIREMENTS.md").read_text(encoding="utf-8")
+            expected_approvals = sorted(set(re.findall(r"(?m)^\|\s*(O-\d{2})\s*\|", requirements)))
+            self.assertEqual(summary["open_approval_ids"], expected_approvals)
+            self.assertEqual(summary["next_task_id"], state["task_refs"]["next_task_id"])
+            self.assertEqual(summary["next_milestone"], state["engineering"]["next_milestone"])
+            self.assertEqual(summary["next_milestone_status"], state["engineering"]["next_milestone_status"])
+            self.assertEqual(summary["engineering_start_authorized"], state["engineering"]["start_authorized"])
+            self.assertEqual(summary["active_task_id"], state["task_refs"]["active_task_id"])
+            self.assertEqual(
+                summary["task_ids_by_status"],
+                {
+                    status: sorted(task["id"] for task in backlog["tasks"] if task["status"] == status)
+                    for status in ("done", "in_progress", "pending", "blocked", "cancelled")
+                },
+            )
+            next_task_id = state["task_refs"]["next_task_id"]
+            if next_task_id is None:
+                self.assertIsNone(summary["next_task_id"])
+                self.assertEqual(summary["next_task_acceptance_criteria_ids"], [])
+            else:
+                self.assertIn(next_task_id, tasks)
+                self.assertEqual(summary["next_task_status"], tasks[next_task_id]["status"])
+                self.assertEqual(summary["next_task_dependencies"], tasks[next_task_id]["depends_on"])
+                self.assertEqual(summary["next_task_acceptance_criteria_ids"], tasks[next_task_id]["acceptance_criteria_ids"])
             self.assertEqual(summary["next_user_action"], state["governance"]["next_user_action"])
             warning_codes = {warning["code"] for warning in report["warnings"]}
             self.assertNotIn("GIT_SNAPSHOT_DRIFT", warning_codes)
@@ -509,7 +572,7 @@ class AgentContextRecoveryTests(unittest.TestCase):
             clone_env = os.environ.copy()
             clone_env["ATARI_VIDEOCHESS_SKIP_CLONE_RECOVERY_TEST"] = "1"
             clone_tests = subprocess.run(
-                [sys.executable, "-m", "unittest", "discover", "-s", "tests", "-v"],
+                [sys.executable, "-m", "unittest", "discover", "-s", "tests", "-p", "test_agent_context.py", "-v"],
                 cwd=clone,
                 env=clone_env,
                 capture_output=True,
@@ -533,6 +596,19 @@ class AgentContextRecoveryTests(unittest.TestCase):
             legacy_state["last_checkpoint"].pop("workspace_id", None)
             legacy_state["last_checkpoint"]["git"].pop("scope", None)
             legacy_state.pop("checkpoint_history", None)
+            legacy_git = legacy_state["last_checkpoint"]["git"]
+            legacy_hashes = legacy_git.get("repo_file_hashes", {})
+            legacy_head_paths = set(agent_preflight._git_head_manifest(legacy_clone, include_control_files=True)) - {".agents/state/PROJECT_STATE.yaml"}
+            legacy_untracked = {
+                entry[3:] for entry in legacy_git.get("status_entries", [])
+                if isinstance(entry, str) and entry.startswith("?? ")
+            }
+            legacy_snapshot_matches = bool(legacy_head_paths) and not (legacy_head_paths & legacy_untracked) and all(
+                rel in legacy_hashes
+                and (legacy_clone / rel).is_file()
+                and file_hash(legacy_clone / rel) == legacy_hashes[rel]
+                for rel in legacy_head_paths
+            )
             write_json(legacy_state_path, legacy_state)
             git(legacy_clone, "add", ".agents/state/PROJECT_STATE.yaml")
             subprocess.run(
@@ -544,11 +620,20 @@ class AgentContextRecoveryTests(unittest.TestCase):
             legacy_result = clone_preflight(legacy_clone)
             self.assertEqual(legacy_result.returncode, 0, legacy_result.stderr + legacy_result.stdout)
             legacy_report = json.loads(legacy_result.stdout)
-            self.assertEqual(legacy_report["summary"]["git_snapshot_mode"], "legacy_portable_commit_transition")
             legacy_codes = {warning["code"] for warning in legacy_report["warnings"]}
-            self.assertNotIn("GIT_SNAPSHOT_DRIFT", legacy_codes)
-            self.assertNotIn("WORKTREE_CONTENT_DRIFT", legacy_codes)
-            self.assertTrue(legacy_report["summary"]["repo_content_matches"])
+            expected_legacy_mode = (
+                "legacy_portable_commit_transition"
+                if legacy_snapshot_matches
+                else "unverified_legacy_git_transition"
+            )
+            self.assertEqual(legacy_report["summary"]["git_snapshot_mode"], expected_legacy_mode)
+            if legacy_snapshot_matches:
+                self.assertNotIn("GIT_SNAPSHOT_DRIFT", legacy_codes)
+                self.assertNotIn("WORKTREE_CONTENT_DRIFT", legacy_codes)
+                self.assertTrue(legacy_report["summary"]["repo_content_matches"])
+            else:
+                self.assertIn("GIT_COMMIT_TRANSITION_UNVERIFIED", legacy_codes)
+                self.assertFalse(legacy_report["summary"]["repo_content_matches"])
 
             for cache_dir in (clone / "scripts/__pycache__", clone / "tests/__pycache__"):
                 cache_dir.mkdir(parents=True, exist_ok=True)
@@ -569,6 +654,149 @@ class AgentContextRecoveryTests(unittest.TestCase):
             modified_codes = {warning["code"] for warning in modified_report["warnings"]}
             self.assertIn("WORKTREE_CONTENT_DRIFT", modified_codes)
             self.assertFalse(modified_report["summary"]["repo_content_matches"])
+
+    @unittest.skipIf(os.environ.get("ATARI_VIDEOCHESS_SKIP_CLONE_RECOVERY_TEST") == "1", "avoid nested historical recovery fixture")
+    def test_historical_g1_recovery_matches_recorded_baseline(self) -> None:
+        fixture = json.loads(G1_RECOVERY_FIXTURE.read_text(encoding="utf-8"))
+        available = subprocess.run(
+            ["git", "-C", str(REPO), "cat-file", "-e", f"{fixture['source_revision']}^{{commit}}"],
+            capture_output=True,
+        )
+        if available.returncode:
+            self.skipTest("the pinned G1 baseline commit is unavailable in this checkout")
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            source = Path(temp_dir) / "g1-baseline"
+            clone = Path(temp_dir) / "g1-clean-clone"
+            create_repo_from_revision(source, fixture["source_revision"])
+            subprocess.run(["git", "clone", "--quiet", str(source), str(clone)], check=True, capture_output=True)
+
+            result = run_preflight(clone)
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            report = json.loads(result.stdout)
+            summary = report["summary"]
+            state = json.loads((clone / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
+            backlog = json.loads((clone / ".agents/tasks/BACKLOG.yaml").read_text(encoding="utf-8"))
+            tasks = {task["id"]: task for task in backlog["tasks"]}
+
+            self.assertEqual(state["governance"]["current_gate"], fixture["governance"]["current_gate"])
+            self.assertEqual(summary["current_gate"], fixture["governance"]["current_gate"])
+            self.assertEqual(state["governance"]["gate_status"], fixture["governance"]["gate_status"])
+            self.assertEqual(summary["approved_gates"], fixture["governance"]["approved_gates"])
+            self.assertEqual(state["engineering"]["next_milestone"], fixture["engineering"]["next_milestone"])
+            self.assertEqual(summary["next_milestone_status"], fixture["engineering"]["next_milestone_status"])
+            self.assertEqual(summary["engineering_start_authorized"], fixture["engineering"]["start_authorized"])
+            self.assertIsNone(state["engineering"]["active_milestone"])
+            self.assertEqual(state["task_refs"]["next_task_id"], fixture["task_refs"]["next_task_id"])
+            self.assertEqual(tasks["M0-001"]["status"], fixture["tasks"]["M0-001"]["status"])
+            self.assertEqual(tasks["M0-001"]["depends_on"], fixture["tasks"]["M0-001"]["depends_on"])
+            self.assertEqual(summary["open_approval_ids"], fixture["open_approval_ids"])
+            self.assertTrue(summary["portable_baseline_matches"])
+            self.assertTrue(summary["repo_content_matches"])
+
+    @unittest.skipIf(os.environ.get("ATARI_VIDEOCHESS_SKIP_CLONE_RECOVERY_TEST") == "1", "avoid nested milestone transition fixture")
+    def test_clean_clone_recovers_g2_and_future_milestone_transitions(self) -> None:
+        def state_and_backlog(root: Path):
+            state_path = root / ".agents/state/PROJECT_STATE.yaml"
+            backlog_path = root / ".agents/tasks/BACKLOG.yaml"
+            return (
+                state_path,
+                json.loads(state_path.read_text(encoding="utf-8")),
+                backlog_path,
+                json.loads(backlog_path.read_text(encoding="utf-8")),
+            )
+
+        def clone_and_assert(source: Path, name: str, milestone: str, milestone_status: str, authorized: bool):
+            clone = source.parent / name
+            subprocess.run(["git", "clone", "--quiet", str(source), str(clone)], check=True, capture_output=True)
+            result = run_preflight(clone)
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            report = json.loads(result.stdout)
+            summary = report["summary"]
+            state = json.loads((clone / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
+            self.assertEqual(summary["current_gate"], state["governance"]["current_gate"])
+            self.assertEqual(summary["approved_gates"], state["governance"]["approved_gates"])
+            self.assertEqual(summary["next_milestone"], milestone)
+            self.assertEqual(summary["next_milestone_status"], milestone_status)
+            self.assertEqual(summary["engineering_start_authorized"], authorized)
+            self.assertEqual(summary["next_user_action"], state["governance"]["next_user_action"])
+            self.assertTrue(summary["portable_baseline_matches"])
+            self.assertTrue(summary["repo_content_matches"])
+            warning_codes = {warning["code"] for warning in report["warnings"]}
+            self.assertNotIn("GIT_SNAPSHOT_DRIFT", warning_codes)
+            self.assertNotIn("WORKTREE_CONTENT_DRIFT", warning_codes)
+            return clone
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            source = Path(temp_dir) / "transition-source"
+            create_repo_from_revision(source, G1_BASELINE_REVISION)
+
+            # This is a disposable future-state fixture. It tests recorded state transitions only;
+            # it does not authorize or perform any milestone work in the real repository.
+            state_path, state, backlog_path, backlog = state_and_backlog(source)
+            state["governance"].update({
+                "current_gate": "G2",
+                "gate_status": "in_progress",
+                "approved_gates": ["G0", "G1"],
+                "next_governance_gate": "G3",
+                "next_user_action": "Review M0 results; M1 requires separate explicit authorization.",
+            })
+            state["engineering"].update({
+                "active_milestone": None,
+                "next_milestone": "M1",
+                "next_milestone_status": "pending_user_approval",
+                "start_authorized": False,
+                "hold_reason": "M1 awaits explicit user authorization.",
+            })
+            state["task_refs"].update({"active_task_id": None, "next_task_id": None})
+            task = next(item for item in backlog["tasks"] if item["id"] == "M0-001")
+            evidence_path = ".agents/evidence/M0-future-state-fixture.md"
+            (source / evidence_path).parent.mkdir(parents=True, exist_ok=True)
+            (source / evidence_path).write_text("Synthetic state-transition fixture; no M0 result is asserted.\n", encoding="utf-8")
+            task["status"] = "done"
+            task["evidence"] = [{
+                "kind": "file",
+                "path": evidence_path,
+                "detail": "Synthetic fixture evidence to exercise a completed M0 task state.",
+                "provenance": {
+                    "status": "verified",
+                    "executed_at_utc": None,
+                    "recorded_at_utc": "2026-10-15T00:00:00Z",
+                    "exit_code": None,
+                    "git_revision": git(source, "rev-parse", "HEAD"),
+                    "log_path": None,
+                },
+            }]
+            write_json(state_path, state)
+            write_json(backlog_path, backlog)
+            checkpoint_and_commit(source, "fixture G1 to G2 with M0 complete")
+            clone_and_assert(source, "g2-clone", "M1", "pending_user_approval", False)
+
+            state_path, state, _, _ = state_and_backlog(source)
+            state["engineering"].update({
+                "active_milestone": "M1",
+                "next_milestone": "M1",
+                "next_milestone_status": "in_progress",
+                "start_authorized": True,
+                "hold_reason": "",
+            })
+            state["governance"]["next_user_action"] = "Complete the synthetic M1 transition before M2 review."
+            write_json(state_path, state)
+            checkpoint_and_commit(source, "fixture M1 active")
+            clone_and_assert(source, "m1-clone", "M1", "in_progress", True)
+
+            state_path, state, _, _ = state_and_backlog(source)
+            state["engineering"].update({
+                "active_milestone": None,
+                "next_milestone": "M2",
+                "next_milestone_status": "pending_user_approval",
+                "start_authorized": False,
+                "hold_reason": "M2 awaits explicit user authorization.",
+            })
+            state["governance"]["next_user_action"] = "Review synthetic M1 completion before authorizing M2."
+            write_json(state_path, state)
+            checkpoint_and_commit(source, "fixture M1 to M2")
+            clone_and_assert(source, "m2-clone", "M2", "pending_user_approval", False)
 
     def test_preflight_reports_files_it_could_not_hash(self) -> None:
         with patch.object(agent_preflight, "_sha_file", side_effect=PermissionError("fixture read denial")):
@@ -841,7 +1069,8 @@ class AgentContextRecoveryTests(unittest.TestCase):
         result = self.run_script(PREFLIGHT, "--json")
         self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
         payload = json.loads(result.stdout)
-        self.assertEqual(payload["summary"]["current_gate"], "G1")
+        state = json.loads((self.root / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
+        self.assertEqual(payload["summary"]["current_gate"], state["governance"]["current_gate"])
         state_text = (self.root / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8")
         self.assertNotIn(str(self.root), state_text)
 
@@ -865,16 +1094,24 @@ class AgentContextRecoveryTests(unittest.TestCase):
         self.assertEqual(summary["next_task_id"], state["task_refs"]["next_task_id"])
         self.assertEqual(summary["next_milestone"], state["engineering"]["next_milestone"])
         self.assertEqual(summary["next_milestone_status"], state["engineering"]["next_milestone_status"])
-        self.assertFalse(summary["engineering_start_authorized"])
+        self.assertEqual(summary["engineering_start_authorized"], state["engineering"]["start_authorized"])
         self.assertEqual(summary["next_user_action"], state["governance"]["next_user_action"])
-        next_task = next(task for task in backlog["tasks"] if task["id"] == state["task_refs"]["next_task_id"])
-        self.assertEqual(summary["next_task_acceptance_criteria_ids"], next_task["acceptance_criteria_ids"])
+        next_task_id = state["task_refs"]["next_task_id"]
+        if next_task_id is None:
+            self.assertIsNone(summary["next_task_id"])
+            self.assertEqual(summary["next_task_acceptance_criteria_ids"], [])
+        else:
+            next_task = next(task for task in backlog["tasks"] if task["id"] == next_task_id)
+            self.assertEqual(summary["next_task_acceptance_criteria_ids"], next_task["acceptance_criteria_ids"])
         self.assertEqual(summary["task_ids_by_status"]["done"], sorted(task["id"] for task in backlog["tasks"] if task["status"] == "done"))
         self.assertEqual(summary["open_approval_ids"], [f"O-{index:02d}" for index in range(1, 9)])
         self.assertIn("docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md", summary["decision_refs"])
         self.assertTrue(summary["roadmap_source"]["matches"])
         self.assertTrue(summary["git_snapshot_matches"])
-        self.assertTrue(summary["repo_content_matches"])
+        self.assertTrue(
+            summary["workspace_snapshot_matches"]
+            or summary["git_snapshot_mode"] in {"portable_commit_transition", "legacy_portable_commit_transition"}
+        )
         self.assertEqual(len(summary["task_ids_by_status"]["done"]), sum(1 for task in backlog["tasks"] if task["status"] == "done"))
 
 

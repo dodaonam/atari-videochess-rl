@@ -62,7 +62,7 @@ When a category changes, update its canonical source and then refresh references
 
 ## 4. G1 exit gate
 
-Use criteria `G1-01` through `G1-10` in [`ACCEPTANCE_CRITERIA.md`](../06-quality/ACCEPTANCE_CRITERIA.md) as the single pass/fail source. Task-level progress and evidence are recorded by ID in `.agents/tasks/BACKLOG.yaml`; the current state/handoff is finalized only after those criteria have evidence. G1-10 requires an independent Codex session without prior conversation. G1 closes after explicit user approval; M0 remains a separate, not-yet-started milestone unless its work is explicitly authorized.
+Use criteria `G1-01` through `G1-10` in [`ACCEPTANCE_CRITERIA.md`](../06-quality/ACCEPTANCE_CRITERIA.md) as the single pass/fail source. Task-level progress and evidence are recorded by ID in `.agents/tasks/BACKLOG.yaml`; the current state/handoff is finalized only after those criteria have evidence. G1-10 requires an independent Codex session without prior conversation. G1 closes after explicit user approval; M0 is a separate milestone whose authorization and live status are recorded in canonical state and backlog.
 
 ## 5. Approved fixed-file inventory
 

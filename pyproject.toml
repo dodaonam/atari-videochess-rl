@@ -4,4 +4,17 @@ version = "0.1.0"
 description = "Reproducible reinforcement learning for Atari VideoChess."
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "ale-py>=0.11,<0.12",
+    "chess>=1.11,<2",
+    "gymnasium>=1.1,<2",
+    "torch>=2.6,<3",
+]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }

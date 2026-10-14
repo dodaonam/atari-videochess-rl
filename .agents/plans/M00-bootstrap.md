@@ -1,7 +1,7 @@
 # M00 — Technical Project Bootstrap Plan
 
 - **Plan ID:** M00
-- **Status:** Draft plan; execution not authorized during G1
+- **Status:** M0-001 was completed and user-accepted under G2 on 2026-10-15. Acceptance evidence covers M0-01 through M0-04. Current Git state and any next-milestone authorization are owned by `PROJECT_STATE.yaml` and the latest direct user instructions.
 - **Task:** `M0-001` in `.agents/tasks/BACKLOG.yaml`
 - **Governance gate:** G2 (see [`EXECUTION_PLAN.md`](../../docs/02-management/EXECUTION_PLAN.md))
 - **Acceptance:** M0-01 through M0-04 in [`ACCEPTANCE_CRITERIA.md`](../../docs/06-quality/ACCEPTANCE_CRITERIA.md)
@@ -29,7 +29,7 @@ Audit and establish a reproducible local development environment and low-cost sm
 ## Dependencies and approvals
 
 1. G1 must be reviewed and explicitly approved by the user.
-2. `M0-001` must be marked eligible in the canonical backlog after that approval.
+2. M0-001 authorization and progress are recorded in canonical state and backlog.
 3. If a check requires credentials, external account changes, system privileges, or paid resources, stop that check and obtain the required authorization.
 
 ## Planned checks

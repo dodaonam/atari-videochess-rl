@@ -4,7 +4,7 @@
 
 ## Current status
 
-No active technical blocker has been confirmed because M0/M1 have not started. G1 hardening and independent-session acceptance are complete, and the user approved G1 on 2026-10-14. M0 is the next milestone; its live start authorization is owned by `.agents/state/PROJECT_STATE.yaml` and the latest direct user instructions. Open academic and service approvals O-01 through O-08 remain in `REQUIREMENTS.md`; these are unresolved approvals, not technical blockers.
+No active technical blocker is recorded. G1 is approved; M0-001 completed under G2 after explicit user authorization. M0 has been user-accepted; M1 has not started and awaits separate explicit authorization. ALE-Py 0.11.2 includes an accessible `video_chess.bin` ROM; this removes local ROM absence as a prerequisite concern, while O-05's runtime/evaluation details and O-01 assignment permissions remain open. Colab authentication was not live-verified. O-01 through O-08 remain unresolved in `REQUIREMENTS.md` and are recorded as open approval/setup conditions, not active technical blockers.
 
 ## Record format
 

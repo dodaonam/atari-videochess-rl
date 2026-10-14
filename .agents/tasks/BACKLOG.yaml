@@ -649,20 +649,190 @@
       "id": "M0-001",
       "title": "Technical project bootstrap",
       "milestone": "M0",
-      "status": "pending",
+      "status": "done",
       "depends_on": [
         "G1-008"
       ],
       "requires_user_gate_approval": "G1",
       "blocker_ids": [],
-      "evidence": [],
+      "evidence": [
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M0-authorization.md",
+          "detail": "Direct user authorization for M0-001 under G2, with the authorized scope and remaining boundaries.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-14T17:25:42Z",
+            "exit_code": null,
+            "git_revision": "9449b3f3508c55e1a34893a49c2670498310f78f",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "uv --cache-dir .venv/.cache/uv lock --check --python /usr/bin/python3",
+          "result": "Resolved 18 packages in 3ms",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-14T17:53:18Z",
+            "recorded_at_utc": "2026-10-14T18:03:30Z",
+            "exit_code": 0,
+            "git_revision": "9449b3f3508c55e1a34893a49c2670498310f78f",
+            "log_path": ".agents/evidence/M0-001-verification.md"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "uv --cache-dir .venv/.cache/uv sync --python /usr/bin/python3 --locked --offline",
+          "result": "Audited 16 packages in 0.17ms",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-14T17:53:18Z",
+            "recorded_at_utc": "2026-10-14T18:03:30Z",
+            "exit_code": 0,
+            "git_revision": "9449b3f3508c55e1a34893a49c2670498310f78f",
+            "log_path": ".agents/evidence/M0-001-verification.md"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "uv --cache-dir .venv/.cache/uv run --locked python -m unittest discover -s tests -p test_m0_smoke.py -v",
+          "result": "Ran 5 tests in 2.327s; OK",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-14T17:47:24Z",
+            "recorded_at_utc": "2026-10-14T18:03:30Z",
+            "exit_code": 0,
+            "git_revision": "9449b3f3508c55e1a34893a49c2670498310f78f",
+            "log_path": ".agents/evidence/M0-001-verification.md"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "uv --cache-dir .venv/.cache/uv run --locked python -m unittest discover -s tests -v",
+          "result": "Ran 41 tests in 19.575s; OK",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-14T18:05:48Z",
+            "recorded_at_utc": "2026-10-14T18:06:21Z",
+            "exit_code": 0,
+            "git_revision": "9449b3f3508c55e1a34893a49c2670498310f78f",
+            "log_path": ".agents/evidence/M0-001-verification.md"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "colab version",
+          "result": "Version: 0.7.4",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-14T17:53:34Z",
+            "recorded_at_utc": "2026-10-14T18:03:30Z",
+            "exit_code": 0,
+            "git_revision": "9449b3f3508c55e1a34893a49c2670498310f78f",
+            "log_path": ".agents/evidence/M0-001-verification.md"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "colab --help",
+          "result": "usage and command capability list available",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-14T17:53:35Z",
+            "recorded_at_utc": "2026-10-14T18:03:30Z",
+            "exit_code": 0,
+            "git_revision": "9449b3f3508c55e1a34893a49c2670498310f78f",
+            "log_path": ".agents/evidence/M0-001-verification.md"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M0-001-verification.md",
+          "detail": "M0-01 through M0-04 assessment, environment/tool versions, original results, corrected packaged-ROM evidence, limitations, and reproducibility notes.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-14T18:06:21Z",
+            "exit_code": null,
+            "git_revision": "9449b3f3508c55e1a34893a49c2670498310f78f",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "Agent context preflight: PASS; no validation errors; one expected WORKTREE_CONTENT_DRIFT warning for uncommitted M0 tracked changes.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-14T18:05:09Z",
+            "recorded_at_utc": "2026-10-14T18:06:21Z",
+            "exit_code": 0,
+            "git_revision": "9449b3f3508c55e1a34893a49c2670498310f78f",
+            "log_path": ".agents/evidence/M0-001-verification.md"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "uv lock --check --python /usr/bin/python3",
+          "result": "Resolved 18 packages in 1ms",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-14T19:14:50Z",
+            "recorded_at_utc": "2026-10-14T19:16:25Z",
+            "exit_code": 0,
+            "git_revision": "9449b3f3508c55e1a34893a49c2670498310f78f",
+            "log_path": ".agents/evidence/M0-final-technical-verification.md"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M0-final-technical-verification.md",
+          "detail": "Final M0 technical verification: corrected ALE-Py ROM evidence, future-proof clone recovery, Stockfish checksum/license procedure, Colab cache metadata review, full test suite, lock verification, and M0 acceptance assessment.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-14T19:16:25Z",
+            "exit_code": null,
+            "git_revision": "9449b3f3508c55e1a34893a49c2670498310f78f",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "finding",
+          "finding_id": "M0-ACCEPTANCE",
+          "result": "The user explicitly accepted M0-001 and M0-01 through M0-04 based on the final technical verification evidence; this approval does not authorize a commit, push, or M1.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-14T19:47:47Z",
+            "recorded_at_utc": "2026-10-14T19:47:47Z",
+            "exit_code": null,
+            "git_revision": "9449b3f3508c55e1a34893a49c2670498310f78f",
+            "log_path": ".agents/evidence/M0-acceptance.md"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M0-finalization-verification.md",
+          "detail": "M0 acceptance, token-cache permission change, offline environment verification, locked dependency audit, Colab CLI checks, Stockfish identity/license hash, and 62-test suite results.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-14T19:53:22Z",
+            "exit_code": null,
+            "git_revision": "9449b3f3508c55e1a34893a49c2670498310f78f",
+            "log_path": null
+          }
+        }
+      ],
       "acceptance_criteria_ids": [
         "M0-01",
         "M0-02",
         "M0-03",
         "M0-04"
       ],
-      "next_action": "G1 is approved. M0 remains pending explicit user authorization; follow PROJECT_STATE.yaml and latest direct user instructions before starting.",
+      "next_action": "",
       "plan_ref": ".agents/plans/M00-bootstrap.md"
     },
     {
@@ -786,5 +956,5 @@
       "plan_ref": ".agents/plans/G1-consistency-hardening.md"
     }
   ],
-  "updated_at_utc": "2026-10-14T16:40:32Z"
+  "updated_at_utc": "2026-10-14T19:53:22Z"
 }
