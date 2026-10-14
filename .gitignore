@@ -222,6 +222,7 @@ __marimo__/
 # Conversation exports and documentation bundles
 /chat_history.md
 *documentation*.zip
+/.agents/review-bundles/
 
 # Local secrets and credentials
 .env*

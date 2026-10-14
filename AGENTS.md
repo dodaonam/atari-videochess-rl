@@ -88,3 +88,7 @@ Context state uses JSON-compatible YAML 1.2 so Python's standard library can par
 A blocker record must state its ID, evidence, impact, owner, and unblock condition. An approval gate is not a technical blocker. Keep incomplete tasks incomplete; never fabricate a finding to fill a template.
 
 A completion report states exact file changes, verification commands/results, what was not run, discrepancies or unresolved approvals, current state, and next user action. A gate is ready for review only when its acceptance evidence exists and state/backlog are consistent. Gate approval and authorization for a specific follow-on task are distinct; read the current request and canonical state before acting.
+
+## 10. Review bundle exports
+
+For a project or task review archive, follow [`.agents/skills/export-review-bundle/SKILL.md`](.agents/skills/export-review-bundle/SKILL.md) and run `python3 scripts/export_review_bundle.py --scope <scope>`. The default is a working-tree snapshot; use `--mode staged` for the index or `--mode committed --commit <revision>` for a specific commit. Bundles are written under the ignored `.agents/review-bundles/` directory. A bundle records project status for review and does not grant approval to start another task. Include files over 2 MiB only after explicit user approval; stop if a sensitive-content finding is reported.
