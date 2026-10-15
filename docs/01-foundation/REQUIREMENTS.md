@@ -1,6 +1,6 @@
 # Project Requirements and Decision Register
 
-**Status:** G0 and G1 approved. Live gate/task status is owned by `.agents/state/PROJECT_STATE.yaml`.
+**Status:** G0, G1 and G2 are approved. Live gate/task status and milestone authorization are owned by [project state](../../.agents/state/PROJECT_STATE.yaml).
 **Purpose:** Consolidate the project baseline from [`ROADMAP.md`](ROADMAP.md) and `chat_history.md` while distinguishing source-stated constraints, proposed choices, and open approvals.
 
 ## 1. Status labels and authority
@@ -49,6 +49,7 @@ These are starting points to test, not decisions proven optimal:
 - A small CNN and proposed feature planes; network size, channels, optimizer, and learning rates are initial values only.
 - Stockfish evaluation transformed into supervised targets, including candidate `tanh` normalization. Teacher scores are not automatically calibrated Q-values or win probabilities. Verify perspective, sign, scale, and relationship to RL rewards before TD updates.
 - PGN, tactical-position, and agent-generated examples. Suggested dataset sizes are trial scales, not strength guarantees; split by source game/position group to avoid leakage.
+- **Proposed M3 primary PGN candidate:** the third-party Lichess Elite Database monthly archive for May 2022. Its listing describes a filtered collection of standard Lichess games, excluding bullet and, since December 2021, using a 2500+ versus 2300+ rating filter; it reports 355,535 games and 93 MB for May 2022. These are source-reported listing values, not locally confirmed archive metadata. The archive has not been downloaded, ingested, or approved. The third-party listing does not state a dataset license; the CC0 terms published for Lichess’s official database exports do not by themselves establish the terms for this filtered third-party package. Preserve O-06 until source identity, provenance, license, permitted use, and expected scope are verified and approved. See the [candidate listing](https://database.nikonoel.fr/) and [official Lichess open database terms](https://database.lichess.org/).
 - Opponent pool/curriculum; Atari fine-tuning only after stable integration and throughput evidence.
 - Local CPU for environment/preprocessing and Colab GPU for workloads that benefit. Free T4 availability depends on current entitlement, quota, and capacity.
 - Separate low-variability development settings from ALE evaluation. The roadmap's cited `frameskip=4` and sticky-action probability `0.25` must be checked against the installed ALE version; debug settings are not default-environment results.
@@ -63,6 +64,10 @@ The user reviewed and approved `AGENTS.md`, `ROADMAP.md`, and this `REQUIREMENTS
 ### G1 — Persistent Agent Context and Governance Bootstrap
 
 G1 was authorized, its hardening and independent-session acceptance were completed, and the user approved the gate on 2026-10-14. Verification is retained in `.agents/evidence/G1-hardening-verification.md` and `.agents/evidence/G1-10-recovery-verification.md`. Read `.agents/state/PROJECT_STATE.yaml` and the latest direct user instructions for live task scope and authorization. M0 follows G1 in the engineering sequence; gate approval alone does not resolve assignment, runtime, data-use, or compute approvals. Open approvals O-01 through O-08 remain unresolved.
+
+### G2 — Technical Feasibility
+
+The M1-01 through M1-06 acceptance and G2 approval are recorded in [M1/G2 final verification](../../.agents/evidence/M1-G2-final-verification-20261016.md). This does not authorize M2; the current state and M2-001 task record its separate user-authorization requirement. O-01 through O-08 remain unresolved.
 
 ### Engineering milestones
 

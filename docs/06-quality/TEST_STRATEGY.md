@@ -72,7 +72,24 @@ uv run --locked python scripts/run_m1_demo.py --profile deterministic-dev --seed
 uv run --locked python scripts/run_m1_demo.py --profile v5-default --seed 20261016 --max-opponent-wait-frames 10000
 ```
 
-The runner writes JSON traces and raw RGB frames under ignored `artifacts/m1/`. Only sanitized hashes, settings, action summaries, and findings belong in version-controlled evidence. Terminal behavior is reported as unverified unless a real game-ending position is observed; an ALE API or mock termination flag is not a substitute.
+The runner writes JSON traces and raw RGB frames under ignored `artifacts/m1/`. Only sanitized hashes, settings, action summaries, and findings belong in version-controlled evidence. A real ALE terminal requires the actual step result and returned reward/flags; source code, an ALE mock, a python-chess outcome, or an experiment stop is not a substitute.
+
+## M2 chess simulator verification design
+
+M2 implementation tests have not been created or run. When M2 is explicitly authorized, keep rule logic in python-chess and use distinct unit, simulator-integration, seeded-episode and benchmark evidence:
+
+| Layer | Required checks | Expected evidence |
+|---|---|---|
+| State and serialization unit tests | Deterministic semantic state identity; FEN parse/serialize round trip and normalization; preserve side to move, castling rights, en passant square, halfmove clock and move history needed for repetition. Compare full-history restores with claim and automatic draw behavior. | Test output plus representative before/after state records. FEN alone must not be treated as repetition history. |
+| Legal action unit tests | Generated candidates equal python-chess legal moves; legal mask exactly matches candidates; illegal candidates are masked/rejected; deterministic semantic keys do not depend on legal-list ordering. | Candidate/key/mask test fixtures and negative-path state-unchanged checks. |
+| Action conversion tests | Encode/decode round trip for ordinary moves, castling, en passant, queen/rook/bishop/knight promotions, `CLAIM_DRAW_NOW` and `CLAIM_DRAW_AFTER(move)`. Test claim eligibility, announced-move legality, claim-basis records, collisions and candidate reordering. If a fixed vocabulary is selected, test its full legal mapping and invalid-ID rejection. | Exact mapping and claim assertions with retained fixture positions; invalid claims leave the Board unchanged. |
+| Rule/transition unit tests | Apply ordinary moves, captures, castling, en passant and promotions; verify resulting Board, side to move, clocks and rights. Cover check, checkmate, stalemate, insufficient material, fivefold repetition, seventy-five-move automatic draw, current-position threefold/fifty-move claims and claims based on a legal announced move under the chosen claim-action contract. | Deterministic python-chess position fixtures, claim-basis traces and reason-specific outcome assertions. |
+| Simulator integration tests | Agent move followed by opponent response; terminal after agent action skips opponent; terminal after opponent response returns without another agent step; rewards use the agent-color perspective for both colors; invalid action preserves state; truncation is distinct from terminal and retains a valid final observation. | Complete transition records with agent move, opponent move, reward, terminated/truncated and result reason. |
+| Seeded episode tests | Same seed, color, opponent identity/configuration and initial position reproduce action/outcome records. Different colors are tested without sign inversion errors. Random-legal and heuristic selectors choose only legal actions and run bounded complete games. | Episode traces with seed, policy versions, colors, moves, final result and truncation count. Incomplete games are not counted as complete. |
+| Benchmark/tournament evidence | Run random-legal and heuristic baselines against identified opponents under a recorded color/seed schedule. Record W/D/L, game lengths, completion/truncation counts, policy/opponent identity, config and source revision. | Per-game data and an aggregate summary; no unsupported Elo claim or uncalibrated rating. |
+| Metric separation checks | Ensure simulator result records have an explicit simulator identity and are not merged into ALE W/D/L, ALE reward, or terminal metrics. | Schema/aggregation tests and report review showing simulator and ALE evidence separately. |
+
+M2 acceptance evidence maps to M2-01 through M2-04 in [ACCEPTANCE_CRITERIA.md](ACCEPTANCE_CRITERIA.md). The detailed contracts and provisional choices are in [MDP_SPEC.md](../03-technical/MDP_SPEC.md); action/perspective review is pending in [ADR-0002](../02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md). Do not treat this test design as an M2 result.
 
 ## Future project test layers
 
