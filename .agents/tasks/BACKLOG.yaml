@@ -1287,8 +1287,8 @@
         },
         {
           "kind": "file",
-          "path": "artifacts/m1/blk001-terminal-12f-20261015/trace.json",
-          "detail": "Eighth bounded terminal-seeking episode after controller correction, seed 20261015; 18 RGB-verified cycles before safe stop.",
+          "path": ".agents/evidence/BLK-001-diagnostic-20261015-r2.zip",
+          "detail": "Portable bundle member corrected-16f/terminal-seeking-trace.json: eighth bounded terminal-seeking attempt, seed 20261015, with 18 RGB-verified cycles before safe stop.",
           "result": "ALE reward 0.0, terminated=false, truncated=false, frame 14081; M1-04 remains UNVERIFIED.",
           "provenance": {
             "status": "verified",
@@ -1301,8 +1301,8 @@
         },
         {
           "kind": "file",
-          "path": "artifacts/m1/blk001-final-instrumented-20261015/trace.json",
-          "detail": "Final-code two-cycle deterministic real-ALE trace; each action carries ALE frame-number and environment-step boundaries.",
+          "path": ".agents/evidence/BLK-001-diagnostic-20261015-r2.zip",
+          "detail": "Portable bundle member controller-traces/phase-instrumented-2cycle-trace.json: final-code two-cycle trace with ALE frame-number and environment-step boundaries.",
           "result": "Two RGB-verified cycles; 1,332 ALE frames, 3.822 seconds, target FIRE 16 frames; no terminal observed.",
           "provenance": {
             "status": "verified",
