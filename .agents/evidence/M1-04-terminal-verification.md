@@ -279,3 +279,13 @@ The recovery test initially failed because its synthetic Git repository copied i
 - **Log:** [`BLK-001-context-export-final-20261015.log`](logs/BLK-001-context-export-final-20261015.log), SHA-256 `37e091c00350cc962aac2115b2c1a522fa2ffebd71b03f2bd12e45a9f8aff4a6`.
 - **Artifact manifest:** `artifacts/m1/MANIFEST-20261015.sha256`, 1,214 entries; `sha256sum --check --status` passed.
 - **M1 decision:** M1-04 remains UNVERIFIED because no real ALE terminal or nonzero reward was observed. G2 remains in progress and BLK-001 remains active.
+
+
+### GitHub clean-clone verification
+
+- **Executed:** 2026-10-15T16:32:32Z–16:33:40Z.
+- **Remote:** `https://github.com/dodaonam/atari-videochess-rl.git`, branch `initial-idea`, cloned HEAD `3cded0908ae17b598f31f7674a4fbe3d9a078c8c` (the pushed revision at verification time).
+- **Preflight:** `python3 scripts/agent_preflight.py --json` passed with no errors; the expected `ARTIFACT_MANIFEST_REQUIRED` warning remained because raw local experiment artifacts are not in Git.
+- **Modes and local files:** all 71 tracked file modes matched Git; only `scripts/run_m1_terminal_experiment.py` has mode `100755`. `main.py`, `chat_history.md`, `.venv`, and raw experiment artifacts were absent; only the tracked `artifacts/m1/MANIFEST-20261015.sha256` was present.
+- **Tests:** `python3 -m unittest tests.test_agent_context tests.test_export_review_bundle -v` passed all 57 tests in 65.196 seconds, exit code `0`. No dependencies were installed.
+- **Retained sanitized log:** [`BLK-001-remote-cleanclone-20261015.log`](logs/BLK-001-remote-cleanclone-20261015.log), SHA-256 `69264bd7f358dfb10e160120c46a94bbc609b79d201287bc71f098ce1473110e`.
