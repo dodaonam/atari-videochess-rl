@@ -1390,6 +1390,19 @@
             "git_revision": "3cded0908ae17b598f31f7674a4fbe3d9a078c8c",
             "log_path": ".agents/evidence/logs/BLK-001-remote-cleanclone-20261015.log"
           }
+        },
+        {
+          "kind": "test",
+          "command": "git clone --quiet --branch initial-idea --single-branch https://github.com/dodaonam/atari-videochess-rl.git <temporary-directory> followed by python3 scripts/agent_preflight.py --json and python3 -m unittest tests.test_agent_context tests.test_export_review_bundle -v",
+          "result": "PASS: final GitHub clean clone at b328d8d7470bb5c8f695b368971d1f667ad7cf9e matched portable baseline; 72 tracked modes matched, only the terminal runner at 100755; local-only files and raw artifacts were absent; preflight passed and all 57 context/export tests passed in 63.404s.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-15T16:35:23Z",
+            "recorded_at_utc": "2026-10-15T16:36:31Z",
+            "exit_code": 0,
+            "git_revision": "b328d8d7470bb5c8f695b368971d1f667ad7cf9e",
+            "log_path": ".agents/evidence/logs/BLK-001-final-remote-cleanclone-20261015.log"
+          }
         }
       ],
       "acceptance_criteria_ids": [
@@ -1404,5 +1417,5 @@
       "plan_ref": ".agents/plans/M01-ale-feasibility.md"
     }
   ],
-  "updated_at_utc": "2026-10-15T16:33:40Z"
+  "updated_at_utc": "2026-10-15T16:36:31Z"
 }
