@@ -482,9 +482,15 @@ class AgentContextRecoveryTests(unittest.TestCase):
             )
             section = record.split("## Approved baseline inventory", 1)[1].split("## Explicit exclusions", 1)[0]
             approved_files = set(re.findall(r"^- `([^`]+)`$", section, flags=re.MULTILINE))
-            committed_files = set(filter(None, subprocess.check_output(
-                ["git", "-C", str(REPO), "ls-tree", "-r", "--name-only", "-z", "HEAD"]
-            ).decode().split("\0")))
+            tree_entries = subprocess.check_output(
+                ["git", "-C", str(REPO), "ls-tree", "-r", "-z", "HEAD"]
+            ).split(b"\0")
+            file_modes = {}
+            for entry in filter(None, tree_entries):
+                header, raw_path = entry.split(b"\t", 1)
+                mode = header.split(b" ", 1)[0].decode("ascii")
+                file_modes[raw_path.decode("utf-8")] = mode
+            committed_files = set(file_modes)
             self.assertGreater(len(approved_files), 20)
             self.assertTrue(approved_files <= committed_files)
             self.assertNotIn("chat_history.md", committed_files)
@@ -496,6 +502,8 @@ class AgentContextRecoveryTests(unittest.TestCase):
                 destination = source / rel
                 destination.parent.mkdir(parents=True, exist_ok=True)
                 destination.write_bytes(subprocess.check_output(["git", "-C", str(REPO), "show", f"HEAD:{rel}"]))
+                if file_modes[rel] == "100755":
+                    destination.chmod(0o755)
 
             git(source, "add", "--all")
             subprocess.run(

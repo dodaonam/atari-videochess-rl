@@ -1,6 +1,6 @@
 # M1-04 Terminal, Reward, Turn, and Mode Verification
 
-- **Recorded at:** 2026-10-15T10:34:52Z.
+- **Recorded at:** 2026-10-15T10:41:41Z.
 - **Branch / source revision:** `initial-idea` at `dd67267ff85670c674d0d6d08c129ce10692798f`; working tree contained authorized M1 changes.
 - **Authorization:** `.agents/evidence/M1-authorization.md` and the current direct user task.
 - **Plan:** `.agents/plans/M01-ale-feasibility.md`.
@@ -155,3 +155,25 @@ videochess_rl/vision.py
 ```
 
 Recorded result: M1-04 remains UNVERIFIED; M1-001 is blocked by BLK-001; G2 remains in progress.
+
+## Clean-clone portability regression and correction
+
+After the first push, a fresh clone of remote `initial-idea` at `cd9bd56cd3ac41eedd603a933d6886935a70e361` recovered G2/M1/BLK-001 correctly with `python3 scripts/agent_preflight.py` (exit 0); `main.py`, `chat_history.md`, `.venv`, and `artifacts/` were absent. The environment-independent context/export suite then ran 57 tests and had one failure in `test_clean_clone_recovers_current_committed_state_without_local_artifacts`.
+
+The failure was in that test's synthetic Git fixture: it copied committed file bytes with `write_bytes()` but did not preserve executable mode `100755` for the new terminal runner. The fixture committed it as `100644`, so the synthetic tree did not match the portable manifest and preflight correctly reported `unexplained_git_transition`. The real clone retained Git mode and preflight classified the transition as portable. The fixture now reads modes from `git ls-tree` and reapplies executable mode when materializing files. The focused regression test passed after this correction; final context/export and remote clean-clone results are reported below after rerun.
+
+### Context/export rerun after mode-preserving fixture correction
+
+- **Executed:** 2026-10-15T10:40:20Z–10:41:41Z.
+- Command: `python3 -m unittest tests.test_agent_context tests.test_export_review_bundle -v`
+- Result: `PASS: 57 tests in 80.487s.`
+Exit code: 0
+- **Coverage:** the current-committed-state clean-clone regression, portable milestone transitions, checkpoint/cache recovery, and export security/manifest behavior.
+- **Note:** this rerun was performed in the source checkout after correcting the synthetic fixture. A second clean clone from the updated remote is performed after the follow-up commit.
+
+### Focused recovery tests after final follow-up checkpoint
+
+- **Executed:** 2026-10-15T10:42:28Z–10:42:56Z.
+- Command: `python3 -m unittest tests.test_agent_context.AgentContextRecoveryTests.test_clean_clone_recovers_current_committed_state_without_local_artifacts tests.test_agent_context.AgentContextRecoveryTests.test_project_context_can_be_recovered_without_chat_history -v`
+- Result: `PASS: 2 recovery tests in 27.118s.`
+Exit code: 0
