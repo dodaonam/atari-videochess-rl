@@ -1,6 +1,6 @@
 # M1-001 — ALE Feasibility Verification
 
-> Historical verification snapshot from 2026-10-15T08:29:19Z. The later multi-turn controller work, mode reset checks, bounded terminal-seeking runs, and current M1-04 verdict are recorded in [M1-04-terminal-verification.md](M1-04-terminal-verification.md). This record is retained unchanged as the earlier baseline.
+> Historical verification snapshot from 2026-10-15T08:29:19Z. The later multi-turn controller work and final M1-01–M1-06 acceptance/G2 decision are recorded in [M1/G2 final mission verification](M1-G2-final-verification-20261016.md) and [M1-04 terminal verification](M1-04-terminal-verification.md). This record is retained as the earlier baseline.
 
 - **Recorded at:** 2026-10-15T08:29:19Z
 - **Branch:** `initial-idea`

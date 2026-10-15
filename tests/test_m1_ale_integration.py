@@ -11,6 +11,7 @@ import chess
 from videochess_rl.demo import run_closed_loop
 from videochess_rl.environment import ALEConfig, VideoChessEnv
 from videochess_rl.episode import choose_diagnostic_move, run_episode
+from videochess_rl.episode import StopCategory
 from videochess_rl.shadow import DesynchronizationError, ShadowBoard
 from videochess_rl.vision import VideoChessVision
 
@@ -29,7 +30,9 @@ class RealALEClosedLoopTests(unittest.TestCase):
                 artifact_dir=directory,
             )
 
-        self.assertEqual(result["status"], "complete", result.get("failure"))
+        self.assertEqual(result["status"], "runner_stopped", result.get("failure"))
+        self.assertEqual(result["terminal"]["runner_stop_category"], StopCategory.RUNNER_MAX_PLAYER_MOVES.value)
+        self.assertFalse(result["terminal"]["ale_terminated"])
         self.assertEqual(len(result["turns"]), 2)
         self.assertNotEqual(result["turns"][1]["board_before_fen"], chess.Board().fen())
         for turn in result["turns"]:
@@ -51,7 +54,9 @@ class RealALEClosedLoopTests(unittest.TestCase):
                 artifact_dir=directory,
             )
 
-        self.assertEqual(result["status"], "complete", result.get("failure"))
+        self.assertEqual(result["status"], "runner_stopped", result.get("failure"))
+        self.assertEqual(result["terminal"]["runner_stop_category"], StopCategory.RUNNER_MAX_PLAYER_MOVES.value)
+        self.assertFalse(result["terminal"]["ale_terminated"])
         self.assertEqual(result["turns"][0]["player_move"]["uci"], "e2e3")
         self.assertTrue(result["turns"][0]["player_move"]["verified_from_rgb"])
         reply = result["turns"][0]["opponent_reply"]["uci"]

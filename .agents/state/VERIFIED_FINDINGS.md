@@ -2,6 +2,8 @@
 
 **Canonical source for:** evidence-backed facts that future sessions should retain. Proposals belong in plans/requirements; decisions belong in ADRs; live task status belongs in the backlog/state.
 
+Findings are append-only historical observations. FND-021 and FND-022 record the final M1 results and supersede the earlier in-progress M1/BLK-001 status statements in FND-014, FND-016 through FND-020; those earlier experiment observations remain valid for their recorded dates.
+
 ## FND-001 — G1-start repository baseline
 
 - **Status:** verified at G1 start
@@ -144,3 +146,17 @@
 - **Finding:** The eighth authorized mode-0 terminal-seeking episode used the phase-verified controller with 12-frame target FIRE, ran 14,081 ALE frames in 37.973 seconds, and completed 18 full RGB-verified cycles. It stopped on a later `a2a1` because the selected-piece preview remained after target FIRE. ALE reported reward `0.0`, `terminated=false`, and `truncated=false`; no terminal event was observed. A separate 16-frame 20-cycle control replay also ended without terminal or reward.
 - **Evidence:** `.agents/evidence/M1-04-terminal-verification.md`; `.agents/evidence/BLK-001-diagnostic-20261015-r2.zip`; trace `artifacts/m1/blk001-terminal-12f-20261015/trace.json`.
 - **Impact:** M1-04 remains UNVERIFIED; M1-001 remains blocked by BLK-001; G2 remains in progress. Do not begin M2.
+
+## FND-021 — Episode stop reasons and mode-4 reply readiness
+
+- **Status:** verified and corrected 2026-10-15
+- **Finding:** The previous 20-cycle experiment ended at `max_player_moves=20` with ALE reward zero and both ALE flags false; the prior runner's `status="complete"` was ambiguous. The previous 18-cycle episode ended at safe target-confirmation uncertainty, also without an ALE ending. A new mode-4 attempt stopped after ten transient RGB mismatch windows at approximately 330 reply-wait frames despite a 20,000-frame bound. After removing that early stop and requiring the unique legal reply's source cursor in RGB, actual Atari replies were observed after 594, 660, 858, and 1,221 frames. Python computation consumes host wall time but advances no emulator frames; only ALE stepping does.
+- **Evidence:** `.agents/evidence/M1-G2-final-verification-20261016.md`; `.agents/evidence/M1-04-experiment-campaign-20261016.md`; mode-4 traces and RGB frames under ignored `artifacts/m1/m1-04/`; `videochess_rl/episode.py` stop categories and readiness logic.
+- **Impact:** Runner caps, controller uncertainty, and actual ALE terminal/truncation are now recorded as distinct categories. Long-thinking modes wait within explicit bounds without interpreting transient visual states as game endings.
+
+## FND-022 — Genuine ALE terminal and white-loss reward reproduced
+
+- **Status:** verified 2026-10-15
+- **Finding:** Two fresh deterministic `ALE/VideoChess-v5` mode-4 runs with seed `20261017` returned ALE reward `-1.0`, `terminated=true`, and `truncated=false` at frame 4,613 / environment step 4,609. The three verified Atari replies, terminal reward event, terminal flags, and terminal RGB pixels matched on replay. The last independently verified FEN is preserved; the attempted final `b2b3` move and inferred `d8h4#` are explicitly not presented as RGB-confirmed transitions. The live negative reward confirms White-perspective loss; the positive sign is source-documented but not observed.
+- **Evidence:** `.agents/evidence/M1-G2-final-verification-20261016.md`; `.agents/evidence/M1-04-terminal-success-20261016.zip`; `.agents/evidence/logs/M1-terminal-evidence-integrity-20261016.log`; traces `artifacts/m1/m1-04/campaign4-mode4-queenmate-seed20261017/trace.json` and `campaign5-terminal-replay-seed20261017/trace.json`.
+- **Impact:** M1-04 now has genuine terminal/reward, turn, and mode evidence. M1-001 is complete, BLK-001 is resolved, G2 is approved, and M2 remains pending separate authorization. O-01 through O-08 remain open.

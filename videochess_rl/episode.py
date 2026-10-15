@@ -81,6 +81,26 @@ class EpisodeStop(RuntimeError):
     """The bounded episode cannot continue without guessing state."""
 
 
+class StopCategory(str, Enum):
+    """Machine-readable reason an episode stopped or ended."""
+
+    ALE_TERMINATED = "ALE_TERMINATED"
+    ALE_TRUNCATED = "ALE_TRUNCATED"
+    RUNNER_MAX_PLAYER_MOVES = "RUNNER_MAX_PLAYER_MOVES"
+    RUNNER_MAX_ALE_FRAMES = "RUNNER_MAX_ALE_FRAMES"
+    RUNNER_MAX_ENV_STEPS = "RUNNER_MAX_ENV_STEPS"
+    RUNNER_MAX_WALL_CLOCK = "RUNNER_MAX_WALL_CLOCK"
+    RUNNER_ARTIFACT_LIMIT = "RUNNER_ARTIFACT_LIMIT"
+    CONTROLLER_SOURCE_SELECTION_UNCERTAIN = "CONTROLLER_SOURCE_SELECTION_UNCERTAIN"
+    CONTROLLER_TARGET_NAVIGATION_UNCERTAIN = "CONTROLLER_TARGET_NAVIGATION_UNCERTAIN"
+    CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN = "CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN"
+    CONTROLLER_BOARD_DESYNCHRONIZED = "CONTROLLER_BOARD_DESYNCHRONIZED"
+    OPPONENT_RESPONSE_TIMEOUT = "OPPONENT_RESPONSE_TIMEOUT"
+    CHESS_RULE_INCOMPATIBILITY = "CHESS_RULE_INCOMPATIBILITY"
+    EXCEPTION_OR_EXTERNAL_INTERRUPTION = "EXCEPTION_OR_EXTERNAL_INTERRUPTION"
+    UNKNOWN = "UNKNOWN"
+
+
 def agent_reward_from_ale(ale_reward: float, agent_color: chess.Color) -> float:
     """Convert the wrapper's white-perspective reward to an agent perspective."""
     return float(ale_reward if agent_color == chess.WHITE else -ale_reward)
@@ -123,6 +143,120 @@ def choose_diagnostic_move(board: chess.Board) -> str:
         if move in candidates:
             return uci
     return candidates[0].uci()
+
+
+def choose_cooperative_loss_move(board: chess.Board) -> str:
+    """Choose a legal, deliberately weak move to test real ALE loss handling.
+
+    The opening tries Fool's Mate (f3, then g4) and then prefers a legal move
+    that gives the opponent an immediate checkmate. This is a diagnostic loss
+    policy, not a chess-playing baseline.
+    """
+    legal = sorted(board.legal_moves, key=lambda move: move.uci())
+    if not legal:
+        raise ValueError("No legal move is available in the observed position")
+
+    previous_player_move = board.move_stack[-2] if len(board.move_stack) >= 2 else None
+
+    def reverses_previous_player_move(move: chess.Move) -> bool:
+        return bool(
+            previous_player_move
+            and move.from_square == previous_player_move.to_square
+            and move.to_square == previous_player_move.from_square
+        )
+
+    def repeats_position(move: chess.Move) -> bool:
+        candidate = _board_after(board, move)
+        return candidate.is_repetition(2)
+
+    # Keep e2 and h2 in place so the queen's h4 diagonal can become a genuine
+    # Fool's Mate threat after Black opens the e-file. Quiet queenside pawn
+    # moves preserve that tactical condition while remaining ordinary legal
+    # gameplay.
+    preferred_blunders = ("f2f3", "g2g4", "a2a3", "b2b3", "c2c3", "d2d3", "f3f4", "g4g5")
+    for uci in preferred_blunders:
+        move = chess.Move.from_uci(uci)
+        if move in board.legal_moves and not reverses_previous_player_move(move) and not repeats_position(move):
+            candidate = board.copy()
+            candidate.push(move)
+            if any(
+                (reply_board := _board_after(candidate, reply)).is_checkmate()
+                for reply in candidate.legal_moves
+            ):
+                return uci
+    # If the preferred two-move mating trap is not available, intentionally
+    # allow any immediate legal mate by the opponent.
+    for move in legal:
+        if reverses_previous_player_move(move) or repeats_position(move):
+            continue
+        candidate = board.copy()
+        candidate.push(move)
+        if any(_board_after(candidate, reply).is_checkmate() for reply in candidate.legal_moves):
+            return move.uci()
+    for uci in preferred_blunders:
+        move = chess.Move.from_uci(uci)
+        if move in board.legal_moves and not reverses_previous_player_move(move) and not repeats_position(move):
+            return uci
+    non_repeating = [move for move in legal if not reverses_previous_player_move(move) and not repeats_position(move)]
+    return (non_repeating or legal)[0].uci()
+
+
+def _board_after(board: chess.Board, move: chess.Move) -> chess.Board:
+    result = board.copy()
+    result.push(move)
+    return result
+
+
+def _classify_stop(reason: str | None, phase: str | None) -> StopCategory:
+    if not reason:
+        return StopCategory.UNKNOWN
+    if "wall-clock budget" in reason:
+        return StopCategory.RUNNER_MAX_WALL_CLOCK
+    if "environment-step budget" in reason or "env-step budget" in reason:
+        return StopCategory.RUNNER_MAX_ENV_STEPS
+    if "frame budget" in reason or "ALE frame budget" in reason:
+        return StopCategory.RUNNER_MAX_ALE_FRAMES
+    if "artifact-byte budget" in reason:
+        return StopCategory.RUNNER_ARTIFACT_LIMIT
+    if phase == "source_selection_uncertain" or "Source FIRE" in reason:
+        return StopCategory.CONTROLLER_SOURCE_SELECTION_UNCERTAIN
+    if phase == "selected_target_uncertain" or "Selected target" in reason:
+        return StopCategory.CONTROLLER_TARGET_NAVIGATION_UNCERTAIN
+    if phase == "target_confirmation_uncertain" or "Target FIRE" in reason:
+        return StopCategory.CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN
+    if "No stable unique legal Atari reply appeared within the bounded wait" in reason or "opponent wait limit" in reason:
+        return StopCategory.OPPONENT_RESPONSE_TIMEOUT
+    if "illegal move" in reason or "not legal" in reason:
+        return StopCategory.CHESS_RULE_INCOMPATIBILITY
+    if "RGB" in reason or "cursor" in reason or "board" in reason:
+        return StopCategory.CONTROLLER_BOARD_DESYNCHRONIZED
+    return StopCategory.UNKNOWN
+
+
+def _game_progress(board: chess.Board) -> dict[str, object]:
+    """Summarize verified chess state for diagnostics; this never drives ALE truth."""
+    material = {"white": 0, "black": 0}
+    for piece in board.piece_map().values():
+        if piece.piece_type != chess.KING:
+            color = "white" if piece.color else "black"
+            material[color] += PIECE_VALUE[piece.piece_type]
+    white_king = board.king(chess.WHITE)
+    black_king = board.king(chess.BLACK)
+    return {
+        "side_to_move": "white" if board.turn else "black",
+        "side_to_move_in_check": board.is_check(),
+        "white_king_attacked": bool(white_king is not None and board.is_attacked_by(chess.BLACK, white_king)),
+        "black_king_attacked": bool(black_king is not None and board.is_attacked_by(chess.WHITE, black_king)),
+        "material_points": material,
+        "material_difference_white_minus_black": material["white"] - material["black"],
+        "legal_move_count": board.legal_moves.count(),
+        "checkmate_in_verified_shadow": board.is_checkmate(),
+        "stalemate_in_verified_shadow": board.is_stalemate(),
+        "position_repeated_twice": board.is_repetition(2),
+        "threefold_claim_available": board.can_claim_threefold_repetition(),
+        "halfmove_clock": board.halfmove_clock,
+        "fullmove_number": board.fullmove_number,
+    }
 
 
 def _unique_cursor(window: BoardWindow) -> str | None:
@@ -248,6 +382,7 @@ def run_episode(
     max_player_moves: int = 1,
     max_opponent_wait_frames: int = 10000,
     max_episode_frames: int = 54000,
+    max_episode_env_steps: int | None = None,
     max_episode_seconds: float = 900.0,
     max_artifact_bytes: int = 250 * 1024 * 1024,
     target_fire_press_frames: int = 16,
@@ -259,7 +394,12 @@ def run_episode(
         raise ValueError("max_player_moves must be positive")
     if max_opponent_wait_frames < WINDOW_FRAMES:
         raise ValueError(f"max_opponent_wait_frames must be at least {WINDOW_FRAMES}")
-    if max_episode_frames < WINDOW_FRAMES or max_episode_seconds <= 0 or max_artifact_bytes <= 0:
+    if (
+        max_episode_frames < WINDOW_FRAMES
+        or (max_episode_env_steps is not None and max_episode_env_steps < 1)
+        or max_episode_seconds <= 0
+        or max_artifact_bytes <= 0
+    ):
         raise ValueError("Episode frame and wall-clock budgets must be positive")
 
     config = config or ALEConfig.deterministic_dev()
@@ -295,6 +435,7 @@ def run_episode(
             "max_player_moves": max_player_moves,
             "max_opponent_wait_frames": max_opponent_wait_frames,
             "max_episode_frames": max_episode_frames,
+            "max_episode_env_steps": max_episode_env_steps,
             "max_episode_seconds": max_episode_seconds,
             "max_artifact_bytes": max_artifact_bytes,
         },
@@ -303,6 +444,7 @@ def run_episode(
         "initial_position": {"verified_from_rgb": False, "cursor_squares": []},
         "actions": [],
         "observations": [],
+        "ale_reward_events": [],
         "cursor_observations": [],
         "ram_diagnostics_only": [],
         "turn_events": [],
@@ -312,9 +454,17 @@ def run_episode(
         "terminal": {
             "observed": False,
             "terminated": False,
+            "ale_terminated": False,
             "truncated": False,
+            "ale_truncated": False,
             "ale_reward_total": 0.0,
             "agent_reward_total": 0.0,
+            "runner_stopped": False,
+            "runner_stop_category": StopCategory.UNKNOWN.value,
+            "runner_stop_reason": None,
+            "player_moves_attempted": 0,
+            "verified_player_moves": 0,
+            "verified_atari_replies": 0,
         },
     }
     frames_dir = None
@@ -328,6 +478,25 @@ def run_episode(
         vision = VideoChessVision()
         reset = env.reset(seed=seed)
         last_frame = reset
+
+        def mark_blocked(reason: str) -> dict[str, object]:
+            trace["status"] = "blocked"
+            trace["failure"] = reason
+            trace["terminal"].update(
+                {
+                    "runner_stopped": True,
+                    "runner_stop_category": StopCategory.CONTROLLER_BOARD_DESYNCHRONIZED.value,
+                    "runner_stop_reason": reason,
+                    "stop_reason": reason,
+                    "ale_frames": last_frame.frame_number,
+                    "frame_number": last_frame.frame_number,
+                    "environment_steps": 0,
+                    "env_steps": 0,
+                    "wall_seconds": round(time.monotonic() - started_monotonic, 3),
+                }
+            )
+            return trace
+
         initial_observation = vision.observe(reset.rgb)
         initial_window = vision.window((reset.rgb, reset.rgb, reset.rgb))
         trace["runtime"] = env.runtime_info()
@@ -348,23 +517,15 @@ def run_episode(
             {"stage": "reset", **env.diagnostic_ram((0xE1, 0xE4, 0xEA, 0xEE))}
         )
         if not initial_observation.matches_start_position() or not initial_window.is_stable:
-            trace["status"] = "blocked"
-            trace["failure"] = "Reset RGB did not establish a stable standard chess start"
-            return trace
+            return mark_blocked("Reset RGB did not establish a stable standard chess start")
         shadow = ShadowBoard()
         if not initial_window.matches_board_except_cursor(shadow.board):
-            trace["status"] = "blocked"
-            trace["failure"] = "Reset RGB did not agree with the initial shadow position"
-            return trace
+            return mark_blocked("Reset RGB did not agree with the initial shadow position")
         cursor = _unique_cursor(initial_window)
         if cursor is None:
-            trace["status"] = "blocked"
-            trace["failure"] = "Reset RGB did not show one uniquely locatable cursor"
-            return trace
+            return mark_blocked("Reset RGB did not show one uniquely locatable cursor")
         if expected_reset_cursor is not None and cursor != expected_reset_cursor:
-            trace["status"] = "blocked"
-            trace["failure"] = f"Reset cursor expectation {expected_reset_cursor} disagrees with RGB cursor {cursor}"
-            return trace
+            return mark_blocked(f"Reset cursor expectation {expected_reset_cursor} disagrees with RGB cursor {cursor}")
         current_window = initial_window
         actions: list[dict[str, object]] = trace["actions"]
         observations: list[dict[str, object]] = trace["observations"]
@@ -372,8 +533,18 @@ def run_episode(
         episode_env_steps = 0
         terminal_observed = False
         stop_reason: str | None = None
+        stop_category: StopCategory | None = None
+        latest_input_phase: str | None = None
+        terminal_phase: str | None = None
+        pre_terminal_frame: ALEFrame | None = None
         max_env_steps = max_episode_frames // config.frameskip
         artifact_bytes = 0
+
+        def set_stop(reason: str, category: StopCategory | None = None) -> None:
+            nonlocal stop_reason, stop_category
+            if stop_reason is None:
+                stop_reason = reason
+                stop_category = category
 
         def set_turn_state(turn_index: int, state: TurnState, reason: str) -> None:
             trace["turn_events"].append(
@@ -386,6 +557,8 @@ def run_episode(
             reason: str,
             **evidence: object,
         ) -> None:
+            nonlocal latest_input_phase
+            latest_input_phase = phase
             turn.setdefault("input_phases", []).append(
                 {
                     "phase": phase,
@@ -396,7 +569,7 @@ def run_episode(
             )
 
         def execute(action: int, requested_frames: int, name: str) -> list[ALEFrame]:
-            nonlocal last_frame, total_reward, episode_env_steps, terminal_observed, stop_reason
+            nonlocal last_frame, total_reward, episode_env_steps, terminal_observed, terminal_phase, pre_terminal_frame
             if terminal_observed or stop_reason:
                 return []
             env_steps = math.ceil(requested_frames / config.frameskip)
@@ -407,17 +580,42 @@ def run_episode(
             reward_sum = 0.0
             for _ in range(env_steps):
                 if time.monotonic() - started_monotonic >= max_episode_seconds:
-                    stop_reason = "per-episode wall-clock budget reached"
+                    set_stop("per-episode wall-clock budget reached", StopCategory.RUNNER_MAX_WALL_CLOCK)
+                    break
+                if max_episode_env_steps is not None and episode_env_steps >= max_episode_env_steps:
+                    set_stop("per-episode environment-step budget reached", StopCategory.RUNNER_MAX_ENV_STEPS)
                     break
                 if episode_env_steps >= max_env_steps:
-                    stop_reason = "per-episode ALE frame budget reached"
+                    set_stop("per-episode ALE frame budget reached", StopCategory.RUNNER_MAX_ALE_FRAMES)
                     break
-                last_frame = env.step(action)
+                frame_before_step = last_frame
+                try:
+                    last_frame = env.step(action)
+                except Exception as exc:  # retain an inspectable stop for runtime failures
+                    set_stop(
+                        f"env.step raised {type(exc).__name__}: {exc}",
+                        StopCategory.EXCEPTION_OR_EXTERNAL_INTERRUPTION,
+                    )
+                    break
                 samples.append(last_frame)
                 episode_env_steps += 1
                 reward_sum += last_frame.reward
                 total_reward += last_frame.reward
                 terminal_observed = terminal_observed or last_frame.terminated or last_frame.truncated
+                if last_frame.terminated or last_frame.truncated:
+                    terminal_phase = name
+                    pre_terminal_frame = frame_before_step
+                if last_frame.reward != 0.0 or last_frame.terminated or last_frame.truncated:
+                    trace["ale_reward_events"].append(
+                        {
+                            "frame_number": last_frame.frame_number,
+                            "environment_step": episode_env_steps,
+                            "action": ACTION_NAMES[action],
+                            "reward": last_frame.reward,
+                            "terminated": last_frame.terminated,
+                            "truncated": last_frame.truncated,
+                        }
+                    )
                 if last_frame.terminated or last_frame.truncated:
                     break
             actions.append(
@@ -540,19 +738,20 @@ def run_episode(
                     raise EpisodeStop("Cursor remained unlocatable after bounded RGB samples")
             raise EpisodeStop(f"Cursor route exceeded {MAX_CURSOR_ACTIONS_PER_MOVE} verified actions")
 
-        def save_frame(name: str) -> dict[str, object]:
-            nonlocal artifact_bytes, stop_reason
+        def save_frame(name: str, frame: ALEFrame | None = None) -> dict[str, object]:
+            nonlocal artifact_bytes
+            frame = frame or last_frame
             item: dict[str, object] = {
                 "name": name,
-                "frame_number": last_frame.frame_number,
-                "rgb_sha256": hashlib.sha256(last_frame.rgb.tobytes()).hexdigest(),
+                "frame_number": frame.frame_number,
+                "rgb_sha256": hashlib.sha256(frame.rgb.tobytes()).hexdigest(),
             }
             if frames_dir is not None:
-                if artifact_bytes + last_frame.rgb.nbytes > max_artifact_bytes:
-                    stop_reason = "local experimental artifact-byte budget reached"
-                    raise EpisodeStop(stop_reason)
+                if artifact_bytes + frame.rgb.nbytes > max_artifact_bytes:
+                    set_stop("local experimental artifact-byte budget reached", StopCategory.RUNNER_ARTIFACT_LIMIT)
+                    raise EpisodeStop(stop_reason or "local experimental artifact-byte budget reached")
                 path = frames_dir / f"{name}.png"
-                _write_png(path, last_frame.rgb)
+                _write_png(path, frame.rgb)
                 artifact_bytes += path.stat().st_size
                 repo_root = Path(__file__).resolve().parents[1]
                 try:
@@ -743,6 +942,16 @@ def run_episode(
                     else:
                         execute(event.index, event.frames, event.phase)
 
+                if terminal_observed:
+                    set_input_phase(
+                        turn,
+                        "ale_terminal_observed",
+                        f"ALE ended during {terminal_phase or 'player input'}; no further input was sent",
+                        terminated=last_frame.terminated,
+                        truncated=last_frame.truncated,
+                        reward=last_frame.reward,
+                    )
+                    break
                 if stop_reason:
                     raise EpisodeStop(stop_reason)
                 expected_player_board = board_before.copy()
@@ -756,6 +965,16 @@ def run_episode(
                     if terminal_observed or stop_reason:
                         break
                     window = observe_window("player move RGB confirmation", expected_player_board)
+                    if terminal_observed:
+                        set_input_phase(
+                            turn,
+                            "ale_terminal_observed",
+                            f"ALE ended during {terminal_phase or 'player move confirmation'}; no further input was sent",
+                            terminated=last_frame.terminated,
+                            truncated=last_frame.truncated,
+                            reward=last_frame.reward,
+                        )
+                        break
                     confirmation_frames += window.observations.__len__() * config.frameskip
                     turn["evidence_windows"].append(_window_record(window, last_frame, expected_player_board))
                     remaining_selection = _selected_target_evidence(
@@ -805,6 +1024,8 @@ def run_episode(
                         if mismatch_windows >= 4:
                             raise EpisodeStop("RGB showed an invalid or unresolved player transition")
 
+                if terminal_observed:
+                    break
                 turn["player_move"].update(
                     {
                         "frames_to_candidate_rgb": confirmation_frames,
@@ -826,14 +1047,36 @@ def run_episode(
                 candidate_streak = 0
                 mismatch_streak = 0
                 reply_window: BoardWindow | None = None
+                unconfirmed_search_candidate: str | None = None
+                thinking_frames_saved = 0
+                next_thinking_frame_save = 0
                 while waited_frames < max_opponent_wait_frames and not terminal_observed and not stop_reason:
                     chunk = min(WINDOW_FRAMES, max_opponent_wait_frames - waited_frames)
                     window = observe_window("Atari thinking/reply observation", expected_player_board, chunk)
                     waited_frames += max(1, window.observations.__len__()) * config.frameskip
+                    if terminal_observed:
+                        set_input_phase(
+                            turn,
+                            "ale_terminal_observed",
+                            f"ALE ended during Atari reply observation at {terminal_phase or 'opponent response'}",
+                            terminated=last_frame.terminated,
+                            truncated=last_frame.truncated,
+                            reward=last_frame.reward,
+                        )
+                        break
                     turn["evidence_windows"].append(_window_record(window, last_frame, expected_player_board))
+                    if (
+                        config.mode >= 3
+                        and not window.matches_board(expected_player_board)
+                        and thinking_frames_saved < 20
+                        and waited_frames >= next_thinking_frame_save
+                    ):
+                        save_frame(f"turn-{turn_index:02d}-atari-thinking-{waited_frames:05d}")
+                        thinking_frames_saved += 1
+                        next_thinking_frame_save = waited_frames + 1000
                     if not window.is_stable:
                         mismatch_streak += 1
-                        if mismatch_streak >= 10:
+                        if config.mode < 3 and mismatch_streak >= 10:
                             raise EpisodeStop("Atari reply remained visually transitional or ambiguous for ten windows")
                         continue
                     try:
@@ -842,14 +1085,35 @@ def run_episode(
                         mismatch_streak += 1
                         candidate_reply = None
                         candidate_streak = 0
-                        if mismatch_streak >= 10:
+                        if config.mode < 3 and mismatch_streak >= 10:
                             raise EpisodeStop("RGB did not match the current board or one legal Atari reply")
                         continue
                     mismatch_streak = 0
                     if inferred is None:
                         candidate_reply = None
                         candidate_streak = 0
+                        unconfirmed_search_candidate = None
                         continue
+                    inferred_move = chess.Move.from_uci(inferred)
+                    cursor = _unique_cursor(window)
+                    expected_cursor = chess.square_name(inferred_move.from_square)
+                    if cursor != expected_cursor:
+                        if inferred != unconfirmed_search_candidate:
+                            turn["opponent_reply"].setdefault("thinking_candidates", []).append(
+                                {
+                                    "uci": inferred,
+                                    "frame_number": last_frame.frame_number,
+                                    "cursor_squares": sorted(window.cursor_squares),
+                                    "expected_final_cursor": expected_cursor,
+                                    "rgb_sha256": hashlib.sha256(last_frame.rgb.tobytes()).hexdigest(),
+                                    "not_accepted": "no RGB cursor at the Atari move's source square",
+                                }
+                            )
+                            unconfirmed_search_candidate = inferred
+                        candidate_reply = None
+                        candidate_streak = 0
+                        continue
+                    unconfirmed_search_candidate = None
                     if inferred == candidate_reply:
                         candidate_streak += 1
                     else:
@@ -866,7 +1130,9 @@ def run_episode(
                 if terminal_observed:
                     break
                 if reply_window is None or candidate_reply is None:
-                    raise EpisodeStop("No stable unique legal Atari reply appeared within the bounded wait")
+                    raise EpisodeStop(
+                        f"No stable unique legal Atari reply appeared within the bounded wait of {max_opponent_wait_frames} ALE frames"
+                    )
 
                 reply_move = chess.Move.from_uci(candidate_reply)
                 final_candidate = expected_player_board.copy()
@@ -922,6 +1188,10 @@ def run_episode(
                     "cursor_positions": [sorted(reply_window.cursor_squares), sorted(verification_window.cursor_squares)],
                     "all_squares_covered": True,
                 }
+                turn["verified_game_progress"] = _game_progress(shadow.board)
+                trace.setdefault("verified_progress", []).append(
+                    {"turn": turn_index, "fen": shadow.board.fen(), **turn["verified_game_progress"]}
+                )
                 trace["player_move"] = turn["player_move"]
                 trace["opponent_reply"] = turn["opponent_reply"]
                 trace["final_position"] = {"matches_shadow_board": True, "shadow_fen": shadow.board.fen()}
@@ -936,15 +1206,73 @@ def run_episode(
                     set_turn_state(turn_index, TurnState.PLAYER_TURN, "complete RGB-verified two-ply transition")
                     current_window = verification_window
             except (EpisodeStop, DesynchronizationError, ValueError) as exc:
-                stop_reason = str(exc)
-                set_turn_state(turn_index, TurnState.UNCERTAIN, stop_reason)
+                if terminal_observed:
+                    set_input_phase(
+                        turn,
+                        "ale_terminal_observed",
+                        f"ALE ended during {terminal_phase or 'the current action'}; no further input was sent",
+                        terminated=last_frame.terminated,
+                        truncated=last_frame.truncated,
+                        reward=last_frame.reward,
+                    )
+                    break
+                reason = str(exc)
+                set_stop(reason, stop_category or _classify_stop(reason, latest_input_phase))
+                set_turn_state(turn_index, TurnState.UNCERTAIN, reason)
                 break
+            except Exception as exc:  # do not lose a reproducible runner failure
+                reason = f"{type(exc).__name__}: {exc}"
+                set_stop(reason, StopCategory.EXCEPTION_OR_EXTERNAL_INTERRUPTION)
+                set_turn_state(turn_index, TurnState.UNCERTAIN, reason)
+                break
+
+        if not terminal_observed and stop_reason is None and len(trace["turns"]) >= max_player_moves:
+            set_stop(
+                f"runner stopped after the configured {max_player_moves} player-move limit",
+                StopCategory.RUNNER_MAX_PLAYER_MOVES,
+            )
+
+        if terminal_observed:
+            if pre_terminal_frame is not None:
+                try:
+                    pre_terminal_record = save_frame("ale-pre-terminal", frame=pre_terminal_frame)
+                except EpisodeStop:
+                    pre_terminal_record = None
+            else:
+                pre_terminal_record = None
+            try:
+                frame_record = save_frame("ale-terminal")
+            except EpisodeStop:
+                frame_record = None
+            terminal_observation = {
+                "phase": terminal_phase,
+                "frame_number": last_frame.frame_number,
+                "environment_step": episode_env_steps,
+                "reward": last_frame.reward,
+                "terminated": last_frame.terminated,
+                "truncated": last_frame.truncated,
+                "rgb_sha256": hashlib.sha256(last_frame.rgb.tobytes()).hexdigest(),
+                "pre_terminal_frame": (
+                    {
+                        "frame_number": pre_terminal_frame.frame_number,
+                        "rgb_sha256": hashlib.sha256(pre_terminal_frame.rgb.tobytes()).hexdigest(),
+                        "frame_artifact": pre_terminal_record,
+                    }
+                    if pre_terminal_frame is not None
+                    else None
+                ),
+                "ram_diagnostics_only": env.diagnostic_ram((0xE1, 0xE4, 0xEA, 0xEE)),
+                "frame_artifact": frame_record,
+            }
+            trace["terminal_observation"] = terminal_observation
 
         trace["terminal"].update(
             {
                 "observed": terminal_observed,
                 "terminated": last_frame.terminated,
+                "ale_terminated": last_frame.terminated,
                 "truncated": last_frame.truncated,
+                "ale_truncated": last_frame.truncated,
                 "ale_reward_total": total_reward,
                 "agent_reward_total": agent_reward_from_ale(total_reward, chess.WHITE),
                 "white_result_from_reward": (
@@ -953,9 +1281,52 @@ def run_episode(
                 "last_reward": last_frame.reward,
                 "last_verified_fen": shadow.board.fen() if shadow.board else None,
                 "frame_number": last_frame.frame_number,
+                "ale_frames": last_frame.frame_number,
                 "wall_seconds": round(time.monotonic() - started_monotonic, 3),
                 "env_steps": episode_env_steps,
+                "environment_steps": episode_env_steps,
                 "artifact_bytes": artifact_bytes,
+                "last_verified_fen": shadow.board.fen() if shadow.board else None,
+                "player_moves_attempted": sum(
+                    1 for turn in trace["turns"] if turn.get("player_move", {}).get("uci") is not None
+                ),
+                "verified_player_moves": sum(
+                    1 for turn in trace["turns"] if turn.get("player_move", {}).get("verified_from_rgb")
+                ),
+                "verified_atari_replies": sum(
+                    1 for turn in trace["turns"] if turn.get("opponent_reply", {}).get("verified_from_rgb")
+                ),
+                "failed_source_selections": sum(
+                    1
+                    for turn in trace["turns"]
+                    for event in turn.get("input_phases", [])
+                    if event.get("phase") == "source_selection_uncertain"
+                ),
+                "failed_target_previews": sum(
+                    1
+                    for turn in trace["turns"]
+                    for event in turn.get("input_phases", [])
+                    if event.get("phase") == "selected_target_uncertain"
+                ),
+                "failed_target_confirmations": sum(
+                    1
+                    for turn in trace["turns"]
+                    for event in turn.get("input_phases", [])
+                    if event.get("phase") == "target_confirmation_uncertain"
+                ),
+                "unexpected_directional_displacements": sum(
+                    1 for event in trace["cursor_observations"] if event.get("unexpected_displacement")
+                ),
+                "last_verified_progress": _game_progress(shadow.board) if shadow.board else None,
+                "runner_stopped": not terminal_observed,
+                "runner_stop_category": (
+                    StopCategory.ALE_TERMINATED.value
+                    if last_frame.terminated
+                    else StopCategory.ALE_TRUNCATED.value
+                    if last_frame.truncated
+                    else (stop_category or _classify_stop(stop_reason, latest_input_phase)).value
+                ),
+                "runner_stop_reason": stop_reason,
                 "stop_reason": stop_reason,
             }
         )
@@ -963,11 +1334,22 @@ def run_episode(
             set_turn_state(len(trace["turns"]), TurnState.EPISODE_FINISHED, "ALE terminated=True")
         elif last_frame.truncated:
             set_turn_state(len(trace["turns"]), TurnState.EPISODE_TRUNCATED, "ALE truncated=True")
-        if stop_reason:
+        if last_frame.terminated:
+            trace["status"] = "ale_terminated"
+        elif last_frame.truncated:
+            trace["status"] = "ale_truncated"
+        elif stop_reason and stop_category in {
+            StopCategory.RUNNER_MAX_ALE_FRAMES,
+            StopCategory.RUNNER_MAX_ENV_STEPS,
+            StopCategory.RUNNER_MAX_WALL_CLOCK,
+            StopCategory.RUNNER_ARTIFACT_LIMIT,
+            StopCategory.RUNNER_MAX_PLAYER_MOVES,
+        }:
+            trace["status"] = "runner_stopped"
+            trace["failure"] = stop_reason
+        elif stop_reason:
             trace["status"] = "partial"
             trace["failure"] = stop_reason
-        elif terminal_observed or len(trace["turns"]) == max_player_moves:
-            trace["status"] = "complete"
         else:
             trace["status"] = "partial"
             trace["failure"] = "Episode stopped before a verified move cycle completed"

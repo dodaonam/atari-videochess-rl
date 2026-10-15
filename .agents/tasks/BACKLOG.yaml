@@ -959,14 +959,12 @@
       "id": "M1-001",
       "title": "ALE feasibility: observation-driven VideoChess interaction",
       "milestone": "M1",
-      "status": "blocked",
+      "status": "done",
       "depends_on": [
         "M0-001"
       ],
       "requires_user_gate_approval": null,
-      "blocker_ids": [
-        "BLK-001"
-      ],
+      "blocker_ids": [],
       "evidence": [
         {
           "kind": "file",
@@ -1403,6 +1401,100 @@
             "git_revision": "b328d8d7470bb5c8f695b368971d1f667ad7cf9e",
             "log_path": ".agents/evidence/logs/BLK-001-final-remote-cleanclone-20261015.log"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M1-G2-final-verification-20261016.md",
+          "detail": "Final M1-01–M1-06 verdicts, genuine ALE terminal/reward replay, exact stop reasons, resource accounting, and conditional G2 decision.",
+          "result": "M1-01 through M1-06 PASS; M1-001 complete; BLK-001 resolved; G2 approved; M2 remains pending explicit authorization.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-15T18:15:01Z",
+            "exit_code": null,
+            "git_revision": "f2f2065c5da991394eba9204cb481daceeeba904",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M1-04-experiment-campaign-20261016.md",
+          "detail": "Separately authorized terminal campaign, adaptive batches, actual five-episode results, and bounded resource accounting.",
+          "result": "Two fresh mode-4 resets reproduced ALE reward -1.0, terminated=true, truncated=false; five episodes, 23,903 frames, 48.175 gameplay seconds.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-15T18:15:01Z",
+            "exit_code": null,
+            "git_revision": "f2f2065c5da991394eba9204cb481daceeeba904",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M1-04-terminal-verification.md",
+          "detail": "Historical M1-04 record with a current-decision pointer to the final verification report.",
+          "result": "Historical UNVERIFIED verdict is retained; current M1-04 PASS and G2 decision are recorded in M1-G2-final-verification-20261016.md.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-15T18:15:01Z",
+            "exit_code": null,
+            "git_revision": "f2f2065c5da991394eba9204cb481daceeeba904",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "test",
+          "command": "/home/dodaonam/.local/bin/uv --offline --cache-dir .venv/.cache/uv run --locked --no-sync python -m unittest tests.test_m0_smoke tests.test_m1_control tests.test_m1_episode tests.test_m1_ale_integration tests.test_m1_environment tests.test_m1_shadow tests.test_m1_vision tests.test_m1_terminal_cli -v",
+          "result": "PASS: 65 tests in 15.142s.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-15T18:12:06Z",
+            "recorded_at_utc": "2026-10-15T18:15:01Z",
+            "exit_code": 0,
+            "git_revision": "f2f2065c5da991394eba9204cb481daceeeba904",
+            "log_path": ".agents/evidence/logs/M1-final-focused-suite-20261016.log"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "/home/dodaonam/.local/bin/uv --offline --cache-dir .venv/.cache/uv run --locked --no-sync python -m unittest discover -s tests -v",
+          "result": "PASS: Ran 122 tests in 80.413s",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-15T18:15:16Z",
+            "recorded_at_utc": "2026-10-15T18:17:12Z",
+            "exit_code": 0,
+            "git_revision": "f2f2065c5da991394eba9204cb481daceeeba904",
+            "log_path": ".agents/evidence/logs/M1-full-suite-final-20261016.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "/home/dodaonam/.local/bin/uv --offline --cache-dir .venv/.cache/uv lock --check --python /usr/bin/python3",
+          "result": "PASS: lockfile consistent; no dependency installation performed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-15T18:16:50Z",
+            "recorded_at_utc": "2026-10-15T18:17:12Z",
+            "exit_code": 0,
+            "git_revision": "f2f2065c5da991394eba9204cb481daceeeba904",
+            "log_path": ".agents/evidence/logs/M1-final-lock-check-20261016.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "PASS: preflight exited 0; any reported warnings are listed above.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-15T18:15:12Z",
+            "recorded_at_utc": "2026-10-15T18:17:12Z",
+            "exit_code": 0,
+            "git_revision": "f2f2065c5da991394eba9204cb481daceeeba904",
+            "log_path": ".agents/evidence/logs/M1-final-preflight-20261016.log"
+          }
         }
       ],
       "acceptance_criteria_ids": [
@@ -1413,9 +1505,9 @@
         "M1-05",
         "M1-06"
       ],
-      "next_action": "M1-04 remains unverified: preserve the current safe controller and blocker, and obtain genuine ALE terminal/reward evidence only with an updated bounded budget; do not begin M2.",
+      "next_action": "M1-001 is complete and G2 is approved. M2 remains pending explicit user authorization; O-01 through O-08 remain unresolved.",
       "plan_ref": ".agents/plans/M01-ale-feasibility.md"
     }
   ],
-  "updated_at_utc": "2026-10-15T16:36:31Z"
+  "updated_at_utc": "2026-10-15T18:17:12Z"
 }

@@ -8,7 +8,13 @@ import chess
 import numpy as np
 
 from tests.test_m1_vision import BACKGROUND, BLUE, GOLD, paint, start_frame
-from videochess_rl.episode import agent_reward_from_ale, choose_diagnostic_move, run_episode
+from videochess_rl.episode import (
+    StopCategory,
+    agent_reward_from_ale,
+    choose_cooperative_loss_move,
+    choose_diagnostic_move,
+    run_episode,
+)
 from videochess_rl.environment import ALEConfig, ALEFrame
 
 
@@ -64,6 +70,9 @@ class FakeALE:
         fail_selected_target_navigation: bool = False,
         stop_kind: str | None = None,
         stop_reward: float = 0.0,
+        stop_after_fire_presses: int | None = None,
+        stop_on_opponent_thinking: bool = False,
+        opponent_thinking_noops: int = 35,
         overshoot_first_cursor_action: bool = False,
     ):
         self.config = None
@@ -81,6 +90,11 @@ class FakeALE:
         self.overshot = False
         self.stop_kind = stop_kind
         self.stop_reward = stop_reward
+        self.stop_after_fire_presses = stop_after_fire_presses
+        self.stop_on_opponent_thinking = stop_on_opponent_thinking
+        self.opponent_thinking_noops = opponent_thinking_noops
+        self.fire_presses = 0
+        self.opponent_noops = 0
         self.stopped = False
         self.steps_after_terminal = 0
         self.last_frame = None
@@ -129,13 +143,37 @@ class FakeALE:
         if self.stopped:
             self.steps_after_terminal += 1
             return self._frame(self.stop_reward, self.stop_kind == "terminated", self.stop_kind == "truncated")
-        if self.stop_kind and action in (1, 2, 3, 4, 5, 6, 7, 8, 9):
+        if (
+            self.stop_kind
+            and self.stop_after_fire_presses is None
+            and not self.stop_on_opponent_thinking
+            and action in (1, 2, 3, 4, 5, 6, 7, 8, 9)
+        ):
             self.stopped = True
             return self._frame(
                 self.stop_reward,
                 self.stop_kind == "terminated",
                 self.stop_kind == "truncated",
             )
+        if action == 1 and self.held_action != 1:
+            self.fire_presses += 1
+            if self.stop_kind and self.stop_after_fire_presses == self.fire_presses:
+                self.stopped = True
+                return self._frame(
+                    self.stop_reward,
+                    self.stop_kind == "terminated",
+                    self.stop_kind == "truncated",
+                )
+        if action == 0 and self.stop_kind and self.stop_on_opponent_thinking:
+            if self.fire_presses >= 2:
+                self.opponent_noops += 1
+                if self.opponent_noops >= self.opponent_thinking_noops:
+                    self.stopped = True
+                    return self._frame(
+                        self.stop_reward,
+                        self.stop_kind == "terminated",
+                        self.stop_kind == "truncated",
+                    )
         if action in (2, 3, 4, 5, 6, 7, 8, 9):
             if self.held_action != action:
                 self.held_action = action
@@ -226,6 +264,31 @@ class DiagnosticMoveSelectorTests(unittest.TestCase):
 
     def test_initial_move_is_the_disclosed_one_ply_feasibility_choice(self) -> None:
         self.assertEqual(choose_diagnostic_move(chess.Board()), "e2e3")
+
+    def test_cooperative_loss_policy_uses_legal_fools_mate_blunders(self) -> None:
+        board = chess.Board()
+        self.assertEqual(choose_cooperative_loss_move(board), "f2f3")
+        board.push_uci("f2f3")
+        board.push_uci("c7c5")
+        self.assertEqual(choose_cooperative_loss_move(board), "g2g4")
+        board.push_uci("g2g4")
+        board.push_uci("b8c6")
+        self.assertEqual(choose_cooperative_loss_move(board), "a2a3")
+        board.push_uci("a2a3")
+        board.push_uci("e7e5")
+        self.assertEqual(choose_cooperative_loss_move(board), "b2b3")
+        board.push_uci("b2b3")
+        self.assertIn(chess.Move.from_uci("d8h4"), board.legal_moves)
+        mate = board.copy()
+        mate.push_uci("d8h4")
+        self.assertTrue(mate.is_checkmate())
+
+    def test_cooperative_loss_policy_does_not_immediately_undo_its_last_move(self) -> None:
+        board = chess.Board()
+        for move in ("a2a3", "c7c5", "a1a2", "b8c6"):
+            board.push_uci(move)
+
+        self.assertNotEqual(choose_cooperative_loss_move(board), "a2a1")
 
     def test_selector_takes_an_immediate_checkmate(self) -> None:
         board = chess.Board()
@@ -328,9 +391,10 @@ class EpisodeSafetyTests(unittest.TestCase):
     def test_episode_frame_budget_is_not_reported_as_ale_truncation(self) -> None:
         result = self.run_fake(FakeALE(), max_episode_frames=40)
 
-        self.assertEqual(result["status"], "partial")
+        self.assertEqual(result["status"], "runner_stopped")
         self.assertFalse(result["terminal"]["terminated"])
         self.assertFalse(result["terminal"]["truncated"])
+        self.assertEqual(result["terminal"]["runner_stop_category"], StopCategory.RUNNER_MAX_ALE_FRAMES.value)
         self.assertIn("frame budget", result["failure"])
 
     def test_termination_during_input_records_reward_and_stops_stepping(self) -> None:
@@ -341,8 +405,43 @@ class EpisodeSafetyTests(unittest.TestCase):
         self.assertFalse(result["terminal"]["truncated"])
         self.assertEqual(result["terminal"]["ale_reward_total"], 1.0)
         self.assertEqual(result["terminal"]["agent_reward_total"], 1.0)
+        self.assertEqual(result["status"], "ale_terminated")
+        self.assertEqual(result["terminal"]["runner_stop_category"], StopCategory.ALE_TERMINATED.value)
+        terminal_visual = result["terminal_observation"]
+        self.assertLess(
+            terminal_visual["pre_terminal_frame"]["frame_number"],
+            terminal_visual["frame_number"],
+        )
+        self.assertEqual(len(terminal_visual["pre_terminal_frame"]["rgb_sha256"]), 64)
         self.assertEqual(fake.steps_after_terminal, 0)
         self.assertIn("episode_finished", [event["state"] for event in result["turn_events"]])
+
+    def test_terminal_at_target_fire_is_not_overwritten_by_rgb_confirmation_failure(self) -> None:
+        fake = FakeALE(stop_kind="terminated", stop_reward=-1.0, stop_after_fire_presses=2)
+        result = self.run_fake(fake)
+
+        self.assertEqual(result["status"], "ale_terminated")
+        self.assertEqual(result["terminal"]["runner_stop_category"], StopCategory.ALE_TERMINATED.value)
+        self.assertEqual(result["terminal"]["ale_reward_total"], -1.0)
+        self.assertEqual(result["terminal_observation"]["phase"], "select_target")
+        self.assertEqual(fake.steps_after_terminal, 0)
+
+    def test_terminal_during_opponent_thinking_stops_without_requesting_another_turn(self) -> None:
+        fake = FakeALE(stop_kind="terminated", stop_reward=-1.0, stop_on_opponent_thinking=True)
+        result = self.run_fake(fake)
+
+        self.assertEqual(result["status"], "ale_terminated")
+        self.assertEqual(result["terminal"]["ale_reward_total"], -1.0)
+        self.assertEqual(result["terminal_observation"]["phase"], "Atari thinking/reply observation")
+        self.assertEqual(fake.steps_after_terminal, 0)
+
+    def test_environment_step_budget_has_a_distinct_runner_stop_category(self) -> None:
+        result = self.run_fake(FakeALE(), max_episode_env_steps=1)
+
+        self.assertEqual(result["status"], "runner_stopped")
+        self.assertEqual(result["terminal"]["runner_stop_category"], StopCategory.RUNNER_MAX_ENV_STEPS.value)
+        self.assertFalse(result["terminal"]["ale_terminated"])
+        self.assertFalse(result["terminal"]["ale_truncated"])
 
     def test_truncation_is_distinct_from_termination(self) -> None:
         fake = FakeALE(stop_kind="truncated")
@@ -351,6 +450,8 @@ class EpisodeSafetyTests(unittest.TestCase):
         self.assertFalse(result["terminal"]["terminated"])
         self.assertTrue(result["terminal"]["truncated"])
         self.assertEqual(result["terminal"]["ale_reward_total"], 0.0)
+        self.assertEqual(result["status"], "ale_truncated")
+        self.assertEqual(result["terminal"]["runner_stop_category"], StopCategory.ALE_TRUNCATED.value)
         self.assertIn("episode_truncated", [event["state"] for event in result["turn_events"]])
 
     def test_white_perspective_reward_conversion_is_explicit(self) -> None:

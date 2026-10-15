@@ -1,0 +1,431 @@
+A.L.E: Arcade Learning Environment (version 0.11.2+ecc1138)
+[Powered by Stella]
+{
+  "status": "runner_stopped",
+  "trace": "artifacts/m1/m1-04/campaign1-mode0-loss-seed20261016/trace.json",
+  "turns": [
+    {
+      "player_move": {
+        "uci": "f2f3",
+        "verified_from_rgb": true,
+        "frames_to_candidate_rgb": 33,
+        "partial_cursor_masked_candidate": true,
+        "candidate_fen": "rnbqkbnr/pppppppp/8/8/8/5P2/PPPPP1PP/RNBQKBNR b KQkq - 0 1",
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 0,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "verification": "intermediate partial window plus complete two-cursor-position RGB coverage",
+        "shadow_fen_after": "rnbqkbnr/pppppppp/8/8/8/5P2/PPPPP1PP/RNBQKBNR b KQkq - 0 1"
+      },
+      "opponent_reply": {
+        "uci": "c7c5",
+        "verified_from_rgb": true,
+        "frames_waited": 297,
+        "candidate_uci": "c7c5",
+        "candidate_from_rgb": true,
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 1,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "shadow_fen_after": "rnbqkbnr/pp1ppppp/8/2p5/8/5P2/PPPPP1PP/RNBQKBNR w KQkq - 0 2",
+        "verification": "unique legal candidate repeated in two windows, then full RGB coverage"
+      },
+      "board_after_fen": "rnbqkbnr/pp1ppppp/8/2p5/8/5P2/PPPPP1PP/RNBQKBNR w KQkq - 0 2"
+    },
+    {
+      "player_move": {
+        "uci": "g2g4",
+        "verified_from_rgb": true,
+        "frames_to_candidate_rgb": 33,
+        "partial_cursor_masked_candidate": true,
+        "candidate_fen": "rnbqkbnr/pp1ppppp/8/2p5/6P1/5P2/PPPPP2P/RNBQKBNR b KQkq - 0 2",
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 1,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "verification": "intermediate partial window plus complete two-cursor-position RGB coverage",
+        "shadow_fen_after": "rnbqkbnr/pp1ppppp/8/2p5/6P1/5P2/PPPPP2P/RNBQKBNR b KQkq - 0 2"
+      },
+      "opponent_reply": {
+        "uci": "b8c6",
+        "verified_from_rgb": true,
+        "frames_waited": 297,
+        "candidate_uci": "b8c6",
+        "candidate_from_rgb": true,
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 2,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "shadow_fen_after": "r1bqkbnr/pp1ppppp/2n5/2p5/6P1/5P2/PPPPP2P/RNBQKBNR w KQkq - 1 3",
+        "verification": "unique legal candidate repeated in two windows, then full RGB coverage"
+      },
+      "board_after_fen": "r1bqkbnr/pp1ppppp/2n5/2p5/6P1/5P2/PPPPP2P/RNBQKBNR w KQkq - 1 3"
+    },
+    {
+      "player_move": {
+        "uci": "h2h4",
+        "verified_from_rgb": true,
+        "frames_to_candidate_rgb": 33,
+        "partial_cursor_masked_candidate": true,
+        "candidate_fen": "r1bqkbnr/pp1ppppp/2n5/2p5/6PP/5P2/PPPPP3/RNBQKBNR b KQkq - 0 3",
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 2,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "verification": "intermediate partial window plus complete two-cursor-position RGB coverage",
+        "shadow_fen_after": "r1bqkbnr/pp1ppppp/2n5/2p5/6PP/5P2/PPPPP3/RNBQKBNR b KQkq - 0 3"
+      },
+      "opponent_reply": {
+        "uci": "e7e5",
+        "verified_from_rgb": true,
+        "frames_waited": 297,
+        "candidate_uci": "e7e5",
+        "candidate_from_rgb": true,
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 3,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "shadow_fen_after": "r1bqkbnr/pp1p1ppp/2n5/2p1p3/6PP/5P2/PPPPP3/RNBQKBNR w KQkq - 0 4",
+        "verification": "unique legal candidate repeated in two windows, then full RGB coverage"
+      },
+      "board_after_fen": "r1bqkbnr/pp1p1ppp/2n5/2p1p3/6PP/5P2/PPPPP3/RNBQKBNR w KQkq - 0 4"
+    },
+    {
+      "player_move": {
+        "uci": "f3f4",
+        "verified_from_rgb": true,
+        "frames_to_candidate_rgb": 33,
+        "partial_cursor_masked_candidate": true,
+        "candidate_fen": "r1bqkbnr/pp1p1ppp/2n5/2p1p3/5PPP/8/PPPPP3/RNBQKBNR b KQkq - 0 4",
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 3,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "verification": "intermediate partial window plus complete two-cursor-position RGB coverage",
+        "shadow_fen_after": "r1bqkbnr/pp1p1ppp/2n5/2p1p3/5PPP/8/PPPPP3/RNBQKBNR b KQkq - 0 4"
+      },
+      "opponent_reply": {
+        "uci": "e5f4",
+        "verified_from_rgb": true,
+        "frames_waited": 297,
+        "candidate_uci": "e5f4",
+        "candidate_from_rgb": true,
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 4,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "shadow_fen_after": "r1bqkbnr/pp1p1ppp/2n5/2p5/5pPP/8/PPPPP3/RNBQKBNR w KQkq - 0 5",
+        "verification": "unique legal candidate repeated in two windows, then full RGB coverage"
+      },
+      "board_after_fen": "r1bqkbnr/pp1p1ppp/2n5/2p5/5pPP/8/PPPPP3/RNBQKBNR w KQkq - 0 5"
+    },
+    {
+      "player_move": {
+        "uci": "g4g5",
+        "verified_from_rgb": true,
+        "frames_to_candidate_rgb": 33,
+        "partial_cursor_masked_candidate": true,
+        "candidate_fen": "r1bqkbnr/pp1p1ppp/2n5/2p3P1/5p1P/8/PPPPP3/RNBQKBNR b KQkq - 0 5",
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 4,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "verification": "intermediate partial window plus complete two-cursor-position RGB coverage",
+        "shadow_fen_after": "r1bqkbnr/pp1p1ppp/2n5/2p3P1/5p1P/8/PPPPP3/RNBQKBNR b KQkq - 0 5"
+      },
+      "opponent_reply": {
+        "uci": "d7d5",
+        "verified_from_rgb": true,
+        "frames_waited": 297,
+        "candidate_uci": "d7d5",
+        "candidate_from_rgb": true,
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 5,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "shadow_fen_after": "r1bqkbnr/pp3ppp/2n5/2pp2P1/5p1P/8/PPPPP3/RNBQKBNR w KQkq - 0 6",
+        "verification": "unique legal candidate repeated in two windows, then full RGB coverage"
+      },
+      "board_after_fen": "r1bqkbnr/pp3ppp/2n5/2pp2P1/5p1P/8/PPPPP3/RNBQKBNR w KQkq - 0 6"
+    },
+    {
+      "player_move": {
+        "uci": "a2a3",
+        "verified_from_rgb": true,
+        "frames_to_candidate_rgb": 33,
+        "partial_cursor_masked_candidate": true,
+        "candidate_fen": "r1bqkbnr/pp3ppp/2n5/2pp2P1/5p1P/P7/1PPPP3/RNBQKBNR b KQkq - 0 6",
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 5,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "verification": "intermediate partial window plus complete two-cursor-position RGB coverage",
+        "shadow_fen_after": "r1bqkbnr/pp3ppp/2n5/2pp2P1/5p1P/P7/1PPPP3/RNBQKBNR b KQkq - 0 6"
+      },
+      "opponent_reply": {
+        "uci": "g8e7",
+        "verified_from_rgb": true,
+        "frames_waited": 330,
+        "candidate_uci": "g8e7",
+        "candidate_from_rgb": true,
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 6,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "shadow_fen_after": "r1bqkb1r/pp2nppp/2n5/2pp2P1/5p1P/P7/1PPPP3/RNBQKBNR w KQkq - 1 7",
+        "verification": "unique legal candidate repeated in two windows, then full RGB coverage"
+      },
+      "board_after_fen": "r1bqkb1r/pp2nppp/2n5/2pp2P1/5p1P/P7/1PPPP3/RNBQKBNR w KQkq - 1 7"
+    },
+    {
+      "player_move": {
+        "uci": "a1a2",
+        "verified_from_rgb": true,
+        "frames_to_candidate_rgb": 33,
+        "partial_cursor_masked_candidate": true,
+        "candidate_fen": "r1bqkb1r/pp2nppp/2n5/2pp2P1/5p1P/P7/RPPPP3/1NBQKBNR b Kkq - 2 7",
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 6,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "verification": "intermediate partial window plus complete two-cursor-position RGB coverage",
+        "shadow_fen_after": "r1bqkb1r/pp2nppp/2n5/2pp2P1/5p1P/P7/RPPPP3/1NBQKBNR b Kkq - 2 7"
+      },
+      "opponent_reply": {
+        "uci": "e7f5",
+        "verified_from_rgb": true,
+        "frames_waited": 297,
+        "candidate_uci": "e7f5",
+        "candidate_from_rgb": true,
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 7,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "shadow_fen_after": "r1bqkb1r/pp3ppp/2n5/2pp1nP1/5p1P/P7/RPPPP3/1NBQKBNR w Kkq - 3 8",
+        "verification": "unique legal candidate repeated in two windows, then full RGB coverage"
+      },
+      "board_after_fen": "r1bqkb1r/pp3ppp/2n5/2pp1nP1/5p1P/P7/RPPPP3/1NBQKBNR w Kkq - 3 8"
+    },
+    {
+      "player_move": {
+        "uci": "a2a1",
+        "verified_from_rgb": true,
+        "frames_to_candidate_rgb": 33,
+        "partial_cursor_masked_candidate": true,
+        "candidate_fen": "r1bqkb1r/pp3ppp/2n5/2pp1nP1/5p1P/P7/1PPPP3/RNBQKBNR b Kkq - 4 8",
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 7,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "verification": "intermediate partial window plus complete two-cursor-position RGB coverage",
+        "shadow_fen_after": "r1bqkb1r/pp3ppp/2n5/2pp1nP1/5p1P/P7/1PPPP3/RNBQKBNR b Kkq - 4 8"
+      },
+      "opponent_reply": {
+        "uci": "f8d6",
+        "verified_from_rgb": true,
+        "frames_waited": 330,
+        "candidate_uci": "f8d6",
+        "candidate_from_rgb": true,
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 8,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "shadow_fen_after": "r1bqk2r/pp3ppp/2nb4/2pp1nP1/5p1P/P7/1PPPP3/RNBQKBNR w Kkq - 5 9",
+        "verification": "unique legal candidate repeated in two windows, then full RGB coverage"
+      },
+      "board_after_fen": "r1bqk2r/pp3ppp/2nb4/2pp1nP1/5p1P/P7/1PPPP3/RNBQKBNR w Kkq - 5 9"
+    },
+    {
+      "player_move": {
+        "uci": "a1a2",
+        "verified_from_rgb": true,
+        "frames_to_candidate_rgb": 33,
+        "partial_cursor_masked_candidate": true,
+        "candidate_fen": "r1bqk2r/pp3ppp/2nb4/2pp1nP1/5p1P/P7/RPPPP3/1NBQKBNR b Kkq - 6 9",
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 8,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "verification": "intermediate partial window plus complete two-cursor-position RGB coverage",
+        "shadow_fen_after": "r1bqk2r/pp3ppp/2nb4/2pp1nP1/5p1P/P7/RPPPP3/1NBQKBNR b Kkq - 6 9"
+      },
+      "opponent_reply": {
+        "uci": "e8g8",
+        "verified_from_rgb": true,
+        "frames_waited": 330,
+        "candidate_uci": "e8g8",
+        "candidate_from_rgb": true,
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 9,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "shadow_fen_after": "r1bq1rk1/pp3ppp/2nb4/2pp1nP1/5p1P/P7/RPPPP3/1NBQKBNR w K - 7 10",
+        "verification": "unique legal candidate repeated in two windows, then full RGB coverage"
+      },
+      "board_after_fen": "r1bq1rk1/pp3ppp/2nb4/2pp1nP1/5p1P/P7/RPPPP3/1NBQKBNR w K - 7 10"
+    },
+    {
+      "player_move": {
+        "uci": "a2a1",
+        "verified_from_rgb": true,
+        "frames_to_candidate_rgb": 33,
+        "partial_cursor_masked_candidate": true,
+        "candidate_fen": "r1bq1rk1/pp3ppp/2nb4/2pp1nP1/5p1P/P7/1PPPP3/RNBQKBNR b K - 8 10",
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 9,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "verification": "intermediate partial window plus complete two-cursor-position RGB coverage",
+        "shadow_fen_after": "r1bq1rk1/pp3ppp/2nb4/2pp1nP1/5p1P/P7/1PPPP3/RNBQKBNR b K - 8 10"
+      },
+      "opponent_reply": {
+        "uci": "f8e8",
+        "verified_from_rgb": true,
+        "frames_waited": 330,
+        "candidate_uci": "f8e8",
+        "candidate_from_rgb": true,
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 10,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "shadow_fen_after": "r1bqr1k1/pp3ppp/2nb4/2pp1nP1/5p1P/P7/1PPPP3/RNBQKBNR w K - 9 11",
+        "verification": "unique legal candidate repeated in two windows, then full RGB coverage"
+      },
+      "board_after_fen": "r1bqr1k1/pp3ppp/2nb4/2pp1nP1/5p1P/P7/1PPPP3/RNBQKBNR w K - 9 11"
+    },
+    {
+      "player_move": {
+        "uci": "a1a2",
+        "verified_from_rgb": true,
+        "frames_to_candidate_rgb": 33,
+        "partial_cursor_masked_candidate": true,
+        "candidate_fen": "r1bqr1k1/pp3ppp/2nb4/2pp1nP1/5p1P/P7/RPPPP3/1NBQKBNR b K - 10 11",
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 10,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "verification": "intermediate partial window plus complete two-cursor-position RGB coverage",
+        "shadow_fen_after": "r1bqr1k1/pp3ppp/2nb4/2pp1nP1/5p1P/P7/RPPPP3/1NBQKBNR b K - 10 11"
+      },
+      "opponent_reply": {
+        "uci": "c8d7",
+        "verified_from_rgb": true,
+        "frames_waited": 363,
+        "candidate_uci": "c8d7",
+        "candidate_from_rgb": true,
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 11,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "shadow_fen_after": "r2qr1k1/pp1b1ppp/2nb4/2pp1nP1/5p1P/P7/RPPPP3/1NBQKBNR w K - 11 12",
+        "verification": "unique legal candidate repeated in two windows, then full RGB coverage"
+      },
+      "board_after_fen": "r2qr1k1/pp1b1ppp/2nb4/2pp1nP1/5p1P/P7/RPPPP3/1NBQKBNR w K - 11 12"
+    },
+    {
+      "player_move": {
+        "uci": "a2a1",
+        "verified_from_rgb": true,
+        "frames_to_candidate_rgb": 33,
+        "partial_cursor_masked_candidate": true,
+        "candidate_fen": "r2qr1k1/pp1b1ppp/2nb4/2pp1nP1/5p1P/P7/1PPPP3/RNBQKBNR b K - 12 12",
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 11,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "verification": "intermediate partial window plus complete two-cursor-position RGB coverage",
+        "shadow_fen_after": "r2qr1k1/pp1b1ppp/2nb4/2pp1nP1/5p1P/P7/1PPPP3/RNBQKBNR b K - 12 12"
+      },
+      "opponent_reply": {
+        "uci": "f5d4",
+        "verified_from_rgb": true,
+        "frames_waited": 363,
+        "candidate_uci": "f5d4",
+        "candidate_from_rgb": true,
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 12,
+          "0xEA": 0,
+          "0xEE": 3
+        },
+        "shadow_fen_after": "r2qr1k1/pp1b1ppp/2nb4/2pp2P1/3n1p1P/P7/1PPPP3/RNBQKBNR w K - 13 13",
+        "verification": "unique legal candidate repeated in two windows, then full RGB coverage"
+      },
+      "board_after_fen": "r2qr1k1/pp1b1ppp/2nb4/2pp2P1/3n1p1P/P7/1PPPP3/RNBQKBNR w K - 13 13"
+    }
+  ],
+  "terminal": {
+    "observed": false,
+    "terminated": false,
+    "truncated": false,
+    "ale_reward_total": 0.0,
+    "agent_reward_total": 0.0,
+    "ale_terminated": false,
+    "ale_truncated": false,
+    "white_result_from_reward": null,
+    "last_reward": 0.0,
+    "last_verified_fen": "r2qr1k1/pp1b1ppp/2nb4/2pp2P1/3n1p1P/P7/1PPPP3/RNBQKBNR w K - 13 13",
+    "frame_number": 8916,
+    "ale_frames": 8916,
+    "wall_seconds": 16.477,
+    "env_steps": 8916,
+    "environment_steps": 8916,
+    "artifact_bytes": 69006,
+    "player_moves_attempted": 12,
+    "verified_player_moves": 12,
+    "verified_atari_replies": 12,
+    "runner_stopped": true,
+    "runner_stop_category": "RUNNER_MAX_PLAYER_MOVES",
+    "runner_stop_reason": "runner stopped after the configured 12 player-move limit",
+    "stop_reason": "runner stopped after the configured 12 player-move limit"
+  },
+  "terminal_observation": null,
+  "failure": "runner stopped after the configured 12 player-move limit"
+}

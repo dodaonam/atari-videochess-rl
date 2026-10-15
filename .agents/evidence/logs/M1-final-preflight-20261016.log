@@ -1,0 +1,42 @@
+START_UTC=2026-10-15T18:15:12Z
+COMMAND=python3 scripts/agent_preflight.py
+Agent context preflight: PASS
+Governance: G2 (approved); approved: G0, G1, G2
+Next engineering milestone: M2 — not started (pending user approval)
+Tasks: done=10, in_progress=0, pending=0, blocked=0, cancelled=0
+Completed task IDs: G1-001, G1-002, G1-003, G1-004, G1-005, G1-006, G1-007, G1-008, M0-001, M1-001
+In progress task IDs: none
+Pending task IDs: none
+Blocked task IDs: none
+Active blockers: none recorded
+Open confirmations:
+  O-01: Assignment/instructor rules for ALE observation extraction, action wrappers, custom PyTorch RL, Stockfish training use, and any engine use in offline evaluation.
+  O-02: Whether full-game performance on actual ALE is a hard submission requirement or a research target with an accepted fallback.
+  O-03: Whether the approximate three-week estimate is still the project deadline.
+  O-04: Actual Colab entitlement/quota, GPU availability, storage, and whether paid compute is allowed.
+  O-05: ALE/ROM runtime behavior, RAM mapping, game modes, difficulty behavior, and official evaluation settings.
+  O-06: PGN/tactical data sources, licenses, permitted use, and expected scale.
+  O-07: Stockfish version/search limits and whether it may be a benchmark opponent or offline evaluator.
+  O-08: Opponent pool and rating method for any Elo claim.
+Relevant decisions: docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md
+Acceptance criteria recognized: 51
+Last verified Git: initial-idea @ f2f2065c5da991394eba9204cb481daceeeba904
+Live Git: initial-idea @ f2f2065c5da991394eba9204cb481daceeeba904
+Roadmap source: exact match; 19 sections; SHA-256 fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf
+Git recovery: portable HEAD matches, but local tracked or state changes remain.
+Workspace Git status: matches checkpoint
+Portable tracked baseline: matches
+Portable Git index: matches checkpoint
+Hashed ordinary-file snapshot: differs
+Content hashes: 106 ordinary files verified by SHA-256.
+Not content-verified by this hash map: PROJECT_STATE self-reference, chat history/credential-like paths, temp files, symlinks, and the excluded directories listed below.
+Excluded directories: .git, .venv, artifacts, scripts/__pycache__, tests/__pycache__, videochess_rl/__pycache__
+Artifact directories requiring independent manifests: artifacts
+Last verified dirty paths (20):  M .agents/evidence/BLK-001-diagnostic-20261015.md;  M .agents/evidence/M1-04-terminal-verification.md;  M .agents/evidence/M1-feasibility-verification.md;  M .agents/plans/M01-ale-feasibility.md;  M .agents/state/BLOCKERS.md;  M .agents/state/PROJECT_STATE.yaml;  M .agents/state/SESSION_HANDOFF.md;  M .agents/state/VERIFIED_FINDINGS.md;  M .agents/tasks/BACKLOG.yaml;  M docs/05-operations/M1-ALE-REPRODUCIBILITY.md;  M scripts/run_m1_demo.py;  M scripts/run_m1_terminal_experiment.py;  M tests/test_m1_ale_integration.py;  M tests/test_m1_episode.py;  M videochess_rl/episode.py; ?? .agents/evidence/M1-04-experiment-campaign-20261016.md; ?? .agents/evidence/M1-04-terminal-success-20261016-README.md; ?? .agents/evidence/M1-04-terminal-success-20261016.zip; ?? .agents/evidence/M1-G2-final-verification-20261016.md; ?? main.py
+Next user action: G2 is approved after M1 acceptance. M2 remains pending explicit user authorization; O-01 through O-08 remain unresolved.
+WARNING WORKTREE_CONTENT_DRIFT [.]: Tracked worktree changes exist after the portable baseline checkpoint:  M .agents/evidence/BLK-001-diagnostic-20261015.md;  M .agents/evidence/M1-04-terminal-verification.md;  M .agents/evidence/M1-feasibility-verification.md;  M .agents/plans/M01-ale-feasibility.md;  M .agents/state/BLOCKERS.md;  M .agents/state/VERIFIED_FINDINGS.md;  M .agents/tasks/BACKLOG.yaml;  M docs/05-operations/M1-ALE-REPRODUCIBILITY.md;  M scripts/run_m1_demo.py;  M scripts/run_m1_terminal_experiment.py; ….
+WARNING WORKTREE_CONTENT_DRIFT [.]: newly hashed workspace files: .agents/evidence/logs/M1-final-preflight-20261016.log. Inspect before checkpointing.
+WARNING ARTIFACT_MANIFEST_REQUIRED [.]: Artifact/data directories are excluded from content hashing and require independent manifest verification: artifacts.
+RESULT=PASS: preflight exited 0; any reported warnings are listed above.
+Exit code: 0
+END_UTC=2026-10-15T18:15:12Z

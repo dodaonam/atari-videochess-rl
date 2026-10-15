@@ -1,5 +1,7 @@
 # BLK-001 diagnosis and controller follow-up
 
+> Historical diagnosis as of 2026-10-15 before the additional authorized campaign. Its input-stage findings remain valid; current terminal, runner-readiness, and blocker-resolution evidence is in [M1/G2 final mission verification](M1-G2-final-verification-20261016.md).
+
 - **Recorded:** 2026-10-15T16:17:05Z UTC; final test and archive-integrity addenda recorded after verification.
 - **Repository revision used by the experiments:** `ef86ba18fa9cd594ae419fa99b2ad191b75a49a8` on `initial-idea`; the worktree contained the authorized controller/test changes. No remote history was changed during experimentation.
 - **Runtime:** Python 3.12.3, Gymnasium 1.4.0, ALE-Py 0.11.2, `ALE/VideoChess-v5`, packaged `video_chess.bin` SHA-256 `d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7`.

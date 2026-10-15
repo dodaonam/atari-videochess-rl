@@ -1,6 +1,8 @@
 # M1-04 Terminal, Reward, Turn, and Mode Verification
 
-- **Recorded at:** 2026-10-15T10:55:03Z.
+> **Current decision:** This file contains the historical 2026-10-15 pre-terminal verdicts. The final authorized continuation and current acceptance decision are recorded in [M1/G2 final mission verification](M1-G2-final-verification-20261016.md). Two fresh real-ALE mode-4 runs now returned reward `−1.0`, `terminated=true`, and `truncated=false`; all six M1 criteria pass and G2 is approved. The terminal RGB screen has no parseable final board; only the last pre-terminal verified FEN is claimed.
+
+- **Historical snapshot recorded at:** 2026-10-15T10:55:03Z.
 - **Branch / source revision:** `initial-idea` at `dd67267ff85670c674d0d6d08c129ce10692798f`; working tree contained authorized M1 changes.
 - **Authorization:** `.agents/evidence/M1-authorization.md` and the current direct user task.
 - **Plan:** `.agents/plans/M01-ale-feasibility.md`.

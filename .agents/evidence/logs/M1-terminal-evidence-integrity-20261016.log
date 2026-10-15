@@ -1,0 +1,19 @@
+replay: same verified move/reply sequence, reward event, terminal flags, frame/step counts, and all shared frame pixel hashes
+terminal: {"environment_step": 4609, "frame_artifact": {"frame_number": 4613, "name": "ale-terminal", "path": "artifacts/m1/m1-04/campaign4-mode4-queenmate-seed20261017/frames/ale-terminal.png", "rgb_sha256": "024b23b1c9295ba28cf1c8dd716934262a5d5eabade513eaf96a95c03cd4809c"}, "frame_number": 4613, "phase": "Atari thinking/reply observation", "ram_diagnostics_only": {"0xE1": 130, "0xE4": 4, "0xEA": 4, "0xEE": 1}, "reward": -1.0, "rgb_sha256": "024b23b1c9295ba28cf1c8dd716934262a5d5eabade513eaf96a95c03cd4809c", "terminated": true, "truncated": false}
+last_verified_fen: r1bqkbnr/pp1p1ppp/2n5/2p1p3/6P1/P4P2/1PPPP2P/RNBQKBNR w KQkq - 0 4
+unverified_candidate_move: b2b3 legal_from_last_verified_fen: True
+candidate mate inference only: ['d8h4']
+last_verified_fen: r1bqkbnr/pp1p1ppp/2n5/2p1p3/6P1/P4P2/1PPPP2P/RNBQKBNR w KQkq - 0 4
+unverified_candidate_move: b2b3 legal_from_last_verified_fen: True
+candidate mate inference only: ['d8h4']
+trace-linked RGB pixels: all recorded frames in both terminal episodes decode to the recorded pixel hashes
+source_sha256 de5df684201cbba9a72310691b4fbab09e4fb6f5d2e75b4cc024e92ac632c069 videochess_rl/episode.py
+source_sha256 c9519d149c4bacf9c1e0ef8fcb99c1f8b292c5688f0ad97c5baf99bfe021338e scripts/run_m1_terminal_experiment.py
+source_sha256 8b6d9651896abe1fd320a45479101be48e5b624809ad3450c4c03e4bd44276b5 scripts/run_m1_demo.py
+source_sha256 f09aa6293dde46e914e12e87ef76558ec217ea1fc44a76558c79f47aa578a3aa tests/test_m1_episode.py
+source_sha256 7b01601620e7af90f700f47d10e905ec51bfac02a2583b059734456f5a2ee9ff tests/test_m1_ale_integration.py
+trace_sha256 9d16fca4c12c42398b286f488b1521d1cfba1ef169b53a1bfccde1dd90c99231 artifacts/m1/m1-04/campaign4-mode4-queenmate-seed20261017/trace.json
+trace_sha256 78264f381049c70b4daf195f1de5c85d1e5756325d94c134158ac30bda62fc9b artifacts/m1/m1-04/campaign5-terminal-replay-seed20261017/trace.json
+rom_sha256: d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7
+verification_time_utc: 2026-10-15T18:07:19.204992+00:00
+exit: 0

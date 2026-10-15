@@ -47,6 +47,7 @@ def main() -> int:
     write_trace(trace_path, result)
     summary = {
         "status": result.get("status"),
+        "runner_stop_category": result.get("terminal", {}).get("runner_stop_category"),
         "trace": trace_path.relative_to(REPO_ROOT).as_posix()
         if trace_path.is_relative_to(REPO_ROOT)
         else str(trace_path),
@@ -55,7 +56,10 @@ def main() -> int:
         "failure": result.get("failure"),
     }
     print(json.dumps(summary, indent=2))
-    return 0 if result.get("status") == "complete" else 2
+    return 0 if (
+        result.get("terminal", {}).get("verified_player_moves", 0) == 1
+        and result.get("terminal", {}).get("verified_atari_replies", 0) == 1
+    ) else 2
 
 
 if __name__ == "__main__":

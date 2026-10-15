@@ -1,0 +1,189 @@
+A.L.E: Arcade Learning Environment (version 0.11.2+ecc1138)
+[Powered by Stella]
+{
+  "status": "runner_stopped",
+  "trace": "artifacts/m1/m1-04/campaign3-mode4-wait-seed20261016/trace.json",
+  "turns": [
+    {
+      "player_move": {
+        "uci": "f2f3",
+        "verified_from_rgb": true,
+        "frames_to_candidate_rgb": 33,
+        "partial_cursor_masked_candidate": true,
+        "candidate_fen": "rnbqkbnr/pppppppp/8/8/8/5P2/PPPPP1PP/RNBQKBNR b KQkq - 0 1",
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 0,
+          "0xEA": 4,
+          "0xEE": 3
+        },
+        "verification": "intermediate partial window plus complete two-cursor-position RGB coverage",
+        "shadow_fen_after": "rnbqkbnr/pppppppp/8/8/8/5P2/PPPPP1PP/RNBQKBNR b KQkq - 0 1"
+      },
+      "opponent_reply": {
+        "uci": "c7c5",
+        "verified_from_rgb": true,
+        "frames_waited": 594,
+        "candidate_uci": "c7c5",
+        "candidate_from_rgb": true,
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 1,
+          "0xEA": 4,
+          "0xEE": 3
+        },
+        "shadow_fen_after": "rnbqkbnr/pp1ppppp/8/2p5/8/5P2/PPPPP1PP/RNBQKBNR w KQkq - 0 2",
+        "verification": "unique legal candidate repeated in two windows, then full RGB coverage"
+      },
+      "board_after_fen": "rnbqkbnr/pp1ppppp/8/2p5/8/5P2/PPPPP1PP/RNBQKBNR w KQkq - 0 2"
+    },
+    {
+      "player_move": {
+        "uci": "g2g4",
+        "verified_from_rgb": true,
+        "frames_to_candidate_rgb": 33,
+        "partial_cursor_masked_candidate": true,
+        "candidate_fen": "rnbqkbnr/pp1ppppp/8/2p5/6P1/5P2/PPPPP2P/RNBQKBNR b KQkq - 0 2",
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 1,
+          "0xEA": 4,
+          "0xEE": 3
+        },
+        "verification": "intermediate partial window plus complete two-cursor-position RGB coverage",
+        "shadow_fen_after": "rnbqkbnr/pp1ppppp/8/2p5/6P1/5P2/PPPPP2P/RNBQKBNR b KQkq - 0 2"
+      },
+      "opponent_reply": {
+        "uci": "b8c6",
+        "verified_from_rgb": true,
+        "frames_waited": 660,
+        "candidate_uci": "b8c6",
+        "candidate_from_rgb": true,
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 2,
+          "0xEA": 4,
+          "0xEE": 3
+        },
+        "shadow_fen_after": "r1bqkbnr/pp1ppppp/2n5/2p5/6P1/5P2/PPPPP2P/RNBQKBNR w KQkq - 1 3",
+        "verification": "unique legal candidate repeated in two windows, then full RGB coverage"
+      },
+      "board_after_fen": "r1bqkbnr/pp1ppppp/2n5/2p5/6P1/5P2/PPPPP2P/RNBQKBNR w KQkq - 1 3"
+    },
+    {
+      "player_move": {
+        "uci": "h2h4",
+        "verified_from_rgb": true,
+        "frames_to_candidate_rgb": 33,
+        "partial_cursor_masked_candidate": true,
+        "candidate_fen": "r1bqkbnr/pp1ppppp/2n5/2p5/6PP/5P2/PPPPP3/RNBQKBNR b KQkq - 0 3",
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 2,
+          "0xEA": 4,
+          "0xEE": 3
+        },
+        "verification": "intermediate partial window plus complete two-cursor-position RGB coverage",
+        "shadow_fen_after": "r1bqkbnr/pp1ppppp/2n5/2p5/6PP/5P2/PPPPP3/RNBQKBNR b KQkq - 0 3"
+      },
+      "opponent_reply": {
+        "uci": "e7e5",
+        "verified_from_rgb": true,
+        "frames_waited": 858,
+        "candidate_uci": "e7e5",
+        "candidate_from_rgb": true,
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 3,
+          "0xEA": 4,
+          "0xEE": 3
+        },
+        "shadow_fen_after": "r1bqkbnr/pp1p1ppp/2n5/2p1p3/6PP/5P2/PPPPP3/RNBQKBNR w KQkq - 0 4",
+        "verification": "unique legal candidate repeated in two windows, then full RGB coverage"
+      },
+      "board_after_fen": "r1bqkbnr/pp1p1ppp/2n5/2p1p3/6PP/5P2/PPPPP3/RNBQKBNR w KQkq - 0 4"
+    },
+    {
+      "player_move": {
+        "uci": "f3f4",
+        "verified_from_rgb": true,
+        "frames_to_candidate_rgb": 33,
+        "partial_cursor_masked_candidate": true,
+        "candidate_fen": "r1bqkbnr/pp1p1ppp/2n5/2p1p3/5PPP/8/PPPPP3/RNBQKBNR b KQkq - 0 4",
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 3,
+          "0xEA": 4,
+          "0xEE": 3
+        },
+        "verification": "intermediate partial window plus complete two-cursor-position RGB coverage",
+        "shadow_fen_after": "r1bqkbnr/pp1p1ppp/2n5/2p1p3/5PPP/8/PPPPP3/RNBQKBNR b KQkq - 0 4"
+      },
+      "opponent_reply": {
+        "uci": "e5f4",
+        "verified_from_rgb": true,
+        "frames_waited": 1221,
+        "candidate_uci": "e5f4",
+        "candidate_from_rgb": true,
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 4,
+          "0xEA": 4,
+          "0xEE": 3
+        },
+        "shadow_fen_after": "r1bqkbnr/pp1p1ppp/2n5/2p5/5pPP/8/PPPPP3/RNBQKBNR w KQkq - 0 5",
+        "verification": "unique legal candidate repeated in two windows, then full RGB coverage"
+      },
+      "board_after_fen": "r1bqkbnr/pp1p1ppp/2n5/2p5/5pPP/8/PPPPP3/RNBQKBNR w KQkq - 0 5"
+    }
+  ],
+  "terminal": {
+    "observed": false,
+    "terminated": false,
+    "ale_terminated": false,
+    "truncated": false,
+    "ale_truncated": false,
+    "ale_reward_total": 0.0,
+    "agent_reward_total": 0.0,
+    "runner_stopped": true,
+    "runner_stop_category": "RUNNER_MAX_PLAYER_MOVES",
+    "runner_stop_reason": "runner stopped after the configured 4 player-move limit",
+    "player_moves_attempted": 4,
+    "verified_player_moves": 4,
+    "verified_atari_replies": 4,
+    "white_result_from_reward": null,
+    "last_reward": 0.0,
+    "last_verified_fen": "r1bqkbnr/pp1p1ppp/2n5/2p5/5pPP/8/PPPPP3/RNBQKBNR w KQkq - 0 5",
+    "frame_number": 5029,
+    "ale_frames": 5029,
+    "wall_seconds": 10.058,
+    "env_steps": 5025,
+    "environment_steps": 5025,
+    "artifact_bytes": 27352,
+    "failed_source_selections": 0,
+    "failed_target_previews": 0,
+    "failed_target_confirmations": 0,
+    "unexpected_directional_displacements": 0,
+    "last_verified_progress": {
+      "side_to_move": "white",
+      "side_to_move_in_check": false,
+      "white_king_attacked": false,
+      "black_king_attacked": false,
+      "material_points": {
+        "white": 38,
+        "black": 39
+      },
+      "material_difference_white_minus_black": -1,
+      "legal_move_count": 21,
+      "checkmate_in_verified_shadow": false,
+      "stalemate_in_verified_shadow": false,
+      "position_repeated_twice": false,
+      "threefold_claim_available": false,
+      "halfmove_clock": 0,
+      "fullmove_number": 5
+    },
+    "stop_reason": "runner stopped after the configured 4 player-move limit"
+  },
+  "terminal_observation": null,
+  "failure": "runner stopped after the configured 4 player-move limit"
+}
