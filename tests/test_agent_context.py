@@ -509,7 +509,10 @@ class AgentContextRecoveryTests(unittest.TestCase):
                 if file_modes[rel] == "100755":
                     destination.chmod(0o755)
 
-            git(source, "add", "--all")
+            # Some repositories deliberately commit selected files inside
+            # ignored artifact/evidence paths. Recreate the actual HEAD tree
+            # in this synthetic clone fixture, including those paths.
+            git(source, "add", "-f", "--all")
             subprocess.run(
                 ["git", "-C", str(source), "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "approved baseline"],
                 check=True,
