@@ -25,20 +25,20 @@
     "next_task_id": "M1-001"
   },
   "last_checkpoint": {
-    "id": "cp-5cf1f830-20261015T162250149266Z",
-    "created_at_utc": "2026-10-15T16:22:50Z",
+    "id": "cp-261f4579-20261015T162535267126Z",
+    "created_at_utc": "2026-10-15T16:25:35Z",
     "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
     "git": {
       "scope": "workspace",
       "branch": "initial-idea",
-      "head": "5cf1f83014fa2888fe163ba6baf17430e94ff19b",
+      "head": "261f457952b9ef345e42ab2c43457263783fcf3d",
       "status_entries": [
         " M .agents/state/PROJECT_STATE.yaml",
         " M .agents/state/SESSION_HANDOFF.md",
         "?? main.py",
-        "M  .agents/tasks/BACKLOG.yaml"
+        "M  tests/test_agent_context.py"
       ],
-      "status_sha256": "0f2959ff0e917253db25c614d0a6be1cf25423b3babc867ecb1571f02c890b61",
+      "status_sha256": "7c39d3ed0330f5a7cea22100bbc16bd9ce820fe1fd1fdf2175179fbef70bb6f9",
       "repo_file_hashes": {
         ".gitignore": "1828249263215f6182229194dd1c662907d115310da5ca5a0c65ad207ed2ae3c",
         ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
@@ -85,7 +85,7 @@
         ".agents/review-bundles/export_review_bundle-working-tree-20261014T210537795808Z.zip": "5606106ef43267add13d83478778b47f08e3916fa6cf07e2940e9a03e2b274e2",
         ".agents/skills/export-review-bundle/SKILL.md": "02623443e4833824a7c2606e5d4cb9ea1d79e0b5d8c436741933978142932942",
         ".agents/state/BLOCKERS.md": "817f74c72bc8cdcf0e0ac8ea18d76120d438a119f82b3459e8307cc994389ce6",
-        ".agents/state/SESSION_HANDOFF.md": "b30d480291229bbfdacf800d00f4f2afde5265f9aba38306a4d93acd00c47416",
+        ".agents/state/SESSION_HANDOFF.md": "f53f0be9603194eae1f6d69cbdff9eb657b7c2fe794c33d78377b6231b964563",
         ".agents/state/VERIFIED_FINDINGS.md": "71dda94a5dd7522f6b8236224ddd134a0bd23032894e0e61abd80a2368c78c3a",
         ".agents/tasks/BACKLOG.yaml": "03794658af66c687537ec0ab96c419337c3271e875e0e2c05fd39cc871210472",
         "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
@@ -103,7 +103,7 @@
         "scripts/export_review_bundle.py": "7ed9a3a22dc2435f157840ad710f6fb8af183118830acb0b91cdbe47fa2930c0",
         "scripts/run_m1_demo.py": "885c83435efe3009d0eea85098879c311062a8f39459ec18850ba1dc5e605ef0",
         "scripts/run_m1_terminal_experiment.py": "b3f5803b9aaf620082f5a0eee863787709a056b25369fb3fef65022fb578e57b",
-        "tests/test_agent_context.py": "483913544951af2419b0efbd9ec52eab5846d6ad5511d06bf2e877377056f866",
+        "tests/test_agent_context.py": "70bb35663b0cfc0297d6bae31372536fb2bdcb920479631dd30aa5238c77b1b7",
         "tests/test_export_review_bundle.py": "3d9684586b76aa73f794b936b336f8529237f1797cfe19645cc64ce74239db6c",
         "tests/test_m0_smoke.py": "ba6303fc4c6b9f06b03bb1259a8084083c595b278e163d7f1ca710ef7bf77594",
         "tests/test_m1_ale_integration.py": "d7ac8f2f65adbf1787e940f6fb67635e8e2491e15fd3bbebe6aa985bf309ab05",
@@ -342,7 +342,7 @@
         },
         "tests/test_agent_context.py": {
           "mode": "100644",
-          "object_id": "b4249737abc804f3a00d8274f23679a75f60bc67"
+          "object_id": "ca39523e909cc64ef9b50425423dea112fdd633c"
         },
         "tests/test_export_review_bundle.py": {
           "mode": "100644",
@@ -413,9 +413,9 @@
           "object_id": "5be7bf92574229c232a364a7c9c03830a50524ee"
         }
       },
-      "manifest_sha256": "acc37ce8b311e4a7e0f853345d2a3f58ef5830cc17876e759c777f959faf11b3",
-      "state_sha256": "a6d9e56160c4eb0110ddf501b08d5e72fe462ea861307549e2282a21e85d9602",
-      "handoff_sha256": "b30d480291229bbfdacf800d00f4f2afde5265f9aba38306a4d93acd00c47416"
+      "manifest_sha256": "81f802989a302ab519b5904a96338990cfd44f204e558756ed900beebf507002",
+      "state_sha256": "73e04abb03a37d76ed9853378b71d0d1ccdfb246b8343fab83931d42a46c6d44",
+      "handoff_sha256": "f53f0be9603194eae1f6d69cbdff9eb657b7c2fe794c33d78377b6231b964563"
     }
   },
   "g1_baseline": {
@@ -16291,6 +16291,400 @@
         "manifest_sha256": "c7369decfb49abd32334a7532e18d27fc80c70885ddb193952dce9cdc86c95ad",
         "state_sha256": "746f5a7c09d7a187bbfc12000e62bc3aa66e15f52d2dd3713860b7756d92c2a4",
         "handoff_sha256": "f6e4a71fd9dba5a121703ab03bfc54587e503e1a2617f93f8a1216431e4de0fc"
+      }
+    },
+    {
+      "id": "cp-5cf1f830-20261015T162250149266Z",
+      "created_at_utc": "2026-10-15T16:22:50Z",
+      "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
+      "workspace_git": {
+        "scope": "workspace",
+        "branch": "initial-idea",
+        "head": "5cf1f83014fa2888fe163ba6baf17430e94ff19b",
+        "status_entries": [
+          " M .agents/state/PROJECT_STATE.yaml",
+          " M .agents/state/SESSION_HANDOFF.md",
+          "?? main.py",
+          "M  .agents/tasks/BACKLOG.yaml"
+        ],
+        "status_sha256": "0f2959ff0e917253db25c614d0a6be1cf25423b3babc867ecb1571f02c890b61",
+        "repo_file_hashes": {
+          ".gitignore": "1828249263215f6182229194dd1c662907d115310da5ca5a0c65ad207ed2ae3c",
+          ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+          "AGENTS.md": "d37ebbe8fdb94fabe7c039d8b89c3beaa36584d6d5eb09934f714941129463cd",
+          "README.md": "b56bd7410a2c90c559ad5fd52a6a78065bee4d2d54856d6677af4b0200746dce",
+          "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+          "main.py": "c101b2abfee28217d24a7c550eda37cffe548adfc9149244646199108361c0fe",
+          "pyproject.toml": "7be065e3664844a7774e9d85c4eabb06526e427e4e3e9f2f8e52f090fd600cc8",
+          "uv.lock": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+          ".agents/PLANS.md": "ed50b3ccc51cbe29123630c5069ab2d00f7428751ca67f1e64bd15558bd044d2",
+          ".agents/evidence/BLK-001-diagnostic-20261015-r2.zip": "91b0d03907b1b6764f18991880596f9c09b90986ad982b05f106bed948f96a32",
+          ".agents/evidence/BLK-001-diagnostic-20261015.md": "d44b453ad53d54726c99c111a84f3f458ebe4b7b8001777c8280fba205197aea",
+          ".agents/evidence/G1-10-recovery-verification.md": "39e05a96034d4eaa4f22f0dec72670afacbd9b48bcfcc41ed81f8a718d3a5f65",
+          ".agents/evidence/G1-git-baseline-verification.md": "13772b3438b30d440baac4caeeceb564017a5216ea9409d7b9412390d4b96f65",
+          ".agents/evidence/G1-hardening-verification.md": "0963f26840d2c393525fd10bba32f13e5ff3a51210a87d3d731b2ba96bd09380",
+          ".agents/evidence/G1-portability-consistency-verification.md": "f1fa95b9c2e7415ff0ff8a9e452920f7c8a29c77ea3ce3fabfc77fb744b7ad0e",
+          ".agents/evidence/M0-001-verification.md": "1f0dfba9ba36a3ce03f21e951e0af4a1b53d3b3b26970dd0c3aaaab76aaa3333",
+          ".agents/evidence/M0-acceptance.md": "089a86c5e50c0e5be698dff2dbc83643c58968b883e03c6e5c85b3d5cad28f14",
+          ".agents/evidence/M0-authorization.md": "2e7f62983b98cc79e1d25168da031bf2269c7364d8551956d41744a91ed58205",
+          ".agents/evidence/M0-final-technical-verification.md": "b64899752217a9fe55ae1a646ebb7b694956cb2164f804bbe2f47ff6340ca9c3",
+          ".agents/evidence/M0-finalization-verification.md": "9202f9c41518eb448efaac49ffbcee4cd2384c0435ebcca21fb31843a1d6f7b8",
+          ".agents/evidence/M1-04-experiment-budget.md": "d78af2e2a065c2346fc432bd932a82ce2cd3791da50c0656ef3bb65342efc7b0",
+          ".agents/evidence/M1-04-terminal-verification.md": "0f52e9e1916ae97279c15fbe29366888fb25703fc2e2117484de9a3d7b2a28a2",
+          ".agents/evidence/M1-authorization.md": "9985e9917dc8fe938b2c48c23da4868334b98d2a7bc2eba7f5a72b9a1a32d117",
+          ".agents/evidence/M1-feasibility-verification.md": "f6e00c39778c44604c2422f959a12dfa22156bde784afaca824d350e3fa523e5",
+          ".agents/evidence/logs/BLK-001-full-suite-20261015.log": "b85c0d3902d3ee25d64b1e80ab14338672b9d84eb503e37835463ef63670703d",
+          ".agents/evidence/logs/BLK-001-full-suite-final2-20261015.log": "db96a482f772ef7d41fc3b9becfd50fb77a7d01a80f25efaabc676323f98f907",
+          ".agents/evidence/logs/BLK-001-m1-suite-20261015.log": "76625627dad842447ca42ae9a4d3717b5a9a6bde6d37ea4f4ee4bd37a7150f87",
+          ".agents/evidence/logs/BLK-001-m1-suite-final2-20261015.log": "5f5e3985404a73c152c99b9afd81e20d0bf5e68067e5af05cfed5cab358c7d70",
+          ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
+          ".agents/plans/M00-bootstrap.md": "9c7b045f7efd20c60f01e2b23224ccac12d7a659699f0f43e6bc1ff286671f7f",
+          ".agents/plans/M01-ale-feasibility.md": "65ad3f04c34ab8751509ee0303f1cd772c5f83e980ac9b4b7d2b336a7cfbd5bb",
+          ".agents/review-bundles/M0-working-tree-20261014T184343213544Z.zip": "e888fa48c1d9662a8d63ce8af141f29b7a9a8ac4578fc3f25858660a0b07d345",
+          ".agents/review-bundles/M0-working-tree-20261014T184649013533Z.zip": "c705ea19971683c1526645552288ca377f11f2dcf101250319d8a12086535fd3",
+          ".agents/review-bundles/M0-working-tree-20261014T192404457787Z.zip": "3f846aa17591d879da385b833225f059db6dc0b9df5c992e33236ca66d35b7fd",
+          ".agents/review-bundles/M1-committed-20261015T104746718457Z.zip": "5b1b5fcf6b6d7d23e7f0f815f83c7da3c7b076f7be038e511d396e13c6e50cb1",
+          ".agents/review-bundles/M1-committed-20261015T105640197729Z.zip": "04afda8137148f35358e74bb236bca2717e9be4e814c795136a962530dd17f33",
+          ".agents/review-bundles/M1-committed-20261015T110014915834Z.zip": "593820363219b275a8ef34cdc9df30e53eb9d70804eafe50935f469d7141dda0",
+          ".agents/review-bundles/M1-staged-20261015T082948737608Z.zip": "68b710ef07bb36a2b656795f3ee295c0d2759e02c4dbf2e6002a6f074f50dfb4",
+          ".agents/review-bundles/M1-staged-20261015T103528610506Z.zip": "55a308cebbcbbfc10ebc85f78230324c31fcdc90eaf9352b995fb6ee8d197bc2",
+          ".agents/review-bundles/M1-staged-20261015T104346174941Z.zip": "8296640561a2f3b0e3a2bc0706701b0624696f8f9da543b92abf0687bb8aeeb8",
+          ".agents/review-bundles/M1-staged-20261015T104657854593Z.zip": "a27de74a32349b18f31956f01172f8b8daea6548e9850efcba3768f26fe1b9c4",
+          ".agents/review-bundles/export_review_bundle-staged-20261014T210535155205Z.zip": "2b50a6b35606d61e1d3f6ee3a156791b38cd294c626533101f103603c172ebd4",
+          ".agents/review-bundles/export_review_bundle-working-tree-20261014T210537795808Z.zip": "5606106ef43267add13d83478778b47f08e3916fa6cf07e2940e9a03e2b274e2",
+          ".agents/skills/export-review-bundle/SKILL.md": "02623443e4833824a7c2606e5d4cb9ea1d79e0b5d8c436741933978142932942",
+          ".agents/state/BLOCKERS.md": "817f74c72bc8cdcf0e0ac8ea18d76120d438a119f82b3459e8307cc994389ce6",
+          ".agents/state/SESSION_HANDOFF.md": "b30d480291229bbfdacf800d00f4f2afde5265f9aba38306a4d93acd00c47416",
+          ".agents/state/VERIFIED_FINDINGS.md": "71dda94a5dd7522f6b8236224ddd134a0bd23032894e0e61abd80a2368c78c3a",
+          ".agents/tasks/BACKLOG.yaml": "03794658af66c687537ec0ab96c419337c3271e875e0e2c05fd39cc871210472",
+          "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
+          "docs/01-foundation/REQUIREMENTS.md": "4aa8f91e830459f513ff47d4afa09341c5fdcebcb26eca4f45f0d5c67e4f344c",
+          "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
+          "docs/02-management/EXECUTION_PLAN.md": "a71a322a1b68b011ce28a1222fca328837803341ed3366848f10d467d1192535",
+          "docs/02-management/RISK_REGISTER.md": "47a9ceadeed7eae88d2c19f71ca98f991215433f1131309df29446159f55f52d",
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
+          "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": "a3e71e3b9f127e2a191b4a0d7b58881c14f2547c18357f90d473906d6ef2816d",
+          "docs/05-operations/SETUP.md": "05776d5f0e9bcf5931807fbbcca46ae583d37f25ebaf116308572f6874025a89",
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": "395741bc505bbc0c0dd3fcb63187f198303e538c064da32fc58c9389e93373a5",
+          "docs/06-quality/TEST_STRATEGY.md": "d851678481b9a12d742b2ae5ee6195a848ab1a7dc59f7fca6b6b62e53df42482",
+          "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
+          "scripts/agent_preflight.py": "7f24cf19f659603f2d96907eae790f1df07ff8212cfc321db2f4c47e641f026e",
+          "scripts/export_review_bundle.py": "7ed9a3a22dc2435f157840ad710f6fb8af183118830acb0b91cdbe47fa2930c0",
+          "scripts/run_m1_demo.py": "885c83435efe3009d0eea85098879c311062a8f39459ec18850ba1dc5e605ef0",
+          "scripts/run_m1_terminal_experiment.py": "b3f5803b9aaf620082f5a0eee863787709a056b25369fb3fef65022fb578e57b",
+          "tests/test_agent_context.py": "483913544951af2419b0efbd9ec52eab5846d6ad5511d06bf2e877377056f866",
+          "tests/test_export_review_bundle.py": "3d9684586b76aa73f794b936b336f8529237f1797cfe19645cc64ce74239db6c",
+          "tests/test_m0_smoke.py": "ba6303fc4c6b9f06b03bb1259a8084083c595b278e163d7f1ca710ef7bf77594",
+          "tests/test_m1_ale_integration.py": "d7ac8f2f65adbf1787e940f6fb67635e8e2491e15fd3bbebe6aa985bf309ab05",
+          "tests/test_m1_control.py": "922b889082f054cceb299d3092e27a6eafc125a774eaab9daa04536c9c8448be",
+          "tests/test_m1_environment.py": "62b80652d0dbe73f9342788ce1b0cdeac0e3748f23991e5635e202f80ced90c3",
+          "tests/test_m1_episode.py": "c379ba4f81d3c7560087366c5b2e18c14e852e2cc370bb062f7e681e104badfc",
+          "tests/test_m1_shadow.py": "19bd94ca9eece7d4317788f08df85fe46911d706a43665a437c6596446e99ffc",
+          "tests/test_m1_terminal_cli.py": "049e92159537ec90136135278ae060a33cfaae6cd1dcb10de4ef5234e696d942",
+          "tests/test_m1_vision.py": "e36315af24d76e89027f3eeb2b46a3740615d3c03fff3172365531eaa2b8f11c",
+          "tests/fixtures/g1-recovery-baseline.json": "a48deb7bbd5f1a67e21c66b4f5feec22c08f169b6dcc3d44b89248a30a8aa0df",
+          "videochess_rl/__init__.py": "6288a2698f98216834cce812d32cd8ecc95da5a2bdce96ebf891c22b1d30e009",
+          "videochess_rl/controller.py": "ee82e40f5e68c319f7e22e14e15e721f13ffc331b02f76e39b0684c19e075103",
+          "videochess_rl/demo.py": "221d4327433d2a877c215e9bd474009e938c07d6df19cc0dcd34f24765df3c37",
+          "videochess_rl/environment.py": "e00047d0f046d994f230712797d5b3b85264b73815301ef498b3b12aeb86dcff",
+          "videochess_rl/episode.py": "03bdb26cc6cf1623d6ef95d6df46787b0c806b29b23ae2cb82c84dd1f9c20a80",
+          "videochess_rl/shadow.py": "b342062ce2a6e176ed872d90ecbab584c5f0fb4bc0bb057b6d007694ac7d5149",
+          "videochess_rl/vision.py": "8f3a3b0a142bb91e3f7cd58dd29a596a01982f03cd7324929638a1fa5811b770"
+        },
+        "unhashed_large_files": [],
+        "unreadable_files": [],
+        "artifact_dirs_requiring_manifest": [
+          "artifacts"
+        ],
+        "excluded_directories": [
+          ".git",
+          ".venv",
+          "artifacts",
+          "scripts/__pycache__",
+          "tests/__pycache__",
+          "videochess_rl/__pycache__"
+        ],
+        "excluded_symlink_files": 0
+      },
+      "portable_git": {
+        "format_version": 1,
+        "tracked_manifest": {
+          ".agents/PLANS.md": {
+            "mode": "100644",
+            "object_id": "1c1b78d477af82837465daf21c1de62c32c07c84"
+          },
+          ".agents/evidence/BLK-001-diagnostic-20261015-r2.zip": {
+            "mode": "100644",
+            "object_id": "515428242de14038ca2bc968d82f877ec3d887f5"
+          },
+          ".agents/evidence/BLK-001-diagnostic-20261015.md": {
+            "mode": "100644",
+            "object_id": "17fb0872e1c4d13f7af8006b2b55aee65ae17420"
+          },
+          ".agents/evidence/G1-10-recovery-verification.md": {
+            "mode": "100644",
+            "object_id": "6ff27d51b9cf51803d8ca8c863066253ae6297bc"
+          },
+          ".agents/evidence/G1-git-baseline-verification.md": {
+            "mode": "100644",
+            "object_id": "c3c79107166243fe35ae2d8e9f270b8a46e0ffe9"
+          },
+          ".agents/evidence/G1-hardening-verification.md": {
+            "mode": "100644",
+            "object_id": "949549fa06ad46bc3076ac462e7ccba7cdc70fbf"
+          },
+          ".agents/evidence/G1-portability-consistency-verification.md": {
+            "mode": "100644",
+            "object_id": "5120604c17c3a481431701154d2783058ff78dcd"
+          },
+          ".agents/evidence/M0-001-verification.md": {
+            "mode": "100644",
+            "object_id": "0899b37e78e7244661bebb1fcea242bc66114e57"
+          },
+          ".agents/evidence/M0-acceptance.md": {
+            "mode": "100644",
+            "object_id": "99c6b35c927fc0eea29dad671ba59744e52c6644"
+          },
+          ".agents/evidence/M0-authorization.md": {
+            "mode": "100644",
+            "object_id": "4682598c5d00e2e9f0cb8f0a46171cdcc6de748a"
+          },
+          ".agents/evidence/M0-final-technical-verification.md": {
+            "mode": "100644",
+            "object_id": "219fa2bb8620f94faf680d956d1042d714ac9c94"
+          },
+          ".agents/evidence/M0-finalization-verification.md": {
+            "mode": "100644",
+            "object_id": "ba82a757f3cf0075d28c5435dd866dda2d7f34aa"
+          },
+          ".agents/evidence/M1-04-experiment-budget.md": {
+            "mode": "100644",
+            "object_id": "aa948644a729f6f24eb79431974faf3f70411818"
+          },
+          ".agents/evidence/M1-04-terminal-verification.md": {
+            "mode": "100644",
+            "object_id": "d19432058fa6e47e480c633bc623b31df0273452"
+          },
+          ".agents/evidence/M1-authorization.md": {
+            "mode": "100644",
+            "object_id": "07d0ac7de9ec5ef4f29d1a02ed83ca2ba619e938"
+          },
+          ".agents/evidence/M1-feasibility-verification.md": {
+            "mode": "100644",
+            "object_id": "e6cab1db0430f21069d4836d416eb9b7bf6457a7"
+          },
+          ".agents/evidence/logs/BLK-001-full-suite-20261015.log": {
+            "mode": "100644",
+            "object_id": "340cf4693a378b9e961eb7e719ad619a3dcf3f9e"
+          },
+          ".agents/evidence/logs/BLK-001-full-suite-final2-20261015.log": {
+            "mode": "100644",
+            "object_id": "fa616cde607f43f7c41643cf238e115e47442209"
+          },
+          ".agents/evidence/logs/BLK-001-m1-suite-20261015.log": {
+            "mode": "100644",
+            "object_id": "d389fe8292618c15cbe7645196b8e8c54f4cc098"
+          },
+          ".agents/evidence/logs/BLK-001-m1-suite-final2-20261015.log": {
+            "mode": "100644",
+            "object_id": "b3b4d5e78ea8e2f946a0958d47a53cbb0107d343"
+          },
+          ".agents/plans/G1-consistency-hardening.md": {
+            "mode": "100644",
+            "object_id": "a371486eaf564cf62503c6a2de683888e09b3b9d"
+          },
+          ".agents/plans/M00-bootstrap.md": {
+            "mode": "100644",
+            "object_id": "9a546c32e71394fb65b0dceb44d8b3a9db44a5aa"
+          },
+          ".agents/plans/M01-ale-feasibility.md": {
+            "mode": "100644",
+            "object_id": "314df312e52236255ef946d2732ce3edc4b5d726"
+          },
+          ".agents/skills/export-review-bundle/SKILL.md": {
+            "mode": "100644",
+            "object_id": "9c94b136d7f6b78a99ffcdda780b2a20d712678d"
+          },
+          ".agents/state/BLOCKERS.md": {
+            "mode": "100644",
+            "object_id": "a17e340975fa11ec8dd4e1006e10a60ebb04fdca"
+          },
+          ".agents/state/VERIFIED_FINDINGS.md": {
+            "mode": "100644",
+            "object_id": "4644010cc5675160162448a1681d42013b2ef5aa"
+          },
+          ".agents/tasks/BACKLOG.yaml": {
+            "mode": "100644",
+            "object_id": "c87c7caf7ebf5bce638db717d58eb8ce1f2deedd"
+          },
+          ".gitignore": {
+            "mode": "100644",
+            "object_id": "1f47241035421aa3dd73732d084b533e3fad7763"
+          },
+          ".python-version": {
+            "mode": "100644",
+            "object_id": "e4fba2183587225f216eeada4c78dfab6b2e65f5"
+          },
+          "AGENTS.md": {
+            "mode": "100644",
+            "object_id": "1aff494964fb5b9844f29589a53b83c2b6489e51"
+          },
+          "README.md": {
+            "mode": "100644",
+            "object_id": "c64740f9ac205eaac873da341d5c9079bc4b09f4"
+          },
+          "artifacts/m1/MANIFEST-20261015.sha256": {
+            "mode": "100644",
+            "object_id": "5cf175efa20ceb07087191d370ddae44f09ae893"
+          },
+          "atari-videochess-rl-roadmap.html": {
+            "mode": "100644",
+            "object_id": "78f34984b1f10c9921974a96c8648112876017fa"
+          },
+          "docs/01-foundation/PROJECT_OVERVIEW.md": {
+            "mode": "100644",
+            "object_id": "6131db7cb1ebe66ed6f903c2cde0dcec64ec1795"
+          },
+          "docs/01-foundation/REQUIREMENTS.md": {
+            "mode": "100644",
+            "object_id": "d9e049eb9f7aa9664cc65499d023ef88ed7b3ad5"
+          },
+          "docs/01-foundation/ROADMAP.md": {
+            "mode": "100644",
+            "object_id": "3d6517b186feb24fb95702fffefc1a568266bf37"
+          },
+          "docs/02-management/EXECUTION_PLAN.md": {
+            "mode": "100644",
+            "object_id": "57cc25116b0657cb910a00c88fc04dba51ba9621"
+          },
+          "docs/02-management/RISK_REGISTER.md": {
+            "mode": "100644",
+            "object_id": "5e5dbf91608bc458abfc2072ab28cb2aec131410"
+          },
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
+            "mode": "100644",
+            "object_id": "97db1a054605b8aa3c94697a75f2ebf1d80d3e5e"
+          },
+          "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": {
+            "mode": "100644",
+            "object_id": "775469adcc75d82e6d8c9bf91ca82c0b9c36ed0a"
+          },
+          "docs/05-operations/SETUP.md": {
+            "mode": "100644",
+            "object_id": "8255761d45367521f6428aece17d882807055146"
+          },
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": {
+            "mode": "100644",
+            "object_id": "47e4cb03e6067424f07f6fa2c543869a5e96c3f2"
+          },
+          "docs/06-quality/TEST_STRATEGY.md": {
+            "mode": "100644",
+            "object_id": "2243239d36d518a317d441149f8e0924867abda7"
+          },
+          "pyproject.toml": {
+            "mode": "100644",
+            "object_id": "af61e2b43ca0e55def303fd48d797285119d0c70"
+          },
+          "scripts/agent_checkpoint.py": {
+            "mode": "100644",
+            "object_id": "6f4f0ca28dbc837dce01ab788903c2e43a58b1d8"
+          },
+          "scripts/agent_preflight.py": {
+            "mode": "100644",
+            "object_id": "322932885074db6e8dc5a098a90dd96de393e760"
+          },
+          "scripts/export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "5fe121a545a759d487af574bd67c32b25f1fbd8f"
+          },
+          "scripts/run_m1_demo.py": {
+            "mode": "100644",
+            "object_id": "cd7e704dbae92a9d084988cf94267162a7168f17"
+          },
+          "scripts/run_m1_terminal_experiment.py": {
+            "mode": "100755",
+            "object_id": "06e4e9f3a8fc48c1dcc087f800540e8acf548df8"
+          },
+          "tests/fixtures/g1-recovery-baseline.json": {
+            "mode": "100644",
+            "object_id": "e6bad6a18ef49b42487ef8c388d803e16b7a64e3"
+          },
+          "tests/test_agent_context.py": {
+            "mode": "100644",
+            "object_id": "b4249737abc804f3a00d8274f23679a75f60bc67"
+          },
+          "tests/test_export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "7e36d44e58d292afd40ce951ab87f006ae17be47"
+          },
+          "tests/test_m0_smoke.py": {
+            "mode": "100644",
+            "object_id": "06fc374a092bb537b521656c195a90db48f6f1ab"
+          },
+          "tests/test_m1_ale_integration.py": {
+            "mode": "100644",
+            "object_id": "bd24bd1116149afa98b84c79671480a850a001a9"
+          },
+          "tests/test_m1_control.py": {
+            "mode": "100644",
+            "object_id": "78b487cd107250f012fa491b78292353e7da726d"
+          },
+          "tests/test_m1_environment.py": {
+            "mode": "100644",
+            "object_id": "394f0aa1ee8243e1f95121fdb7a31e1d406741a7"
+          },
+          "tests/test_m1_episode.py": {
+            "mode": "100644",
+            "object_id": "2ba8989469761b18ef899206f3d8697d50c46552"
+          },
+          "tests/test_m1_shadow.py": {
+            "mode": "100644",
+            "object_id": "ee085a1693595c5a265081f24f186032c39b4e7e"
+          },
+          "tests/test_m1_terminal_cli.py": {
+            "mode": "100644",
+            "object_id": "c31f0b6bef1f66d9f5b54a03c44576bb637203af"
+          },
+          "tests/test_m1_vision.py": {
+            "mode": "100644",
+            "object_id": "a69e3b463b6c00a38adcdc4f6f2b4948e94e39a2"
+          },
+          "uv.lock": {
+            "mode": "100644",
+            "object_id": "a122403ed28fba3956a138b886e5d65791e1c516"
+          },
+          "videochess_rl/__init__.py": {
+            "mode": "100644",
+            "object_id": "1dd9a23ede9e748cc14d9da2ad7b7f0b4f1fde98"
+          },
+          "videochess_rl/controller.py": {
+            "mode": "100644",
+            "object_id": "875212221d304659ca99755e4d1d09e05903c244"
+          },
+          "videochess_rl/demo.py": {
+            "mode": "100644",
+            "object_id": "5a35b608d5323f8139cbed675c76b2ecef33adfe"
+          },
+          "videochess_rl/environment.py": {
+            "mode": "100644",
+            "object_id": "5617ef3abf556ce16e23210b6b855a79debd4efa"
+          },
+          "videochess_rl/episode.py": {
+            "mode": "100644",
+            "object_id": "131491d029a9014b7943db7f1118b6bb24ba8b14"
+          },
+          "videochess_rl/shadow.py": {
+            "mode": "100644",
+            "object_id": "d971e7db7026c21afc86f3cca3864fa745d32454"
+          },
+          "videochess_rl/vision.py": {
+            "mode": "100644",
+            "object_id": "5be7bf92574229c232a364a7c9c03830a50524ee"
+          }
+        },
+        "manifest_sha256": "acc37ce8b311e4a7e0f853345d2a3f58ef5830cc17876e759c777f959faf11b3",
+        "state_sha256": "a6d9e56160c4eb0110ddf501b08d5e72fe462ea861307549e2282a21e85d9602",
+        "handoff_sha256": "b30d480291229bbfdacf800d00f4f2afde5265f9aba38306a4d93acd00c47416"
       }
     }
   ]

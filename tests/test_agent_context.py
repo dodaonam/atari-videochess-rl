@@ -494,7 +494,11 @@ class AgentContextRecoveryTests(unittest.TestCase):
             self.assertGreater(len(approved_files), 20)
             self.assertTrue(approved_files <= committed_files)
             self.assertNotIn("chat_history.md", committed_files)
-            self.assertFalse(any(path.endswith(".zip") for path in committed_files))
+            self.assertEqual(
+                {path for path in committed_files if path.endswith(".zip")},
+                {".agents/evidence/BLK-001-diagnostic-20261015-r2.zip"},
+                "Only the explicitly portable M1 diagnostic bundle may be committed as a ZIP",
+            )
             self.assertNotIn("main.py", committed_files)
             baseline_files = sorted(committed_files)
 
