@@ -99,15 +99,15 @@ The task-specific `.agents/plans/G1-consistency-hardening.md` and `.agents/evide
 | `scripts/agent_preflight.py` | Created and tested in G1. |
 | `scripts/agent_checkpoint.py` | Created and tested in G1. |
 
-### P2 — Created only when the relevant milestone or decision needs them (38 files)
+### P2 — Created only when the relevant milestone or decision needs them (39 files)
 
-The inventory is 34 Markdown files and four Python scripts:
+The inventory is 35 Markdown files and four Python scripts:
 
 - Foundation: `docs/01-foundation/GLOSSARY.md`.
 - Decision records: `docs/02-management/decisions/README.md` and `ADR-0001-governance-crosswalk-and-file-priorities.md`. `ADR-0001` is created in G1 because the requested G1 work resolves this governance decision; it is the only P2 artifact created now.
 - Technical specifications (7): `ARCHITECTURE.md`, `ALE_ENVIRONMENT.md`, `BOARD_EXTRACTION.md`, `ACTION_ADAPTER.md`, `MDP_SPEC.md`, `MODEL_DESIGN.md`, and `RL_ALGORITHM.md` under `docs/03-technical/`.
 - Research specifications (5): `DATASET_SPEC.md`, `STOCKFISH_TEACHER.md`, `TRAINING_PROTOCOL.md`, `EXPERIMENT_PROTOCOL.md`, and `EVALUATION_PROTOCOL.md` under `docs/04-research/`.
-- Operations (3): `COLAB_WORKFLOW.md`, `REPRODUCIBILITY.md`, and `TROUBLESHOOTING.md` under `docs/05-operations/`.
+- Operations (4): `COLAB_WORKFLOW.md`, `REPRODUCIBILITY.md`, `TROUBLESHOOTING.md`, and `M1-ALE-REPRODUCIBILITY.md` under `docs/05-operations/`.
 - Quality (1): `docs/06-quality/VALIDATION_REPORT.md`.
 - Delivery (4): `FINAL_REPORT.md`, `MODEL_CARD.md`, `USER_GUIDE.md`, and `HANDOVER.md` under `docs/07-delivery/`.
 - Engineering plans (7): `.agents/plans/M01-ale-feasibility.md` through `.agents/plans/M07-evaluation-delivery.md`.

@@ -954,7 +954,43 @@
       ],
       "next_action": "",
       "plan_ref": ".agents/plans/G1-consistency-hardening.md"
+    },
+    {
+      "id": "M1-001",
+      "title": "ALE feasibility: observation-driven VideoChess interaction",
+      "milestone": "M1",
+      "status": "in_progress",
+      "depends_on": [
+        "M0-001"
+      ],
+      "requires_user_gate_approval": null,
+      "blocker_ids": [],
+      "evidence": [
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M1-authorization.md",
+          "detail": "Explicit user authorization for M1 and conditional G2 approval, with M2+ and unresolved confirmation boundaries.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-15T06:24:49Z",
+            "recorded_at_utc": "2026-10-15T06:24:49Z",
+            "exit_code": null,
+            "git_revision": "aa955a141ddc8f4a309d9d4e644b4ef27ad18765",
+            "log_path": ".agents/evidence/M1-authorization.md"
+          }
+        }
+      ],
+      "acceptance_criteria_ids": [
+        "M1-01",
+        "M1-02",
+        "M1-03",
+        "M1-04",
+        "M1-05",
+        "M1-06"
+      ],
+      "next_action": "Finalize the M1 evidence matrix and investigate real terminal/reward behavior for M1-04; keep M1 and G2 in progress unless every mandatory criterion is verified.",
+      "plan_ref": ".agents/plans/M01-ale-feasibility.md"
     }
   ],
-  "updated_at_utc": "2026-10-14T19:53:22Z"
+  "updated_at_utc": "2026-10-15T07:34:21Z"
 }

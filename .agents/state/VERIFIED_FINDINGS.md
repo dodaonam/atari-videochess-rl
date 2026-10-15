@@ -79,4 +79,4 @@
 - **Status:** user-accepted 2026-10-15
 - **Finding:** The user explicitly accepted M0-001 and M0-01 through M0-04 based on the final technical verification evidence; this approval does not authorize a commit, push, or M1.
 - **Evidence:** `.agents/evidence/M0-acceptance.md`; `.agents/evidence/M0-final-technical-verification.md`.
-- **Impact:** M0 is accepted. G2 remains in progress; M1 is still unauthorized pending separate user approval.
+- **Impact:** M0 is accepted. This M0 approval did not itself authorize M1; the later direct M1 authorization is recorded in `.agents/evidence/M1-authorization.md`. G2 remains in progress.

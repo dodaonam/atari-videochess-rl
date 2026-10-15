@@ -58,6 +58,22 @@ Verified command/test evidence records `executed_at_utc`, `recorded_at_utc`, `ex
 
 `tests/test_m0_smoke.py` runs inside the locked project environment with `uv run`. It checks a legal opening move through `python-chess`, a CPU-only PyTorch tensor operation, the bundled ALE-Py `video_chess` ROM resource, Gymnasium registration and VideoChess construction without reset, and a Stockfish UCI readiness ping without searching a position. ROM availability and environment construction do not verify M1 reset behavior, observations, controls, or gameplay. Check Colab CLI version/help without creating a session or invoking account usage/authentication.
 
+## M1 ALE feasibility checks
+
+`tests/test_m1_vision.py`, `tests/test_m1_control.py`, and `tests/test_m1_shadow.py` cover RGB square parsing, cursor ambiguity, measured action timing, legal shadow transitions, and safe mismatch handling. Synthetic frames are unit fixtures only; they do not count as ALE evidence.
+
+`tests/test_m1_environment.py` and `tests/test_m1_ale_integration.py` use the real packaged VideoChess ROM. The integration checks reset/capture the actual RGB screen, execute a player move through joystick/FIRE actions, observe the computer reply from RGB, and compare the result against legal `python-chess` shadow transitions. It runs once with deterministic development settings and once with the registered v5 defaults. Neither test reads RAM to choose actions.
+
+Run the M1 checks and bounded demo from the repository root:
+
+```bash
+uv run --locked python -m unittest tests.test_m1_vision tests.test_m1_control tests.test_m1_shadow tests.test_m1_environment tests.test_m1_ale_integration -v
+uv run --locked python scripts/run_m1_demo.py --profile deterministic-dev --seed 20261015 --max-opponent-wait-frames 10000
+uv run --locked python scripts/run_m1_demo.py --profile v5-default --seed 20261016 --max-opponent-wait-frames 10000
+```
+
+The runner writes JSON traces and raw RGB frames under ignored `artifacts/m1/`. Only sanitized hashes, settings, action summaries, and findings belong in version-controlled evidence. Terminal behavior is reported as unverified unless a real game-ending position is observed; an ALE API or mock termination flag is not a substitute.
+
 ## Future project test layers
 
 | Layer | Examples | Run when |

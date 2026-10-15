@@ -11,38 +11,54 @@
     ],
     "next_governance_gate": "G3",
     "user_authorized_g1": true,
-    "next_user_action": "After repository finalization, obtain explicit user authorization to start M1 ALE feasibility. M1 remains not started; O-01 through O-08 remain unresolved."
+    "next_user_action": "Review the M1 acceptance report; M1-04 terminal behavior remains unverified and M2 requires separate explicit authorization."
   },
   "engineering": {
-    "active_milestone": null,
+    "active_milestone": "M1",
     "next_milestone": "M1",
-    "next_milestone_status": "pending_user_approval",
-    "start_authorized": false,
-    "hold_reason": "M1 remains pending separate explicit user authorization after M0; repository finalization and M0 acceptance do not start or authorize M1."
+    "next_milestone_status": "in_progress",
+    "start_authorized": true,
+    "hold_reason": ""
   },
   "task_refs": {
-    "active_task_id": null,
-    "next_task_id": null
+    "active_task_id": "M1-001",
+    "next_task_id": "M1-001"
   },
   "last_checkpoint": {
-    "id": "cp-ff9ba625-20261014T210607034030Z",
-    "created_at_utc": "2026-10-14T21:06:07Z",
+    "id": "cp-aa955a14-20261015T073443108543Z",
+    "created_at_utc": "2026-10-15T07:34:43Z",
     "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
     "git": {
       "scope": "workspace",
       "branch": "initial-idea",
-      "head": "ff9ba625c5cce07b97e5c038998fb4b5869be1d7",
+      "head": "aa955a141ddc8f4a309d9d4e644b4ef27ad18765",
       "status_entries": [
-        " M .agents/state/PROJECT_STATE.yaml",
-        " M .agents/state/SESSION_HANDOFF.md",
+        " M .agents/state/BLOCKERS.md",
+        " M .agents/state/VERIFIED_FINDINGS.md",
+        " M docs/02-management/EXECUTION_PLAN.md",
+        " M docs/05-operations/SETUP.md",
+        " M docs/06-quality/TEST_STRATEGY.md",
+        "?? docs/05-operations/M1-ALE-REPRODUCIBILITY.md",
         "?? main.py",
-        "A  .agents/skills/export-review-bundle/SKILL.md",
-        "A  scripts/export_review_bundle.py",
-        "A  tests/test_export_review_bundle.py",
-        "M  .gitignore",
-        "M  AGENTS.md"
+        "?? scripts/run_m1_demo.py",
+        "?? tests/test_m1_ale_integration.py",
+        "?? tests/test_m1_control.py",
+        "?? tests/test_m1_environment.py",
+        "?? tests/test_m1_shadow.py",
+        "?? tests/test_m1_vision.py",
+        "?? videochess_rl/__init__.py",
+        "?? videochess_rl/controller.py",
+        "?? videochess_rl/demo.py",
+        "?? videochess_rl/environment.py",
+        "?? videochess_rl/shadow.py",
+        "?? videochess_rl/vision.py",
+        "A  .agents/evidence/M1-authorization.md",
+        "AM .agents/plans/M01-ale-feasibility.md",
+        "MM .agents/state/PROJECT_STATE.yaml",
+        "MM .agents/state/SESSION_HANDOFF.md",
+        "MM .agents/tasks/BACKLOG.yaml"
       ],
-      "status_sha256": "3471622c1bc8e00717a7e130150d83314ebb35602a972c7846e833c1fd001f43",
+      "status_sha256": "55bfd20056d3106a7ea29eb084ffc238e689e636987aaf0b1c0379617351d9e2",
       "repo_file_hashes": {
         ".gitignore": "1828249263215f6182229194dd1c662907d115310da5ca5a0c65ad207ed2ae3c",
         ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
@@ -62,43 +78,62 @@
         ".agents/evidence/M0-authorization.md": "2e7f62983b98cc79e1d25168da031bf2269c7364d8551956d41744a91ed58205",
         ".agents/evidence/M0-final-technical-verification.md": "b64899752217a9fe55ae1a646ebb7b694956cb2164f804bbe2f47ff6340ca9c3",
         ".agents/evidence/M0-finalization-verification.md": "9202f9c41518eb448efaac49ffbcee4cd2384c0435ebcca21fb31843a1d6f7b8",
+        ".agents/evidence/M1-authorization.md": "9985e9917dc8fe938b2c48c23da4868334b98d2a7bc2eba7f5a72b9a1a32d117",
         ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
         ".agents/plans/M00-bootstrap.md": "9c7b045f7efd20c60f01e2b23224ccac12d7a659699f0f43e6bc1ff286671f7f",
+        ".agents/plans/M01-ale-feasibility.md": "65ad3f04c34ab8751509ee0303f1cd772c5f83e980ac9b4b7d2b336a7cfbd5bb",
         ".agents/review-bundles/M0-working-tree-20261014T184343213544Z.zip": "e888fa48c1d9662a8d63ce8af141f29b7a9a8ac4578fc3f25858660a0b07d345",
         ".agents/review-bundles/M0-working-tree-20261014T184649013533Z.zip": "c705ea19971683c1526645552288ca377f11f2dcf101250319d8a12086535fd3",
         ".agents/review-bundles/M0-working-tree-20261014T192404457787Z.zip": "3f846aa17591d879da385b833225f059db6dc0b9df5c992e33236ca66d35b7fd",
         ".agents/review-bundles/export_review_bundle-staged-20261014T210535155205Z.zip": "2b50a6b35606d61e1d3f6ee3a156791b38cd294c626533101f103603c172ebd4",
         ".agents/review-bundles/export_review_bundle-working-tree-20261014T210537795808Z.zip": "5606106ef43267add13d83478778b47f08e3916fa6cf07e2940e9a03e2b274e2",
         ".agents/skills/export-review-bundle/SKILL.md": "02623443e4833824a7c2606e5d4cb9ea1d79e0b5d8c436741933978142932942",
-        ".agents/state/BLOCKERS.md": "ffbc439301aeb2e6be5697e98af94abd14370d5982a9f2f15b30cebdf4a20286",
-        ".agents/state/SESSION_HANDOFF.md": "39fedc15d3eeb8187537ee8126d5935b049b835a9db25b55d6b37b65fa897ec0",
-        ".agents/state/VERIFIED_FINDINGS.md": "ecfa03889b673b2cbc9d59c286e7d8fe19a10fb40c95777960f61d1bc4ce00e7",
-        ".agents/tasks/BACKLOG.yaml": "6538d4ab6469ded11908118e5efaefddb23042ebb1244a3016ca9b1185c947c6",
+        ".agents/state/BLOCKERS.md": "b40fe4963b5e69160a4a6871d14c028e367ea19e922f9feee25740864b04550e",
+        ".agents/state/SESSION_HANDOFF.md": "1a44836a51eec8e60d3a0996a13b9d6d12d8fcf4a8f5194cd6c527a3bd418099",
+        ".agents/state/VERIFIED_FINDINGS.md": "549ec613869b143368cbee9afa547f6b298361755afc23fb0d47445e15f62089",
+        ".agents/tasks/BACKLOG.yaml": "640d12ffa430f5d6a379c0a8df5a53e36f63d340d9c85a6b4b49840e0c8f425c",
         "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
         "docs/01-foundation/REQUIREMENTS.md": "4aa8f91e830459f513ff47d4afa09341c5fdcebcb26eca4f45f0d5c67e4f344c",
         "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
-        "docs/02-management/EXECUTION_PLAN.md": "ef5497521a10cf37183a43fcc40bbf6d4aa62564e3dff25aa166941373a8f06e",
+        "docs/02-management/EXECUTION_PLAN.md": "a71a322a1b68b011ce28a1222fca328837803341ed3366848f10d467d1192535",
         "docs/02-management/RISK_REGISTER.md": "2d3a3fef7062377c6479048992bae3e3ec0a9cc880a883bb1e57f24473c00ab8",
         "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
-        "docs/05-operations/SETUP.md": "1dff0568aac5e3ecf881875be9580c9eaa77d71ca0556fb1513d3df13819a00c",
+        "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": "1fa120468ec2a983b64bc69a9092ec0212719092953116c9df2886f795892324",
+        "docs/05-operations/SETUP.md": "05776d5f0e9bcf5931807fbbcca46ae583d37f25ebaf116308572f6874025a89",
         "docs/06-quality/ACCEPTANCE_CRITERIA.md": "395741bc505bbc0c0dd3fcb63187f198303e538c064da32fc58c9389e93373a5",
-        "docs/06-quality/TEST_STRATEGY.md": "8bf60a1191845eb06c0a21e2f317064d4b3ee4e52e3dc08b0430389666b2cde7",
+        "docs/06-quality/TEST_STRATEGY.md": "bce1ac5aacc8445f6a3bc80b8f3af82b7101e49f08ff12d43a2e9489af107cd8",
         "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
         "scripts/agent_preflight.py": "7f24cf19f659603f2d96907eae790f1df07ff8212cfc321db2f4c47e641f026e",
         "scripts/export_review_bundle.py": "7ed9a3a22dc2435f157840ad710f6fb8af183118830acb0b91cdbe47fa2930c0",
+        "scripts/run_m1_demo.py": "885c83435efe3009d0eea85098879c311062a8f39459ec18850ba1dc5e605ef0",
         "tests/test_agent_context.py": "ee3c6a272cf0e21cfc459b3c8ebe1e372fb70fe1a7f4735c2a36c2b531a7faab",
         "tests/test_export_review_bundle.py": "3d9684586b76aa73f794b936b336f8529237f1797cfe19645cc64ce74239db6c",
         "tests/test_m0_smoke.py": "ba6303fc4c6b9f06b03bb1259a8084083c595b278e163d7f1ca710ef7bf77594",
-        "tests/fixtures/g1-recovery-baseline.json": "a48deb7bbd5f1a67e21c66b4f5feec22c08f169b6dcc3d44b89248a30a8aa0df"
+        "tests/test_m1_ale_integration.py": "da508d0aff6f01841036435cca4b6a397e12a1b0a3c7ed2c41abf0bebe46eddd",
+        "tests/test_m1_control.py": "be8ec1573e5fe2920c9df4e847fa679d70c987ed9cec74db05580b797aafb7fc",
+        "tests/test_m1_environment.py": "427eeba8bc7672e3c8ce811906b5a746a7852893b53b1025df9bae468d75c5b3",
+        "tests/test_m1_shadow.py": "64862adb1b6af8a2f9d6b29cd8babf26c8dc4694b79e22226e8e168601f07178",
+        "tests/test_m1_vision.py": "0273ddabe79ec09f1525d62ae03c6d0f04214ec4aeb90f53ad0f0aa919cd1a85",
+        "tests/fixtures/g1-recovery-baseline.json": "a48deb7bbd5f1a67e21c66b4f5feec22c08f169b6dcc3d44b89248a30a8aa0df",
+        "videochess_rl/__init__.py": "6288a2698f98216834cce812d32cd8ecc95da5a2bdce96ebf891c22b1d30e009",
+        "videochess_rl/controller.py": "23ae39ddb40e24a930d49c9f3d796491598820efae93d6124cebf417c8d0df41",
+        "videochess_rl/demo.py": "0b1428a74353db4c72fa972b75d68ab8ce7f0e7b081f0ef26e6743c6e3daf090",
+        "videochess_rl/environment.py": "e00047d0f046d994f230712797d5b3b85264b73815301ef498b3b12aeb86dcff",
+        "videochess_rl/shadow.py": "64ad1fb411c0b8f1c0becc0d9427d87f5badc1976a88ea460d0cc071260208d7",
+        "videochess_rl/vision.py": "4e2f69dead40987e1c2d6d1dfa3671c80951adafd06b6a87cb223acf81c09592"
       },
       "unhashed_large_files": [],
       "unreadable_files": [],
-      "artifact_dirs_requiring_manifest": [],
+      "artifact_dirs_requiring_manifest": [
+        "artifacts"
+      ],
       "excluded_directories": [
         ".git",
         ".venv",
+        "artifacts",
         "scripts/__pycache__",
-        "tests/__pycache__"
+        "tests/__pycache__",
+        "videochess_rl/__pycache__"
       ],
       "excluded_symlink_files": 0
     },
@@ -145,6 +180,10 @@
           "mode": "100644",
           "object_id": "ba82a757f3cf0075d28c5435dd866dda2d7f34aa"
         },
+        ".agents/evidence/M1-authorization.md": {
+          "mode": "100644",
+          "object_id": "07d0ac7de9ec5ef4f29d1a02ed83ca2ba619e938"
+        },
         ".agents/plans/G1-consistency-hardening.md": {
           "mode": "100644",
           "object_id": "a371486eaf564cf62503c6a2de683888e09b3b9d"
@@ -152,6 +191,10 @@
         ".agents/plans/M00-bootstrap.md": {
           "mode": "100644",
           "object_id": "9a546c32e71394fb65b0dceb44d8b3a9db44a5aa"
+        },
+        ".agents/plans/M01-ale-feasibility.md": {
+          "mode": "100644",
+          "object_id": "79aee06fe16f8bc114746920915e8c46d6cfe979"
         },
         ".agents/skills/export-review-bundle/SKILL.md": {
           "mode": "100644",
@@ -167,7 +210,7 @@
         },
         ".agents/tasks/BACKLOG.yaml": {
           "mode": "100644",
-          "object_id": "dbd11255b698f111eb0a2dc632bfdc57635eacd4"
+          "object_id": "fb4d92b5e11a02225b0dba75bb3a8c746a78c766"
         },
         ".gitignore": {
           "mode": "100644",
@@ -262,9 +305,9 @@
           "object_id": "a122403ed28fba3956a138b886e5d65791e1c516"
         }
       },
-      "manifest_sha256": "07cd4212c5e4e23784e79c4ad3ce05a55f4b6fd0f0d3e87d76d6a902bf4341d6",
-      "state_sha256": "c633feb2d7eb0869d541f6def5064f94fa41488189193da84e3b60aa049b10fb",
-      "handoff_sha256": "39fedc15d3eeb8187537ee8126d5935b049b835a9db25b55d6b37b65fa897ec0"
+      "manifest_sha256": "c020ac00daa8326ca148b923c1f1b72d3c647ea3989b05dbc978af85ae36828b",
+      "state_sha256": "210381d63375e0cc598b9490e1abc26246cae109d80e784e36d26421dd093624",
+      "handoff_sha256": "1a44836a51eec8e60d3a0996a13b9d6d12d8fcf4a8f5194cd6c527a3bd418099"
     }
   },
   "g1_baseline": {
@@ -6629,6 +6672,1029 @@
         "manifest_sha256": "957c82e589eb00b5a07f3eb2c757cb5652bcd448511be8d50e259100349ee93a",
         "state_sha256": "7c441df6a97a093631bf26541932b64d51487b30abc00b03bba2dfed1b77f234",
         "handoff_sha256": "a59fa2c9225255398ea1109b3ff44f2268a897b80b6547d9baafa24c077d0c17"
+      }
+    },
+    {
+      "id": "cp-ff9ba625-20261014T210607034030Z",
+      "created_at_utc": "2026-10-14T21:06:07Z",
+      "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
+      "workspace_git": {
+        "scope": "workspace",
+        "branch": "initial-idea",
+        "head": "ff9ba625c5cce07b97e5c038998fb4b5869be1d7",
+        "status_entries": [
+          " M .agents/state/PROJECT_STATE.yaml",
+          " M .agents/state/SESSION_HANDOFF.md",
+          "?? main.py",
+          "A  .agents/skills/export-review-bundle/SKILL.md",
+          "A  scripts/export_review_bundle.py",
+          "A  tests/test_export_review_bundle.py",
+          "M  .gitignore",
+          "M  AGENTS.md"
+        ],
+        "status_sha256": "3471622c1bc8e00717a7e130150d83314ebb35602a972c7846e833c1fd001f43",
+        "repo_file_hashes": {
+          ".gitignore": "1828249263215f6182229194dd1c662907d115310da5ca5a0c65ad207ed2ae3c",
+          ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+          "AGENTS.md": "d37ebbe8fdb94fabe7c039d8b89c3beaa36584d6d5eb09934f714941129463cd",
+          "README.md": "b56bd7410a2c90c559ad5fd52a6a78065bee4d2d54856d6677af4b0200746dce",
+          "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+          "main.py": "c101b2abfee28217d24a7c550eda37cffe548adfc9149244646199108361c0fe",
+          "pyproject.toml": "7be065e3664844a7774e9d85c4eabb06526e427e4e3e9f2f8e52f090fd600cc8",
+          "uv.lock": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+          ".agents/PLANS.md": "ed50b3ccc51cbe29123630c5069ab2d00f7428751ca67f1e64bd15558bd044d2",
+          ".agents/evidence/G1-10-recovery-verification.md": "39e05a96034d4eaa4f22f0dec72670afacbd9b48bcfcc41ed81f8a718d3a5f65",
+          ".agents/evidence/G1-git-baseline-verification.md": "13772b3438b30d440baac4caeeceb564017a5216ea9409d7b9412390d4b96f65",
+          ".agents/evidence/G1-hardening-verification.md": "0963f26840d2c393525fd10bba32f13e5ff3a51210a87d3d731b2ba96bd09380",
+          ".agents/evidence/G1-portability-consistency-verification.md": "f1fa95b9c2e7415ff0ff8a9e452920f7c8a29c77ea3ce3fabfc77fb744b7ad0e",
+          ".agents/evidence/M0-001-verification.md": "1f0dfba9ba36a3ce03f21e951e0af4a1b53d3b3b26970dd0c3aaaab76aaa3333",
+          ".agents/evidence/M0-acceptance.md": "089a86c5e50c0e5be698dff2dbc83643c58968b883e03c6e5c85b3d5cad28f14",
+          ".agents/evidence/M0-authorization.md": "2e7f62983b98cc79e1d25168da031bf2269c7364d8551956d41744a91ed58205",
+          ".agents/evidence/M0-final-technical-verification.md": "b64899752217a9fe55ae1a646ebb7b694956cb2164f804bbe2f47ff6340ca9c3",
+          ".agents/evidence/M0-finalization-verification.md": "9202f9c41518eb448efaac49ffbcee4cd2384c0435ebcca21fb31843a1d6f7b8",
+          ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
+          ".agents/plans/M00-bootstrap.md": "9c7b045f7efd20c60f01e2b23224ccac12d7a659699f0f43e6bc1ff286671f7f",
+          ".agents/review-bundles/M0-working-tree-20261014T184343213544Z.zip": "e888fa48c1d9662a8d63ce8af141f29b7a9a8ac4578fc3f25858660a0b07d345",
+          ".agents/review-bundles/M0-working-tree-20261014T184649013533Z.zip": "c705ea19971683c1526645552288ca377f11f2dcf101250319d8a12086535fd3",
+          ".agents/review-bundles/M0-working-tree-20261014T192404457787Z.zip": "3f846aa17591d879da385b833225f059db6dc0b9df5c992e33236ca66d35b7fd",
+          ".agents/review-bundles/export_review_bundle-staged-20261014T210535155205Z.zip": "2b50a6b35606d61e1d3f6ee3a156791b38cd294c626533101f103603c172ebd4",
+          ".agents/review-bundles/export_review_bundle-working-tree-20261014T210537795808Z.zip": "5606106ef43267add13d83478778b47f08e3916fa6cf07e2940e9a03e2b274e2",
+          ".agents/skills/export-review-bundle/SKILL.md": "02623443e4833824a7c2606e5d4cb9ea1d79e0b5d8c436741933978142932942",
+          ".agents/state/BLOCKERS.md": "ffbc439301aeb2e6be5697e98af94abd14370d5982a9f2f15b30cebdf4a20286",
+          ".agents/state/SESSION_HANDOFF.md": "39fedc15d3eeb8187537ee8126d5935b049b835a9db25b55d6b37b65fa897ec0",
+          ".agents/state/VERIFIED_FINDINGS.md": "ecfa03889b673b2cbc9d59c286e7d8fe19a10fb40c95777960f61d1bc4ce00e7",
+          ".agents/tasks/BACKLOG.yaml": "6538d4ab6469ded11908118e5efaefddb23042ebb1244a3016ca9b1185c947c6",
+          "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
+          "docs/01-foundation/REQUIREMENTS.md": "4aa8f91e830459f513ff47d4afa09341c5fdcebcb26eca4f45f0d5c67e4f344c",
+          "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
+          "docs/02-management/EXECUTION_PLAN.md": "ef5497521a10cf37183a43fcc40bbf6d4aa62564e3dff25aa166941373a8f06e",
+          "docs/02-management/RISK_REGISTER.md": "2d3a3fef7062377c6479048992bae3e3ec0a9cc880a883bb1e57f24473c00ab8",
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
+          "docs/05-operations/SETUP.md": "1dff0568aac5e3ecf881875be9580c9eaa77d71ca0556fb1513d3df13819a00c",
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": "395741bc505bbc0c0dd3fcb63187f198303e538c064da32fc58c9389e93373a5",
+          "docs/06-quality/TEST_STRATEGY.md": "8bf60a1191845eb06c0a21e2f317064d4b3ee4e52e3dc08b0430389666b2cde7",
+          "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
+          "scripts/agent_preflight.py": "7f24cf19f659603f2d96907eae790f1df07ff8212cfc321db2f4c47e641f026e",
+          "scripts/export_review_bundle.py": "7ed9a3a22dc2435f157840ad710f6fb8af183118830acb0b91cdbe47fa2930c0",
+          "tests/test_agent_context.py": "ee3c6a272cf0e21cfc459b3c8ebe1e372fb70fe1a7f4735c2a36c2b531a7faab",
+          "tests/test_export_review_bundle.py": "3d9684586b76aa73f794b936b336f8529237f1797cfe19645cc64ce74239db6c",
+          "tests/test_m0_smoke.py": "ba6303fc4c6b9f06b03bb1259a8084083c595b278e163d7f1ca710ef7bf77594",
+          "tests/fixtures/g1-recovery-baseline.json": "a48deb7bbd5f1a67e21c66b4f5feec22c08f169b6dcc3d44b89248a30a8aa0df"
+        },
+        "unhashed_large_files": [],
+        "unreadable_files": [],
+        "artifact_dirs_requiring_manifest": [],
+        "excluded_directories": [
+          ".git",
+          ".venv",
+          "scripts/__pycache__",
+          "tests/__pycache__"
+        ],
+        "excluded_symlink_files": 0
+      },
+      "portable_git": {
+        "format_version": 1,
+        "tracked_manifest": {
+          ".agents/PLANS.md": {
+            "mode": "100644",
+            "object_id": "1c1b78d477af82837465daf21c1de62c32c07c84"
+          },
+          ".agents/evidence/G1-10-recovery-verification.md": {
+            "mode": "100644",
+            "object_id": "6ff27d51b9cf51803d8ca8c863066253ae6297bc"
+          },
+          ".agents/evidence/G1-git-baseline-verification.md": {
+            "mode": "100644",
+            "object_id": "c3c79107166243fe35ae2d8e9f270b8a46e0ffe9"
+          },
+          ".agents/evidence/G1-hardening-verification.md": {
+            "mode": "100644",
+            "object_id": "949549fa06ad46bc3076ac462e7ccba7cdc70fbf"
+          },
+          ".agents/evidence/G1-portability-consistency-verification.md": {
+            "mode": "100644",
+            "object_id": "5120604c17c3a481431701154d2783058ff78dcd"
+          },
+          ".agents/evidence/M0-001-verification.md": {
+            "mode": "100644",
+            "object_id": "0899b37e78e7244661bebb1fcea242bc66114e57"
+          },
+          ".agents/evidence/M0-acceptance.md": {
+            "mode": "100644",
+            "object_id": "99c6b35c927fc0eea29dad671ba59744e52c6644"
+          },
+          ".agents/evidence/M0-authorization.md": {
+            "mode": "100644",
+            "object_id": "4682598c5d00e2e9f0cb8f0a46171cdcc6de748a"
+          },
+          ".agents/evidence/M0-final-technical-verification.md": {
+            "mode": "100644",
+            "object_id": "219fa2bb8620f94faf680d956d1042d714ac9c94"
+          },
+          ".agents/evidence/M0-finalization-verification.md": {
+            "mode": "100644",
+            "object_id": "ba82a757f3cf0075d28c5435dd866dda2d7f34aa"
+          },
+          ".agents/plans/G1-consistency-hardening.md": {
+            "mode": "100644",
+            "object_id": "a371486eaf564cf62503c6a2de683888e09b3b9d"
+          },
+          ".agents/plans/M00-bootstrap.md": {
+            "mode": "100644",
+            "object_id": "9a546c32e71394fb65b0dceb44d8b3a9db44a5aa"
+          },
+          ".agents/skills/export-review-bundle/SKILL.md": {
+            "mode": "100644",
+            "object_id": "9c94b136d7f6b78a99ffcdda780b2a20d712678d"
+          },
+          ".agents/state/BLOCKERS.md": {
+            "mode": "100644",
+            "object_id": "ee3f13eee90abbbdd15fa903e16ad43720b9a6b0"
+          },
+          ".agents/state/VERIFIED_FINDINGS.md": {
+            "mode": "100644",
+            "object_id": "275fdb455239952d6ccdca2fcf4c165eca2cec4f"
+          },
+          ".agents/tasks/BACKLOG.yaml": {
+            "mode": "100644",
+            "object_id": "dbd11255b698f111eb0a2dc632bfdc57635eacd4"
+          },
+          ".gitignore": {
+            "mode": "100644",
+            "object_id": "1f47241035421aa3dd73732d084b533e3fad7763"
+          },
+          ".python-version": {
+            "mode": "100644",
+            "object_id": "e4fba2183587225f216eeada4c78dfab6b2e65f5"
+          },
+          "AGENTS.md": {
+            "mode": "100644",
+            "object_id": "1aff494964fb5b9844f29589a53b83c2b6489e51"
+          },
+          "README.md": {
+            "mode": "100644",
+            "object_id": "c64740f9ac205eaac873da341d5c9079bc4b09f4"
+          },
+          "atari-videochess-rl-roadmap.html": {
+            "mode": "100644",
+            "object_id": "78f34984b1f10c9921974a96c8648112876017fa"
+          },
+          "docs/01-foundation/PROJECT_OVERVIEW.md": {
+            "mode": "100644",
+            "object_id": "6131db7cb1ebe66ed6f903c2cde0dcec64ec1795"
+          },
+          "docs/01-foundation/REQUIREMENTS.md": {
+            "mode": "100644",
+            "object_id": "d9e049eb9f7aa9664cc65499d023ef88ed7b3ad5"
+          },
+          "docs/01-foundation/ROADMAP.md": {
+            "mode": "100644",
+            "object_id": "3d6517b186feb24fb95702fffefc1a568266bf37"
+          },
+          "docs/02-management/EXECUTION_PLAN.md": {
+            "mode": "100644",
+            "object_id": "a7a034a0cd6d65034385b93e7284ec7f81fcc054"
+          },
+          "docs/02-management/RISK_REGISTER.md": {
+            "mode": "100644",
+            "object_id": "489ef9a0ee129697b8cfccc064de96070ac04f55"
+          },
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
+            "mode": "100644",
+            "object_id": "97db1a054605b8aa3c94697a75f2ebf1d80d3e5e"
+          },
+          "docs/05-operations/SETUP.md": {
+            "mode": "100644",
+            "object_id": "c53cb3a1087ddec2c4dcb81a7d391a0a2e8c9aa5"
+          },
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": {
+            "mode": "100644",
+            "object_id": "47e4cb03e6067424f07f6fa2c543869a5e96c3f2"
+          },
+          "docs/06-quality/TEST_STRATEGY.md": {
+            "mode": "100644",
+            "object_id": "ca17c7700fd28edaa944e006ddadc647d79cca6b"
+          },
+          "pyproject.toml": {
+            "mode": "100644",
+            "object_id": "af61e2b43ca0e55def303fd48d797285119d0c70"
+          },
+          "scripts/agent_checkpoint.py": {
+            "mode": "100644",
+            "object_id": "6f4f0ca28dbc837dce01ab788903c2e43a58b1d8"
+          },
+          "scripts/agent_preflight.py": {
+            "mode": "100644",
+            "object_id": "322932885074db6e8dc5a098a90dd96de393e760"
+          },
+          "scripts/export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "5fe121a545a759d487af574bd67c32b25f1fbd8f"
+          },
+          "tests/fixtures/g1-recovery-baseline.json": {
+            "mode": "100644",
+            "object_id": "e6bad6a18ef49b42487ef8c388d803e16b7a64e3"
+          },
+          "tests/test_agent_context.py": {
+            "mode": "100644",
+            "object_id": "44a4cc26566bd2b2659a0f385fe727c512400aad"
+          },
+          "tests/test_export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "7e36d44e58d292afd40ce951ab87f006ae17be47"
+          },
+          "tests/test_m0_smoke.py": {
+            "mode": "100644",
+            "object_id": "06fc374a092bb537b521656c195a90db48f6f1ab"
+          },
+          "uv.lock": {
+            "mode": "100644",
+            "object_id": "a122403ed28fba3956a138b886e5d65791e1c516"
+          }
+        },
+        "manifest_sha256": "07cd4212c5e4e23784e79c4ad3ce05a55f4b6fd0f0d3e87d76d6a902bf4341d6",
+        "state_sha256": "c633feb2d7eb0869d541f6def5064f94fa41488189193da84e3b60aa049b10fb",
+        "handoff_sha256": "39fedc15d3eeb8187537ee8126d5935b049b835a9db25b55d6b37b65fa897ec0"
+      }
+    },
+    {
+      "id": "cp-aa955a14-20261015T062526570008Z",
+      "created_at_utc": "2026-10-15T06:25:26Z",
+      "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
+      "workspace_git": {
+        "scope": "workspace",
+        "branch": "initial-idea",
+        "head": "aa955a141ddc8f4a309d9d4e644b4ef27ad18765",
+        "status_entries": [
+          " M .agents/state/PROJECT_STATE.yaml",
+          " M .agents/state/SESSION_HANDOFF.md",
+          " M .agents/tasks/BACKLOG.yaml",
+          "?? .agents/evidence/M1-authorization.md",
+          "?? .agents/plans/M01-ale-feasibility.md",
+          "?? main.py"
+        ],
+        "status_sha256": "19fe88afcd880906d84556aa38d69639d415f6d88d94a21ad2a63953653d2006",
+        "repo_file_hashes": {
+          ".gitignore": "1828249263215f6182229194dd1c662907d115310da5ca5a0c65ad207ed2ae3c",
+          ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+          "AGENTS.md": "d37ebbe8fdb94fabe7c039d8b89c3beaa36584d6d5eb09934f714941129463cd",
+          "README.md": "b56bd7410a2c90c559ad5fd52a6a78065bee4d2d54856d6677af4b0200746dce",
+          "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+          "main.py": "c101b2abfee28217d24a7c550eda37cffe548adfc9149244646199108361c0fe",
+          "pyproject.toml": "7be065e3664844a7774e9d85c4eabb06526e427e4e3e9f2f8e52f090fd600cc8",
+          "uv.lock": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+          ".agents/PLANS.md": "ed50b3ccc51cbe29123630c5069ab2d00f7428751ca67f1e64bd15558bd044d2",
+          ".agents/evidence/G1-10-recovery-verification.md": "39e05a96034d4eaa4f22f0dec72670afacbd9b48bcfcc41ed81f8a718d3a5f65",
+          ".agents/evidence/G1-git-baseline-verification.md": "13772b3438b30d440baac4caeeceb564017a5216ea9409d7b9412390d4b96f65",
+          ".agents/evidence/G1-hardening-verification.md": "0963f26840d2c393525fd10bba32f13e5ff3a51210a87d3d731b2ba96bd09380",
+          ".agents/evidence/G1-portability-consistency-verification.md": "f1fa95b9c2e7415ff0ff8a9e452920f7c8a29c77ea3ce3fabfc77fb744b7ad0e",
+          ".agents/evidence/M0-001-verification.md": "1f0dfba9ba36a3ce03f21e951e0af4a1b53d3b3b26970dd0c3aaaab76aaa3333",
+          ".agents/evidence/M0-acceptance.md": "089a86c5e50c0e5be698dff2dbc83643c58968b883e03c6e5c85b3d5cad28f14",
+          ".agents/evidence/M0-authorization.md": "2e7f62983b98cc79e1d25168da031bf2269c7364d8551956d41744a91ed58205",
+          ".agents/evidence/M0-final-technical-verification.md": "b64899752217a9fe55ae1a646ebb7b694956cb2164f804bbe2f47ff6340ca9c3",
+          ".agents/evidence/M0-finalization-verification.md": "9202f9c41518eb448efaac49ffbcee4cd2384c0435ebcca21fb31843a1d6f7b8",
+          ".agents/evidence/M1-authorization.md": "9985e9917dc8fe938b2c48c23da4868334b98d2a7bc2eba7f5a72b9a1a32d117",
+          ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
+          ".agents/plans/M00-bootstrap.md": "9c7b045f7efd20c60f01e2b23224ccac12d7a659699f0f43e6bc1ff286671f7f",
+          ".agents/plans/M01-ale-feasibility.md": "8b3ff8606175fedca79f65d7eb294f5d238b36c4e956fed2ce08240f39f07cb9",
+          ".agents/review-bundles/M0-working-tree-20261014T184343213544Z.zip": "e888fa48c1d9662a8d63ce8af141f29b7a9a8ac4578fc3f25858660a0b07d345",
+          ".agents/review-bundles/M0-working-tree-20261014T184649013533Z.zip": "c705ea19971683c1526645552288ca377f11f2dcf101250319d8a12086535fd3",
+          ".agents/review-bundles/M0-working-tree-20261014T192404457787Z.zip": "3f846aa17591d879da385b833225f059db6dc0b9df5c992e33236ca66d35b7fd",
+          ".agents/review-bundles/export_review_bundle-staged-20261014T210535155205Z.zip": "2b50a6b35606d61e1d3f6ee3a156791b38cd294c626533101f103603c172ebd4",
+          ".agents/review-bundles/export_review_bundle-working-tree-20261014T210537795808Z.zip": "5606106ef43267add13d83478778b47f08e3916fa6cf07e2940e9a03e2b274e2",
+          ".agents/skills/export-review-bundle/SKILL.md": "02623443e4833824a7c2606e5d4cb9ea1d79e0b5d8c436741933978142932942",
+          ".agents/state/BLOCKERS.md": "ffbc439301aeb2e6be5697e98af94abd14370d5982a9f2f15b30cebdf4a20286",
+          ".agents/state/SESSION_HANDOFF.md": "c9057b8c27aa15d75634bfc5c1f3e7eb00dd8aeddacfd94e3e610c8419d995fe",
+          ".agents/state/VERIFIED_FINDINGS.md": "ecfa03889b673b2cbc9d59c286e7d8fe19a10fb40c95777960f61d1bc4ce00e7",
+          ".agents/tasks/BACKLOG.yaml": "ca207f7d2ae4783157685373e994e55a53a8726efd8f4d412f1db554485c2cff",
+          "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
+          "docs/01-foundation/REQUIREMENTS.md": "4aa8f91e830459f513ff47d4afa09341c5fdcebcb26eca4f45f0d5c67e4f344c",
+          "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
+          "docs/02-management/EXECUTION_PLAN.md": "ef5497521a10cf37183a43fcc40bbf6d4aa62564e3dff25aa166941373a8f06e",
+          "docs/02-management/RISK_REGISTER.md": "2d3a3fef7062377c6479048992bae3e3ec0a9cc880a883bb1e57f24473c00ab8",
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
+          "docs/05-operations/SETUP.md": "1dff0568aac5e3ecf881875be9580c9eaa77d71ca0556fb1513d3df13819a00c",
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": "395741bc505bbc0c0dd3fcb63187f198303e538c064da32fc58c9389e93373a5",
+          "docs/06-quality/TEST_STRATEGY.md": "8bf60a1191845eb06c0a21e2f317064d4b3ee4e52e3dc08b0430389666b2cde7",
+          "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
+          "scripts/agent_preflight.py": "7f24cf19f659603f2d96907eae790f1df07ff8212cfc321db2f4c47e641f026e",
+          "scripts/export_review_bundle.py": "7ed9a3a22dc2435f157840ad710f6fb8af183118830acb0b91cdbe47fa2930c0",
+          "tests/test_agent_context.py": "ee3c6a272cf0e21cfc459b3c8ebe1e372fb70fe1a7f4735c2a36c2b531a7faab",
+          "tests/test_export_review_bundle.py": "3d9684586b76aa73f794b936b336f8529237f1797cfe19645cc64ce74239db6c",
+          "tests/test_m0_smoke.py": "ba6303fc4c6b9f06b03bb1259a8084083c595b278e163d7f1ca710ef7bf77594",
+          "tests/fixtures/g1-recovery-baseline.json": "a48deb7bbd5f1a67e21c66b4f5feec22c08f169b6dcc3d44b89248a30a8aa0df"
+        },
+        "unhashed_large_files": [],
+        "unreadable_files": [],
+        "artifact_dirs_requiring_manifest": [],
+        "excluded_directories": [
+          ".git",
+          ".venv",
+          "scripts/__pycache__",
+          "tests/__pycache__"
+        ],
+        "excluded_symlink_files": 0
+      },
+      "portable_git": {
+        "format_version": 1,
+        "tracked_manifest": {
+          ".agents/PLANS.md": {
+            "mode": "100644",
+            "object_id": "1c1b78d477af82837465daf21c1de62c32c07c84"
+          },
+          ".agents/evidence/G1-10-recovery-verification.md": {
+            "mode": "100644",
+            "object_id": "6ff27d51b9cf51803d8ca8c863066253ae6297bc"
+          },
+          ".agents/evidence/G1-git-baseline-verification.md": {
+            "mode": "100644",
+            "object_id": "c3c79107166243fe35ae2d8e9f270b8a46e0ffe9"
+          },
+          ".agents/evidence/G1-hardening-verification.md": {
+            "mode": "100644",
+            "object_id": "949549fa06ad46bc3076ac462e7ccba7cdc70fbf"
+          },
+          ".agents/evidence/G1-portability-consistency-verification.md": {
+            "mode": "100644",
+            "object_id": "5120604c17c3a481431701154d2783058ff78dcd"
+          },
+          ".agents/evidence/M0-001-verification.md": {
+            "mode": "100644",
+            "object_id": "0899b37e78e7244661bebb1fcea242bc66114e57"
+          },
+          ".agents/evidence/M0-acceptance.md": {
+            "mode": "100644",
+            "object_id": "99c6b35c927fc0eea29dad671ba59744e52c6644"
+          },
+          ".agents/evidence/M0-authorization.md": {
+            "mode": "100644",
+            "object_id": "4682598c5d00e2e9f0cb8f0a46171cdcc6de748a"
+          },
+          ".agents/evidence/M0-final-technical-verification.md": {
+            "mode": "100644",
+            "object_id": "219fa2bb8620f94faf680d956d1042d714ac9c94"
+          },
+          ".agents/evidence/M0-finalization-verification.md": {
+            "mode": "100644",
+            "object_id": "ba82a757f3cf0075d28c5435dd866dda2d7f34aa"
+          },
+          ".agents/plans/G1-consistency-hardening.md": {
+            "mode": "100644",
+            "object_id": "a371486eaf564cf62503c6a2de683888e09b3b9d"
+          },
+          ".agents/plans/M00-bootstrap.md": {
+            "mode": "100644",
+            "object_id": "9a546c32e71394fb65b0dceb44d8b3a9db44a5aa"
+          },
+          ".agents/skills/export-review-bundle/SKILL.md": {
+            "mode": "100644",
+            "object_id": "9c94b136d7f6b78a99ffcdda780b2a20d712678d"
+          },
+          ".agents/state/BLOCKERS.md": {
+            "mode": "100644",
+            "object_id": "ee3f13eee90abbbdd15fa903e16ad43720b9a6b0"
+          },
+          ".agents/state/VERIFIED_FINDINGS.md": {
+            "mode": "100644",
+            "object_id": "275fdb455239952d6ccdca2fcf4c165eca2cec4f"
+          },
+          ".agents/tasks/BACKLOG.yaml": {
+            "mode": "100644",
+            "object_id": "dbd11255b698f111eb0a2dc632bfdc57635eacd4"
+          },
+          ".gitignore": {
+            "mode": "100644",
+            "object_id": "1f47241035421aa3dd73732d084b533e3fad7763"
+          },
+          ".python-version": {
+            "mode": "100644",
+            "object_id": "e4fba2183587225f216eeada4c78dfab6b2e65f5"
+          },
+          "AGENTS.md": {
+            "mode": "100644",
+            "object_id": "1aff494964fb5b9844f29589a53b83c2b6489e51"
+          },
+          "README.md": {
+            "mode": "100644",
+            "object_id": "c64740f9ac205eaac873da341d5c9079bc4b09f4"
+          },
+          "atari-videochess-rl-roadmap.html": {
+            "mode": "100644",
+            "object_id": "78f34984b1f10c9921974a96c8648112876017fa"
+          },
+          "docs/01-foundation/PROJECT_OVERVIEW.md": {
+            "mode": "100644",
+            "object_id": "6131db7cb1ebe66ed6f903c2cde0dcec64ec1795"
+          },
+          "docs/01-foundation/REQUIREMENTS.md": {
+            "mode": "100644",
+            "object_id": "d9e049eb9f7aa9664cc65499d023ef88ed7b3ad5"
+          },
+          "docs/01-foundation/ROADMAP.md": {
+            "mode": "100644",
+            "object_id": "3d6517b186feb24fb95702fffefc1a568266bf37"
+          },
+          "docs/02-management/EXECUTION_PLAN.md": {
+            "mode": "100644",
+            "object_id": "a7a034a0cd6d65034385b93e7284ec7f81fcc054"
+          },
+          "docs/02-management/RISK_REGISTER.md": {
+            "mode": "100644",
+            "object_id": "489ef9a0ee129697b8cfccc064de96070ac04f55"
+          },
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
+            "mode": "100644",
+            "object_id": "97db1a054605b8aa3c94697a75f2ebf1d80d3e5e"
+          },
+          "docs/05-operations/SETUP.md": {
+            "mode": "100644",
+            "object_id": "c53cb3a1087ddec2c4dcb81a7d391a0a2e8c9aa5"
+          },
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": {
+            "mode": "100644",
+            "object_id": "47e4cb03e6067424f07f6fa2c543869a5e96c3f2"
+          },
+          "docs/06-quality/TEST_STRATEGY.md": {
+            "mode": "100644",
+            "object_id": "ca17c7700fd28edaa944e006ddadc647d79cca6b"
+          },
+          "pyproject.toml": {
+            "mode": "100644",
+            "object_id": "af61e2b43ca0e55def303fd48d797285119d0c70"
+          },
+          "scripts/agent_checkpoint.py": {
+            "mode": "100644",
+            "object_id": "6f4f0ca28dbc837dce01ab788903c2e43a58b1d8"
+          },
+          "scripts/agent_preflight.py": {
+            "mode": "100644",
+            "object_id": "322932885074db6e8dc5a098a90dd96de393e760"
+          },
+          "scripts/export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "5fe121a545a759d487af574bd67c32b25f1fbd8f"
+          },
+          "tests/fixtures/g1-recovery-baseline.json": {
+            "mode": "100644",
+            "object_id": "e6bad6a18ef49b42487ef8c388d803e16b7a64e3"
+          },
+          "tests/test_agent_context.py": {
+            "mode": "100644",
+            "object_id": "44a4cc26566bd2b2659a0f385fe727c512400aad"
+          },
+          "tests/test_export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "7e36d44e58d292afd40ce951ab87f006ae17be47"
+          },
+          "tests/test_m0_smoke.py": {
+            "mode": "100644",
+            "object_id": "06fc374a092bb537b521656c195a90db48f6f1ab"
+          },
+          "uv.lock": {
+            "mode": "100644",
+            "object_id": "a122403ed28fba3956a138b886e5d65791e1c516"
+          }
+        },
+        "manifest_sha256": "07cd4212c5e4e23784e79c4ad3ce05a55f4b6fd0f0d3e87d76d6a902bf4341d6",
+        "state_sha256": "59f30c67b2b996ed17d6697077cbe812d8f42d49068391ec7d584231979b0db1",
+        "handoff_sha256": "c9057b8c27aa15d75634bfc5c1f3e7eb00dd8aeddacfd94e3e610c8419d995fe"
+      }
+    },
+    {
+      "id": "cp-aa955a14-20261015T062547020509Z",
+      "created_at_utc": "2026-10-15T06:25:47Z",
+      "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
+      "workspace_git": {
+        "scope": "workspace",
+        "branch": "initial-idea",
+        "head": "aa955a141ddc8f4a309d9d4e644b4ef27ad18765",
+        "status_entries": [
+          "?? main.py",
+          "A  .agents/evidence/M1-authorization.md",
+          "A  .agents/plans/M01-ale-feasibility.md",
+          "M  .agents/tasks/BACKLOG.yaml",
+          "MM .agents/state/PROJECT_STATE.yaml",
+          "MM .agents/state/SESSION_HANDOFF.md"
+        ],
+        "status_sha256": "eeafa81340464dc581db51f0aa7f53e5500b02e19a484ed0dc1046494d07c0c8",
+        "repo_file_hashes": {
+          ".gitignore": "1828249263215f6182229194dd1c662907d115310da5ca5a0c65ad207ed2ae3c",
+          ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+          "AGENTS.md": "d37ebbe8fdb94fabe7c039d8b89c3beaa36584d6d5eb09934f714941129463cd",
+          "README.md": "b56bd7410a2c90c559ad5fd52a6a78065bee4d2d54856d6677af4b0200746dce",
+          "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+          "main.py": "c101b2abfee28217d24a7c550eda37cffe548adfc9149244646199108361c0fe",
+          "pyproject.toml": "7be065e3664844a7774e9d85c4eabb06526e427e4e3e9f2f8e52f090fd600cc8",
+          "uv.lock": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+          ".agents/PLANS.md": "ed50b3ccc51cbe29123630c5069ab2d00f7428751ca67f1e64bd15558bd044d2",
+          ".agents/evidence/G1-10-recovery-verification.md": "39e05a96034d4eaa4f22f0dec72670afacbd9b48bcfcc41ed81f8a718d3a5f65",
+          ".agents/evidence/G1-git-baseline-verification.md": "13772b3438b30d440baac4caeeceb564017a5216ea9409d7b9412390d4b96f65",
+          ".agents/evidence/G1-hardening-verification.md": "0963f26840d2c393525fd10bba32f13e5ff3a51210a87d3d731b2ba96bd09380",
+          ".agents/evidence/G1-portability-consistency-verification.md": "f1fa95b9c2e7415ff0ff8a9e452920f7c8a29c77ea3ce3fabfc77fb744b7ad0e",
+          ".agents/evidence/M0-001-verification.md": "1f0dfba9ba36a3ce03f21e951e0af4a1b53d3b3b26970dd0c3aaaab76aaa3333",
+          ".agents/evidence/M0-acceptance.md": "089a86c5e50c0e5be698dff2dbc83643c58968b883e03c6e5c85b3d5cad28f14",
+          ".agents/evidence/M0-authorization.md": "2e7f62983b98cc79e1d25168da031bf2269c7364d8551956d41744a91ed58205",
+          ".agents/evidence/M0-final-technical-verification.md": "b64899752217a9fe55ae1a646ebb7b694956cb2164f804bbe2f47ff6340ca9c3",
+          ".agents/evidence/M0-finalization-verification.md": "9202f9c41518eb448efaac49ffbcee4cd2384c0435ebcca21fb31843a1d6f7b8",
+          ".agents/evidence/M1-authorization.md": "9985e9917dc8fe938b2c48c23da4868334b98d2a7bc2eba7f5a72b9a1a32d117",
+          ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
+          ".agents/plans/M00-bootstrap.md": "9c7b045f7efd20c60f01e2b23224ccac12d7a659699f0f43e6bc1ff286671f7f",
+          ".agents/plans/M01-ale-feasibility.md": "8b3ff8606175fedca79f65d7eb294f5d238b36c4e956fed2ce08240f39f07cb9",
+          ".agents/review-bundles/M0-working-tree-20261014T184343213544Z.zip": "e888fa48c1d9662a8d63ce8af141f29b7a9a8ac4578fc3f25858660a0b07d345",
+          ".agents/review-bundles/M0-working-tree-20261014T184649013533Z.zip": "c705ea19971683c1526645552288ca377f11f2dcf101250319d8a12086535fd3",
+          ".agents/review-bundles/M0-working-tree-20261014T192404457787Z.zip": "3f846aa17591d879da385b833225f059db6dc0b9df5c992e33236ca66d35b7fd",
+          ".agents/review-bundles/export_review_bundle-staged-20261014T210535155205Z.zip": "2b50a6b35606d61e1d3f6ee3a156791b38cd294c626533101f103603c172ebd4",
+          ".agents/review-bundles/export_review_bundle-working-tree-20261014T210537795808Z.zip": "5606106ef43267add13d83478778b47f08e3916fa6cf07e2940e9a03e2b274e2",
+          ".agents/skills/export-review-bundle/SKILL.md": "02623443e4833824a7c2606e5d4cb9ea1d79e0b5d8c436741933978142932942",
+          ".agents/state/BLOCKERS.md": "ffbc439301aeb2e6be5697e98af94abd14370d5982a9f2f15b30cebdf4a20286",
+          ".agents/state/SESSION_HANDOFF.md": "1f11d24ce469a544682600f3a445d4a6eb7875d31c2e41d01896b484af5566cd",
+          ".agents/state/VERIFIED_FINDINGS.md": "ecfa03889b673b2cbc9d59c286e7d8fe19a10fb40c95777960f61d1bc4ce00e7",
+          ".agents/tasks/BACKLOG.yaml": "ca207f7d2ae4783157685373e994e55a53a8726efd8f4d412f1db554485c2cff",
+          "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
+          "docs/01-foundation/REQUIREMENTS.md": "4aa8f91e830459f513ff47d4afa09341c5fdcebcb26eca4f45f0d5c67e4f344c",
+          "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
+          "docs/02-management/EXECUTION_PLAN.md": "ef5497521a10cf37183a43fcc40bbf6d4aa62564e3dff25aa166941373a8f06e",
+          "docs/02-management/RISK_REGISTER.md": "2d3a3fef7062377c6479048992bae3e3ec0a9cc880a883bb1e57f24473c00ab8",
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
+          "docs/05-operations/SETUP.md": "1dff0568aac5e3ecf881875be9580c9eaa77d71ca0556fb1513d3df13819a00c",
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": "395741bc505bbc0c0dd3fcb63187f198303e538c064da32fc58c9389e93373a5",
+          "docs/06-quality/TEST_STRATEGY.md": "8bf60a1191845eb06c0a21e2f317064d4b3ee4e52e3dc08b0430389666b2cde7",
+          "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
+          "scripts/agent_preflight.py": "7f24cf19f659603f2d96907eae790f1df07ff8212cfc321db2f4c47e641f026e",
+          "scripts/export_review_bundle.py": "7ed9a3a22dc2435f157840ad710f6fb8af183118830acb0b91cdbe47fa2930c0",
+          "tests/test_agent_context.py": "ee3c6a272cf0e21cfc459b3c8ebe1e372fb70fe1a7f4735c2a36c2b531a7faab",
+          "tests/test_export_review_bundle.py": "3d9684586b76aa73f794b936b336f8529237f1797cfe19645cc64ce74239db6c",
+          "tests/test_m0_smoke.py": "ba6303fc4c6b9f06b03bb1259a8084083c595b278e163d7f1ca710ef7bf77594",
+          "tests/fixtures/g1-recovery-baseline.json": "a48deb7bbd5f1a67e21c66b4f5feec22c08f169b6dcc3d44b89248a30a8aa0df"
+        },
+        "unhashed_large_files": [],
+        "unreadable_files": [],
+        "artifact_dirs_requiring_manifest": [],
+        "excluded_directories": [
+          ".git",
+          ".venv",
+          "scripts/__pycache__",
+          "tests/__pycache__"
+        ],
+        "excluded_symlink_files": 0
+      },
+      "portable_git": {
+        "format_version": 1,
+        "tracked_manifest": {
+          ".agents/PLANS.md": {
+            "mode": "100644",
+            "object_id": "1c1b78d477af82837465daf21c1de62c32c07c84"
+          },
+          ".agents/evidence/G1-10-recovery-verification.md": {
+            "mode": "100644",
+            "object_id": "6ff27d51b9cf51803d8ca8c863066253ae6297bc"
+          },
+          ".agents/evidence/G1-git-baseline-verification.md": {
+            "mode": "100644",
+            "object_id": "c3c79107166243fe35ae2d8e9f270b8a46e0ffe9"
+          },
+          ".agents/evidence/G1-hardening-verification.md": {
+            "mode": "100644",
+            "object_id": "949549fa06ad46bc3076ac462e7ccba7cdc70fbf"
+          },
+          ".agents/evidence/G1-portability-consistency-verification.md": {
+            "mode": "100644",
+            "object_id": "5120604c17c3a481431701154d2783058ff78dcd"
+          },
+          ".agents/evidence/M0-001-verification.md": {
+            "mode": "100644",
+            "object_id": "0899b37e78e7244661bebb1fcea242bc66114e57"
+          },
+          ".agents/evidence/M0-acceptance.md": {
+            "mode": "100644",
+            "object_id": "99c6b35c927fc0eea29dad671ba59744e52c6644"
+          },
+          ".agents/evidence/M0-authorization.md": {
+            "mode": "100644",
+            "object_id": "4682598c5d00e2e9f0cb8f0a46171cdcc6de748a"
+          },
+          ".agents/evidence/M0-final-technical-verification.md": {
+            "mode": "100644",
+            "object_id": "219fa2bb8620f94faf680d956d1042d714ac9c94"
+          },
+          ".agents/evidence/M0-finalization-verification.md": {
+            "mode": "100644",
+            "object_id": "ba82a757f3cf0075d28c5435dd866dda2d7f34aa"
+          },
+          ".agents/evidence/M1-authorization.md": {
+            "mode": "100644",
+            "object_id": "07d0ac7de9ec5ef4f29d1a02ed83ca2ba619e938"
+          },
+          ".agents/plans/G1-consistency-hardening.md": {
+            "mode": "100644",
+            "object_id": "a371486eaf564cf62503c6a2de683888e09b3b9d"
+          },
+          ".agents/plans/M00-bootstrap.md": {
+            "mode": "100644",
+            "object_id": "9a546c32e71394fb65b0dceb44d8b3a9db44a5aa"
+          },
+          ".agents/plans/M01-ale-feasibility.md": {
+            "mode": "100644",
+            "object_id": "79aee06fe16f8bc114746920915e8c46d6cfe979"
+          },
+          ".agents/skills/export-review-bundle/SKILL.md": {
+            "mode": "100644",
+            "object_id": "9c94b136d7f6b78a99ffcdda780b2a20d712678d"
+          },
+          ".agents/state/BLOCKERS.md": {
+            "mode": "100644",
+            "object_id": "ee3f13eee90abbbdd15fa903e16ad43720b9a6b0"
+          },
+          ".agents/state/VERIFIED_FINDINGS.md": {
+            "mode": "100644",
+            "object_id": "275fdb455239952d6ccdca2fcf4c165eca2cec4f"
+          },
+          ".agents/tasks/BACKLOG.yaml": {
+            "mode": "100644",
+            "object_id": "fb4d92b5e11a02225b0dba75bb3a8c746a78c766"
+          },
+          ".gitignore": {
+            "mode": "100644",
+            "object_id": "1f47241035421aa3dd73732d084b533e3fad7763"
+          },
+          ".python-version": {
+            "mode": "100644",
+            "object_id": "e4fba2183587225f216eeada4c78dfab6b2e65f5"
+          },
+          "AGENTS.md": {
+            "mode": "100644",
+            "object_id": "1aff494964fb5b9844f29589a53b83c2b6489e51"
+          },
+          "README.md": {
+            "mode": "100644",
+            "object_id": "c64740f9ac205eaac873da341d5c9079bc4b09f4"
+          },
+          "atari-videochess-rl-roadmap.html": {
+            "mode": "100644",
+            "object_id": "78f34984b1f10c9921974a96c8648112876017fa"
+          },
+          "docs/01-foundation/PROJECT_OVERVIEW.md": {
+            "mode": "100644",
+            "object_id": "6131db7cb1ebe66ed6f903c2cde0dcec64ec1795"
+          },
+          "docs/01-foundation/REQUIREMENTS.md": {
+            "mode": "100644",
+            "object_id": "d9e049eb9f7aa9664cc65499d023ef88ed7b3ad5"
+          },
+          "docs/01-foundation/ROADMAP.md": {
+            "mode": "100644",
+            "object_id": "3d6517b186feb24fb95702fffefc1a568266bf37"
+          },
+          "docs/02-management/EXECUTION_PLAN.md": {
+            "mode": "100644",
+            "object_id": "a7a034a0cd6d65034385b93e7284ec7f81fcc054"
+          },
+          "docs/02-management/RISK_REGISTER.md": {
+            "mode": "100644",
+            "object_id": "489ef9a0ee129697b8cfccc064de96070ac04f55"
+          },
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
+            "mode": "100644",
+            "object_id": "97db1a054605b8aa3c94697a75f2ebf1d80d3e5e"
+          },
+          "docs/05-operations/SETUP.md": {
+            "mode": "100644",
+            "object_id": "c53cb3a1087ddec2c4dcb81a7d391a0a2e8c9aa5"
+          },
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": {
+            "mode": "100644",
+            "object_id": "47e4cb03e6067424f07f6fa2c543869a5e96c3f2"
+          },
+          "docs/06-quality/TEST_STRATEGY.md": {
+            "mode": "100644",
+            "object_id": "ca17c7700fd28edaa944e006ddadc647d79cca6b"
+          },
+          "pyproject.toml": {
+            "mode": "100644",
+            "object_id": "af61e2b43ca0e55def303fd48d797285119d0c70"
+          },
+          "scripts/agent_checkpoint.py": {
+            "mode": "100644",
+            "object_id": "6f4f0ca28dbc837dce01ab788903c2e43a58b1d8"
+          },
+          "scripts/agent_preflight.py": {
+            "mode": "100644",
+            "object_id": "322932885074db6e8dc5a098a90dd96de393e760"
+          },
+          "scripts/export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "5fe121a545a759d487af574bd67c32b25f1fbd8f"
+          },
+          "tests/fixtures/g1-recovery-baseline.json": {
+            "mode": "100644",
+            "object_id": "e6bad6a18ef49b42487ef8c388d803e16b7a64e3"
+          },
+          "tests/test_agent_context.py": {
+            "mode": "100644",
+            "object_id": "44a4cc26566bd2b2659a0f385fe727c512400aad"
+          },
+          "tests/test_export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "7e36d44e58d292afd40ce951ab87f006ae17be47"
+          },
+          "tests/test_m0_smoke.py": {
+            "mode": "100644",
+            "object_id": "06fc374a092bb537b521656c195a90db48f6f1ab"
+          },
+          "uv.lock": {
+            "mode": "100644",
+            "object_id": "a122403ed28fba3956a138b886e5d65791e1c516"
+          }
+        },
+        "manifest_sha256": "c020ac00daa8326ca148b923c1f1b72d3c647ea3989b05dbc978af85ae36828b",
+        "state_sha256": "5370b629ccebb642b02d10dc53c892cbd2224cf71e9f449005b6b319469b5a8e",
+        "handoff_sha256": "1f11d24ce469a544682600f3a445d4a6eb7875d31c2e41d01896b484af5566cd"
+      }
+    },
+    {
+      "id": "cp-aa955a14-20261015T073140975974Z",
+      "created_at_utc": "2026-10-15T07:31:41Z",
+      "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
+      "workspace_git": {
+        "scope": "workspace",
+        "branch": "initial-idea",
+        "head": "aa955a141ddc8f4a309d9d4e644b4ef27ad18765",
+        "status_entries": [
+          " M .agents/state/BLOCKERS.md",
+          " M .agents/state/VERIFIED_FINDINGS.md",
+          " M docs/02-management/EXECUTION_PLAN.md",
+          " M docs/05-operations/SETUP.md",
+          " M docs/06-quality/TEST_STRATEGY.md",
+          "?? docs/05-operations/M1-ALE-REPRODUCIBILITY.md",
+          "?? main.py",
+          "?? scripts/run_m1_demo.py",
+          "?? tests/test_m1_ale_integration.py",
+          "?? tests/test_m1_control.py",
+          "?? tests/test_m1_environment.py",
+          "?? tests/test_m1_shadow.py",
+          "?? tests/test_m1_vision.py",
+          "?? videochess_rl/__init__.py",
+          "?? videochess_rl/controller.py",
+          "?? videochess_rl/demo.py",
+          "?? videochess_rl/environment.py",
+          "?? videochess_rl/shadow.py",
+          "?? videochess_rl/vision.py",
+          "A  .agents/evidence/M1-authorization.md",
+          "A  .agents/plans/M01-ale-feasibility.md",
+          "M  .agents/tasks/BACKLOG.yaml",
+          "MM .agents/state/PROJECT_STATE.yaml",
+          "MM .agents/state/SESSION_HANDOFF.md"
+        ],
+        "status_sha256": "862acc5bdd2387a9ea28d7a306d0ea418cb655334710df452310bb19a361af00",
+        "repo_file_hashes": {
+          ".gitignore": "1828249263215f6182229194dd1c662907d115310da5ca5a0c65ad207ed2ae3c",
+          ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+          "AGENTS.md": "d37ebbe8fdb94fabe7c039d8b89c3beaa36584d6d5eb09934f714941129463cd",
+          "README.md": "b56bd7410a2c90c559ad5fd52a6a78065bee4d2d54856d6677af4b0200746dce",
+          "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+          "main.py": "c101b2abfee28217d24a7c550eda37cffe548adfc9149244646199108361c0fe",
+          "pyproject.toml": "7be065e3664844a7774e9d85c4eabb06526e427e4e3e9f2f8e52f090fd600cc8",
+          "uv.lock": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+          ".agents/PLANS.md": "ed50b3ccc51cbe29123630c5069ab2d00f7428751ca67f1e64bd15558bd044d2",
+          ".agents/evidence/G1-10-recovery-verification.md": "39e05a96034d4eaa4f22f0dec72670afacbd9b48bcfcc41ed81f8a718d3a5f65",
+          ".agents/evidence/G1-git-baseline-verification.md": "13772b3438b30d440baac4caeeceb564017a5216ea9409d7b9412390d4b96f65",
+          ".agents/evidence/G1-hardening-verification.md": "0963f26840d2c393525fd10bba32f13e5ff3a51210a87d3d731b2ba96bd09380",
+          ".agents/evidence/G1-portability-consistency-verification.md": "f1fa95b9c2e7415ff0ff8a9e452920f7c8a29c77ea3ce3fabfc77fb744b7ad0e",
+          ".agents/evidence/M0-001-verification.md": "1f0dfba9ba36a3ce03f21e951e0af4a1b53d3b3b26970dd0c3aaaab76aaa3333",
+          ".agents/evidence/M0-acceptance.md": "089a86c5e50c0e5be698dff2dbc83643c58968b883e03c6e5c85b3d5cad28f14",
+          ".agents/evidence/M0-authorization.md": "2e7f62983b98cc79e1d25168da031bf2269c7364d8551956d41744a91ed58205",
+          ".agents/evidence/M0-final-technical-verification.md": "b64899752217a9fe55ae1a646ebb7b694956cb2164f804bbe2f47ff6340ca9c3",
+          ".agents/evidence/M0-finalization-verification.md": "9202f9c41518eb448efaac49ffbcee4cd2384c0435ebcca21fb31843a1d6f7b8",
+          ".agents/evidence/M1-authorization.md": "9985e9917dc8fe938b2c48c23da4868334b98d2a7bc2eba7f5a72b9a1a32d117",
+          ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
+          ".agents/plans/M00-bootstrap.md": "9c7b045f7efd20c60f01e2b23224ccac12d7a659699f0f43e6bc1ff286671f7f",
+          ".agents/plans/M01-ale-feasibility.md": "8b3ff8606175fedca79f65d7eb294f5d238b36c4e956fed2ce08240f39f07cb9",
+          ".agents/review-bundles/M0-working-tree-20261014T184343213544Z.zip": "e888fa48c1d9662a8d63ce8af141f29b7a9a8ac4578fc3f25858660a0b07d345",
+          ".agents/review-bundles/M0-working-tree-20261014T184649013533Z.zip": "c705ea19971683c1526645552288ca377f11f2dcf101250319d8a12086535fd3",
+          ".agents/review-bundles/M0-working-tree-20261014T192404457787Z.zip": "3f846aa17591d879da385b833225f059db6dc0b9df5c992e33236ca66d35b7fd",
+          ".agents/review-bundles/export_review_bundle-staged-20261014T210535155205Z.zip": "2b50a6b35606d61e1d3f6ee3a156791b38cd294c626533101f103603c172ebd4",
+          ".agents/review-bundles/export_review_bundle-working-tree-20261014T210537795808Z.zip": "5606106ef43267add13d83478778b47f08e3916fa6cf07e2940e9a03e2b274e2",
+          ".agents/skills/export-review-bundle/SKILL.md": "02623443e4833824a7c2606e5d4cb9ea1d79e0b5d8c436741933978142932942",
+          ".agents/state/BLOCKERS.md": "b40fe4963b5e69160a4a6871d14c028e367ea19e922f9feee25740864b04550e",
+          ".agents/state/SESSION_HANDOFF.md": "303e16791dcaf2b2e6a2d66be90c199d202a51e4049287485ed3b7a60db88e62",
+          ".agents/state/VERIFIED_FINDINGS.md": "549ec613869b143368cbee9afa547f6b298361755afc23fb0d47445e15f62089",
+          ".agents/tasks/BACKLOG.yaml": "ca207f7d2ae4783157685373e994e55a53a8726efd8f4d412f1db554485c2cff",
+          "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
+          "docs/01-foundation/REQUIREMENTS.md": "4aa8f91e830459f513ff47d4afa09341c5fdcebcb26eca4f45f0d5c67e4f344c",
+          "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
+          "docs/02-management/EXECUTION_PLAN.md": "a71a322a1b68b011ce28a1222fca328837803341ed3366848f10d467d1192535",
+          "docs/02-management/RISK_REGISTER.md": "2d3a3fef7062377c6479048992bae3e3ec0a9cc880a883bb1e57f24473c00ab8",
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
+          "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": "1fa120468ec2a983b64bc69a9092ec0212719092953116c9df2886f795892324",
+          "docs/05-operations/SETUP.md": "05776d5f0e9bcf5931807fbbcca46ae583d37f25ebaf116308572f6874025a89",
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": "395741bc505bbc0c0dd3fcb63187f198303e538c064da32fc58c9389e93373a5",
+          "docs/06-quality/TEST_STRATEGY.md": "bce1ac5aacc8445f6a3bc80b8f3af82b7101e49f08ff12d43a2e9489af107cd8",
+          "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
+          "scripts/agent_preflight.py": "7f24cf19f659603f2d96907eae790f1df07ff8212cfc321db2f4c47e641f026e",
+          "scripts/export_review_bundle.py": "7ed9a3a22dc2435f157840ad710f6fb8af183118830acb0b91cdbe47fa2930c0",
+          "scripts/run_m1_demo.py": "885c83435efe3009d0eea85098879c311062a8f39459ec18850ba1dc5e605ef0",
+          "tests/test_agent_context.py": "ee3c6a272cf0e21cfc459b3c8ebe1e372fb70fe1a7f4735c2a36c2b531a7faab",
+          "tests/test_export_review_bundle.py": "3d9684586b76aa73f794b936b336f8529237f1797cfe19645cc64ce74239db6c",
+          "tests/test_m0_smoke.py": "ba6303fc4c6b9f06b03bb1259a8084083c595b278e163d7f1ca710ef7bf77594",
+          "tests/test_m1_ale_integration.py": "da508d0aff6f01841036435cca4b6a397e12a1b0a3c7ed2c41abf0bebe46eddd",
+          "tests/test_m1_control.py": "be8ec1573e5fe2920c9df4e847fa679d70c987ed9cec74db05580b797aafb7fc",
+          "tests/test_m1_environment.py": "427eeba8bc7672e3c8ce811906b5a746a7852893b53b1025df9bae468d75c5b3",
+          "tests/test_m1_shadow.py": "64862adb1b6af8a2f9d6b29cd8babf26c8dc4694b79e22226e8e168601f07178",
+          "tests/test_m1_vision.py": "0273ddabe79ec09f1525d62ae03c6d0f04214ec4aeb90f53ad0f0aa919cd1a85",
+          "tests/fixtures/g1-recovery-baseline.json": "a48deb7bbd5f1a67e21c66b4f5feec22c08f169b6dcc3d44b89248a30a8aa0df",
+          "videochess_rl/__init__.py": "6288a2698f98216834cce812d32cd8ecc95da5a2bdce96ebf891c22b1d30e009",
+          "videochess_rl/controller.py": "23ae39ddb40e24a930d49c9f3d796491598820efae93d6124cebf417c8d0df41",
+          "videochess_rl/demo.py": "0b1428a74353db4c72fa972b75d68ab8ce7f0e7b081f0ef26e6743c6e3daf090",
+          "videochess_rl/environment.py": "e00047d0f046d994f230712797d5b3b85264b73815301ef498b3b12aeb86dcff",
+          "videochess_rl/shadow.py": "64ad1fb411c0b8f1c0becc0d9427d87f5badc1976a88ea460d0cc071260208d7",
+          "videochess_rl/vision.py": "4e2f69dead40987e1c2d6d1dfa3671c80951adafd06b6a87cb223acf81c09592"
+        },
+        "unhashed_large_files": [],
+        "unreadable_files": [],
+        "artifact_dirs_requiring_manifest": [
+          "artifacts"
+        ],
+        "excluded_directories": [
+          ".git",
+          ".venv",
+          "artifacts",
+          "scripts/__pycache__",
+          "tests/__pycache__",
+          "videochess_rl/__pycache__"
+        ],
+        "excluded_symlink_files": 0
+      },
+      "portable_git": {
+        "format_version": 1,
+        "tracked_manifest": {
+          ".agents/PLANS.md": {
+            "mode": "100644",
+            "object_id": "1c1b78d477af82837465daf21c1de62c32c07c84"
+          },
+          ".agents/evidence/G1-10-recovery-verification.md": {
+            "mode": "100644",
+            "object_id": "6ff27d51b9cf51803d8ca8c863066253ae6297bc"
+          },
+          ".agents/evidence/G1-git-baseline-verification.md": {
+            "mode": "100644",
+            "object_id": "c3c79107166243fe35ae2d8e9f270b8a46e0ffe9"
+          },
+          ".agents/evidence/G1-hardening-verification.md": {
+            "mode": "100644",
+            "object_id": "949549fa06ad46bc3076ac462e7ccba7cdc70fbf"
+          },
+          ".agents/evidence/G1-portability-consistency-verification.md": {
+            "mode": "100644",
+            "object_id": "5120604c17c3a481431701154d2783058ff78dcd"
+          },
+          ".agents/evidence/M0-001-verification.md": {
+            "mode": "100644",
+            "object_id": "0899b37e78e7244661bebb1fcea242bc66114e57"
+          },
+          ".agents/evidence/M0-acceptance.md": {
+            "mode": "100644",
+            "object_id": "99c6b35c927fc0eea29dad671ba59744e52c6644"
+          },
+          ".agents/evidence/M0-authorization.md": {
+            "mode": "100644",
+            "object_id": "4682598c5d00e2e9f0cb8f0a46171cdcc6de748a"
+          },
+          ".agents/evidence/M0-final-technical-verification.md": {
+            "mode": "100644",
+            "object_id": "219fa2bb8620f94faf680d956d1042d714ac9c94"
+          },
+          ".agents/evidence/M0-finalization-verification.md": {
+            "mode": "100644",
+            "object_id": "ba82a757f3cf0075d28c5435dd866dda2d7f34aa"
+          },
+          ".agents/evidence/M1-authorization.md": {
+            "mode": "100644",
+            "object_id": "07d0ac7de9ec5ef4f29d1a02ed83ca2ba619e938"
+          },
+          ".agents/plans/G1-consistency-hardening.md": {
+            "mode": "100644",
+            "object_id": "a371486eaf564cf62503c6a2de683888e09b3b9d"
+          },
+          ".agents/plans/M00-bootstrap.md": {
+            "mode": "100644",
+            "object_id": "9a546c32e71394fb65b0dceb44d8b3a9db44a5aa"
+          },
+          ".agents/plans/M01-ale-feasibility.md": {
+            "mode": "100644",
+            "object_id": "79aee06fe16f8bc114746920915e8c46d6cfe979"
+          },
+          ".agents/skills/export-review-bundle/SKILL.md": {
+            "mode": "100644",
+            "object_id": "9c94b136d7f6b78a99ffcdda780b2a20d712678d"
+          },
+          ".agents/state/BLOCKERS.md": {
+            "mode": "100644",
+            "object_id": "ee3f13eee90abbbdd15fa903e16ad43720b9a6b0"
+          },
+          ".agents/state/VERIFIED_FINDINGS.md": {
+            "mode": "100644",
+            "object_id": "275fdb455239952d6ccdca2fcf4c165eca2cec4f"
+          },
+          ".agents/tasks/BACKLOG.yaml": {
+            "mode": "100644",
+            "object_id": "fb4d92b5e11a02225b0dba75bb3a8c746a78c766"
+          },
+          ".gitignore": {
+            "mode": "100644",
+            "object_id": "1f47241035421aa3dd73732d084b533e3fad7763"
+          },
+          ".python-version": {
+            "mode": "100644",
+            "object_id": "e4fba2183587225f216eeada4c78dfab6b2e65f5"
+          },
+          "AGENTS.md": {
+            "mode": "100644",
+            "object_id": "1aff494964fb5b9844f29589a53b83c2b6489e51"
+          },
+          "README.md": {
+            "mode": "100644",
+            "object_id": "c64740f9ac205eaac873da341d5c9079bc4b09f4"
+          },
+          "atari-videochess-rl-roadmap.html": {
+            "mode": "100644",
+            "object_id": "78f34984b1f10c9921974a96c8648112876017fa"
+          },
+          "docs/01-foundation/PROJECT_OVERVIEW.md": {
+            "mode": "100644",
+            "object_id": "6131db7cb1ebe66ed6f903c2cde0dcec64ec1795"
+          },
+          "docs/01-foundation/REQUIREMENTS.md": {
+            "mode": "100644",
+            "object_id": "d9e049eb9f7aa9664cc65499d023ef88ed7b3ad5"
+          },
+          "docs/01-foundation/ROADMAP.md": {
+            "mode": "100644",
+            "object_id": "3d6517b186feb24fb95702fffefc1a568266bf37"
+          },
+          "docs/02-management/EXECUTION_PLAN.md": {
+            "mode": "100644",
+            "object_id": "a7a034a0cd6d65034385b93e7284ec7f81fcc054"
+          },
+          "docs/02-management/RISK_REGISTER.md": {
+            "mode": "100644",
+            "object_id": "489ef9a0ee129697b8cfccc064de96070ac04f55"
+          },
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
+            "mode": "100644",
+            "object_id": "97db1a054605b8aa3c94697a75f2ebf1d80d3e5e"
+          },
+          "docs/05-operations/SETUP.md": {
+            "mode": "100644",
+            "object_id": "c53cb3a1087ddec2c4dcb81a7d391a0a2e8c9aa5"
+          },
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": {
+            "mode": "100644",
+            "object_id": "47e4cb03e6067424f07f6fa2c543869a5e96c3f2"
+          },
+          "docs/06-quality/TEST_STRATEGY.md": {
+            "mode": "100644",
+            "object_id": "ca17c7700fd28edaa944e006ddadc647d79cca6b"
+          },
+          "pyproject.toml": {
+            "mode": "100644",
+            "object_id": "af61e2b43ca0e55def303fd48d797285119d0c70"
+          },
+          "scripts/agent_checkpoint.py": {
+            "mode": "100644",
+            "object_id": "6f4f0ca28dbc837dce01ab788903c2e43a58b1d8"
+          },
+          "scripts/agent_preflight.py": {
+            "mode": "100644",
+            "object_id": "322932885074db6e8dc5a098a90dd96de393e760"
+          },
+          "scripts/export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "5fe121a545a759d487af574bd67c32b25f1fbd8f"
+          },
+          "tests/fixtures/g1-recovery-baseline.json": {
+            "mode": "100644",
+            "object_id": "e6bad6a18ef49b42487ef8c388d803e16b7a64e3"
+          },
+          "tests/test_agent_context.py": {
+            "mode": "100644",
+            "object_id": "44a4cc26566bd2b2659a0f385fe727c512400aad"
+          },
+          "tests/test_export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "7e36d44e58d292afd40ce951ab87f006ae17be47"
+          },
+          "tests/test_m0_smoke.py": {
+            "mode": "100644",
+            "object_id": "06fc374a092bb537b521656c195a90db48f6f1ab"
+          },
+          "uv.lock": {
+            "mode": "100644",
+            "object_id": "a122403ed28fba3956a138b886e5d65791e1c516"
+          }
+        },
+        "manifest_sha256": "c020ac00daa8326ca148b923c1f1b72d3c647ea3989b05dbc978af85ae36828b",
+        "state_sha256": "50e6e145f1ec7435c68a158bb202134ab89c23a771c9807f272f8fe44c2d4189",
+        "handoff_sha256": "303e16791dcaf2b2e6a2d66be90c199d202a51e4049287485ed3b7a60db88e62"
       }
     }
   ]
