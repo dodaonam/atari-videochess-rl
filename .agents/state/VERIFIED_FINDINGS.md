@@ -63,7 +63,7 @@
 - **Status:** verified 2026-10-15
 - **Finding:** On Ubuntu 24.04.5 with system Python 3.12.3 and `uv` 0.9.26, the project lock installed Gymnasium 1.4.0, ALE-Py 0.11.2, python-chess 1.11.2, and CPU-only PyTorch 2.14.1+cpu in `.venv`. Five M0 smoke checks and the full 41-test suite passed. Stockfish 19 passed a UCI readiness ping only. Colab CLI 0.7.4 version/help checks passed; no remote session or runtime was used.
 - **Evidence:** `.agents/evidence/M0-001-verification.md`; `tests/test_m0_smoke.py`; `uv.lock`.
-- **Impact:** M0 bootstrap is complete and user-accepted; baseline commit preparation remains pending. M1 has not started. The installed ALE-Py 0.11.2 package includes and resolves `video_chess.bin`; Gymnasium registration and construction without reset are distinct verified checks, and neither establishes gameplay behavior. The ROM absence concern is cleared; O-05 remains open for RAM mapping, modes, difficulty, evaluation settings, and assignment/runtime permissions. Colab authentication/entitlement, O-01–O-08, and permitted Stockfish roles remain unresolved.
+- **Impact:** M0 bootstrap is complete and user-accepted. At the time of this M0 finding M1 had not started; current M1 authorization and status are in `.agents/evidence/M1-authorization.md`, `.agents/tasks/BACKLOG.yaml`, and `.agents/state/PROJECT_STATE.yaml`. The installed ALE-Py 0.11.2 package includes and resolves `video_chess.bin`; Gymnasium registration and construction without reset are distinct verified checks, and neither establishes gameplay behavior. The ROM absence concern is cleared; O-05 remains open for RAM mapping, modes, difficulty, evaluation settings, and assignment/runtime permissions. Colab authentication/entitlement, O-01–O-08, and permitted Stockfish roles remain unresolved.
 
 
 ## FND-010 — M0 final technical verification
@@ -71,7 +71,7 @@
 - **Status:** verified 2026-10-14; M0 user-accepted 2026-10-15
 - **Finding:** The full 62-test context/export/M0 suite and locked dependency check passed. ALE-Py 0.11.2 contains and resolves the packaged VideoChess ROM under `video_chess`; Gymnasium registration and construction without reset also passed. Historical G1 recovery, current-HEAD recovery, and synthetic G1-to-G2/M1/M2 clone transitions passed. Stockfish 19 archive, executable, and license hashes are reproducible from the pinned official release/source tag.
 - **Evidence:** `.agents/evidence/M0-final-technical-verification.md`; `.agents/evidence/M0-001-verification.md`; `tests/test_agent_context.py`; `tests/test_m0_smoke.py`; `docs/05-operations/SETUP.md`.
-- **Impact:** M0-01 through M0-04 are user-accepted. M1 remains unstarted and requires separate explicit authorization. O-01 through O-08 remain unresolved; O-05 is partially informed by local ROM evidence but remains open for runtime/evaluation details.
+- **Impact:** M0-01 through M0-04 are user-accepted. At the time of this M0 verification M1 still required separate authorization; the later authorization is recorded in `.agents/evidence/M1-authorization.md`. O-01 through O-08 remain unresolved; O-05 is partially informed by local ROM evidence and M1 observations but remains open for official evaluation details and other confirmations.
 
 
 ## FND-011 — M0 user acceptance
@@ -80,3 +80,31 @@
 - **Finding:** The user explicitly accepted M0-001 and M0-01 through M0-04 based on the final technical verification evidence; this approval does not authorize a commit, push, or M1.
 - **Evidence:** `.agents/evidence/M0-acceptance.md`; `.agents/evidence/M0-final-technical-verification.md`.
 - **Impact:** M0 is accepted. This M0 approval did not itself authorize M1; the later direct M1 authorization is recorded in `.agents/evidence/M1-authorization.md`. G2 remains in progress.
+
+## FND-012 — Real ALE VideoChess observation and control profile
+
+- **Status:** verified 2026-10-15
+- **Finding:** ALE-Py 0.11.2 / Gymnasium 1.4.0 resets the bundled VideoChess ROM to a standard visible start layout with RGB `(210,160,3)`, RAM `(128,)`, `Discrete(10)`, modes `[0,1,2,3,4]`, and difficulty `[0]`. The calibrated RGB board occupies x=44–107 and y=36–171; deterministic joystick repeat is one square per 33 ALE frames. RAM is diagnostic-only.
+- **Evidence:** `.agents/evidence/M1-feasibility-verification.md`; final run traces and raw frame hashes under ignored `artifacts/m1/`.
+- **Impact:** M1-01 and M1-02 pass for the recorded configurations. O-05 remains open for terminal behavior and official evaluation settings.
+
+## FND-013 — RGB-verified player move and Atari reply
+
+- **Status:** verified 2026-10-15
+- **Finding:** From the real reset board, Atari actions moved the blue pawn e2–e3. The RGB board then showed the gold Atari pawn move c7–c5. `python-chess` accepted both observed transitions, and the final visible occupancy matched the shadow board under deterministic development settings and two fresh v5-default seeds.
+- **Evidence:** `.agents/evidence/M1-feasibility-verification.md`; `videochess_rl/demo.py`; `tests/test_m1_ale_integration.py`; raw RGB frame hashes in the local traces.
+- **Impact:** M1-03 passes. No simulator move or hidden-state value is used to claim the Atari transition.
+
+## FND-014 — M1 terminal behavior remains unverified
+
+- **Status:** verified observation; terminal result unverified
+- **Finding:** All bounded two-ply demonstrations returned reward 0 and `terminated=false`, `truncated=false`. The real game was not ended, so live terminal reward perspective and game-over behavior were not observed. The ALE wrapper source documents checkmate reward handling, but source inspection does not replace runtime evidence.
+- **Evidence:** `.agents/evidence/M1-feasibility-verification.md`; final deterministic and v5-default traces under ignored `artifacts/m1/`.
+- **Impact:** M1-04 remains UNVERIFIED; M1 and G2 stay in progress.
+
+## FND-015 — Portable checkpoint transition after the M1 implementation commit
+
+- **Status:** verified 2026-10-15
+- **Finding:** A post-implementation full-suite run detected that the first M1 commit did not carry the checkpoint manifest for its staged file contents. The portable state and handoff were refreshed and committed at `c57e39dde883c711548049ba4410c2ec4d397ba2`; the clean-clone regression then recognized the commit transition and the full suite passed.
+- **Evidence:** `.agents/evidence/M1-feasibility-verification.md`; `tests/test_agent_context.py::test_clean_clone_recovers_current_committed_state_without_local_artifacts`; commit `c57e39dde883c711548049ba4410c2ec4d397ba2`.
+- **Impact:** The portable tracked manifest matches the corrected commit tree. Preserve the checkpoint-before-commit and restage-controls sequence for the next commit.

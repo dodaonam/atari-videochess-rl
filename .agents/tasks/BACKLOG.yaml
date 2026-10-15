@@ -978,6 +978,97 @@
             "git_revision": "aa955a141ddc8f4a309d9d4e644b4ef27ad18765",
             "log_path": ".agents/evidence/M1-authorization.md"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M1-feasibility-verification.md",
+          "detail": "M1-01 through M1-06 verdicts, real deterministic/default v5 traces, current full-suite results, staged-index clean-clone recovery, and the unverified terminal limitation.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-15T08:29:19Z",
+            "exit_code": null,
+            "git_revision": "c57e39dde883c711548049ba4410c2ec4d397ba2",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "test",
+          "command": "uv --offline --cache-dir .venv/.cache/uv run --locked --no-sync python -m unittest discover -s tests -v",
+          "result": "PASS: 84 tests in 36.942s, including context, export, M0 smoke, M1 unit, and real ALE integration checks.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-15T08:26:14Z",
+            "recorded_at_utc": "2026-10-15T08:27:12Z",
+            "exit_code": 0,
+            "git_revision": "c57e39dde883c711548049ba4410c2ec4d397ba2",
+            "log_path": ".agents/evidence/M1-feasibility-verification.md"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "uv --offline --cache-dir .venv/.cache/uv run --locked --no-sync python3 scripts/run_m1_demo.py --profile deterministic-dev --seed 20261015 --max-opponent-wait-frames 10000 --trace artifacts/m1/final-deterministic-c57/trace.json",
+          "result": "PASS: RGB-verified e2e3 and Atari reply c7c5; trace SHA-256 227fd9f37749f08cc4a98917bc640c9dd00f7c2682450b2e865e4b0a8da13e9c.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-15T07:51:35Z",
+            "recorded_at_utc": "2026-10-15T08:23:21Z",
+            "exit_code": 0,
+            "git_revision": "c57e39dde883c711548049ba4410c2ec4d397ba2",
+            "log_path": ".agents/evidence/M1-feasibility-verification.md"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "uv --offline --cache-dir .venv/.cache/uv run --locked --no-sync python3 scripts/run_m1_demo.py --profile v5-default --seed 20261015 --max-opponent-wait-frames 10000 --trace artifacts/m1/final-v5-default-seed-20261015/trace.json",
+          "result": "PASS: RGB-verified e2e3 and Atari reply c7c5; trace SHA-256 a76eb0b6e7e85edf1f56c7c4f89f391017edd2a2caa98a15fab3972b5a90d322.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-15T07:51:16Z",
+            "recorded_at_utc": "2026-10-15T08:23:21Z",
+            "exit_code": 0,
+            "git_revision": "c57e39dde883c711548049ba4410c2ec4d397ba2",
+            "log_path": ".agents/evidence/M1-feasibility-verification.md"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "uv --offline --cache-dir .venv/.cache/uv run --locked --no-sync python3 scripts/run_m1_demo.py --profile v5-default --seed 20261016 --max-opponent-wait-frames 10000 --trace artifacts/m1/final-v5-default-c57-seed-20261016/trace.json",
+          "result": "PASS: RGB-verified e2e3 and Atari reply c7c5; trace SHA-256 5ac35241d32fa29c467a47ca7e985d4b08771948e77cc248ffe879c8e86cab0d.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-15T07:51:52Z",
+            "recorded_at_utc": "2026-10-15T08:23:21Z",
+            "exit_code": 0,
+            "git_revision": "c57e39dde883c711548049ba4410c2ec4d397ba2",
+            "log_path": ".agents/evidence/M1-feasibility-verification.md"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "PASS: no errors; one expected ARTIFACT_MANIFEST_REQUIRED warning for ignored local ALE frames.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-15T08:27:17Z",
+            "recorded_at_utc": "2026-10-15T08:29:19Z",
+            "exit_code": 0,
+            "git_revision": "c57e39dde883c711548049ba4410c2ec4d397ba2",
+            "log_path": ".agents/evidence/M1-feasibility-verification.md"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "uv --offline --cache-dir .venv/.cache/uv lock --check --python /usr/bin/python3",
+          "result": "PASS: lockfile consistent; no dependency installation performed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-15T08:28:33Z",
+            "recorded_at_utc": "2026-10-15T08:29:19Z",
+            "exit_code": 0,
+            "git_revision": "c57e39dde883c711548049ba4410c2ec4d397ba2",
+            "log_path": ".agents/evidence/M1-feasibility-verification.md"
+          }
         }
       ],
       "acceptance_criteria_ids": [
@@ -988,9 +1079,9 @@
         "M1-05",
         "M1-06"
       ],
-      "next_action": "Finalize the M1 evidence matrix and investigate real terminal/reward behavior for M1-04; keep M1 and G2 in progress unless every mandatory criterion is verified.",
+      "next_action": "Observe a real VideoChess terminal/reward outcome for M1-04 or retain it as UNVERIFIED; keep M1 and G2 in progress and do not begin M2.",
       "plan_ref": ".agents/plans/M01-ale-feasibility.md"
     }
   ],
-  "updated_at_utc": "2026-10-15T07:34:21Z"
+  "updated_at_utc": "2026-10-15T08:29:19Z"
 }
