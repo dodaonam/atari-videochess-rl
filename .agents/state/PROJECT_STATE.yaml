@@ -11,36 +11,54 @@
     ],
     "next_governance_gate": "G3",
     "user_authorized_g1": true,
-    "next_user_action": "Review the M1 acceptance report; M1-04 terminal behavior remains unverified and M2 requires separate explicit authorization."
+    "next_user_action": "Review the M1-04 verification and BLK-001; M1/G2 remain incomplete and M2 still requires separate explicit authorization."
   },
   "engineering": {
     "active_milestone": "M1",
     "next_milestone": "M1",
     "next_milestone_status": "in_progress",
     "start_authorized": true,
-    "hold_reason": ""
+    "hold_reason": "M1-001 is blocked by BLK-001: later-turn player input is not reliably verified and no genuine ALE terminal/reward was observed."
   },
   "task_refs": {
     "active_task_id": "M1-001",
     "next_task_id": "M1-001"
   },
   "last_checkpoint": {
-    "id": "cp-c57e39dd-20261015T082919341775Z",
-    "created_at_utc": "2026-10-15T08:29:19Z",
+    "id": "cp-dd67267f-20261015T103518217183Z",
+    "created_at_utc": "2026-10-15T10:35:18Z",
     "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
     "git": {
       "scope": "workspace",
       "branch": "initial-idea",
-      "head": "c57e39dde883c711548049ba4410c2ec4d397ba2",
+      "head": "dd67267ff85670c674d0d6d08c129ce10692798f",
       "status_entries": [
         "?? main.py",
-        "A  .agents/evidence/M1-feasibility-verification.md",
+        "A  .agents/evidence/M1-04-experiment-budget.md",
+        "A  .agents/evidence/M1-04-terminal-verification.md",
+        "A  scripts/run_m1_terminal_experiment.py",
+        "A  tests/test_m1_episode.py",
+        "A  videochess_rl/episode.py",
+        "M  .agents/evidence/M1-feasibility-verification.md",
+        "M  .agents/state/BLOCKERS.md",
         "M  .agents/state/VERIFIED_FINDINGS.md",
         "M  .agents/tasks/BACKLOG.yaml",
+        "M  docs/02-management/RISK_REGISTER.md",
+        "M  docs/05-operations/M1-ALE-REPRODUCIBILITY.md",
+        "M  docs/06-quality/TEST_STRATEGY.md",
+        "M  tests/test_m1_ale_integration.py",
+        "M  tests/test_m1_control.py",
+        "M  tests/test_m1_environment.py",
+        "M  tests/test_m1_shadow.py",
+        "M  tests/test_m1_vision.py",
+        "M  videochess_rl/controller.py",
+        "M  videochess_rl/demo.py",
+        "M  videochess_rl/shadow.py",
+        "M  videochess_rl/vision.py",
         "MM .agents/state/PROJECT_STATE.yaml",
         "MM .agents/state/SESSION_HANDOFF.md"
       ],
-      "status_sha256": "011a9ee26d53d6f187bf3246960b659145a08f021fb21d2c9521efb9f685d246",
+      "status_sha256": "794dbc7212bcebaa3c7c7efbda65343e10528ea1006a2585243629d29605eb7c",
       "repo_file_hashes": {
         ".gitignore": "1828249263215f6182229194dd1c662907d115310da5ca5a0c65ad207ed2ae3c",
         ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
@@ -60,50 +78,56 @@
         ".agents/evidence/M0-authorization.md": "2e7f62983b98cc79e1d25168da031bf2269c7364d8551956d41744a91ed58205",
         ".agents/evidence/M0-final-technical-verification.md": "b64899752217a9fe55ae1a646ebb7b694956cb2164f804bbe2f47ff6340ca9c3",
         ".agents/evidence/M0-finalization-verification.md": "9202f9c41518eb448efaac49ffbcee4cd2384c0435ebcca21fb31843a1d6f7b8",
+        ".agents/evidence/M1-04-experiment-budget.md": "4eb17e35a3ba41a1220c9dca74e8f16ef8e4b4b16288533cd6597c8b60c7162e",
+        ".agents/evidence/M1-04-terminal-verification.md": "da7fb93abf333e166a5d89aaaae8aef3428af3eea30aa8264b43cdcd7a1fbecb",
         ".agents/evidence/M1-authorization.md": "9985e9917dc8fe938b2c48c23da4868334b98d2a7bc2eba7f5a72b9a1a32d117",
-        ".agents/evidence/M1-feasibility-verification.md": "f61e52a1d51e14a87702c50e736389ed34c042fcbc0ddbbe62bbfa5f92e54eb2",
+        ".agents/evidence/M1-feasibility-verification.md": "f6e00c39778c44604c2422f959a12dfa22156bde784afaca824d350e3fa523e5",
         ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
         ".agents/plans/M00-bootstrap.md": "9c7b045f7efd20c60f01e2b23224ccac12d7a659699f0f43e6bc1ff286671f7f",
         ".agents/plans/M01-ale-feasibility.md": "65ad3f04c34ab8751509ee0303f1cd772c5f83e980ac9b4b7d2b336a7cfbd5bb",
         ".agents/review-bundles/M0-working-tree-20261014T184343213544Z.zip": "e888fa48c1d9662a8d63ce8af141f29b7a9a8ac4578fc3f25858660a0b07d345",
         ".agents/review-bundles/M0-working-tree-20261014T184649013533Z.zip": "c705ea19971683c1526645552288ca377f11f2dcf101250319d8a12086535fd3",
         ".agents/review-bundles/M0-working-tree-20261014T192404457787Z.zip": "3f846aa17591d879da385b833225f059db6dc0b9df5c992e33236ca66d35b7fd",
+        ".agents/review-bundles/M1-staged-20261015T082948737608Z.zip": "68b710ef07bb36a2b656795f3ee295c0d2759e02c4dbf2e6002a6f074f50dfb4",
         ".agents/review-bundles/export_review_bundle-staged-20261014T210535155205Z.zip": "2b50a6b35606d61e1d3f6ee3a156791b38cd294c626533101f103603c172ebd4",
         ".agents/review-bundles/export_review_bundle-working-tree-20261014T210537795808Z.zip": "5606106ef43267add13d83478778b47f08e3916fa6cf07e2940e9a03e2b274e2",
         ".agents/skills/export-review-bundle/SKILL.md": "02623443e4833824a7c2606e5d4cb9ea1d79e0b5d8c436741933978142932942",
-        ".agents/state/BLOCKERS.md": "b40fe4963b5e69160a4a6871d14c028e367ea19e922f9feee25740864b04550e",
-        ".agents/state/SESSION_HANDOFF.md": "a5e6e3aaabc832f56da9a64e795ca6112673c3b2d3a4f08de7f2578c637ed4b3",
-        ".agents/state/VERIFIED_FINDINGS.md": "df59c2db9652e2e0f56b3e00ad01482b31c93db3a664adba6358af5ec3671d7b",
-        ".agents/tasks/BACKLOG.yaml": "e0ebae87940ef89c6862e7dff37acc524ff0a3da9b6ccf75d21b20887feffc8d",
+        ".agents/state/BLOCKERS.md": "131f15716a6657d5a3cef0fe966b5547be52449ff434bc4464c211cf72b27923",
+        ".agents/state/SESSION_HANDOFF.md": "663fa03539e32a050d2f2a27cb73b966d1978a6086d774902362fce5dbf425e5",
+        ".agents/state/VERIFIED_FINDINGS.md": "42cf451f95c8f67255eee6928726c91b107d1968037c094cb55057721333a374",
+        ".agents/tasks/BACKLOG.yaml": "2f2819379d6e557f4de4a7250f4328584a0aefbeec0724b0437809c7929e7cd7",
         "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
         "docs/01-foundation/REQUIREMENTS.md": "4aa8f91e830459f513ff47d4afa09341c5fdcebcb26eca4f45f0d5c67e4f344c",
         "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
         "docs/02-management/EXECUTION_PLAN.md": "a71a322a1b68b011ce28a1222fca328837803341ed3366848f10d467d1192535",
-        "docs/02-management/RISK_REGISTER.md": "2d3a3fef7062377c6479048992bae3e3ec0a9cc880a883bb1e57f24473c00ab8",
+        "docs/02-management/RISK_REGISTER.md": "47a9ceadeed7eae88d2c19f71ca98f991215433f1131309df29446159f55f52d",
         "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
-        "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": "1fa120468ec2a983b64bc69a9092ec0212719092953116c9df2886f795892324",
+        "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": "ef68db68b75a0521b91ae109b7ea7cb462d87e131b25ef77969d568f76a06d88",
         "docs/05-operations/SETUP.md": "05776d5f0e9bcf5931807fbbcca46ae583d37f25ebaf116308572f6874025a89",
         "docs/06-quality/ACCEPTANCE_CRITERIA.md": "395741bc505bbc0c0dd3fcb63187f198303e538c064da32fc58c9389e93373a5",
-        "docs/06-quality/TEST_STRATEGY.md": "bce1ac5aacc8445f6a3bc80b8f3af82b7101e49f08ff12d43a2e9489af107cd8",
+        "docs/06-quality/TEST_STRATEGY.md": "987bc0dd44e50f7097f1dbf334a413a13a92564b4761ef9bc52791e5cd2392e9",
         "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
         "scripts/agent_preflight.py": "7f24cf19f659603f2d96907eae790f1df07ff8212cfc321db2f4c47e641f026e",
         "scripts/export_review_bundle.py": "7ed9a3a22dc2435f157840ad710f6fb8af183118830acb0b91cdbe47fa2930c0",
         "scripts/run_m1_demo.py": "885c83435efe3009d0eea85098879c311062a8f39459ec18850ba1dc5e605ef0",
+        "scripts/run_m1_terminal_experiment.py": "de4f4eb48826e3808faf2ea595ae03afe43bbc8d15fa3e64d637f19c5db9252e",
         "tests/test_agent_context.py": "ee3c6a272cf0e21cfc459b3c8ebe1e372fb70fe1a7f4735c2a36c2b531a7faab",
         "tests/test_export_review_bundle.py": "3d9684586b76aa73f794b936b336f8529237f1797cfe19645cc64ce74239db6c",
         "tests/test_m0_smoke.py": "ba6303fc4c6b9f06b03bb1259a8084083c595b278e163d7f1ca710ef7bf77594",
-        "tests/test_m1_ale_integration.py": "da508d0aff6f01841036435cca4b6a397e12a1b0a3c7ed2c41abf0bebe46eddd",
-        "tests/test_m1_control.py": "be8ec1573e5fe2920c9df4e847fa679d70c987ed9cec74db05580b797aafb7fc",
-        "tests/test_m1_environment.py": "427eeba8bc7672e3c8ce811906b5a746a7852893b53b1025df9bae468d75c5b3",
-        "tests/test_m1_shadow.py": "64862adb1b6af8a2f9d6b29cd8babf26c8dc4694b79e22226e8e168601f07178",
-        "tests/test_m1_vision.py": "0273ddabe79ec09f1525d62ae03c6d0f04214ec4aeb90f53ad0f0aa919cd1a85",
+        "tests/test_m1_ale_integration.py": "d7ac8f2f65adbf1787e940f6fb67635e8e2491e15fd3bbebe6aa985bf309ab05",
+        "tests/test_m1_control.py": "ab06294343b80650a1592c107556f1655ef515ecc5d254adf0e6c0f18f6aea24",
+        "tests/test_m1_environment.py": "62b80652d0dbe73f9342788ce1b0cdeac0e3748f23991e5635e202f80ced90c3",
+        "tests/test_m1_episode.py": "6f41ac30def658c8276c100ed8a77809458988a4d6ad6d800344623069445ac8",
+        "tests/test_m1_shadow.py": "19bd94ca9eece7d4317788f08df85fe46911d706a43665a437c6596446e99ffc",
+        "tests/test_m1_vision.py": "e36315af24d76e89027f3eeb2b46a3740615d3c03fff3172365531eaa2b8f11c",
         "tests/fixtures/g1-recovery-baseline.json": "a48deb7bbd5f1a67e21c66b4f5feec22c08f169b6dcc3d44b89248a30a8aa0df",
         "videochess_rl/__init__.py": "6288a2698f98216834cce812d32cd8ecc95da5a2bdce96ebf891c22b1d30e009",
-        "videochess_rl/controller.py": "23ae39ddb40e24a930d49c9f3d796491598820efae93d6124cebf417c8d0df41",
-        "videochess_rl/demo.py": "0b1428a74353db4c72fa972b75d68ab8ce7f0e7b081f0ef26e6743c6e3daf090",
+        "videochess_rl/controller.py": "bd68e1bf492f03fe6f9d597689865d0682dcccc40e242c84adfc1293c66ae0a3",
+        "videochess_rl/demo.py": "221d4327433d2a877c215e9bd474009e938c07d6df19cc0dcd34f24765df3c37",
         "videochess_rl/environment.py": "e00047d0f046d994f230712797d5b3b85264b73815301ef498b3b12aeb86dcff",
-        "videochess_rl/shadow.py": "64ad1fb411c0b8f1c0becc0d9427d87f5badc1976a88ea460d0cc071260208d7",
-        "videochess_rl/vision.py": "4e2f69dead40987e1c2d6d1dfa3671c80951adafd06b6a87cb223acf81c09592"
+        "videochess_rl/episode.py": "a47ad23c9f79547daecbef7f88bc627bc2cfc2e88794c5544ea5c8962508b005",
+        "videochess_rl/shadow.py": "b342062ce2a6e176ed872d90ecbab584c5f0fb4bc0bb057b6d007694ac7d5149",
+        "videochess_rl/vision.py": "8f3a3b0a142bb91e3f7cd58dd29a596a01982f03cd7324929638a1fa5811b770"
       },
       "unhashed_large_files": [],
       "unreadable_files": [],
@@ -163,13 +187,21 @@
           "mode": "100644",
           "object_id": "ba82a757f3cf0075d28c5435dd866dda2d7f34aa"
         },
+        ".agents/evidence/M1-04-experiment-budget.md": {
+          "mode": "100644",
+          "object_id": "463c910b2be35998ff070541ba9f409e60792178"
+        },
+        ".agents/evidence/M1-04-terminal-verification.md": {
+          "mode": "100644",
+          "object_id": "af67e3757fe95cb048d43df991701fcfff040a94"
+        },
         ".agents/evidence/M1-authorization.md": {
           "mode": "100644",
           "object_id": "07d0ac7de9ec5ef4f29d1a02ed83ca2ba619e938"
         },
         ".agents/evidence/M1-feasibility-verification.md": {
           "mode": "100644",
-          "object_id": "b059c501a13bbfe8037c5a401c251b94e30d8fe4"
+          "object_id": "e6cab1db0430f21069d4836d416eb9b7bf6457a7"
         },
         ".agents/plans/G1-consistency-hardening.md": {
           "mode": "100644",
@@ -189,15 +221,15 @@
         },
         ".agents/state/BLOCKERS.md": {
           "mode": "100644",
-          "object_id": "be19cf39a083f8f1e7a3baba6bb72ecf0d3a5979"
+          "object_id": "cc381164949bb180e5bc29e045d48b7aca47d0a6"
         },
         ".agents/state/VERIFIED_FINDINGS.md": {
           "mode": "100644",
-          "object_id": "dd77edff4fbb98a37538816c6244954c45d7d834"
+          "object_id": "6ee22c42f6a09b1b6ffa19b507bd0c4591729dae"
         },
         ".agents/tasks/BACKLOG.yaml": {
           "mode": "100644",
-          "object_id": "0ce4ce1ede67572340b8e4b31c377502e374f50b"
+          "object_id": "e1a54698bd20162753a56951e648c0468572593d"
         },
         ".gitignore": {
           "mode": "100644",
@@ -237,7 +269,7 @@
         },
         "docs/02-management/RISK_REGISTER.md": {
           "mode": "100644",
-          "object_id": "489ef9a0ee129697b8cfccc064de96070ac04f55"
+          "object_id": "5e5dbf91608bc458abfc2072ab28cb2aec131410"
         },
         "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
           "mode": "100644",
@@ -245,7 +277,7 @@
         },
         "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": {
           "mode": "100644",
-          "object_id": "f55f247d052a6278688154302f958a86cf1edb27"
+          "object_id": "42f8707174b1621e03ce4e404bfe01616779c579"
         },
         "docs/05-operations/SETUP.md": {
           "mode": "100644",
@@ -257,7 +289,7 @@
         },
         "docs/06-quality/TEST_STRATEGY.md": {
           "mode": "100644",
-          "object_id": "c34f1127de21eec8d185a84d0c549a9658829506"
+          "object_id": "dc1b0a60759de6be798c52b79b90101c5c4609a2"
         },
         "pyproject.toml": {
           "mode": "100644",
@@ -279,6 +311,10 @@
           "mode": "100644",
           "object_id": "cd7e704dbae92a9d084988cf94267162a7168f17"
         },
+        "scripts/run_m1_terminal_experiment.py": {
+          "mode": "100755",
+          "object_id": "78dd80d138650a96c747dd5962b9a6a17241216d"
+        },
         "tests/fixtures/g1-recovery-baseline.json": {
           "mode": "100644",
           "object_id": "e6bad6a18ef49b42487ef8c388d803e16b7a64e3"
@@ -297,23 +333,27 @@
         },
         "tests/test_m1_ale_integration.py": {
           "mode": "100644",
-          "object_id": "191496cfc6b48a28cc0d8773e952165fc046b8c5"
+          "object_id": "bd24bd1116149afa98b84c79671480a850a001a9"
         },
         "tests/test_m1_control.py": {
           "mode": "100644",
-          "object_id": "4af757c047b250c9fb4f09eb89803cc782b0293e"
+          "object_id": "f30285bcc56950d883115bfba910a54dac70712b"
         },
         "tests/test_m1_environment.py": {
           "mode": "100644",
-          "object_id": "2f2ae4dd2ee61ef03ca48f03860ec1e3b04be05e"
+          "object_id": "394f0aa1ee8243e1f95121fdb7a31e1d406741a7"
+        },
+        "tests/test_m1_episode.py": {
+          "mode": "100644",
+          "object_id": "7f53685708967d49542a43927138d0481d841e18"
         },
         "tests/test_m1_shadow.py": {
           "mode": "100644",
-          "object_id": "92f05c1caa2ab9e63348006f2ae752fca0aa254a"
+          "object_id": "ee085a1693595c5a265081f24f186032c39b4e7e"
         },
         "tests/test_m1_vision.py": {
           "mode": "100644",
-          "object_id": "7eb39c62a97e4216569fff0086104b0238dbc282"
+          "object_id": "a69e3b463b6c00a38adcdc4f6f2b4948e94e39a2"
         },
         "uv.lock": {
           "mode": "100644",
@@ -325,28 +365,32 @@
         },
         "videochess_rl/controller.py": {
           "mode": "100644",
-          "object_id": "d187bb608d795a1e8fe92b812b009f7b21b0dc5c"
+          "object_id": "7574b25c12ab78ac9cbc6bb68863e62d5bf092d0"
         },
         "videochess_rl/demo.py": {
           "mode": "100644",
-          "object_id": "1d9afd1e2e45f60614cd54f71355c282ff25f4ae"
+          "object_id": "5a35b608d5323f8139cbed675c76b2ecef33adfe"
         },
         "videochess_rl/environment.py": {
           "mode": "100644",
           "object_id": "5617ef3abf556ce16e23210b6b855a79debd4efa"
         },
+        "videochess_rl/episode.py": {
+          "mode": "100644",
+          "object_id": "dc7c859059ebb849db58c91586e97454738e459f"
+        },
         "videochess_rl/shadow.py": {
           "mode": "100644",
-          "object_id": "8f0ea99ceee29d72342c4b66c4ac2b680f7ad6da"
+          "object_id": "d971e7db7026c21afc86f3cca3864fa745d32454"
         },
         "videochess_rl/vision.py": {
           "mode": "100644",
-          "object_id": "ecfb43d2998fd165a982e426559edd03fda39695"
+          "object_id": "5be7bf92574229c232a364a7c9c03830a50524ee"
         }
       },
-      "manifest_sha256": "73db4c802d07617e229bd3d0fa317799f911dc742c336c32db9d5595853e7115",
-      "state_sha256": "638efd0312a936ed7f131e70109fa1cf44d660168608ae9206e98b05d4a4d2f4",
-      "handoff_sha256": "a5e6e3aaabc832f56da9a64e795ca6112673c3b2d3a4f08de7f2578c637ed4b3"
+      "manifest_sha256": "6e743a388b9768f9af93b8da80198d9eeebdac2ad71474ee6afe1d749a7ffbbb",
+      "state_sha256": "b1804dc01248715b294e9ae8182bdd5b88914aa10c7203ef1b97995021cf607f",
+      "handoff_sha256": "663fa03539e32a050d2f2a27cb73b966d1978a6086d774902362fce5dbf425e5"
     }
   },
   "g1_baseline": {
@@ -379,7 +423,9 @@
     "comparison_policy": "Historical baseline only; current drift is compared with last_checkpoint.git.",
     "baseline_sha256": "47b912a660741fe834a53479c2fc065392b1a3bcaa0dbd1d670433a671fa1493"
   },
-  "active_blocker_ids": [],
+  "active_blocker_ids": [
+    "BLK-001"
+  ],
   "updated_at_utc": "2026-10-14T19:53:22Z",
   "checkpoint_history": [
     {
@@ -8987,6 +9033,2437 @@
         "manifest_sha256": "88e816ba97086487eab484fd9656118132be15a0e5444e37a78b77f3ba80e509",
         "state_sha256": "48a29010c3b3a85fff02a892e538d495934606890b53e6d094001c6cd56ba95b",
         "handoff_sha256": "e97690d1f5579c957cae6bd8a2930f0c80c5fb11d17fdd4fe2e7d7afb7068174"
+      }
+    },
+    {
+      "id": "cp-c57e39dd-20261015T082919341775Z",
+      "created_at_utc": "2026-10-15T08:29:19Z",
+      "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
+      "workspace_git": {
+        "scope": "workspace",
+        "branch": "initial-idea",
+        "head": "c57e39dde883c711548049ba4410c2ec4d397ba2",
+        "status_entries": [
+          "?? main.py",
+          "A  .agents/evidence/M1-feasibility-verification.md",
+          "M  .agents/state/VERIFIED_FINDINGS.md",
+          "M  .agents/tasks/BACKLOG.yaml",
+          "MM .agents/state/PROJECT_STATE.yaml",
+          "MM .agents/state/SESSION_HANDOFF.md"
+        ],
+        "status_sha256": "011a9ee26d53d6f187bf3246960b659145a08f021fb21d2c9521efb9f685d246",
+        "repo_file_hashes": {
+          ".gitignore": "1828249263215f6182229194dd1c662907d115310da5ca5a0c65ad207ed2ae3c",
+          ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+          "AGENTS.md": "d37ebbe8fdb94fabe7c039d8b89c3beaa36584d6d5eb09934f714941129463cd",
+          "README.md": "b56bd7410a2c90c559ad5fd52a6a78065bee4d2d54856d6677af4b0200746dce",
+          "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+          "main.py": "c101b2abfee28217d24a7c550eda37cffe548adfc9149244646199108361c0fe",
+          "pyproject.toml": "7be065e3664844a7774e9d85c4eabb06526e427e4e3e9f2f8e52f090fd600cc8",
+          "uv.lock": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+          ".agents/PLANS.md": "ed50b3ccc51cbe29123630c5069ab2d00f7428751ca67f1e64bd15558bd044d2",
+          ".agents/evidence/G1-10-recovery-verification.md": "39e05a96034d4eaa4f22f0dec72670afacbd9b48bcfcc41ed81f8a718d3a5f65",
+          ".agents/evidence/G1-git-baseline-verification.md": "13772b3438b30d440baac4caeeceb564017a5216ea9409d7b9412390d4b96f65",
+          ".agents/evidence/G1-hardening-verification.md": "0963f26840d2c393525fd10bba32f13e5ff3a51210a87d3d731b2ba96bd09380",
+          ".agents/evidence/G1-portability-consistency-verification.md": "f1fa95b9c2e7415ff0ff8a9e452920f7c8a29c77ea3ce3fabfc77fb744b7ad0e",
+          ".agents/evidence/M0-001-verification.md": "1f0dfba9ba36a3ce03f21e951e0af4a1b53d3b3b26970dd0c3aaaab76aaa3333",
+          ".agents/evidence/M0-acceptance.md": "089a86c5e50c0e5be698dff2dbc83643c58968b883e03c6e5c85b3d5cad28f14",
+          ".agents/evidence/M0-authorization.md": "2e7f62983b98cc79e1d25168da031bf2269c7364d8551956d41744a91ed58205",
+          ".agents/evidence/M0-final-technical-verification.md": "b64899752217a9fe55ae1a646ebb7b694956cb2164f804bbe2f47ff6340ca9c3",
+          ".agents/evidence/M0-finalization-verification.md": "9202f9c41518eb448efaac49ffbcee4cd2384c0435ebcca21fb31843a1d6f7b8",
+          ".agents/evidence/M1-authorization.md": "9985e9917dc8fe938b2c48c23da4868334b98d2a7bc2eba7f5a72b9a1a32d117",
+          ".agents/evidence/M1-feasibility-verification.md": "f61e52a1d51e14a87702c50e736389ed34c042fcbc0ddbbe62bbfa5f92e54eb2",
+          ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
+          ".agents/plans/M00-bootstrap.md": "9c7b045f7efd20c60f01e2b23224ccac12d7a659699f0f43e6bc1ff286671f7f",
+          ".agents/plans/M01-ale-feasibility.md": "65ad3f04c34ab8751509ee0303f1cd772c5f83e980ac9b4b7d2b336a7cfbd5bb",
+          ".agents/review-bundles/M0-working-tree-20261014T184343213544Z.zip": "e888fa48c1d9662a8d63ce8af141f29b7a9a8ac4578fc3f25858660a0b07d345",
+          ".agents/review-bundles/M0-working-tree-20261014T184649013533Z.zip": "c705ea19971683c1526645552288ca377f11f2dcf101250319d8a12086535fd3",
+          ".agents/review-bundles/M0-working-tree-20261014T192404457787Z.zip": "3f846aa17591d879da385b833225f059db6dc0b9df5c992e33236ca66d35b7fd",
+          ".agents/review-bundles/export_review_bundle-staged-20261014T210535155205Z.zip": "2b50a6b35606d61e1d3f6ee3a156791b38cd294c626533101f103603c172ebd4",
+          ".agents/review-bundles/export_review_bundle-working-tree-20261014T210537795808Z.zip": "5606106ef43267add13d83478778b47f08e3916fa6cf07e2940e9a03e2b274e2",
+          ".agents/skills/export-review-bundle/SKILL.md": "02623443e4833824a7c2606e5d4cb9ea1d79e0b5d8c436741933978142932942",
+          ".agents/state/BLOCKERS.md": "b40fe4963b5e69160a4a6871d14c028e367ea19e922f9feee25740864b04550e",
+          ".agents/state/SESSION_HANDOFF.md": "a5e6e3aaabc832f56da9a64e795ca6112673c3b2d3a4f08de7f2578c637ed4b3",
+          ".agents/state/VERIFIED_FINDINGS.md": "df59c2db9652e2e0f56b3e00ad01482b31c93db3a664adba6358af5ec3671d7b",
+          ".agents/tasks/BACKLOG.yaml": "e0ebae87940ef89c6862e7dff37acc524ff0a3da9b6ccf75d21b20887feffc8d",
+          "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
+          "docs/01-foundation/REQUIREMENTS.md": "4aa8f91e830459f513ff47d4afa09341c5fdcebcb26eca4f45f0d5c67e4f344c",
+          "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
+          "docs/02-management/EXECUTION_PLAN.md": "a71a322a1b68b011ce28a1222fca328837803341ed3366848f10d467d1192535",
+          "docs/02-management/RISK_REGISTER.md": "2d3a3fef7062377c6479048992bae3e3ec0a9cc880a883bb1e57f24473c00ab8",
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
+          "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": "1fa120468ec2a983b64bc69a9092ec0212719092953116c9df2886f795892324",
+          "docs/05-operations/SETUP.md": "05776d5f0e9bcf5931807fbbcca46ae583d37f25ebaf116308572f6874025a89",
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": "395741bc505bbc0c0dd3fcb63187f198303e538c064da32fc58c9389e93373a5",
+          "docs/06-quality/TEST_STRATEGY.md": "bce1ac5aacc8445f6a3bc80b8f3af82b7101e49f08ff12d43a2e9489af107cd8",
+          "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
+          "scripts/agent_preflight.py": "7f24cf19f659603f2d96907eae790f1df07ff8212cfc321db2f4c47e641f026e",
+          "scripts/export_review_bundle.py": "7ed9a3a22dc2435f157840ad710f6fb8af183118830acb0b91cdbe47fa2930c0",
+          "scripts/run_m1_demo.py": "885c83435efe3009d0eea85098879c311062a8f39459ec18850ba1dc5e605ef0",
+          "tests/test_agent_context.py": "ee3c6a272cf0e21cfc459b3c8ebe1e372fb70fe1a7f4735c2a36c2b531a7faab",
+          "tests/test_export_review_bundle.py": "3d9684586b76aa73f794b936b336f8529237f1797cfe19645cc64ce74239db6c",
+          "tests/test_m0_smoke.py": "ba6303fc4c6b9f06b03bb1259a8084083c595b278e163d7f1ca710ef7bf77594",
+          "tests/test_m1_ale_integration.py": "da508d0aff6f01841036435cca4b6a397e12a1b0a3c7ed2c41abf0bebe46eddd",
+          "tests/test_m1_control.py": "be8ec1573e5fe2920c9df4e847fa679d70c987ed9cec74db05580b797aafb7fc",
+          "tests/test_m1_environment.py": "427eeba8bc7672e3c8ce811906b5a746a7852893b53b1025df9bae468d75c5b3",
+          "tests/test_m1_shadow.py": "64862adb1b6af8a2f9d6b29cd8babf26c8dc4694b79e22226e8e168601f07178",
+          "tests/test_m1_vision.py": "0273ddabe79ec09f1525d62ae03c6d0f04214ec4aeb90f53ad0f0aa919cd1a85",
+          "tests/fixtures/g1-recovery-baseline.json": "a48deb7bbd5f1a67e21c66b4f5feec22c08f169b6dcc3d44b89248a30a8aa0df",
+          "videochess_rl/__init__.py": "6288a2698f98216834cce812d32cd8ecc95da5a2bdce96ebf891c22b1d30e009",
+          "videochess_rl/controller.py": "23ae39ddb40e24a930d49c9f3d796491598820efae93d6124cebf417c8d0df41",
+          "videochess_rl/demo.py": "0b1428a74353db4c72fa972b75d68ab8ce7f0e7b081f0ef26e6743c6e3daf090",
+          "videochess_rl/environment.py": "e00047d0f046d994f230712797d5b3b85264b73815301ef498b3b12aeb86dcff",
+          "videochess_rl/shadow.py": "64ad1fb411c0b8f1c0becc0d9427d87f5badc1976a88ea460d0cc071260208d7",
+          "videochess_rl/vision.py": "4e2f69dead40987e1c2d6d1dfa3671c80951adafd06b6a87cb223acf81c09592"
+        },
+        "unhashed_large_files": [],
+        "unreadable_files": [],
+        "artifact_dirs_requiring_manifest": [
+          "artifacts"
+        ],
+        "excluded_directories": [
+          ".git",
+          ".venv",
+          "artifacts",
+          "scripts/__pycache__",
+          "tests/__pycache__",
+          "videochess_rl/__pycache__"
+        ],
+        "excluded_symlink_files": 0
+      },
+      "portable_git": {
+        "format_version": 1,
+        "tracked_manifest": {
+          ".agents/PLANS.md": {
+            "mode": "100644",
+            "object_id": "1c1b78d477af82837465daf21c1de62c32c07c84"
+          },
+          ".agents/evidence/G1-10-recovery-verification.md": {
+            "mode": "100644",
+            "object_id": "6ff27d51b9cf51803d8ca8c863066253ae6297bc"
+          },
+          ".agents/evidence/G1-git-baseline-verification.md": {
+            "mode": "100644",
+            "object_id": "c3c79107166243fe35ae2d8e9f270b8a46e0ffe9"
+          },
+          ".agents/evidence/G1-hardening-verification.md": {
+            "mode": "100644",
+            "object_id": "949549fa06ad46bc3076ac462e7ccba7cdc70fbf"
+          },
+          ".agents/evidence/G1-portability-consistency-verification.md": {
+            "mode": "100644",
+            "object_id": "5120604c17c3a481431701154d2783058ff78dcd"
+          },
+          ".agents/evidence/M0-001-verification.md": {
+            "mode": "100644",
+            "object_id": "0899b37e78e7244661bebb1fcea242bc66114e57"
+          },
+          ".agents/evidence/M0-acceptance.md": {
+            "mode": "100644",
+            "object_id": "99c6b35c927fc0eea29dad671ba59744e52c6644"
+          },
+          ".agents/evidence/M0-authorization.md": {
+            "mode": "100644",
+            "object_id": "4682598c5d00e2e9f0cb8f0a46171cdcc6de748a"
+          },
+          ".agents/evidence/M0-final-technical-verification.md": {
+            "mode": "100644",
+            "object_id": "219fa2bb8620f94faf680d956d1042d714ac9c94"
+          },
+          ".agents/evidence/M0-finalization-verification.md": {
+            "mode": "100644",
+            "object_id": "ba82a757f3cf0075d28c5435dd866dda2d7f34aa"
+          },
+          ".agents/evidence/M1-authorization.md": {
+            "mode": "100644",
+            "object_id": "07d0ac7de9ec5ef4f29d1a02ed83ca2ba619e938"
+          },
+          ".agents/evidence/M1-feasibility-verification.md": {
+            "mode": "100644",
+            "object_id": "b059c501a13bbfe8037c5a401c251b94e30d8fe4"
+          },
+          ".agents/plans/G1-consistency-hardening.md": {
+            "mode": "100644",
+            "object_id": "a371486eaf564cf62503c6a2de683888e09b3b9d"
+          },
+          ".agents/plans/M00-bootstrap.md": {
+            "mode": "100644",
+            "object_id": "9a546c32e71394fb65b0dceb44d8b3a9db44a5aa"
+          },
+          ".agents/plans/M01-ale-feasibility.md": {
+            "mode": "100644",
+            "object_id": "314df312e52236255ef946d2732ce3edc4b5d726"
+          },
+          ".agents/skills/export-review-bundle/SKILL.md": {
+            "mode": "100644",
+            "object_id": "9c94b136d7f6b78a99ffcdda780b2a20d712678d"
+          },
+          ".agents/state/BLOCKERS.md": {
+            "mode": "100644",
+            "object_id": "be19cf39a083f8f1e7a3baba6bb72ecf0d3a5979"
+          },
+          ".agents/state/VERIFIED_FINDINGS.md": {
+            "mode": "100644",
+            "object_id": "dd77edff4fbb98a37538816c6244954c45d7d834"
+          },
+          ".agents/tasks/BACKLOG.yaml": {
+            "mode": "100644",
+            "object_id": "0ce4ce1ede67572340b8e4b31c377502e374f50b"
+          },
+          ".gitignore": {
+            "mode": "100644",
+            "object_id": "1f47241035421aa3dd73732d084b533e3fad7763"
+          },
+          ".python-version": {
+            "mode": "100644",
+            "object_id": "e4fba2183587225f216eeada4c78dfab6b2e65f5"
+          },
+          "AGENTS.md": {
+            "mode": "100644",
+            "object_id": "1aff494964fb5b9844f29589a53b83c2b6489e51"
+          },
+          "README.md": {
+            "mode": "100644",
+            "object_id": "c64740f9ac205eaac873da341d5c9079bc4b09f4"
+          },
+          "atari-videochess-rl-roadmap.html": {
+            "mode": "100644",
+            "object_id": "78f34984b1f10c9921974a96c8648112876017fa"
+          },
+          "docs/01-foundation/PROJECT_OVERVIEW.md": {
+            "mode": "100644",
+            "object_id": "6131db7cb1ebe66ed6f903c2cde0dcec64ec1795"
+          },
+          "docs/01-foundation/REQUIREMENTS.md": {
+            "mode": "100644",
+            "object_id": "d9e049eb9f7aa9664cc65499d023ef88ed7b3ad5"
+          },
+          "docs/01-foundation/ROADMAP.md": {
+            "mode": "100644",
+            "object_id": "3d6517b186feb24fb95702fffefc1a568266bf37"
+          },
+          "docs/02-management/EXECUTION_PLAN.md": {
+            "mode": "100644",
+            "object_id": "57cc25116b0657cb910a00c88fc04dba51ba9621"
+          },
+          "docs/02-management/RISK_REGISTER.md": {
+            "mode": "100644",
+            "object_id": "489ef9a0ee129697b8cfccc064de96070ac04f55"
+          },
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
+            "mode": "100644",
+            "object_id": "97db1a054605b8aa3c94697a75f2ebf1d80d3e5e"
+          },
+          "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": {
+            "mode": "100644",
+            "object_id": "f55f247d052a6278688154302f958a86cf1edb27"
+          },
+          "docs/05-operations/SETUP.md": {
+            "mode": "100644",
+            "object_id": "8255761d45367521f6428aece17d882807055146"
+          },
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": {
+            "mode": "100644",
+            "object_id": "47e4cb03e6067424f07f6fa2c543869a5e96c3f2"
+          },
+          "docs/06-quality/TEST_STRATEGY.md": {
+            "mode": "100644",
+            "object_id": "c34f1127de21eec8d185a84d0c549a9658829506"
+          },
+          "pyproject.toml": {
+            "mode": "100644",
+            "object_id": "af61e2b43ca0e55def303fd48d797285119d0c70"
+          },
+          "scripts/agent_checkpoint.py": {
+            "mode": "100644",
+            "object_id": "6f4f0ca28dbc837dce01ab788903c2e43a58b1d8"
+          },
+          "scripts/agent_preflight.py": {
+            "mode": "100644",
+            "object_id": "322932885074db6e8dc5a098a90dd96de393e760"
+          },
+          "scripts/export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "5fe121a545a759d487af574bd67c32b25f1fbd8f"
+          },
+          "scripts/run_m1_demo.py": {
+            "mode": "100644",
+            "object_id": "cd7e704dbae92a9d084988cf94267162a7168f17"
+          },
+          "tests/fixtures/g1-recovery-baseline.json": {
+            "mode": "100644",
+            "object_id": "e6bad6a18ef49b42487ef8c388d803e16b7a64e3"
+          },
+          "tests/test_agent_context.py": {
+            "mode": "100644",
+            "object_id": "44a4cc26566bd2b2659a0f385fe727c512400aad"
+          },
+          "tests/test_export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "7e36d44e58d292afd40ce951ab87f006ae17be47"
+          },
+          "tests/test_m0_smoke.py": {
+            "mode": "100644",
+            "object_id": "06fc374a092bb537b521656c195a90db48f6f1ab"
+          },
+          "tests/test_m1_ale_integration.py": {
+            "mode": "100644",
+            "object_id": "191496cfc6b48a28cc0d8773e952165fc046b8c5"
+          },
+          "tests/test_m1_control.py": {
+            "mode": "100644",
+            "object_id": "4af757c047b250c9fb4f09eb89803cc782b0293e"
+          },
+          "tests/test_m1_environment.py": {
+            "mode": "100644",
+            "object_id": "2f2ae4dd2ee61ef03ca48f03860ec1e3b04be05e"
+          },
+          "tests/test_m1_shadow.py": {
+            "mode": "100644",
+            "object_id": "92f05c1caa2ab9e63348006f2ae752fca0aa254a"
+          },
+          "tests/test_m1_vision.py": {
+            "mode": "100644",
+            "object_id": "7eb39c62a97e4216569fff0086104b0238dbc282"
+          },
+          "uv.lock": {
+            "mode": "100644",
+            "object_id": "a122403ed28fba3956a138b886e5d65791e1c516"
+          },
+          "videochess_rl/__init__.py": {
+            "mode": "100644",
+            "object_id": "1dd9a23ede9e748cc14d9da2ad7b7f0b4f1fde98"
+          },
+          "videochess_rl/controller.py": {
+            "mode": "100644",
+            "object_id": "d187bb608d795a1e8fe92b812b009f7b21b0dc5c"
+          },
+          "videochess_rl/demo.py": {
+            "mode": "100644",
+            "object_id": "1d9afd1e2e45f60614cd54f71355c282ff25f4ae"
+          },
+          "videochess_rl/environment.py": {
+            "mode": "100644",
+            "object_id": "5617ef3abf556ce16e23210b6b855a79debd4efa"
+          },
+          "videochess_rl/shadow.py": {
+            "mode": "100644",
+            "object_id": "8f0ea99ceee29d72342c4b66c4ac2b680f7ad6da"
+          },
+          "videochess_rl/vision.py": {
+            "mode": "100644",
+            "object_id": "ecfb43d2998fd165a982e426559edd03fda39695"
+          }
+        },
+        "manifest_sha256": "73db4c802d07617e229bd3d0fa317799f911dc742c336c32db9d5595853e7115",
+        "state_sha256": "638efd0312a936ed7f131e70109fa1cf44d660168608ae9206e98b05d4a4d2f4",
+        "handoff_sha256": "a5e6e3aaabc832f56da9a64e795ca6112673c3b2d3a4f08de7f2578c637ed4b3"
+      }
+    },
+    {
+      "id": "cp-dd67267f-20261015T090519402007Z",
+      "created_at_utc": "2026-10-15T09:05:19Z",
+      "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
+      "workspace_git": {
+        "scope": "workspace",
+        "branch": "initial-idea",
+        "head": "dd67267ff85670c674d0d6d08c129ce10692798f",
+        "status_entries": [
+          " M .agents/state/PROJECT_STATE.yaml",
+          " M .agents/state/SESSION_HANDOFF.md",
+          "?? main.py",
+          "A  .agents/evidence/M1-04-experiment-budget.md"
+        ],
+        "status_sha256": "6328951626503b9f5ff32c9c2f784dfc5414ad06829735929e86f12978c9b62b",
+        "repo_file_hashes": {
+          ".gitignore": "1828249263215f6182229194dd1c662907d115310da5ca5a0c65ad207ed2ae3c",
+          ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+          "AGENTS.md": "d37ebbe8fdb94fabe7c039d8b89c3beaa36584d6d5eb09934f714941129463cd",
+          "README.md": "b56bd7410a2c90c559ad5fd52a6a78065bee4d2d54856d6677af4b0200746dce",
+          "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+          "main.py": "c101b2abfee28217d24a7c550eda37cffe548adfc9149244646199108361c0fe",
+          "pyproject.toml": "7be065e3664844a7774e9d85c4eabb06526e427e4e3e9f2f8e52f090fd600cc8",
+          "uv.lock": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+          ".agents/PLANS.md": "ed50b3ccc51cbe29123630c5069ab2d00f7428751ca67f1e64bd15558bd044d2",
+          ".agents/evidence/G1-10-recovery-verification.md": "39e05a96034d4eaa4f22f0dec72670afacbd9b48bcfcc41ed81f8a718d3a5f65",
+          ".agents/evidence/G1-git-baseline-verification.md": "13772b3438b30d440baac4caeeceb564017a5216ea9409d7b9412390d4b96f65",
+          ".agents/evidence/G1-hardening-verification.md": "0963f26840d2c393525fd10bba32f13e5ff3a51210a87d3d731b2ba96bd09380",
+          ".agents/evidence/G1-portability-consistency-verification.md": "f1fa95b9c2e7415ff0ff8a9e452920f7c8a29c77ea3ce3fabfc77fb744b7ad0e",
+          ".agents/evidence/M0-001-verification.md": "1f0dfba9ba36a3ce03f21e951e0af4a1b53d3b3b26970dd0c3aaaab76aaa3333",
+          ".agents/evidence/M0-acceptance.md": "089a86c5e50c0e5be698dff2dbc83643c58968b883e03c6e5c85b3d5cad28f14",
+          ".agents/evidence/M0-authorization.md": "2e7f62983b98cc79e1d25168da031bf2269c7364d8551956d41744a91ed58205",
+          ".agents/evidence/M0-final-technical-verification.md": "b64899752217a9fe55ae1a646ebb7b694956cb2164f804bbe2f47ff6340ca9c3",
+          ".agents/evidence/M0-finalization-verification.md": "9202f9c41518eb448efaac49ffbcee4cd2384c0435ebcca21fb31843a1d6f7b8",
+          ".agents/evidence/M1-04-experiment-budget.md": "afaa9507dc253ebfda48b920370160f41e82534dc5a5f17b814c34768773755f",
+          ".agents/evidence/M1-authorization.md": "9985e9917dc8fe938b2c48c23da4868334b98d2a7bc2eba7f5a72b9a1a32d117",
+          ".agents/evidence/M1-feasibility-verification.md": "f61e52a1d51e14a87702c50e736389ed34c042fcbc0ddbbe62bbfa5f92e54eb2",
+          ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
+          ".agents/plans/M00-bootstrap.md": "9c7b045f7efd20c60f01e2b23224ccac12d7a659699f0f43e6bc1ff286671f7f",
+          ".agents/plans/M01-ale-feasibility.md": "65ad3f04c34ab8751509ee0303f1cd772c5f83e980ac9b4b7d2b336a7cfbd5bb",
+          ".agents/review-bundles/M0-working-tree-20261014T184343213544Z.zip": "e888fa48c1d9662a8d63ce8af141f29b7a9a8ac4578fc3f25858660a0b07d345",
+          ".agents/review-bundles/M0-working-tree-20261014T184649013533Z.zip": "c705ea19971683c1526645552288ca377f11f2dcf101250319d8a12086535fd3",
+          ".agents/review-bundles/M0-working-tree-20261014T192404457787Z.zip": "3f846aa17591d879da385b833225f059db6dc0b9df5c992e33236ca66d35b7fd",
+          ".agents/review-bundles/M1-staged-20261015T082948737608Z.zip": "68b710ef07bb36a2b656795f3ee295c0d2759e02c4dbf2e6002a6f074f50dfb4",
+          ".agents/review-bundles/export_review_bundle-staged-20261014T210535155205Z.zip": "2b50a6b35606d61e1d3f6ee3a156791b38cd294c626533101f103603c172ebd4",
+          ".agents/review-bundles/export_review_bundle-working-tree-20261014T210537795808Z.zip": "5606106ef43267add13d83478778b47f08e3916fa6cf07e2940e9a03e2b274e2",
+          ".agents/skills/export-review-bundle/SKILL.md": "02623443e4833824a7c2606e5d4cb9ea1d79e0b5d8c436741933978142932942",
+          ".agents/state/BLOCKERS.md": "b40fe4963b5e69160a4a6871d14c028e367ea19e922f9feee25740864b04550e",
+          ".agents/state/SESSION_HANDOFF.md": "8ec755f02eb336cfafaae34c85b0df64187c5fd727b7ae158df0bb02e3765bee",
+          ".agents/state/VERIFIED_FINDINGS.md": "df59c2db9652e2e0f56b3e00ad01482b31c93db3a664adba6358af5ec3671d7b",
+          ".agents/tasks/BACKLOG.yaml": "e0ebae87940ef89c6862e7dff37acc524ff0a3da9b6ccf75d21b20887feffc8d",
+          "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
+          "docs/01-foundation/REQUIREMENTS.md": "4aa8f91e830459f513ff47d4afa09341c5fdcebcb26eca4f45f0d5c67e4f344c",
+          "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
+          "docs/02-management/EXECUTION_PLAN.md": "a71a322a1b68b011ce28a1222fca328837803341ed3366848f10d467d1192535",
+          "docs/02-management/RISK_REGISTER.md": "2d3a3fef7062377c6479048992bae3e3ec0a9cc880a883bb1e57f24473c00ab8",
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
+          "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": "1fa120468ec2a983b64bc69a9092ec0212719092953116c9df2886f795892324",
+          "docs/05-operations/SETUP.md": "05776d5f0e9bcf5931807fbbcca46ae583d37f25ebaf116308572f6874025a89",
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": "395741bc505bbc0c0dd3fcb63187f198303e538c064da32fc58c9389e93373a5",
+          "docs/06-quality/TEST_STRATEGY.md": "bce1ac5aacc8445f6a3bc80b8f3af82b7101e49f08ff12d43a2e9489af107cd8",
+          "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
+          "scripts/agent_preflight.py": "7f24cf19f659603f2d96907eae790f1df07ff8212cfc321db2f4c47e641f026e",
+          "scripts/export_review_bundle.py": "7ed9a3a22dc2435f157840ad710f6fb8af183118830acb0b91cdbe47fa2930c0",
+          "scripts/run_m1_demo.py": "885c83435efe3009d0eea85098879c311062a8f39459ec18850ba1dc5e605ef0",
+          "tests/test_agent_context.py": "ee3c6a272cf0e21cfc459b3c8ebe1e372fb70fe1a7f4735c2a36c2b531a7faab",
+          "tests/test_export_review_bundle.py": "3d9684586b76aa73f794b936b336f8529237f1797cfe19645cc64ce74239db6c",
+          "tests/test_m0_smoke.py": "ba6303fc4c6b9f06b03bb1259a8084083c595b278e163d7f1ca710ef7bf77594",
+          "tests/test_m1_ale_integration.py": "da508d0aff6f01841036435cca4b6a397e12a1b0a3c7ed2c41abf0bebe46eddd",
+          "tests/test_m1_control.py": "be8ec1573e5fe2920c9df4e847fa679d70c987ed9cec74db05580b797aafb7fc",
+          "tests/test_m1_environment.py": "427eeba8bc7672e3c8ce811906b5a746a7852893b53b1025df9bae468d75c5b3",
+          "tests/test_m1_shadow.py": "64862adb1b6af8a2f9d6b29cd8babf26c8dc4694b79e22226e8e168601f07178",
+          "tests/test_m1_vision.py": "0273ddabe79ec09f1525d62ae03c6d0f04214ec4aeb90f53ad0f0aa919cd1a85",
+          "tests/fixtures/g1-recovery-baseline.json": "a48deb7bbd5f1a67e21c66b4f5feec22c08f169b6dcc3d44b89248a30a8aa0df",
+          "videochess_rl/__init__.py": "6288a2698f98216834cce812d32cd8ecc95da5a2bdce96ebf891c22b1d30e009",
+          "videochess_rl/controller.py": "23ae39ddb40e24a930d49c9f3d796491598820efae93d6124cebf417c8d0df41",
+          "videochess_rl/demo.py": "0b1428a74353db4c72fa972b75d68ab8ce7f0e7b081f0ef26e6743c6e3daf090",
+          "videochess_rl/environment.py": "e00047d0f046d994f230712797d5b3b85264b73815301ef498b3b12aeb86dcff",
+          "videochess_rl/shadow.py": "64ad1fb411c0b8f1c0becc0d9427d87f5badc1976a88ea460d0cc071260208d7",
+          "videochess_rl/vision.py": "4e2f69dead40987e1c2d6d1dfa3671c80951adafd06b6a87cb223acf81c09592"
+        },
+        "unhashed_large_files": [],
+        "unreadable_files": [],
+        "artifact_dirs_requiring_manifest": [
+          "artifacts"
+        ],
+        "excluded_directories": [
+          ".git",
+          ".venv",
+          "artifacts",
+          "scripts/__pycache__",
+          "tests/__pycache__",
+          "videochess_rl/__pycache__"
+        ],
+        "excluded_symlink_files": 0
+      },
+      "portable_git": {
+        "format_version": 1,
+        "tracked_manifest": {
+          ".agents/PLANS.md": {
+            "mode": "100644",
+            "object_id": "1c1b78d477af82837465daf21c1de62c32c07c84"
+          },
+          ".agents/evidence/G1-10-recovery-verification.md": {
+            "mode": "100644",
+            "object_id": "6ff27d51b9cf51803d8ca8c863066253ae6297bc"
+          },
+          ".agents/evidence/G1-git-baseline-verification.md": {
+            "mode": "100644",
+            "object_id": "c3c79107166243fe35ae2d8e9f270b8a46e0ffe9"
+          },
+          ".agents/evidence/G1-hardening-verification.md": {
+            "mode": "100644",
+            "object_id": "949549fa06ad46bc3076ac462e7ccba7cdc70fbf"
+          },
+          ".agents/evidence/G1-portability-consistency-verification.md": {
+            "mode": "100644",
+            "object_id": "5120604c17c3a481431701154d2783058ff78dcd"
+          },
+          ".agents/evidence/M0-001-verification.md": {
+            "mode": "100644",
+            "object_id": "0899b37e78e7244661bebb1fcea242bc66114e57"
+          },
+          ".agents/evidence/M0-acceptance.md": {
+            "mode": "100644",
+            "object_id": "99c6b35c927fc0eea29dad671ba59744e52c6644"
+          },
+          ".agents/evidence/M0-authorization.md": {
+            "mode": "100644",
+            "object_id": "4682598c5d00e2e9f0cb8f0a46171cdcc6de748a"
+          },
+          ".agents/evidence/M0-final-technical-verification.md": {
+            "mode": "100644",
+            "object_id": "219fa2bb8620f94faf680d956d1042d714ac9c94"
+          },
+          ".agents/evidence/M0-finalization-verification.md": {
+            "mode": "100644",
+            "object_id": "ba82a757f3cf0075d28c5435dd866dda2d7f34aa"
+          },
+          ".agents/evidence/M1-04-experiment-budget.md": {
+            "mode": "100644",
+            "object_id": "5931b9252efd2c01885eb7b3f8b7f910d3cc4cfb"
+          },
+          ".agents/evidence/M1-authorization.md": {
+            "mode": "100644",
+            "object_id": "07d0ac7de9ec5ef4f29d1a02ed83ca2ba619e938"
+          },
+          ".agents/evidence/M1-feasibility-verification.md": {
+            "mode": "100644",
+            "object_id": "b059c501a13bbfe8037c5a401c251b94e30d8fe4"
+          },
+          ".agents/plans/G1-consistency-hardening.md": {
+            "mode": "100644",
+            "object_id": "a371486eaf564cf62503c6a2de683888e09b3b9d"
+          },
+          ".agents/plans/M00-bootstrap.md": {
+            "mode": "100644",
+            "object_id": "9a546c32e71394fb65b0dceb44d8b3a9db44a5aa"
+          },
+          ".agents/plans/M01-ale-feasibility.md": {
+            "mode": "100644",
+            "object_id": "314df312e52236255ef946d2732ce3edc4b5d726"
+          },
+          ".agents/skills/export-review-bundle/SKILL.md": {
+            "mode": "100644",
+            "object_id": "9c94b136d7f6b78a99ffcdda780b2a20d712678d"
+          },
+          ".agents/state/BLOCKERS.md": {
+            "mode": "100644",
+            "object_id": "be19cf39a083f8f1e7a3baba6bb72ecf0d3a5979"
+          },
+          ".agents/state/VERIFIED_FINDINGS.md": {
+            "mode": "100644",
+            "object_id": "dd77edff4fbb98a37538816c6244954c45d7d834"
+          },
+          ".agents/tasks/BACKLOG.yaml": {
+            "mode": "100644",
+            "object_id": "0ce4ce1ede67572340b8e4b31c377502e374f50b"
+          },
+          ".gitignore": {
+            "mode": "100644",
+            "object_id": "1f47241035421aa3dd73732d084b533e3fad7763"
+          },
+          ".python-version": {
+            "mode": "100644",
+            "object_id": "e4fba2183587225f216eeada4c78dfab6b2e65f5"
+          },
+          "AGENTS.md": {
+            "mode": "100644",
+            "object_id": "1aff494964fb5b9844f29589a53b83c2b6489e51"
+          },
+          "README.md": {
+            "mode": "100644",
+            "object_id": "c64740f9ac205eaac873da341d5c9079bc4b09f4"
+          },
+          "atari-videochess-rl-roadmap.html": {
+            "mode": "100644",
+            "object_id": "78f34984b1f10c9921974a96c8648112876017fa"
+          },
+          "docs/01-foundation/PROJECT_OVERVIEW.md": {
+            "mode": "100644",
+            "object_id": "6131db7cb1ebe66ed6f903c2cde0dcec64ec1795"
+          },
+          "docs/01-foundation/REQUIREMENTS.md": {
+            "mode": "100644",
+            "object_id": "d9e049eb9f7aa9664cc65499d023ef88ed7b3ad5"
+          },
+          "docs/01-foundation/ROADMAP.md": {
+            "mode": "100644",
+            "object_id": "3d6517b186feb24fb95702fffefc1a568266bf37"
+          },
+          "docs/02-management/EXECUTION_PLAN.md": {
+            "mode": "100644",
+            "object_id": "57cc25116b0657cb910a00c88fc04dba51ba9621"
+          },
+          "docs/02-management/RISK_REGISTER.md": {
+            "mode": "100644",
+            "object_id": "489ef9a0ee129697b8cfccc064de96070ac04f55"
+          },
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
+            "mode": "100644",
+            "object_id": "97db1a054605b8aa3c94697a75f2ebf1d80d3e5e"
+          },
+          "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": {
+            "mode": "100644",
+            "object_id": "f55f247d052a6278688154302f958a86cf1edb27"
+          },
+          "docs/05-operations/SETUP.md": {
+            "mode": "100644",
+            "object_id": "8255761d45367521f6428aece17d882807055146"
+          },
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": {
+            "mode": "100644",
+            "object_id": "47e4cb03e6067424f07f6fa2c543869a5e96c3f2"
+          },
+          "docs/06-quality/TEST_STRATEGY.md": {
+            "mode": "100644",
+            "object_id": "c34f1127de21eec8d185a84d0c549a9658829506"
+          },
+          "pyproject.toml": {
+            "mode": "100644",
+            "object_id": "af61e2b43ca0e55def303fd48d797285119d0c70"
+          },
+          "scripts/agent_checkpoint.py": {
+            "mode": "100644",
+            "object_id": "6f4f0ca28dbc837dce01ab788903c2e43a58b1d8"
+          },
+          "scripts/agent_preflight.py": {
+            "mode": "100644",
+            "object_id": "322932885074db6e8dc5a098a90dd96de393e760"
+          },
+          "scripts/export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "5fe121a545a759d487af574bd67c32b25f1fbd8f"
+          },
+          "scripts/run_m1_demo.py": {
+            "mode": "100644",
+            "object_id": "cd7e704dbae92a9d084988cf94267162a7168f17"
+          },
+          "tests/fixtures/g1-recovery-baseline.json": {
+            "mode": "100644",
+            "object_id": "e6bad6a18ef49b42487ef8c388d803e16b7a64e3"
+          },
+          "tests/test_agent_context.py": {
+            "mode": "100644",
+            "object_id": "44a4cc26566bd2b2659a0f385fe727c512400aad"
+          },
+          "tests/test_export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "7e36d44e58d292afd40ce951ab87f006ae17be47"
+          },
+          "tests/test_m0_smoke.py": {
+            "mode": "100644",
+            "object_id": "06fc374a092bb537b521656c195a90db48f6f1ab"
+          },
+          "tests/test_m1_ale_integration.py": {
+            "mode": "100644",
+            "object_id": "191496cfc6b48a28cc0d8773e952165fc046b8c5"
+          },
+          "tests/test_m1_control.py": {
+            "mode": "100644",
+            "object_id": "4af757c047b250c9fb4f09eb89803cc782b0293e"
+          },
+          "tests/test_m1_environment.py": {
+            "mode": "100644",
+            "object_id": "2f2ae4dd2ee61ef03ca48f03860ec1e3b04be05e"
+          },
+          "tests/test_m1_shadow.py": {
+            "mode": "100644",
+            "object_id": "92f05c1caa2ab9e63348006f2ae752fca0aa254a"
+          },
+          "tests/test_m1_vision.py": {
+            "mode": "100644",
+            "object_id": "7eb39c62a97e4216569fff0086104b0238dbc282"
+          },
+          "uv.lock": {
+            "mode": "100644",
+            "object_id": "a122403ed28fba3956a138b886e5d65791e1c516"
+          },
+          "videochess_rl/__init__.py": {
+            "mode": "100644",
+            "object_id": "1dd9a23ede9e748cc14d9da2ad7b7f0b4f1fde98"
+          },
+          "videochess_rl/controller.py": {
+            "mode": "100644",
+            "object_id": "d187bb608d795a1e8fe92b812b009f7b21b0dc5c"
+          },
+          "videochess_rl/demo.py": {
+            "mode": "100644",
+            "object_id": "1d9afd1e2e45f60614cd54f71355c282ff25f4ae"
+          },
+          "videochess_rl/environment.py": {
+            "mode": "100644",
+            "object_id": "5617ef3abf556ce16e23210b6b855a79debd4efa"
+          },
+          "videochess_rl/shadow.py": {
+            "mode": "100644",
+            "object_id": "8f0ea99ceee29d72342c4b66c4ac2b680f7ad6da"
+          },
+          "videochess_rl/vision.py": {
+            "mode": "100644",
+            "object_id": "ecfb43d2998fd165a982e426559edd03fda39695"
+          }
+        },
+        "manifest_sha256": "8a706dbfbfda4240fd7829780f93a8b024afa34af83c657a8b99c91e9b8d9e01",
+        "state_sha256": "c9b94da260ea9bb93be09d05492119e7d5679f9987de99fce355a04b4482f1a5",
+        "handoff_sha256": "8ec755f02eb336cfafaae34c85b0df64187c5fd727b7ae158df0bb02e3765bee"
+      }
+    },
+    {
+      "id": "cp-dd67267f-20261015T094606986206Z",
+      "created_at_utc": "2026-10-15T09:46:07Z",
+      "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
+      "workspace_git": {
+        "scope": "workspace",
+        "branch": "initial-idea",
+        "head": "dd67267ff85670c674d0d6d08c129ce10692798f",
+        "status_entries": [
+          " M tests/test_m1_ale_integration.py",
+          " M tests/test_m1_control.py",
+          " M tests/test_m1_shadow.py",
+          " M tests/test_m1_vision.py",
+          " M videochess_rl/controller.py",
+          " M videochess_rl/demo.py",
+          " M videochess_rl/shadow.py",
+          " M videochess_rl/vision.py",
+          "?? main.py",
+          "?? scripts/run_m1_terminal_experiment.py",
+          "?? tests/test_m1_episode.py",
+          "?? videochess_rl/episode.py",
+          "A  .agents/evidence/M1-04-experiment-budget.md",
+          "MM .agents/state/PROJECT_STATE.yaml",
+          "MM .agents/state/SESSION_HANDOFF.md"
+        ],
+        "status_sha256": "2a154c4f36c6e441cc1d3dc362483646954d669efc39beb1aae76f6da887c8c4",
+        "repo_file_hashes": {
+          ".gitignore": "1828249263215f6182229194dd1c662907d115310da5ca5a0c65ad207ed2ae3c",
+          ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+          "AGENTS.md": "d37ebbe8fdb94fabe7c039d8b89c3beaa36584d6d5eb09934f714941129463cd",
+          "README.md": "b56bd7410a2c90c559ad5fd52a6a78065bee4d2d54856d6677af4b0200746dce",
+          "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+          "main.py": "c101b2abfee28217d24a7c550eda37cffe548adfc9149244646199108361c0fe",
+          "pyproject.toml": "7be065e3664844a7774e9d85c4eabb06526e427e4e3e9f2f8e52f090fd600cc8",
+          "uv.lock": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+          ".agents/PLANS.md": "ed50b3ccc51cbe29123630c5069ab2d00f7428751ca67f1e64bd15558bd044d2",
+          ".agents/evidence/G1-10-recovery-verification.md": "39e05a96034d4eaa4f22f0dec72670afacbd9b48bcfcc41ed81f8a718d3a5f65",
+          ".agents/evidence/G1-git-baseline-verification.md": "13772b3438b30d440baac4caeeceb564017a5216ea9409d7b9412390d4b96f65",
+          ".agents/evidence/G1-hardening-verification.md": "0963f26840d2c393525fd10bba32f13e5ff3a51210a87d3d731b2ba96bd09380",
+          ".agents/evidence/G1-portability-consistency-verification.md": "f1fa95b9c2e7415ff0ff8a9e452920f7c8a29c77ea3ce3fabfc77fb744b7ad0e",
+          ".agents/evidence/M0-001-verification.md": "1f0dfba9ba36a3ce03f21e951e0af4a1b53d3b3b26970dd0c3aaaab76aaa3333",
+          ".agents/evidence/M0-acceptance.md": "089a86c5e50c0e5be698dff2dbc83643c58968b883e03c6e5c85b3d5cad28f14",
+          ".agents/evidence/M0-authorization.md": "2e7f62983b98cc79e1d25168da031bf2269c7364d8551956d41744a91ed58205",
+          ".agents/evidence/M0-final-technical-verification.md": "b64899752217a9fe55ae1a646ebb7b694956cb2164f804bbe2f47ff6340ca9c3",
+          ".agents/evidence/M0-finalization-verification.md": "9202f9c41518eb448efaac49ffbcee4cd2384c0435ebcca21fb31843a1d6f7b8",
+          ".agents/evidence/M1-04-experiment-budget.md": "afaa9507dc253ebfda48b920370160f41e82534dc5a5f17b814c34768773755f",
+          ".agents/evidence/M1-authorization.md": "9985e9917dc8fe938b2c48c23da4868334b98d2a7bc2eba7f5a72b9a1a32d117",
+          ".agents/evidence/M1-feasibility-verification.md": "f61e52a1d51e14a87702c50e736389ed34c042fcbc0ddbbe62bbfa5f92e54eb2",
+          ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
+          ".agents/plans/M00-bootstrap.md": "9c7b045f7efd20c60f01e2b23224ccac12d7a659699f0f43e6bc1ff286671f7f",
+          ".agents/plans/M01-ale-feasibility.md": "65ad3f04c34ab8751509ee0303f1cd772c5f83e980ac9b4b7d2b336a7cfbd5bb",
+          ".agents/review-bundles/M0-working-tree-20261014T184343213544Z.zip": "e888fa48c1d9662a8d63ce8af141f29b7a9a8ac4578fc3f25858660a0b07d345",
+          ".agents/review-bundles/M0-working-tree-20261014T184649013533Z.zip": "c705ea19971683c1526645552288ca377f11f2dcf101250319d8a12086535fd3",
+          ".agents/review-bundles/M0-working-tree-20261014T192404457787Z.zip": "3f846aa17591d879da385b833225f059db6dc0b9df5c992e33236ca66d35b7fd",
+          ".agents/review-bundles/M1-staged-20261015T082948737608Z.zip": "68b710ef07bb36a2b656795f3ee295c0d2759e02c4dbf2e6002a6f074f50dfb4",
+          ".agents/review-bundles/export_review_bundle-staged-20261014T210535155205Z.zip": "2b50a6b35606d61e1d3f6ee3a156791b38cd294c626533101f103603c172ebd4",
+          ".agents/review-bundles/export_review_bundle-working-tree-20261014T210537795808Z.zip": "5606106ef43267add13d83478778b47f08e3916fa6cf07e2940e9a03e2b274e2",
+          ".agents/skills/export-review-bundle/SKILL.md": "02623443e4833824a7c2606e5d4cb9ea1d79e0b5d8c436741933978142932942",
+          ".agents/state/BLOCKERS.md": "b40fe4963b5e69160a4a6871d14c028e367ea19e922f9feee25740864b04550e",
+          ".agents/state/SESSION_HANDOFF.md": "f259b5cf522c7c95cefe1900d0ac9952e6d45d613c8a7b817b782f66ac1e7103",
+          ".agents/state/VERIFIED_FINDINGS.md": "df59c2db9652e2e0f56b3e00ad01482b31c93db3a664adba6358af5ec3671d7b",
+          ".agents/tasks/BACKLOG.yaml": "e0ebae87940ef89c6862e7dff37acc524ff0a3da9b6ccf75d21b20887feffc8d",
+          "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
+          "docs/01-foundation/REQUIREMENTS.md": "4aa8f91e830459f513ff47d4afa09341c5fdcebcb26eca4f45f0d5c67e4f344c",
+          "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
+          "docs/02-management/EXECUTION_PLAN.md": "a71a322a1b68b011ce28a1222fca328837803341ed3366848f10d467d1192535",
+          "docs/02-management/RISK_REGISTER.md": "2d3a3fef7062377c6479048992bae3e3ec0a9cc880a883bb1e57f24473c00ab8",
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
+          "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": "1fa120468ec2a983b64bc69a9092ec0212719092953116c9df2886f795892324",
+          "docs/05-operations/SETUP.md": "05776d5f0e9bcf5931807fbbcca46ae583d37f25ebaf116308572f6874025a89",
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": "395741bc505bbc0c0dd3fcb63187f198303e538c064da32fc58c9389e93373a5",
+          "docs/06-quality/TEST_STRATEGY.md": "bce1ac5aacc8445f6a3bc80b8f3af82b7101e49f08ff12d43a2e9489af107cd8",
+          "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
+          "scripts/agent_preflight.py": "7f24cf19f659603f2d96907eae790f1df07ff8212cfc321db2f4c47e641f026e",
+          "scripts/export_review_bundle.py": "7ed9a3a22dc2435f157840ad710f6fb8af183118830acb0b91cdbe47fa2930c0",
+          "scripts/run_m1_demo.py": "885c83435efe3009d0eea85098879c311062a8f39459ec18850ba1dc5e605ef0",
+          "scripts/run_m1_terminal_experiment.py": "de4f4eb48826e3808faf2ea595ae03afe43bbc8d15fa3e64d637f19c5db9252e",
+          "tests/test_agent_context.py": "ee3c6a272cf0e21cfc459b3c8ebe1e372fb70fe1a7f4735c2a36c2b531a7faab",
+          "tests/test_export_review_bundle.py": "3d9684586b76aa73f794b936b336f8529237f1797cfe19645cc64ce74239db6c",
+          "tests/test_m0_smoke.py": "ba6303fc4c6b9f06b03bb1259a8084083c595b278e163d7f1ca710ef7bf77594",
+          "tests/test_m1_ale_integration.py": "d7ac8f2f65adbf1787e940f6fb67635e8e2491e15fd3bbebe6aa985bf309ab05",
+          "tests/test_m1_control.py": "f0f68cb0bce32d0821c08632f81a2b34920966023e2b8e6d6feba2e92bb77636",
+          "tests/test_m1_environment.py": "427eeba8bc7672e3c8ce811906b5a746a7852893b53b1025df9bae468d75c5b3",
+          "tests/test_m1_episode.py": "dde9a3e9ed109c15ad96c20cac2b406a83f110f431451dbb4bc25baa404b736d",
+          "tests/test_m1_shadow.py": "19bd94ca9eece7d4317788f08df85fe46911d706a43665a437c6596446e99ffc",
+          "tests/test_m1_vision.py": "e36315af24d76e89027f3eeb2b46a3740615d3c03fff3172365531eaa2b8f11c",
+          "tests/fixtures/g1-recovery-baseline.json": "a48deb7bbd5f1a67e21c66b4f5feec22c08f169b6dcc3d44b89248a30a8aa0df",
+          "videochess_rl/__init__.py": "6288a2698f98216834cce812d32cd8ecc95da5a2bdce96ebf891c22b1d30e009",
+          "videochess_rl/controller.py": "4130082a3bcda0109521b91fd18c5e8020fefa4b6a06d685ee68401d10a2f85d",
+          "videochess_rl/demo.py": "221d4327433d2a877c215e9bd474009e938c07d6df19cc0dcd34f24765df3c37",
+          "videochess_rl/environment.py": "e00047d0f046d994f230712797d5b3b85264b73815301ef498b3b12aeb86dcff",
+          "videochess_rl/episode.py": "34271e8c2c46b1988143194f37555a6e24832b1bc31e83997e11fe07ee86726e",
+          "videochess_rl/shadow.py": "b342062ce2a6e176ed872d90ecbab584c5f0fb4bc0bb057b6d007694ac7d5149",
+          "videochess_rl/vision.py": "8f3a3b0a142bb91e3f7cd58dd29a596a01982f03cd7324929638a1fa5811b770"
+        },
+        "unhashed_large_files": [],
+        "unreadable_files": [],
+        "artifact_dirs_requiring_manifest": [
+          "artifacts"
+        ],
+        "excluded_directories": [
+          ".git",
+          ".venv",
+          "artifacts",
+          "scripts/__pycache__",
+          "tests/__pycache__",
+          "videochess_rl/__pycache__"
+        ],
+        "excluded_symlink_files": 0
+      },
+      "portable_git": {
+        "format_version": 1,
+        "tracked_manifest": {
+          ".agents/PLANS.md": {
+            "mode": "100644",
+            "object_id": "1c1b78d477af82837465daf21c1de62c32c07c84"
+          },
+          ".agents/evidence/G1-10-recovery-verification.md": {
+            "mode": "100644",
+            "object_id": "6ff27d51b9cf51803d8ca8c863066253ae6297bc"
+          },
+          ".agents/evidence/G1-git-baseline-verification.md": {
+            "mode": "100644",
+            "object_id": "c3c79107166243fe35ae2d8e9f270b8a46e0ffe9"
+          },
+          ".agents/evidence/G1-hardening-verification.md": {
+            "mode": "100644",
+            "object_id": "949549fa06ad46bc3076ac462e7ccba7cdc70fbf"
+          },
+          ".agents/evidence/G1-portability-consistency-verification.md": {
+            "mode": "100644",
+            "object_id": "5120604c17c3a481431701154d2783058ff78dcd"
+          },
+          ".agents/evidence/M0-001-verification.md": {
+            "mode": "100644",
+            "object_id": "0899b37e78e7244661bebb1fcea242bc66114e57"
+          },
+          ".agents/evidence/M0-acceptance.md": {
+            "mode": "100644",
+            "object_id": "99c6b35c927fc0eea29dad671ba59744e52c6644"
+          },
+          ".agents/evidence/M0-authorization.md": {
+            "mode": "100644",
+            "object_id": "4682598c5d00e2e9f0cb8f0a46171cdcc6de748a"
+          },
+          ".agents/evidence/M0-final-technical-verification.md": {
+            "mode": "100644",
+            "object_id": "219fa2bb8620f94faf680d956d1042d714ac9c94"
+          },
+          ".agents/evidence/M0-finalization-verification.md": {
+            "mode": "100644",
+            "object_id": "ba82a757f3cf0075d28c5435dd866dda2d7f34aa"
+          },
+          ".agents/evidence/M1-04-experiment-budget.md": {
+            "mode": "100644",
+            "object_id": "5931b9252efd2c01885eb7b3f8b7f910d3cc4cfb"
+          },
+          ".agents/evidence/M1-authorization.md": {
+            "mode": "100644",
+            "object_id": "07d0ac7de9ec5ef4f29d1a02ed83ca2ba619e938"
+          },
+          ".agents/evidence/M1-feasibility-verification.md": {
+            "mode": "100644",
+            "object_id": "b059c501a13bbfe8037c5a401c251b94e30d8fe4"
+          },
+          ".agents/plans/G1-consistency-hardening.md": {
+            "mode": "100644",
+            "object_id": "a371486eaf564cf62503c6a2de683888e09b3b9d"
+          },
+          ".agents/plans/M00-bootstrap.md": {
+            "mode": "100644",
+            "object_id": "9a546c32e71394fb65b0dceb44d8b3a9db44a5aa"
+          },
+          ".agents/plans/M01-ale-feasibility.md": {
+            "mode": "100644",
+            "object_id": "314df312e52236255ef946d2732ce3edc4b5d726"
+          },
+          ".agents/skills/export-review-bundle/SKILL.md": {
+            "mode": "100644",
+            "object_id": "9c94b136d7f6b78a99ffcdda780b2a20d712678d"
+          },
+          ".agents/state/BLOCKERS.md": {
+            "mode": "100644",
+            "object_id": "be19cf39a083f8f1e7a3baba6bb72ecf0d3a5979"
+          },
+          ".agents/state/VERIFIED_FINDINGS.md": {
+            "mode": "100644",
+            "object_id": "dd77edff4fbb98a37538816c6244954c45d7d834"
+          },
+          ".agents/tasks/BACKLOG.yaml": {
+            "mode": "100644",
+            "object_id": "0ce4ce1ede67572340b8e4b31c377502e374f50b"
+          },
+          ".gitignore": {
+            "mode": "100644",
+            "object_id": "1f47241035421aa3dd73732d084b533e3fad7763"
+          },
+          ".python-version": {
+            "mode": "100644",
+            "object_id": "e4fba2183587225f216eeada4c78dfab6b2e65f5"
+          },
+          "AGENTS.md": {
+            "mode": "100644",
+            "object_id": "1aff494964fb5b9844f29589a53b83c2b6489e51"
+          },
+          "README.md": {
+            "mode": "100644",
+            "object_id": "c64740f9ac205eaac873da341d5c9079bc4b09f4"
+          },
+          "atari-videochess-rl-roadmap.html": {
+            "mode": "100644",
+            "object_id": "78f34984b1f10c9921974a96c8648112876017fa"
+          },
+          "docs/01-foundation/PROJECT_OVERVIEW.md": {
+            "mode": "100644",
+            "object_id": "6131db7cb1ebe66ed6f903c2cde0dcec64ec1795"
+          },
+          "docs/01-foundation/REQUIREMENTS.md": {
+            "mode": "100644",
+            "object_id": "d9e049eb9f7aa9664cc65499d023ef88ed7b3ad5"
+          },
+          "docs/01-foundation/ROADMAP.md": {
+            "mode": "100644",
+            "object_id": "3d6517b186feb24fb95702fffefc1a568266bf37"
+          },
+          "docs/02-management/EXECUTION_PLAN.md": {
+            "mode": "100644",
+            "object_id": "57cc25116b0657cb910a00c88fc04dba51ba9621"
+          },
+          "docs/02-management/RISK_REGISTER.md": {
+            "mode": "100644",
+            "object_id": "489ef9a0ee129697b8cfccc064de96070ac04f55"
+          },
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
+            "mode": "100644",
+            "object_id": "97db1a054605b8aa3c94697a75f2ebf1d80d3e5e"
+          },
+          "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": {
+            "mode": "100644",
+            "object_id": "f55f247d052a6278688154302f958a86cf1edb27"
+          },
+          "docs/05-operations/SETUP.md": {
+            "mode": "100644",
+            "object_id": "8255761d45367521f6428aece17d882807055146"
+          },
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": {
+            "mode": "100644",
+            "object_id": "47e4cb03e6067424f07f6fa2c543869a5e96c3f2"
+          },
+          "docs/06-quality/TEST_STRATEGY.md": {
+            "mode": "100644",
+            "object_id": "c34f1127de21eec8d185a84d0c549a9658829506"
+          },
+          "pyproject.toml": {
+            "mode": "100644",
+            "object_id": "af61e2b43ca0e55def303fd48d797285119d0c70"
+          },
+          "scripts/agent_checkpoint.py": {
+            "mode": "100644",
+            "object_id": "6f4f0ca28dbc837dce01ab788903c2e43a58b1d8"
+          },
+          "scripts/agent_preflight.py": {
+            "mode": "100644",
+            "object_id": "322932885074db6e8dc5a098a90dd96de393e760"
+          },
+          "scripts/export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "5fe121a545a759d487af574bd67c32b25f1fbd8f"
+          },
+          "scripts/run_m1_demo.py": {
+            "mode": "100644",
+            "object_id": "cd7e704dbae92a9d084988cf94267162a7168f17"
+          },
+          "tests/fixtures/g1-recovery-baseline.json": {
+            "mode": "100644",
+            "object_id": "e6bad6a18ef49b42487ef8c388d803e16b7a64e3"
+          },
+          "tests/test_agent_context.py": {
+            "mode": "100644",
+            "object_id": "44a4cc26566bd2b2659a0f385fe727c512400aad"
+          },
+          "tests/test_export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "7e36d44e58d292afd40ce951ab87f006ae17be47"
+          },
+          "tests/test_m0_smoke.py": {
+            "mode": "100644",
+            "object_id": "06fc374a092bb537b521656c195a90db48f6f1ab"
+          },
+          "tests/test_m1_ale_integration.py": {
+            "mode": "100644",
+            "object_id": "191496cfc6b48a28cc0d8773e952165fc046b8c5"
+          },
+          "tests/test_m1_control.py": {
+            "mode": "100644",
+            "object_id": "4af757c047b250c9fb4f09eb89803cc782b0293e"
+          },
+          "tests/test_m1_environment.py": {
+            "mode": "100644",
+            "object_id": "2f2ae4dd2ee61ef03ca48f03860ec1e3b04be05e"
+          },
+          "tests/test_m1_shadow.py": {
+            "mode": "100644",
+            "object_id": "92f05c1caa2ab9e63348006f2ae752fca0aa254a"
+          },
+          "tests/test_m1_vision.py": {
+            "mode": "100644",
+            "object_id": "7eb39c62a97e4216569fff0086104b0238dbc282"
+          },
+          "uv.lock": {
+            "mode": "100644",
+            "object_id": "a122403ed28fba3956a138b886e5d65791e1c516"
+          },
+          "videochess_rl/__init__.py": {
+            "mode": "100644",
+            "object_id": "1dd9a23ede9e748cc14d9da2ad7b7f0b4f1fde98"
+          },
+          "videochess_rl/controller.py": {
+            "mode": "100644",
+            "object_id": "d187bb608d795a1e8fe92b812b009f7b21b0dc5c"
+          },
+          "videochess_rl/demo.py": {
+            "mode": "100644",
+            "object_id": "1d9afd1e2e45f60614cd54f71355c282ff25f4ae"
+          },
+          "videochess_rl/environment.py": {
+            "mode": "100644",
+            "object_id": "5617ef3abf556ce16e23210b6b855a79debd4efa"
+          },
+          "videochess_rl/shadow.py": {
+            "mode": "100644",
+            "object_id": "8f0ea99ceee29d72342c4b66c4ac2b680f7ad6da"
+          },
+          "videochess_rl/vision.py": {
+            "mode": "100644",
+            "object_id": "ecfb43d2998fd165a982e426559edd03fda39695"
+          }
+        },
+        "manifest_sha256": "8a706dbfbfda4240fd7829780f93a8b024afa34af83c657a8b99c91e9b8d9e01",
+        "state_sha256": "dc2fd9f269710f5e3399e1ec8f6859263eb2c177fd13bb8df639b1f81e96685b",
+        "handoff_sha256": "f259b5cf522c7c95cefe1900d0ac9952e6d45d613c8a7b817b782f66ac1e7103"
+      }
+    },
+    {
+      "id": "cp-dd67267f-20261015T101338477281Z",
+      "created_at_utc": "2026-10-15T10:13:38Z",
+      "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
+      "workspace_git": {
+        "scope": "workspace",
+        "branch": "initial-idea",
+        "head": "dd67267ff85670c674d0d6d08c129ce10692798f",
+        "status_entries": [
+          " M tests/test_m1_ale_integration.py",
+          " M tests/test_m1_control.py",
+          " M tests/test_m1_shadow.py",
+          " M tests/test_m1_vision.py",
+          " M videochess_rl/controller.py",
+          " M videochess_rl/demo.py",
+          " M videochess_rl/shadow.py",
+          " M videochess_rl/vision.py",
+          "?? main.py",
+          "?? scripts/run_m1_terminal_experiment.py",
+          "?? tests/test_m1_episode.py",
+          "?? videochess_rl/episode.py",
+          "A  .agents/evidence/M1-04-experiment-budget.md",
+          "MM .agents/state/PROJECT_STATE.yaml",
+          "MM .agents/state/SESSION_HANDOFF.md"
+        ],
+        "status_sha256": "2a154c4f36c6e441cc1d3dc362483646954d669efc39beb1aae76f6da887c8c4",
+        "repo_file_hashes": {
+          ".gitignore": "1828249263215f6182229194dd1c662907d115310da5ca5a0c65ad207ed2ae3c",
+          ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+          "AGENTS.md": "d37ebbe8fdb94fabe7c039d8b89c3beaa36584d6d5eb09934f714941129463cd",
+          "README.md": "b56bd7410a2c90c559ad5fd52a6a78065bee4d2d54856d6677af4b0200746dce",
+          "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+          "main.py": "c101b2abfee28217d24a7c550eda37cffe548adfc9149244646199108361c0fe",
+          "pyproject.toml": "7be065e3664844a7774e9d85c4eabb06526e427e4e3e9f2f8e52f090fd600cc8",
+          "uv.lock": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+          ".agents/PLANS.md": "ed50b3ccc51cbe29123630c5069ab2d00f7428751ca67f1e64bd15558bd044d2",
+          ".agents/evidence/G1-10-recovery-verification.md": "39e05a96034d4eaa4f22f0dec72670afacbd9b48bcfcc41ed81f8a718d3a5f65",
+          ".agents/evidence/G1-git-baseline-verification.md": "13772b3438b30d440baac4caeeceb564017a5216ea9409d7b9412390d4b96f65",
+          ".agents/evidence/G1-hardening-verification.md": "0963f26840d2c393525fd10bba32f13e5ff3a51210a87d3d731b2ba96bd09380",
+          ".agents/evidence/G1-portability-consistency-verification.md": "f1fa95b9c2e7415ff0ff8a9e452920f7c8a29c77ea3ce3fabfc77fb744b7ad0e",
+          ".agents/evidence/M0-001-verification.md": "1f0dfba9ba36a3ce03f21e951e0af4a1b53d3b3b26970dd0c3aaaab76aaa3333",
+          ".agents/evidence/M0-acceptance.md": "089a86c5e50c0e5be698dff2dbc83643c58968b883e03c6e5c85b3d5cad28f14",
+          ".agents/evidence/M0-authorization.md": "2e7f62983b98cc79e1d25168da031bf2269c7364d8551956d41744a91ed58205",
+          ".agents/evidence/M0-final-technical-verification.md": "b64899752217a9fe55ae1a646ebb7b694956cb2164f804bbe2f47ff6340ca9c3",
+          ".agents/evidence/M0-finalization-verification.md": "9202f9c41518eb448efaac49ffbcee4cd2384c0435ebcca21fb31843a1d6f7b8",
+          ".agents/evidence/M1-04-experiment-budget.md": "afaa9507dc253ebfda48b920370160f41e82534dc5a5f17b814c34768773755f",
+          ".agents/evidence/M1-authorization.md": "9985e9917dc8fe938b2c48c23da4868334b98d2a7bc2eba7f5a72b9a1a32d117",
+          ".agents/evidence/M1-feasibility-verification.md": "f61e52a1d51e14a87702c50e736389ed34c042fcbc0ddbbe62bbfa5f92e54eb2",
+          ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
+          ".agents/plans/M00-bootstrap.md": "9c7b045f7efd20c60f01e2b23224ccac12d7a659699f0f43e6bc1ff286671f7f",
+          ".agents/plans/M01-ale-feasibility.md": "65ad3f04c34ab8751509ee0303f1cd772c5f83e980ac9b4b7d2b336a7cfbd5bb",
+          ".agents/review-bundles/M0-working-tree-20261014T184343213544Z.zip": "e888fa48c1d9662a8d63ce8af141f29b7a9a8ac4578fc3f25858660a0b07d345",
+          ".agents/review-bundles/M0-working-tree-20261014T184649013533Z.zip": "c705ea19971683c1526645552288ca377f11f2dcf101250319d8a12086535fd3",
+          ".agents/review-bundles/M0-working-tree-20261014T192404457787Z.zip": "3f846aa17591d879da385b833225f059db6dc0b9df5c992e33236ca66d35b7fd",
+          ".agents/review-bundles/M1-staged-20261015T082948737608Z.zip": "68b710ef07bb36a2b656795f3ee295c0d2759e02c4dbf2e6002a6f074f50dfb4",
+          ".agents/review-bundles/export_review_bundle-staged-20261014T210535155205Z.zip": "2b50a6b35606d61e1d3f6ee3a156791b38cd294c626533101f103603c172ebd4",
+          ".agents/review-bundles/export_review_bundle-working-tree-20261014T210537795808Z.zip": "5606106ef43267add13d83478778b47f08e3916fa6cf07e2940e9a03e2b274e2",
+          ".agents/skills/export-review-bundle/SKILL.md": "02623443e4833824a7c2606e5d4cb9ea1d79e0b5d8c436741933978142932942",
+          ".agents/state/BLOCKERS.md": "b40fe4963b5e69160a4a6871d14c028e367ea19e922f9feee25740864b04550e",
+          ".agents/state/SESSION_HANDOFF.md": "46009fc1be92f299b4503ebe87cf150b8377eb2ec717abd10aa666cb131e69ca",
+          ".agents/state/VERIFIED_FINDINGS.md": "df59c2db9652e2e0f56b3e00ad01482b31c93db3a664adba6358af5ec3671d7b",
+          ".agents/tasks/BACKLOG.yaml": "e0ebae87940ef89c6862e7dff37acc524ff0a3da9b6ccf75d21b20887feffc8d",
+          "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
+          "docs/01-foundation/REQUIREMENTS.md": "4aa8f91e830459f513ff47d4afa09341c5fdcebcb26eca4f45f0d5c67e4f344c",
+          "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
+          "docs/02-management/EXECUTION_PLAN.md": "a71a322a1b68b011ce28a1222fca328837803341ed3366848f10d467d1192535",
+          "docs/02-management/RISK_REGISTER.md": "2d3a3fef7062377c6479048992bae3e3ec0a9cc880a883bb1e57f24473c00ab8",
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
+          "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": "1fa120468ec2a983b64bc69a9092ec0212719092953116c9df2886f795892324",
+          "docs/05-operations/SETUP.md": "05776d5f0e9bcf5931807fbbcca46ae583d37f25ebaf116308572f6874025a89",
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": "395741bc505bbc0c0dd3fcb63187f198303e538c064da32fc58c9389e93373a5",
+          "docs/06-quality/TEST_STRATEGY.md": "bce1ac5aacc8445f6a3bc80b8f3af82b7101e49f08ff12d43a2e9489af107cd8",
+          "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
+          "scripts/agent_preflight.py": "7f24cf19f659603f2d96907eae790f1df07ff8212cfc321db2f4c47e641f026e",
+          "scripts/export_review_bundle.py": "7ed9a3a22dc2435f157840ad710f6fb8af183118830acb0b91cdbe47fa2930c0",
+          "scripts/run_m1_demo.py": "885c83435efe3009d0eea85098879c311062a8f39459ec18850ba1dc5e605ef0",
+          "scripts/run_m1_terminal_experiment.py": "de4f4eb48826e3808faf2ea595ae03afe43bbc8d15fa3e64d637f19c5db9252e",
+          "tests/test_agent_context.py": "ee3c6a272cf0e21cfc459b3c8ebe1e372fb70fe1a7f4735c2a36c2b531a7faab",
+          "tests/test_export_review_bundle.py": "3d9684586b76aa73f794b936b336f8529237f1797cfe19645cc64ce74239db6c",
+          "tests/test_m0_smoke.py": "ba6303fc4c6b9f06b03bb1259a8084083c595b278e163d7f1ca710ef7bf77594",
+          "tests/test_m1_ale_integration.py": "d7ac8f2f65adbf1787e940f6fb67635e8e2491e15fd3bbebe6aa985bf309ab05",
+          "tests/test_m1_control.py": "ab06294343b80650a1592c107556f1655ef515ecc5d254adf0e6c0f18f6aea24",
+          "tests/test_m1_environment.py": "427eeba8bc7672e3c8ce811906b5a746a7852893b53b1025df9bae468d75c5b3",
+          "tests/test_m1_episode.py": "6f41ac30def658c8276c100ed8a77809458988a4d6ad6d800344623069445ac8",
+          "tests/test_m1_shadow.py": "19bd94ca9eece7d4317788f08df85fe46911d706a43665a437c6596446e99ffc",
+          "tests/test_m1_vision.py": "e36315af24d76e89027f3eeb2b46a3740615d3c03fff3172365531eaa2b8f11c",
+          "tests/fixtures/g1-recovery-baseline.json": "a48deb7bbd5f1a67e21c66b4f5feec22c08f169b6dcc3d44b89248a30a8aa0df",
+          "videochess_rl/__init__.py": "6288a2698f98216834cce812d32cd8ecc95da5a2bdce96ebf891c22b1d30e009",
+          "videochess_rl/controller.py": "bd68e1bf492f03fe6f9d597689865d0682dcccc40e242c84adfc1293c66ae0a3",
+          "videochess_rl/demo.py": "221d4327433d2a877c215e9bd474009e938c07d6df19cc0dcd34f24765df3c37",
+          "videochess_rl/environment.py": "e00047d0f046d994f230712797d5b3b85264b73815301ef498b3b12aeb86dcff",
+          "videochess_rl/episode.py": "a47ad23c9f79547daecbef7f88bc627bc2cfc2e88794c5544ea5c8962508b005",
+          "videochess_rl/shadow.py": "b342062ce2a6e176ed872d90ecbab584c5f0fb4bc0bb057b6d007694ac7d5149",
+          "videochess_rl/vision.py": "8f3a3b0a142bb91e3f7cd58dd29a596a01982f03cd7324929638a1fa5811b770"
+        },
+        "unhashed_large_files": [],
+        "unreadable_files": [],
+        "artifact_dirs_requiring_manifest": [
+          "artifacts"
+        ],
+        "excluded_directories": [
+          ".git",
+          ".venv",
+          "artifacts",
+          "scripts/__pycache__",
+          "tests/__pycache__",
+          "videochess_rl/__pycache__"
+        ],
+        "excluded_symlink_files": 0
+      },
+      "portable_git": {
+        "format_version": 1,
+        "tracked_manifest": {
+          ".agents/PLANS.md": {
+            "mode": "100644",
+            "object_id": "1c1b78d477af82837465daf21c1de62c32c07c84"
+          },
+          ".agents/evidence/G1-10-recovery-verification.md": {
+            "mode": "100644",
+            "object_id": "6ff27d51b9cf51803d8ca8c863066253ae6297bc"
+          },
+          ".agents/evidence/G1-git-baseline-verification.md": {
+            "mode": "100644",
+            "object_id": "c3c79107166243fe35ae2d8e9f270b8a46e0ffe9"
+          },
+          ".agents/evidence/G1-hardening-verification.md": {
+            "mode": "100644",
+            "object_id": "949549fa06ad46bc3076ac462e7ccba7cdc70fbf"
+          },
+          ".agents/evidence/G1-portability-consistency-verification.md": {
+            "mode": "100644",
+            "object_id": "5120604c17c3a481431701154d2783058ff78dcd"
+          },
+          ".agents/evidence/M0-001-verification.md": {
+            "mode": "100644",
+            "object_id": "0899b37e78e7244661bebb1fcea242bc66114e57"
+          },
+          ".agents/evidence/M0-acceptance.md": {
+            "mode": "100644",
+            "object_id": "99c6b35c927fc0eea29dad671ba59744e52c6644"
+          },
+          ".agents/evidence/M0-authorization.md": {
+            "mode": "100644",
+            "object_id": "4682598c5d00e2e9f0cb8f0a46171cdcc6de748a"
+          },
+          ".agents/evidence/M0-final-technical-verification.md": {
+            "mode": "100644",
+            "object_id": "219fa2bb8620f94faf680d956d1042d714ac9c94"
+          },
+          ".agents/evidence/M0-finalization-verification.md": {
+            "mode": "100644",
+            "object_id": "ba82a757f3cf0075d28c5435dd866dda2d7f34aa"
+          },
+          ".agents/evidence/M1-04-experiment-budget.md": {
+            "mode": "100644",
+            "object_id": "5931b9252efd2c01885eb7b3f8b7f910d3cc4cfb"
+          },
+          ".agents/evidence/M1-authorization.md": {
+            "mode": "100644",
+            "object_id": "07d0ac7de9ec5ef4f29d1a02ed83ca2ba619e938"
+          },
+          ".agents/evidence/M1-feasibility-verification.md": {
+            "mode": "100644",
+            "object_id": "b059c501a13bbfe8037c5a401c251b94e30d8fe4"
+          },
+          ".agents/plans/G1-consistency-hardening.md": {
+            "mode": "100644",
+            "object_id": "a371486eaf564cf62503c6a2de683888e09b3b9d"
+          },
+          ".agents/plans/M00-bootstrap.md": {
+            "mode": "100644",
+            "object_id": "9a546c32e71394fb65b0dceb44d8b3a9db44a5aa"
+          },
+          ".agents/plans/M01-ale-feasibility.md": {
+            "mode": "100644",
+            "object_id": "314df312e52236255ef946d2732ce3edc4b5d726"
+          },
+          ".agents/skills/export-review-bundle/SKILL.md": {
+            "mode": "100644",
+            "object_id": "9c94b136d7f6b78a99ffcdda780b2a20d712678d"
+          },
+          ".agents/state/BLOCKERS.md": {
+            "mode": "100644",
+            "object_id": "be19cf39a083f8f1e7a3baba6bb72ecf0d3a5979"
+          },
+          ".agents/state/VERIFIED_FINDINGS.md": {
+            "mode": "100644",
+            "object_id": "dd77edff4fbb98a37538816c6244954c45d7d834"
+          },
+          ".agents/tasks/BACKLOG.yaml": {
+            "mode": "100644",
+            "object_id": "0ce4ce1ede67572340b8e4b31c377502e374f50b"
+          },
+          ".gitignore": {
+            "mode": "100644",
+            "object_id": "1f47241035421aa3dd73732d084b533e3fad7763"
+          },
+          ".python-version": {
+            "mode": "100644",
+            "object_id": "e4fba2183587225f216eeada4c78dfab6b2e65f5"
+          },
+          "AGENTS.md": {
+            "mode": "100644",
+            "object_id": "1aff494964fb5b9844f29589a53b83c2b6489e51"
+          },
+          "README.md": {
+            "mode": "100644",
+            "object_id": "c64740f9ac205eaac873da341d5c9079bc4b09f4"
+          },
+          "atari-videochess-rl-roadmap.html": {
+            "mode": "100644",
+            "object_id": "78f34984b1f10c9921974a96c8648112876017fa"
+          },
+          "docs/01-foundation/PROJECT_OVERVIEW.md": {
+            "mode": "100644",
+            "object_id": "6131db7cb1ebe66ed6f903c2cde0dcec64ec1795"
+          },
+          "docs/01-foundation/REQUIREMENTS.md": {
+            "mode": "100644",
+            "object_id": "d9e049eb9f7aa9664cc65499d023ef88ed7b3ad5"
+          },
+          "docs/01-foundation/ROADMAP.md": {
+            "mode": "100644",
+            "object_id": "3d6517b186feb24fb95702fffefc1a568266bf37"
+          },
+          "docs/02-management/EXECUTION_PLAN.md": {
+            "mode": "100644",
+            "object_id": "57cc25116b0657cb910a00c88fc04dba51ba9621"
+          },
+          "docs/02-management/RISK_REGISTER.md": {
+            "mode": "100644",
+            "object_id": "489ef9a0ee129697b8cfccc064de96070ac04f55"
+          },
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
+            "mode": "100644",
+            "object_id": "97db1a054605b8aa3c94697a75f2ebf1d80d3e5e"
+          },
+          "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": {
+            "mode": "100644",
+            "object_id": "f55f247d052a6278688154302f958a86cf1edb27"
+          },
+          "docs/05-operations/SETUP.md": {
+            "mode": "100644",
+            "object_id": "8255761d45367521f6428aece17d882807055146"
+          },
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": {
+            "mode": "100644",
+            "object_id": "47e4cb03e6067424f07f6fa2c543869a5e96c3f2"
+          },
+          "docs/06-quality/TEST_STRATEGY.md": {
+            "mode": "100644",
+            "object_id": "c34f1127de21eec8d185a84d0c549a9658829506"
+          },
+          "pyproject.toml": {
+            "mode": "100644",
+            "object_id": "af61e2b43ca0e55def303fd48d797285119d0c70"
+          },
+          "scripts/agent_checkpoint.py": {
+            "mode": "100644",
+            "object_id": "6f4f0ca28dbc837dce01ab788903c2e43a58b1d8"
+          },
+          "scripts/agent_preflight.py": {
+            "mode": "100644",
+            "object_id": "322932885074db6e8dc5a098a90dd96de393e760"
+          },
+          "scripts/export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "5fe121a545a759d487af574bd67c32b25f1fbd8f"
+          },
+          "scripts/run_m1_demo.py": {
+            "mode": "100644",
+            "object_id": "cd7e704dbae92a9d084988cf94267162a7168f17"
+          },
+          "tests/fixtures/g1-recovery-baseline.json": {
+            "mode": "100644",
+            "object_id": "e6bad6a18ef49b42487ef8c388d803e16b7a64e3"
+          },
+          "tests/test_agent_context.py": {
+            "mode": "100644",
+            "object_id": "44a4cc26566bd2b2659a0f385fe727c512400aad"
+          },
+          "tests/test_export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "7e36d44e58d292afd40ce951ab87f006ae17be47"
+          },
+          "tests/test_m0_smoke.py": {
+            "mode": "100644",
+            "object_id": "06fc374a092bb537b521656c195a90db48f6f1ab"
+          },
+          "tests/test_m1_ale_integration.py": {
+            "mode": "100644",
+            "object_id": "191496cfc6b48a28cc0d8773e952165fc046b8c5"
+          },
+          "tests/test_m1_control.py": {
+            "mode": "100644",
+            "object_id": "4af757c047b250c9fb4f09eb89803cc782b0293e"
+          },
+          "tests/test_m1_environment.py": {
+            "mode": "100644",
+            "object_id": "2f2ae4dd2ee61ef03ca48f03860ec1e3b04be05e"
+          },
+          "tests/test_m1_shadow.py": {
+            "mode": "100644",
+            "object_id": "92f05c1caa2ab9e63348006f2ae752fca0aa254a"
+          },
+          "tests/test_m1_vision.py": {
+            "mode": "100644",
+            "object_id": "7eb39c62a97e4216569fff0086104b0238dbc282"
+          },
+          "uv.lock": {
+            "mode": "100644",
+            "object_id": "a122403ed28fba3956a138b886e5d65791e1c516"
+          },
+          "videochess_rl/__init__.py": {
+            "mode": "100644",
+            "object_id": "1dd9a23ede9e748cc14d9da2ad7b7f0b4f1fde98"
+          },
+          "videochess_rl/controller.py": {
+            "mode": "100644",
+            "object_id": "d187bb608d795a1e8fe92b812b009f7b21b0dc5c"
+          },
+          "videochess_rl/demo.py": {
+            "mode": "100644",
+            "object_id": "1d9afd1e2e45f60614cd54f71355c282ff25f4ae"
+          },
+          "videochess_rl/environment.py": {
+            "mode": "100644",
+            "object_id": "5617ef3abf556ce16e23210b6b855a79debd4efa"
+          },
+          "videochess_rl/shadow.py": {
+            "mode": "100644",
+            "object_id": "8f0ea99ceee29d72342c4b66c4ac2b680f7ad6da"
+          },
+          "videochess_rl/vision.py": {
+            "mode": "100644",
+            "object_id": "ecfb43d2998fd165a982e426559edd03fda39695"
+          }
+        },
+        "manifest_sha256": "8a706dbfbfda4240fd7829780f93a8b024afa34af83c657a8b99c91e9b8d9e01",
+        "state_sha256": "3787e4c8866c2f7724a956d9ac22bdb1ba5a8b0fe5bb1319a846b10d8a66f91f",
+        "handoff_sha256": "46009fc1be92f299b4503ebe87cf150b8377eb2ec717abd10aa666cb131e69ca"
+      }
+    },
+    {
+      "id": "cp-dd67267f-20261015T102644531118Z",
+      "created_at_utc": "2026-10-15T10:26:44Z",
+      "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
+      "workspace_git": {
+        "scope": "workspace",
+        "branch": "initial-idea",
+        "head": "dd67267ff85670c674d0d6d08c129ce10692798f",
+        "status_entries": [
+          " M .agents/evidence/M1-feasibility-verification.md",
+          " M .agents/state/BLOCKERS.md",
+          " M .agents/state/VERIFIED_FINDINGS.md",
+          " M .agents/tasks/BACKLOG.yaml",
+          " M docs/02-management/RISK_REGISTER.md",
+          " M docs/05-operations/M1-ALE-REPRODUCIBILITY.md",
+          " M docs/06-quality/TEST_STRATEGY.md",
+          " M tests/test_m1_ale_integration.py",
+          " M tests/test_m1_control.py",
+          " M tests/test_m1_environment.py",
+          " M tests/test_m1_shadow.py",
+          " M tests/test_m1_vision.py",
+          " M videochess_rl/controller.py",
+          " M videochess_rl/demo.py",
+          " M videochess_rl/shadow.py",
+          " M videochess_rl/vision.py",
+          "?? .agents/evidence/M1-04-terminal-verification.md",
+          "?? main.py",
+          "?? scripts/run_m1_terminal_experiment.py",
+          "?? tests/test_m1_episode.py",
+          "?? videochess_rl/episode.py",
+          "AM .agents/evidence/M1-04-experiment-budget.md",
+          "MM .agents/state/PROJECT_STATE.yaml",
+          "MM .agents/state/SESSION_HANDOFF.md"
+        ],
+        "status_sha256": "ddfcf895c60b2ebee11f61c92400dbb04af8ec80603f8fc491f7f45b1d20121c",
+        "repo_file_hashes": {
+          ".gitignore": "1828249263215f6182229194dd1c662907d115310da5ca5a0c65ad207ed2ae3c",
+          ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+          "AGENTS.md": "d37ebbe8fdb94fabe7c039d8b89c3beaa36584d6d5eb09934f714941129463cd",
+          "README.md": "b56bd7410a2c90c559ad5fd52a6a78065bee4d2d54856d6677af4b0200746dce",
+          "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+          "main.py": "c101b2abfee28217d24a7c550eda37cffe548adfc9149244646199108361c0fe",
+          "pyproject.toml": "7be065e3664844a7774e9d85c4eabb06526e427e4e3e9f2f8e52f090fd600cc8",
+          "uv.lock": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+          ".agents/PLANS.md": "ed50b3ccc51cbe29123630c5069ab2d00f7428751ca67f1e64bd15558bd044d2",
+          ".agents/evidence/G1-10-recovery-verification.md": "39e05a96034d4eaa4f22f0dec72670afacbd9b48bcfcc41ed81f8a718d3a5f65",
+          ".agents/evidence/G1-git-baseline-verification.md": "13772b3438b30d440baac4caeeceb564017a5216ea9409d7b9412390d4b96f65",
+          ".agents/evidence/G1-hardening-verification.md": "0963f26840d2c393525fd10bba32f13e5ff3a51210a87d3d731b2ba96bd09380",
+          ".agents/evidence/G1-portability-consistency-verification.md": "f1fa95b9c2e7415ff0ff8a9e452920f7c8a29c77ea3ce3fabfc77fb744b7ad0e",
+          ".agents/evidence/M0-001-verification.md": "1f0dfba9ba36a3ce03f21e951e0af4a1b53d3b3b26970dd0c3aaaab76aaa3333",
+          ".agents/evidence/M0-acceptance.md": "089a86c5e50c0e5be698dff2dbc83643c58968b883e03c6e5c85b3d5cad28f14",
+          ".agents/evidence/M0-authorization.md": "2e7f62983b98cc79e1d25168da031bf2269c7364d8551956d41744a91ed58205",
+          ".agents/evidence/M0-final-technical-verification.md": "b64899752217a9fe55ae1a646ebb7b694956cb2164f804bbe2f47ff6340ca9c3",
+          ".agents/evidence/M0-finalization-verification.md": "9202f9c41518eb448efaac49ffbcee4cd2384c0435ebcca21fb31843a1d6f7b8",
+          ".agents/evidence/M1-04-experiment-budget.md": "4eb17e35a3ba41a1220c9dca74e8f16ef8e4b4b16288533cd6597c8b60c7162e",
+          ".agents/evidence/M1-04-terminal-verification.md": "ecad8f1c694c2b9dc0a86905e99fc7499d9329bb5bc0b788abbab66028393def",
+          ".agents/evidence/M1-authorization.md": "9985e9917dc8fe938b2c48c23da4868334b98d2a7bc2eba7f5a72b9a1a32d117",
+          ".agents/evidence/M1-feasibility-verification.md": "f6e00c39778c44604c2422f959a12dfa22156bde784afaca824d350e3fa523e5",
+          ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
+          ".agents/plans/M00-bootstrap.md": "9c7b045f7efd20c60f01e2b23224ccac12d7a659699f0f43e6bc1ff286671f7f",
+          ".agents/plans/M01-ale-feasibility.md": "65ad3f04c34ab8751509ee0303f1cd772c5f83e980ac9b4b7d2b336a7cfbd5bb",
+          ".agents/review-bundles/M0-working-tree-20261014T184343213544Z.zip": "e888fa48c1d9662a8d63ce8af141f29b7a9a8ac4578fc3f25858660a0b07d345",
+          ".agents/review-bundles/M0-working-tree-20261014T184649013533Z.zip": "c705ea19971683c1526645552288ca377f11f2dcf101250319d8a12086535fd3",
+          ".agents/review-bundles/M0-working-tree-20261014T192404457787Z.zip": "3f846aa17591d879da385b833225f059db6dc0b9df5c992e33236ca66d35b7fd",
+          ".agents/review-bundles/M1-staged-20261015T082948737608Z.zip": "68b710ef07bb36a2b656795f3ee295c0d2759e02c4dbf2e6002a6f074f50dfb4",
+          ".agents/review-bundles/export_review_bundle-staged-20261014T210535155205Z.zip": "2b50a6b35606d61e1d3f6ee3a156791b38cd294c626533101f103603c172ebd4",
+          ".agents/review-bundles/export_review_bundle-working-tree-20261014T210537795808Z.zip": "5606106ef43267add13d83478778b47f08e3916fa6cf07e2940e9a03e2b274e2",
+          ".agents/skills/export-review-bundle/SKILL.md": "02623443e4833824a7c2606e5d4cb9ea1d79e0b5d8c436741933978142932942",
+          ".agents/state/BLOCKERS.md": "131f15716a6657d5a3cef0fe966b5547be52449ff434bc4464c211cf72b27923",
+          ".agents/state/SESSION_HANDOFF.md": "4931159dc07058ab740cecae6e2595ab00d5eb629966ba6828dcc066de7e9c85",
+          ".agents/state/VERIFIED_FINDINGS.md": "42cf451f95c8f67255eee6928726c91b107d1968037c094cb55057721333a374",
+          ".agents/tasks/BACKLOG.yaml": "3d0a6f10eafd777f45a055c03442e0b41a5b1ba53bcb0d48393b7892e1ca8705",
+          "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
+          "docs/01-foundation/REQUIREMENTS.md": "4aa8f91e830459f513ff47d4afa09341c5fdcebcb26eca4f45f0d5c67e4f344c",
+          "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
+          "docs/02-management/EXECUTION_PLAN.md": "a71a322a1b68b011ce28a1222fca328837803341ed3366848f10d467d1192535",
+          "docs/02-management/RISK_REGISTER.md": "47a9ceadeed7eae88d2c19f71ca98f991215433f1131309df29446159f55f52d",
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
+          "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": "ef68db68b75a0521b91ae109b7ea7cb462d87e131b25ef77969d568f76a06d88",
+          "docs/05-operations/SETUP.md": "05776d5f0e9bcf5931807fbbcca46ae583d37f25ebaf116308572f6874025a89",
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": "395741bc505bbc0c0dd3fcb63187f198303e538c064da32fc58c9389e93373a5",
+          "docs/06-quality/TEST_STRATEGY.md": "987bc0dd44e50f7097f1dbf334a413a13a92564b4761ef9bc52791e5cd2392e9",
+          "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
+          "scripts/agent_preflight.py": "7f24cf19f659603f2d96907eae790f1df07ff8212cfc321db2f4c47e641f026e",
+          "scripts/export_review_bundle.py": "7ed9a3a22dc2435f157840ad710f6fb8af183118830acb0b91cdbe47fa2930c0",
+          "scripts/run_m1_demo.py": "885c83435efe3009d0eea85098879c311062a8f39459ec18850ba1dc5e605ef0",
+          "scripts/run_m1_terminal_experiment.py": "de4f4eb48826e3808faf2ea595ae03afe43bbc8d15fa3e64d637f19c5db9252e",
+          "tests/test_agent_context.py": "ee3c6a272cf0e21cfc459b3c8ebe1e372fb70fe1a7f4735c2a36c2b531a7faab",
+          "tests/test_export_review_bundle.py": "3d9684586b76aa73f794b936b336f8529237f1797cfe19645cc64ce74239db6c",
+          "tests/test_m0_smoke.py": "ba6303fc4c6b9f06b03bb1259a8084083c595b278e163d7f1ca710ef7bf77594",
+          "tests/test_m1_ale_integration.py": "d7ac8f2f65adbf1787e940f6fb67635e8e2491e15fd3bbebe6aa985bf309ab05",
+          "tests/test_m1_control.py": "ab06294343b80650a1592c107556f1655ef515ecc5d254adf0e6c0f18f6aea24",
+          "tests/test_m1_environment.py": "62b80652d0dbe73f9342788ce1b0cdeac0e3748f23991e5635e202f80ced90c3",
+          "tests/test_m1_episode.py": "6f41ac30def658c8276c100ed8a77809458988a4d6ad6d800344623069445ac8",
+          "tests/test_m1_shadow.py": "19bd94ca9eece7d4317788f08df85fe46911d706a43665a437c6596446e99ffc",
+          "tests/test_m1_vision.py": "e36315af24d76e89027f3eeb2b46a3740615d3c03fff3172365531eaa2b8f11c",
+          "tests/fixtures/g1-recovery-baseline.json": "a48deb7bbd5f1a67e21c66b4f5feec22c08f169b6dcc3d44b89248a30a8aa0df",
+          "videochess_rl/__init__.py": "6288a2698f98216834cce812d32cd8ecc95da5a2bdce96ebf891c22b1d30e009",
+          "videochess_rl/controller.py": "bd68e1bf492f03fe6f9d597689865d0682dcccc40e242c84adfc1293c66ae0a3",
+          "videochess_rl/demo.py": "221d4327433d2a877c215e9bd474009e938c07d6df19cc0dcd34f24765df3c37",
+          "videochess_rl/environment.py": "e00047d0f046d994f230712797d5b3b85264b73815301ef498b3b12aeb86dcff",
+          "videochess_rl/episode.py": "a47ad23c9f79547daecbef7f88bc627bc2cfc2e88794c5544ea5c8962508b005",
+          "videochess_rl/shadow.py": "b342062ce2a6e176ed872d90ecbab584c5f0fb4bc0bb057b6d007694ac7d5149",
+          "videochess_rl/vision.py": "8f3a3b0a142bb91e3f7cd58dd29a596a01982f03cd7324929638a1fa5811b770"
+        },
+        "unhashed_large_files": [],
+        "unreadable_files": [],
+        "artifact_dirs_requiring_manifest": [
+          "artifacts"
+        ],
+        "excluded_directories": [
+          ".git",
+          ".venv",
+          "artifacts",
+          "scripts/__pycache__",
+          "tests/__pycache__",
+          "videochess_rl/__pycache__"
+        ],
+        "excluded_symlink_files": 0
+      },
+      "portable_git": {
+        "format_version": 1,
+        "tracked_manifest": {
+          ".agents/PLANS.md": {
+            "mode": "100644",
+            "object_id": "1c1b78d477af82837465daf21c1de62c32c07c84"
+          },
+          ".agents/evidence/G1-10-recovery-verification.md": {
+            "mode": "100644",
+            "object_id": "6ff27d51b9cf51803d8ca8c863066253ae6297bc"
+          },
+          ".agents/evidence/G1-git-baseline-verification.md": {
+            "mode": "100644",
+            "object_id": "c3c79107166243fe35ae2d8e9f270b8a46e0ffe9"
+          },
+          ".agents/evidence/G1-hardening-verification.md": {
+            "mode": "100644",
+            "object_id": "949549fa06ad46bc3076ac462e7ccba7cdc70fbf"
+          },
+          ".agents/evidence/G1-portability-consistency-verification.md": {
+            "mode": "100644",
+            "object_id": "5120604c17c3a481431701154d2783058ff78dcd"
+          },
+          ".agents/evidence/M0-001-verification.md": {
+            "mode": "100644",
+            "object_id": "0899b37e78e7244661bebb1fcea242bc66114e57"
+          },
+          ".agents/evidence/M0-acceptance.md": {
+            "mode": "100644",
+            "object_id": "99c6b35c927fc0eea29dad671ba59744e52c6644"
+          },
+          ".agents/evidence/M0-authorization.md": {
+            "mode": "100644",
+            "object_id": "4682598c5d00e2e9f0cb8f0a46171cdcc6de748a"
+          },
+          ".agents/evidence/M0-final-technical-verification.md": {
+            "mode": "100644",
+            "object_id": "219fa2bb8620f94faf680d956d1042d714ac9c94"
+          },
+          ".agents/evidence/M0-finalization-verification.md": {
+            "mode": "100644",
+            "object_id": "ba82a757f3cf0075d28c5435dd866dda2d7f34aa"
+          },
+          ".agents/evidence/M1-04-experiment-budget.md": {
+            "mode": "100644",
+            "object_id": "5931b9252efd2c01885eb7b3f8b7f910d3cc4cfb"
+          },
+          ".agents/evidence/M1-authorization.md": {
+            "mode": "100644",
+            "object_id": "07d0ac7de9ec5ef4f29d1a02ed83ca2ba619e938"
+          },
+          ".agents/evidence/M1-feasibility-verification.md": {
+            "mode": "100644",
+            "object_id": "b059c501a13bbfe8037c5a401c251b94e30d8fe4"
+          },
+          ".agents/plans/G1-consistency-hardening.md": {
+            "mode": "100644",
+            "object_id": "a371486eaf564cf62503c6a2de683888e09b3b9d"
+          },
+          ".agents/plans/M00-bootstrap.md": {
+            "mode": "100644",
+            "object_id": "9a546c32e71394fb65b0dceb44d8b3a9db44a5aa"
+          },
+          ".agents/plans/M01-ale-feasibility.md": {
+            "mode": "100644",
+            "object_id": "314df312e52236255ef946d2732ce3edc4b5d726"
+          },
+          ".agents/skills/export-review-bundle/SKILL.md": {
+            "mode": "100644",
+            "object_id": "9c94b136d7f6b78a99ffcdda780b2a20d712678d"
+          },
+          ".agents/state/BLOCKERS.md": {
+            "mode": "100644",
+            "object_id": "be19cf39a083f8f1e7a3baba6bb72ecf0d3a5979"
+          },
+          ".agents/state/VERIFIED_FINDINGS.md": {
+            "mode": "100644",
+            "object_id": "dd77edff4fbb98a37538816c6244954c45d7d834"
+          },
+          ".agents/tasks/BACKLOG.yaml": {
+            "mode": "100644",
+            "object_id": "0ce4ce1ede67572340b8e4b31c377502e374f50b"
+          },
+          ".gitignore": {
+            "mode": "100644",
+            "object_id": "1f47241035421aa3dd73732d084b533e3fad7763"
+          },
+          ".python-version": {
+            "mode": "100644",
+            "object_id": "e4fba2183587225f216eeada4c78dfab6b2e65f5"
+          },
+          "AGENTS.md": {
+            "mode": "100644",
+            "object_id": "1aff494964fb5b9844f29589a53b83c2b6489e51"
+          },
+          "README.md": {
+            "mode": "100644",
+            "object_id": "c64740f9ac205eaac873da341d5c9079bc4b09f4"
+          },
+          "atari-videochess-rl-roadmap.html": {
+            "mode": "100644",
+            "object_id": "78f34984b1f10c9921974a96c8648112876017fa"
+          },
+          "docs/01-foundation/PROJECT_OVERVIEW.md": {
+            "mode": "100644",
+            "object_id": "6131db7cb1ebe66ed6f903c2cde0dcec64ec1795"
+          },
+          "docs/01-foundation/REQUIREMENTS.md": {
+            "mode": "100644",
+            "object_id": "d9e049eb9f7aa9664cc65499d023ef88ed7b3ad5"
+          },
+          "docs/01-foundation/ROADMAP.md": {
+            "mode": "100644",
+            "object_id": "3d6517b186feb24fb95702fffefc1a568266bf37"
+          },
+          "docs/02-management/EXECUTION_PLAN.md": {
+            "mode": "100644",
+            "object_id": "57cc25116b0657cb910a00c88fc04dba51ba9621"
+          },
+          "docs/02-management/RISK_REGISTER.md": {
+            "mode": "100644",
+            "object_id": "489ef9a0ee129697b8cfccc064de96070ac04f55"
+          },
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
+            "mode": "100644",
+            "object_id": "97db1a054605b8aa3c94697a75f2ebf1d80d3e5e"
+          },
+          "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": {
+            "mode": "100644",
+            "object_id": "f55f247d052a6278688154302f958a86cf1edb27"
+          },
+          "docs/05-operations/SETUP.md": {
+            "mode": "100644",
+            "object_id": "8255761d45367521f6428aece17d882807055146"
+          },
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": {
+            "mode": "100644",
+            "object_id": "47e4cb03e6067424f07f6fa2c543869a5e96c3f2"
+          },
+          "docs/06-quality/TEST_STRATEGY.md": {
+            "mode": "100644",
+            "object_id": "c34f1127de21eec8d185a84d0c549a9658829506"
+          },
+          "pyproject.toml": {
+            "mode": "100644",
+            "object_id": "af61e2b43ca0e55def303fd48d797285119d0c70"
+          },
+          "scripts/agent_checkpoint.py": {
+            "mode": "100644",
+            "object_id": "6f4f0ca28dbc837dce01ab788903c2e43a58b1d8"
+          },
+          "scripts/agent_preflight.py": {
+            "mode": "100644",
+            "object_id": "322932885074db6e8dc5a098a90dd96de393e760"
+          },
+          "scripts/export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "5fe121a545a759d487af574bd67c32b25f1fbd8f"
+          },
+          "scripts/run_m1_demo.py": {
+            "mode": "100644",
+            "object_id": "cd7e704dbae92a9d084988cf94267162a7168f17"
+          },
+          "tests/fixtures/g1-recovery-baseline.json": {
+            "mode": "100644",
+            "object_id": "e6bad6a18ef49b42487ef8c388d803e16b7a64e3"
+          },
+          "tests/test_agent_context.py": {
+            "mode": "100644",
+            "object_id": "44a4cc26566bd2b2659a0f385fe727c512400aad"
+          },
+          "tests/test_export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "7e36d44e58d292afd40ce951ab87f006ae17be47"
+          },
+          "tests/test_m0_smoke.py": {
+            "mode": "100644",
+            "object_id": "06fc374a092bb537b521656c195a90db48f6f1ab"
+          },
+          "tests/test_m1_ale_integration.py": {
+            "mode": "100644",
+            "object_id": "191496cfc6b48a28cc0d8773e952165fc046b8c5"
+          },
+          "tests/test_m1_control.py": {
+            "mode": "100644",
+            "object_id": "4af757c047b250c9fb4f09eb89803cc782b0293e"
+          },
+          "tests/test_m1_environment.py": {
+            "mode": "100644",
+            "object_id": "2f2ae4dd2ee61ef03ca48f03860ec1e3b04be05e"
+          },
+          "tests/test_m1_shadow.py": {
+            "mode": "100644",
+            "object_id": "92f05c1caa2ab9e63348006f2ae752fca0aa254a"
+          },
+          "tests/test_m1_vision.py": {
+            "mode": "100644",
+            "object_id": "7eb39c62a97e4216569fff0086104b0238dbc282"
+          },
+          "uv.lock": {
+            "mode": "100644",
+            "object_id": "a122403ed28fba3956a138b886e5d65791e1c516"
+          },
+          "videochess_rl/__init__.py": {
+            "mode": "100644",
+            "object_id": "1dd9a23ede9e748cc14d9da2ad7b7f0b4f1fde98"
+          },
+          "videochess_rl/controller.py": {
+            "mode": "100644",
+            "object_id": "d187bb608d795a1e8fe92b812b009f7b21b0dc5c"
+          },
+          "videochess_rl/demo.py": {
+            "mode": "100644",
+            "object_id": "1d9afd1e2e45f60614cd54f71355c282ff25f4ae"
+          },
+          "videochess_rl/environment.py": {
+            "mode": "100644",
+            "object_id": "5617ef3abf556ce16e23210b6b855a79debd4efa"
+          },
+          "videochess_rl/shadow.py": {
+            "mode": "100644",
+            "object_id": "8f0ea99ceee29d72342c4b66c4ac2b680f7ad6da"
+          },
+          "videochess_rl/vision.py": {
+            "mode": "100644",
+            "object_id": "ecfb43d2998fd165a982e426559edd03fda39695"
+          }
+        },
+        "manifest_sha256": "8a706dbfbfda4240fd7829780f93a8b024afa34af83c657a8b99c91e9b8d9e01",
+        "state_sha256": "8717446bfe9b23fb39449d72d1dd109ca1bb77518639d206a52a0c4ae6076b43",
+        "handoff_sha256": "4931159dc07058ab740cecae6e2595ab00d5eb629966ba6828dcc066de7e9c85"
+      }
+    },
+    {
+      "id": "cp-dd67267f-20261015T103132462083Z",
+      "created_at_utc": "2026-10-15T10:31:32Z",
+      "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
+      "workspace_git": {
+        "scope": "workspace",
+        "branch": "initial-idea",
+        "head": "dd67267ff85670c674d0d6d08c129ce10692798f",
+        "status_entries": [
+          "?? main.py",
+          "A  .agents/evidence/M1-04-experiment-budget.md",
+          "A  scripts/run_m1_terminal_experiment.py",
+          "A  tests/test_m1_episode.py",
+          "A  videochess_rl/episode.py",
+          "AM .agents/evidence/M1-04-terminal-verification.md",
+          "M  .agents/evidence/M1-feasibility-verification.md",
+          "M  .agents/state/BLOCKERS.md",
+          "M  .agents/state/VERIFIED_FINDINGS.md",
+          "M  docs/02-management/RISK_REGISTER.md",
+          "M  docs/05-operations/M1-ALE-REPRODUCIBILITY.md",
+          "M  docs/06-quality/TEST_STRATEGY.md",
+          "M  tests/test_m1_ale_integration.py",
+          "M  tests/test_m1_control.py",
+          "M  tests/test_m1_environment.py",
+          "M  tests/test_m1_shadow.py",
+          "M  tests/test_m1_vision.py",
+          "M  videochess_rl/controller.py",
+          "M  videochess_rl/demo.py",
+          "M  videochess_rl/shadow.py",
+          "M  videochess_rl/vision.py",
+          "MM .agents/state/PROJECT_STATE.yaml",
+          "MM .agents/state/SESSION_HANDOFF.md",
+          "MM .agents/tasks/BACKLOG.yaml"
+        ],
+        "status_sha256": "288accd8d8ee88f3bad305bf24375e193712ec99c0c493000b4bce20275156bc",
+        "repo_file_hashes": {
+          ".gitignore": "1828249263215f6182229194dd1c662907d115310da5ca5a0c65ad207ed2ae3c",
+          ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+          "AGENTS.md": "d37ebbe8fdb94fabe7c039d8b89c3beaa36584d6d5eb09934f714941129463cd",
+          "README.md": "b56bd7410a2c90c559ad5fd52a6a78065bee4d2d54856d6677af4b0200746dce",
+          "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+          "main.py": "c101b2abfee28217d24a7c550eda37cffe548adfc9149244646199108361c0fe",
+          "pyproject.toml": "7be065e3664844a7774e9d85c4eabb06526e427e4e3e9f2f8e52f090fd600cc8",
+          "uv.lock": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+          ".agents/PLANS.md": "ed50b3ccc51cbe29123630c5069ab2d00f7428751ca67f1e64bd15558bd044d2",
+          ".agents/evidence/G1-10-recovery-verification.md": "39e05a96034d4eaa4f22f0dec72670afacbd9b48bcfcc41ed81f8a718d3a5f65",
+          ".agents/evidence/G1-git-baseline-verification.md": "13772b3438b30d440baac4caeeceb564017a5216ea9409d7b9412390d4b96f65",
+          ".agents/evidence/G1-hardening-verification.md": "0963f26840d2c393525fd10bba32f13e5ff3a51210a87d3d731b2ba96bd09380",
+          ".agents/evidence/G1-portability-consistency-verification.md": "f1fa95b9c2e7415ff0ff8a9e452920f7c8a29c77ea3ce3fabfc77fb744b7ad0e",
+          ".agents/evidence/M0-001-verification.md": "1f0dfba9ba36a3ce03f21e951e0af4a1b53d3b3b26970dd0c3aaaab76aaa3333",
+          ".agents/evidence/M0-acceptance.md": "089a86c5e50c0e5be698dff2dbc83643c58968b883e03c6e5c85b3d5cad28f14",
+          ".agents/evidence/M0-authorization.md": "2e7f62983b98cc79e1d25168da031bf2269c7364d8551956d41744a91ed58205",
+          ".agents/evidence/M0-final-technical-verification.md": "b64899752217a9fe55ae1a646ebb7b694956cb2164f804bbe2f47ff6340ca9c3",
+          ".agents/evidence/M0-finalization-verification.md": "9202f9c41518eb448efaac49ffbcee4cd2384c0435ebcca21fb31843a1d6f7b8",
+          ".agents/evidence/M1-04-experiment-budget.md": "4eb17e35a3ba41a1220c9dca74e8f16ef8e4b4b16288533cd6597c8b60c7162e",
+          ".agents/evidence/M1-04-terminal-verification.md": "0461dc6370f701492828a3ba1c7ca01e4efcd6ab931474ea1b9c8f5616a997c0",
+          ".agents/evidence/M1-authorization.md": "9985e9917dc8fe938b2c48c23da4868334b98d2a7bc2eba7f5a72b9a1a32d117",
+          ".agents/evidence/M1-feasibility-verification.md": "f6e00c39778c44604c2422f959a12dfa22156bde784afaca824d350e3fa523e5",
+          ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
+          ".agents/plans/M00-bootstrap.md": "9c7b045f7efd20c60f01e2b23224ccac12d7a659699f0f43e6bc1ff286671f7f",
+          ".agents/plans/M01-ale-feasibility.md": "65ad3f04c34ab8751509ee0303f1cd772c5f83e980ac9b4b7d2b336a7cfbd5bb",
+          ".agents/review-bundles/M0-working-tree-20261014T184343213544Z.zip": "e888fa48c1d9662a8d63ce8af141f29b7a9a8ac4578fc3f25858660a0b07d345",
+          ".agents/review-bundles/M0-working-tree-20261014T184649013533Z.zip": "c705ea19971683c1526645552288ca377f11f2dcf101250319d8a12086535fd3",
+          ".agents/review-bundles/M0-working-tree-20261014T192404457787Z.zip": "3f846aa17591d879da385b833225f059db6dc0b9df5c992e33236ca66d35b7fd",
+          ".agents/review-bundles/M1-staged-20261015T082948737608Z.zip": "68b710ef07bb36a2b656795f3ee295c0d2759e02c4dbf2e6002a6f074f50dfb4",
+          ".agents/review-bundles/export_review_bundle-staged-20261014T210535155205Z.zip": "2b50a6b35606d61e1d3f6ee3a156791b38cd294c626533101f103603c172ebd4",
+          ".agents/review-bundles/export_review_bundle-working-tree-20261014T210537795808Z.zip": "5606106ef43267add13d83478778b47f08e3916fa6cf07e2940e9a03e2b274e2",
+          ".agents/skills/export-review-bundle/SKILL.md": "02623443e4833824a7c2606e5d4cb9ea1d79e0b5d8c436741933978142932942",
+          ".agents/state/BLOCKERS.md": "131f15716a6657d5a3cef0fe966b5547be52449ff434bc4464c211cf72b27923",
+          ".agents/state/SESSION_HANDOFF.md": "59304f76daef1825c6d620490bf82590940e11a3bf19bc9162ff7a65b09c5589",
+          ".agents/state/VERIFIED_FINDINGS.md": "42cf451f95c8f67255eee6928726c91b107d1968037c094cb55057721333a374",
+          ".agents/tasks/BACKLOG.yaml": "606cf136c2160495e1606aeaab00980b30dd5ce2ce5b5e161e4d91b9fb285dc8",
+          "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
+          "docs/01-foundation/REQUIREMENTS.md": "4aa8f91e830459f513ff47d4afa09341c5fdcebcb26eca4f45f0d5c67e4f344c",
+          "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
+          "docs/02-management/EXECUTION_PLAN.md": "a71a322a1b68b011ce28a1222fca328837803341ed3366848f10d467d1192535",
+          "docs/02-management/RISK_REGISTER.md": "47a9ceadeed7eae88d2c19f71ca98f991215433f1131309df29446159f55f52d",
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
+          "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": "ef68db68b75a0521b91ae109b7ea7cb462d87e131b25ef77969d568f76a06d88",
+          "docs/05-operations/SETUP.md": "05776d5f0e9bcf5931807fbbcca46ae583d37f25ebaf116308572f6874025a89",
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": "395741bc505bbc0c0dd3fcb63187f198303e538c064da32fc58c9389e93373a5",
+          "docs/06-quality/TEST_STRATEGY.md": "987bc0dd44e50f7097f1dbf334a413a13a92564b4761ef9bc52791e5cd2392e9",
+          "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
+          "scripts/agent_preflight.py": "7f24cf19f659603f2d96907eae790f1df07ff8212cfc321db2f4c47e641f026e",
+          "scripts/export_review_bundle.py": "7ed9a3a22dc2435f157840ad710f6fb8af183118830acb0b91cdbe47fa2930c0",
+          "scripts/run_m1_demo.py": "885c83435efe3009d0eea85098879c311062a8f39459ec18850ba1dc5e605ef0",
+          "scripts/run_m1_terminal_experiment.py": "de4f4eb48826e3808faf2ea595ae03afe43bbc8d15fa3e64d637f19c5db9252e",
+          "tests/test_agent_context.py": "ee3c6a272cf0e21cfc459b3c8ebe1e372fb70fe1a7f4735c2a36c2b531a7faab",
+          "tests/test_export_review_bundle.py": "3d9684586b76aa73f794b936b336f8529237f1797cfe19645cc64ce74239db6c",
+          "tests/test_m0_smoke.py": "ba6303fc4c6b9f06b03bb1259a8084083c595b278e163d7f1ca710ef7bf77594",
+          "tests/test_m1_ale_integration.py": "d7ac8f2f65adbf1787e940f6fb67635e8e2491e15fd3bbebe6aa985bf309ab05",
+          "tests/test_m1_control.py": "ab06294343b80650a1592c107556f1655ef515ecc5d254adf0e6c0f18f6aea24",
+          "tests/test_m1_environment.py": "62b80652d0dbe73f9342788ce1b0cdeac0e3748f23991e5635e202f80ced90c3",
+          "tests/test_m1_episode.py": "6f41ac30def658c8276c100ed8a77809458988a4d6ad6d800344623069445ac8",
+          "tests/test_m1_shadow.py": "19bd94ca9eece7d4317788f08df85fe46911d706a43665a437c6596446e99ffc",
+          "tests/test_m1_vision.py": "e36315af24d76e89027f3eeb2b46a3740615d3c03fff3172365531eaa2b8f11c",
+          "tests/fixtures/g1-recovery-baseline.json": "a48deb7bbd5f1a67e21c66b4f5feec22c08f169b6dcc3d44b89248a30a8aa0df",
+          "videochess_rl/__init__.py": "6288a2698f98216834cce812d32cd8ecc95da5a2bdce96ebf891c22b1d30e009",
+          "videochess_rl/controller.py": "bd68e1bf492f03fe6f9d597689865d0682dcccc40e242c84adfc1293c66ae0a3",
+          "videochess_rl/demo.py": "221d4327433d2a877c215e9bd474009e938c07d6df19cc0dcd34f24765df3c37",
+          "videochess_rl/environment.py": "e00047d0f046d994f230712797d5b3b85264b73815301ef498b3b12aeb86dcff",
+          "videochess_rl/episode.py": "a47ad23c9f79547daecbef7f88bc627bc2cfc2e88794c5544ea5c8962508b005",
+          "videochess_rl/shadow.py": "b342062ce2a6e176ed872d90ecbab584c5f0fb4bc0bb057b6d007694ac7d5149",
+          "videochess_rl/vision.py": "8f3a3b0a142bb91e3f7cd58dd29a596a01982f03cd7324929638a1fa5811b770"
+        },
+        "unhashed_large_files": [],
+        "unreadable_files": [],
+        "artifact_dirs_requiring_manifest": [
+          "artifacts"
+        ],
+        "excluded_directories": [
+          ".git",
+          ".venv",
+          "artifacts",
+          "scripts/__pycache__",
+          "tests/__pycache__",
+          "videochess_rl/__pycache__"
+        ],
+        "excluded_symlink_files": 0
+      },
+      "portable_git": {
+        "format_version": 1,
+        "tracked_manifest": {
+          ".agents/PLANS.md": {
+            "mode": "100644",
+            "object_id": "1c1b78d477af82837465daf21c1de62c32c07c84"
+          },
+          ".agents/evidence/G1-10-recovery-verification.md": {
+            "mode": "100644",
+            "object_id": "6ff27d51b9cf51803d8ca8c863066253ae6297bc"
+          },
+          ".agents/evidence/G1-git-baseline-verification.md": {
+            "mode": "100644",
+            "object_id": "c3c79107166243fe35ae2d8e9f270b8a46e0ffe9"
+          },
+          ".agents/evidence/G1-hardening-verification.md": {
+            "mode": "100644",
+            "object_id": "949549fa06ad46bc3076ac462e7ccba7cdc70fbf"
+          },
+          ".agents/evidence/G1-portability-consistency-verification.md": {
+            "mode": "100644",
+            "object_id": "5120604c17c3a481431701154d2783058ff78dcd"
+          },
+          ".agents/evidence/M0-001-verification.md": {
+            "mode": "100644",
+            "object_id": "0899b37e78e7244661bebb1fcea242bc66114e57"
+          },
+          ".agents/evidence/M0-acceptance.md": {
+            "mode": "100644",
+            "object_id": "99c6b35c927fc0eea29dad671ba59744e52c6644"
+          },
+          ".agents/evidence/M0-authorization.md": {
+            "mode": "100644",
+            "object_id": "4682598c5d00e2e9f0cb8f0a46171cdcc6de748a"
+          },
+          ".agents/evidence/M0-final-technical-verification.md": {
+            "mode": "100644",
+            "object_id": "219fa2bb8620f94faf680d956d1042d714ac9c94"
+          },
+          ".agents/evidence/M0-finalization-verification.md": {
+            "mode": "100644",
+            "object_id": "ba82a757f3cf0075d28c5435dd866dda2d7f34aa"
+          },
+          ".agents/evidence/M1-04-experiment-budget.md": {
+            "mode": "100644",
+            "object_id": "463c910b2be35998ff070541ba9f409e60792178"
+          },
+          ".agents/evidence/M1-04-terminal-verification.md": {
+            "mode": "100644",
+            "object_id": "c6a33554fbba38b12ed1322d736604003cc55975"
+          },
+          ".agents/evidence/M1-authorization.md": {
+            "mode": "100644",
+            "object_id": "07d0ac7de9ec5ef4f29d1a02ed83ca2ba619e938"
+          },
+          ".agents/evidence/M1-feasibility-verification.md": {
+            "mode": "100644",
+            "object_id": "e6cab1db0430f21069d4836d416eb9b7bf6457a7"
+          },
+          ".agents/plans/G1-consistency-hardening.md": {
+            "mode": "100644",
+            "object_id": "a371486eaf564cf62503c6a2de683888e09b3b9d"
+          },
+          ".agents/plans/M00-bootstrap.md": {
+            "mode": "100644",
+            "object_id": "9a546c32e71394fb65b0dceb44d8b3a9db44a5aa"
+          },
+          ".agents/plans/M01-ale-feasibility.md": {
+            "mode": "100644",
+            "object_id": "314df312e52236255ef946d2732ce3edc4b5d726"
+          },
+          ".agents/skills/export-review-bundle/SKILL.md": {
+            "mode": "100644",
+            "object_id": "9c94b136d7f6b78a99ffcdda780b2a20d712678d"
+          },
+          ".agents/state/BLOCKERS.md": {
+            "mode": "100644",
+            "object_id": "cc381164949bb180e5bc29e045d48b7aca47d0a6"
+          },
+          ".agents/state/VERIFIED_FINDINGS.md": {
+            "mode": "100644",
+            "object_id": "6ee22c42f6a09b1b6ffa19b507bd0c4591729dae"
+          },
+          ".agents/tasks/BACKLOG.yaml": {
+            "mode": "100644",
+            "object_id": "646bc1aff91b324a40ef6264a6210650bc7430e1"
+          },
+          ".gitignore": {
+            "mode": "100644",
+            "object_id": "1f47241035421aa3dd73732d084b533e3fad7763"
+          },
+          ".python-version": {
+            "mode": "100644",
+            "object_id": "e4fba2183587225f216eeada4c78dfab6b2e65f5"
+          },
+          "AGENTS.md": {
+            "mode": "100644",
+            "object_id": "1aff494964fb5b9844f29589a53b83c2b6489e51"
+          },
+          "README.md": {
+            "mode": "100644",
+            "object_id": "c64740f9ac205eaac873da341d5c9079bc4b09f4"
+          },
+          "atari-videochess-rl-roadmap.html": {
+            "mode": "100644",
+            "object_id": "78f34984b1f10c9921974a96c8648112876017fa"
+          },
+          "docs/01-foundation/PROJECT_OVERVIEW.md": {
+            "mode": "100644",
+            "object_id": "6131db7cb1ebe66ed6f903c2cde0dcec64ec1795"
+          },
+          "docs/01-foundation/REQUIREMENTS.md": {
+            "mode": "100644",
+            "object_id": "d9e049eb9f7aa9664cc65499d023ef88ed7b3ad5"
+          },
+          "docs/01-foundation/ROADMAP.md": {
+            "mode": "100644",
+            "object_id": "3d6517b186feb24fb95702fffefc1a568266bf37"
+          },
+          "docs/02-management/EXECUTION_PLAN.md": {
+            "mode": "100644",
+            "object_id": "57cc25116b0657cb910a00c88fc04dba51ba9621"
+          },
+          "docs/02-management/RISK_REGISTER.md": {
+            "mode": "100644",
+            "object_id": "5e5dbf91608bc458abfc2072ab28cb2aec131410"
+          },
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
+            "mode": "100644",
+            "object_id": "97db1a054605b8aa3c94697a75f2ebf1d80d3e5e"
+          },
+          "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": {
+            "mode": "100644",
+            "object_id": "42f8707174b1621e03ce4e404bfe01616779c579"
+          },
+          "docs/05-operations/SETUP.md": {
+            "mode": "100644",
+            "object_id": "8255761d45367521f6428aece17d882807055146"
+          },
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": {
+            "mode": "100644",
+            "object_id": "47e4cb03e6067424f07f6fa2c543869a5e96c3f2"
+          },
+          "docs/06-quality/TEST_STRATEGY.md": {
+            "mode": "100644",
+            "object_id": "dc1b0a60759de6be798c52b79b90101c5c4609a2"
+          },
+          "pyproject.toml": {
+            "mode": "100644",
+            "object_id": "af61e2b43ca0e55def303fd48d797285119d0c70"
+          },
+          "scripts/agent_checkpoint.py": {
+            "mode": "100644",
+            "object_id": "6f4f0ca28dbc837dce01ab788903c2e43a58b1d8"
+          },
+          "scripts/agent_preflight.py": {
+            "mode": "100644",
+            "object_id": "322932885074db6e8dc5a098a90dd96de393e760"
+          },
+          "scripts/export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "5fe121a545a759d487af574bd67c32b25f1fbd8f"
+          },
+          "scripts/run_m1_demo.py": {
+            "mode": "100644",
+            "object_id": "cd7e704dbae92a9d084988cf94267162a7168f17"
+          },
+          "scripts/run_m1_terminal_experiment.py": {
+            "mode": "100755",
+            "object_id": "78dd80d138650a96c747dd5962b9a6a17241216d"
+          },
+          "tests/fixtures/g1-recovery-baseline.json": {
+            "mode": "100644",
+            "object_id": "e6bad6a18ef49b42487ef8c388d803e16b7a64e3"
+          },
+          "tests/test_agent_context.py": {
+            "mode": "100644",
+            "object_id": "44a4cc26566bd2b2659a0f385fe727c512400aad"
+          },
+          "tests/test_export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "7e36d44e58d292afd40ce951ab87f006ae17be47"
+          },
+          "tests/test_m0_smoke.py": {
+            "mode": "100644",
+            "object_id": "06fc374a092bb537b521656c195a90db48f6f1ab"
+          },
+          "tests/test_m1_ale_integration.py": {
+            "mode": "100644",
+            "object_id": "bd24bd1116149afa98b84c79671480a850a001a9"
+          },
+          "tests/test_m1_control.py": {
+            "mode": "100644",
+            "object_id": "f30285bcc56950d883115bfba910a54dac70712b"
+          },
+          "tests/test_m1_environment.py": {
+            "mode": "100644",
+            "object_id": "394f0aa1ee8243e1f95121fdb7a31e1d406741a7"
+          },
+          "tests/test_m1_episode.py": {
+            "mode": "100644",
+            "object_id": "7f53685708967d49542a43927138d0481d841e18"
+          },
+          "tests/test_m1_shadow.py": {
+            "mode": "100644",
+            "object_id": "ee085a1693595c5a265081f24f186032c39b4e7e"
+          },
+          "tests/test_m1_vision.py": {
+            "mode": "100644",
+            "object_id": "a69e3b463b6c00a38adcdc4f6f2b4948e94e39a2"
+          },
+          "uv.lock": {
+            "mode": "100644",
+            "object_id": "a122403ed28fba3956a138b886e5d65791e1c516"
+          },
+          "videochess_rl/__init__.py": {
+            "mode": "100644",
+            "object_id": "1dd9a23ede9e748cc14d9da2ad7b7f0b4f1fde98"
+          },
+          "videochess_rl/controller.py": {
+            "mode": "100644",
+            "object_id": "7574b25c12ab78ac9cbc6bb68863e62d5bf092d0"
+          },
+          "videochess_rl/demo.py": {
+            "mode": "100644",
+            "object_id": "5a35b608d5323f8139cbed675c76b2ecef33adfe"
+          },
+          "videochess_rl/environment.py": {
+            "mode": "100644",
+            "object_id": "5617ef3abf556ce16e23210b6b855a79debd4efa"
+          },
+          "videochess_rl/episode.py": {
+            "mode": "100644",
+            "object_id": "dc7c859059ebb849db58c91586e97454738e459f"
+          },
+          "videochess_rl/shadow.py": {
+            "mode": "100644",
+            "object_id": "d971e7db7026c21afc86f3cca3864fa745d32454"
+          },
+          "videochess_rl/vision.py": {
+            "mode": "100644",
+            "object_id": "5be7bf92574229c232a364a7c9c03830a50524ee"
+          }
+        },
+        "manifest_sha256": "80ba1f216598aa633cd75743343f044f94eaadc6f17df1c485350bb51cac2314",
+        "state_sha256": "7e4615dc8c750922d38defe272ffaf7d0d1bfe541a5940ae81030209ff149df1",
+        "handoff_sha256": "59304f76daef1825c6d620490bf82590940e11a3bf19bc9162ff7a65b09c5589"
+      }
+    },
+    {
+      "id": "cp-dd67267f-20261015T103311916852Z",
+      "created_at_utc": "2026-10-15T10:33:11Z",
+      "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
+      "workspace_git": {
+        "scope": "workspace",
+        "branch": "initial-idea",
+        "head": "dd67267ff85670c674d0d6d08c129ce10692798f",
+        "status_entries": [
+          "?? main.py",
+          "A  .agents/evidence/M1-04-experiment-budget.md",
+          "A  .agents/evidence/M1-04-terminal-verification.md",
+          "A  scripts/run_m1_terminal_experiment.py",
+          "A  tests/test_m1_episode.py",
+          "A  videochess_rl/episode.py",
+          "M  .agents/evidence/M1-feasibility-verification.md",
+          "M  .agents/state/BLOCKERS.md",
+          "M  .agents/state/VERIFIED_FINDINGS.md",
+          "M  .agents/tasks/BACKLOG.yaml",
+          "M  docs/02-management/RISK_REGISTER.md",
+          "M  docs/05-operations/M1-ALE-REPRODUCIBILITY.md",
+          "M  docs/06-quality/TEST_STRATEGY.md",
+          "M  tests/test_m1_ale_integration.py",
+          "M  tests/test_m1_control.py",
+          "M  tests/test_m1_environment.py",
+          "M  tests/test_m1_shadow.py",
+          "M  tests/test_m1_vision.py",
+          "M  videochess_rl/controller.py",
+          "M  videochess_rl/demo.py",
+          "M  videochess_rl/shadow.py",
+          "M  videochess_rl/vision.py",
+          "MM .agents/state/PROJECT_STATE.yaml",
+          "MM .agents/state/SESSION_HANDOFF.md"
+        ],
+        "status_sha256": "794dbc7212bcebaa3c7c7efbda65343e10528ea1006a2585243629d29605eb7c",
+        "repo_file_hashes": {
+          ".gitignore": "1828249263215f6182229194dd1c662907d115310da5ca5a0c65ad207ed2ae3c",
+          ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+          "AGENTS.md": "d37ebbe8fdb94fabe7c039d8b89c3beaa36584d6d5eb09934f714941129463cd",
+          "README.md": "b56bd7410a2c90c559ad5fd52a6a78065bee4d2d54856d6677af4b0200746dce",
+          "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+          "main.py": "c101b2abfee28217d24a7c550eda37cffe548adfc9149244646199108361c0fe",
+          "pyproject.toml": "7be065e3664844a7774e9d85c4eabb06526e427e4e3e9f2f8e52f090fd600cc8",
+          "uv.lock": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+          ".agents/PLANS.md": "ed50b3ccc51cbe29123630c5069ab2d00f7428751ca67f1e64bd15558bd044d2",
+          ".agents/evidence/G1-10-recovery-verification.md": "39e05a96034d4eaa4f22f0dec72670afacbd9b48bcfcc41ed81f8a718d3a5f65",
+          ".agents/evidence/G1-git-baseline-verification.md": "13772b3438b30d440baac4caeeceb564017a5216ea9409d7b9412390d4b96f65",
+          ".agents/evidence/G1-hardening-verification.md": "0963f26840d2c393525fd10bba32f13e5ff3a51210a87d3d731b2ba96bd09380",
+          ".agents/evidence/G1-portability-consistency-verification.md": "f1fa95b9c2e7415ff0ff8a9e452920f7c8a29c77ea3ce3fabfc77fb744b7ad0e",
+          ".agents/evidence/M0-001-verification.md": "1f0dfba9ba36a3ce03f21e951e0af4a1b53d3b3b26970dd0c3aaaab76aaa3333",
+          ".agents/evidence/M0-acceptance.md": "089a86c5e50c0e5be698dff2dbc83643c58968b883e03c6e5c85b3d5cad28f14",
+          ".agents/evidence/M0-authorization.md": "2e7f62983b98cc79e1d25168da031bf2269c7364d8551956d41744a91ed58205",
+          ".agents/evidence/M0-final-technical-verification.md": "b64899752217a9fe55ae1a646ebb7b694956cb2164f804bbe2f47ff6340ca9c3",
+          ".agents/evidence/M0-finalization-verification.md": "9202f9c41518eb448efaac49ffbcee4cd2384c0435ebcca21fb31843a1d6f7b8",
+          ".agents/evidence/M1-04-experiment-budget.md": "4eb17e35a3ba41a1220c9dca74e8f16ef8e4b4b16288533cd6597c8b60c7162e",
+          ".agents/evidence/M1-04-terminal-verification.md": "ce63de4a091ac43466fcaf2e9630d9cc38e9e6dcfdc9010dea4708c90dc16161",
+          ".agents/evidence/M1-authorization.md": "9985e9917dc8fe938b2c48c23da4868334b98d2a7bc2eba7f5a72b9a1a32d117",
+          ".agents/evidence/M1-feasibility-verification.md": "f6e00c39778c44604c2422f959a12dfa22156bde784afaca824d350e3fa523e5",
+          ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
+          ".agents/plans/M00-bootstrap.md": "9c7b045f7efd20c60f01e2b23224ccac12d7a659699f0f43e6bc1ff286671f7f",
+          ".agents/plans/M01-ale-feasibility.md": "65ad3f04c34ab8751509ee0303f1cd772c5f83e980ac9b4b7d2b336a7cfbd5bb",
+          ".agents/review-bundles/M0-working-tree-20261014T184343213544Z.zip": "e888fa48c1d9662a8d63ce8af141f29b7a9a8ac4578fc3f25858660a0b07d345",
+          ".agents/review-bundles/M0-working-tree-20261014T184649013533Z.zip": "c705ea19971683c1526645552288ca377f11f2dcf101250319d8a12086535fd3",
+          ".agents/review-bundles/M0-working-tree-20261014T192404457787Z.zip": "3f846aa17591d879da385b833225f059db6dc0b9df5c992e33236ca66d35b7fd",
+          ".agents/review-bundles/M1-staged-20261015T082948737608Z.zip": "68b710ef07bb36a2b656795f3ee295c0d2759e02c4dbf2e6002a6f074f50dfb4",
+          ".agents/review-bundles/export_review_bundle-staged-20261014T210535155205Z.zip": "2b50a6b35606d61e1d3f6ee3a156791b38cd294c626533101f103603c172ebd4",
+          ".agents/review-bundles/export_review_bundle-working-tree-20261014T210537795808Z.zip": "5606106ef43267add13d83478778b47f08e3916fa6cf07e2940e9a03e2b274e2",
+          ".agents/skills/export-review-bundle/SKILL.md": "02623443e4833824a7c2606e5d4cb9ea1d79e0b5d8c436741933978142932942",
+          ".agents/state/BLOCKERS.md": "131f15716a6657d5a3cef0fe966b5547be52449ff434bc4464c211cf72b27923",
+          ".agents/state/SESSION_HANDOFF.md": "995bc9bcc6876f79ec921206a8e59d7aa62107768f8f4dfbede1684a31a39d45",
+          ".agents/state/VERIFIED_FINDINGS.md": "42cf451f95c8f67255eee6928726c91b107d1968037c094cb55057721333a374",
+          ".agents/tasks/BACKLOG.yaml": "9064596571af6ac8c07cfb70701a0adc618e48e0ec5e7d601670e732c9626bcc",
+          "docs/01-foundation/PROJECT_OVERVIEW.md": "19d3ca0f0c97019cbf72ce5787a6f36771c8826c2c0661169c0bdf041e89abd0",
+          "docs/01-foundation/REQUIREMENTS.md": "4aa8f91e830459f513ff47d4afa09341c5fdcebcb26eca4f45f0d5c67e4f344c",
+          "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
+          "docs/02-management/EXECUTION_PLAN.md": "a71a322a1b68b011ce28a1222fca328837803341ed3366848f10d467d1192535",
+          "docs/02-management/RISK_REGISTER.md": "47a9ceadeed7eae88d2c19f71ca98f991215433f1131309df29446159f55f52d",
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
+          "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": "ef68db68b75a0521b91ae109b7ea7cb462d87e131b25ef77969d568f76a06d88",
+          "docs/05-operations/SETUP.md": "05776d5f0e9bcf5931807fbbcca46ae583d37f25ebaf116308572f6874025a89",
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": "395741bc505bbc0c0dd3fcb63187f198303e538c064da32fc58c9389e93373a5",
+          "docs/06-quality/TEST_STRATEGY.md": "987bc0dd44e50f7097f1dbf334a413a13a92564b4761ef9bc52791e5cd2392e9",
+          "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
+          "scripts/agent_preflight.py": "7f24cf19f659603f2d96907eae790f1df07ff8212cfc321db2f4c47e641f026e",
+          "scripts/export_review_bundle.py": "7ed9a3a22dc2435f157840ad710f6fb8af183118830acb0b91cdbe47fa2930c0",
+          "scripts/run_m1_demo.py": "885c83435efe3009d0eea85098879c311062a8f39459ec18850ba1dc5e605ef0",
+          "scripts/run_m1_terminal_experiment.py": "de4f4eb48826e3808faf2ea595ae03afe43bbc8d15fa3e64d637f19c5db9252e",
+          "tests/test_agent_context.py": "ee3c6a272cf0e21cfc459b3c8ebe1e372fb70fe1a7f4735c2a36c2b531a7faab",
+          "tests/test_export_review_bundle.py": "3d9684586b76aa73f794b936b336f8529237f1797cfe19645cc64ce74239db6c",
+          "tests/test_m0_smoke.py": "ba6303fc4c6b9f06b03bb1259a8084083c595b278e163d7f1ca710ef7bf77594",
+          "tests/test_m1_ale_integration.py": "d7ac8f2f65adbf1787e940f6fb67635e8e2491e15fd3bbebe6aa985bf309ab05",
+          "tests/test_m1_control.py": "ab06294343b80650a1592c107556f1655ef515ecc5d254adf0e6c0f18f6aea24",
+          "tests/test_m1_environment.py": "62b80652d0dbe73f9342788ce1b0cdeac0e3748f23991e5635e202f80ced90c3",
+          "tests/test_m1_episode.py": "6f41ac30def658c8276c100ed8a77809458988a4d6ad6d800344623069445ac8",
+          "tests/test_m1_shadow.py": "19bd94ca9eece7d4317788f08df85fe46911d706a43665a437c6596446e99ffc",
+          "tests/test_m1_vision.py": "e36315af24d76e89027f3eeb2b46a3740615d3c03fff3172365531eaa2b8f11c",
+          "tests/fixtures/g1-recovery-baseline.json": "a48deb7bbd5f1a67e21c66b4f5feec22c08f169b6dcc3d44b89248a30a8aa0df",
+          "videochess_rl/__init__.py": "6288a2698f98216834cce812d32cd8ecc95da5a2bdce96ebf891c22b1d30e009",
+          "videochess_rl/controller.py": "bd68e1bf492f03fe6f9d597689865d0682dcccc40e242c84adfc1293c66ae0a3",
+          "videochess_rl/demo.py": "221d4327433d2a877c215e9bd474009e938c07d6df19cc0dcd34f24765df3c37",
+          "videochess_rl/environment.py": "e00047d0f046d994f230712797d5b3b85264b73815301ef498b3b12aeb86dcff",
+          "videochess_rl/episode.py": "a47ad23c9f79547daecbef7f88bc627bc2cfc2e88794c5544ea5c8962508b005",
+          "videochess_rl/shadow.py": "b342062ce2a6e176ed872d90ecbab584c5f0fb4bc0bb057b6d007694ac7d5149",
+          "videochess_rl/vision.py": "8f3a3b0a142bb91e3f7cd58dd29a596a01982f03cd7324929638a1fa5811b770"
+        },
+        "unhashed_large_files": [],
+        "unreadable_files": [],
+        "artifact_dirs_requiring_manifest": [
+          "artifacts"
+        ],
+        "excluded_directories": [
+          ".git",
+          ".venv",
+          "artifacts",
+          "scripts/__pycache__",
+          "tests/__pycache__",
+          "videochess_rl/__pycache__"
+        ],
+        "excluded_symlink_files": 0
+      },
+      "portable_git": {
+        "format_version": 1,
+        "tracked_manifest": {
+          ".agents/PLANS.md": {
+            "mode": "100644",
+            "object_id": "1c1b78d477af82837465daf21c1de62c32c07c84"
+          },
+          ".agents/evidence/G1-10-recovery-verification.md": {
+            "mode": "100644",
+            "object_id": "6ff27d51b9cf51803d8ca8c863066253ae6297bc"
+          },
+          ".agents/evidence/G1-git-baseline-verification.md": {
+            "mode": "100644",
+            "object_id": "c3c79107166243fe35ae2d8e9f270b8a46e0ffe9"
+          },
+          ".agents/evidence/G1-hardening-verification.md": {
+            "mode": "100644",
+            "object_id": "949549fa06ad46bc3076ac462e7ccba7cdc70fbf"
+          },
+          ".agents/evidence/G1-portability-consistency-verification.md": {
+            "mode": "100644",
+            "object_id": "5120604c17c3a481431701154d2783058ff78dcd"
+          },
+          ".agents/evidence/M0-001-verification.md": {
+            "mode": "100644",
+            "object_id": "0899b37e78e7244661bebb1fcea242bc66114e57"
+          },
+          ".agents/evidence/M0-acceptance.md": {
+            "mode": "100644",
+            "object_id": "99c6b35c927fc0eea29dad671ba59744e52c6644"
+          },
+          ".agents/evidence/M0-authorization.md": {
+            "mode": "100644",
+            "object_id": "4682598c5d00e2e9f0cb8f0a46171cdcc6de748a"
+          },
+          ".agents/evidence/M0-final-technical-verification.md": {
+            "mode": "100644",
+            "object_id": "219fa2bb8620f94faf680d956d1042d714ac9c94"
+          },
+          ".agents/evidence/M0-finalization-verification.md": {
+            "mode": "100644",
+            "object_id": "ba82a757f3cf0075d28c5435dd866dda2d7f34aa"
+          },
+          ".agents/evidence/M1-04-experiment-budget.md": {
+            "mode": "100644",
+            "object_id": "463c910b2be35998ff070541ba9f409e60792178"
+          },
+          ".agents/evidence/M1-04-terminal-verification.md": {
+            "mode": "100644",
+            "object_id": "2629adf40222c5177ef4eeddb3a1b05bdc1fc376"
+          },
+          ".agents/evidence/M1-authorization.md": {
+            "mode": "100644",
+            "object_id": "07d0ac7de9ec5ef4f29d1a02ed83ca2ba619e938"
+          },
+          ".agents/evidence/M1-feasibility-verification.md": {
+            "mode": "100644",
+            "object_id": "e6cab1db0430f21069d4836d416eb9b7bf6457a7"
+          },
+          ".agents/plans/G1-consistency-hardening.md": {
+            "mode": "100644",
+            "object_id": "a371486eaf564cf62503c6a2de683888e09b3b9d"
+          },
+          ".agents/plans/M00-bootstrap.md": {
+            "mode": "100644",
+            "object_id": "9a546c32e71394fb65b0dceb44d8b3a9db44a5aa"
+          },
+          ".agents/plans/M01-ale-feasibility.md": {
+            "mode": "100644",
+            "object_id": "314df312e52236255ef946d2732ce3edc4b5d726"
+          },
+          ".agents/skills/export-review-bundle/SKILL.md": {
+            "mode": "100644",
+            "object_id": "9c94b136d7f6b78a99ffcdda780b2a20d712678d"
+          },
+          ".agents/state/BLOCKERS.md": {
+            "mode": "100644",
+            "object_id": "cc381164949bb180e5bc29e045d48b7aca47d0a6"
+          },
+          ".agents/state/VERIFIED_FINDINGS.md": {
+            "mode": "100644",
+            "object_id": "6ee22c42f6a09b1b6ffa19b507bd0c4591729dae"
+          },
+          ".agents/tasks/BACKLOG.yaml": {
+            "mode": "100644",
+            "object_id": "4bbddeafd7ad98f7d960521a98b5c91def9e17ee"
+          },
+          ".gitignore": {
+            "mode": "100644",
+            "object_id": "1f47241035421aa3dd73732d084b533e3fad7763"
+          },
+          ".python-version": {
+            "mode": "100644",
+            "object_id": "e4fba2183587225f216eeada4c78dfab6b2e65f5"
+          },
+          "AGENTS.md": {
+            "mode": "100644",
+            "object_id": "1aff494964fb5b9844f29589a53b83c2b6489e51"
+          },
+          "README.md": {
+            "mode": "100644",
+            "object_id": "c64740f9ac205eaac873da341d5c9079bc4b09f4"
+          },
+          "atari-videochess-rl-roadmap.html": {
+            "mode": "100644",
+            "object_id": "78f34984b1f10c9921974a96c8648112876017fa"
+          },
+          "docs/01-foundation/PROJECT_OVERVIEW.md": {
+            "mode": "100644",
+            "object_id": "6131db7cb1ebe66ed6f903c2cde0dcec64ec1795"
+          },
+          "docs/01-foundation/REQUIREMENTS.md": {
+            "mode": "100644",
+            "object_id": "d9e049eb9f7aa9664cc65499d023ef88ed7b3ad5"
+          },
+          "docs/01-foundation/ROADMAP.md": {
+            "mode": "100644",
+            "object_id": "3d6517b186feb24fb95702fffefc1a568266bf37"
+          },
+          "docs/02-management/EXECUTION_PLAN.md": {
+            "mode": "100644",
+            "object_id": "57cc25116b0657cb910a00c88fc04dba51ba9621"
+          },
+          "docs/02-management/RISK_REGISTER.md": {
+            "mode": "100644",
+            "object_id": "5e5dbf91608bc458abfc2072ab28cb2aec131410"
+          },
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
+            "mode": "100644",
+            "object_id": "97db1a054605b8aa3c94697a75f2ebf1d80d3e5e"
+          },
+          "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": {
+            "mode": "100644",
+            "object_id": "42f8707174b1621e03ce4e404bfe01616779c579"
+          },
+          "docs/05-operations/SETUP.md": {
+            "mode": "100644",
+            "object_id": "8255761d45367521f6428aece17d882807055146"
+          },
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": {
+            "mode": "100644",
+            "object_id": "47e4cb03e6067424f07f6fa2c543869a5e96c3f2"
+          },
+          "docs/06-quality/TEST_STRATEGY.md": {
+            "mode": "100644",
+            "object_id": "dc1b0a60759de6be798c52b79b90101c5c4609a2"
+          },
+          "pyproject.toml": {
+            "mode": "100644",
+            "object_id": "af61e2b43ca0e55def303fd48d797285119d0c70"
+          },
+          "scripts/agent_checkpoint.py": {
+            "mode": "100644",
+            "object_id": "6f4f0ca28dbc837dce01ab788903c2e43a58b1d8"
+          },
+          "scripts/agent_preflight.py": {
+            "mode": "100644",
+            "object_id": "322932885074db6e8dc5a098a90dd96de393e760"
+          },
+          "scripts/export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "5fe121a545a759d487af574bd67c32b25f1fbd8f"
+          },
+          "scripts/run_m1_demo.py": {
+            "mode": "100644",
+            "object_id": "cd7e704dbae92a9d084988cf94267162a7168f17"
+          },
+          "scripts/run_m1_terminal_experiment.py": {
+            "mode": "100755",
+            "object_id": "78dd80d138650a96c747dd5962b9a6a17241216d"
+          },
+          "tests/fixtures/g1-recovery-baseline.json": {
+            "mode": "100644",
+            "object_id": "e6bad6a18ef49b42487ef8c388d803e16b7a64e3"
+          },
+          "tests/test_agent_context.py": {
+            "mode": "100644",
+            "object_id": "44a4cc26566bd2b2659a0f385fe727c512400aad"
+          },
+          "tests/test_export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "7e36d44e58d292afd40ce951ab87f006ae17be47"
+          },
+          "tests/test_m0_smoke.py": {
+            "mode": "100644",
+            "object_id": "06fc374a092bb537b521656c195a90db48f6f1ab"
+          },
+          "tests/test_m1_ale_integration.py": {
+            "mode": "100644",
+            "object_id": "bd24bd1116149afa98b84c79671480a850a001a9"
+          },
+          "tests/test_m1_control.py": {
+            "mode": "100644",
+            "object_id": "f30285bcc56950d883115bfba910a54dac70712b"
+          },
+          "tests/test_m1_environment.py": {
+            "mode": "100644",
+            "object_id": "394f0aa1ee8243e1f95121fdb7a31e1d406741a7"
+          },
+          "tests/test_m1_episode.py": {
+            "mode": "100644",
+            "object_id": "7f53685708967d49542a43927138d0481d841e18"
+          },
+          "tests/test_m1_shadow.py": {
+            "mode": "100644",
+            "object_id": "ee085a1693595c5a265081f24f186032c39b4e7e"
+          },
+          "tests/test_m1_vision.py": {
+            "mode": "100644",
+            "object_id": "a69e3b463b6c00a38adcdc4f6f2b4948e94e39a2"
+          },
+          "uv.lock": {
+            "mode": "100644",
+            "object_id": "a122403ed28fba3956a138b886e5d65791e1c516"
+          },
+          "videochess_rl/__init__.py": {
+            "mode": "100644",
+            "object_id": "1dd9a23ede9e748cc14d9da2ad7b7f0b4f1fde98"
+          },
+          "videochess_rl/controller.py": {
+            "mode": "100644",
+            "object_id": "7574b25c12ab78ac9cbc6bb68863e62d5bf092d0"
+          },
+          "videochess_rl/demo.py": {
+            "mode": "100644",
+            "object_id": "5a35b608d5323f8139cbed675c76b2ecef33adfe"
+          },
+          "videochess_rl/environment.py": {
+            "mode": "100644",
+            "object_id": "5617ef3abf556ce16e23210b6b855a79debd4efa"
+          },
+          "videochess_rl/episode.py": {
+            "mode": "100644",
+            "object_id": "dc7c859059ebb849db58c91586e97454738e459f"
+          },
+          "videochess_rl/shadow.py": {
+            "mode": "100644",
+            "object_id": "d971e7db7026c21afc86f3cca3864fa745d32454"
+          },
+          "videochess_rl/vision.py": {
+            "mode": "100644",
+            "object_id": "5be7bf92574229c232a364a7c9c03830a50524ee"
+          }
+        },
+        "manifest_sha256": "b00be7673cc1dd3fdf107642e844517a01319d452a8aadc5fe6b9acf4ad6192a",
+        "state_sha256": "b45a3e1d5c7694604a938d78a1addb0f694bf95cd48f74c4abff6c069b9a0480",
+        "handoff_sha256": "995bc9bcc6876f79ec921206a8e59d7aa62107768f8f4dfbede1684a31a39d45"
       }
     }
   ]

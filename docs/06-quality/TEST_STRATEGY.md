@@ -62,7 +62,7 @@ Verified command/test evidence records `executed_at_utc`, `recorded_at_utc`, `ex
 
 `tests/test_m1_vision.py`, `tests/test_m1_control.py`, and `tests/test_m1_shadow.py` cover RGB square parsing, cursor ambiguity, measured action timing, legal shadow transitions, and safe mismatch handling. Synthetic frames are unit fixtures only; they do not count as ALE evidence.
 
-`tests/test_m1_environment.py` and `tests/test_m1_ale_integration.py` use the real packaged VideoChess ROM. The integration checks reset/capture the actual RGB screen, execute a player move through joystick/FIRE actions, observe the computer reply from RGB, and compare the result against legal `python-chess` shadow transitions. It runs once with deterministic development settings and once with the registered v5 defaults. Neither test reads RAM to choose actions.
+`tests/test_m1_environment.py` and `tests/test_m1_ale_integration.py` use the real packaged VideoChess ROM. They reset and capture the actual RGB screen, verify the configured mode for each supported mode, execute player moves through joystick/FIRE actions, observe computer replies from RGB, and compare results against legal `python-chess` shadow transitions. Closed-loop gameplay checks use deterministic development settings and the registered v5 defaults. Diagnostic RAM is never used to choose actions. `tests/test_m1_episode.py` covers the multi-turn diagnostic selector and safe stop behavior with synthetic environment doubles; these tests are not runtime terminal evidence.
 
 Run the M1 checks and bounded demo from the repository root:
 

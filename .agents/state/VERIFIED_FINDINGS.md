@@ -98,8 +98,8 @@
 ## FND-014 — M1 terminal behavior remains unverified
 
 - **Status:** verified observation; terminal result unverified
-- **Finding:** All bounded two-ply demonstrations returned reward 0 and `terminated=false`, `truncated=false`. The real game was not ended, so live terminal reward perspective and game-over behavior were not observed. The ALE wrapper source documents checkmate reward handling, but source inspection does not replace runtime evidence.
-- **Evidence:** `.agents/evidence/M1-feasibility-verification.md`; final deterministic and v5-default traces under ignored `artifacts/m1/`.
+- **Finding:** In the initial two-ply demonstrations, each run returned reward 0 and `terminated=false`, `truncated=false`. The real game was not ended, so live terminal reward perspective and game-over behavior were not observed. The later multi-turn evidence is in FND-017; it also did not reach a terminal.
+- **Evidence:** `.agents/evidence/M1-feasibility-verification.md`; `.agents/evidence/M1-04-terminal-verification.md`; traces under ignored `artifacts/m1/`.
 - **Impact:** M1-04 remains UNVERIFIED; M1 and G2 stay in progress.
 
 ## FND-015 — Portable checkpoint transition after the M1 implementation commit
@@ -108,3 +108,17 @@
 - **Finding:** A post-implementation full-suite run detected that the first M1 commit did not carry the checkpoint manifest for its staged file contents. The portable state and handoff were refreshed and committed at `c57e39dde883c711548049ba4410c2ec4d397ba2`; the clean-clone regression then recognized the commit transition and the full suite passed.
 - **Evidence:** `.agents/evidence/M1-feasibility-verification.md`; `tests/test_agent_context.py::test_clean_clone_recovers_current_committed_state_without_local_artifacts`; commit `c57e39dde883c711548049ba4410c2ec4d397ba2`.
 - **Impact:** The portable tracked manifest matches the corrected commit tree. Preserve the checkpoint-before-commit and restage-controls sequence for the next commit.
+
+## FND-016 — M1 multi-turn RGB synchronization and mode resets
+
+- **Status:** verified 2026-10-15
+- **Finding:** The observation-driven controller advanced the shadow only after a complete RGB check of the player's move and unique Atari reply. Seven bounded mode-0 episodes verified 24 complete two-ply cycles in aggregate; the longest verified five cycles (10 plies). A new real-ALE test resets supported modes 0–4 and confirms the selected mode byte `0xEA` and RGB shape. This does not establish higher-mode gameplay behavior.
+- **Evidence:** `.agents/evidence/M1-04-terminal-verification.md`; `tests/test_m1_ale_integration.py`; `tests/test_m1_environment.py`; selected local traces under ignored `artifacts/m1/m1-04/`.
+- **Impact:** M1-01, M1-02, M1-03, and the turn/state-synchronization portion of M1-04 have runtime evidence. Terminal behavior remains unverified.
+
+## FND-017 — Terminal experiment stopped at later-turn input failure
+
+- **Status:** verified observation; cause unresolved
+- **Finding:** Seven mode-0 terminal-seeking episodes used 42.870 seconds and 18,673 ALE frames. Each stopped after a later player move was not observed, despite prior RGB-verified turns. Four targeted probes plus one `e2e4` probe did not isolate the cause. Across all 12 traces, ALE reward summed to 0.0 and no trace reported termination or truncation. The traces do not establish whether the failure is source selection, target navigation/FIRE, or turn handoff.
+- **Evidence:** `.agents/evidence/M1-04-terminal-verification.md`; `.agents/evidence/M1-04-experiment-budget.md`; local traces under ignored `artifacts/m1/m1-04/`.
+- **Impact:** M1-04 remains UNVERIFIED. M1-001 is blocked by BLK-001 and G2 remains in progress; do not begin M2.

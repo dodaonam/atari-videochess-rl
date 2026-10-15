@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections import Counter
 from dataclasses import dataclass
 
 import chess
@@ -36,18 +37,13 @@ class WindowCell:
     gold_piece_seen: bool
     blue_piece_seen: bool
     cursor_seen: bool
+    observed_side: str
+    stable: bool
+    masked_only: bool
 
     @property
     def side(self) -> str:
-        if self.cursor_seen:
-            return "cursor"
-        if self.gold_piece_seen and not self.blue_piece_seen:
-            return "black"
-        if self.blue_piece_seen and not self.gold_piece_seen:
-            return "white"
-        if not self.gold_piece_seen and not self.blue_piece_seen:
-            return "empty"
-        return "unknown"
+        return self.observed_side if self.stable else "unknown"
 
 
 @dataclass(frozen=True)
@@ -125,27 +121,103 @@ class BoardWindow:
 
     def cell(self, square: str) -> WindowCell:
         pixels = [observation.cell(square) for observation in self.observations]
+        cursor_seen = any(p.gold == CURSOR_GOLD_PIXELS for p in pixels)
+        sides: list[str] = []
+        for p in pixels:
+            gold_piece = p.gold > 0 and p.gold != CURSOR_GOLD_PIXELS
+            blue_piece = p.blue > 0
+            if p.gold == CURSOR_GOLD_PIXELS and not blue_piece:
+                continue
+            if gold_piece and blue_piece:
+                sides.append("unknown")
+            elif gold_piece:
+                sides.append("black")
+            elif blue_piece:
+                sides.append("white")
+            else:
+                sides.append("empty")
+        counts = Counter(sides)
+        side_colors = [side for side in ("white", "black") if counts[side] > 0]
+        if len(side_colors) > 1:
+            observed_side = "unknown"
+        elif side_colors:
+            candidate = side_colors[0]
+            observed_side = (
+                candidate
+                if counts[candidate] >= 3 and counts[candidate] / len(self.observations) >= 0.15
+                else "unknown"
+            )
+        elif counts["empty"] >= 2:
+            observed_side = "empty"
+        else:
+            observed_side = "unknown"
+        stable = observed_side != "unknown"
+        masked_only = not sides and cursor_seen
         return WindowCell(
             gold_piece_seen=any(p.gold > 0 and p.gold != CURSOR_GOLD_PIXELS for p in pixels),
             blue_piece_seen=any(p.blue > 0 for p in pixels),
-            cursor_seen=any(p.gold == CURSOR_GOLD_PIXELS for p in pixels),
+            cursor_seen=cursor_seen,
+            observed_side=observed_side,
+            stable=stable,
+            masked_only=masked_only,
         )
 
     @property
     def cursor_squares(self) -> frozenset[str]:
         return frozenset().union(*(observation.cursor_squares for observation in self.observations))
 
+    @property
+    def is_stable(self) -> bool:
+        return len(self.cursor_squares) <= 1 and all(
+            (cell := self.cell(chess.square_name(square))).stable or cell.masked_only
+            for square in chess.SQUARES
+        )
+
     def matches_board(self, board: chess.Board) -> bool:
+        return self._matches_board(board, allow_cursor_mask=False)
+
+    def matches_board_except_cursor(self, board: chess.Board) -> bool:
+        """Check visible squares while leaving a cursor-only square unresolved.
+
+        This is an intermediate observation check only. Shadow state must not
+        advance until ``matches_board`` succeeds after the cursor no longer
+        masks that square.
+        """
+        return self._matches_board(board, allow_cursor_mask=True)
+
+    def _matches_board(self, board: chess.Board, *, allow_cursor_mask: bool) -> bool:
         if len(self.cursor_squares) > 1:
             return False
         for square in chess.SQUARES:
             name = chess.square_name(square)
             cell = self.cell(name)
-            if cell.side == "cursor":
-                continue
+            if cell.side == "unknown":
+                if allow_cursor_mask and cell.masked_only:
+                    continue
+                return False
             piece = board.piece_at(square)
             expected = "empty" if piece is None else ("white" if piece.color else "black")
             if cell.side != expected:
+                return False
+        return True
+
+
+@dataclass(frozen=True)
+class BoardEvidenceSet:
+    """Combine stable RGB windows captured while the cursor covered different squares."""
+
+    windows: tuple[BoardWindow, ...]
+
+    def matches_board(self, board: chess.Board) -> bool:
+        if not self.windows or any(not window.is_stable for window in self.windows):
+            return False
+        for square in chess.SQUARES:
+            name = chess.square_name(square)
+            piece = board.piece_at(square)
+            expected = "empty" if piece is None else ("white" if piece.color else "black")
+            observed = [window.cell(name).side for window in self.windows]
+            known = [side for side in observed if side != "unknown"]
+            if not known or any(side != expected for side in known):
                 return False
         return True
 

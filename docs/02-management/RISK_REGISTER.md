@@ -4,8 +4,8 @@
 
 | ID | Risk | Initial severity | Status | Planned response / evidence needed |
 |---|---|---:|---|---|
-| RSK-001 | ALE board extraction or state synchronization is unreliable, especially while Atari is thinking. | High | Open; untested | M1: compare RGB/RAM and shadow-board transitions, detect desync, stop/recover rather than continue on unverified state. |
-| RSK-002 | Atari Video Chess and `python-chess` differ in rules, turn behavior, or terminal conditions. | High | Open; untested | M1/M2: test special moves and endings; document supported behavior and any mismatch. |
+| RSK-001 | ALE board extraction or state synchronization is unreliable, especially while Atari is thinking. | High | Open; later-turn control failure observed | M1: retain RGB evidence, detect desync, stop without advancing the shadow, and establish reliable selected-target control before a terminal run; see `.agents/evidence/M1-04-terminal-verification.md`. |
+| RSK-002 | Atari Video Chess and `python-chess` differ in rules, turn behavior, or terminal conditions. | High | Open; partially tested | M1/M2: basic legal turns and modes 0–4 resets were observed; special moves, higher-mode gameplay, and real endings remain untested. Keep source, synthetic-test, and runtime evidence separate. |
 | RSK-003 | Stockfish evaluations have a different perspective/scale/meaning from Double DQN Q-values. | High | Open; design concern | M3–M5: record perspective and target transform, unit-test signs/scales, verify reward alignment before TD updates. |
 | RSK-004 | Sparse terminal rewards or unstable updates cause RL to regress the pretraining baseline. | High | Open; not measured | Keep pretraining and RL checkpoints; compare under the same benchmark; report regressions honestly. |
 | RSK-005 | Colab free GPU availability or session duration is insufficient for planned workloads. | Medium | Open; not checked | M0: inspect current quota/runtime capability; checkpoint/resume and persistent artifacts; no paid compute without authorization. |

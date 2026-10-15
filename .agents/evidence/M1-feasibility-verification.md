@@ -1,5 +1,7 @@
 # M1-001 — ALE Feasibility Verification
 
+> Historical verification snapshot from 2026-10-15T08:29:19Z. The later multi-turn controller work, mode reset checks, bounded terminal-seeking runs, and current M1-04 verdict are recorded in [M1-04-terminal-verification.md](M1-04-terminal-verification.md). This record is retained unchanged as the earlier baseline.
+
 - **Recorded at:** 2026-10-15T08:29:19Z
 - **Branch:** `initial-idea`
 - **Implementation revision:** `61c169d02c91ac495dc8fb9c5d20691f0fdf0ada`

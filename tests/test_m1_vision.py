@@ -7,7 +7,7 @@ import unittest
 import chess
 import numpy as np
 
-from videochess_rl.vision import BoardObservation, BoardWindow, VideoChessVision
+from videochess_rl.vision import BoardEvidenceSet, BoardObservation, BoardWindow, VideoChessVision
 
 
 BACKGROUND = (24, 26, 167)
@@ -106,7 +106,11 @@ class VideoChessVisionTests(unittest.TestCase):
         board.push_uci("e2e3")
         board.push_uci("c7c5")
         window = self.vision.window(
-            [after_e2e3(cursor=None), after_c7c5(cursor="c7"), after_c7c5(cursor=None)]
+            [
+                after_c7c5(cursor="c7"),
+                after_c7c5(cursor=None),
+                after_c7c5(cursor=None),
+            ]
         )
 
         self.assertTrue(window.matches_board(board))
@@ -129,6 +133,60 @@ class VideoChessVisionTests(unittest.TestCase):
         )
 
         self.assertFalse(window.matches_board(board))
+
+    def test_cursor_overlay_does_not_hide_a_missing_piece(self) -> None:
+        board = chess.Board()
+        board.push_uci("e2e3")
+        missing_piece = after_e2e3(cursor=None)
+        missing_piece[36 + 5 * 17 : 36 + 6 * 17, 44 + 4 * 8 : 44 + 5 * 8] = BACKGROUND
+        paint(missing_piece, "e3", GOLD, 19)
+        window = self.vision.window([missing_piece, missing_piece.copy(), missing_piece.copy()])
+
+        self.assertFalse(window.matches_board(board))
+
+    def test_transition_window_is_not_accepted_as_a_stable_board(self) -> None:
+        after = chess.Board()
+        after.push_uci("e2e3")
+        window = self.vision.window([start_frame(), start_frame(cursor=None), after_e2e3(cursor=None)])
+
+        self.assertFalse(window.is_stable)
+        self.assertFalse(window.matches_board(chess.Board()))
+        self.assertFalse(window.matches_board(after))
+        stable = self.vision.window([after_e2e3(cursor=None)] * 3)
+        self.assertTrue(stable.is_stable)
+        self.assertTrue(stable.matches_board(after))
+
+    def test_window_recovers_a_blinking_piece_but_keeps_cursor_square_masked(self) -> None:
+        board = chess.Board()
+        board.push_uci("e2e3")
+        visible = after_e2e3(cursor="e2")
+        hidden = visible.copy()
+        hidden[36 + 5 * 17 : 36 + 6 * 17, 44 + 4 * 8 : 44 + 5 * 8] = BACKGROUND
+        window = self.vision.window([visible if i % 4 == 0 else hidden for i in range(32)])
+
+        self.assertEqual(window.cell("e3").side, "white")
+        self.assertTrue(window.is_stable)
+        self.assertFalse(window.matches_board(board))
+        self.assertTrue(window.matches_board_except_cursor(board))
+
+    def test_separate_stable_views_combine_to_verify_every_square(self) -> None:
+        board = chess.Board()
+        board.push_uci("e2e3")
+        board.push_uci("c7c5")
+        cursor_on_c7 = self.vision.window([after_c7c5(cursor="c7")] * 32)
+        cursor_on_d4 = self.vision.window([after_c7c5(cursor="d4")] * 32)
+        evidence = BoardEvidenceSet((cursor_on_c7, cursor_on_d4))
+
+        self.assertTrue(evidence.matches_board(board))
+        self.assertFalse(evidence.matches_board(chess.Board()))
+
+    def test_one_cursor_masked_view_cannot_verify_a_complete_board(self) -> None:
+        board = chess.Board()
+        board.push_uci("e2e3")
+        board.push_uci("c7c5")
+        evidence = BoardEvidenceSet((self.vision.window([after_c7c5(cursor="c7")] * 32),))
+
+        self.assertFalse(evidence.matches_board(board))
 
 
 if __name__ == "__main__":

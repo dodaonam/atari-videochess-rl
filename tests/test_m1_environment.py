@@ -36,6 +36,15 @@ class ALEEnvironmentTests(unittest.TestCase):
         self.assertEqual(runtime["registered_defaults"]["frameskip"], 4)
         self.assertEqual(runtime["registered_defaults"]["repeat_action_probability"], 0.25)
 
+    def test_supported_modes_reset_to_rgb_and_report_the_selected_mode(self) -> None:
+        for mode in range(5):
+            with self.subTest(mode=mode), VideoChessEnv(ALEConfig.deterministic_dev(mode=mode)) as env:
+                reset = env.reset(seed=20261015 + mode)
+
+                self.assertEqual(reset.rgb.shape, (210, 160, 3))
+                self.assertEqual(env.diagnostic_ram((0xEA,))["0xEA"], mode)
+                self.assertEqual(env.runtime_info()["available_difficulties"], [0])
+
 
 if __name__ == "__main__":
     unittest.main()

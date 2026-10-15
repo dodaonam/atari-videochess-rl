@@ -43,4 +43,18 @@ The runner writes a JSON trace and its local RGB frames under `artifacts/m1/`. I
 
 ## Limitations and M1 gate
 
-The two-ply interaction verifies reset, RGB geometry, cursor movement, FIRE timing, a player move, an Atari reply, and RGB-to-shadow synchronization. The observed games did not end, so live checkmate reward perspective and terminal/truncation behavior remain unverified. M1-04 therefore remains **UNVERIFIED**, G2 stays **in progress**, and the conditional G2 approval is not exercised. M1 status remains in progress until terminal/reward evidence is available or the acceptance record explicitly retains this limitation.
+The multi-turn runner verifies consecutive player moves and Atari replies from an evolving RGB-checked shadow board. Seven bounded terminal-seeking episodes reached at most five complete player/Atari cycles before a later player input was not reflected in RGB; targeted probes reproduced the input limitation from more than one legal position. The exact cause is not established. The runtime traces show no terminal, truncation, or nonzero reward. See `.agents/evidence/M1-04-terminal-verification.md` for the attempt-by-attempt record and current verdict.
+
+Mode configuration was checked by resetting each supported mode 0–4 and reading the configured mode byte only as a diagnostic. Only mode 0 received gameplay testing; higher modes were not evaluated for turn behavior or terminal reliability. Difficulty is limited to 0 in the installed ALE-Py release.
+
+## Multi-turn reproduction and safety tests
+
+Run one bounded terminal-feasibility episode inside the locked environment:
+
+```bash
+uv run --locked python scripts/run_m1_terminal_experiment.py --profile deterministic-dev --seed 20261017 --max-player-moves 40 --max-opponent-wait-frames 10000 --max-episode-frames 54000 --max-episode-seconds 900 --trace artifacts/m1/m1-04/attempt.json
+```
+
+The selector is a disclosed, one-ply diagnostic heuristic. It uses no Stockfish, model, or search engine. Every player move is checked against the current legal `python-chess` board; the shadow advances only after RGB evidence covers the full resulting board. A failed or ambiguous control stops the episode and retains the last verified board. `tests/test_m1_episode.py` covers bounded failures, cursor displacement, terminal/truncation bookkeeping, and reward perspective with synthetic environment doubles; those tests do not establish ALE terminal behavior.
+
+The current M1-04 result is **UNVERIFIED** because no real terminal/reward event was observed and later-turn player input is not reliable enough to continue to an ending. G2 remains **in progress**; conditional G2 approval is not exercised. M1 remains incomplete, and M2 requires separate explicit authorization.
