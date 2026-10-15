@@ -111,3 +111,11 @@ The authorized remote is `origin` (`https://github.com/dodaonam/atari-videochess
 ## 11. Next action
 
 G2 is technically accepted. M2 has not started; it requires a separate explicit user authorization, and O-01 through O-08 remain open.
+
+## 12. Post-push verification
+
+The implementation/evidence commit `f3d45923a4f183e671bdcdd6a5e29a95471b879c` was pushed to `origin/initial-idea` with a normal fast-forward. `git ls-remote origin refs/heads/initial-idea` returned the same SHA as local HEAD. The full-history clean clone at that revision reported preflight `ok=true`, zero errors, and only the expected artifact-manifest advisory because ignored raw `artifacts/` are not part of Git. The context-recovery and review-bundle exporter suite passed 57 tests in 65.321 seconds (exit 0). The first depth-1 clone could not satisfy a history-dependent test (`fatal: not a tree object`); after fetching full history, the suite passed. Full retained output: `.agents/evidence/logs/M1-post-push-cleanclone-20261016.log`.
+
+The committed-mode M1 review bundle was generated from the pushed implementation revision. The bundle passed ZIP CRC and all 74 manifest file SHA-256 checks, with no unlisted members, raw artifacts, or nested ZIPs. It contains 75 members and is 358,635 bytes. Bundle SHA-256: `86b0023c09ba86629b5ea269db47b63a5e33efa130cb6983637ad84590b23267`. The bundle excludes ignored raw experimental files by design; the separate local terminal ZIP remains uncommitted.
+
+The pre-existing untracked `main.py` and the local terminal evidence ZIP remain unchanged and unstaged. No `main` branch changes were made.
