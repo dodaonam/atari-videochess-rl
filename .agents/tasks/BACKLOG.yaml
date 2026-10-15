@@ -1075,8 +1075,8 @@
         {
           "kind": "file",
           "path": ".agents/evidence/M1-04-terminal-verification.md",
-          "detail": "Current source/test/runtime evidence, bounded episode accounting, exact M1 verdicts, and unresolved controller failure; no terminal or nonzero reward was observed.",
-          "result": "M1-04 remains UNVERIFIED; M1-001 is blocked by BLK-001; G2 remains in progress.",
+          "detail": "Current M1-04 result, eight-attempt terminal budget, phase-specific controller findings, 20-cycle replay, real ALE traces, and M1 acceptance matrix.",
+          "result": "M1-04 remains UNVERIFIED; M1-001 remains blocked by BLK-001; G2 remains in progress.",
           "provenance": {
             "status": "manual_verified",
             "executed_at_utc": "2026-10-15T10:22:25Z",
@@ -1193,8 +1193,8 @@
         {
           "kind": "file",
           "path": ".agents/evidence/M1-04-terminal-verification.md",
-          "detail": "Post-push clean-clone recovery from origin at 5e97f71: preflight recovered canonical state and all context/export tests passed without local-only files or environment installation.",
-          "result": "Clean clone 5e97f71: preflight passed and 57 context/export tests passed; no local-only files were present.",
+          "detail": "Current M1-04 result, eight-attempt terminal budget, phase-specific controller findings, 20-cycle replay, real ALE traces, and M1 acceptance matrix.",
+          "result": "M1-04 remains UNVERIFIED; M1-001 remains blocked by BLK-001; G2 remains in progress.",
           "provenance": {
             "status": "manual_verified",
             "executed_at_utc": "2026-10-15T10:45:37Z",
@@ -1242,6 +1242,128 @@
             "git_revision": "7f4c6f5b7d5129f41d324979302012df8a3699d5",
             "log_path": ".agents/evidence/M1-04-terminal-verification.md"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/BLK-001-diagnostic-20261015.md",
+          "detail": "Frame-level root-cause analysis, hypothesis dispositions, controlled FIRE-duration comparisons, real-ALE move categories, 20-cycle reliability result, and terminal limitation.",
+          "result": "Target confirmation is the observed failure stage; target FIRE timing is duration-sensitive. The 16-frame profile completed 20 cycles, but terminal evidence is absent and BLK-001 remains active.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-15T16:05:38Z",
+            "exit_code": null,
+            "git_revision": "ef86ba18fa9cd594ae419fa99b2ad191b75a49a8",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/BLK-001-diagnostic-20261015-r2.zip",
+          "detail": "Portable 59-member diagnostic bundle with the full failed replay trace, baseline frames, corrected/category/runtime traces, RGB frames, local artifact manifest, and per-member SHA-256 manifest.",
+          "result": "ZIP CRC, all member hashes, 30 trace-linked decoded RGB hashes, and sensitive-pattern scan passed; SHA-256 91b0d03907b1b6764f18991880596f9c09b90986ad982b05f106bed948f96a32.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-15T16:17:05Z",
+            "exit_code": null,
+            "git_revision": "ef86ba18fa9cd594ae419fa99b2ad191b75a49a8",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "artifacts/m1/MANIFEST-20261015.sha256",
+          "detail": "Complete SHA-256 manifest for the 1,214 files present under artifacts/m1/ at generation time; the manifest excludes itself.",
+          "result": "All 1,214 listed paths existed and hashes matched; no symlinks were present. The prior 327-entry manifest remains unchanged.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-15T16:10:38Z",
+            "exit_code": null,
+            "git_revision": "ef86ba18fa9cd594ae419fa99b2ad191b75a49a8",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "artifacts/m1/blk001-terminal-12f-20261015/trace.json",
+          "detail": "Eighth bounded terminal-seeking episode after controller correction, seed 20261015; 18 RGB-verified cycles before safe stop.",
+          "result": "ALE reward 0.0, terminated=false, truncated=false, frame 14081; M1-04 remains UNVERIFIED.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-15T16:08:16Z",
+            "exit_code": null,
+            "git_revision": "ef86ba18fa9cd594ae419fa99b2ad191b75a49a8",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "artifacts/m1/blk001-final-instrumented-20261015/trace.json",
+          "detail": "Final-code two-cycle deterministic real-ALE trace; each action carries ALE frame-number and environment-step boundaries.",
+          "result": "Two RGB-verified cycles; 1,332 ALE frames, 3.822 seconds, target FIRE 16 frames; no terminal observed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-15T16:10:38Z",
+            "exit_code": null,
+            "git_revision": "ef86ba18fa9cd594ae419fa99b2ad191b75a49a8",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "test",
+          "command": "./.venv/bin/python -m unittest tests.test_m1_control tests.test_m1_episode tests.test_m1_ale_integration tests.test_m1_environment tests.test_m1_shadow tests.test_m1_vision -v",
+          "result": "PASS: 50 M1 unit and real ALE integration tests in 13.238s.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-15T16:13:50Z",
+            "recorded_at_utc": "2026-10-15T16:14:14Z",
+            "exit_code": 0,
+            "git_revision": "ef86ba18fa9cd594ae419fa99b2ad191b75a49a8",
+            "log_path": ".agents/evidence/logs/BLK-001-m1-suite-20261015.log"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "./.venv/bin/python -m unittest discover -s tests -v",
+          "result": "PARTIAL: 112 of 113 tests passed in 67.098s; sole failure was the Stockfish readiness check because no executable was available in PATH.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-15T16:12:15Z",
+            "recorded_at_utc": "2026-10-15T16:14:14Z",
+            "exit_code": 1,
+            "git_revision": "ef86ba18fa9cd594ae419fa99b2ad191b75a49a8",
+            "log_path": ".agents/evidence/logs/BLK-001-full-suite-20261015.log"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "./.venv/bin/python -m unittest tests.test_m1_control tests.test_m1_episode tests.test_m1_ale_integration tests.test_m1_environment tests.test_m1_shadow tests.test_m1_vision tests.test_m1_terminal_cli -v",
+          "result": "PASS: 54 M1 unit, CLI safety, and real ALE integration tests in 14.383s.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-15T16:17:46Z",
+            "recorded_at_utc": "2026-10-15T16:18:01Z",
+            "exit_code": 0,
+            "git_revision": "ef86ba18fa9cd594ae419fa99b2ad191b75a49a8",
+            "log_path": ".agents/evidence/logs/BLK-001-m1-suite-final2-20261015.log"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "./.venv/bin/python -m unittest discover -s tests -v",
+          "result": "PARTIAL: 116 of 117 tests passed in 64.894s; sole failure was the Stockfish readiness check because no executable was available in PATH.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-15T16:18:25Z",
+            "recorded_at_utc": "2026-10-15T16:19:37Z",
+            "exit_code": 1,
+            "git_revision": "ef86ba18fa9cd594ae419fa99b2ad191b75a49a8",
+            "log_path": ".agents/evidence/logs/BLK-001-full-suite-final2-20261015.log"
+          }
         }
       ],
       "acceptance_criteria_ids": [
@@ -1252,7 +1374,7 @@
         "M1-05",
         "M1-06"
       ],
-      "next_action": "Diagnose and resolve the later-turn player input failure from the last RGB-verified position, then obtain a genuine ALE terminal/reward trace; keep G2 in progress and do not begin M2.",
+      "next_action": "M1-04 remains unverified: preserve the current safe controller and blocker, and obtain genuine ALE terminal/reward evidence only with an updated bounded budget; do not begin M2.",
       "plan_ref": ".agents/plans/M01-ale-feasibility.md"
     }
   ],

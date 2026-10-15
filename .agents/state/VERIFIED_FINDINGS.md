@@ -122,3 +122,25 @@
 - **Finding:** Seven mode-0 terminal-seeking episodes used 42.870 seconds and 18,673 ALE frames. Each stopped after a later player move was not observed, despite prior RGB-verified turns. Four targeted probes plus one `e2e4` probe did not isolate the cause. Across all 12 traces, ALE reward summed to 0.0 and no trace reported termination or truncation. The traces do not establish whether the failure is source selection, target navigation/FIRE, or turn handoff.
 - **Evidence:** `.agents/evidence/M1-04-terminal-verification.md`; `.agents/evidence/M1-04-experiment-budget.md`; local traces under ignored `artifacts/m1/m1-04/`.
 - **Impact:** M1-04 remains UNVERIFIED. M1-001 is blocked by BLK-001 and G2 remains in progress; do not begin M2.
+
+
+## FND-018 — BLK-001 failure localized to target confirmation
+
+- **Status:** observable failure stage confirmed; internal ROM mechanism unresolved (2026-10-15)
+- **Finding:** A genuine same-seed replay of `e2e3`, `e3e4`, `d2d3`, then `a2a3` reproduced the later-turn failure. RGB showed a stable source cursor, the selected-piece blink after source FIRE, and the selected pawn preview at `a3`. One-frame target FIRE did not change the board through frame 2279, including 132 subsequent no-op frames. This rejects source-selection failure, target-navigation failure, and a parser-only false negative for this replay. Target confirmation is the observed failure boundary. Controlled target FIRE durations correlate longer holds with more successful move categories, but the specific ROM-side polling/debounce/readiness cause is not established.
+- **Evidence:** `.agents/evidence/BLK-001-diagnostic-20261015.md`; `.agents/evidence/BLK-001-diagnostic-20261015-r2.zip`; full local per-frame source trace `artifacts/m1/blk001-frame-replay-20261015/trace.json`.
+- **Impact:** The controller now records explicit input phases, verifies source selection and each selected target from RGB, uses a separate 16-frame target FIRE, and stops without retry when the preview remains after confirmation. Keep BLK-001 active until M1-04 terminal/reward evidence is obtained.
+
+## FND-019 — Phase-verified controller completed 20 real ALE cycles
+
+- **Status:** verified 2026-10-15
+- **Finding:** With deterministic mode 0, seed `20261015`, frameskip 1, sticky-action probability 0, and 16-frame target FIRE, the real ALE controller completed 20 consecutive legal player moves and 20 Atari replies from reset, all verified from RGB. Additional real traces accepted `e2e4`, `g1f3`, `f1b5`, one-square pawn moves including `h2h3`, and the `d3d4` / Atari `c5d4` / `d1d4` capture line. The registered v5-default profile completed two full cycles with frameskip 4 and sticky-action probability 0.25. These runs improve on the prior five-cycle ceiling, but do not prove an unbounded success rate or terminal behavior.
+- **Evidence:** `.agents/evidence/BLK-001-diagnostic-20261015.md`; `.agents/evidence/BLK-001-diagnostic-20261015-r2.zip`; raw traces in ignored `artifacts/m1/` covered by `artifacts/m1/MANIFEST-20261015.sha256`.
+- **Impact:** M1-02 control calibration and M1-03 legal player/Atari transitions are supported by broader runtime evidence. Keep the shadow-board RGB gate strict and retain safe-stop behavior.
+
+## FND-020 — M1-04 remains unverified after the eighth terminal attempt
+
+- **Status:** verified observation; terminal/reward result unverified (2026-10-15)
+- **Finding:** The eighth authorized mode-0 terminal-seeking episode used the phase-verified controller with 12-frame target FIRE, ran 14,081 ALE frames in 37.973 seconds, and completed 18 full RGB-verified cycles. It stopped on a later `a2a1` because the selected-piece preview remained after target FIRE. ALE reported reward `0.0`, `terminated=false`, and `truncated=false`; no terminal event was observed. A separate 16-frame 20-cycle control replay also ended without terminal or reward.
+- **Evidence:** `.agents/evidence/M1-04-terminal-verification.md`; `.agents/evidence/BLK-001-diagnostic-20261015-r2.zip`; trace `artifacts/m1/blk001-terminal-12f-20261015/trace.json`.
+- **Impact:** M1-04 remains UNVERIFIED; M1-001 remains blocked by BLK-001; G2 remains in progress. Do not begin M2.
