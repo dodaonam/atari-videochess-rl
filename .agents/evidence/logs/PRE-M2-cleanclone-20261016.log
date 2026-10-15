@@ -1,0 +1,120 @@
+REMOTE: https://github.com/dodaonam/atari-videochess-rl.git
+BRANCH: initial-idea
+CLONE_REVISION: 992679e3c42974c7b6e0c442e2c2c0746b1f8173
+COMMAND: python3 scripts/agent_preflight.py
+PREFLIGHT_EXECUTED_AT_UTC: 2026-10-15T19:48:12Z
+PREFLIGHT_FINISHED_AT_UTC: 2026-10-15T19:48:12Z
+PREFLIGHT_ELAPSED_SECONDS: 0.49
+PREFLIGHT_EXIT_CODE: 0
+
+COMMAND: python3 -m unittest tests.test_agent_context tests.test_export_review_bundle -v
+TEST_EXECUTED_AT_UTC: 2026-10-15T19:48:12Z
+TEST_FINISHED_AT_UTC: 2026-10-15T19:49:17Z
+TEST_ELAPSED_SECONDS: 65.03
+TEST_EXIT_CODE: 0
+
+--- PREFLIGHT OUTPUT ---
+Agent context preflight: PASS
+Governance: G2 (approved); approved: G0, G1, G2
+Next engineering milestone: M2 — not started (pending user approval)
+Next task: M2-001 (pending) — Implement and verify the chess foundation
+Next task action: Await explicit user authorization for M2. Review proposed ADR-0002 before implementation; do not change M2 status or code until authorized.
+Next task dependencies: M1-001
+Next task acceptance criteria: M2-01, M2-02, M2-03, M2-04
+Tasks: done=10, in_progress=0, pending=1, blocked=0, cancelled=0
+Completed task IDs: G1-001, G1-002, G1-003, G1-004, G1-005, G1-006, G1-007, G1-008, M0-001, M1-001
+In progress task IDs: none
+Pending task IDs: M2-001
+Blocked task IDs: none
+Active blockers: none recorded
+Open confirmations:
+  O-01: Assignment/instructor rules for ALE observation extraction, action wrappers, custom PyTorch RL, Stockfish training use, and any engine use in offline evaluation.
+  O-02: Whether full-game performance on actual ALE is a hard submission requirement or a research target with an accepted fallback.
+  O-03: Whether the approximate three-week estimate is still the project deadline.
+  O-04: Actual Colab entitlement/quota, GPU availability, storage, and whether paid compute is allowed.
+  O-05: ALE/ROM runtime behavior, RAM mapping, game modes, difficulty behavior, and official evaluation settings.
+  O-06: PGN/tactical data sources, licenses, permitted use, and expected scale.
+  O-07: Stockfish version/search limits and whether it may be a benchmark opponent or offline evaluator.
+  O-08: Opponent pool and rating method for any Elo claim.
+Relevant decisions: docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md, docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md
+Acceptance criteria recognized: 51
+Last verified Git: initial-idea @ 0f4c49f322115194f0146fe7719c5447da996fc6
+Live Git: initial-idea @ 992679e3c42974c7b6e0c442e2c2c0746b1f8173
+Roadmap source: exact match; 19 sections; SHA-256 fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf
+Git recovery: expected commit/checkout transition; portable tracked-file manifest matches.
+Workspace Git status: differs from checkpoint
+Portable tracked baseline: matches
+Portable Git index: matches checkpoint
+Hashed ordinary-file snapshot: matches
+Content hashes: 102 ordinary files verified by SHA-256.
+Not content-verified by this hash map: PROJECT_STATE self-reference, chat history/credential-like paths, temp files, symlinks, and the excluded directories listed below.
+Excluded directories: .git, artifacts
+Artifact directories requiring independent manifests: artifacts
+Last verified dirty paths (0): none
+Dirty paths no longer present since checkpoint: ?? .agents/evidence/M1-04-terminal-success-20261016.zip; ?? main.py; A  .agents/evidence/PRE-M2-readiness-20261016.md; A  .agents/evidence/logs/PRE-M2-context-export-20261016.log; A  .agents/evidence/logs/PRE-M2-context-export-final-20261016.log; A  .agents/evidence/logs/PRE-M2-preflight-final2-20261016.log; A  .agents/plans/M02-chess-foundation.md; A  docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md; A  docs/03-technical/ACTION_ADAPTER.md; A  docs/03-technical/ALE_ENVIRONMENT.md; A  docs/03-technical/ARCHITECTURE.md; A  docs/03-technical/BOARD_EXTRACTION.md; A  docs/03-technical/MDP_SPEC.md; M  .agents/tasks/BACKLOG.yaml; M  docs/01-foundation/REQUIREMENTS.md; M  docs/02-management/RISK_REGISTER.md; M  docs/06-quality/TEST_STRATEGY.md
+Next user action: Review the Pre-M2 plan and proposed ADR-0002, then explicitly authorize M2 before implementation. G3 is not approved; O-01 through O-08 remain unresolved.
+WARNING ARTIFACT_MANIFEST_REQUIRED [.]: Artifact/data directories are excluded from content hashing and require independent manifest verification: artifacts.
+
+--- TEST OUTPUT ---
+test_blocked_task_must_reference_an_active_blocker (tests.test_agent_context.AgentContextRecoveryTests.test_blocked_task_must_reference_an_active_blocker) ... ok
+test_checkpoint_is_consistent_after_one_run_from_clean_worktree (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_is_consistent_after_one_run_from_clean_worktree) ... ok
+test_checkpoint_repairs_stale_handoff_pointer (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_repairs_stale_handoff_pointer) ... ok
+test_clean_clone_recovers_current_committed_state_without_local_artifacts (tests.test_agent_context.AgentContextRecoveryTests.test_clean_clone_recovers_current_committed_state_without_local_artifacts) ... ok
+test_clean_clone_recovers_g2_and_future_milestone_transitions (tests.test_agent_context.AgentContextRecoveryTests.test_clean_clone_recovers_g2_and_future_milestone_transitions) ... ok
+test_completed_task_requires_existing_evidence (tests.test_agent_context.AgentContextRecoveryTests.test_completed_task_requires_existing_evidence) ... ok
+test_done_task_cannot_rely_only_on_historical_unverified_evidence (tests.test_agent_context.AgentContextRecoveryTests.test_done_task_cannot_rely_only_on_historical_unverified_evidence) ... ok
+test_dry_run_with_partial_recovery_does_not_mutate_files (tests.test_agent_context.AgentContextRecoveryTests.test_dry_run_with_partial_recovery_does_not_mutate_files) ... ok
+test_future_milestone_bullet_criteria_are_valid_task_references (tests.test_agent_context.AgentContextRecoveryTests.test_future_milestone_bullet_criteria_are_valid_task_references) ... ok
+test_g1_cannot_be_ready_with_incomplete_g1_tasks (tests.test_agent_context.AgentContextRecoveryTests.test_g1_cannot_be_ready_with_incomplete_g1_tasks) ... ok
+test_git_ignored_zip_is_still_content_hashed (tests.test_agent_context.AgentContextRecoveryTests.test_git_ignored_zip_is_still_content_hashed) ... ok
+test_historical_baseline_checksum_detects_record_mutation (tests.test_agent_context.AgentContextRecoveryTests.test_historical_baseline_checksum_detects_record_mutation) ... ok
+test_historical_baseline_is_not_recompared_to_current_files (tests.test_agent_context.AgentContextRecoveryTests.test_historical_baseline_is_not_recompared_to_current_files) ... ok
+test_historical_g1_recovery_matches_recorded_baseline (tests.test_agent_context.AgentContextRecoveryTests.test_historical_g1_recovery_matches_recorded_baseline) ... ok
+test_ignored_cache_generation_does_not_create_source_content_drift (tests.test_agent_context.AgentContextRecoveryTests.test_ignored_cache_generation_does_not_create_source_content_drift) ... ok
+test_json_output_is_machine_readable_and_paths_are_portable (tests.test_agent_context.AgentContextRecoveryTests.test_json_output_is_machine_readable_and_paths_are_portable) ... ok
+test_large_files_and_artifact_directories_are_reported_once_and_separately (tests.test_agent_context.AgentContextRecoveryTests.test_large_files_and_artifact_directories_are_reported_once_and_separately) ... ok
+test_m0_cannot_be_authorized_before_g1_approval (tests.test_agent_context.AgentContextRecoveryTests.test_m0_cannot_be_authorized_before_g1_approval) ... ok
+test_manual_session_evidence_requires_sanitized_record_and_revision (tests.test_agent_context.AgentContextRecoveryTests.test_manual_session_evidence_requires_sanitized_record_and_revision) ... ok
+test_partial_state_file_is_detected_and_recovered (tests.test_agent_context.AgentContextRecoveryTests.test_partial_state_file_is_detected_and_recovered) ... ok
+test_preflight_detects_content_change_inside_existing_dirty_path (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_detects_content_change_inside_existing_dirty_path) ... ok
+test_preflight_detects_roadmap_source_mismatch (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_detects_roadmap_source_mismatch) ... ok
+test_preflight_discovers_every_documented_acceptance_criterion (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_discovers_every_documented_acceptance_criterion) ... ok
+test_preflight_finds_broken_markdown_link (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_finds_broken_markdown_link) ... ok
+test_preflight_recovers_project_state_without_conversation (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_recovers_project_state_without_conversation) ... ok
+test_preflight_rejects_dependency_cycle (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_rejects_dependency_cycle) ... ok
+test_preflight_rejects_invalid_state_schema (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_rejects_invalid_state_schema) ... ok
+test_preflight_reports_dirty_worktree_and_checkpoint_refreshes_it (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_reports_dirty_worktree_and_checkpoint_refreshes_it) ... ok
+test_preflight_reports_files_it_could_not_hash (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_reports_files_it_could_not_hash) ... ok
+test_preflight_reports_malformed_git_snapshot_without_crashing (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_reports_malformed_git_snapshot_without_crashing) ... ok
+test_preflight_reports_malformed_task_status_without_crashing (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_reports_malformed_task_status_without_crashing) ... ok
+test_project_context_can_be_recovered_without_chat_history (tests.test_agent_context.AgentContextRecoveryTests.test_project_context_can_be_recovered_without_chat_history) ... ok
+test_staging_checkpoint_control_files_does_not_create_snapshot_drift (tests.test_agent_context.AgentContextRecoveryTests.test_staging_checkpoint_control_files_does_not_create_snapshot_drift) ... ok
+test_state_blocker_index_must_match_active_blocker_records (tests.test_agent_context.AgentContextRecoveryTests.test_state_blocker_index_must_match_active_blocker_records) ... ok
+test_tracked_content_drift_is_detected_without_a_status_path_change (tests.test_agent_context.AgentContextRecoveryTests.test_tracked_content_drift_is_detected_without_a_status_path_change) ... ok
+test_verified_command_evidence_must_match_retained_log (tests.test_agent_context.AgentContextRecoveryTests.test_verified_command_evidence_must_match_retained_log) ... ok
+test_verified_command_evidence_requires_timestamp_revision_exit_and_log (tests.test_agent_context.AgentContextRecoveryTests.test_verified_command_evidence_requires_timestamp_revision_exit_and_log) ... ok
+test_verified_command_evidence_with_provenance_passes (tests.test_agent_context.AgentContextRecoveryTests.test_verified_command_evidence_with_provenance_passes) ... ok
+test_arbitrary_task_scope_resolves_dependencies_and_records_current_gate (tests.test_export_review_bundle.ExportReviewBundleTests.test_arbitrary_task_scope_resolves_dependencies_and_records_current_gate) ... ok
+test_archive_name_collision_does_not_overwrite_existing_file (tests.test_export_review_bundle.ExportReviewBundleTests.test_archive_name_collision_does_not_overwrite_existing_file) ... ok
+test_artifact_reference_is_omitted_by_default_and_included_only_with_opt_in (tests.test_export_review_bundle.ExportReviewBundleTests.test_artifact_reference_is_omitted_by_default_and_included_only_with_opt_in) ... ok
+test_clean_working_tree_is_exported_from_worktree (tests.test_export_review_bundle.ExportReviewBundleTests.test_clean_working_tree_is_exported_from_worktree) ... ok
+test_committed_mode_reads_only_requested_commit (tests.test_export_review_bundle.ExportReviewBundleTests.test_committed_mode_reads_only_requested_commit) ... ok
+test_export_does_not_change_state_index_or_tracked_working_files (tests.test_export_review_bundle.ExportReviewBundleTests.test_export_does_not_change_state_index_or_tracked_working_files) ... ok
+test_external_symlink_is_rejected_without_reading_target (tests.test_export_review_bundle.ExportReviewBundleTests.test_external_symlink_is_rejected_without_reading_target) ... ok
+test_ignored_files_are_excluded (tests.test_export_review_bundle.ExportReviewBundleTests.test_ignored_files_are_excluded) ... ok
+test_ignored_private_file_is_excluded_and_candidate_secret_stops_export (tests.test_export_review_bundle.ExportReviewBundleTests.test_ignored_private_file_is_excluded_and_candidate_secret_stops_export) ... ok
+test_manifest_hashes_crc_and_required_coverage_are_consistent (tests.test_export_review_bundle.ExportReviewBundleTests.test_manifest_hashes_crc_and_required_coverage_are_consistent) ... ok
+test_missing_required_context_fails_without_archive (tests.test_export_review_bundle.ExportReviewBundleTests.test_missing_required_context_fails_without_archive) ... ok
+test_missing_task_evidence_is_reported_as_a_limitation (tests.test_export_review_bundle.ExportReviewBundleTests.test_missing_task_evidence_is_reported_as_a_limitation) ... ok
+test_repeated_export_does_not_include_prior_archives (tests.test_export_review_bundle.ExportReviewBundleTests.test_repeated_export_does_not_include_prior_archives) ... ok
+test_short_credential_assignment_is_reported_without_value (tests.test_export_review_bundle.ExportReviewBundleTests.test_short_credential_assignment_is_reported_without_value) ... ok
+test_staged_uses_index_for_staged_content_and_head_for_unchanged (tests.test_export_review_bundle.ExportReviewBundleTests.test_staged_uses_index_for_staged_content_and_head_for_unchanged) ... ok
+test_unrelated_untracked_user_file_is_not_included (tests.test_export_review_bundle.ExportReviewBundleTests.test_unrelated_untracked_user_file_is_not_included) ... ok
+test_unsafe_git_path_is_rejected (tests.test_export_review_bundle.ExportReviewBundleTests.test_unsafe_git_path_is_rejected) ... ok
+test_windows_drive_path_is_rejected (tests.test_export_review_bundle.ExportReviewBundleTests.test_windows_drive_path_is_rejected) ... ok
+test_working_tree_uses_dirty_and_relevant_untracked_files (tests.test_export_review_bundle.ExportReviewBundleTests.test_working_tree_uses_dirty_and_relevant_untracked_files) ... ok
+
+----------------------------------------------------------------------
+Ran 57 tests in 64.668s
+
+OK
