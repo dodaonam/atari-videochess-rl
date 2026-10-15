@@ -1189,6 +1189,20 @@
             "git_revision": "cd9bd56cd3ac41eedd603a933d6886935a70e361",
             "log_path": ".agents/evidence/M1-04-terminal-verification.md"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M1-04-terminal-verification.md",
+          "detail": "Post-push clean-clone recovery from origin at 5e97f71: preflight recovered canonical state and all context/export tests passed without local-only files or environment installation.",
+          "result": "Clean clone 5e97f71: preflight passed and 57 context/export tests passed; no local-only files were present.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-15T10:45:37Z",
+            "recorded_at_utc": "2026-10-15T10:45:37Z",
+            "exit_code": null,
+            "git_revision": "5e97f71b6c1100b01e4e6f5a9617836eb0f18d19",
+            "log_path": ".agents/evidence/M1-04-terminal-verification.md"
+          }
         }
       ],
       "acceptance_criteria_ids": [
@@ -1203,5 +1217,5 @@
       "plan_ref": ".agents/plans/M01-ale-feasibility.md"
     }
   ],
-  "updated_at_utc": "2026-10-15T10:42:56Z"
+  "updated_at_utc": "2026-10-15T10:45:37Z"
 }
