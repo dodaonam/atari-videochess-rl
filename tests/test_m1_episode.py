@@ -22,16 +22,34 @@ PIECE_PIXELS = {
 }
 
 
-def render_fake_board(board: chess.Board, cursor: str) -> np.ndarray:
+def render_fake_board(
+    board: chess.Board,
+    cursor: str,
+    *,
+    selected_source: str | None = None,
+    selected_target: str | None = None,
+    frame_number: int = 0,
+) -> np.ndarray:
     rgb = np.empty((210, 160, 3), dtype=np.uint8)
     rgb[:] = BACKGROUND
     for square, piece in board.piece_map().items():
         name = chess.square_name(square)
-        if name == cursor:
+        if name == cursor or name == selected_source:
             continue
         color = BLUE if piece.color == chess.WHITE else GOLD
         paint(rgb, name, color, PIECE_PIXELS[piece.piece_type])
-    paint(rgb, cursor, GOLD, 19)
+    if selected_source is None:
+        paint(rgb, cursor, GOLD, 19)
+    else:
+        piece = board.piece_at(chess.parse_square(selected_source))
+        color = BLUE if piece.color == chess.WHITE else GOLD
+        if selected_target in (None, selected_source):
+            if frame_number % 2 == 0:
+                paint(rgb, selected_source, color, PIECE_PIXELS[piece.piece_type])
+        elif frame_number % 2 == 0:
+            paint(rgb, selected_source, color, PIECE_PIXELS[piece.piece_type])
+        else:
+            paint(rgb, selected_target, color, PIECE_PIXELS[piece.piece_type])
     return rgb
 
 
@@ -42,6 +60,8 @@ class FakeALE:
         self,
         *,
         fail_target_fire: bool = False,
+        fail_source_selection: bool = False,
+        fail_selected_target_navigation: bool = False,
         stop_kind: str | None = None,
         stop_reward: float = 0.0,
         overshoot_first_cursor_action: bool = False,
@@ -55,6 +75,8 @@ class FakeALE:
         self.held_frames = 0
         self.frame_number = 0
         self.fail_target_fire = fail_target_fire
+        self.fail_source_selection = fail_source_selection
+        self.fail_selected_target_navigation = fail_selected_target_navigation
         self.overshoot_first_cursor_action = overshoot_first_cursor_action
         self.overshot = False
         self.stop_kind = stop_kind
@@ -62,6 +84,7 @@ class FakeALE:
         self.stopped = False
         self.steps_after_terminal = 0
         self.last_frame = None
+        self.actions_seen: list[int] = []
 
     def __enter__(self):
         return self
@@ -71,7 +94,13 @@ class FakeALE:
 
     def _frame(self, reward=0.0, terminated=False, truncated=False):
         self.last_frame = ALEFrame(
-            rgb=render_fake_board(self.board, self.cursor),
+            rgb=render_fake_board(
+                self.board,
+                self.cursor,
+                selected_source=self.selected_source,
+                selected_target=self.selected_target,
+                frame_number=self.frame_number,
+            ),
             reward=reward,
             terminated=terminated,
             truncated=truncated,
@@ -95,6 +124,7 @@ class FakeALE:
         return {f"0x{address:02X}": 0 for address in addresses}
 
     def step(self, action):
+        self.actions_seen.append(action)
         self.frame_number += 1
         if self.stopped:
             self.steps_after_terminal += 1
@@ -157,17 +187,19 @@ class FakeALE:
                         row += 1; col += 1
                     else:
                         row += 1; col -= 1
-                    if 0 <= row < 8 and 0 <= col < 8:
+                    if 0 <= row < 8 and 0 <= col < 8 and not self.fail_selected_target_navigation:
                         self.selected_target = chr(ord("a") + col) + str(8 - row)
         elif action == 0:
             self.held_action = None
             self.held_frames = 0
         elif action == 1:
-            self.held_action = None
+            if self.held_action == 1:
+                return self._frame()
+            self.held_action = 1
             self.held_frames = 0
             if self.selected_source is None:
                 piece = self.board.piece_at(chess.parse_square(self.cursor))
-                if piece is not None and piece.color == chess.WHITE:
+                if piece is not None and piece.color == chess.WHITE and not self.fail_source_selection:
                     self.selected_source = self.cursor
                     self.selected_target = self.cursor
             elif not self.fail_target_fire:
@@ -245,8 +277,33 @@ class EpisodeSafetyTests(unittest.TestCase):
         result = self.run_fake(FakeALE(fail_target_fire=True))
 
         self.assertEqual(result["status"], "partial")
-        self.assertIn("FIRE selection or target input may have failed", result["failure"])
+        self.assertIn("selected-piece preview remained visible", result["failure"])
+        self.assertIn(
+            "target_confirmation_uncertain",
+            [event["phase"] for event in result["turns"][0]["input_phases"]],
+        )
         self.assertFalse(result["turns"][0]["player_move"]["verified_from_rgb"])
+        self.assertEqual(result["terminal"]["last_verified_fen"], chess.Board().fen())
+
+    def test_unverified_source_selection_stops_before_target_navigation(self) -> None:
+        fake = FakeALE(fail_source_selection=True)
+        result = self.run_fake(fake)
+
+        self.assertEqual(result["status"], "partial")
+        phases = [event["phase"] for event in result["turns"][0]["input_phases"]]
+        self.assertIn("source_selection_uncertain", phases)
+        self.assertNotIn("selected_target_navigation_requested", phases)
+        self.assertEqual(result["terminal"]["last_verified_fen"], chess.Board().fen())
+
+    def test_unverified_selected_target_stops_without_retry_or_target_fire(self) -> None:
+        fake = FakeALE(fail_selected_target_navigation=True)
+        result = self.run_fake(fake)
+
+        self.assertEqual(result["status"], "partial")
+        phases = [event["phase"] for event in result["turns"][0]["input_phases"]]
+        self.assertIn("selected_target_uncertain", phases)
+        self.assertNotIn("target_confirmation_requested", phases)
+        self.assertEqual(fake.actions_seen.count(1), 1, "only the source-selection FIRE should be issued")
         self.assertEqual(result["terminal"]["last_verified_fen"], chess.Board().fen())
 
     def test_missing_atari_reply_leaves_the_shadow_at_last_verified_state(self) -> None:

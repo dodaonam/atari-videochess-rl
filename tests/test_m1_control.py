@@ -22,9 +22,11 @@ class AtariControlPlanTests(unittest.TestCase):
                 (0, 33),
                 (1, 1),
                 (0, 1),
-                (2, 33),
                 (0, 33),
-                (1, 1),
+                (2, 33),
+                (0, 1),
+                (0, 33),
+                (1, 16),
                 (0, 1),
             ],
         )
@@ -39,17 +41,30 @@ class AtariControlPlanTests(unittest.TestCase):
         board = chess.Board()
         board.push_uci("e2e3")
         board.push_uci("c7c5")
-        timing = ControllerTiming(direction_frames=12, fire_settle_frames=14, fire_press_frames=2)
+        timing = ControllerTiming(
+            direction_frames=12,
+            fire_settle_frames=14,
+            source_fire_press_frames=2,
+            target_fire_press_frames=7,
+            source_selection_observation_frames=11,
+            selected_target_observation_frames=13,
+        )
 
         actions = plan_move(cursor_origin="c7", uci="e3e4", board=board, timing=timing)
 
         self.assertEqual((actions[0].index, actions[0].frames, actions[0].cursor_after), (8, 12, "d6"))
         self.assertEqual((actions[2].index, actions[2].frames, actions[2].cursor_after), (8, 12, "e5"))
         self.assertIn((1, 2), [(action.index, action.frames) for action in actions])
+        self.assertIn((1, 7), [(action.index, action.frames) for action in actions])
         self.assertIn((0, 14), [(action.index, action.frames) for action in actions])
+        source_observation = next(action for action in actions if action.phase == "verify_source_selection")
+        target_observation = next(action for action in actions if action.phase == "verify_selected_target")
+        self.assertEqual(source_observation.frames, 11)
+        self.assertEqual(target_observation.frames, 13)
         target_navigation = [action for action in actions if action.phase == "selected_target_navigation"]
         self.assertTrue(target_navigation)
         self.assertTrue(all(action.cursor_after is None for action in target_navigation))
+        self.assertEqual(target_navigation[-1].selected_target_after, "e4")
 
     def test_cursor_route_uses_observed_and_calibrated_diagonal_actions(self) -> None:
         actions = plan_cursor_route("d4", "e5")

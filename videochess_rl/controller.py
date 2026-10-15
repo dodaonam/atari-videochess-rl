@@ -27,19 +27,32 @@ class ActionFrame:
     frames: int
     cursor_after: str | None = None
     phase: str = "action"
+    selected_target_after: str | None = None
 
 
 @dataclass(frozen=True)
 class ControllerTiming:
     direction_frames: int = DIRECTION_FRAMES
     fire_settle_frames: int = FIRE_SETTLE_FRAMES
-    fire_press_frames: int = 1
+    source_fire_press_frames: int = 1
+    target_fire_press_frames: int = 16
     release_frames: int = 1
+    source_selection_observation_frames: int = 33
+    selected_target_observation_frames: int = 33
     frameskip: int = 1
     repeat_action_probability: float = 0.0
 
     def __post_init__(self) -> None:
-        if min(self.direction_frames, self.fire_settle_frames, self.fire_press_frames, self.release_frames, self.frameskip) < 1:
+        if min(
+            self.direction_frames,
+            self.fire_settle_frames,
+            self.source_fire_press_frames,
+            self.target_fire_press_frames,
+            self.release_frames,
+            self.source_selection_observation_frames,
+            self.selected_target_observation_frames,
+            self.frameskip,
+        ) < 1:
             raise ValueError("Controller frame timings and frameskip must be positive")
         if not 0.0 <= self.repeat_action_probability <= 1.0:
             raise ValueError("repeat_action_probability must be between 0 and 1")
@@ -128,9 +141,9 @@ def plan_move(
 ) -> tuple[ActionFrame, ...]:
     """Plan a legal move from the supplied verified position and observed cursor.
 
-    Direction holds and short FIRE pulses reflect the measured deterministic
-    development configuration. Each pulse remains an Atari joystick action;
-    the board is verified separately from RGB after execution.
+    Cursor directions use the measured hold duration. Source selection remains
+    a one-frame press, while target confirmation uses its separately calibrated
+    hold. Every phase is verified separately from RGB after execution.
     """
     try:
         move = chess.Move.from_uci(uci)
@@ -146,31 +159,51 @@ def plan_move(
         raise ValueError(f"Move is not legal from the current position: {uci}")
 
     actions: list[ActionFrame] = []
-    for start, destination, phase, cursor_is_moving in (
-        (cursor_origin, source, "cursor_to_source", True),
-        (source, target, "selected_target_navigation", False),
-    ):
-        path = _cursor_path(start, destination)
-        for index, (direction, cursor_after) in enumerate(path):
-            actions.append(
-                ActionFrame(
-                    direction,
-                    timing.direction_frames,
-                    cursor_after if cursor_is_moving else None,
-                    phase,
-                )
+    source_path = _cursor_path(cursor_origin, source)
+    for index, (direction, cursor_after) in enumerate(source_path):
+        actions.append(
+            ActionFrame(
+                direction,
+                timing.direction_frames,
+                cursor_after=cursor_after,
+                phase="cursor_to_source",
             )
-            if index < len(path) - 1:
-                actions.append(ActionFrame(NOOP, timing.release_frames, phase=phase))
-        if phase == "cursor_to_source":
-            actions.extend((
-                ActionFrame(NOOP, timing.fire_settle_frames, phase="settle_source"),
-                ActionFrame(FIRE, timing.fire_press_frames, phase="select_source"),
-                ActionFrame(NOOP, timing.release_frames, phase="release_source"),
-            ))
+        )
+        if index < len(source_path) - 1:
+            actions.append(ActionFrame(NOOP, timing.release_frames, phase="cursor_to_source"))
+
     actions.extend((
-        ActionFrame(NOOP, timing.fire_settle_frames, phase="settle_target"),
-        ActionFrame(FIRE, timing.fire_press_frames, phase="select_target"),
+        ActionFrame(NOOP, timing.fire_settle_frames, phase="settle_source"),
+        ActionFrame(FIRE, timing.source_fire_press_frames, phase="select_source"),
+        ActionFrame(NOOP, timing.release_frames, phase="release_source"),
+        ActionFrame(
+            NOOP,
+            timing.source_selection_observation_frames,
+            phase="verify_source_selection",
+            selected_target_after=source,
+        ),
+    ))
+
+    target_path = _cursor_path(source, target)
+    for direction, selected_target_after in target_path:
+        actions.extend((
+            ActionFrame(
+                direction,
+                timing.direction_frames,
+                phase="selected_target_navigation",
+                selected_target_after=selected_target_after,
+            ),
+            ActionFrame(NOOP, timing.release_frames, phase="release_selected_target"),
+            ActionFrame(
+                NOOP,
+                timing.selected_target_observation_frames,
+                phase="verify_selected_target",
+                selected_target_after=selected_target_after,
+            ),
+        ))
+
+    actions.extend((
+        ActionFrame(FIRE, timing.target_fire_press_frames, phase="select_target"),
         ActionFrame(NOOP, timing.release_frames, phase="release_target"),
     ))
     return tuple(actions)

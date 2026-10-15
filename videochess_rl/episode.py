@@ -157,6 +157,88 @@ def _window_record(
     }
 
 
+def _piece_channel(color: chess.Color) -> str:
+    return "blue" if color == chess.WHITE else "gold"
+
+
+def _source_selection_evidence(
+    window: BoardWindow,
+    reference_board: chess.Board,
+    source: str,
+) -> dict[str, object]:
+    """Recognize VideoChess' flashing selected-piece state from RGB only."""
+    piece = reference_board.piece_at(chess.parse_square(source))
+    if piece is None:
+        return {"verified": False, "reason": "source square has no shadow piece"}
+    channel = _piece_channel(piece.color)
+    counts = [getattr(observation.cell(source), channel) for observation in window.observations]
+    visible = sum(count > 0 for count in counts)
+    absent = len(counts) - visible
+    no_cursor = not window.cursor_squares
+    legal_board_view = window.is_stable and window.matches_board_except_cursor(reference_board)
+    verified = visible >= 2 and absent >= 2 and no_cursor and legal_board_view
+    return {
+        "verified": verified,
+        "source_square": source,
+        "piece_color": "white" if piece.color else "black",
+        "piece_visible_frames": visible,
+        "piece_absent_frames": absent,
+        "cursor_squares": sorted(window.cursor_squares),
+        "stable_board_except_cursor": legal_board_view,
+        "signature": "selected-piece blink with cursor absent" if verified else None,
+    }
+
+
+def _selected_target_evidence(
+    window: BoardWindow,
+    reference_board: chess.Board,
+    source: str,
+    target: str,
+) -> dict[str, object]:
+    """Verify a flashing selected-piece preview at the requested target square."""
+    piece = reference_board.piece_at(chess.parse_square(source))
+    if piece is None:
+        return {"verified": False, "reason": "source square has no shadow piece"}
+    channel = _piece_channel(piece.color)
+    source_cell = window.cell(source)
+    target_cell = window.cell(target)
+    unrelated_squares_match = True
+    for square in chess.SQUARES:
+        name = chess.square_name(square)
+        if name in (source, target):
+            continue
+        cell = window.cell(name)
+        if cell.side == "unknown" and cell.masked_only:
+            continue
+        expected_piece = reference_board.piece_at(square)
+        expected_side = "empty" if expected_piece is None else ("white" if expected_piece.color else "black")
+        if cell.side != expected_side:
+            unrelated_squares_match = False
+            break
+    target_piece_seen = target_cell.blue_piece_seen if piece.color else target_cell.gold_piece_seen
+    source_piece_seen = source_cell.blue_piece_seen if piece.color else source_cell.gold_piece_seen
+    verified = (
+        target_piece_seen
+        and source_piece_seen
+        and unrelated_squares_match
+        and window.cursor_squares.issubset({source})
+    )
+    return {
+        "verified": verified,
+        "source_square": source,
+        "target_square": target,
+        "piece_color": "white" if piece.color else "black",
+        "source_piece_seen": source_piece_seen,
+        "target_piece_seen": target_piece_seen,
+        "target_piece_pixel_frames": sum(
+            getattr(observation.cell(target), channel) > 0 for observation in window.observations
+        ),
+        "cursor_squares": sorted(window.cursor_squares),
+        "unrelated_squares_match": unrelated_squares_match,
+        "signature": "selected-piece preview visible at target" if verified else None,
+    }
+
+
 def run_episode(
     *,
     config: ALEConfig | None = None,
@@ -168,6 +250,7 @@ def run_episode(
     max_episode_frames: int = 54000,
     max_episode_seconds: float = 900.0,
     max_artifact_bytes: int = 250 * 1024 * 1024,
+    target_fire_press_frames: int = 16,
     artifact_dir: str | None = None,
     env_factory: Callable[[ALEConfig], VideoChessEnv] = VideoChessEnv,
 ) -> dict[str, object]:
@@ -181,9 +264,13 @@ def run_episode(
 
     config = config or ALEConfig.deterministic_dev()
     selector = move_selector or choose_diagnostic_move
+    input_observation_frames = 66 if config.frameskip > 1 else WINDOW_FRAMES
     timing = ControllerTiming(
+        target_fire_press_frames=target_fire_press_frames,
         frameskip=config.frameskip,
         repeat_action_probability=config.repeat_action_probability,
+        source_selection_observation_frames=input_observation_frames,
+        selected_target_observation_frames=input_observation_frames,
     )
     started_monotonic = time.monotonic()
     trace: dict[str, object] = {
@@ -196,8 +283,11 @@ def run_episode(
         "controller_timing": {
             "direction_frames": timing.direction_frames,
             "fire_settle_frames": timing.fire_settle_frames,
-            "fire_press_frames": timing.fire_press_frames,
+            "source_fire_press_frames": timing.source_fire_press_frames,
+            "target_fire_press_frames": timing.target_fire_press_frames,
             "release_frames": timing.release_frames,
+            "source_selection_observation_frames": timing.source_selection_observation_frames,
+            "selected_target_observation_frames": timing.selected_target_observation_frames,
             "frameskip": timing.frameskip,
             "repeat_action_probability": timing.repeat_action_probability,
         },
@@ -290,12 +380,28 @@ def run_episode(
                 {"turn": turn_index, "state": state.value, "reason": reason, "frame_number": last_frame.frame_number}
             )
 
+        def set_input_phase(
+            turn: dict[str, object],
+            phase: str,
+            reason: str,
+            **evidence: object,
+        ) -> None:
+            turn.setdefault("input_phases", []).append(
+                {
+                    "phase": phase,
+                    "reason": reason,
+                    "frame_number": last_frame.frame_number,
+                    **evidence,
+                }
+            )
+
         def execute(action: int, requested_frames: int, name: str) -> list[ALEFrame]:
             nonlocal last_frame, total_reward, episode_env_steps, terminal_observed, stop_reason
             if terminal_observed or stop_reason:
                 return []
             env_steps = math.ceil(requested_frames / config.frameskip)
             start_frame = last_frame.frame_number
+            start_env_step = episode_env_steps
             start_rgb = last_frame.rgb
             samples: list[ALEFrame] = []
             reward_sum = 0.0
@@ -320,6 +426,10 @@ def run_episode(
                     "action": ACTION_NAMES[action],
                     "action_index": action,
                     "requested_frames": requested_frames,
+                    "frame_number_start": start_frame,
+                    "frame_number_end": last_frame.frame_number,
+                    "env_step_start": start_env_step,
+                    "env_step_end": episode_env_steps,
                     "actual_frame_delta": last_frame.frame_number - start_frame,
                     "changed_pixels_start_to_end": int(np.any(start_rgb != last_frame.rgb, axis=2).sum()),
                     "ale_reward_sum": reward_sum,
@@ -482,6 +592,8 @@ def run_episode(
                     "player_move": {"uci": player_move, "verified_from_rgb": False},
                     "opponent_reply": {"uci": None, "verified_from_rgb": False},
                     "evidence_windows": [],
+                    "input_phases": [],
+                    "selected_target_observations": [],
                 }
                 trace["turns"].append(turn)
                 trace["player_move"] = turn["player_move"]
@@ -489,34 +601,145 @@ def run_episode(
                 set_turn_state(turn_index, TurnState.PLAYER_MOVE_EXECUTING, f"executing legal move {player_move}")
                 move_source = chess.square_name(planned_move.from_square)
                 move_target = chess.square_name(planned_move.to_square)
+                source_selection_verified = False
+                target_position_verified = False
+                set_input_phase(turn, "player_turn_verified", "stable RGB board and unique cursor matched the last verified shadow position")
+                set_input_phase(turn, "cursor_navigating_to_source", f"navigating the cursor to {move_source}")
+                if current_cursor == move_source:
+                    set_input_phase(turn, "source_cursor_verified", f"RGB already showed the cursor on {move_source}", cursor_square=move_source)
                 for event in plan:
                     if stop_reason or terminal_observed:
                         break
                     if event.cursor_after is not None:
                         current_window = move_cursor_to(event.cursor_after, board_before, current_window)
+                        if event.cursor_after == move_source:
+                            set_input_phase(
+                                turn,
+                                "source_cursor_verified",
+                                f"RGB confirmed the cursor on {move_source}",
+                                cursor_square=move_source,
+                            )
                     elif event.phase == "cursor_to_source":
                         continue
-                    elif event.phase in ("settle_source", "settle_target"):
+                    elif event.phase == "settle_source":
                         settle_samples = execute(event.index, event.frames, event.phase)
-                        if event.phase == "settle_source":
-                            if not settle_samples:
-                                raise EpisodeStop("No ALE frames were available to verify the selected source")
-                            settle_window = vision.window(tuple(frame.rgb for frame in settle_samples))
-                            if (
-                                not settle_window.is_stable
-                                or _unique_cursor(settle_window) != move_source
-                                or not settle_window.matches_board_except_cursor(board_before)
-                            ):
-                                raise EpisodeStop("Source square/cursor was not stable before FIRE selection")
-                            current_window = settle_window
-                        elif settle_samples:
-                            save_frame(f"turn-{turn_index:02d}-target-navigation")
-                    elif event.phase in ("release_source", "release_target"):
+                        if not settle_samples:
+                            raise EpisodeStop("No ALE frames were available to verify the source cursor")
+                        settle_window = vision.window(tuple(frame.rgb for frame in settle_samples))
+                        if (
+                            not settle_window.is_stable
+                            or _unique_cursor(settle_window) != move_source
+                            or not settle_window.matches_board_except_cursor(board_before)
+                        ):
+                            raise EpisodeStop("Source square/cursor was not stable before FIRE selection")
+                        current_window = settle_window
+                        set_input_phase(
+                            turn,
+                            "source_cursor_verified",
+                            f"stable RGB confirmed the cursor and legal board at {move_source}",
+                            cursor_square=move_source,
+                            rgb_sha256=hashlib.sha256(settle_samples[-1].rgb.tobytes()).hexdigest(),
+                        )
+                    elif event.phase == "select_source":
+                        set_input_phase(turn, "source_selection_requested", f"pressed FIRE once on {move_source}")
                         execute(event.index, event.frames, event.phase)
-                        if event.phase == "release_source":
-                            save_frame(f"turn-{turn_index:02d}-source-selected")
-                        else:
-                            save_frame(f"turn-{turn_index:02d}-target-fired")
+                    elif event.phase == "release_source":
+                        execute(event.index, event.frames, event.phase)
+                        save_frame(f"turn-{turn_index:02d}-source-fire-released")
+                    elif event.phase == "verify_source_selection":
+                        selection_samples = execute(event.index, event.frames, event.phase)
+                        if not selection_samples:
+                            raise EpisodeStop("No ALE frames were available to verify source selection")
+                        selection_window = vision.window(tuple(frame.rgb for frame in selection_samples))
+                        selection_evidence = _source_selection_evidence(
+                            selection_window,
+                            board_before,
+                            move_source,
+                        )
+                        selection_evidence["window"] = _window_record(
+                            selection_window,
+                            selection_samples[-1],
+                            board_before,
+                        )
+                        turn["source_selection_evidence"] = selection_evidence
+                        if not selection_evidence["verified"]:
+                            set_input_phase(
+                                turn,
+                                "source_selection_uncertain",
+                                "RGB did not show the selected-piece blink; stopped before target input",
+                                evidence=selection_evidence,
+                            )
+                            raise EpisodeStop("Source FIRE did not produce a verified selected-piece RGB signature")
+                        source_selection_verified = True
+                        set_input_phase(
+                            turn,
+                            "source_selection_verified",
+                            "RGB showed the selected-piece blink with the cursor absent",
+                            evidence=selection_evidence,
+                        )
+                        save_frame(f"turn-{turn_index:02d}-source-selection-verified")
+                    elif event.phase == "selected_target_navigation":
+                        if not source_selection_verified:
+                            raise EpisodeStop("Selected-target navigation was blocked because source selection was unverified")
+                        set_input_phase(
+                            turn,
+                            "selected_target_navigation_requested",
+                            f"sent one {ACTION_NAMES[event.index]} input toward {event.selected_target_after}",
+                            intended_target=event.selected_target_after,
+                        )
+                        execute(event.index, event.frames, event.phase)
+                    elif event.phase == "release_selected_target":
+                        execute(event.index, event.frames, event.phase)
+                    elif event.phase == "verify_selected_target":
+                        target_samples = execute(event.index, event.frames, event.phase)
+                        if not target_samples:
+                            raise EpisodeStop("No ALE frames were available to verify the selected target")
+                        target_window = vision.window(tuple(frame.rgb for frame in target_samples))
+                        target_evidence = _selected_target_evidence(
+                            target_window,
+                            board_before,
+                            move_source,
+                            event.selected_target_after or move_source,
+                        )
+                        target_evidence["window"] = _window_record(
+                            target_window,
+                            target_samples[-1],
+                            board_before,
+                        )
+                        turn["selected_target_observations"].append(target_evidence)
+                        if not target_evidence["verified"]:
+                            set_input_phase(
+                                turn,
+                                "selected_target_uncertain",
+                                "RGB did not verify the intended selected-piece preview; no direction was retried",
+                                evidence=target_evidence,
+                            )
+                            raise EpisodeStop(
+                                f"Selected target {event.selected_target_after} was not verifiable from RGB; stopped before FIRE"
+                            )
+                        target_position_verified = event.selected_target_after == move_target
+                        set_input_phase(
+                            turn,
+                            "target_position_verified",
+                            f"RGB showed the selected piece preview at {event.selected_target_after}",
+                            evidence=target_evidence,
+                        )
+                        if event.selected_target_after == move_target:
+                            save_frame(f"turn-{turn_index:02d}-target-position-verified")
+                    elif event.phase == "select_target":
+                        if not source_selection_verified or not target_position_verified:
+                            raise EpisodeStop("Target FIRE was blocked because source or target position was unverified")
+                        set_input_phase(
+                            turn,
+                            "target_confirmation_requested",
+                            f"held FIRE for {event.frames} ALE frames at verified target {move_target}",
+                            target_square=move_target,
+                            fire_press_frames=event.frames,
+                        )
+                        execute(event.index, event.frames, event.phase)
+                    elif event.phase == "release_target":
+                        execute(event.index, event.frames, event.phase)
+                        save_frame(f"turn-{turn_index:02d}-target-fire-released")
                     else:
                         execute(event.index, event.frames, event.phase)
 
@@ -535,15 +758,43 @@ def run_episode(
                     window = observe_window("player move RGB confirmation", expected_player_board)
                     confirmation_frames += window.observations.__len__() * config.frameskip
                     turn["evidence_windows"].append(_window_record(window, last_frame, expected_player_board))
+                    remaining_selection = _selected_target_evidence(
+                        window,
+                        board_before,
+                        move_source,
+                        move_target,
+                    )
+                    if remaining_selection["verified"]:
+                        set_input_phase(
+                            turn,
+                            "target_confirmation_uncertain",
+                            "RGB still showed the selected piece at source and target after FIRE; stopped without retry",
+                            evidence=remaining_selection,
+                        )
+                        raise EpisodeStop(
+                            "Target FIRE did not produce a board transition; the selected-piece preview remained visible, so no retry was issued"
+                        )
                     if not window.is_stable:
                         mismatch_windows += 1
                     elif window.matches_board(expected_player_board):
                         player_window = window
+                        set_input_phase(
+                            turn,
+                            "move_transition_observed",
+                            "RGB showed the complete candidate player board",
+                            evidence=_window_record(window, last_frame, expected_player_board),
+                        )
                         break
                     elif window.matches_board_except_cursor(expected_player_board):
                         player_partial_streak += 1
                         if player_partial_streak >= 1:
                             player_window = window
+                            set_input_phase(
+                                turn,
+                                "move_transition_observed",
+                                "RGB showed the candidate player board except for the cursor-masked square",
+                                evidence=_window_record(window, last_frame, expected_player_board),
+                            )
                             break
                     elif window.matches_board_except_cursor(board_before):
                         stagnant_windows += 1
@@ -567,6 +818,7 @@ def run_episode(
                 if player_window is None:
                     raise EpisodeStop("RGB did not confirm the player move within the bounded observation windows")
 
+                set_input_phase(turn, "atari_thinking", "player candidate was observed; waiting for an RGB-verified Atari reply")
                 set_turn_state(turn_index, TurnState.ATARI_THINKING, "player candidate observed; waiting for a unique legal Atari reply")
                 pending_shadow = ShadowBoard(board=expected_player_board)
                 waited_frames = 0
@@ -650,6 +902,20 @@ def run_episode(
                         "shadow_fen_after": shadow.board.fen(),
                         "verification": "unique legal candidate repeated in two windows, then full RGB coverage",
                     }
+                )
+                set_input_phase(
+                    turn,
+                    "player_move_confirmed",
+                    "the player move and Atari reply were verified by complete multi-cursor RGB coverage",
+                    player_move=player_move,
+                    opponent_reply=candidate_reply,
+                    final_board_rgb_verified=True,
+                )
+                set_input_phase(
+                    turn,
+                    "opponent_move_confirmed",
+                    f"RGB confirmed the legal Atari reply {candidate_reply}",
+                    opponent_reply=candidate_reply,
                 )
                 turn["board_after_fen"] = shadow.board.fen()
                 turn["full_board_evidence"] = {
