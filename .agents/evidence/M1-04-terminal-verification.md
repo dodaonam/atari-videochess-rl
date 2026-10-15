@@ -266,3 +266,16 @@ The terminal experiment CLI now refuses an existing trace path, an existing `fra
 - **Command:** `./.venv/bin/python -m unittest discover -s tests -v`
 - **Result:** 117 tests in 64.894s; 116 passed; one failed; exit code `1`. The sole failure remained `test_stockfish_answers_uci_readiness_without_searching` because the Stockfish executable is unavailable in PATH. The M1-focused 54-test suite, all four new CLI safety checks, and the context recovery check passed.
 - **Log:** [`BLK-001-full-suite-final2-20261015.log`](logs/BLK-001-full-suite-final2-20261015.log).
+
+
+### Portable clean-clone fixture correction and final context/export run
+
+The recovery test initially failed because its synthetic Git repository copied ignored-but-committed evidence files, then ordinary `git add --all` omitted those files. This made the fixture's commit differ from the checked-in portable manifest and caused valid relative evidence links to appear broken. The fixture now force-adds the copied HEAD tree, preserving ignored paths that are already committed. It does not change runtime code or weaken preflight checks.
+
+- **Source revision:** `75498a61b258f293a77d4059088004b647a1c75f`.
+- **Executed:** 2026-10-15T16:29:07Z–16:30:02Z.
+- **Command:** `python3 -m unittest tests.test_agent_context tests.test_export_review_bundle -v`.
+- **Result:** PASS, 57 tests in 54.451s; exit code `0`. This includes the committed-state synthetic clean-clone recovery test and the source-checkout context recovery test.
+- **Log:** [`BLK-001-context-export-final-20261015.log`](logs/BLK-001-context-export-final-20261015.log), SHA-256 `37e091c00350cc962aac2115b2c1a522fa2ffebd71b03f2bd12e45a9f8aff4a6`.
+- **Artifact manifest:** `artifacts/m1/MANIFEST-20261015.sha256`, 1,214 entries; `sha256sum --check --status` passed.
+- **M1 decision:** M1-04 remains UNVERIFIED because no real ALE terminal or nonzero reward was observed. G2 remains in progress and BLK-001 remains active.

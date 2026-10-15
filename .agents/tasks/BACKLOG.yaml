@@ -1364,6 +1364,19 @@
             "git_revision": "ef86ba18fa9cd594ae419fa99b2ad191b75a49a8",
             "log_path": ".agents/evidence/logs/BLK-001-full-suite-final2-20261015.log"
           }
+        },
+        {
+          "kind": "test",
+          "command": "python3 -m unittest tests.test_agent_context tests.test_export_review_bundle -v",
+          "result": "PASS: 57 context, recovery, clean-clone, and export tests in 54.451s. The clean-clone fixture preserves ignored-but-committed evidence files.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-15T16:29:07Z",
+            "recorded_at_utc": "2026-10-15T16:30:02Z",
+            "exit_code": 0,
+            "git_revision": "75498a61b258f293a77d4059088004b647a1c75f",
+            "log_path": ".agents/evidence/logs/BLK-001-context-export-final-20261015.log"
+          }
         }
       ],
       "acceptance_criteria_ids": [
@@ -1378,5 +1391,5 @@
       "plan_ref": ".agents/plans/M01-ale-feasibility.md"
     }
   ],
-  "updated_at_utc": "2026-10-15T10:55:03Z"
+  "updated_at_utc": "2026-10-15T16:30:02Z"
 }
