@@ -1203,6 +1203,45 @@
             "git_revision": "5e97f71b6c1100b01e4e6f5a9617836eb0f18d19",
             "log_path": ".agents/evidence/M1-04-terminal-verification.md"
           }
+        },
+        {
+          "kind": "test",
+          "command": "uv --offline --cache-dir .venv/.cache/uv run --locked --no-sync python -m unittest discover -s tests -v",
+          "result": "PASS: 111 tests in 89.692s.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-15T10:48:13Z",
+            "recorded_at_utc": "2026-10-15T10:49:44Z",
+            "exit_code": 0,
+            "git_revision": "7f4c6f5b7d5129f41d324979302012df8a3699d5",
+            "log_path": ".agents/evidence/M1-04-terminal-verification.md"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "PASS: no errors; portable baseline matched remote clean-clone commit.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-15T10:53:47Z",
+            "recorded_at_utc": "2026-10-15T10:53:48Z",
+            "exit_code": 0,
+            "git_revision": "7f4c6f5b7d5129f41d324979302012df8a3699d5",
+            "log_path": ".agents/evidence/M1-04-terminal-verification.md"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "python3 -m unittest tests.test_agent_context tests.test_export_review_bundle -v",
+          "result": "PASS: 57 tests in 75.281s.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-15T10:53:48Z",
+            "recorded_at_utc": "2026-10-15T10:55:03Z",
+            "exit_code": 0,
+            "git_revision": "7f4c6f5b7d5129f41d324979302012df8a3699d5",
+            "log_path": ".agents/evidence/M1-04-terminal-verification.md"
+          }
         }
       ],
       "acceptance_criteria_ids": [
@@ -1217,5 +1256,5 @@
       "plan_ref": ".agents/plans/M01-ale-feasibility.md"
     }
   ],
-  "updated_at_utc": "2026-10-15T10:45:37Z"
+  "updated_at_utc": "2026-10-15T10:55:03Z"
 }

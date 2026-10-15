@@ -1,6 +1,6 @@
 # M1-04 Terminal, Reward, Turn, and Mode Verification
 
-- **Recorded at:** 2026-10-15T10:45:37Z.
+- **Recorded at:** 2026-10-15T10:55:03Z.
 - **Branch / source revision:** `initial-idea` at `dd67267ff85670c674d0d6d08c129ce10692798f`; working tree contained authorized M1 changes.
 - **Authorization:** `.agents/evidence/M1-authorization.md` and the current direct user task.
 - **Plan:** `.agents/plans/M01-ale-feasibility.md`.
@@ -178,7 +178,7 @@ Exit code: 0
 - Result: `PASS: 2 recovery tests in 27.118s.`
 Exit code: 0
 
-### Final remote clean-clone recovery
+### Remote clean-clone recovery after mode-fix push
 
 - **Executed:** 2026-10-15T10:44:19Z–10:45:37Z.
 - **Clone source/revision:** `https://github.com/dodaonam/atari-videochess-rl.git`, branch `initial-idea`, HEAD `5e97f71b6c1100b01e4e6f5a9617836eb0f18d19`.
@@ -192,3 +192,30 @@ Exit code: 0
 - **Limit:** The clean clone did not install dependencies and did not run M0/M1 ALE/PyTorch/Stockfish smoke tests. Those environment-dependent checks ran in the locked local environment instead.
 
 Recorded result: Clean clone 5e97f71: preflight passed and 57 context/export tests passed; no local-only files were present.
+
+## Final verification at published HEAD
+
+- **Revision:** `7f4c6f5b7d5129f41d324979302012df8a3699d5` on `origin/initial-idea`.
+
+### Full local suite
+
+- **Executed:** 2026-10-15T10:48:13Z–10:49:44Z.
+- Command: `uv --offline --cache-dir .venv/.cache/uv run --locked --no-sync python -m unittest discover -s tests -v`
+- Result: `PASS: 111 tests in 89.692s.`
+Exit code: 0
+- This run includes the corrected executable-mode clone fixture and the M1 mode-reset test.
+
+### Final remote clean clone
+
+- **Executed:** 2026-10-15T10:50:04Z–10:55:03Z.
+- **Clone HEAD:** `7f4c6f5b7d5129f41d324979302012df8a3699d5`.
+- **Local-only absence:** `main.py`, `chat_history.md`, `.venv`, and `artifacts/` were absent.
+- Preflight command: `python3 scripts/agent_preflight.py`.
+- Preflight result: `PASS: no errors; portable baseline matched remote clean-clone commit.`
+- Preflight exit code: `0`.
+- Context/export test command: `python3 -m unittest tests.test_agent_context tests.test_export_review_bundle -v`.
+- Context/export test result: `PASS: 57 tests in 75.281s.`
+- Context/export test exit code: `0`.
+- Recovered G2 `in_progress`, G0/G1 approved, M1 active with M1-001 blocked by BLK-001, M2 still separately gated, and O-01 through O-08 open. No dependencies were installed in the clone.
+
+The full clean-clone suite covers context and export behavior only. M0/M1 runtime smoke tests remained in the locked local environment and were not repeated in the dependency-free clone.
