@@ -6,6 +6,30 @@
 - **Plan:** `.agents/plans/M01-ale-feasibility.md`.
 - **Verdict:** **PARTIAL. M1-04 remains UNVERIFIED; M1-001 and G2 are not complete.**
 
+## Latest BLK-001 continuation (2026-10-15)
+
+This section supersedes the earlier attempt counts and unresolved-stage description below. The earlier evidence is retained as the historical baseline and is not rewritten.
+
+- **Current diagnosis:** A same-seed later-turn `a2a3` replay localized the observable failure to target confirmation. RGB verified the source cursor, the selected-piece blink after source FIRE, and the selected piece's preview at `a3`. A one-frame target FIRE produced no board transition through frame 2279, including 132 subsequent no-op frames. Controlled target FIRE durations (1, 4, 6, 8, 12, and 16 frames) show that a longer target press correlates with more successful inputs. This does not prove the ROM-side poll/debounce/readiness mechanism. See [BLK-001 diagnostic evidence](BLK-001-diagnostic-20261015.md) and the [portable diagnostic ZIP](BLK-001-diagnostic-20261015-r2.zip).
+- **Controller change:** The controller now records input phases, verifies source selection and each selected-target preview from RGB, uses a separate 16-frame target FIRE, and stops without retry if the selected preview remains after FIRE. The full-board shadow transition check is unchanged.
+- **Reliability:** The 16-frame deterministic mode-0 replay completed 20 player moves and 20 Atari replies over 15,356 ALE frames in 41.255 seconds. A 12-frame terminal-seeking episode completed 18 full cycles over 14,081 frames in 37.973 seconds and then safely stopped on `a2a1`. A registered v5-default run completed two cycles at frameskip 4 and sticky-action probability 0.25. Targeted traces also verified `e2e4`, `g1f3`, `f1b5`, `d3d4`, Atari `c5d4`, and `d1d4` capture inputs.
+- **Terminal result:** The eighth authorized terminal-seeking episode (seed `20261015`, mode 0, difficulty 0, frameskip 1, sticky-action probability 0.0) returned cumulative ALE reward `0.0`, `terminated=false`, and `truncated=false`; no live terminal was observed. The trace records ROM SHA-256 `d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7`, ALE-Py 0.11.2, Gymnasium 1.4.0, frame number 14,081, and 14,081 environment steps. The last verified FEN is `r2r2k1/3n1ppp/2nbb3/ppp1p3/8/PqPp1PPP/R7/1NBQKBNR w K - 0 19`.
+
+### Current M1 decision
+
+| Criterion | Current verdict | Evidence |
+|---|---|---|
+| M1-01 | **PASS** | Genuine ALE RGB observations, runtime configuration, ROM hash, and package versions are retained in the real traces. |
+| M1-02 | **PASS** | Source selection, selected-target preview, direction holds, and target FIRE duration are calibrated against real RGB outcomes; deterministic and v5-default runs are present. |
+| M1-03 | **PASS** | Real legal player moves and Atari replies were verified from full-board RGB evidence across the 20-cycle run and targeted move categories. |
+| M1-04 | **UNVERIFIED** | No real terminal or nonzero reward was observed; zero reward alone cannot establish reward-sign behavior. |
+| M1-05 | **PASS** | Ambiguous source/target/confirmation states stop without unsafe retries or shadow advancement; regression tests and real safe-stop trace cover the behavior. |
+| M1-06 | **PASS** | Reproduction guide, diagnostic report, per-frame evidence, manifests, and portable bundle are retained. |
+
+**Current gate decision:** M1 remains in progress and G2 remains in progress because M1-04 is unverified. BLK-001 stays active. The eight-episode terminal budget is exhausted. Do not begin M2, do not approve G2, and do not close O-01 through O-08.
+
+Recorded current result: M1-04 remains UNVERIFIED; M1-001 remains blocked by BLK-001; G2 remains in progress.
+
 ## Evidence classification
 
 This report separates source facts, synthetic/unit-test evidence, and real ALE observations. Only the real runtime observations can establish a real terminal or reward event. No simulator position, mocked terminal flag, or source comment is counted as a live terminal result.
@@ -219,3 +243,26 @@ Exit code: 0
 - Recovered G2 `in_progress`, G0/G1 approved, M1 active with M1-001 blocked by BLK-001, M2 still separately gated, and O-01 through O-08 open. No dependencies were installed in the clone.
 
 The full clean-clone suite covers context and export behavior only. M0/M1 runtime smoke tests remained in the locked local environment and were not repeated in the dependency-free clone.
+
+
+## BLK-001 continuation: final test results (2026-10-15)
+
+- **M1-focused command:** `./.venv/bin/python -m unittest tests.test_m1_control tests.test_m1_episode tests.test_m1_ale_integration tests.test_m1_environment tests.test_m1_shadow tests.test_m1_vision -v`
+- **M1-focused result:** `PASS: 50 M1 unit and real ALE integration tests in 13.238s.` Exit code `0`; executed 2026-10-15T16:13:50Z–16:14:03Z.
+- **Full-suite command:** `./.venv/bin/python -m unittest discover -s tests -v`
+- **Full-suite result:** 113 tests in 67.098s; 112 passed, 1 failed, exit code `1`. The sole failure was the M0 Stockfish readiness check because no Stockfish executable was available in PATH. The checkpoint-related context recovery test passed. Executed 2026-10-15T16:12:15Z–16:13:23Z.
+- Sanitized retained logs: [`BLK-001-m1-suite-20261015.log`](logs/BLK-001-m1-suite-20261015.log) and [`BLK-001-full-suite-20261015.log`](logs/BLK-001-full-suite-20261015.log).
+- `uv` and the venv's `pip` module were unavailable, so lock-check and `pip check` could not be run. No dependencies were installed. `git diff --check` passed.
+
+
+### CLI output collision safety
+
+The terminal experiment CLI now refuses an existing trace path, an existing `frames/` directory, or a trace symlink. Four focused regression tests cover fresh paths, existing traces, prior frame output, and a broken trace symlink. The expanded M1-focused suite passed 54 tests in 14.383 seconds with real ALE integration checks; see [`BLK-001-m1-suite-final2-20261015.log`](logs/BLK-001-m1-suite-final2-20261015.log).
+
+
+### Final full-suite rerun with output-collision guard
+
+- **Executed:** 2026-10-15T16:18:25Z–16:19:31Z.
+- **Command:** `./.venv/bin/python -m unittest discover -s tests -v`
+- **Result:** 117 tests in 64.894s; 116 passed; one failed; exit code `1`. The sole failure remained `test_stockfish_answers_uci_readiness_without_searching` because the Stockfish executable is unavailable in PATH. The M1-focused 54-test suite, all four new CLI safety checks, and the context recovery check passed.
+- **Log:** [`BLK-001-full-suite-final2-20261015.log`](logs/BLK-001-full-suite-final2-20261015.log).

@@ -13,10 +13,11 @@ The two short baseline reproductions recorded before this budget are not termina
 
 ## Actual use
 
-- **Terminal-seeking episodes:** 7 of 8 maximum; seeds `20261015`, `20261016`, `20261017`, `20261018`, `20261019`, `20261015` (repeat), and `20261022`.
-- **Additional bounded probes:** one one-move `e2e4` attempt and four targeted control probes. All used real mode-0 ALE actions; no injected position or RAM modification.
-- **Elapsed wall time:** 60.583 seconds across all 12 retained traces, including terminal-seeking episodes and probes (42.870 seconds for the seven terminal-seeking episodes).
-- **ALE frames:** 26,161 summed across all 12 traces. The longest terminal-seeking episode used 3,922 frames and 9.039 seconds.
-- **Artifacts:** 1,384,023 bytes under `artifacts/m1/m1-04/`, below the 250 MiB limit. The pre-existing `artifacts/m1/MANIFEST.sha256` was not changed.
-- **Caps reached:** none. No episode reached 15 minutes or 54,000 frames; the experiment stopped at seven terminal-seeking episodes because additional runs repeated the same unresolved input failure and were unlikely to add evidence.
-- **Outcome:** no episode terminated or truncated; the sum of ALE rewards was 0.0. M1-04 remains unverified. See `.agents/evidence/M1-04-terminal-verification.md` for the attempt table and diagnosis.
+- **Terminal-seeking episodes:** 8 of 8 maximum. The original seven used seeds `20261015`, `20261016`, `20261017`, `20261018`, `20261019`, `20261015` (repeat), and `20261022`. The eighth used seed `20261015` with the phase-verified controller and 12-frame target FIRE.
+- **Eighth result:** 18 complete RGB-verified player/Atari cycles, then a safe stop on `a2a1` when the selected-piece preview remained after FIRE; 14,081 ALE frames and 37.973 seconds. It returned reward 0.0, `terminated=false`, `truncated=false`.
+- **Additional bounded probes:** 17 retained `blk001` traces cover same-seed failure reproduction, 4/6/8/12/16-frame target FIRE comparisons, 20-cycle deterministic control, pawn/knight/diagonal/straight/capture categories, and v5-default gameplay. All used genuine mode-0 ALE actions from reset; no injected position or RAM modification.
+- **Elapsed wall time:** 188.307 seconds across 18 `blk001` traces in the current diagnostic continuation (including the eighth terminal attempt); 80.843 seconds across all eight terminal-seeking episodes, combining the original 42.870 seconds and the new 37.973-second episode.
+- **ALE frames:** 72,901 summed across the 18 current-continuation traces (replays included); 32,754 across the eight terminal-seeking episodes, combining 18,673 original frames and 14,081 new frames. The longest terminal-seeking episode remains below the 54,000-frame/15-minute cap.
+- **Artifacts:** 1,214 entries and 7,444,452 bytes were covered by the new local `artifacts/m1/MANIFEST-20261015.sha256`; it lists every file under `artifacts/m1/` except itself and verifies with zero missing paths or hash mismatches. The older `MANIFEST.sha256` was preserved unchanged; it still covers its original 327 entries and does not cover 872 current content files.
+- **Caps reached:** the eight-episode terminal-attempt cap is reached. No episode reached 15 minutes or 54,000 ALE frames. Stop terminal-seeking runs; the observable target-confirmation failure is diagnosed and the 16-frame correction completed 20 cycles, but no terminal evidence was obtained.
+- **Outcome:** no terminal or truncation was observed; all eight terminal-seeking episodes returned cumulative reward 0.0. M1-04 remains UNVERIFIED. See `.agents/evidence/M1-04-terminal-verification.md` and `.agents/evidence/BLK-001-diagnostic-20261015.md` for results.

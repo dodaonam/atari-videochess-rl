@@ -60,9 +60,9 @@ Verified command/test evidence records `executed_at_utc`, `recorded_at_utc`, `ex
 
 ## M1 ALE feasibility checks
 
-`tests/test_m1_vision.py`, `tests/test_m1_control.py`, and `tests/test_m1_shadow.py` cover RGB square parsing, cursor ambiguity, measured action timing, legal shadow transitions, and safe mismatch handling. Synthetic frames are unit fixtures only; they do not count as ALE evidence.
+`tests/test_m1_vision.py`, `tests/test_m1_control.py`, and `tests/test_m1_shadow.py` cover RGB square parsing, cursor ambiguity, phase-specific action timing, source-selection and selected-target observation phases, legal shadow transitions, and safe mismatch handling. Synthetic frames are unit fixtures only; they do not count as ALE evidence.
 
-`tests/test_m1_environment.py` and `tests/test_m1_ale_integration.py` use the real packaged VideoChess ROM. They reset and capture the actual RGB screen, verify the configured mode for each supported mode, execute player moves through joystick/FIRE actions, observe computer replies from RGB, and compare results against legal `python-chess` shadow transitions. Closed-loop gameplay checks use deterministic development settings and the registered v5 defaults. Diagnostic RAM is never used to choose actions. `tests/test_m1_episode.py` covers the multi-turn diagnostic selector and safe stop behavior with synthetic environment doubles; these tests are not runtime terminal evidence.
+`tests/test_m1_environment.py` and `tests/test_m1_ale_integration.py` use the real packaged VideoChess ROM. They reset and capture the actual RGB screen, verify the configured mode for each supported mode, execute player moves through joystick/FIRE actions, observe computer replies from RGB, and compare results against legal `python-chess` shadow transitions. Closed-loop gameplay checks use deterministic development settings and the registered v5 defaults. Diagnostic RAM is never used to choose actions. `tests/test_m1_episode.py` covers source selection, target preview, target confirmation, bounded uncertainty stops, and reward/terminal bookkeeping with synthetic environment doubles; these tests are not runtime terminal evidence. Longer real-ALE control experiments and terminal evidence are recorded separately in `.agents/evidence/BLK-001-diagnostic-20261015.md`.
 
 Run the M1 checks and bounded demo from the repository root:
 
