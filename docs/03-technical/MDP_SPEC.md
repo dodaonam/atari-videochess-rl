@@ -1,8 +1,8 @@
 # Chess Simulator MDP Specification
 
-**Status:** Proposed M2 contract. No chess simulator, M2 state/action adapter, baseline, or RL environment has been implemented or tested.
+**Status:** Accepted M2 contract under ADR-0002. Simulator implementation and M2-01 through M2-04 verification are in progress and remain unverified until recorded.
 
-**Purpose:** Specify the smallest standard-chess decision process needed for M2 while preserving clear interfaces to future M3 PGN/teacher data, M4 supervised learning, M5 Double DQN, and M6 ALE integration. The recommendation is summarized in [ADR-0002](../02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md). M2-01 through M2-04 remain unverified.
+**Purpose:** Specify the smallest standard-chess decision process needed for M2 while preserving clear interfaces to future M3 PGN/teacher data, M4 supervised learning, M5 Double DQN, and M6 ALE integration. The accepted foundational choices are recorded in [ADR-0002](../02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md). M2-01 through M2-04 remain unverified.
 
 ## 1. Decision process
 

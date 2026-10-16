@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-6457955d-20261016T054201063799Z -->
+<!-- checkpoint-id: cp-f6ede487-20261016T073343626752Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -12,9 +12,9 @@ This file is a pointer, not a status snapshot. Do not infer current phase, task 
    - The current governance decision is [`ADR-0001`](../../docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md); discover later decisions in `docs/02-management/decisions/`.
 5. Compare the portable tracked-file manifest with live HEAD/index. Treat the `git` snapshot as workspace-local; an exact portable manifest match after commit/checkout is expected even when branch, HEAD, status, ignored files, or caches differ. The local Git config UUID distinguishes the original workspace from a clean clone. For older checkpoints without a portable manifest, use the safe tracked-file migration path described in `AGENTS.md`. If version-controlled content or canonical references drift, inspect them and never discard work automatically.
 
-## Pre-M2 review pointer
+## M2 execution pointer
 
-For M2 readiness, review [M02-chess-foundation.md](../plans/M02-chess-foundation.md), [ADR-0002](../../docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md), the technical specifications under docs/03-technical/, and the [Pre-M2 readiness record](../evidence/PRE-M2-readiness-20261016.md). These are preparation artifacts only. The M2-001 backlog task and PROJECT_STATE.yaml retain the pending explicit-authorization boundary; G3 is not approved.
+For M2 execution, follow the active [M02-chess-foundation.md](../plans/M02-chess-foundation.md), accepted [ADR-0002](../../docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md), technical specifications under docs/03-technical/, and [authorization record](../evidence/M2-authorization-20261016.md). Current task and milestone status remain in PROJECT_STATE.yaml and BACKLOG.yaml; G3 is not approved and O-01 through O-08 remain unresolved.
 
 ## Checkpoint operation
 

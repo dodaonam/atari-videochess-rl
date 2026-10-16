@@ -1512,7 +1512,7 @@
       "id": "M2-001",
       "title": "Implement and verify the chess foundation",
       "milestone": "M2",
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "M1-001"
       ],
@@ -1524,10 +1524,25 @@
         "M2-04"
       ],
       "blocker_ids": [],
-      "evidence": [],
-      "next_action": "Await explicit user authorization for M2. Review proposed ADR-0002 before implementation; do not change M2 status or code until authorized.",
+      "evidence": [
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M2-authorization-20261016.md",
+          "detail": "Current direct user directive authorizes the complete M2 engineering and GitHub PR workflow, with the PR explicitly required to remain unmerged.",
+          "result": "The project owner directly authorized complete M2 implementation, verification, evidence, commits, push, and PR creation; the PR must remain unmerged, and G3 remains unapproved.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-16T07:18:56Z",
+            "recorded_at_utc": "2026-10-16T07:18:56Z",
+            "exit_code": null,
+            "git_revision": "11b6dfe67c961bca3d5d693d87a1f27448983487",
+            "log_path": ".agents/evidence/M2-authorization-20261016.md"
+          }
+        }
+      ],
+      "next_action": "Implement M2 simulator, baselines, benchmark, tests, acceptance evidence, and documentation under the current direct authorization; keep G3 unapproved and O-01 through O-08 open.",
       "plan_ref": ".agents/plans/M02-chess-foundation.md"
     }
   ],
-  "updated_at_utc": "2026-10-15T19:38:34Z"
+  "updated_at_utc": "2026-10-16T07:18:56Z"
 }

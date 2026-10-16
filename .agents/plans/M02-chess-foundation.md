@@ -2,16 +2,16 @@
 
 - **Plan ID:** M02
 - **Milestone:** M2 — Chess foundation, associated with G3
-- **Plan status:** draft; prepared for review, not active
-- **Task:** M2-001 in [BACKLOG.yaml](../tasks/BACKLOG.yaml), pending separate explicit user authorization
+- **Plan status:** in_progress; current direct user authorization is recorded in `.agents/evidence/M2-authorization-20261016.md`
+- **Task:** M2-001 in [BACKLOG.yaml](../tasks/BACKLOG.yaml), in progress
 - **Dependencies:** M1-001 complete; G2 approved
 - **Requirements:** B-03, B-05, B-06, B-07, B-08; unresolved approvals O-01, O-06, O-07, O-08 in [REQUIREMENTS.md](../../docs/01-foundation/REQUIREMENTS.md)
 - **Acceptance:** M2-01 through M2-04 in [ACCEPTANCE_CRITERIA.md](../../docs/06-quality/ACCEPTANCE_CRITERIA.md)
-- **Specifications:** [ARCHITECTURE.md](../../docs/03-technical/ARCHITECTURE.md), [MDP_SPEC.md](../../docs/03-technical/MDP_SPEC.md), proposed [ADR-0002](../../docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md)
+- **Specifications:** [ARCHITECTURE.md](../../docs/03-technical/ARCHITECTURE.md), [MDP_SPEC.md](../../docs/03-technical/MDP_SPEC.md), accepted M2 contract in [ADR-0002](../../docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md)
 
 ## Objective
 
-When M2 is separately authorized, implement and verify a small standard-chess simulator using the locked `python-chess` dependency. Establish stable legal-move identity, the agreed agent/opponent transition, agent-perspective terminal rewards, automatic chess outcomes, and explicit truncation. Add two lightweight baselines and a small seeded benchmark. This plan is preparation only; no M2 implementation or acceptance test has been run.
+Implement and verify a small standard-chess simulator using the locked `python-chess` dependency. Establish stable legal-move identity, the agreed agent/opponent transition, agent-perspective terminal rewards, automatic chess outcomes, and explicit truncation. Add two lightweight baselines and a small seeded benchmark. Implementation and acceptance remain unverified until their evidence is recorded.
 
 ## Scope
 
@@ -24,7 +24,7 @@ The active action scope permanently excludes voluntary draw claims and other non
 
 ## Exclusions
 
-- This plan does not authorize implementation; await separate explicit M2 authorization.
+- The current authorization covers M2 only. Keep G3 unapproved and do not start M3–M7.
 - No M3 PGN download/ingestion, dataset construction, or Stockfish labeling/search.
 - No M4 model or supervised training; no M5 Double DQN, replay buffer, or training code.
 - No new ALE gameplay or changes to M1 controller/vision/shadow code. Simulator metrics are not Atari results.
@@ -68,7 +68,7 @@ These are evidence expectations, not M2 results. Canonical acceptance wording re
 
 ## Implementation sequence after authorization
 
-1. Re-read canonical state/backlog, this plan, MDP specification, ADR-0002, and acceptance criteria. Confirm the M2 authorization is current.
+1. Re-read canonical state/backlog, this plan, MDP specification, accepted ADR-0002, and acceptance criteria. The current direct user authorization is recorded in the evidence path above.
 2. Verify the locked `python-chess` API for `Board.outcome(claim_draw=False)` and standard move UCI semantics. Define a small reset/step/result interface before coding.
 3. Add focused simulator tests for state/history, legal UCI moves, ordinary/special moves, automatic outcomes, and invalid-action safety.
 4. Implement the agent-move/opponent-reply transition with terminal checks after each move; test reward signs for both agent colors.
@@ -80,12 +80,12 @@ These are evidence expectations, not M2 results. Canonical acceptance wording re
 
 ## Verification commands after implementation
 
-These commands are for future authorized M2 implementation and were not run for this preparation task:
+Run these commands for current M2 implementation and retain their actual results:
 
-- **Focused tests:** `uv run --locked --no-sync python -m unittest tests.test_m2_simulator tests.test_m2_baselines -v`
-- **Full suite:** `uv run --locked --no-sync python -m unittest discover -s tests -v`
+- **Focused tests:** `python -m unittest tests.test_m2_simulator tests.test_m2_baselines tests.test_m2_benchmark -v` from the locked project environment.
+- **Full suite:** `python -m unittest discover -s tests -v` from the locked project environment.
 - **Context/preflight:** `python3 scripts/agent_preflight.py`
-- **Seeded benchmark:** add the exact CLI/config with implementation; retain per-game records and a compact summary.
+- **Seeded benchmark:** `python -m videochess_rl.benchmark --seeds 20261016 20261017 --max-decisions 400 --output artifacts/m2/<run-id>.json`; retain per-game records and a compact summary.
 
 Use the existing locked environment documented in [SETUP.md](../../docs/05-operations/SETUP.md). Do not install dependencies merely to begin M2. Store raw run artifacts under the ignored artifact area with unique IDs; commit only a small sanitized report/manifest where project policy permits.
 
@@ -101,4 +101,4 @@ Use the existing locked environment documented in [SETUP.md](../../docs/05-opera
 
 ## Checkpoint and recovery
 
-Before future M2 implementation, refresh the approved checkpoint and preflight; use current canonical state rather than this plan's status. Preserve untracked files and local ALE evidence. Mark M2 in progress only after implementation actually starts, and do not mark acceptance from documentation alone.
+At execution start and after meaningful state changes, refresh the checkpoint and preflight; use canonical state and backlog for live status. Preserve untracked files and local ALE evidence. Mark acceptance only after implementation and verification evidence exists.

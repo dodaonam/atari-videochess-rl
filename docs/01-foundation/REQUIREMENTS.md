@@ -67,7 +67,7 @@ G1 was authorized, its hardening and independent-session acceptance were complet
 
 ### G2 — Technical Feasibility
 
-The M1-01 through M1-06 acceptance and G2 approval are recorded in [M1/G2 final verification](../../.agents/evidence/M1-G2-final-verification-20261016.md). This does not authorize M2; the current state and M2-001 task record its separate user-authorization requirement. O-01 through O-08 remain unresolved.
+The M1-01 through M1-06 acceptance and G2 approval are recorded in [M1/G2 final verification](../../.agents/evidence/M1-G2-final-verification-20261016.md). A later direct user instruction authorizes M2-001; this does not approve G3 or resolve O-01 through O-08. Current M2 status is owned by `.agents/state/PROJECT_STATE.yaml` and `.agents/tasks/BACKLOG.yaml`.
 
 ### Engineering milestones
 

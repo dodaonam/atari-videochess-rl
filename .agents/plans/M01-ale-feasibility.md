@@ -47,7 +47,7 @@ Demonstrate a reproducible, observation-driven interaction with real ALE/VideoCh
 - `videochess_rl/demo.py` and `scripts/run_m1_demo.py`: bounded closed-loop runner and structured local trace.
 - M1 test modules: `tests/test_m1_vision.py`, `tests/test_m1_control.py`, `tests/test_m1_shadow.py`, `tests/test_m1_environment.py`, and `tests/test_m1_ale_integration.py`.
 
-The final evidence-backed M1 acceptance matrix and G2 decision are in `.agents/evidence/M1-G2-final-verification-20261016.md`; earlier M1 records remain historical. Live status is canonical in `BACKLOG.yaml` and `PROJECT_STATE.yaml`. M2 remains pending explicit authorization.
+The final evidence-backed M1 acceptance matrix and G2 decision are in `.agents/evidence/M1-G2-final-verification-20261016.md`; earlier M1 records remain historical. Live status is canonical in `BACKLOG.yaml` and `PROJECT_STATE.yaml`. M2 was subsequently authorized under `.agents/evidence/M2-authorization-20261016.md`; G3 remains unapproved.
 
 ## Acceptance review
 

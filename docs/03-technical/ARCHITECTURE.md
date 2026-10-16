@@ -1,6 +1,6 @@
 # System Architecture
 
-**Status:** M1/ALE slice is implemented and verified as cited. The M2–M7 architecture below is proposed; those milestones have not started. This document describes boundaries, not a claim that future components exist.
+**Status:** M1/ALE slice is implemented and verified as cited. M2 is authorized and in progress; M3–M7 remain unstarted. This document describes boundaries, not a claim that unimplemented components exist.
 
 **Purpose:** Explain how the verified Atari interface and proposed chess learning pipeline fit together while preserving separate sources of truth.
 
@@ -25,7 +25,7 @@ M1-01 through M1-06 are accepted and G2 is approved in the [final verification r
 
 | Milestone | Proposed component and output | Maturity |
 |---|---|---|
-| M2 | Standard-chess simulator, explicit MDP, stable UCI identities for legal moves, random-legal and heuristic baselines, seeded simulator records. | Proposed; plan and MDP spec drafted; not implemented or authorized. |
+| M2 | Standard-chess simulator, explicit MDP, stable UCI identities for legal moves, random-legal and heuristic baselines, seeded simulator records. | In progress under M2-001; acceptance evidence is pending. |
 | M3 | Provenance-aware PGN parsing and separately identified Stockfish teacher labels, with leakage-safe splits. | Proposed; no data downloaded; O-01, O-06 and O-07 remain open. |
 | M4 | Supervised pretraining from explicitly selected behavior or teacher targets; saved pretraining checkpoint and evaluation. | Proposed; no model or training code exists. |
 | M5 | Direct PyTorch Double DQN in the chess simulator with legal-move selection, replay/target networks and separately configured curriculum. | Proposed; no RL training code exists. |
@@ -88,4 +88,4 @@ Not every legal python-chess position or move is known to be representable or co
 - Current interfaces: [environment.py](../../videochess_rl/environment.py), [vision.py](../../videochess_rl/vision.py), [controller.py](../../videochess_rl/controller.py), [shadow.py](../../videochess_rl/shadow.py), [episode.py](../../videochess_rl/episode.py), [demo.py](../../videochess_rl/demo.py).
 - Current tests: [M1 vision](../../tests/test_m1_vision.py), [control](../../tests/test_m1_control.py), [shadow](../../tests/test_m1_shadow.py), [episode](../../tests/test_m1_episode.py), [ALE integration](../../tests/test_m1_ale_integration.py).
 - Proposed MDP: [MDP_SPEC.md](MDP_SPEC.md); proposed M2 sequence: [.agents/plans/M02-chess-foundation.md](../../.agents/plans/M02-chess-foundation.md).
-- The action/perspective proposal remains unaccepted in [ADR-0002](../02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md). M2 remains pending explicit authorization in canonical project state.
+- The M2 foundational action and perspective contract is accepted in [ADR-0002](../02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md). M4/M5 neural scoring remains undecided; M2 authorization and task progress are recorded in canonical project state.
