@@ -15,6 +15,7 @@
 `tests/test_agent_context.py` exercises:
 
 - valid and malformed JSON-compatible YAML state/backlog schemas;
+- gate-to-milestone circularity, the partial M7 G4/G5 acceptance allocation, and direct milestone authorization evidence separate from gate approval or plan references;
 - duplicate/missing task IDs, unknown dependencies, dependency cycles, and missing evidence on completed tasks;
 - valid and broken repository-relative Markdown links (external URLs are not fetched);
 - blocker/task consistency and unresolved approval reporting;
@@ -108,6 +109,10 @@ The workflow does not configure branch protection or a mandatory status check. G
 
 ## M3 data integrity tests
 
-When M3 is separately authorized, add the focused synthetic fixtures and invariants in [DATASET_SPEC.md](../04-research/DATASET_SPEC.md). Cover source/hash approval gates, PGN streaming and quarantine, standard chess replay, FEN plus history reconstruction, stable legal UCI candidates, played-move legality, perspective conversion, deterministic sampling/splits, exact position leakage audits, teacher score/MultiPV/mate semantics, output manifests, and interrupted-run recovery. Fixtures must be synthetic and must not contain downloaded public games or player identities.
+The Pre-M3 synthetic contract vectors in `tests/fixtures/pre_m3_identity_vectors.json` are exercised by `tests/test_pre_m3_contracts.py`. They verify deterministic identity hashes, board signature versus replay-state identity (clocks, repetition, castling, en passant, and transposition), source-game versus normalized-game identity when headers differ, promotion UCI identity, game-group split assignment, candidate inheritance/purge, and detection of a collapsed holdout. This tiny oracle is not a production parser or dataset implementation.
+
+When M3 is separately authorized, add focused synthetic PGN fixtures and implementation tests in line with [DATASET_SPEC.md](../04-research/DATASET_SPEC.md). Cover source/hash approval gates, archive/member byte and path caps, PGN streaming/quarantine, standard-chess replay, game-reference/history reconstruction, stable legal UCI candidates, played-move legality, perspective conversion, deterministic sampling/splits, exact board overlap audits, teacher score/MultiPV/mate semantics, output manifests, and interrupted-run recovery. Candidate/teacher rows must inherit their parent sample's split and be purged with it. Fixtures must be authored, synthetic, and contain no downloaded public games or player identities.
+
+Current canonical M3-02 requires an authorized real bounded Stockfish 19 run. Fake-UCI and configuration tests are necessary contract checks but do not pass M3-02; a PGN-only output is an intermediate artifact. The real engine run and any data acquisition remain gated by the source, assignment, and teacher approvals in `REQUIREMENTS.md`.
 
 Never use a G1 context-tool test to imply M0/M1 readiness. M0 smoke checks are separate from M1 ALE resets, observation capture, control calibration, training, or Colab runtime work.

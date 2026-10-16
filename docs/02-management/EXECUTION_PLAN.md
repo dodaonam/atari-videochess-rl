@@ -32,9 +32,9 @@ The accepted mapping from governance gates to engineering milestones is recorded
 | M0 — Technical project bootstrap | G1 review and explicit user approval | Audit and establish a reproducible local environment; run low-cost checks; validate Colab CLI workflow without allocating a GPU or launching costly training. |
 | M1 — ALE feasibility | M0 | Verify ALE observations, board extraction, cursor/input timing, move execution, opponent response detection, synchronization, reward, and terminal behavior on actual ALE. |
 | M2 — Chess foundation | M1 | Specify and test the simulator MDP; establish random and heuristic baselines. |
-| M3 — Expert data | M2 | Build a reproducible Stockfish labeling and dataset pipeline with provenance and leakage-safe splits. |
-| M4 — Supervised pretraining | M3 | Train and evaluate a standalone pretraining baseline with no Stockfish in inference. |
-| M5 — Double DQN and curriculum | M4 | Train in the chess simulator, preserve pre/post-RL checkpoints, and measure whether RL changes performance. |
+| M3 — Expert data | M2 | Build the smallest reproducible, provenance-aware PGN artifact and bounded Stockfish teacher contract/run with leakage-safe splits; data and labels support later RL and do not become an independent scale objective. |
+| M4 — Supervised pretraining | M3 | If time and compute permit, train a small behavior-only baseline/checkpoint for comparison; keep supervised metrics separate and do not substitute imitation for RL. |
+| M5 — Double DQN and curriculum | M3 for core implementation/training; M4 checkpoint for current M5-04 completion | Principal learning stage: independently implement and train Double DQN through M2 simulator transitions as soon as M3 and the M2 interfaces permit. M4 must not block the core DDQN implementation or first sanity run. The current M5-04 acceptance still requires a pretraining-only checkpoint for the final paired comparison; keep that baseline small, or formally revise acceptance before claiming M5 complete if it is omitted. |
 | M6 — Atari integration | M1 and M4/M5 as applicable | Evaluate closed-loop gameplay using ALE observations and actions; report Atari evidence separately from simulator results. |
 | M7 — Evaluation and delivery | M2–M6 | Run the approved comparisons and prepare evidence-backed reports, demo, reproduction steps, and handover. |
 

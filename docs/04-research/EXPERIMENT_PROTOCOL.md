@@ -1,7 +1,7 @@
 # Experiment and Evaluation Protocol
 
 **Status:** Proposed research protocol. It does not approve M3–M7 execution or choose a final model architecture.  
-**Owners:** This file defines experiment identity, comparisons, and metric separation. Dataset and teacher meanings are defined in [DATASET_SPEC.md](DATASET_SPEC.md) and [STOCKFISH_TEACHER.md](STOCKFISH_TEACHER.md).
+**Owners:** This file defines experiment identity, comparisons, and metric separation. RL-first feasibility and M5 update requirements are defined in [RL_FIRST_ALIGNMENT.md](RL_FIRST_ALIGNMENT.md); dataset and teacher meanings are defined in [DATASET_SPEC.md](DATASET_SPEC.md) and [STOCKFISH_TEACHER.md](STOCKFISH_TEACHER.md).
 
 ## 1. Experiment identity
 
@@ -36,27 +36,29 @@ M3 evidence is a data-engineering result, not a playing-strength result. Report:
 
 No source statistics may be backfilled from the publisher's listing as if measured locally.
 
-## 3. M4 — supervised pretraining
+## 3. M4 — supporting supervised baseline
 
-Keep a behavior-only checkpoint as the baseline. If an outcome or teacher task is added, run it as a separately named configuration and retain its own checkpoint.
+M4 supports Double DQN; it is not the primary project result. Keep one small behavior-only checkpoint as a pretraining baseline only if it fits the schedule and compute budget. If an outcome or teacher task is added, run it as a separately named configuration and retain its own checkpoint. The M3-02 teacher analysis is not an instruction to train on engine labels.
 
 For a played-move objective, report held-out cross-entropy, legal top-1/top-k accuracy, candidate ranking metrics, and metrics stratified by side, ply band, rating/time-control availability, and source. All candidates for a position stay together. Invalid model outputs outside legal candidates are an inference/test defect, not a correct prediction.
 
-Compare against a legal-random policy and a transparent heuristic where evaluation is permitted. Do not turn PGN accuracy into an Elo estimate. A held-out split measures prediction on that split's sampled games; it does not establish general chess strength.
+Compare against a legal-random policy and a transparent heuristic where evaluation is permitted. A policy logit is not a Q-value; if M5 shares parameters, state which layers transfer and initialize/recalibrate Q output semantics explicitly. Do not turn PGN accuracy into an Elo estimate. A held-out split measures prediction on that split's sampled games; it does not establish general chess strength.
 
 Small-sample overfit/sanity checks are engineering diagnostics, not final evaluation. Save training/validation curves and actual checkpoint hashes. Do not run Stockfish during model inference.
 
-## 4. M5 — simulator reinforcement learning
+## 4. M5 — principal simulator reinforcement-learning experiment
 
 Record the simulator state/action/transition contract, python-chess version, Board/history reconstruction, fixed agent color, opponent policy/configuration, reward perspective, terminal reason, truncation reason, and episode decision cap.
 
-Compare:
+The core implementation and comparisons are specified in [RL_FIRST_ALIGNMENT.md](RL_FIRST_ALIGNMENT.md). At minimum, preserve a pre-RL checkpoint and compare it with post-RL under the same evaluator. Plan the following comparisons in academic-value order, subject to the measured resource budget:
 
-1. pretraining-only checkpoint;
-2. post-RL checkpoint;
-3. random-legal and heuristic baselines.
+1. random-legal and transparent heuristic baselines;
+2. Double DQN post-training versus its own initialization/pretraining-only checkpoint;
+3. pretraining-only checkpoint versus post-RL checkpoint;
+4. random-initialized Double DQN where feasible;
+5. one controlled RL ablation (for example Double DQN vs a DQN target-selection control).
 
-Use the same opponent set, color coverage, opening/start-state rules, decision caps, and seed list across compared checkpoints. Report complete-game W/D/L separately from truncations, interruptions, and policy failures. Use multiple seeds and report per-seed results, variance/uncertainty, and all exclusions. If a comparison changes the opponent pool or configuration, identify it as a different experiment.
+Use the same opponent set, color coverage, opening/start-state rules, decision caps, and seed list across paired checkpoints/ablations. Report complete-game W/D/L separately from truncations, interruptions, and policy failures. Use multiple seeds where the authorized budget permits and report per-seed results, uncertainty, and all exclusions. If a comparison changes the opponent pool or configuration, identify it as a different experiment. A controlled post-RL improvement in simulator returns/outcomes is evidence of RL contribution; retained behavior-cloning accuracy without return improvement is not.
 
 Simulator returns and M2 benchmark metrics remain labeled simulator evidence. They are not ALE gameplay or Atari reward.
 

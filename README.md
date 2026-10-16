@@ -1,6 +1,6 @@
 # Atari VideoChess RL
 
-This repository studies a chess-playing reinforcement-learning agent for ALE **VideoChess-v5**. The research direction separates expert-game behavior, optional Stockfish teacher signals, learning in a python-chess simulator, and actual Atari evaluation.
+This repository studies a chess-playing reinforcement-learning agent for ALE **VideoChess-v5**. Independently implemented Double DQN learning from simulator transitions is the central course objective; expert-game behavior and optional Stockfish signals are bounded supporting experiments. The project separates supervised baselines, simulator RL, and actual Atari evaluation.
 
 The current integration branch is **initial-idea**. GitHub currently defaults to **main**, which is an older ancestor. Clone the integration branch explicitly:
 
@@ -18,7 +18,7 @@ The project does not yet contain a production PGN dataset pipeline, supervised m
 - **videochess_rl/environment.py, vision.py, controller.py, shadow.py, episode.py:** ALE environment wrapper, RGB board observations, cursor/input control, shadow transition validation, and bounded episode runner. ALE observations and actual step outcomes remain authoritative.
 - **videochess_rl/simulator.py:** python-chess rules and move history, legal UCI actions, agent/opponent transitions, perspective-aware reward, terminal outcomes, and explicit truncation.
 - **videochess_rl/baselines.py, benchmark.py:** engine-free random and transparent heuristic agents and bounded simulator-only comparisons.
-- **docs/04-research/**: proposed M3 dataset, Stockfish teacher, experiment, and owner decision contracts.
+- **docs/04-research/**: RL-first Double DQN feasibility/alignment, proposed M3 dataset and teacher contracts, experiment protocol, and owner decisions. `.agents/plans/M03-expert-dataset.md` holds the bounded future implementation plan.
 - **tests/**: context/recovery, M0, M1 synthetic and real ALE, M2 simulator, baseline, and benchmark checks.
 
 Simulator performance is not Atari performance. A python-chess Board may track or cross-check an ALE transition, but it must not replace the emulator observation or conceal desynchronization.

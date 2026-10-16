@@ -13,7 +13,7 @@ The roadmap is preserved verbatim and remains the source for original research d
 
 ## 2. Project objective
 
-Design, implement, train, and evaluate a chess-playing reinforcement-learning agent whose target environment is ALE `VideoChess-v5`. The roadmap's research direction is Stockfish-assisted supervised pretraining followed by a separately measured reinforcement-learning stage and evaluation on Atari Video Chess.
+Design, implement, train, and evaluate a chess-playing reinforcement-learning agent whose target environment is ALE `VideoChess-v5`. The roadmap's research direction is expert/optional Stockfish-assisted preparation followed by separately measured simulator reinforcement learning and evaluation on Atari Video Chess. Double DQN environment-interaction learning is the central course deliverable; PGN data and supervised warm-starts are supporting experiments and must not displace the RL implementation or its evaluation.
 
 Keep three evidence tracks distinct:
 

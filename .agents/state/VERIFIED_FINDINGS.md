@@ -209,3 +209,45 @@ Findings are append-only historical observations. FND-021 and FND-022 record the
 - **Finding:** A clean clone of feature commit 843a0bc728370ff9bc8e7a21884c7e05b82eb7c1 passed agent preflight with the portable tracked manifest matching. GitHub Actions run 38944551579 passed the same checkpointed commit with preflight and the bounded standard-library context/export suite. PR #2 targets initial-idea and remains open and unmerged.
 - **Evidence:** PRE-M3-readiness-20261017.md; logs/pre-m3-final-tip-cleanclone-preflight-20261017.log; GitHub Actions https://github.com/dodaonam/atari-videochess-rl/actions/runs/38944551579; PR https://github.com/dodaonam/atari-videochess-rl/pull/2.
 - **Impact:** Pre-M3 readiness and delivery checks pass. G3 remains unapproved, M3 remains unauthorized, and O-01 through O-08 remain open.
+
+## FND-030 — Milestone authorization is distinct from gate closure
+
+- **Status:** verified by focused regression tests (2026-10-17)
+- **Finding:** G3 covers M2–M5 and G4 covers M6 plus only the evaluation portion of M7; neither gate's final closure is required to start the engineering work it covers. A covered milestone still requires a separate direct authorization record, active task/evidence match, and in-progress state before preflight permits it. G3 remains unapproved and M3 remains pending/unauthorized.
+- **Evidence:** `scripts/agent_preflight.py`; `tests/test_agent_context.py::test_preflight_detects_gate_coverage_used_as_its_own_start_prerequisite`; `tests/test_agent_context.py::test_m3_can_be_explicitly_authorized_while_g3_remains_unapproved`; `tests/test_agent_context.py::test_start_authorized_boolean_without_direct_record_is_rejected`; `.agents/evidence/PRE-M3-readiness-20261017.md` corrective-hardening section.
+- **Impact:** A future explicit M3 authorization can be represented without marking G3 complete; plans and Boolean status alone cannot authorize work. Current G3/M3 statuses have not changed.
+
+## FND-031 — M3 identities and split behavior have deterministic synthetic oracles
+
+- **Status:** contract and regression checks verified (2026-10-17)
+- **Finding:** The proposed data contract distinguishes board-position signatures, replay-history state, source-game identity, normalized-game identity, position samples, and materialized UCI candidate identity. The synthetic suite verifies clock/repetition distinctions, castling/en-passant, transpositions, changed headers, promotions, deterministic hashes, candidate split inheritance/purge, and a holdout-collapse failure. These checks do not implement or profile a production dataset.
+- **Evidence:** `docs/04-research/DATASET_SPEC.md`; `tests/fixtures/pre_m3_identity_vectors.json`; `tests/test_pre_m3_contracts.py`; retained full-suite log `.agents/evidence/logs/pre-m3-corrective-full-suite-20261017.log`.
+- **Impact:** Future M3 implementation has test vectors and split invariants; actual source distributions and purge effects remain unmeasured until source approval.
+
+## FND-032 — Current M3-02 cannot pass from PGN-only or mock-teacher work
+
+- **Status:** canonical acceptance alignment verified by document audit (2026-10-17)
+- **Finding:** Under the unchanged M3-02 criterion, a separately authorized real bounded Stockfish run with actual version/options/score semantics is required. PGN-only output may be an intermediate artifact; mock-UCI tests establish interface behavior only. If assignment policy prohibits teacher use, M3-02 remains pending until canonical acceptance is formally changed.
+- **Evidence:** `docs/06-quality/ACCEPTANCE_CRITERIA.md`; `docs/04-research/STOCKFISH_TEACHER.md`; `.agents/plans/M03-expert-dataset.md`; `docs/06-quality/TEST_STRATEGY.md`.
+- **Impact:** Stockfish 19 remains the reference; no search was run. O-01/O-07 and explicit M3 authorization remain prerequisites for real labeling.
+
+## FND-033 — M5 Double DQN can start before supervised pretraining completes
+
+- **Status:** RL-first planning alignment verified (2026-10-17)
+- **Finding:** The PM-directed contract keeps simulator-trained Double DQN as the central academic contribution. M5 core implementation and its first sanity run need not wait for a behavior-cloning M4 checkpoint; current M5-04 still requires a small pretraining-only checkpoint for the final paired comparison. Data breadth and teacher coverage are bounded, and the architecture remains open.
+- **Evidence:** `docs/04-research/RL_FIRST_ALIGNMENT.md`; `docs/04-research/EXPERIMENT_PROTOCOL.md`; `docs/02-management/EXECUTION_PLAN.md`; `docs/04-research/DECISION_REGISTER.md`.
+- **Impact:** The prior supervised-scope drift risk is mitigated in planning, not eliminated: deadline, compute, and instructor permissions remain unknown. No M4/M5 implementation or experiment was run.
+
+## FND-034 — M3 processing, resume, and release limits are specified but unmeasured
+
+- **Status:** proposed operational safeguards reviewed (2026-10-17)
+- **Finding:** The M03 plan requires archive/member and decompressed-byte ceilings, path/member checks, stream limits, memory/disk safeguards, immutable source/config/code identities, verified batch journals, and atomic release finalization. Proposed ceilings require comparison with an approved source sample; they are not measured throughput or execution authority.
+- **Evidence:** `docs/04-research/DATASET_SPEC.md` sections 8–9; `docs/04-research/STOCKFISH_TEACHER.md` resource tiers; `.agents/plans/M03-expert-dataset.md`.
+- **Impact:** A future executor has a fail-closed design; source-specific limits, output expansion, and CPU throughput remain unknown. No archive was acquired.
+
+## FND-035 — Checkpoint growth remains an operational follow-up, not corruption
+
+- **Status:** verified and dispositioned (2026-10-17)
+- **Finding:** At corrective-hardening recovery, `PROJECT_STATE.yaml` was 2,229,784 bytes with 96 history entries. Existing semantic checksum and portable manifest validation pass; historical entries remain intact. A lossless migration design is assigned before the first sustained M3 checkpoint-heavy run, with earlier triggers at 4 MiB, 128 entries, or a measured checkpoint taking over 5 seconds.
+- **Evidence:** `docs/02-management/RISK_REGISTER.md` RSK-010; `docs/05-operations/REPRODUCIBILITY.md`; final corrective preflight/checkpoint evidence in `.agents/evidence/PRE-M3-readiness-20261017.md`.
+- **Impact:** No migration or truncation was performed. The state file is already above the ordinary file hash boundary; preflight relies on its semantic checksum plus portable manifest and clean-clone recovery.

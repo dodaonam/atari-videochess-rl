@@ -7,6 +7,8 @@
 - **PM3 acceptance IDs:** Mission-level criteria supplied in the Pre-M3 directive; they do not replace or modify canonical M3-01 through M3-04.
 - **Final verification and delivery fields:** Updated after local verification, push, clean-clone check, and PR creation.
 
+> **Corrective-hardening addendum (2026-10-17):** The original readiness report below preserves findings and verification from the first PR review. Its statements that G3 approval is required before M3 work and that behavior cloning is the first M4 objective are superseded by this addendum and the current canonical plan/research contracts. G3 is the closure gate for M2–M5, not an M3 start prerequisite; M3 still requires separate explicit authorization and source-specific approvals. Double DQN is the principal academic objective; behavior cloning is optional and time-boxed. See [RL-First Alignment](../../docs/04-research/RL_FIRST_ALIGNMENT.md), [M03 plan](../plans/M03-expert-dataset.md), and [PLANS.md](../PLANS.md). Historical test/CI statements below refer to their named revisions only and are not claims about the final corrective-hardening HEAD.
+
 ## Executive status
 
 The clean feature worktree was created from the verified post-M2 squash merge. M2-001 and M2-01 through M2-04 remain complete; G2 remains approved; G3 is unapproved; M3 remains pending separate owner authorization. No source archive was downloaded, parsed, or ingested. No Stockfish search, model training, Colab session, paid compute, or ALE gameplay campaign was started.
@@ -79,7 +81,7 @@ No archive was downloaded. The first M3 profile must bound sample size and repor
 
 DATASET_SPEC.md defines versioned source, game, position, teacher, split, and release manifests; full history replay; FEN limits; UCI candidates; game-level deterministic sampling; reason-coded quarantine; deduplication; and split-level canonical position purge with residual leakage measurements.
 
-STOCKFISH_TEACHER.md recommends played-move behavior cloning as the first M4 baseline. It distinguishes played behavior, final result, Stockfish MultiPV, raw evaluation, normalization, RL reward/return, and learned Q. It records the verified M0 Stockfish 19 host hash and proposes a one-thread bounded MultiPV pilot only after approval. No Stockfish search was run.
+At the original readiness checkpoint, STOCKFISH_TEACHER.md recommended played-move behavior cloning as the first M4 baseline. Corrective hardening supersedes that priority: behavior cloning is optional and time-boxed, while Double DQN from simulator reward is central. The teacher contract still distinguishes played behavior, final result, Stockfish MultiPV, raw evaluation, normalization, RL reward/return, and learned Q. It records the verified M0 Stockfish 19 host hash and proposes a one-thread bounded MultiPV pilot only after approval. No Stockfish search was run.
 
 EXPERIMENT_PROTOCOL.md separates M3 data quality, M4 supervised prediction, M5 simulator RL, M6 real ALE, and M7 integrated reporting. REPRODUCIBILITY.md specifies configs, seeds, artifact manifests, checkpoint recovery, CPU/GPU boundaries, and storage safety.
 
@@ -94,7 +96,7 @@ The concise alternatives, verified facts, uncertainties, trade-offs, authority, 
 - O-07: Stockfish role/version/search budget.
 - O-04: storage, cloud/GPU entitlement, and paid-resource permission.
 - Repository owner: default branch main vs initial-idea and no top-level code license.
-- Owner/instructor: played-move behavior cloning as first M4 objective, with outcome/teacher targets kept as separate experiments.
+- Owner/instructor: confirm assignment constraints; RL-first policy keeps behavior cloning optional and time-boxed, with outcome/teacher targets separate.
 
 These remain pending. G2 is approved, M2 is integrated, G3 is not approved, and M3 is not authorized. A recommendation does not resolve an approval.
 
@@ -131,14 +133,14 @@ Local verification and delivery evidence is recorded in the sections below; each
 | PM3-10 | PASS with source decision open | Candidate/fallback terms and risks documented; no archive download. |
 | PM3-11 | PASS | DATASET_SPEC.md contracts versioned. |
 | PM3-12 | PASS | Validation, sampling, deduplication, and split policies are testable in DATASET_SPEC.md. |
-| PM3-13 | PASS | Behavior cloning recommendation and alternatives in STOCKFISH_TEACHER.md. |
+| PM3-13 | PASS | Corrective RL-first analysis makes behavior cloning optional/time-boxed and compares it with the Double DQN objective in RL_FIRST_ALIGNMENT.md. |
 | PM3-14 | PASS | Teacher protocol specified; no labels/search executed. |
 | PM3-15 | PASS as planning model | Formulas, assumptions, ceilings, and stop conditions documented; actual throughput awaits pilot. |
 | PM3-16 | PASS with transfer risks open | Compatibility assessed; Atari transfer not claimed. |
 | PM3-17 | PASS | EXPERIMENT_PROTOCOL.md defines staged provenance and metrics. |
 | PM3-18 | PASS | M03 plan maps canonical M3-01 through M3-04 to modules/tests/evidence. |
 | PM3-19 | PASS | Decision register keeps O-01/O-04/O-06/O-07 and owner choices unresolved. |
-| PM3-20 | PASS | Full local suite, final-tip clean-clone preflight, and PR run 38944551579 passed on checkpointed commit 843a0bc; the final closeout-only commit will receive a fresh PR check. |
+| PM3-20 | PASS at original PR head only | Historical checks at 843a0bc are not the final corrective verification. The H09 section below records the corrective suite, checkpoint, clean-clone recovery, and SHA-specific CI result as they complete. |
 | PM3-21 | PASS | Feature branch was pushed without force; see PR #2 for its live head. |
 | PM3-22 | PASS | PR #2 is open against initial-idea and remains unmerged. |
 
@@ -156,12 +158,12 @@ No production data code, full archive download, PGN ingestion, bulk Stockfish la
 | C03 — Schema and lineage | Defined versioned source, game, position, teacher, split, and release records with hashes, history, FEN, UCI, perspective, and split lineage. | No production writer or schema implementation created. | Complete as contract. |
 | C04 — Validation and sampling | Specified streaming validation, quarantine codes, deterministic caps, deduplication, coverage summaries, and test cases. | Filter thresholds remain proposals pending source profile and owner decisions. | Complete as design. |
 | C05 — Leakage-safe split | Specified normalized-game grouping, deterministic split seed, canonical exact-position ownership/purge, and residual-overlap reporting. | Near-position, player, and opening-concept overlap cannot be eliminated by this policy. | Complete as testable policy. |
-| D01 — Supervised targets | Compared behavior cloning, result/value, candidate ranking, and teacher guidance; recommended played-move behavior cloning as the first M4 baseline. | Owner/instructor confirmation and final loss/architecture remain open. | Complete as recommendation. |
+| D01 — Supervised targets | Compared behavior cloning, result/value, candidate ranking, and teacher guidance; corrective hardening makes behavior cloning optional under RL-first staging. | Owner/instructor confirmation and final loss/architecture remain open. | Complete as recommendation. |
 | D02 — Stockfish contract | Verified local Stockfish 19 provenance from M0 records and specified raw scores, perspective, MultiPV limits, node/watchdog protocol, and run identity. | No search or labels; O-01/O-07 restrict engine use until approved. | Complete as proposed protocol. |
 | D03 — Resource budget | Added formulas, assumptions, pilot/medium/larger caps, memory/output safeguards, and source-specific storage caveat. | Throughput, expansion, and p95 engine time await an authorized pilot. | Complete as planning model. |
 | D04 — Downstream compatibility | Mapped history/UCI/result perspective and terminal semantics to M4/M5; kept ALE RGB as M6 authority. | Atari transfer, feature planes, and final model architecture remain unresolved risks. | Complete as interface assessment. |
 | D05 — Experiment methodology | Separated M3 data, M4 supervised, M5 simulator RL, M6 ALE, and M7 reporting metrics and provenance. | Final M4–M7 specifications remain deferred to their milestones. | Complete. |
-| E01 — M3 architecture and plan | Added M03 plan with packages, CLI boundaries, streaming, resume, tests, caps, evidence, and M3-01–04 mapping. | Implementation and data generation await G3 plus explicit M3 authorization. | Complete; plan is review-ready, not authorizing. |
+| E01 — M3 architecture and plan | Added M03 plan with packages, CLI boundaries, streaming, resume, tests, caps, evidence, and M3-01–04 mapping. | Implementation and data generation require separate explicit M3 authorization and applicable source/teacher/storage approvals; G3 is not a start prerequisite. | Complete; plan is review-ready, not authorizing. |
 | E02 — Documentation/governance | Added dataset, teacher, experiment, reproducibility, decision, inventory, integration, and README material; synchronized canonical records. | Owner decisions and deferred M4–M7 documents remain open by design. | Complete. |
 | F01 — Verification and delivery | Full 180-test local suite, clean-clone recovery tests, final checkpoint/preflight, and bounded PR CI passed. | Two earlier remote failures were diagnosed: missing G1 history in shallow checkout, then portable-manifest drift after a post-checkpoint commit. | Complete; no test was weakened. |
 
@@ -187,3 +189,47 @@ No production dataset or model artifact was created.
 ## State growth disposition
 
 After three readiness checkpoints and before the closeout report checkpoint, PROJECT_STATE.yaml was 2,180,216 bytes with 95 checkpoint-history entries, above 2 MiB. Its semantic checksum and portable Git manifest validated. Historical records were preserved. RSK-010 now requires a reviewed migration design before sustained further growth; this is an operational follow-up, not a pretext to truncate history.
+
+## Corrective hardening H01–H10
+
+| Package | Finding and action | Evidence / status |
+|---|---|---|
+| H01 — Governance | Separated G3/G4 closure from milestone entry; M3 remains pending and requires a direct authorization evidence record. Preflight reads ADR-0001 coverage and guards the split M7 G4/G5 acceptance ownership. | `scripts/agent_preflight.py`; focused governance tests in `tests/test_agent_context.py`; FND-030. Verified. |
+| H02 — Chess identity and split | Specified board signature, replay-history state, source-game identity, normalized-game hash, sample ID, and materialized candidate ID separately. Added deterministic fixtures for clocks, repetition, castling, en passant, transpositions, changed headers, promotion, candidate inheritance/purge, and holdout collapse. | `docs/04-research/DATASET_SPEC.md`; `tests/fixtures/pre_m3_identity_vectors.json`; `tests/test_pre_m3_contracts.py`; FND-031. Verified as contract tests only. |
+| H03 — Teacher acceptance | PGN-only output is an intermediate; canonical M3-02 requires an authorized real bounded Stockfish 19 run. Mock tests/protocol prose cannot pass it; formal acceptance change is required if teacher use is prohibited. | `docs/04-research/STOCKFISH_TEACHER.md`; M03 plan; acceptance criteria; FND-032. Verified by cross-document audit; no search ran. |
+| H04 — RL-first alignment | Double DQN from simulator reward is central. M5 core and first sanity run need not wait for M4, but current M5-04 still requires a small pretraining-only checkpoint for final paired comparison. The compact behavior baseline is optional to DDQN startup and cannot substitute for RL. | `docs/04-research/RL_FIRST_ALIGNMENT.md`; `docs/04-research/EXPERIMENT_PROTOCOL.md`; `docs/02-management/EXECUTION_PLAN.md`; RSK-012; FND-033. Planning contract verified. |
+| H05 — Deterministic identities | Defined canonical JSON encoding, domain-separated SHA-256 inputs, normalization, split ownership, config/teacher/release IDs, and exact reference vectors. Candidate identity now binds parent sample plus UCI action. | Dataset spec and synthetic vector test above. Included in full-suite run below. |
+| H06 — Storage and bounded processing | Position rows refer to immutable game history rather than repeating it. Proposed compressed/decompressed/member/game/header/comment, RSS, disk, time, worker, engine, output, resume, and atomic-release controls fail closed pending source-specific measurement. | Dataset spec sections 8–9; teacher resource tiers; M03 plan. Design reviewed; no source acquired or processed. |
+| H07 — Checkpoint growth | Preserved all checkpoint history. The first four corrective snapshots measured +206,375 bytes across 4 entries (about 51.6 kB per entry in this limited sample); no general growth forecast is claimed. RSK-010 assigns lossless migration design before sustained M3 checkpoints, with 4 MiB / 128-entry / 5-second earlier triggers and clean-clone/historical-recovery requirements. | `docs/02-management/RISK_REGISTER.md`; `docs/05-operations/REPRODUCIBILITY.md`; FND-035. No migration performed. |
+| H08 — Reconciliation | Corrected historical G3/M3 and supervised-first statements via a dated addendum; synchronized M03 plan, state, backlog, findings, research documents, risk register, test strategy, and decision priorities. Lichess source facts remain publisher-reported; O-06 remains open. | This record; canonical state/backlog; DATASET_SPEC and DECISION_REGISTER. Original roadmap and accepted ADRs unchanged. |
+| H09 — Verification | Full local suite, offline lock check, checkpoint, and preflight passed on the corrective working tree. Final clean-clone verification and remote PR CI remain pending at this report revision. | Full suite: 192 tests, 82.988 s, exit 0, 2026-10-16T19:36:03.491912526Z–19:37:26.922435254Z; HEAD `bd84973436ab6d71ccb927cb16f16f357041399e`; test checkpoint `cp-bd849734-20261016T193559973241Z`. The immediately preceding checkpoint `cp-bd849734-20261016T193837211396Z` and standalone preflight passed with only `ARTIFACT_MANIFEST_REQUIRED` for ignored artifacts; the current report/evidence update is followed by another checkpoint. Full-suite log SHA-256 `01072d409e623c5b09918062e154c098e3f3d71e57e3db2359a39e3ed0203517`; lock log SHA-256 `fe2f95342cce279d247b0950802b85b99b2f4a5c1d99d7bb116782a9ece0c833`; preflight log SHA-256 `e387e03f557180b7fb080f90310cb5ac438771e7a70c40a92f0132b0acb245eb`. |
+| H10 — Existing PR delivery | Continue on `feature/pre-m3-readiness`; update PR #2 targeting `initial-idea`; do not create another PR, force-push, change defaults, or merge. | Delivery remains pending final commit/push, clean-clone verification, PR description update, and final SHA-specific Actions check. |
+
+### Corrective local verification
+
+The exact full-suite command was `PYTHONDONTWRITEBYTECODE=1 PATH=<existing-project-venv>/bin:$PATH <existing-project-venv>/bin/python -m unittest discover -s tests -v` (environment paths sanitized). It ran against HEAD `bd84973436ab6d71ccb927cb16f16f357041399e` with corrective code/docs/tests staged and checkpointed; it completed with 192 tests and `OK` in 82.988 seconds. The output is retained at `.agents/evidence/logs/pre-m3-corrective-full-suite-20261017.log` (SHA-256 above). Offline dependency validation used uv 0.9.26 / CPython 3.12.3 with `uv lock --check --offline`, resolved 18 packages, exit 0, no installation. The initial attempt to call `uv` by PATH failed because the executable was outside PATH; rerunning the same check through the existing user-local executable succeeded. No lockfile or dependency changed. Standalone agent preflight passed with only the expected ignored-artifact manifest warning; its sanitized output is also retained above.
+
+The first M7-ownership regression-test iteration failed because its minimal synthetic repository had no canonical M7 G4/G5 allocation paragraph. The fixture root was corrected to use the canonical acceptance document; the subsequent focused run passed all 11 selected governance and data-contract tests. The later full-suite run passed all 192 tests, including the corrected fixture. No test was weakened. This initial diagnostic output was streamed rather than retained separately.
+
+No M1/M2 source module or dependency lock was modified. No archive download/ingestion, Stockfish position search, supervised model training, Double DQN training, cloud allocation, release/publication, G3 approval, M3 authorization, default-branch change, or PR merge occurred.
+
+### HC-01–HC-16 corrective acceptance checks
+
+| Check | Status at this report revision | Evidence / limitation |
+|---|---|---|
+| HC-01 | PASS | G3/M3, G4/M6, and partial M7 gate-coverage checks are exercised against the canonical ADR/acceptance allocation. |
+| HC-02 | PASS | Synthetic M3 direct authorization succeeds while G3 remains unapproved; Boolean-only and plan-only authorization fail. |
+| HC-03 | PASS | State/backlog/ADR/M03 plan/acceptance references agree; G3 remains open and M3 pending. |
+| HC-04 | PASS | Board-position signature is separate from replay/history-state identity. |
+| HC-05 | PASS | Synthetic clock, repetition, castling, en-passant, and transposition vectors pass. |
+| HC-06 | PASS | Candidate inheritance/purge and holdout-collapse failure test pass; release policy reports retention/distortion and fails below thresholds. |
+| HC-07 | PASS | PGN-only and fake-teacher paths cannot satisfy current M3-02; real authorized Stockfish run remains required. |
+| HC-08 | PASS | Played moves, teacher scores, simulator returns, and Q-values have separate types/meaning in research contracts. |
+| HC-09 | PASS | RL-first Double DQN requirements, baselines, ablation and transfer criteria are documented; no training was run. |
+| HC-10 | PASS | Source/game/fallback/sample/candidate/config/teacher/split/release identifiers have canonical SHA-256 vectors. |
+| HC-11 | PASS | Archive/resource/resume/atomic-release design is documented; source-specific caps remain proposals pending a permitted profile. |
+| HC-12 | PASS | No M1/M2 production code, dependency lock, accepted ADR, original roadmap, repository setting, or external service was changed. |
+| HC-13 | PASS | Final local preflight and checkpoint pass; only the ignored-artifact manifest warning remains. |
+| HC-14 | NOT VERIFIED | Full local suite passes; final pushed clean-clone recovery is pending. |
+| HC-15 | NOT VERIFIED | Final pushed-HEAD GitHub Actions result is pending. Historical PR run 38944551579 is not evidence for this corrective HEAD. |
+| HC-16 | PASS | No source acquisition, Stockfish search, training, paid/cloud use, release, G3 approval, M3 authorization, default-branch change, or merge occurred. |

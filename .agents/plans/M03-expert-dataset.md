@@ -4,25 +4,25 @@
 - **Milestone:** M3 — Expert dataset, within the engineering sequence owned by **EXECUTION_PLAN.md**
 - **Plan status:** ready for independent review; this plan is not authorization to execute M3
 - **Canonical task:** M3-001 in **BACKLOG.yaml**, pending owner/instructor prerequisites and separate M3 authorization
-- **Dependencies:** M2-001 complete and G2 approved; retain G3 unapproved until its owner review
+- **Dependencies:** M2-001 complete and G2 approved; retain G3 unapproved until its closure review. G3 covers M2–M5 and is not a prerequisite to start M3.
 - **Acceptance:** M3-01 through M3-04 in **docs/06-quality/ACCEPTANCE_CRITERIA.md**
 - **Requirements:** B-04, B-05, B-07; O-01, O-04, O-06, and O-07 remain open
 - **Relevant decision:** accepted **ADR-0002** for stable UCI action identity, Board history, and color perspective; it does not approve data, Stockfish, or neural architecture
-- **Contracts:** [DATASET_SPEC.md](../../docs/04-research/DATASET_SPEC.md), [STOCKFISH_TEACHER.md](../../docs/04-research/STOCKFISH_TEACHER.md), [EXPERIMENT_PROTOCOL.md](../../docs/04-research/EXPERIMENT_PROTOCOL.md), [REPRODUCIBILITY.md](../../docs/05-operations/REPRODUCIBILITY.md)
+- **Contracts:** [DATASET_SPEC.md](../../docs/04-research/DATASET_SPEC.md), [STOCKFISH_TEACHER.md](../../docs/04-research/STOCKFISH_TEACHER.md), [EXPERIMENT_PROTOCOL.md](../../docs/04-research/EXPERIMENT_PROTOCOL.md), [RL_FIRST_ALIGNMENT.md](../../docs/04-research/RL_FIRST_ALIGNMENT.md), [REPRODUCIBILITY.md](../../docs/05-operations/REPRODUCIBILITY.md)
 
 ## Objective
 
-Create a reproducible, provenance-preserving, leakage-audited expert dataset for later supervised work. Keep expert played moves, game outcomes, and optional Stockfish annotations as distinct signals. M3 does not train a model, claim playing strength, change the M2 simulator, run reinforcement learning, or evaluate ALE gameplay.
+Create the smallest reproducible, provenance-preserving, leakage-audited expert artifact that supports the later RL experiment. Keep expert played moves, game outcomes, and Stockfish annotations as distinct signals. Dataset size and teacher coverage must be justified by M4/M5 value and hard resource caps; maximizing data volume is not an objective. M3 does not train a model, claim playing strength, change the M2 simulator, run reinforcement learning, or evaluate ALE gameplay. The central course deliverable remains independently implemented Double DQN in M5; see [RL-First Alignment](../../docs/04-research/RL_FIRST_ALIGNMENT.md).
 
 ## Authorization gates and source prerequisites
 
 Before any source retrieval or processing:
 
-1. The owner reviews this plan and explicitly authorizes M3 separately from Pre-M3 review.
+1. The PM/owner records a separate, explicit M3 start authorization in the task evidence and project state. G3 approval is not a start prerequisite; G3 closes only after its covered M2–M5 work and G3 review conditions are satisfied. A plan, completed M2 dependency, or readiness PR is not authorization.
 2. The source and use decision O-06 is resolved for a specific archive, terms, retention, transformation, and any intended distribution.
-3. O-01/O-07 are resolved before Stockfish searches, labels, engine-opponent use, or offline engine evaluation. A PGN-only behavior dataset may proceed if the approved source scope allows it and M3-02 is recorded honestly.
+3. O-01/O-07 are resolved before Stockfish searches, labels, engine-opponent use, or offline engine evaluation. PGN-only output may be an intermediate M3 artifact if its source is approved; it does not by itself pass M3-02 or complete M3.
 4. O-04 is resolved before external storage, Colab, paid compute, or limits beyond verified local resources.
-5. A source profile confirms archive size, PGN member/header behavior, and parser feasibility. Do not use the publisher's game-count/size listing as measured local evidence.
+5. A bounded source profile confirms archive size, PGN member/header behavior, and parser feasibility. Do not use publisher game-count/size listings as measured local evidence.
 
 The May 2022 Lichess Elite package remains a candidate, not an approved source. Its publisher listing reports 355,535 games and 93 MB but does not state a license. The official Lichess rated-standard export and official broadcast data are alternatives with different sizes, distributions, and terms. Never ingest a source until the decision is recorded.
 
@@ -32,9 +32,8 @@ The May 2022 Lichess Elite package remains a candidate, not an approved source. 
 - streaming PGN parsing, validation, and reason-coded quarantine;
 - game-level records and deterministic position extraction/sampling;
 - legal UCI candidate sets and played-move/result labels with explicit perspective;
-- exact game and position deduplication;
-- game-grouped, deterministic splits plus cross-split position-purge audit;
-- optional, separately authorized, versioned Stockfish teacher annotations;
+- normalized-game grouped, deterministic splits plus explicit board-overlap ownership/purge, history-state distinction, holdout-retention gates, and candidate inheritance;
+- a separately authorized, bounded, versioned Stockfish teacher run required by current M3-02 acceptance; teacher rows remain a sidecar and may be omitted from a particular PGN dataset release;
 - bounded CLI, output manifests/hashes, statistics, interruption recovery, and focused tests;
 - M3-01 through M3-04 evidence and one implementation PR against **initial-idea**.
 
@@ -54,14 +53,14 @@ Add the smallest package under **videochess_rl/data/**:
 
 | Planned module | Responsibility | Boundary |
 |---|---|---|
-| **contracts.py** | Versioned source/game/position/teacher/split/release record validation and stable IDs. | No training/model dependency. |
-| **source.py** | Source manifest, archive/member checks, SHA-256, ZIP CRC, bounded input validation. | Never decides source rights; requires a recorded approved decision. |
+| **contracts.py** | Versioned source/game/position/teacher/split/release validation and canonical domain-separated IDs, including separate board, history, game, and sample identities. | No training/model dependency. |
+| **source.py** | Source manifest, archive/member/path/symlink/ratio/decompressed-size checks, streaming SHA-256, ZIP CRC, and bounded input validation. | Never decides source rights; requires recorded source approval. Never extracts arbitrary member paths. |
 | **pgn.py** | One-game-at-a-time parsing, raw/normalized headers, UCI replay, structured diagnostics. | Uses python-chess Board/history; never repairs illegal moves silently. |
 | **sampling.py** | Deterministic source-order-independent game bottom-k and bounded per-game ply sampling. | Seed/config are required and recorded. |
-| **dedup.py** | Source ID, normalized game, repeated canonical-position identity, conflict/quarantine counts. | Does not drop conflicting results silently. |
-| **split.py** | Stable game-hash assignment and deterministic cross-split canonical-position purge. | Candidate/teacher rows inherit the position's split. |
-| **teacher.py** | Optional UCI engine identity, bounded searches, raw score/MultiPV capture, failure records. | Separate process; absent/disabled by default; no inference integration. |
-| **export.py** | JSON Lines/gzip outputs, atomic staging, row counts, hashes, release manifest. | No data-frame/database requirement. |
+| **dedup.py** | Source ID, normalized game sequence, conflict/quarantine counts, and separate board-overlap/replay-state reports. | Does not silently collapse history-distinct states or conflicting results. |
+| **split.py** | Stable normalized-game hash assignment; explicit board-signature owner, purge ledger, and holdout retention/distribution checks. | Candidate/teacher rows inherit sample split; board overlap is not rules-state identity. |
+| **teacher.py** | Stockfish 19 UCI identity and separately authorized bounded search; typed raw score/MultiPV capture, transform provenance, and failure records. | Separate process; never part of inference. Fake UCI tests do not satisfy M3-02. |
+| **export.py** | Reference-based game/position JSON Lines, atomic batch segments/staging, row counts, hashes, and verified immutable release manifest. | No data-frame/database requirement; history is stored once per game, not copied into each position. |
 | **stats.py** | Quality, label, coverage, split, and resource summaries. | Reports measured values only. |
 | **cli.py** | Profile, validate, build, and optionally label subcommands with explicit caps. | No implicit unbounded or online-download mode. |
 
@@ -69,7 +68,7 @@ Use standard library file/JSON/ZIP/gzip/hash/statistics interfaces and the alrea
 
 ## Configuration and command interface
 
-Store human-readable TOML configuration under **configs/data/** and hash its canonical normalized content. Separate source, parsing/filter, sampling, split, teacher, and resource settings. Configuration must include schema versions, deterministic seed, source archive/member hash, start-position and variant policy, minimum/maximum plies where approved, max games, max positions, max teacher positions, max bytes, max elapsed time, max worker count, and output directory.
+Store human-readable TOML configuration under **configs/data/** and hash its canonical normalized content. Separate source, parsing/filter, sampling, split, teacher, and resource settings. Configuration must include schema versions, deterministic seed, source archive/member hash, start-position and variant policy, minimum/maximum plies where approved, max games, max positions, max teacher positions, max archive/member/output bytes, max per-game/header/comment bytes, max elapsed time, max worker count, memory/hash limits, and output directory.
 
 Planned CLI shape:
 
@@ -88,12 +87,12 @@ No default command downloads a URL or processes all input. CLI output states the
 3. Download only within approved scope to a staging path; retain original bytes read-only, verify SHA-256/ZIP CRC/member size, and record retrieval facts. If source has no published checksum, record that fact and compute a local digest after retrieval.
 4. Run a no-output profile on a capped game/header sample. Review observed header, variant, result, rating, time-control, comments/variation, parse-error, and player-identifier statistics.
 5. Validate/replay games one at a time. Quarantine errors with stable reason codes and source ordinals; never discard silently.
-6. Generate game rows and deterministic bounded position samples. Store initial FEN plus complete UCI replay path, current FEN, side to move, legal UCI moves, played UCI move, and White/side-to-move result.
-7. Deduplicate exact game identity, report conflicts, then assign whole normalized games to splits with a frozen hash seed. Purge repeated canonical position fingerprints from other rows and retain before/after leakage counts.
-8. If authorized, run a separate bounded teacher pass after the PGN-only dataset is valid. Record actual engine binary/hash/UCI identity/options, node/depth limit, MultiPV, root perspective, raw cp/mate/WDL types, elapsed time, and per-position errors. Never treat MultiPV as exhaustive.
-9. Write to a new run-specific staging directory. Checkpoint every fixed completed game batch with source/config hashes and output offsets/hashes. On interruption, resume only if every source/schema/config/code hash and output digest matches.
-10. Validate all cross-references, legal candidates, split invariants, release counts, and output hashes. Atomically finalize to a new immutable release directory; never overwrite an earlier release.
-11. Run focused and full applicable tests, M3 preflight/recovery checks, compare statistics, and prepare evidence. Stop rather than publish a partial release if any invariant fails.
+6. Generate game rows and deterministic bounded position samples. Store initial FEN and full UCI move sequence once per game; each position references `game_id` plus `ply_index`, current FEN, `history_state_id`, legal UCI moves, played UCI move, and White/side-to-move result. This stage may produce a validated PGN-only intermediate, not a completed M3 release.
+7. Deduplicate normalized game sequences while retaining source aliases. Assign normalized-game groups using the versioned hash rule. Choose a board-signature owner only among partitions where it occurs; purge other partition rows and every candidate/teacher record attached to them without moving groups, retain an audit ledger, report coverage distortion, and fail/warn on configured holdout thresholds.
+8. Validate the PGN-only intermediate before teacher analysis. Then, only with O-01/O-07 and explicit bounded-run authorization, run deterministic limited Stockfish 19 analysis. Record actual binary/license hashes/UCI identity/options, node limit, MultiPV, root perspective, raw cp/mate/WDL types, normalization, elapsed time, and per-position errors. MultiPV is not exhaustive. This real run is required for canonical M3-02; fake-engine tests do not pass the criterion.
+9. Read the approved PGN member directly as a bounded stream. Reject path traversal, absolute/backslash/symlink/duplicate members, encrypted data, corrupt CRC, unsupported encoding, configured compressed/decompressed/member/game/ratio excesses, and output collisions. Never extract arbitrary archive paths. Apply per-tier compressed/decompressed ceilings, a per-member ceiling, a proposed 200:1 early compression-ratio stop, fixed-chunk streaming byte enforcement, single-game/comment bounds, disk reserve, and OS-enforced memory limits. These initial ceilings are proposals and must be confirmed against a permitted source profile before acquisition.
+10. Write atomic run-specific batch segments and a monotonic journal. Resume only when source/member/schema/config/code/parser identities and every committed segment hash match; reject gaps, overlaps, and duplicate sample IDs. A mismatch preserves the staging artifact and requires a new run ID.
+11. Validate foreign keys, legal candidates, replay-state IDs, split/holdout invariants, counts, and hashes. Atomically finalize on the same filesystem to a previously nonexistent release path. Interrupted or PGN-only runs remain staging/intermediate and are not reported as completed M3.
 
 ## Resource safeguards
 
@@ -106,11 +105,11 @@ Require explicit max-games, max-positions, max-teacher-positions, max-output-byt
 | Criterion | Modules / tests | Required evidence |
 |---|---|---|
 | **M3-01** — Source data and licenses are documented before ingestion. | Source-manifest schema validation; tests reject build without source approval/rights evidence and reject hash/size mismatch. | Approved source decision, terms/provenance snapshot, retrieval manifest, actual archive/member SHA-256 and size before parsing. |
-| **M3-02** — Stockfish version, search settings, score perspective, normalization, and mate handling are recorded. | Teacher config/UCI tests; fake-engine tests cover MultiPV ordering, cp/mate separation, perspective conversion, terminal state, missing score, and resource cap. | If used: binary/license hash, UCI identification, config hash, raw teacher sample and run manifest. If not authorized: precise non-use status and unresolved approval; do not claim this criterion passed. |
+| **M3-02** — Stockfish version, search settings, score perspective, normalization, and mate handling are recorded. | Teacher config/UCI tests plus an authorized bounded real Stockfish 19 run on a deterministic subset. Fake-engine tests cover parser/transform/failure semantics but cannot pass M3-02 alone. | Actual binary/license hash, UCI identification, effective options, search limit, raw cp/mate/WDL values, perspective/transform metadata, run/sample/config hashes, per-position statuses, and sanitized log. Without an authorized real run, M3-02 remains pending and M3 is not complete. If restrictions prohibit the run, a formal canonical acceptance-scope change is required. |
 | **M3-03** — Generation is reproducible and every sample has provenance. | PGN parser, stable IDs, sampling, resume, output exporter, per-row provenance and hash tests. | Source/code/config revision, command, seeds, counts, diagnostics, data manifests/hashes, resumed-run check, and sanitized log. |
-| **M3-04** — Splits prevent leakage between related positions/candidates; statistics and hashes are recorded. | Grouped split, canonical position dedup/purge, candidate inheritance, overlap and determinism tests. | Frozen split seed/config hash, game and position overlap before/after, duplicate purge counts, per-split stats, and file hashes. |
+| **M3-04** — Splits prevent leakage between related positions/candidates; statistics and hashes are recorded. | Normalized-game grouping, candidate/teacher inheritance, board-signature owner/purge, history-state identity, transposition/opening/clock/repetition/castling/en-passant cases, and holdout-collapse failure test. | Frozen seed/config hash, game and board overlap before/after, history-state counts, owner/purge ledger, per-split pre/post counts and distribution shifts, holdout minimum/retention results, and file hashes. |
 
-Test fixtures must be synthetic, tiny, and authored for the tests. Do not commit downloaded public PGNs or player identities. Teacher tests use a fake UCI executable; a separate explicit smoke check may handshake with the approved host binary but must not search without permission.
+Synthetic deterministic identity and split vectors are in `tests/fixtures/pre_m3_identity_vectors.json` and `tests/test_pre_m3_contracts.py`; they are contract checks, not a production pipeline. PGN parser fixtures must be tiny, authored for tests, and contain no downloaded public records/player identities. Fake UCI tests verify semantics only. The real bounded teacher run required by M3-02 is separate and may occur only after permission.
 
 ## Verification and Git workflow
 

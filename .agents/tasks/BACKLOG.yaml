@@ -1929,7 +1929,7 @@
       "depends_on": [
         "M2-001"
       ],
-      "requires_user_gate_approval": "G3",
+      "requires_user_gate_approval": null,
       "acceptance_criteria_ids": [
         "M3-01",
         "M3-02",
@@ -1938,7 +1938,7 @@
       ],
       "blocker_ids": [],
       "evidence": [],
-      "next_action": "Await independent Pre-M3 PR review, G3 approval, and separate explicit M3 authorization. Resolve source/assignment/engine/storage decisions as applicable before any source acquisition or processing.",
+      "next_action": "Await independent Pre-M3 PR review and separate explicit M3 authorization. G3 is a closure gate covering M2–M5, not an M3 start prerequisite. Resolve O-06 before source acquisition; resolve O-01/O-07 before Stockfish use; resolve O-04 before external/paid compute or storage. A plan or completed dependency is not authorization.",
       "plan_ref": ".agents/plans/M03-expert-dataset.md"
     }
   ],

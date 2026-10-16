@@ -1,6 +1,6 @@
 # Stockfish Teacher and Supervised Targets
 
-**Status:** Proposed protocol only. O-01 and O-07 remain open; no engine analysis or labeling was run for Pre-M3.  
+**Status:** Proposed protocol only. O-01 and O-07 remain open; no engine analysis or labeling was run for Pre-M3. Under the current canonical M3 acceptance criteria, an authorized real teacher run is required to pass M3-02; this document or a fake-engine test alone is insufficient.
 **Related records:** [M03 plan](../../.agents/plans/M03-expert-dataset.md), [dataset contract](DATASET_SPEC.md), [experiment protocol](EXPERIMENT_PROTOCOL.md), and [owner decision register](DECISION_REGISTER.md).
 
 ## 1. Keep target meanings separate
@@ -15,9 +15,11 @@
 | Simulator reward / return | Reward and discounted future reward from simulator transitions. | M5 RL evidence; do not substitute engine centipawns. |
 | Learned Q-value | Model estimate for a legal action and simulator return under a stated policy/training setup. | M5/M6 model output; not a teacher score by definition. |
 
-## 2. M4 target recommendation
+## 2. Optional M4 target recommendation
 
-**Proposed first objective:** behavior cloning over the legal candidate set. For each selected position, train against the actually played UCI move using a policy loss restricted to the recorded legal moves. This needs no Stockfish labels, is directly supported by PGN, and provides a baseline before teacher complexity is added. Report held-out legal top-1/top-k move accuracy and ranking metrics as behavior-prediction measures, not Elo or Atari strength.
+**RL-first priority:** the project must reserve its principal time and compute for independently implemented Double DQN trained from M2 simulator transitions. A small behavior-cloning model is an optional supervised-only baseline if it can be built without delaying the core M5 implementation or learning experiment. It is not a prerequisite to M5, the primary project result, or evidence of reinforcement learning.
+
+If retained, train on a selected position's actually played UCI move using a policy loss restricted to that position's recorded legal moves. This needs no Stockfish labels. Report held-out legal top-1/top-k move accuracy and ranking metrics as behavior-prediction measures, not Elo, Q-value quality, simulator return, or Atari strength.
 
 Keep game-result prediction as an optional separate auxiliary experiment. Its target is the final result from a stated color/side perspective; it is not an immediate reward or a Q-target. Compare it independently and retain a behavior-only checkpoint.
 
@@ -25,13 +27,15 @@ At least one simpler baseline is legal random selection or a fixed transparent h
 
 | Objective | Benefit | Main cost or risk | Disposition |
 |---|---|---|---|
-| Played-move behavior cloning | Lowest data and compute complexity; target exists in each accepted PGN position. | Expert actions are demonstrations, not optimality certificates; game context and time controls affect behavior. | Recommended first M4 baseline, pending assignment/source approvals. |
+| Played-move behavior cloning | Lowest data and compute complexity; target exists in each accepted PGN position. | Expert actions are demonstrations, not optimality certificates; game context and time controls affect behavior. | Optional, small, and time-boxed baseline only if it does not delay Double DQN. |
 | Position outcome prediction | Uses game result without engine; provides a distinct outcome baseline. | Outcome is noisy and highly dependent on both players and later moves. | Optional multi-task experiment, not merged into move labels. |
 | Teacher top-k ranking | Adds engine-preferred candidates and interpretable ranking signal. | Requires engine permission and CPU; MultiPV covers only its returned lines. | Optional after O-01/O-07 and a measured pilot. |
 | Every-legal-move candidate scores | Provides broad candidate supervision. | Approximately one restricted-root search per legal move, often dozens of searches per position. | Defer unless a measured pilot and assignment value justify the cost. |
 | Value regression from Stockfish | Dense board signal and simple storage. | Score scale, mate discontinuity, search noise, and perspective can be mistaken for probability or RL return. | Store raw data separately; transform only in a named M4 experiment. |
 
 This recommendation does not freeze the neural architecture, legal-action scorer, loss weighting, feature representation, or Double DQN initialization.
+
+Behavior cloning remains a supporting baseline, not the project's academic result. An imitation policy's logits are not Q-values. A future shared encoder/action-conditioned scorer may be initialized from behavior cloning only as a measured transfer experiment; initialize or recalibrate the Q output semantics and compare against a random-initialized Double DQN control where feasible. Teacher evaluations are also not Bellman-consistent Q-values. M5 must be able to train from random initialization; supervised work cannot block that path.
 
 ## 3. Existing engine baseline and provenance
 
@@ -57,6 +61,16 @@ Every teacher run has an immutable config and run ID. Record:
 Use one engine thread for the first pilot and a fixed, bounded hash allocation. Prefer a node limit for repeatable workload; also set a wall-time watchdog and record both consumed nodes and elapsed time. A node limit does not promise bit-for-bit identical results across engine builds, CPU instruction sets, transposition-table state, or library versions. Use a fresh engine game / clear hash for independent positions unless a documented experiment deliberately carries search state between positions.
 
 Initial candidate protocol proposal, not an approved setting: one thread, Hash at most 256 MiB, MultiPV at most 3, and a starting cap of 50,000 nodes per root in the tiny timing pilot. Measure the pilot before choosing any larger cap. The exact cap, label coverage, and use of Stockfish require O-01/O-07 resolution and are not set by this document.
+
+### M3 completion pathway (mandatory acceptance alignment)
+
+M3 has two technically distinct stages and one formal acceptance condition:
+
+1. **PGN data engineering:** once M3, source, and applicable storage permissions are explicitly authorized, profile and process a bounded approved source, create game/position records, validate lineage, and produce leakage statistics. This can create a valid intermediate PGN-only artifact.
+2. **Teacher interface and contract tests:** typed score records and fake-UCI tests verify parser behavior, perspective conversion, MultiPV rank, mate typing, failure paths, and config serialization. These tests do not establish an engine version or actual search setting.
+3. **Authorized bounded real teacher run:** use the approved engine binary on a deterministic capped position subset; record actual UCI identity, binary/license hashes, effective options, node limit, scores, perspective, normalization formula, mate handling, failures, and run/sample hashes. Keep its output as an optional teacher sidecar rather than overwriting PGN behavior/result rows.
+
+Under the unchanged canonical [M3-02 criterion](../06-quality/ACCEPTANCE_CRITERIA.md), formal M3 completion requires step 3 with evidence for the actual version/settings and semantics. A PGN-only release is an intermediate result and leaves M3-02 pending, so M3 cannot be marked fully complete. If assignment rules prohibit teacher use, M3-02 stays pending until the project owner/instructor formally changes the acceptance scope through the canonical criteria/governance process. Codex must not waive or reinterpret M3-02. The default reference is the already recorded Stockfish 19 host build; no upgrade is proposed. Stockfish remains excluded from learned-agent inference in every path.
 
 ### Score conventions
 
