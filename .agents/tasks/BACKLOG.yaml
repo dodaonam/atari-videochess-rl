@@ -1750,13 +1750,13 @@
         {
           "kind": "file",
           "path": ".agents/evidence/M2-post-review-hardening-20261016.md",
-          "detail": "Consolidated evidence-backed disposition of F-01 through F-08, HC-01 through HC-14, hardening changes through b3fc810, 58 focused and 180 repository tests, corrected benchmark, and GitHub delivery handoff.",
+          "detail": "Consolidated F-01–F-08 and HC-01–HC-14 report with final 58-test focused, 180-test full-suite, benchmark, and context evidence.",
           "provenance": {
             "status": "verified",
             "executed_at_utc": null,
-            "recorded_at_utc": "2026-10-16T15:58:29Z",
+            "recorded_at_utc": "2026-10-16T16:00:43Z",
             "exit_code": null,
-            "git_revision": "959cf48bbeb83ef8191c2433d78bf6e37c20a1ef",
+            "git_revision": "f420bd8a80b6f9f5edc4ae9ce40961ac76d3a581",
             "log_path": null
           }
         },
@@ -1876,11 +1876,37 @@
             "git_revision": "959cf48bbeb83ef8191c2433d78bf6e37c20a1ef",
             "log_path": ".agents/evidence/logs/M2-post-review-final-preflight-20261016.log"
           }
+        },
+        {
+          "kind": "test",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "PASS: 180 repository tests in 82.654 s, including clean-clone context recovery, M0, M1/ALE, and M2.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T15:59:07Z",
+            "recorded_at_utc": "2026-10-16T16:00:43Z",
+            "exit_code": 0,
+            "git_revision": "f420bd8a80b6f9f5edc4ae9ce40961ac76d3a581",
+            "log_path": ".agents/evidence/logs/M2-post-review-full-suite-final-20261016.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "PASS: agent context preflight passed; expected ARTIFACT_MANIFEST_REQUIRED notice reviewed against the M2 manifest.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T16:00:43Z",
+            "recorded_at_utc": "2026-10-16T16:00:43Z",
+            "exit_code": 0,
+            "git_revision": "f420bd8a80b6f9f5edc4ae9ce40961ac76d3a581",
+            "log_path": ".agents/evidence/logs/M2-post-review-final-preflight-f420-20261016.log"
+          }
         }
       ],
       "next_action": "",
       "plan_ref": ".agents/plans/M02-chess-foundation.md"
     }
   ],
-  "updated_at_utc": "2026-10-16T15:58:29Z"
+  "updated_at_utc": "2026-10-16T16:00:43Z"
 }
