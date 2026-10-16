@@ -16,6 +16,8 @@ jobs:
       - name: Check out repository
         # actions/checkout v7.0.0, pinned to its full commit SHA.
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
 
       - name: Set up Python 3.12
         # actions/setup-python v7.0.0, pinned to its full commit SHA.

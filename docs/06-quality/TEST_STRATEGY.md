@@ -102,7 +102,7 @@ M2 tests remain focused on the acceptance contract; M4/M5 scoring, replay, targe
 
 ## Pull request CI boundary
 
-The bounded workflow in .github/workflows/preflight.yml runs on pull requests targeting initial-idea. It uses pinned GitHub-maintained actions, read-only repository permissions, Python 3.12, agent preflight, and the standard-library context/review-bundle test modules. It installs no project dependencies, downloads no dataset, launches no Stockfish search, allocates no GPU, and runs no ALE gameplay. Its coverage protects governance, links, checkpoint/recovery behavior, and review-bundle safety; it is not a replacement for the locked full suite or M1/M2 integration tests.
+The bounded workflow in .github/workflows/preflight.yml runs on pull requests targeting initial-idea. It uses pinned GitHub-maintained actions, read-only repository permissions, Python 3.12, agent preflight, and the standard-library context/review-bundle test modules. It installs no project dependencies, downloads no dataset, launches no Stockfish search, allocates no GPU, and runs no ALE gameplay. Its coverage protects governance, links, checkpoint/recovery behavior, and review-bundle safety; it is not a replacement for the locked full suite or M1/M2 integration tests. Checkout fetches full Git history because a recovery fixture reconstructs the recorded G1 baseline revision.
 
 The workflow does not configure branch protection or a mandatory status check. GitHub Actions execution is limited to the standard public-repository runner. Review actual PR check results before merge; no local run can claim a remote workflow passed.
 
