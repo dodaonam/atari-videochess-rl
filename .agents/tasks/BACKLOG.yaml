@@ -1694,11 +1694,37 @@
             "git_revision": "f5987e09d3cfa3f7ab5a50f401ec8e41329f0316",
             "log_path": ".agents/evidence/logs/M2-preflight-final-20261016.log"
           }
+        },
+        {
+          "kind": "test",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "PASS: 163 repository tests, including clean-clone recovery against completed M2 state.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T07:46:45Z",
+            "recorded_at_utc": "2026-10-16T07:48:20Z",
+            "exit_code": 0,
+            "git_revision": "a4d015c2a272daab165666bbe886240a65e32a4e",
+            "log_path": ".agents/evidence/logs/M2-full-suite-complete-state-20261016.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "PASS: final M2 state preflight passed; artifact manifest warning reviewed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T07:46:40Z",
+            "recorded_at_utc": "2026-10-16T07:48:20Z",
+            "exit_code": 0,
+            "git_revision": "a4d015c2a272daab165666bbe886240a65e32a4e",
+            "log_path": ".agents/evidence/logs/M2-preflight-complete-state-20261016.log"
+          }
         }
       ],
       "next_action": "",
       "plan_ref": ".agents/plans/M02-chess-foundation.md"
     }
   ],
-  "updated_at_utc": "2026-10-16T07:45:47Z"
+  "updated_at_utc": "2026-10-16T07:48:20Z"
 }
