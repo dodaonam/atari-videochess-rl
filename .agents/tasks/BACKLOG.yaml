@@ -1542,13 +1542,13 @@
         {
           "kind": "file",
           "path": ".agents/evidence/M2-acceptance-20261016.md",
-          "detail": "Criterion-by-criterion M2-01 through M2-04 review with implementation references and execution outcomes.",
+          "detail": "M2-01 through M2-04 acceptance review, including post-review 58-test focused suite, 180-test repository suite, and regenerated benchmark.",
           "provenance": {
             "status": "verified",
             "executed_at_utc": null,
-            "recorded_at_utc": "2026-10-16T07:41:33Z",
+            "recorded_at_utc": "2026-10-16T15:58:29Z",
             "exit_code": null,
-            "git_revision": "74008b8c8705809330ef218ba3d5bd9e1b5335ab",
+            "git_revision": "959cf48bbeb83ef8191c2433d78bf6e37c20a1ef",
             "log_path": null
           }
         },
@@ -1754,9 +1754,9 @@
           "provenance": {
             "status": "verified",
             "executed_at_utc": null,
-            "recorded_at_utc": "2026-10-16T15:56:29Z",
+            "recorded_at_utc": "2026-10-16T15:58:29Z",
             "exit_code": null,
-            "git_revision": "57c6bde8f3cd9fdaf0a6fe4ec283c93fb8cf037a",
+            "git_revision": "959cf48bbeb83ef8191c2433d78bf6e37c20a1ef",
             "log_path": null
           }
         },
@@ -1863,11 +1863,24 @@
             "git_revision": "57c6bde8f3cd9fdaf0a6fe4ec283c93fb8cf037a",
             "log_path": ".agents/evidence/logs/M2-post-review-full-suite-20261016.log"
           }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "PASS: agent context preflight passed; expected ARTIFACT_MANIFEST_REQUIRED notice reviewed against the M2 manifest.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T15:58:29Z",
+            "recorded_at_utc": "2026-10-16T15:58:29Z",
+            "exit_code": 0,
+            "git_revision": "959cf48bbeb83ef8191c2433d78bf6e37c20a1ef",
+            "log_path": ".agents/evidence/logs/M2-post-review-final-preflight-20261016.log"
+          }
         }
       ],
       "next_action": "",
       "plan_ref": ".agents/plans/M02-chess-foundation.md"
     }
   ],
-  "updated_at_utc": "2026-10-16T15:56:29Z"
+  "updated_at_utc": "2026-10-16T15:58:29Z"
 }
