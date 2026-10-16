@@ -1720,11 +1720,37 @@
             "git_revision": "a4d015c2a272daab165666bbe886240a65e32a4e",
             "log_path": ".agents/evidence/logs/M2-preflight-complete-state-20261016.log"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M2-github-delivery-20261016.md",
+          "detail": "Remote feature head, base SHA, PR #1 open/unmerged state, changed-file parity, and absence of configured CI are verified.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-16T07:51:04Z",
+            "exit_code": null,
+            "git_revision": "10d11dcc9521c097611f9cb859cfd09a7a3a0668",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "gh api repos/dodaonam/atari-videochess-rl/pulls/1 --jq '{state:.state,merged:.merged,head_sha:.head.sha,base_sha:.base.sha}'",
+          "result": "PASS: GitHub confirms PR #1 is open, head 10d11dcc9521c097611f9cb859cfd09a7a3a0668, base 11b6dfe67c961bca3d5d693d87a1f27448983487, and merged=false.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T07:51:02Z",
+            "recorded_at_utc": "2026-10-16T07:51:04Z",
+            "exit_code": 0,
+            "git_revision": "10d11dcc9521c097611f9cb859cfd09a7a3a0668",
+            "log_path": ".agents/evidence/logs/M2-github-delivery-20261016.log"
+          }
         }
       ],
       "next_action": "",
       "plan_ref": ".agents/plans/M02-chess-foundation.md"
     }
   ],
-  "updated_at_utc": "2026-10-16T07:48:20Z"
+  "updated_at_utc": "2026-10-16T07:51:04Z"
 }

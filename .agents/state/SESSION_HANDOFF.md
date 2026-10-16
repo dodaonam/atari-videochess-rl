@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-a4d015c2-20261016T074839193460Z -->
+<!-- checkpoint-id: cp-10d11dcc-20261016T075120091869Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -12,9 +12,9 @@ This file is a pointer, not a status snapshot. Do not infer current phase, task 
    - The current governance decision is [`ADR-0001`](../../docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md); discover later decisions in `docs/02-management/decisions/`.
 5. Compare the portable tracked-file manifest with live HEAD/index. Treat the `git` snapshot as workspace-local; an exact portable manifest match after commit/checkout is expected even when branch, HEAD, status, ignored files, or caches differ. The local Git config UUID distinguishes the original workspace from a clean clone. For older checkpoints without a portable manifest, use the safe tracked-file migration path described in `AGENTS.md`. If version-controlled content or canonical references drift, inspect them and never discard work automatically.
 
-## M2 execution pointer
+## M2 review pointer
 
-For M2 execution, follow the active [M02-chess-foundation.md](../plans/M02-chess-foundation.md), accepted [ADR-0002](../../docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md), technical specifications under docs/03-technical/, and [authorization record](../evidence/M2-authorization-20261016.md). Current task and milestone status remain in PROJECT_STATE.yaml and BACKLOG.yaml; G3 is not approved and O-01 through O-08 remain unresolved.
+For review of completed M2, follow the [M02 plan](../plans/M02-chess-foundation.md), accepted [ADR-0002](../../docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md), technical specifications under docs/03-technical/, [acceptance evidence](../evidence/M2-acceptance-20261016.md), [GitHub delivery record](../evidence/M2-github-delivery-20261016.md), and [Pull Request #1](https://github.com/dodaonam/atari-videochess-rl/pull/1). Current task, milestone, and gate status remain in PROJECT_STATE.yaml and BACKLOG.yaml; G3 is not approved and O-01 through O-08 remain unresolved.
 
 ## Checkpoint operation
 
