@@ -182,3 +182,23 @@ Findings are append-only historical observations. FND-021 and FND-022 record the
 - **Finding:** Independent PM reviews identified eight simulator, heuristic, benchmark, serialization, provenance, and documentation concerns. The corrective cycle classified and resolved each one, fixed the confirmed P2 defects, retained the FEN-only heuristic history limitation as a bounded baseline-quality issue, and added deterministic regression coverage. The focused suite passed 58 tests on implementation revision `b3fc810`; the full repository suite passed 180 tests on final clean committed snapshot `f420bd8`, including clean-clone recovery. The regenerated two-seed/two-color benchmark and independent repeat matched semantically and all 8 game histories replayed legally. The hardening preserves ADR-0002 and the M2/ALE boundary.
 - **Evidence:** `.agents/evidence/M2-post-review-hardening-20261016.md`; `.agents/evidence/M2-post-review-hardening-benchmark-20261016.json`; `.agents/evidence/M2-post-review-hardening-benchmark-repeat-20261016.json`; `.agents/evidence/M2-post-review-hardening-manifest-20261016.sha256`; source commit `b3fc8105a5dbf543267a77be77f6a8c6c76ab8e2`; full-suite verification snapshot `f420bd8a80b6f9f5edc4ae9ce40961ac76d3a581`.
 - **Impact:** M2-01 through M2-04 remain supported. M2-001 remains done; G3 remains unapproved; M3 remains pending separate user authorization; O-01 through O-08 remain open.
+## FND-026 — M2 squash merge reconciled
+
+- **Status:** verified 2026-10-16
+- **Finding:** GitHub reports PR #1 merged to initial-idea at 27dd9f73d2bf7545e194fe40391d0cae5f9b9003 at 2026-10-16T16:34:50Z. The remote branch matches that merge commit. main remains at its original ancestor and is 26 commits behind. There were no open PRs at verification.
+- **Evidence:** POST-M2-INTEGRATION-VERIFICATION-20261017.md; GitHub PR #1 metadata; remote refs.
+- **Impact:** M2-001 and M2-01 through M2-04 remain complete and integrated; G2 remains approved. G3 is unapproved and M3 remains pending separate authorization. The old handoff action to keep PR #1 unmerged is superseded by the merge fact.
+
+## FND-027 — Candidate PGN rights and archive facts
+
+- **Status:** verified by current source-page inspection; terms remain unresolved
+- **Finding:** The third-party Lichess Elite listing reports May 2022 as 355,535 games/93 MB and describes standard games, no bullet, and a post-December-2021 2500+ versus 2300+ threshold. Its page does not state a license or archive checksum. Official Lichess database exports publish CC0 terms; official broadcast PGNs publish CC BY-SA 4.0. None of those official terms automatically establishes rights for the third-party filtered package.
+- **Evidence:** https://database.nikonoel.fr/; https://database.lichess.org/; DATASET_SPEC.md; DECISION_REGISTER.md.
+- **Impact:** O-06 remains open. No archive was downloaded or ingested; source selection and permitted use require owner approval.
+
+## FND-028 — Locked runtime and local artifact manifests
+
+- **Status:** verified 2026-10-16
+- **Finding:** Offline uv lock check passed with no installation. The inspected host reported Python 3.12.3, python-chess 1.11.2, Gymnasium 1.4.0, ALE-Py 0.11.2, and CPU PyTorch 2.14.1. Its local Stockfish binary identifies as version 19 and matches the M0 executable SHA-256; its retained GPL text matches the M0 license hash. The dated local M1 manifests for 2026-10-15 and 2026-10-16 verified 1,214 and 1,388 entries. The older unversioned manifest lists 327 absent paths and was not treated as current.
+- **Evidence:** PRE-M3-readiness-20261017.md; M0-final-technical-verification.md; local ignored artifact manifests in the primary checkout.
+- **Impact:** No dependency addition or Stockfish search is needed for the proposed parser design. Local artifact evidence remains separate from clean-clone tracked evidence. O-01/O-07 still govern engine use.

@@ -53,7 +53,7 @@ These are starting points to test, not decisions proven optimal:
 - Opponent pool/curriculum; Atari fine-tuning only after stable integration and throughput evidence.
 - Local CPU for environment/preprocessing and Colab GPU for workloads that benefit. Free T4 availability depends on current entitlement, quota, and capacity.
 - Separate low-variability development settings from ALE evaluation. The roadmap's cited `frameskip=4` and sticky-action probability `0.25` must be checked against the installed ALE version; debug settings are not default-environment results.
-- `uv`, a dependency lockfile, CI, experiment registry, and persistent artifact storage are operational recommendations to audit during M0, not G1 commitments.
+- `uv` and the committed dependency lock were implemented and verified in M0. A bounded standard-library PR workflow is added in Pre-M3; experiment registry and approved persistent storage remain future operational decisions. These implementations do not resolve open assignment, source, or compute approvals.
 
 ## 5. Governance and acceptance status
 
@@ -67,7 +67,7 @@ G1 was authorized, its hardening and independent-session acceptance were complet
 
 ### G2 — Technical Feasibility
 
-The M1-01 through M1-06 acceptance and G2 approval are recorded in [M1/G2 final verification](../../.agents/evidence/M1-G2-final-verification-20261016.md). A later direct user instruction authorizes M2-001; this does not approve G3 or resolve O-01 through O-08. Current M2 status is owned by `.agents/state/PROJECT_STATE.yaml` and `.agents/tasks/BACKLOG.yaml`.
+The M1-01 through M1-06 acceptance and G2 approval are recorded in [M1/G2 final verification](../../.agents/evidence/M1-G2-final-verification-20261016.md). M2-01 through M2-04 are accepted and M2 PR #1 was merged into `initial-idea` at `27dd9f73d2bf7545e194fe40391d0cae5f9b9003` on 2026-10-16; see the [post-M2 integration verification](../../.agents/evidence/POST-M2-INTEGRATION-VERIFICATION-20261017.md). This does not approve G3 or resolve O-01 through O-08. Current milestone authorization remains owned by `.agents/state/PROJECT_STATE.yaml`.
 
 ### Engineering milestones
 
@@ -94,4 +94,4 @@ The chat history's G/M mapping and plan-priority inconsistencies were resolved f
 
 ## 8. Current scope boundary
 
-Current task scope is defined by the latest direct user instructions and canonical project state. Do not start M0/M1, install dependencies, run RL, or allocate Colab resources unless the current request and state authorize them. Preserve the README and existing user files. Commit or push only when directly authorized by the user.
+Current task scope is defined by the latest direct user instructions and canonical project state. A plan, completed prerequisite, or technical readiness report does not authorize the next milestone. Do not start an engineering milestone, install additional dependencies, run RL, use Stockfish for analysis, allocate external compute, or upload data unless the current request and state authorize that specific work. Preserve existing user files. Commit, push, publish, or release only when directly authorized by the user.

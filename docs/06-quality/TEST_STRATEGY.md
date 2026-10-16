@@ -100,4 +100,14 @@ M2 tests remain focused on the acceptance contract; M4/M5 scoring, replay, targe
 | Training/evaluation | Reproducible pretraining/RL runs, fixed opponent pools/seeds, checkpoints, raw metrics | Only after the relevant milestone and compute authorization. |
 | Delivery/recovery | Fresh-session handoff, artifact references, end-to-end reproduction | G1 and M7 gates. |
 
+## Pull request CI boundary
+
+The bounded workflow in .github/workflows/preflight.yml runs on pull requests targeting initial-idea. It uses pinned GitHub-maintained actions, read-only repository permissions, Python 3.12, agent preflight, and the standard-library context/review-bundle test modules. It installs no project dependencies, downloads no dataset, launches no Stockfish search, allocates no GPU, and runs no ALE gameplay. Its coverage protects governance, links, checkpoint/recovery behavior, and review-bundle safety; it is not a replacement for the locked full suite or M1/M2 integration tests.
+
+The workflow does not configure branch protection or a mandatory status check. GitHub Actions execution is limited to the standard public-repository runner. Review actual PR check results before merge; no local run can claim a remote workflow passed.
+
+## M3 data integrity tests
+
+When M3 is separately authorized, add the focused synthetic fixtures and invariants in [DATASET_SPEC.md](../04-research/DATASET_SPEC.md). Cover source/hash approval gates, PGN streaming and quarantine, standard chess replay, FEN plus history reconstruction, stable legal UCI candidates, played-move legality, perspective conversion, deterministic sampling/splits, exact position leakage audits, teacher score/MultiPV/mate semantics, output manifests, and interrupted-run recovery. Fixtures must be synthetic and must not contain downloaded public games or player identities.
+
 Never use a G1 context-tool test to imply M0/M1 readiness. M0 smoke checks are separate from M1 ALE resets, observation capture, control calibration, training, or Colab runtime work.

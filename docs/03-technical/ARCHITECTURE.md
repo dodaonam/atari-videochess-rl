@@ -26,7 +26,7 @@ M1-01 through M1-06 are accepted and G2 is approved in the [final verification r
 | Milestone | Proposed component and output | Maturity |
 |---|---|---|
 | M2 | Standard-chess simulator, explicit MDP, stable UCI identities for legal moves, random-legal and heuristic baselines, seeded simulator records. | Implemented and verified under M2-001; G3 remains unapproved. |
-| M3 | Provenance-aware PGN parsing and separately identified Stockfish teacher labels, with leakage-safe splits. | Proposed; no data downloaded; O-01, O-06 and O-07 remain open. |
+| M3 | Provenance-aware PGN parsing and separately identified Stockfish teacher labels, with leakage-safe splits. | Proposed; no data downloaded. Source/schema/split contracts are in [DATASET_SPEC.md](../04-research/DATASET_SPEC.md); O-01, O-06, and O-07 remain open. |
 | M4 | Supervised pretraining from explicitly selected behavior or teacher targets; saved pretraining checkpoint and evaluation. | Proposed; no model or training code exists. |
 | M5 | Direct PyTorch Double DQN in the chess simulator with legal-move selection, replay/target networks and separately configured curriculum. | Proposed; no RL training code exists. |
 | M6 | Inference adapter that observes real ALE RGB, obtains validated chess state, selects a legal move, calls the existing Atari controller and verifies the resulting real transition. | Proposed; M1 controls exist, learned-agent integration does not. |

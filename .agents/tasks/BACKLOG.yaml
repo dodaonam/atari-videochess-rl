@@ -1902,11 +1902,45 @@
             "git_revision": "f420bd8a80b6f9f5edc4ae9ce40961ac76d3a581",
             "log_path": ".agents/evidence/logs/M2-post-review-final-preflight-f420-20261016.log"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/POST-M2-INTEGRATION-VERIFICATION-20261017.md",
+          "detail": "Independent GitHub and remote-ref reconciliation of the M2 squash merge, target branch, default branch, PR status, and preserved local checkout state.",
+          "result": "PR #1 is merged into initial-idea at 27dd9f73d2bf7545e194fe40391d0cae5f9b9003. M2-001 and M2-01 through M2-04 remain complete; G2 is approved; G3 is unapproved and M3 remains unauthorized.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-16T17:44:31Z",
+            "exit_code": null,
+            "git_revision": "27dd9f73d2bf7545e194fe40391d0cae5f9b9003",
+            "log_path": null
+          }
         }
       ],
       "next_action": "",
       "plan_ref": ".agents/plans/M02-chess-foundation.md"
+    },
+    {
+      "id": "M3-001",
+      "title": "Build and verify the expert dataset",
+      "milestone": "M3",
+      "status": "pending",
+      "depends_on": [
+        "M2-001"
+      ],
+      "requires_user_gate_approval": "G3",
+      "acceptance_criteria_ids": [
+        "M3-01",
+        "M3-02",
+        "M3-03",
+        "M3-04"
+      ],
+      "blocker_ids": [],
+      "evidence": [],
+      "next_action": "Await independent Pre-M3 PR review, G3 approval, and separate explicit M3 authorization. Resolve source/assignment/engine/storage decisions as applicable before any source acquisition or processing.",
+      "plan_ref": ".agents/plans/M03-expert-dataset.md"
     }
   ],
-  "updated_at_utc": "2026-10-16T16:00:43Z"
+  "updated_at_utc": "2026-10-16T17:46:05Z"
 }
