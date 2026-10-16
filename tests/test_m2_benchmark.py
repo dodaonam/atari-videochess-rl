@@ -50,6 +50,66 @@ class InterruptingAgent:
         raise KeyboardInterrupt
 
 
+class AgentFailsAfterDecisions:
+    policy_id = "test_agent_fails_after_decisions"
+
+    def __init__(self, successful_decisions: int) -> None:
+        self.successful_decisions = successful_decisions
+        self.calls = 0
+
+    @property
+    def config(self) -> dict[str, object]:
+        return {"successful_decisions": self.successful_decisions}
+
+    def choose_move(self, observation, legal_moves, rng):
+        del observation, rng
+        if self.calls >= self.successful_decisions:
+            raise RuntimeError("agent failed after completed transitions")
+        self.calls += 1
+        return chess.Move.from_uci(sorted(move.uci() for move in legal_moves)[0])
+
+
+class OpponentFailsOnCall:
+    policy_id = "test_opponent_fails_on_call"
+
+    def __init__(self, fail_at: int, *, interrupt: bool = False) -> None:
+        self.fail_at = fail_at
+        self.interrupt = interrupt
+        self.calls = 0
+
+    @property
+    def config(self) -> dict[str, object]:
+        return {"fail_at": self.fail_at, "interrupt": self.interrupt}
+
+    def reset_episode(self, *, seed: int) -> None:
+        del seed
+        self.calls = 0
+
+    def choose_move(self, observation, legal_moves, rng):
+        del observation, rng
+        self.calls += 1
+        if self.calls == self.fail_at:
+            if self.interrupt:
+                raise KeyboardInterrupt
+            raise RuntimeError("opponent failed after completed transitions")
+        return chess.Move.from_uci(sorted(move.uci() for move in legal_moves)[0])
+
+
+class OpponentResetFails:
+    policy_id = "test_opponent_reset_failure"
+
+    @property
+    def config(self) -> dict[str, object]:
+        return {"reset_failure": True}
+
+    def reset_episode(self, *, seed: int) -> None:
+        del seed
+        raise RuntimeError("opponent reset failed")
+
+    def choose_move(self, observation, legal_moves, rng):
+        raise AssertionError("a policy that failed reset must not be asked to move")
+
+
 class BenchmarkTests(unittest.TestCase):
     def test_benchmark_records_seeded_both_color_games_and_separates_truncation(self) -> None:
         run = run_baseline_benchmark([31], max_decisions=1)
@@ -130,6 +190,97 @@ class BenchmarkTests(unittest.TestCase):
         self.assertEqual(game["status"], "external_failure")
         self.assertTrue(game["external_failure_or_interruption"])
         self.assertEqual(game["failure_type"], "RuntimeError")
+        self.assertFalse(game["terminated"])
+        self.assertFalse(game["truncated"])
+        self.assertIsNone(game["agent_wdl"])
+        self.assertIsNone(game["outcome_result_white_perspective"])
+
+    def test_agent_failure_after_multiple_transitions_records_actual_state_for_both_colors(self) -> None:
+        for color, expected_plies in ((chess.WHITE, 4), (chess.BLACK, 5)):
+            with self.subTest(color="white" if color else "black"):
+                game = _play_game(
+                    agent=AgentFailsAfterDecisions(2),
+                    opponent=OpponentFailsOnCall(99),
+                    color=color,
+                    seed=71,
+                    agent_seed=72,
+                    max_decisions=10,
+                    source_revision="test-revision",
+                )
+
+                self.assertEqual(game["status"], "external_failure")
+                self.assertEqual(game["failure_type"], "RuntimeError")
+                self.assertEqual(game["episode_decisions"], 2)
+                self.assertEqual(game["episode_plies"], expected_plies)
+                self.assertEqual(len(game["moves_uci"]), expected_plies)
+                self.assertEqual(game["terminated"], False)
+                self.assertEqual(game["truncated"], False)
+                self.assertIsNone(game["agent_wdl"])
+                self.assertIsNone(game["outcome_result_white_perspective"])
+
+    def test_opponent_failure_after_multiple_transitions_uses_rolled_back_board(self) -> None:
+        for color, fail_at, expected_plies in (
+            (chess.WHITE, 3, 4),
+            (chess.BLACK, 4, 5),
+        ):
+            with self.subTest(color="white" if color else "black"):
+                game = _play_game(
+                    agent=FirstLegalPolicy(),
+                    opponent=OpponentFailsOnCall(fail_at),
+                    color=color,
+                    seed=73,
+                    agent_seed=74,
+                    max_decisions=10,
+                    source_revision="test-revision",
+                )
+
+                self.assertEqual(game["status"], "external_failure")
+                self.assertEqual(game["failure_type"], "OpponentPolicyError")
+                self.assertEqual(game["episode_decisions"], 2)
+                self.assertEqual(game["episode_plies"], expected_plies)
+                self.assertEqual(len(game["moves_uci"]), expected_plies)
+                self.assertFalse(game["terminated"])
+                self.assertFalse(game["truncated"])
+                self.assertIsNone(game["agent_wdl"])
+                self.assertIsNone(game["outcome_result_white_perspective"])
+
+    def test_opponent_interrupt_rolls_back_incomplete_transition_and_keeps_prior_state(self) -> None:
+        game = _play_game(
+            agent=FirstLegalPolicy(),
+            opponent=OpponentFailsOnCall(3, interrupt=True),
+            color=chess.WHITE,
+            seed=75,
+            agent_seed=76,
+            max_decisions=10,
+            source_revision="test-revision",
+        )
+
+        self.assertEqual(game["status"], "interrupted")
+        self.assertEqual(game["failure_type"], "KeyboardInterrupt")
+        self.assertEqual(game["episode_decisions"], 2)
+        self.assertEqual(game["episode_plies"], 4)
+        self.assertEqual(len(game["moves_uci"]), 4)
+        self.assertFalse(game["terminated"])
+        self.assertFalse(game["truncated"])
+        self.assertIsNone(game["agent_wdl"])
+        self.assertIsNone(game["outcome_result_white_perspective"])
+
+    def test_opponent_reset_failure_records_empty_valid_initial_snapshot(self) -> None:
+        game = _play_game(
+            agent=FirstLegalPolicy(),
+            opponent=OpponentResetFails(),
+            color=chess.BLACK,
+            seed=77,
+            agent_seed=78,
+            max_decisions=10,
+            source_revision="test-revision",
+        )
+
+        self.assertEqual(game["status"], "external_failure")
+        self.assertEqual(game["failure_type"], "OpponentPolicyError")
+        self.assertEqual(game["episode_decisions"], 0)
+        self.assertEqual(game["episode_plies"], 0)
+        self.assertEqual(game["moves_uci"], [])
         self.assertFalse(game["terminated"])
         self.assertFalse(game["truncated"])
         self.assertIsNone(game["agent_wdl"])

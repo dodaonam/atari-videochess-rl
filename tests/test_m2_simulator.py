@@ -42,6 +42,10 @@ class ScriptedPolicy:
     def config(self) -> dict[str, object]:
         return {"moves": list(self.ucis)}
 
+    def reset_episode(self, *, seed: int) -> None:
+        del seed
+        self.index = 0
+
     def choose_move(self, observation, legal_moves, rng):
         del observation, rng
         if self.index >= len(self.ucis):
@@ -52,6 +56,48 @@ class ScriptedPolicy:
         if move not in legal_moves:
             raise AssertionError(f"test fixture move is illegal: {uci}")
         return move
+
+
+class ResettablePolicy:
+    policy_id = "test_resettable"
+
+    def __init__(self, *ucis: str, fail_at: int | None = None) -> None:
+        self.ucis = tuple(ucis)
+        self.fail_at = fail_at
+        self.index = 0
+        self.reset_seeds: list[int] = []
+
+    @property
+    def config(self) -> dict[str, object]:
+        return {"moves": list(self.ucis), "fail_at": self.fail_at}
+
+    def reset_episode(self, *, seed: int) -> None:
+        self.index = 0
+        self.reset_seeds.append(seed)
+
+    def choose_move(self, observation, legal_moves, rng):
+        del observation, rng
+        self.index += 1
+        if self.index == self.fail_at:
+            raise RuntimeError("configured stateful policy failure")
+        if not self.ucis:
+            raise AssertionError("no scripted moves configured")
+        uci = self.ucis[(self.index - 1) % len(self.ucis)]
+        move = chess.Move.from_uci(uci)
+        if move not in legal_moves:
+            raise AssertionError(f"test fixture move is illegal: {uci}")
+        return move
+
+
+class MutableConfigPolicy(FirstLegalPolicy):
+    policy_id = "test_mutable_config"
+
+    def __init__(self) -> None:
+        self.version = 1
+
+    @property
+    def config(self) -> dict[str, object]:
+        return {"version": self.version}
 
 
 class RaisingPolicy:
@@ -446,6 +492,67 @@ class ChessSimulatorTests(unittest.TestCase):
             if r1.terminated or r1.truncated:
                 break
 
+    def test_stateful_opponent_reset_reproduces_reused_and_fresh_simulators(self) -> None:
+        policy = ResettablePolicy("e7e5", "b8c6")
+        reused = ChessSimulator(policy)
+
+        def episode(simulator: ChessSimulator) -> tuple[tuple[str, ...], ...]:
+            histories = [simulator.reset(seed=190, agent_color=chess.WHITE).history_uci]
+            histories.append(simulator.step_uci("e2e4").history_uci)
+            histories.append(simulator.step_uci("g1f3").history_uci)
+            return tuple(histories)
+
+        first = episode(reused)
+        repeated = episode(reused)
+        fresh = episode(ChessSimulator(ResettablePolicy("e7e5", "b8c6")))
+
+        self.assertEqual(first, repeated)
+        self.assertEqual(first, fresh)
+        self.assertEqual(policy.reset_seeds, [190, 190])
+
+    def test_reset_after_opponent_failure_resets_policy_local_state(self) -> None:
+        policy = ResettablePolicy("e7e5", "b8c6", fail_at=2)
+        simulator = ChessSimulator(policy)
+        first = simulator.reset(seed=191)
+        result = simulator.step_uci("e2e4")
+        self.assertEqual(result.history_uci, ("e2e4", "e7e5"))
+        with self.assertRaises(OpponentPolicyError):
+            simulator.step_uci("g1f3")
+
+        reset_observation = simulator.reset(seed=191)
+        replayed = simulator.step_uci("e2e4")
+
+        self.assertEqual(reset_observation.history_uci, first.history_uci)
+        self.assertEqual(replayed.history_uci, result.history_uci)
+        self.assertEqual(policy.reset_seeds, [191, 191])
+
+    def test_mutated_policy_configuration_is_rejected_before_reset(self) -> None:
+        policy = MutableConfigPolicy()
+        simulator = ChessSimulator(policy)
+        initial = simulator.reset(seed=192)
+        policy.version = 2
+
+        with self.assertRaisesRegex(OpponentPolicyError, "configuration changed"):
+            simulator.reset(seed=193)
+
+        with self.assertRaises(EpisodeStateError):
+            _ = simulator.observation
+        self.assertEqual(simulator.board.fen(en_passant="fen"), initial.fen)
+        self.assertEqual(simulator.episode_decisions, 0)
+
+    def test_mutated_policy_configuration_is_rejected_before_transition(self) -> None:
+        policy = MutableConfigPolicy()
+        simulator = ChessSimulator(policy)
+        initial = simulator.reset(seed=199)
+        policy.version = 2
+
+        with self.assertRaisesRegex(OpponentPolicyError, "configuration changed"):
+            simulator.step_uci("e2e4")
+
+        self.assertEqual(simulator.observation, initial)
+        self.assertEqual(simulator.episode_decisions, 0)
+        self.assertEqual(simulator.board.fen(en_passant="fen"), initial.fen)
+
     def test_reset_starts_new_episode_and_clears_prior_termination(self) -> None:
         board = chess.Board("7k/8/5KQ1/8/8/8/8/8 w - - 0 1")
         simulator = ChessSimulator(FirstLegalPolicy())
@@ -470,6 +577,101 @@ class ChessSimulatorTests(unittest.TestCase):
             self.simulator.reset(seed=21, agent_color=chess.BLACK, initial_board=terminal)
         with self.assertRaises(ValueError):
             self.simulator.reset(seed=22, initial_board=chess.Board.from_chess960_pos(0))
+
+    def test_invalid_custom_positions_are_rejected_without_changing_live_episode(self) -> None:
+        invalid_fens = {
+            "missing king": "8/8/8/8/8/8/8/4K3 w - - 0 1",
+            "multiple kings": "4k3/8/8/8/8/8/4K3/4K3 w - - 0 1",
+            "pawn on back rank": "P3k3/8/8/8/8/8/8/4K3 w - - 0 1",
+            "invalid castling rights": "4k3/8/8/8/8/8/8/4K3 w K - 0 1",
+            "opposite king in check": "4k3/8/8/8/8/8/8/K3R3 w - - 0 1",
+        }
+        before = self.simulator.observation
+        before_board = self.simulator.board
+
+        for label, fen in invalid_fens.items():
+            with self.subTest(position=label):
+                invalid = chess.Board(fen)
+                self.assertFalse(invalid.is_valid())
+                with self.assertRaisesRegex(ValueError, "not a valid standard chess position"):
+                    self.simulator.reset(seed=194, initial_board=invalid)
+                self.assertEqual(self.simulator.observation, before)
+                self.assertEqual(self.simulator.board.fen(en_passant="fen"), before_board.fen(en_passant="fen"))
+                self.assertEqual(tuple(self.simulator.board.move_stack), tuple(before_board.move_stack))
+
+    def test_fen_round_trip_preserves_position_fields_and_legal_uci_moves(self) -> None:
+        board = chess.Board("r3k2r/8/8/3pP3/8/8/8/R3K2R w KQkq d6 0 22")
+        self.assertTrue(board.is_valid())
+        simulator = ChessSimulator(FirstLegalPolicy())
+        observation = simulator.reset(seed=195, initial_board=board)
+        restored = chess.Board(observation.fen)
+
+        self.assertEqual(restored.board_fen(), board.board_fen())
+        self.assertEqual(restored.turn, board.turn)
+        self.assertEqual(restored.castling_xfen(), board.castling_xfen())
+        self.assertEqual(restored.ep_square, board.ep_square)
+        self.assertEqual(restored.halfmove_clock, board.halfmove_clock)
+        self.assertEqual(restored.fullmove_number, board.fullmove_number)
+        self.assertEqual(
+            {move.uci() for move in restored.legal_moves},
+            set(observation.legal_moves_uci),
+        )
+        self.assertEqual(restored.fen(en_passant="fen"), observation.fen)
+
+    def test_fen_serialization_preserves_en_passant_target_by_fen_convention(self) -> None:
+        board = board_after("e2e4")
+        simulator = ChessSimulator(FirstLegalPolicy())
+        observation = simulator.reset(seed=196, agent_color=chess.BLACK, initial_board=board)
+        restored = chess.Board(observation.fen)
+
+        self.assertEqual(observation.ep_square, "e3")
+        self.assertEqual(restored.ep_square, chess.E3)
+        self.assertEqual(restored.fen(en_passant="fen"), observation.fen)
+
+    def test_uci_history_replay_preserves_standard_and_custom_initial_games(self) -> None:
+        standard = board_after("e2e4", "e7e5", "g1f3", "b8c6")
+        simulator = ChessSimulator(FirstLegalPolicy())
+        standard_observation = simulator.reset(seed=197, initial_board=standard)
+        replayed_standard = chess.Board()
+        for uci in standard_observation.history_uci:
+            replayed_standard.push_uci(uci)
+        self.assertEqual(replayed_standard.fen(en_passant="fen"), standard_observation.fen)
+        self.assertEqual(
+            tuple(move.uci() for move in replayed_standard.move_stack),
+            standard_observation.history_uci,
+        )
+
+        custom_start = chess.Board("r3k2r/pp3ppp/8/8/8/8/PP3PPP/R3K2R w KQkq - 0 1")
+        custom = custom_start.copy()
+        custom.push_uci("a2a3")
+        custom.push_uci("a7a6")
+        custom_observation = simulator.reset(seed=198, initial_board=custom)
+        replayed_custom = custom_start.copy()
+        for uci in custom_observation.history_uci:
+            replayed_custom.push_uci(uci)
+        self.assertEqual(replayed_custom.fen(en_passant="fen"), custom_observation.fen)
+        self.assertEqual(replayed_custom.castling_xfen(), custom_observation.castling_rights)
+
+    def test_fen_alone_does_not_restore_repetition_history(self) -> None:
+        cycle = ("g1f3", "g8f6", "f3g1", "f6g8")
+        historical = board_after(*(cycle * 3))
+        self.assertTrue(historical.is_repetition(4))
+        self.assertIsNone(historical.outcome(claim_draw=False))
+        restored_from_fen = chess.Board(historical.fen(en_passant="fen"))
+        self.assertFalse(restored_from_fen.is_repetition(4))
+
+        replayed = chess.Board()
+        for move in historical.move_stack:
+            replayed.push(move)
+        self.assertTrue(replayed.is_repetition(4))
+        for uci in cycle:
+            historical.push_uci(uci)
+            replayed.push_uci(uci)
+            restored_from_fen.push_uci(uci)
+
+        self.assertEqual(historical.outcome(claim_draw=False).termination, chess.Termination.FIVEFOLD_REPETITION)
+        self.assertEqual(replayed.outcome(claim_draw=False), historical.outcome(claim_draw=False))
+        self.assertIsNone(restored_from_fen.outcome(claim_draw=False))
 
     def test_simulator_requires_a_positive_integer_decision_limit(self) -> None:
         for invalid in (0, -1, True, 1.5):

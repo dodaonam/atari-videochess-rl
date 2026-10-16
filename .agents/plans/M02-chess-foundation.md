@@ -31,11 +31,13 @@ The active action scope permanently excludes voluntary draw claims and other non
 - No Colab, GPU, paid compute, external service, or resolution of O-01 through O-08.
 - No neural tensor shape, network architecture, fixed output head, action scorer, numeric discount, reward shaping, training schedule, Elo claim, or opponent pool is required or frozen by M2.
 
-## Proposed implementation boundaries
+## Implemented M2 module boundaries
 
-Keep additions small under the existing package; these are proposed future files, not existing modules:
+This plan was written before M2 implementation. The target modules below now exist and are implemented; the table preserves the original scope and records their delivered responsibilities.
 
-| Proposed module | Future responsibility | Boundary |
+Keep additions small under the existing package:
+
+| Implemented module | Responsibility | Boundary |
 |---|---|---|
 | `videochess_rl/simulator.py` | Reset, Board/history ownership, legal agent move, opponent reply, reward and terminal/truncation result. | Uses `python-chess`; no ALE, RGB, or joystick timing. |
 | `videochess_rl/baselines.py` | Seeded random-legal and simple heuristic move selectors. | Returns only a move from the supplied current legal set; no engine dependency. |
@@ -44,13 +46,14 @@ Keep additions small under the existing package; these are proposed future files
 
 Stable UCI conversion can remain at the simulator boundary; a separate action-encoder module is not needed for M2. Reuse python-chess for legality and preserve M1's `ShadowBoard` solely as a real-ALE transition cross-check.
 
-## Proposed contracts and later-milestone compatibility
+## Implemented contracts and later-milestone compatibility
 
 - The simulator owns the full Board and history needed for automatic outcomes. FEN is a position serialization, not a complete history restore.
 - At agent decision boundaries, expose a read-only position observation with the fields and stable legal-move keys defined in [MDP_SPEC.md](../../docs/03-technical/MDP_SPEC.md). If a downstream model omits history required for Markov behavior, identify that limitation before M5; no raw-history tensor is required in M2.
 - Validate a submitted UCI move against the current legal set before mutation. Reject illegal/stale actions without changing the Board.
 - Keep agent color fixed per episode and reward from that color's perspective. A Black episode receives the opponent's White opening move during reset.
 - Use automatic `python-chess` outcomes (`Board.outcome(claim_draw=False)`). Simulator caps produce truncation with a final valid state and reason; they do not fabricate a chess result.
+- Treat policies without `reset_episode(seed=...)` as stateless across episodes. Stateful policies use the optional hook; identity and configuration stay fixed for the simulator lifetime. If opponent failure or interruption occurs during a transition, Board rollback is guaranteed, but external policy state and consumed random numbers are not restored.
 - M3 PGN played moves map to the same stable move identity and remain distinct from any separately authorized Stockfish label. Preserve source-game provenance and leakage-safe splits; O-06 remains open.
 - M4/M5 may later compare legal-candidate action-conditioned scoring with a fixed global move vocabulary. M2 implements neither neural scorer nor output head.
 - M6 consumes semantic move intent only after an ALE state is validated; the M1 controller executes it and RGB evidence remains authoritative. Simulator outcomes never substitute for ALE results.

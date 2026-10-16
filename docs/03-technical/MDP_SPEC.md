@@ -15,7 +15,7 @@ For a fixed opponent policy and configuration, use the agent-centered process `(
 - **Discount `γ`:** one discount applies per agent-decision transition, including its opponent reply when one occurs. M2 does not select a numeric discount; that is a later learning experiment.
 - **Initial distribution `ρ₀`:** standard initial board, recorded agent color, opponent identity/configuration, and explicit seed when randomness is used. If the agent is Black, the opponent makes White's opening move during reset, and the move is recorded before the first agent decision.
 
-The stochastic opponent and its fixed policy configuration define the transition distribution. Simulator results do not describe ALE/VideoChess behavior; the separate real-environment contract is in [ALE_ENVIRONMENT.md](ALE_ENVIRONMENT.md).
+The stochastic opponent and its fixed policy configuration define the transition distribution. Policies without an episode reset hook must be stateless across episodes. A stateful policy may implement `reset_episode(seed=...)`; the simulator calls it before each episode. Policy identity and configuration must stay stable for the simulator lifetime so observation and benchmark records remain accurate. If a reset hook fails, the episode is invalidated because external policy state may be partially changed. Simulator results do not describe ALE/VideoChess behavior; the separate real-environment contract is in [ALE_ENVIRONMENT.md](ALE_ENVIRONMENT.md).
 
 ## 2. Rules state and agent observation
 
@@ -29,7 +29,7 @@ FEN is useful for position logs and position-field round trips, but it does not 
 
 At each agent decision, provide a read-only position snapshot with piece placement/colors, side to move, fixed agent color, castling rights, en passant state, relevant move counters, and the current legal moves represented by stable UCI keys. This is an interface contract, not a neural tensor or network design.
 
-The full Board/history remains the rules state. A compact observation that omits repetition-relevant history is not guaranteed to be Markov, even though it may be sufficient for ordinary move selection. M2 must keep that distinction explicit and make any history-derived information available as simulator metadata; it must not require a future model to consume the raw move list. Before M5, validate the chosen observation or document the partial-observation approximation.
+The full Board/history remains the rules state. A compact observation that omits repetition-relevant history is not guaranteed to be Markov, even though it may be sufficient for ordinary move selection. M2 keeps the move history in simulator observation metadata but does not require a future model to consume the raw move list. The simple M2 heuristic rebuilds its one-ply candidate board from FEN and ignores that history; this can affect its move preference around repetitions but cannot change simulator legality or termination. Before M5, validate the chosen observation or document the partial-observation approximation.
 
 ## 3. Legal move identity and handling
 
@@ -50,7 +50,7 @@ One simulator step represents one agent decision and, if the game remains live, 
 3. Otherwise ask the configured opponent for one legal move and apply it.
 4. Return its terminal outcome if the game ended; otherwise return the next agent decision state.
 
-The opponent's policy identity/configuration and seed are recorded because they affect transitions and reproducibility. This is a single-agent simulator, not a multi-agent learner.
+The opponent's policy identity/configuration and seed are recorded because they affect transitions and reproducibility. The simulator checks that the opponent descriptor remains stable before a transition and after its callback. Rejected agent actions leave state unchanged. If an opponent error or interruption occurs after the agent move has been tentatively applied, the simulator restores the prior chess Board and stops the episode; policy-local state and consumed random numbers are not rolled back. This is a single-agent simulator, not a multi-agent learner.
 
 ## 5. Reward, termination, and truncation
 
@@ -83,7 +83,7 @@ For M6, the current ALE RGB observation and verified move history remain the sou
 
 The implementation and focused tests cover these contracts; see the [M2 acceptance record](../../.agents/evidence/M2-acceptance-20261016.md) for exact commands, results, and retained logs:
 
-1. Position serialization is deterministic; FEN round trips preserve position fields, while a replay from the initial position preserves the move history used by the rules engine.
+1. Position serialization is deterministic; the observation FEN uses `en_passant="fen"` and round trips position fields, while replay from the appropriate initial position preserves the move history used by the rules engine. FEN alone cannot restore repetition history.
 2. Generated actions equal `Board.legal_moves`; stable UCI identities round-trip for ordinary moves, captures, all four promotions, castling, and en passant, regardless of candidate enumeration order.
 3. A legal move produces the expected Board transition. An invalid or stale move is rejected before mutation.
 4. Checkmate, stalemate, insufficient material, automatic fivefold repetition, and the automatic seventy-five-move outcome match the locked `python-chess` API.

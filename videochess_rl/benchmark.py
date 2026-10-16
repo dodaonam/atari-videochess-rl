@@ -74,15 +74,31 @@ def _play_game(
         status = "external_failure"
         failure_type = type(exc).__name__
 
-    history = (
-        result.history_uci
-        if result is not None
-        else observation.history_uci
-        if observation is not None
-        else tuple(move.uci() for move in simulator.board.move_stack)
-    )
-    outcome_result = result.outcome_result if result is not None and result.terminated else None
-    agent_result = result.reward if result is not None and result.terminated else None
+    # Read the final valid simulator snapshot directly. A later policy error or
+    # interruption may leave the previous StepResult stale, and an opponent
+    # failure rolls back the currently attempted transition.
+    final_board = simulator.board
+    history = tuple(move.uci() for move in final_board.move_stack)
+    final_outcome = final_board.outcome(claim_draw=False)
+    if status == "completed" and final_outcome is None:
+        status = "external_failure"
+        failure_type = "SimulatorOutcomeMissing"
+    elif status == "truncated" and final_outcome is not None:
+        status = "external_failure"
+        failure_type = "TerminalOutcomeMisclassifiedAsTruncation"
+
+    terminated = status == "completed"
+    truncated = status == "truncated"
+    outcome_result = final_outcome.result() if terminated and final_outcome is not None else None
+    agent_result: float | None = None
+    if terminated and final_outcome is not None:
+        agent_result = (
+            0.0
+            if final_outcome.winner is None
+            else 1.0
+            if final_outcome.winner == color
+            else -1.0
+        )
     return {
         "status": status,
         "metric_source": "chess_simulator",
@@ -98,15 +114,15 @@ def _play_game(
         "agent_result": agent_result,
         "agent_wdl": (
             "win" if agent_result == 1.0 else "loss" if agent_result == -1.0 else "draw"
-        ) if result is not None and result.terminated else None,
-        "termination_reason": result.outcome_reason if result is not None and result.terminated else None,
-        "terminated": bool(result is not None and result.terminated),
-        "truncated": bool(result is not None and result.truncated),
-        "truncation_reason": result.truncation_reason if result is not None else None,
+        ) if terminated else None,
+        "termination_reason": final_outcome.termination.name.lower() if terminated and final_outcome else None,
+        "terminated": terminated,
+        "truncated": truncated,
+        "truncation_reason": result.truncation_reason if truncated and result is not None else None,
         "external_failure_or_interruption": status in {"external_failure", "interrupted"},
         "failure_type": failure_type,
-        "episode_decisions": result.episode_decisions if result is not None else 0,
-        "episode_plies": result.episode_plies if result is not None else 0,
+        "episode_decisions": simulator.episode_decisions,
+        "episode_plies": simulator.episode_plies,
         "elapsed_seconds": round(time.perf_counter() - started, 6),
         "moves_uci": list(history),
         "source_revision": source_revision,

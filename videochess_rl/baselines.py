@@ -33,11 +33,12 @@ class RandomLegalAgent:
 
 
 class SimpleHeuristicAgent:
-    """Prefer mate, material gain, promotions, captures, then checks.
+    """Prefer mate, material gain, captures, then checks.
 
     This is a one-ply evaluation, not an engine or search policy. It rebuilds
     only the current position from the immutable observation FEN; the
-    simulator itself retains the authoritative history for rules outcomes.
+    simulator itself retains the authoritative history for rules outcomes. A
+    FEN-only candidate evaluation cannot account for repetition history.
     """
 
     policy_id = "simple_material_heuristic"
@@ -55,8 +56,9 @@ class SimpleHeuristicAgent:
     @property
     def config(self) -> dict[str, object]:
         return {
-            "evaluation": "immediate mate, material, promotion, capture, check",
+            "evaluation": "immediate mate, material, capture preference, check",
             "material_values_cp": {chess.piece_name(piece): value for piece, value in self._MATERIAL.items()},
+            "capture_preference": "captured piece value // 20 centipawns",
             "check_bonus_cp": self._CHECK_BONUS,
             "search_plies": 1,
         }
@@ -79,31 +81,7 @@ class SimpleHeuristicAgent:
             move = chess.Move.from_uci(uci)
             if move not in board.legal_moves:
                 raise ValueError("supplied move is not legal for the observation")
-            before_material = self._material_balance(board, observation.turn)
-            is_capture = board.is_capture(move)
-            captured_piece = board.piece_at(move.to_square)
-            if board.is_en_passant(move):
-                captured_piece = chess.Piece(chess.PAWN, not board.turn)
-            promotion_bonus = (
-                self._MATERIAL[move.promotion] - self._MATERIAL[chess.PAWN]
-                if move.promotion is not None
-                else 0
-            )
-
-            successor = board.copy(stack=False)
-            successor.push(move)
-            outcome = successor.outcome(claim_draw=False)
-            if outcome is not None and outcome.winner == observation.turn:
-                score = self._MATE_SCORE
-            elif outcome is not None and outcome.winner == (not observation.turn):
-                score = -self._MATE_SCORE
-            else:
-                score = self._material_balance(successor, observation.turn) - before_material
-                score += promotion_bonus
-                if is_capture and captured_piece is not None:
-                    score += self._MATERIAL[captured_piece.piece_type] // 20
-                if successor.is_check():
-                    score += self._CHECK_BONUS
+            score = self._score_move(board, move, observation.turn)
             scored.append((score, uci))
 
         best_score = max(score for score, _ in scored)
@@ -117,3 +95,29 @@ class SimpleHeuristicAgent:
             total += value * len(board.pieces(piece_type, perspective))
             total -= value * len(board.pieces(piece_type, not perspective))
         return total
+
+    @classmethod
+    def _score_move(cls, board: chess.Board, move: chess.Move, perspective: chess.Color) -> int:
+        """Score one legal move; promotion value is already in material delta."""
+        before_material = cls._material_balance(board, perspective)
+        is_capture = board.is_capture(move)
+        captured_piece = board.piece_at(move.to_square)
+        if board.is_en_passant(move):
+            captured_piece = chess.Piece(chess.PAWN, not board.turn)
+
+        successor = board.copy(stack=False)
+        successor.push(move)
+        outcome = successor.outcome(claim_draw=False)
+        if outcome is not None and outcome.winner == perspective:
+            return cls._MATE_SCORE
+        if outcome is not None and outcome.winner == (not perspective):
+            return -cls._MATE_SCORE
+
+        # The material delta includes the pawn-to-promoted-piece difference.
+        # Capture preference and check are separate small positional bonuses.
+        score = cls._material_balance(successor, perspective) - before_material
+        if is_capture and captured_piece is not None:
+            score += cls._MATERIAL[captured_piece.piece_type] // 20
+        if successor.is_check():
+            score += cls._CHECK_BONUS
+        return score

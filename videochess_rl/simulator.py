@@ -32,7 +32,13 @@ class OpponentPolicyError(SimulatorError):
 
 
 class MovePolicy(Protocol):
-    """Small interface implemented by baseline or caller-supplied policies."""
+    """Small interface implemented by baseline or caller-supplied policies.
+
+    Policies without ``reset_episode(seed=...)`` must be stateless across
+    episodes. A stateful policy may implement that optional hook to restore
+    its episode-local state for reproducible repeated resets. Policy identity
+    and configuration must remain stable for the lifetime of a simulator.
+    """
 
     @property
     def policy_id(self) -> str: ...
@@ -183,11 +189,23 @@ class ChessSimulator:
         board = initial_board.copy(stack=True) if initial_board is not None else chess.Board()
         if board.chess960:
             raise ValueError("M2 simulator supports standard chess, not Chess960")
+        if not board.is_valid():
+            raise ValueError(
+                f"initial_board is not a valid standard chess position (status={board.status()})"
+            )
         if initial_board is not None and board.turn != agent_color:
             raise ValueError("initial_board must have the agent to move")
         if board.outcome(claim_draw=False) is not None:
             raise ValueError("initial_board must be a live chess position")
 
+        try:
+            self._reset_opponent_policy(seed)
+        except BaseException:
+            # A failed episode reset may have changed policy-local state, so
+            # the previously active simulator episode is no longer reusable.
+            self._ready = False
+            self._stopped = True
+            raise
         self._board = board
         self._agent_color = agent_color
         self._rng = random.Random(seed)
@@ -200,7 +218,9 @@ class ChessSimulator:
             try:
                 opening = self._choose_opponent_move()
                 self._board.push(opening)
-            except OpponentPolicyError:
+            except BaseException:
+                # Board rollback is guaranteed. A policy's private state and
+                # the consumed RNG stream are external to the chess snapshot.
                 self._board = board
                 raise
 
@@ -212,6 +232,7 @@ class ChessSimulator:
         self._require_ready()
         if self._stopped:
             raise EpisodeStateError("episode is already terminated or truncated; call reset()")
+        self._assert_opponent_identity()
         if not isinstance(action, chess.Move):
             raise InvalidActionError("action must be a python-chess Move; use step_uci() for serialized UCI")
 
@@ -234,7 +255,9 @@ class ChessSimulator:
                 opponent_move = self._choose_opponent_move()
                 opponent_uci = opponent_move.uci()
                 self._board.push(opponent_move)
-            except OpponentPolicyError:
+            except BaseException:
+                # Roll back the entire attempted chess transition, including
+                # agent move, but not policy-local state or consumed RNG.
                 self._board = before
                 self._stopped = True
                 raise
@@ -284,6 +307,7 @@ class ChessSimulator:
         return self.step(action)
 
     def _choose_opponent_move(self) -> chess.Move:
+        self._assert_opponent_identity()
         legal_uci = tuple(sorted(move.uci() for move in self._board.legal_moves))
         if not legal_uci:
             raise OpponentPolicyError("opponent was requested to move in a terminal position")
@@ -291,6 +315,7 @@ class ChessSimulator:
         legal_moves = tuple(chess.Move.from_uci(uci) for uci in legal_uci)
         try:
             selected = self._opponent.choose_move(observation, legal_moves, self._rng)
+            self._assert_opponent_identity()
         except Exception as exc:
             raise OpponentPolicyError(
                 f"opponent policy {self._opponent_id!r} raised {type(exc).__name__}"
@@ -306,6 +331,33 @@ class ChessSimulator:
                 f"opponent policy {self._opponent_id!r} returned illegal move {selected_uci!r}"
             )
         return chess.Move.from_uci(selected_uci)
+
+    def _reset_opponent_policy(self, seed: int) -> None:
+        self._assert_opponent_identity()
+        reset_episode = getattr(self._opponent, "reset_episode", None)
+        if reset_episode is None:
+            return
+        if not callable(reset_episode):
+            raise TypeError("opponent reset_episode attribute must be callable")
+        try:
+            reset_episode(seed=seed)
+        except Exception as exc:
+            raise OpponentPolicyError(
+                f"opponent policy {self._opponent_id!r} failed to reset: {type(exc).__name__}"
+            ) from exc
+        self._assert_opponent_identity()
+
+    def _assert_opponent_identity(self) -> None:
+        try:
+            current = self._describe_policy(self._opponent)
+        except (TypeError, ValueError, AttributeError) as exc:
+            raise OpponentPolicyError(
+                f"opponent policy {self._opponent_id!r} has invalid identity/configuration"
+            ) from exc
+        if current != (self._opponent_id, self._opponent_config_json):
+            raise OpponentPolicyError(
+                "opponent policy identity/configuration changed after simulator construction"
+            )
 
     def _make_observation(self) -> Observation:
         return Observation(
