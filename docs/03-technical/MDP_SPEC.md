@@ -1,153 +1,102 @@
 # Chess Simulator MDP Specification
 
-**Status:** Proposed M2 design. No chess simulator, state encoder, action encoder, baseline or RL environment has been implemented or tested.
+**Status:** Proposed M2 contract. No chess simulator, M2 state/action adapter, baseline, or RL environment has been implemented or tested.
 
-**Purpose:** Define a standard-chess simulator contract that can support M2 baselines and remain compatible with separately scoped M3 PGN/teacher data, M4 pretraining, M5 Double DQN and M6 ALE evaluation.
+**Purpose:** Specify the smallest standard-chess decision process needed for M2 while preserving clear interfaces to future M3 PGN/teacher data, M4 supervised learning, M5 Double DQN, and M6 ALE integration. The recommendation is summarized in [ADR-0002](../02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md). M2-01 through M2-04 remain unverified.
 
-The architecture recommendation is recorded as proposed, not accepted, in [ADR-0002](../02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md). M2-01 through M2-04 remain unverified.
+## 1. Decision process
 
-## 1. Environment definition
+For a fixed opponent policy and configuration, use the agent-centered process `(S, A, P, R, γ, ρ₀)`:
 
-For a fixed opponent policy and configuration, define the proposed agent-decision MDP as
+- **State `S`:** the full standard-chess `python-chess.Board`, including its move stack, plus the episode's fixed agent color and opponent policy identity/configuration. The seeded random generator is episode execution state used to reproduce stochastic opponent choices.
+- **Actions `A(s)`:** exactly the legal `python-chess.Move` values in `Board.legal_moves`. Their stable serialized identity is UCI; a move's meaning never depends on its index in a position-specific list. No other action types are part of the simulator.
+- **Transition `P`:** apply one legal agent move. If it ends the game, return the terminal result. Otherwise the configured opponent selects and applies one legal reply. If that ends the game, return the terminal result; otherwise return the next decision state for the same agent. The opponent move is part of the transition and is not chosen by the agent.
+- **Reward `R`:** terminal result only, from the fixed agent-color perspective. Nonterminal reward is zero. A simulator limit is truncation with zero reward, not a chess result.
+- **Discount `γ`:** one discount applies per agent-decision transition, including its opponent reply when one occurs. M2 does not select a numeric discount; that is a later learning experiment.
+- **Initial distribution `ρ₀`:** standard initial board, recorded agent color, opponent identity/configuration, and explicit seed when randomness is used. If the agent is Black, the opponent makes White's opening move during reset, and the move is recorded before the first agent decision.
 
-**(S, A, P, R, γ, ρ₀)**.
+The stochastic opponent and its fixed policy configuration define the transition distribution. Simulator results do not describe ALE/VideoChess behavior; the separate real-environment contract is in [ALE_ENVIRONMENT.md](ALE_ENVIRONMENT.md).
 
-- **S — state:** a standard chess position, complete game-history information needed by the selected draw rules, fixed agent color, and fixed opponent-policy identity/configuration. The agent receives decisions only when it is its turn.
-- **A — actions:** a legal python-chess move identified by its semantic move key, plus `CLAIM_DRAW_NOW` when the current position is claimable and `CLAIM_DRAW_AFTER(move)` when announcing that legal move would make the position claimable. A claim action ends the game only when its claim basis is valid; an announced move is recorded as the claim basis and is not pushed as an ordinary agent move after an accepted claim. The available set A(s) is state-dependent. See “Action representation” and “Game ending, claims and truncation.”
-- **P — transition:** validate and apply one agent action. If that move ends the game, return the terminal state. Otherwise, invoke exactly one legal opponent response from the configured opponent policy; if that reply ends the game, return the terminal state. Otherwise return the state at the next agent turn. Opponent behavior is part of P, not a second action chosen by the agent.
-- **R — reward:** zero on nonterminal transitions; terminal win/loss/draw reward from the fixed agent’s perspective. Truncation has no chess outcome and no terminal reward.
-- **γ — discount:** one discount per agent decision transition, including the integrated opponent response. The numeric value is a later M5 experiment decision; no value is selected here. M2 rule/benchmark code does not require learning discounting.
-- **ρ₀ — initial distribution:** standard initial board, an explicitly selected agent color, and an identified opponent policy/configuration. If the agent is Black, the opponent makes White’s opening move during reset so the first returned decision state is still the agent’s turn. Record the opening move in reset info and the episode trace.
+## 2. Rules state and agent observation
 
-For a given stationary opponent policy π, the transition is P(s′|s,a,π). A stochastic policy’s identity and configuration are fixed and recorded for the episode; its random choices use an explicit seeded generator. If opponent choice is switched within an episode, that opponent identity or the switching state must be represented so the transition law remains defined.
+### Simulator state
 
-This is a chess simulator with a policy-controlled opponent. It is not ALE/VideoChess. The real ALE environment has its own opponent, RGB observations, joystick timing, reward, terminal and truncation behavior; those facts are specified in [ALE_ENVIRONMENT.md](ALE_ENVIRONMENT.md).
+Use one `python-chess.Board` as the source of truth for simulated chess rules and transitions. It owns piece placement and colors, side to move, castling rights, en passant state, move counters, and the move stack needed for history-dependent automatic outcomes. Do not keep a second mutable chess rules state.
 
-## 2. State and Markov sufficiency
+FEN is useful for position logs and position-field round trips, but it does not preserve prior move history. Recreate a history-sensitive game from its initial position and recorded legal moves; do not treat a FEN-only restore as a complete simulator state.
 
-### Rules state
+### Agent observation
 
-Use a standard python-chess Board as the simulator’s rules engine. The transition-relevant position contains at least:
+At each agent decision, provide a read-only position snapshot with piece placement/colors, side to move, fixed agent color, castling rights, en passant state, relevant move counters, and the current legal moves represented by stable UCI keys. This is an interface contract, not a neural tensor or network design.
 
-- piece placement and piece colors;
-- side to move;
-- castling rights;
-- en passant target/capture availability;
-- halfmove clock;
-- prior position history needed to adjudicate repetition;
-- fixed agent color and opponent policy identity/configuration.
+The full Board/history remains the rules state. A compact observation that omits repetition-relevant history is not guaranteed to be Markov, even though it may be sufficient for ordinary move selection. M2 must keep that distinction explicit and make any history-derived information available as simulator metadata; it must not require a future model to consume the raw move list. Before M5, validate the chosen observation or document the partial-observation approximation.
 
-FEN is useful for readable logs and position round trips. Its fields include piece placement, side to move, castling rights, en passant square, halfmove clock and fullmove number. A FEN does not encode the full prior move stack. A FEN-only restore can therefore lose the history needed for threefold/fivefold repetition and draw claims. Preserve the root position plus move history, or a validated sufficient repetition-history representation. Do not clear the python-chess stack when history-sensitive rules are enabled.
+## 3. Legal move identity and handling
 
-The fullmove counter is useful for notation and logs; the move history and halfmove clock affect history-sensitive outcomes. A compact neural representation is not selected in this document. Piece-plane or structured encodings must additionally represent side to move, castling/en-passant state, the halfmove clock and sufficient repetition context. Board occupancy alone is not Markov for this rule set.
+The M2 action is a standard `python-chess.Move`; serialize it with its UCI move string for traces and stable references. UCI distinguishes all four promotion choices. Castling and en passant are ordinary legal moves whose interpretation and legality come from the current Board. Generate the candidate set directly from `Board.legal_moves`; deterministic UCI sorting may be used for reproducible logs, but candidate ordering has no action semantics.
 
-The observation/action mask supplied to a future policy must be deterministic for the same full state. If the model omits information needed to distinguish draw rights, document that as a partial-observation approximation and validate its effect before M5.
+When a serialized move is received, parse it and verify that the resulting move is in the current Board's legal move set before mutation. Reject an invalid or stale move with a clear error and leave the Board unchanged. Do not persist a legal-list offset as an action identity.
 
-### Episode context
+M2 needs only this semantic move contract; it does not need a neural action encoder, fixed output head, action mask, candidate batching, or Q-network. A fixed global from/to/promotion vocabulary remains a possible later model design, but it adds a large set of position-invalid outputs. The preferred later proposal is an action-conditioned scorer `Q(s,a)` over the current legal moves: online selection chooses a legal semantic move and the target network evaluates that same move, independent of candidate order. This is a proposal for M4/M5, not an implemented or empirically optimal design.
 
-Keep agent color and opponent identity fixed during one episode. They may vary between episodes. Store them in the simulator state or in explicit episode context supplied to the policy and transition. This prevents a single value function from silently mixing reward signs or opponent transition distributions.
+## 4. Player perspective and transition boundary
 
-## 3. Action representation
+Keep board colors absolute (`WHITE`/`BLACK`) and choose one fixed agent color per episode. Episodes may use either color. All simulator rewards and returns use that episode's agent-color perspective; do not switch perspective between turns. Convert White-perspective PGN/Stockfish/ALE values only at a documented boundary with a tested sign conversion. Teacher evaluations are not ALE rewards or calibrated RL returns.
 
-The action object is a chess move, not one of ALE’s ten joystick buttons. Standard castling is represented by python-chess as the king’s from/to move; en passant is determined from the Board’s legal state; promotion must include the selected piece. The move’s semantic identity must survive candidate reordering and serialization.
+One simulator step represents one agent decision and, if the game remains live, at most one opponent reply:
 
-| Representation | Stable identity and size | Strengths | Costs and failure modes |
-|---|---|---|---|
-| Fixed global from/to/promotion vocabulary | One global ID per source square, destination square and promotion choice: 64 × 64 × 5 = 20,480 move IDs. Full claim semantics add one claim-now ID and up to 20,480 claim-after-move IDs, for a 40,961-ID space; a different typed action scorer could avoid a monolithic output head. | Stable output index; easy to save in replay, label PGN moves, and produce a fixed DQN head. Promotion types remain distinct. Legal masks can be derived by mapping Board.legal_moves to IDs. | Most move IDs are geometrically or positionally impossible. Full intended-move claims add another large action family. Mask generation and exact encoding must be tested. Invalid actions must never be silently pushed. |
-| Board-dependent legal candidate set | Candidates are the actual legal Move keys in the current state, sorted by a deterministic semantic key, plus typed claim actions: claim now or claim after a specific legal announced move. Candidate-list positions are temporary and have no global meaning. | Computes scores only for valid actions; directly uses python-chess legal move generation; compact per decision; natural for PGN played-move mapping and pairwise teacher candidate labels. | Variable number of candidates; implementations must not persist list indices. A conventional fixed-output DQN cannot consume candidate position as a global output dimension. It needs an action-conditioned Q scorer Q(s,a) or an explicit mapping to a fixed vocabulary. |
-| Established plane-based chess encoding | A fixed spatial move vocabulary, such as the 8×8×73 action planes used in AlphaZero-style chess systems. | Smaller fixed head than a full from/to cross-product; spatial parameter sharing is natural for convolutional encoders. | Requires careful color/orientation canonicalization, action-plane mapping, promotions and special-move round trips. This adds model/action-encoding coupling before M2 needs it. |
+1. Validate and apply the agent's legal move.
+2. If an automatic game outcome exists, return it without requesting an opponent move.
+3. Otherwise ask the configured opponent for one legal move and apply it.
+4. Return its terminal outcome if the game ended; otherwise return the next agent decision state.
 
-### Provisional recommendation
+The opponent's policy identity/configuration and seed are recorded because they affect transitions and reproducibility. This is a single-agent simulator, not a multi-agent learner.
 
-Retain the project’s existing proposed action-conditioned afterstate Q direction, and use a stable semantic move key such as (from square, to square, promotion piece) as the action identity. Generate candidates from the current Board’s legal moves and score each legal candidate with the same scorer. Represent a draw claim as a typed semantic action: `CLAIM_DRAW_NOW`, or `CLAIM_DRAW_AFTER` with the announced legal move key. Include the claim basis and announced UCI move in the transition trace. Do not store a candidate-list index in replay or evidence.
+## 5. Reward, termination, and truncation
 
-This recommendation resolves the changing-list-index problem without requiring a 20,481-logit move head (or a larger fixed head that also enumerates intended-move claims). For Double DQN, enumerate legal candidates at s′, have the online scorer choose the highest-scoring legal semantic action, then have the target scorer evaluate that same action at s′. For a terminal state there is no next-action maximization. For a truncation with a valid final observation, bootstrap according to the later approved algorithm contract.
+Use terminal-outcome reward only:
 
-The proposed action-conditioned scorer still needs a deterministic state/action feature contract and batching tests. Its tensor structure belongs to future model design, not this specification. If M4/M5 instead choose a fixed output head, adopt a global action-ID mapping and test every legal special-move round trip before training. The recommendation and alternatives remain subject to review in ADR-0002.
-
-### Legal actions and invalid actions
-
-- Candidate generation must match python-chess legal_moves for the current full Board.
-- Promotions to queen, rook, bishop and knight are distinct semantic actions.
-- Castling and en passant are ordinary standard-chess Move keys whose legality depends on Board state.
-- A legal draw claim is a separate action; it is not encoded as a chess Move. Distinguish a claim based on the current position from one based on a specific announced legal move.
-- A mask, when materialized, is true exactly for generated legal move keys and claim actions whose basis is valid in the current full-history state. It is derived from the simulator, not predicted by the model.
-- An attempted key absent from the current legal set is a programming/policy boundary error. Reject it before mutation. Do not assign a synthetic loss reward or push an illegal move.
-- Enumerate candidates deterministically for reproducible traces, while ensuring Q values are associated with semantic actions and not their current enumeration order.
-
-## 4. Player perspective and opponent boundary
-
-### Alternatives
-
-- **Absolute White/Black values:** keep the board and reward in White’s perspective. White wins are positive and Black wins negative; a Black agent must negate values. This aligns naturally with White-perspective Stockfish and observed ALE reward, but invites sign mistakes when mixing data and agent rewards.
-- **Agent-color perspective:** fix one agent color per episode and define all simulator reward and learned return from that agent’s perspective. Include agent color in episode state/config. Convert explicitly at data boundaries. This avoids changing the Q sign between the agent’s turns.
-- **Current-player perspective / alternating actor:** change perspective each ply or let one learner control both sides. It requires sign-flipped/negamax targets or a multi-agent formulation and careful opponent/model ownership; a plain single-agent DQN target cannot be copied without defining this change.
-
-### Provisional recommendation
-
-Use a single decision-making agent with fixed color per episode; sample both colors across separate seeded episodes. The opponent is an explicit policy inside the environment transition. At every decision the agent acts once, then a live game receives one opponent reply before the next agent decision.
-
-Use agent-color rewards: +1 for agent win, −1 for agent loss, and 0 for draw. The board remains absolute White/Black python-chess state. A future model may use agent-relative features, but must retain an explicit color/perspective contract. Keep teacher scores in their documented source perspective until a separately tested conversion produces an agent-relative target. Never treat a Stockfish centipawn score as an ALE reward or calibrated Q value.
-
-For Double DQN targets, rewards are consistently from the fixed agent’s perspective and each transition begins and ends at the same agent-to-move boundary. The opponent move is included in the transition distribution and trace. If an alternate alternating-player design is selected, it requires a revised Bellman target and ADR before implementation.
-
-## 5. Transition and reward contract
-
-The preferred transition is one agent decision followed by at most one complete opponent reply. It lets a conventional agent-centric DQN keep the same decision maker at each state. The reward discount is per such decision transition, not independently per hidden opponent ply. A terminal result immediately after the agent move has no opponent reply. A result after the opponent reply is returned as terminal; the simulator must not request another agent move.
-
-| Event | Reward | terminated | truncated |
+| Event | Agent-perspective reward | `terminated` | `truncated` |
 |---|---:|---:|---:|
-| Nonterminal agent move and legal opponent reply | 0 | false | false |
-| Agent wins by checkmate | +1 | true | false |
-| Agent loses by checkmate | −1 | true | false |
-| Automatic draw or accepted legal claim | 0 | true | false |
-| Simulator decision/ply cap reached at a fully observed boundary | 0 | false | true |
-| Invalid/masked action | No transition; raise a clear error and preserve state | — | — |
-| External benchmark wall-time/process stop | No fabricated chess result; runner records interruption separately | — | — |
+| Nonterminal agent move and opponent reply | 0 | false | false |
+| Agent wins | +1 | true | false |
+| Agent loses | -1 | true | false |
+| Automatic draw | 0 | true | false |
+| Simulator decision limit at a valid agent-decision boundary | 0 | false | true |
+| Invalid move | No transition; reject without mutation | — | — |
 
-Use terminal-outcome reward as the baseline. Nonterminal reward is zero. Material, check, teacher score, shaping and step penalties are not silently added. Any shaping, including potential-based shaping, must be a separately configured later experiment with a separate result identity.
+Use the pinned `python-chess` rules engine's automatic outcome check, equivalent to `Board.outcome(claim_draw=False)`. This includes checkmate, stalemate, insufficient material, automatic fivefold repetition, and the automatic seventy-five-move rule. Voluntary draw-claim actions are excluded from the project's active scope; there is no action, interface, or planned extension for them. Do not write custom chess adjudication when the library supplies the required automatic outcomes. Confirm the exact behavior against the locked library during authorized M2 implementation.
 
-For Double DQN, do not bootstrap from a true terminal result. A time/decision-limit truncation is not a chess result; if the final state is valid and the algorithm permits it, bootstrap from that final state. Preserve the final observation before any auto-reset. An external process interruption is not itself an MDP reward or terminal flag.
+M2 uses an agent-decision limit checked after a complete transition, so truncation returns the valid next-agent state. Any separately added total-ply or wall-clock cap must also report truncation (or an external runner stop for host interruption); it must never fabricate a chess result. Preserve the final valid Board, flags, and explicit stop reason separately.
 
-## 6. Game ending, claims and truncation
+For later Double DQN, do not bootstrap from a genuine terminal outcome. A valid time-limit truncation is not a chess result; retain its final observation and apply the separately tested time-limit bootstrap treatment. M2 does not implement learning targets or choose a discount value.
 
-Use standard chess rules as implemented by the pinned python-chess dependency; verify exact APIs and behavior in tests before accepting M2. The project currently permits chess package versions ≥1.11,<2; the lock file selects the runtime version.
+No material reward, check bonus, step penalty, teacher-score reward, or positional shaping belongs in the baseline. Any later reward change requires a separately authorized experiment and result identity.
 
-- Checkmate, stalemate, insufficient material, fivefold repetition and the seventy-five-move rule are automatic outcome checks. Checkmate precedence must match the library result.
-- Threefold repetition and the fifty-move rule are claimable, not automatically terminal by default in python-chess. A claim may be based on the current position or on a specific legal move announced in advance that would produce the claim condition. Model those as `CLAIM_DRAW_NOW` and `CLAIM_DRAW_AFTER(move)` respectively. For the latter, validate the announced move against the full-history Board, record its semantic key/UCI as claim evidence, and do not treat it as an ordinary completed move when the claim is accepted. Reject an invalid claim without mutating the Board; clocks and penalties for an incorrect claim are outside this no-clock MDP and are not simulated. Verify this action contract against the pinned API and FIDE claim rules before accepting M2.
-- The Board’s move stack/history is required for repetition checks; FEN alone cannot reconstruct that history.
-- A maximum episode length is an environment truncation with the final live board retained. It is not checkmate, a draw, or ALE termination.
-- Simulator draw rules are not evidence of Atari VideoChess rules or terminal flags. Compare them to Atari only with separate authoritative documentation and genuine M1/M6 runtime evidence.
+## 6. Simulator and ALE boundary
 
-The official python-chess core API documents that the default outcome check excludes claimable fifty-move/threefold draws unless claim_draw is requested, and that claims may be based on a legal next move. FIDE rules specify claims based on a position about to appear or an indicated move; M2 must validate the exact accepted-claim trace semantics against both sources and the locked library: [python-chess Core](https://python-chess.readthedocs.io/en/latest/core.html), [FIDE Laws of Chess, Articles 9.2–9.5](https://handbook.fide.com/chapter/e012023).
+The M2 Board and outcome come from `python-chess` and the configured simulator opponent. They are evidence about simulator rules and baselines only. They do not establish Atari move acceptance, opponent behavior, reward, terminal flags, or transfer.
 
-## 7. Simulator and ALE separation
+For M6, the current ALE RGB observation and verified move history remain the source of Atari state. The model may propose a semantic chess move; the existing controller translates it to joystick/FIRE actions and RGB evidence must confirm the resulting transition. Do not emulate Atari cursor timing in M2 or substitute simulator state for a failed ALE observation. Standard-chess moves that remain unverified in Atari, including special moves, stay integration limitations rather than changes to the simulator rules.
 
-M2 board states and outcomes are generated by python-chess and the selected opponent policy. They are useful for testing chess rules, baselines and learning transitions. They are not evidence of Atari move acceptance, Atari opponent behavior, real reward, complete-game Atari performance or transfer.
+## 7. M2 verification contracts
 
-M6 must take its decision state from current ALE RGB and validated move history. It may use python-chess legal moves to constrain candidate moves and use the M1 shadow to check transitions, but the real screen and actual ALE reward/flags remain authoritative for Atari. A mismatch, unreadable special move, unready turn or failed controller phase must stop or use a tested safe recovery. Never substitute a simulator transition for a failed ALE action.
+These are future checks, not passing tests:
 
-Compatibility risks include Atari-specific rule behavior; piece identity not fully visible in RGB; cursor and blink overlays; captures/animations; castling, en passant and promotion not established by M1; target-FIRE timing sensitivity; opponent thinking time; and terminal screens that clear the final board. These risks remain open in [RISK_REGISTER.md](../02-management/RISK_REGISTER.md) and the M1 records.
+1. Position serialization is deterministic; FEN round trips preserve position fields, while a replay from the initial position preserves the move history used by the rules engine.
+2. Generated actions equal `Board.legal_moves`; stable UCI identities round-trip for ordinary moves, captures, all four promotions, castling, and en passant, regardless of candidate enumeration order.
+3. A legal move produces the expected Board transition. An invalid or stale move is rejected before mutation.
+4. Checkmate, stalemate, insufficient material, automatic fivefold repetition, and the automatic seventy-five-move outcome match the locked `python-chess` API.
+5. Agent-color reward signs are correct for both colors. A terminal agent move skips the opponent reply; an opponent terminal reply returns without another agent step.
+6. Simulator truncation retains a valid final state and is distinct from a chess terminal and an external interruption.
+7. Same seed, color, opponent identity/configuration, and initial state reproduce the move/outcome record.
+8. Random-legal and lightweight heuristic baselines select only legal moves; benchmark records identify policies, colors, seeds, outcomes, lengths, completion/truncation, configuration, and source revision.
+9. Simulator results remain separately labeled from ALE observations, reward, terminal flags, and metrics.
 
-## 8. M2 verification contracts
+## References
 
-These are required future checks, not passing tests:
-
-1. Same full state serializes deterministically; FEN round trip preserves rule position while a history round trip preserves repetition context.
-2. Generated candidates exactly match the legal move set. No illegal candidate is mask-valid.
-3. Semantic action encode/decode round trips for ordinary moves, all promotions, castling, en passant, `CLAIM_DRAW_NOW` and `CLAIM_DRAW_AFTER(move)`; candidate reordering does not change action identity. A valid announced-move claim records its basis and ends as a draw without an opponent response; invalid claims leave the Board unchanged.
-4. Applying a legal action produces the expected python-chess state and side to move. An illegal action raises without changing the state.
-5. Agent-perspective terminal rewards are correct for White and Black wins/losses and draws.
-6. Checkmate after the agent action skips the opponent reply; checkmate after opponent reply is returned as terminal without another agent step.
-7. Automatic draws, claimable draws, terminal and truncation are distinct and tested.
-8. Seeded games reproduce move/outcome records for the same environment, policies, color schedule and seed.
-9. Random-legal and heuristic selectors return legal semantic actions and complete bounded games under recorded conditions.
-10. Benchmark records identify simulator metrics and cannot be merged with or labeled as ALE results.
-
-## Sources
-
-- Project constraints and proposed afterstate direction: [REQUIREMENTS.md](../01-foundation/REQUIREMENTS.md), [ROADMAP.md](../01-foundation/ROADMAP.md).
-- M2 acceptance: [ACCEPTANCE_CRITERIA.md](../06-quality/ACCEPTANCE_CRITERIA.md).
-- Existing M1 shadow boundary: [shadow.py](../../videochess_rl/shadow.py).
-- Proposed plan: [.agents/plans/M02-chess-foundation.md](../../.agents/plans/M02-chess-foundation.md).
+- M2 scope and order: [M02 plan](../../.agents/plans/M02-chess-foundation.md).
+- M2 pass conditions: [ACCEPTANCE_CRITERIA.md](../06-quality/ACCEPTANCE_CRITERIA.md).
+- Project constraints and proposed later model choices: [REQUIREMENTS.md](../01-foundation/REQUIREMENTS.md).
+- Existing ALE shadow boundary: [shadow.py](../../videochess_rl/shadow.py).
 - Decision maturity: [ADR-0002](../02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md).

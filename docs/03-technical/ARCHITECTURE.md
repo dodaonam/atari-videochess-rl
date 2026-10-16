@@ -25,10 +25,10 @@ M1-01 through M1-06 are accepted and G2 is approved in the [final verification r
 
 | Milestone | Proposed component and output | Maturity |
 |---|---|---|
-| M2 | Standard-chess simulator, explicit MDP, legal action contract, random-legal and heuristic baselines, seeded simulator records. | Proposed; plan and MDP spec drafted; not implemented or authorized. |
+| M2 | Standard-chess simulator, explicit MDP, stable UCI identities for legal moves, random-legal and heuristic baselines, seeded simulator records. | Proposed; plan and MDP spec drafted; not implemented or authorized. |
 | M3 | Provenance-aware PGN parsing and separately identified Stockfish teacher labels, with leakage-safe splits. | Proposed; no data downloaded; O-01, O-06 and O-07 remain open. |
 | M4 | Supervised pretraining from explicitly selected behavior or teacher targets; saved pretraining checkpoint and evaluation. | Proposed; no model or training code exists. |
-| M5 | Direct PyTorch Double DQN in the chess simulator with legal-action selection, replay/target networks and separately configured curriculum. | Proposed; no RL training code exists. |
+| M5 | Direct PyTorch Double DQN in the chess simulator with legal-move selection, replay/target networks and separately configured curriculum. | Proposed; no RL training code exists. |
 | M6 | Inference adapter that observes real ALE RGB, obtains validated chess state, selects a legal move, calls the existing Atari controller and verifies the resulting real transition. | Proposed; M1 controls exist, learned-agent integration does not. |
 | M7 | Controlled evaluation, comparison, report and handover under approved conditions. | Proposed; no delivery artifacts exist. |
 
@@ -38,11 +38,11 @@ Engineering order and fixed-file inventory remain owned by [EXECUTION_PLAN.md](.
 
 | Concern | Canonical responsibility | Shared interface or required separation |
 |---|---|---|
-| Chess rules and legal transitions | python-chess in the future simulator; current M1 shadow uses it only for candidate validation. | Reuse Move semantics where useful. The simulator owns simulated transitions; ALE RGB owns Atari state. |
+| Chess rules and legal transitions | python-chess in the future simulator; current M1 shadow uses it only for candidate validation. | Reuse stable UCI serialization of `python-chess.Move` where useful. The simulator owns simulated transitions; ALE RGB owns Atari state. |
 | Simulated episode | Proposed M2 simulator and opponent policy. | Has no dependency on ALE frames, cursor positions, FIRE timing or RAM. |
 | ALE observation/control | Existing M1 environment, vision, controller and episode modules. | Accepts move intent only after an ALE-derived state is validated. |
 | Offline PGN/teacher data | Proposed M3 data tooling. | Preserve source game, position, played move, teacher output, score perspective and license/provenance as separate fields. |
-| Model inference | Proposed M4/M5 learned policy. | Scores legal candidates; no Stockfish process in deployed inference. |
+| Model inference | Proposed M4/M5 learned policy. | Selects from semantic legal moves; action-conditioned scoring is a proposal for later review, not an M2 component. No Stockfish process in deployed inference. |
 | Supervised learning | Proposed M4. | Keep played-move behavior targets separate from Stockfish-derived evaluations or rankings. |
 | Simulator RL | Proposed M5. | Use simulator rewards/transitions; report as simulator RL. |
 | Atari evaluation | Proposed M6/M7. | Use actual ALE RGB, actions, reward and flags; report separately from simulator results. |
@@ -53,7 +53,7 @@ Engineering order and fixed-file inventory remain owned by [EXECUTION_PLAN.md](.
 1. M3 may parse a PGN into a source game, legal Board positions and actual played Move keys. Those moves are behavior observations, not automatically best moves.
 2. If separately authorized, Stockfish may evaluate a position or candidates offline. Its score source, search config and White/Black sign must remain explicit. An engine score is not an ALE reward or an RL return.
 3. M4 may train from separately tagged behavior targets and/or teacher-derived targets after the target protocol is approved. The resulting checkpoint does not establish RL performance.
-4. M5 may use the model to score the current simulator’s legal candidates and learn from simulator transitions. Its metrics remain simulator-only.
+4. M5 may use a future model to score legal semantic moves and learn from simulator transitions. Its metrics remain simulator-only; candidate-list offsets are not action identities.
 5. In M6, the policy receives a state derived from current ALE RGB plus a validated move history. It proposes a chess move; the existing adapter translates that move to joystick/FIRE actions.
 6. The ALE RGB board and returned ALE reward/terminated/truncated values are observed after control. Only validated RGB transitions update the M1 shadow. Model predictions, simulator state and diagnostic RAM cannot be substituted for the observed Atari result.
 
@@ -74,7 +74,7 @@ Not every legal python-chess position or move is known to be representable or co
 
 ## Quality requirements
 
-- Keep modules small, with pure state/action conversions separated from episode orchestration.
+- Keep modules small; stable UCI conversion can remain at the simulator boundary unless implementation evidence justifies a separate helper.
 - Use deterministic state/action mappings and seeded randomness where possible.
 - Make configuration explicit and record both registered defaults and effective settings.
 - Reuse the locked dependencies before proposing additions; do not add an RL framework contrary to the project requirements.

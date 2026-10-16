@@ -1,0 +1,44 @@
+command: python3 scripts/agent_preflight.py
+started_utc: 2026-10-16T05:40:26+00:00
+revision: 6457955db8d75c45a503d1f534c1367dbd17481d
+Agent context preflight: PASS
+Governance: G2 (approved); approved: G0, G1, G2
+Next engineering milestone: M2 — not started (pending user approval)
+Next task: M2-001 (pending) — Implement and verify the chess foundation
+Next task action: Await explicit user authorization for M2. Review proposed ADR-0002 before implementation; do not change M2 status or code until authorized.
+Next task dependencies: M1-001
+Next task acceptance criteria: M2-01, M2-02, M2-03, M2-04
+Tasks: done=10, in_progress=0, pending=1, blocked=0, cancelled=0
+Completed task IDs: G1-001, G1-002, G1-003, G1-004, G1-005, G1-006, G1-007, G1-008, M0-001, M1-001
+In progress task IDs: none
+Pending task IDs: M2-001
+Blocked task IDs: none
+Active blockers: none recorded
+Open confirmations:
+  O-01: Assignment/instructor rules for ALE observation extraction, action wrappers, custom PyTorch RL, Stockfish training use, and any engine use in offline evaluation.
+  O-02: Whether full-game performance on actual ALE is a hard submission requirement or a research target with an accepted fallback.
+  O-03: Whether the approximate three-week estimate is still the project deadline.
+  O-04: Actual Colab entitlement/quota, GPU availability, storage, and whether paid compute is allowed.
+  O-05: ALE/ROM runtime behavior, RAM mapping, game modes, difficulty behavior, and official evaluation settings.
+  O-06: PGN/tactical data sources, licenses, permitted use, and expected scale.
+  O-07: Stockfish version/search limits and whether it may be a benchmark opponent or offline evaluator.
+  O-08: Opponent pool and rating method for any Elo claim.
+Relevant decisions: docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md, docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md
+Acceptance criteria recognized: 51
+Last verified Git: initial-idea @ 6457955db8d75c45a503d1f534c1367dbd17481d
+Live Git: initial-idea @ 6457955db8d75c45a503d1f534c1367dbd17481d
+Roadmap source: exact match; 19 sections; SHA-256 fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf
+Git recovery: workspace-specific checkpoint snapshot.
+Workspace Git status: matches checkpoint
+Portable tracked baseline: not yet committed or differs
+Portable Git index: matches checkpoint
+Hashed ordinary-file snapshot: matches
+Content hashes: 126 ordinary files verified by SHA-256.
+Not content-verified by this hash map: PROJECT_STATE self-reference, chat history/credential-like paths, temp files, symlinks, and the excluded directories listed below.
+Excluded directories: .git, .venv, artifacts, scripts/__pycache__, tests/__pycache__, videochess_rl/__pycache__
+Artifact directories requiring independent manifests: artifacts
+Last verified dirty paths (11):  M .agents/state/PROJECT_STATE.yaml;  M .agents/state/SESSION_HANDOFF.md; ?? .agents/evidence/M1-04-terminal-success-20261016.zip; ?? main.py; M  .agents/plans/M02-chess-foundation.md; M  docs/01-foundation/REQUIREMENTS.md; M  docs/02-management/RISK_REGISTER.md; M  docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md; M  docs/03-technical/ARCHITECTURE.md; M  docs/03-technical/MDP_SPEC.md; M  docs/06-quality/TEST_STRATEGY.md
+Next user action: Review the Pre-M2 plan and proposed ADR-0002, then explicitly authorize M2 before implementation. G3 is not approved; O-01 through O-08 remain unresolved.
+WARNING ARTIFACT_MANIFEST_REQUIRED [.]: Artifact/data directories are excluded from content hashing and require independent manifest verification: artifacts.
+exit_code: 0
+exit_code: 0

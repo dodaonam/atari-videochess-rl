@@ -43,7 +43,7 @@ The following is the current baseline **as stated by the roadmap and chat histor
 
 These are starting points to test, not decisions proven optimal:
 
-- An action-conditioned afterstate Q-network that scores legal chess moves, with Double DQN fine-tuning.
+- A future model may use action-conditioned afterstate scoring over legal chess moves, with Double DQN fine-tuning; this is a proposed M4/M5 direction, not an M2 simulator or action-encoding requirement.
 - `python-chess` as simulator/rule implementation, with a separate ALE adapter.
 - Terminal-outcome reward as the initial simulator baseline; potential-based shaping only as a separate experiment.
 - A small CNN and proposed feature planes; network size, channels, optimizer, and learning rates are initial values only.
