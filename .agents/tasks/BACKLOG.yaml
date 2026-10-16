@@ -1512,7 +1512,7 @@
       "id": "M2-001",
       "title": "Implement and verify the chess foundation",
       "milestone": "M2",
-      "status": "pending",
+      "status": "done",
       "depends_on": [
         "M1-001"
       ],
@@ -1524,10 +1524,389 @@
         "M2-04"
       ],
       "blocker_ids": [],
-      "evidence": [],
-      "next_action": "Await explicit user authorization for M2. Review proposed ADR-0002 before implementation; do not change M2 status or code until authorized.",
+      "evidence": [
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M2-authorization-20261016.md",
+          "detail": "Current direct user directive authorizes the complete M2 engineering and GitHub PR workflow, with the PR explicitly required to remain unmerged.",
+          "result": "The project owner directly authorized complete M2 implementation, verification, evidence, commits, push, and PR creation; the PR must remain unmerged, and G3 remains unapproved.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-16T07:18:56Z",
+            "recorded_at_utc": "2026-10-16T07:18:56Z",
+            "exit_code": null,
+            "git_revision": "11b6dfe67c961bca3d5d693d87a1f27448983487",
+            "log_path": ".agents/evidence/M2-authorization-20261016.md"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M2-acceptance-20261016.md",
+          "detail": "M2-01 through M2-04 acceptance review, including post-review 58-test focused suite, 180-test repository suite, and regenerated benchmark.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-16T15:58:29Z",
+            "exit_code": null,
+            "git_revision": "959cf48bbeb83ef8191c2433d78bf6e37c20a1ef",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M2-baseline-results-20261016.md",
+          "detail": "Seeded baseline results and semantic reproducibility comparison.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-16T07:41:33Z",
+            "exit_code": null,
+            "git_revision": "74008b8c8705809330ef218ba3d5bd9e1b5335ab",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M2-baseline-benchmark-20261016.json",
+          "detail": "Official per-game benchmark record; structured result SHA-256 is recorded in the report and manifest.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-16T07:41:33Z",
+            "exit_code": null,
+            "git_revision": "74008b8c8705809330ef218ba3d5bd9e1b5335ab",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M2-baseline-benchmark-repeat-20261016.json",
+          "detail": "Independent repeated per-game result; semantic records match official run.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-16T07:41:33Z",
+            "exit_code": null,
+            "git_revision": "74008b8c8705809330ef218ba3d5bd9e1b5335ab",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M2-artifact-manifest-20261016.sha256",
+          "detail": "Hashes for tracked benchmark JSON and local ignored raw benchmark outputs.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-16T07:41:33Z",
+            "exit_code": null,
+            "git_revision": "74008b8c8705809330ef218ba3d5bd9e1b5335ab",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "test",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m2_simulator tests.test_m2_baselines tests.test_m2_benchmark -v",
+          "result": "PASS: 41 focused M2 tests.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T07:39:04Z",
+            "recorded_at_utc": "2026-10-16T07:41:33Z",
+            "exit_code": 0,
+            "git_revision": "74008b8c8705809330ef218ba3d5bd9e1b5335ab",
+            "log_path": ".agents/evidence/logs/M2-focused-suite-final-20261016.log"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "PASS: 163 repository tests; 81.795 seconds.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T07:34:02Z",
+            "recorded_at_utc": "2026-10-16T07:41:33Z",
+            "exit_code": 0,
+            "git_revision": "74008b8c8705809330ef218ba3d5bd9e1b5335ab",
+            "log_path": ".agents/evidence/logs/M2-full-suite-precheckpoint-pass-20261016.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.benchmark --seeds 20261016 20261017 --max-decisions 400 --output .agents/evidence/M2-baseline-benchmark-20261016.json",
+          "result": "PASS: 8 games completed, 0 truncations, 0 failures or interruptions.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T07:35:51Z",
+            "recorded_at_utc": "2026-10-16T07:41:33Z",
+            "exit_code": 0,
+            "git_revision": "74008b8c8705809330ef218ba3d5bd9e1b5335ab",
+            "log_path": ".agents/evidence/logs/M2-baseline-benchmark-final-20261016.log"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/logs/M2-baseline-reproducibility-20261016.log",
+          "detail": "Official and repeated benchmark configurations, summaries, and semantic per-game fields match.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-16T07:41:33Z",
+            "exit_code": null,
+            "git_revision": "74008b8c8705809330ef218ba3d5bd9e1b5335ab",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "FAIL: 162 passed; clean-clone recovery reported a stale Git snapshot before the required checkpoint refresh. All M2 tests passed; the failure is retained and followed by a post-checkpoint rerun.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T07:39:04Z",
+            "recorded_at_utc": "2026-10-16T07:41:33Z",
+            "exit_code": 1,
+            "git_revision": "74008b8c8705809330ef218ba3d5bd9e1b5335ab",
+            "log_path": ".agents/evidence/logs/M2-full-suite-final-20261016.log"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "PASS: 163 repository tests, including clean-clone recovery.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T07:44:04Z",
+            "recorded_at_utc": "2026-10-16T07:45:47Z",
+            "exit_code": 0,
+            "git_revision": "f5987e09d3cfa3f7ab5a50f401ec8e41329f0316",
+            "log_path": ".agents/evidence/logs/M2-full-suite-postcheckpoint-20261016.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "PASS: agent context preflight passed; artifact manifest warning reviewed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T07:43:58Z",
+            "recorded_at_utc": "2026-10-16T07:45:47Z",
+            "exit_code": 0,
+            "git_revision": "f5987e09d3cfa3f7ab5a50f401ec8e41329f0316",
+            "log_path": ".agents/evidence/logs/M2-preflight-final-20261016.log"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "PASS: 163 repository tests, including clean-clone recovery against completed M2 state.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T07:46:45Z",
+            "recorded_at_utc": "2026-10-16T07:48:20Z",
+            "exit_code": 0,
+            "git_revision": "a4d015c2a272daab165666bbe886240a65e32a4e",
+            "log_path": ".agents/evidence/logs/M2-full-suite-complete-state-20261016.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "PASS: final M2 state preflight passed; artifact manifest warning reviewed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T07:46:40Z",
+            "recorded_at_utc": "2026-10-16T07:48:20Z",
+            "exit_code": 0,
+            "git_revision": "a4d015c2a272daab165666bbe886240a65e32a4e",
+            "log_path": ".agents/evidence/logs/M2-preflight-complete-state-20261016.log"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M2-github-delivery-20261016.md",
+          "detail": "Remote feature head, base SHA, PR #1 open/unmerged state, changed-file parity, and absence of configured CI are verified.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-16T07:51:04Z",
+            "exit_code": null,
+            "git_revision": "10d11dcc9521c097611f9cb859cfd09a7a3a0668",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "gh api repos/dodaonam/atari-videochess-rl/pulls/1 --jq '{state:.state,merged:.merged,head_sha:.head.sha,base_sha:.base.sha}'",
+          "result": "PASS: GitHub confirms PR #1 is open, head 10d11dcc9521c097611f9cb859cfd09a7a3a0668, base 11b6dfe67c961bca3d5d693d87a1f27448983487, and merged=false.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T07:51:02Z",
+            "recorded_at_utc": "2026-10-16T07:51:04Z",
+            "exit_code": 0,
+            "git_revision": "10d11dcc9521c097611f9cb859cfd09a7a3a0668",
+            "log_path": ".agents/evidence/logs/M2-github-delivery-20261016.log"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M2-post-review-hardening-20261016.md",
+          "detail": "Consolidated F-01–F-08 and HC-01–HC-14 report with final 58-test focused, 180-test full-suite, benchmark, and context evidence.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-16T16:00:43Z",
+            "exit_code": null,
+            "git_revision": "f420bd8a80b6f9f5edc4ae9ce40961ac76d3a581",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M2-post-review-hardening-benchmark-20261016.json",
+          "detail": "Corrected b3fc810 benchmark output for seeds 20261016 and 20261017, both colors, 400-decision cap; SHA-256 is in the hardening manifest.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-16T15:53:14Z",
+            "exit_code": null,
+            "git_revision": "b3fc8105a5dbf543267a77be77f6a8c6c76ab8e2",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M2-post-review-hardening-benchmark-repeat-20261016.json",
+          "detail": "Independent b3fc810 repeat; semantic records match the official run; SHA-256 is in the hardening manifest.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-16T15:53:14Z",
+            "exit_code": null,
+            "git_revision": "b3fc8105a5dbf543267a77be77f6a8c6c76ab8e2",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.benchmark --seeds 20261016 20261017 --max-decisions 400 --output artifacts/m2/post-review-hardening-b3-official-20261016.json",
+          "result": "PASS: 8/8 completed; zero truncations, failures, or interruptions (regenerated on b3fc810).",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T15:51:15Z",
+            "recorded_at_utc": "2026-10-16T15:53:14Z",
+            "exit_code": 0,
+            "git_revision": "b3fc8105a5dbf543267a77be77f6a8c6c76ab8e2",
+            "log_path": ".agents/evidence/logs/M2-post-review-benchmark-official-20261016.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.benchmark --seeds 20261016 20261017 --max-decisions 400 --output artifacts/m2/post-review-hardening-b3-repeat-20261016.json",
+          "result": "PASS: 8/8 completed; official/repeat semantic records match on b3fc810.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T15:51:19Z",
+            "recorded_at_utc": "2026-10-16T15:53:14Z",
+            "exit_code": 0,
+            "git_revision": "b3fc8105a5dbf543267a77be77f6a8c6c76ab8e2",
+            "log_path": ".agents/evidence/logs/M2-post-review-benchmark-repeat-20261016.log"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/logs/M2-post-review-benchmark-verification-20261016.log",
+          "detail": "b3fc810 official/repeat semantic comparison, historical move/outcome comparison, and legal replay/integrity check for all 16 benchmark records; PASS.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-16T15:53:14Z",
+            "exit_code": null,
+            "git_revision": "b3fc8105a5dbf543267a77be77f6a8c6c76ab8e2",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "test",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m2_simulator tests.test_m2_baselines tests.test_m2_benchmark -v",
+          "result": "PASS: 58 focused M2 tests on b3fc810; 0 failures.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T15:49:29Z",
+            "recorded_at_utc": "2026-10-16T15:53:14Z",
+            "exit_code": 0,
+            "git_revision": "b3fc8105a5dbf543267a77be77f6a8c6c76ab8e2",
+            "log_path": ".agents/evidence/logs/M2-post-review-focused-suite-20261016.log"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "DIAGNOSTIC FAIL: 180 tests ran; one context snapshot assertion detected uncheckpointed tracked evidence/governance edits. Rerun required after checkpoint; this is not completion evidence.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T15:49:31Z",
+            "recorded_at_utc": "2026-10-16T15:53:14Z",
+            "exit_code": 1,
+            "git_revision": "b3fc8105a5dbf543267a77be77f6a8c6c76ab8e2",
+            "log_path": ".agents/evidence/logs/M2-post-review-full-suite-dirty-checkpoint-failure-20261016.log"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "PASS: 180 repository tests in 80.286 s, including clean-clone context recovery, M0, M1/ALE, and M2.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T15:54:51Z",
+            "recorded_at_utc": "2026-10-16T15:56:29Z",
+            "exit_code": 0,
+            "git_revision": "57c6bde8f3cd9fdaf0a6fe4ec283c93fb8cf037a",
+            "log_path": ".agents/evidence/logs/M2-post-review-full-suite-20261016.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "PASS: agent context preflight passed; expected ARTIFACT_MANIFEST_REQUIRED notice reviewed against the M2 manifest.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T15:58:29Z",
+            "recorded_at_utc": "2026-10-16T15:58:29Z",
+            "exit_code": 0,
+            "git_revision": "959cf48bbeb83ef8191c2433d78bf6e37c20a1ef",
+            "log_path": ".agents/evidence/logs/M2-post-review-final-preflight-20261016.log"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "PASS: 180 repository tests in 82.654 s, including clean-clone context recovery, M0, M1/ALE, and M2.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T15:59:07Z",
+            "recorded_at_utc": "2026-10-16T16:00:43Z",
+            "exit_code": 0,
+            "git_revision": "f420bd8a80b6f9f5edc4ae9ce40961ac76d3a581",
+            "log_path": ".agents/evidence/logs/M2-post-review-full-suite-final-20261016.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "PASS: agent context preflight passed; expected ARTIFACT_MANIFEST_REQUIRED notice reviewed against the M2 manifest.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T16:00:43Z",
+            "recorded_at_utc": "2026-10-16T16:00:43Z",
+            "exit_code": 0,
+            "git_revision": "f420bd8a80b6f9f5edc4ae9ce40961ac76d3a581",
+            "log_path": ".agents/evidence/logs/M2-post-review-final-preflight-f420-20261016.log"
+          }
+        }
+      ],
+      "next_action": "",
       "plan_ref": ".agents/plans/M02-chess-foundation.md"
     }
   ],
-  "updated_at_utc": "2026-10-15T19:38:34Z"
+  "updated_at_utc": "2026-10-16T16:00:43Z"
 }

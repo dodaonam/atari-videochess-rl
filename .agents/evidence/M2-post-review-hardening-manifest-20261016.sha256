@@ -1,0 +1,16 @@
+a923d2f19039578568d0966a93131eb3e6ec1e03160debbb1f7166cbe7669dd1  .agents/evidence/M2-post-review-hardening-20261016.md
+9fd9b123f9bdec862f60caad6df44c94978ee665102fd891f9341778123c4ec1  .agents/evidence/M2-post-review-hardening-benchmark-20261016.json
+b9a54b025fabccfd7ef3f437870c8d7178559bc19b75142b3f102b033c45825f  .agents/evidence/M2-post-review-hardening-benchmark-repeat-20261016.json
+d696e8c692bd769a9b0eaf8edfdbbeecb77b9a1c990b83d017a6e98c9609c508  .agents/evidence/logs/M2-post-review-focused-suite-20261016.log
+7386ff000534a665f6f4acc18e992003f4f8a24d5d5c80c171bbe45a1752bf07  .agents/evidence/logs/M2-post-review-full-suite-20261016.log
+5de2f5e8c9523cf8d87753832b5a9f051061d2452701c4a0eb865bcab2836d04  .agents/evidence/logs/M2-post-review-full-suite-dirty-checkpoint-failure-20261016.log
+b8e4e8e407e26a4460350cb03f8aada0028c7e76c15cfdb95fa9aefd1b9a2ca2  .agents/evidence/logs/M2-post-review-benchmark-official-20261016.log
+897165f4174db3167d9085ed9a5318bd1a5843a69affd997e907bb56029072bb  .agents/evidence/logs/M2-post-review-benchmark-repeat-20261016.log
+61a8c2c634be0fdf8f6cc2fe7bf3230a773de11e8b198d4f981cb69310ea6d08  .agents/evidence/logs/M2-post-review-benchmark-verification-20261016.log
+34cdb9047cde536c10c5b78040375cea24b4921a88e3b0e814aab3552ae4f9ab  .agents/evidence/logs/M2-post-review-development-diagnostic-failure-20261016.log
+611b7d27e18a486007f1b20a25370fb0cf62187d4dc0f4085ac4e765447bbb0f  .agents/evidence/logs/M2-post-review-github-preflight-20261016.log
+9fd9b123f9bdec862f60caad6df44c94978ee665102fd891f9341778123c4ec1  artifacts/m2/post-review-hardening-b3-official-20261016.json
+b9a54b025fabccfd7ef3f437870c8d7178559bc19b75142b3f102b033c45825f  artifacts/m2/post-review-hardening-b3-repeat-20261016.json
+41c7b4f6cd1696199452f1f0cb28a13ffe769a2b43f25e8508d104aa0e3ccf6c  .agents/evidence/logs/M2-post-review-final-preflight-20261016.log
+2e7bfa2ef2942f7318232aaf581b189db38e2d680ee011b94bd328446aaa4601  .agents/evidence/logs/M2-post-review-full-suite-final-20261016.log
+b30898ebfb9fcd731915801bfd1d1f1af797e439faf9544b74ea151baabed233  .agents/evidence/logs/M2-post-review-final-preflight-f420-20261016.log

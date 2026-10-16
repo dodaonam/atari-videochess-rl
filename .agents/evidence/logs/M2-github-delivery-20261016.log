@@ -1,0 +1,61 @@
+Git revision: 10d11dcc9521c097611f9cb859cfd09a7a3a0668
+Started at UTC: 2026-10-16T07:50:31Z
+Command: git ls-remote origin refs/heads/feature/m2-chess-foundation refs/heads/initial-idea
+10d11dcc9521c097611f9cb859cfd09a7a3a0668	refs/heads/feature/m2-chess-foundation
+11b6dfe67c961bca3d5d693d87a1f27448983487	refs/heads/initial-idea
+Exit code: 0
+Finished at UTC: 2026-10-16T07:50:32Z
+Command: gh api repos/dodaonam/atari-videochess-rl/pulls/1 --jq '{state:.state,merged:.merged,head_sha:.head.sha,base_sha:.base.sha}'
+{"base_sha":"11b6dfe67c961bca3d5d693d87a1f27448983487","head_sha":"10d11dcc9521c097611f9cb859cfd09a7a3a0668","merged":false,"state":"open"}
+Exit code: 0
+Finished at UTC: 2026-10-16T07:50:33Z
+Command: gh pr checks 1
+no checks reported on the 'feature/m2-chess-foundation' branch
+Exit code: 1
+Finished at UTC: 2026-10-16T07:50:35Z
+Command: gh pr diff 1 --name-only
+.agents/evidence/M2-acceptance-20261016.md
+.agents/evidence/M2-artifact-manifest-20261016.sha256
+.agents/evidence/M2-authorization-20261016.md
+.agents/evidence/M2-baseline-benchmark-20261016.json
+.agents/evidence/M2-baseline-benchmark-repeat-20261016.json
+.agents/evidence/M2-baseline-results-20261016.md
+.agents/evidence/logs/M2-baseline-benchmark-final-20261016.log
+.agents/evidence/logs/M2-baseline-reproducibility-20261016.log
+.agents/evidence/logs/M2-focused-suite-final-20261016.log
+.agents/evidence/logs/M2-full-suite-complete-state-20261016.log
+.agents/evidence/logs/M2-full-suite-final-20261016.log
+.agents/evidence/logs/M2-full-suite-postcheckpoint-20261016.log
+.agents/evidence/logs/M2-full-suite-precheckpoint-pass-20261016.log
+.agents/evidence/logs/M2-preflight-complete-state-20261016.log
+.agents/evidence/logs/M2-preflight-final-20261016.log
+.agents/plans/M01-ale-feasibility.md
+.agents/plans/M02-chess-foundation.md
+.agents/state/BLOCKERS.md
+.agents/state/PROJECT_STATE.yaml
+.agents/state/SESSION_HANDOFF.md
+.agents/state/VERIFIED_FINDINGS.md
+.agents/tasks/BACKLOG.yaml
+docs/01-foundation/REQUIREMENTS.md
+docs/02-management/RISK_REGISTER.md
+docs/03-technical/ARCHITECTURE.md
+docs/03-technical/MDP_SPEC.md
+docs/05-operations/M1-ALE-REPRODUCIBILITY.md
+docs/06-quality/TEST_STRATEGY.md
+tests/test_m2_baselines.py
+tests/test_m2_benchmark.py
+tests/test_m2_simulator.py
+videochess_rl/baselines.py
+videochess_rl/benchmark.py
+videochess_rl/simulator.py
+Exit code: 0
+PR file list matches the local intended diff: 34 files.
+Finished at UTC: 2026-10-16T07:50:37Z
+
+Command: gh api repos/dodaonam/atari-videochess-rl/pulls/1 --jq '{state:.state,merged:.merged,head_sha:.head.sha,base_sha:.base.sha}'
+Started at UTC: 2026-10-16T07:51:02Z
+Finished at UTC: 2026-10-16T07:51:04Z
+Git revision: 10d11dcc9521c097611f9cb859cfd09a7a3a0668
+API response: {"base_sha":"11b6dfe67c961bca3d5d693d87a1f27448983487","head_sha":"10d11dcc9521c097611f9cb859cfd09a7a3a0668","merged":false,"state":"open"}
+Result: PASS: GitHub confirms PR #1 is open, head 10d11dcc9521c097611f9cb859cfd09a7a3a0668, base 11b6dfe67c961bca3d5d693d87a1f27448983487, and merged=false.
+Exit code: 0

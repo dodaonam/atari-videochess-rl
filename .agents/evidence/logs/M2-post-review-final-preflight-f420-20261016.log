@@ -1,0 +1,42 @@
+started_at_utc=2026-10-16T16:00:43Z
+f420bd8a80b6f9f5edc4ae9ce40961ac76d3a581
+Command: python3 scripts/agent_preflight.py
+Agent context preflight: PASS
+Governance: G2 (approved); approved: G0, G1, G2
+Next engineering milestone: M3 — not started (pending user approval)
+Tasks: done=11, in_progress=0, pending=0, blocked=0, cancelled=0
+Completed task IDs: G1-001, G1-002, G1-003, G1-004, G1-005, G1-006, G1-007, G1-008, M0-001, M1-001, M2-001
+In progress task IDs: none
+Pending task IDs: none
+Blocked task IDs: none
+Active blockers: none recorded
+Open confirmations:
+  O-01: Assignment/instructor rules for ALE observation extraction, action wrappers, custom PyTorch RL, Stockfish training use, and any engine use in offline evaluation.
+  O-02: Whether full-game performance on actual ALE is a hard submission requirement or a research target with an accepted fallback.
+  O-03: Whether the approximate three-week estimate is still the project deadline.
+  O-04: Actual Colab entitlement/quota, GPU availability, storage, and whether paid compute is allowed.
+  O-05: ALE/ROM runtime behavior, RAM mapping, game modes, difficulty behavior, and official evaluation settings.
+  O-06: PGN/tactical data sources, licenses, permitted use, and expected scale.
+  O-07: Stockfish version/search limits and whether it may be a benchmark opponent or offline evaluator.
+  O-08: Opponent pool and rating method for any Elo claim.
+Relevant decisions: docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md, docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md
+Acceptance criteria recognized: 51
+Last verified Git: feature/m2-chess-foundation @ 959cf48bbeb83ef8191c2433d78bf6e37c20a1ef
+Live Git: feature/m2-chess-foundation @ f420bd8a80b6f9f5edc4ae9ce40961ac76d3a581
+Roadmap source: exact match; 19 sections; SHA-256 fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf
+Git recovery: expected commit/checkout transition; portable tracked-file manifest matches.
+Workspace Git status: differs from checkpoint
+Portable tracked baseline: matches
+Portable Git index: matches checkpoint
+Hashed ordinary-file snapshot: matches
+Content hashes: 144 ordinary files verified by SHA-256.
+Not content-verified by this hash map: PROJECT_STATE self-reference, chat history/credential-like paths, temp files, symlinks, and the excluded directories listed below.
+Excluded directories: artifacts, tests/__pycache__, videochess_rl/__pycache__
+Artifact directories requiring independent manifests: artifacts
+Last verified dirty paths (0): none
+Dirty paths no longer present since checkpoint: A  .agents/evidence/logs/M2-post-review-final-preflight-20261016.log; M  .agents/evidence/M2-post-review-hardening-20261016.md; M  .agents/evidence/M2-post-review-hardening-manifest-20261016.sha256; M  .agents/tasks/BACKLOG.yaml
+Next user action: Independently review updated M2 PR #1 using .agents/evidence/M2-post-review-hardening-20261016.md; keep it unmerged. M2-001 remains done, G3 remains unapproved, M3 requires separate authorization and prerequisite review, and O-01 through O-08 remain unresolved.
+WARNING ARTIFACT_MANIFEST_REQUIRED [.]: Artifact/data directories are excluded from content hashing and require independent manifest verification: artifacts.
+
+Result: PASS: agent context preflight passed; expected ARTIFACT_MANIFEST_REQUIRED notice reviewed against the M2 manifest.
+Exit code: 0

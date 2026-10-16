@@ -1,0 +1,6 @@
+Comparison: official M2 benchmark JSON against the repeat JSON; compare configuration, aggregate summary, and semantic per-game fields (including full UCI histories), excluding runtime and run metadata.
+Git revision: 74008b8c8705809330ef218ba3d5bd9e1b5335ab
+Result: PASS; all compared semantic records match.
+Official SHA-256: 681e795b613630d55a2e470bd0887a7975407db9d849b319ae09d4e1c995893a
+Repeat SHA-256: b08f856b33804529fd147f1a028998a7ec8cd0c7c0bbf98fbf17d3c86caeb1f2
+Exit code: 0

@@ -160,3 +160,25 @@ Findings are append-only historical observations. FND-021 and FND-022 record the
 - **Finding:** Two fresh deterministic `ALE/VideoChess-v5` mode-4 runs with seed `20261017` returned ALE reward `-1.0`, `terminated=true`, and `truncated=false` at frame 4,613 / environment step 4,609. The three verified Atari replies, terminal reward event, terminal flags, and terminal RGB pixels matched on replay. The last independently verified FEN is preserved; the attempted final `b2b3` move and inferred `d8h4#` are explicitly not presented as RGB-confirmed transitions. The live negative reward confirms White-perspective loss; the positive sign is source-documented but not observed.
 - **Evidence:** `.agents/evidence/M1-G2-final-verification-20261016.md`; `.agents/evidence/M1-04-terminal-success-20261016.zip`; `.agents/evidence/logs/M1-terminal-evidence-integrity-20261016.log`; traces `artifacts/m1/m1-04/campaign4-mode4-queenmate-seed20261017/trace.json` and `campaign5-terminal-replay-seed20261017/trace.json`.
 - **Impact:** M1-04 now has genuine terminal/reward, turn, and mode evidence. M1-001 is complete, BLK-001 is resolved, G2 is approved, and M2 remains pending separate authorization. O-01 through O-08 remain open.
+
+
+## FND-023 — M2 simulator contract and acceptance verified
+
+- **Status:** verified 2026-10-16
+- **Finding:** The history-preserving `python-chess` simulator, fixed agent perspective, validated semantic moves, one-reply transition, automatic outcomes, decision-boundary truncation, and rollback on opponent errors are implemented. M2-01 and M2-02 pass; the focused M2 suite passed 41 tests. The full repository suite also passed 163 tests before final checkpoint synchronization; a subsequent clean-clone recovery test exposed only that the final documentation edits needed a refreshed checkpoint, retained as a failed run and rerun after checkpointing.
+- **Evidence:** `videochess_rl/simulator.py`; `tests/test_m2_simulator.py`; `.agents/evidence/M2-acceptance-20261016.md`; `.agents/evidence/logs/M2-focused-suite-final-20261016.log`; `.agents/evidence/logs/M2-full-suite-precheckpoint-pass-20261016.log`; retained failure `.agents/evidence/logs/M2-full-suite-final-20261016.log`.
+- **Impact:** The M2-specific behavior, focused tests, post-checkpoint 163-test suite, clean-clone recovery, and final preflight pass. M2-001 is complete; G3 remains unapproved and M3 is not authorized.
+
+## FND-024 — Seeded baseline benchmark completed and replayed
+
+- **Status:** verified 2026-10-16
+- **Finding:** With two base seeds and both agent colors, Random Legal completed four games at W/D/L 0/2/2 and Simple Material Heuristic completed four at 3/1/0. All eight games ended by chess termination (five checkmates, three insufficient-material draws); there were no truncations, failures, or interruptions. A second run matched the configuration, aggregate summary, and all semantic per-game fields including UCI histories. This small sample is not a calibrated strength estimate.
+- **Evidence:** `.agents/evidence/M2-baseline-results-20261016.md`; `.agents/evidence/M2-baseline-benchmark-20261016.json`; `.agents/evidence/M2-baseline-benchmark-repeat-20261016.json`; `.agents/evidence/M2-artifact-manifest-20261016.sha256`; `.agents/evidence/logs/M2-baseline-reproducibility-20261016.log`.
+- **Impact:** M2-03 and M2-04 pass for simulator metrics only. No ALE performance, Elo, or learned competence is inferred.
+
+## FND-025 — M2 post-review hardening verified
+
+- **Status:** verified 2026-10-16
+- **Finding:** Independent PM reviews identified eight simulator, heuristic, benchmark, serialization, provenance, and documentation concerns. The corrective cycle classified and resolved each one, fixed the confirmed P2 defects, retained the FEN-only heuristic history limitation as a bounded baseline-quality issue, and added deterministic regression coverage. The focused suite passed 58 tests on implementation revision `b3fc810`; the full repository suite passed 180 tests on final clean committed snapshot `f420bd8`, including clean-clone recovery. The regenerated two-seed/two-color benchmark and independent repeat matched semantically and all 8 game histories replayed legally. The hardening preserves ADR-0002 and the M2/ALE boundary.
+- **Evidence:** `.agents/evidence/M2-post-review-hardening-20261016.md`; `.agents/evidence/M2-post-review-hardening-benchmark-20261016.json`; `.agents/evidence/M2-post-review-hardening-benchmark-repeat-20261016.json`; `.agents/evidence/M2-post-review-hardening-manifest-20261016.sha256`; source commit `b3fc8105a5dbf543267a77be77f6a8c6c76ab8e2`; full-suite verification snapshot `f420bd8a80b6f9f5edc4ae9ce40961ac76d3a581`.
+- **Impact:** M2-01 through M2-04 remain supported. M2-001 remains done; G3 remains unapproved; M3 remains pending separate user authorization; O-01 through O-08 remain open.
