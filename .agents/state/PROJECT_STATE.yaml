@@ -12,7 +12,7 @@
     ],
     "next_governance_gate": "G3",
     "user_authorized_g1": true,
-    "next_user_action": "Independently review the open Pre-M3 readiness PR against initial-idea and decide the owner/instructor questions in docs/04-research/DECISION_REGISTER.md. G3 approval and explicit M3 authorization are separate prerequisites; keep M3 not started and do not acquire data before authorization."
+    "next_user_action": "Independently review Pre-M3 PR #2 (https://github.com/dodaonam/atari-videochess-rl/pull/2) against initial-idea and decide the owner/instructor questions in docs/04-research/DECISION_REGISTER.md. G3 approval and explicit M3 authorization are separate prerequisites; keep M3 not started and do not acquire data before authorization."
   },
   "engineering": {
     "active_milestone": null,
@@ -26,18 +26,24 @@
     "next_task_id": "M3-001"
   },
   "last_checkpoint": {
-    "id": "cp-80b9ac6b-20261016T175642629607Z",
-    "created_at_utc": "2026-10-16T17:56:42Z",
+    "id": "cp-c158ee6e-20261016T180408298721Z",
+    "created_at_utc": "2026-10-16T18:04:08Z",
     "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
     "git": {
       "scope": "workspace",
       "branch": "feature/pre-m3-readiness",
-      "head": "80b9ac6be2a947fd50fb9d2ab286c00ee53cb45d",
+      "head": "c158ee6efdea44c5cf7da01f902f2e865d3db9ec",
       "status_entries": [
-        " M .agents/state/PROJECT_STATE.yaml",
-        " M .agents/state/SESSION_HANDOFF.md"
+        "A  .agents/evidence/logs/pre-m3-cleanclone-preflight-20261017.log",
+        "A  .agents/evidence/logs/pre-m3-cleanclone-tests-20261017.log",
+        "M  .agents/evidence/PRE-M3-readiness-20261017.md",
+        "M  .agents/evidence/logs/pre-m3-workflow-static-20261017.log",
+        "M  docs/02-management/RISK_REGISTER.md",
+        "M  docs/05-operations/REPRODUCIBILITY.md",
+        "MM .agents/state/PROJECT_STATE.yaml",
+        "MM .agents/state/SESSION_HANDOFF.md"
       ],
-      "status_sha256": "7b4b2dafa57cc1138e89cc551592418ab4bdb684a1f8e50a89f69fbcbbac99bb",
+      "status_sha256": "005d5e41ba5272cabd2c8782a429089792cac745a44ecf1023403a5e93905bf2",
       "repo_file_hashes": {
         ".git": "8e5c8dc34316f8797ac92b4fbf61a88dea57ecc2d7d51884f91a781e68986751",
         ".gitignore": "1828249263215f6182229194dd1c662907d115310da5ca5a0c65ad207ed2ae3c",
@@ -80,7 +86,7 @@
         ".agents/evidence/POST-M2-INTEGRATION-VERIFICATION-20261017.md": "2cdfdaa03c453ea8f64fa1b4f16a42889b39e66507b8ae6933288262177c064f",
         ".agents/evidence/PRE-M2-readiness-20261016.md": "397e9b0a2d2be421383bc346aa6621ed2dc9af1f1749a1a5c9f63c006a2f4d42",
         ".agents/evidence/PRE-M2-refinement-20261016.md": "d13517e34d24ae56dedd9cf66d1bce554d4b948dbbc5f1ccadc262099d81bdb4",
-        ".agents/evidence/PRE-M3-readiness-20261017.md": "78e0d3ffdb538bbe53f0716846b2a5e54e2b82f7d8e42297c8f5ae666e408f75",
+        ".agents/evidence/PRE-M3-readiness-20261017.md": "b2e336b12aa3a5d5775ce87c48f368c3f7b884814b7be2e9c1c11d4251d1a498",
         ".agents/evidence/logs/BLK-001-context-export-final-20261015.log": "37e091c00350cc962aac2115b2c1a522fa2ffebd71b03f2bd12e45a9f8aff4a6",
         ".agents/evidence/logs/BLK-001-final-remote-cleanclone-20261015.log": "cc22299114e2da660c85ff548dade90fc74409a2076131820f17719627e9709b",
         ".agents/evidence/logs/BLK-001-full-suite-20261015.log": "b85c0d3902d3ee25d64b1e80ab14338672b9d84eb503e37835463ef63670703d",
@@ -132,10 +138,12 @@
         ".agents/evidence/logs/PRE-M2-preflight-final2-20261016.log": "0641512be6308b9cb483a3013a0802008d3ed72f45b1a36b30dfc55ac837723e",
         ".agents/evidence/logs/PRE-M2-refinement-preflight-20261016.log": "5ea3e5ffeae0c6f8e177dc2ca31af976a136e2f7e2db77d6f392892e810c68c1",
         ".agents/evidence/logs/PRE-M2-refinement-tests-20261016.log": "6d75fb862e012a0c0fdcdba7e94bc5cb2795611b12c2236e1ffde0dfa262b90d",
+        ".agents/evidence/logs/pre-m3-cleanclone-preflight-20261017.log": "6b497ebb2d4a248941c23b276df882d861ad24bccac60d9332b8bfd5c58e2009",
+        ".agents/evidence/logs/pre-m3-cleanclone-tests-20261017.log": "79106c757a217e69fb074cd7ad442cf6c63abd940ffedfd96edc8fc710b5d1d0",
         ".agents/evidence/logs/pre-m3-final-preflight-20261017.log": "c5cee9294b6fad016dbab627c2d37761befe20d76c0a822155a81f48018ad419",
         ".agents/evidence/logs/pre-m3-full-suite-20261017.log": "fc4110f3300648159b67753ddd1acc254224379d878200752151394dfdde5923",
         ".agents/evidence/logs/pre-m3-lock-check-20261017.log": "37b9dfa14552b2a07b105bb86de755cbfa1d0b3419166fb16bd389e74341608c",
-        ".agents/evidence/logs/pre-m3-workflow-static-20261017.log": "6192d1db48fdf9a3af67cad4334f66325de010a0e4e589f1ef351397340e842d",
+        ".agents/evidence/logs/pre-m3-workflow-static-20261017.log": "756e2e1138ad3ec7de05ab54210838a214dc67741e131a89da627bcb4897e6ce",
         ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
         ".agents/plans/M00-bootstrap.md": "9c7b045f7efd20c60f01e2b23224ccac12d7a659699f0f43e6bc1ff286671f7f",
         ".agents/plans/M01-ale-feasibility.md": "1f719f2335f9c07dd97e4691119003a37b53646bd9b95b42cacf0516cafaf1b9",
@@ -143,15 +151,15 @@
         ".agents/plans/M03-expert-dataset.md": "95676d4cc0eb613953e93a3e93137c8debf26fbcae5fc49ff606564cc1f783a5",
         ".agents/skills/export-review-bundle/SKILL.md": "02623443e4833824a7c2606e5d4cb9ea1d79e0b5d8c436741933978142932942",
         ".agents/state/BLOCKERS.md": "396ca3385fea6710c81491ee1f93553eb3a9f4b2cb17f3792fdec1137e3011fc",
-        ".agents/state/SESSION_HANDOFF.md": "c6ba052fff17b8c0b1de2827a1a37e3318eba1254bb58ed94450dce79c443259",
+        ".agents/state/SESSION_HANDOFF.md": "ca8bac1caec1f93a06a6ad9db672d30ceef8c0c519c73b1c9e92e7f854d20706",
         ".agents/state/VERIFIED_FINDINGS.md": "e30fbd843a66a0f797ceea88b41b898a15785501c70bfab86cfd2c79d6589ee8",
         ".agents/tasks/BACKLOG.yaml": "0ca944f50fe5cfcaf462f09625e1f3edce6c0df1954fa368a5a9a86f83b9a3fc",
-        ".github/workflows/preflight.yml": "365e59991b5249164378d9a6f27fa41bf92eadc3ac89ba74335de66c4e3539cb",
+        ".github/workflows/preflight.yml": "767c0ca73e0abadc35af58bdc729d4b9a0cafa3409657712bcef1b49c7c8ed3d",
         "docs/01-foundation/PROJECT_OVERVIEW.md": "e4498200362b8d6cd5c3faf10ca3120d9e9cdc5af55c0457f6521001eddb9c0b",
         "docs/01-foundation/REQUIREMENTS.md": "a687c39ff96a6e9d0be4fe5e44a7cbf81148d9516dff23f42420e8345c638c34",
         "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
         "docs/02-management/EXECUTION_PLAN.md": "a71a322a1b68b011ce28a1222fca328837803341ed3366848f10d467d1192535",
-        "docs/02-management/RISK_REGISTER.md": "b91cbb48ad90cdc532b1b9b54e1074dda86dc9a95dfedc75c22b92b6249422bc",
+        "docs/02-management/RISK_REGISTER.md": "ff5ec3c54696bd247263c341cd7e444ecb22154c8774f8bd94f23de3a271ffb4",
         "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
         "docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md": "a6f01eba162ebaa2254ba31e082ab28ab2d69580a34a3ff2b05f17f3bc75b854",
         "docs/03-technical/ACTION_ADAPTER.md": "7e13686f6ee923dcc9d5bdc4d3564b374bafda71f1ea4b491f42d25d722cccf5",
@@ -164,10 +172,10 @@
         "docs/04-research/EXPERIMENT_PROTOCOL.md": "53f794ecc68450c56bf2e96c39bcede2eb7f0de39a062da072a27a2986def4a7",
         "docs/04-research/STOCKFISH_TEACHER.md": "6494540c8d77751450dad6e77eb6c14b42277b1f8f51ea927e0bc2eb2de8ef06",
         "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": "900136c5cb891a9f6b6b505838bd239f0046cb813af9b9825acc11532b875b22",
-        "docs/05-operations/REPRODUCIBILITY.md": "bcfd0156ea11694ded5c3fc67101b89f0b0529dc541fc43e32a90c5d7b88f4aa",
+        "docs/05-operations/REPRODUCIBILITY.md": "4756c0ceea73433dc18f24be4bc6040db35b28785fc5d037e10cb82e65f373a7",
         "docs/05-operations/SETUP.md": "05776d5f0e9bcf5931807fbbcca46ae583d37f25ebaf116308572f6874025a89",
         "docs/06-quality/ACCEPTANCE_CRITERIA.md": "395741bc505bbc0c0dd3fcb63187f198303e538c064da32fc58c9389e93373a5",
-        "docs/06-quality/TEST_STRATEGY.md": "60674dcee76e877f8b9855d8921727ee60e32ca24ae9abbf52609212058c81b3",
+        "docs/06-quality/TEST_STRATEGY.md": "e1ae7e4142eb36666bc6be837afdc104722618a3e1957837ddaf21a77e46cbe8",
         "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
         "scripts/agent_preflight.py": "7f24cf19f659603f2d96907eae790f1df07ff8212cfc321db2f4c47e641f026e",
         "scripts/export_review_bundle.py": "7ed9a3a22dc2435f157840ad710f6fb8af183118830acb0b91cdbe47fa2930c0",
@@ -345,7 +353,7 @@
         },
         ".agents/evidence/PRE-M3-readiness-20261017.md": {
           "mode": "100644",
-          "object_id": "b526b824d02d5adb785684d4cec3271b43be8e5f"
+          "object_id": "124bc59d1ae1791fa9dbc893a7c8f0b2371062be"
         },
         ".agents/evidence/logs/BLK-001-context-export-final-20261015.log": {
           "mode": "100644",
@@ -551,6 +559,14 @@
           "mode": "100644",
           "object_id": "d50b150d468c68eaa38b650237592c7852b3f345"
         },
+        ".agents/evidence/logs/pre-m3-cleanclone-preflight-20261017.log": {
+          "mode": "100644",
+          "object_id": "80d4faa7a02213f3f44cfff35a65e45f5cb13b77"
+        },
+        ".agents/evidence/logs/pre-m3-cleanclone-tests-20261017.log": {
+          "mode": "100644",
+          "object_id": "b6fab5800c00e07166629291ac0fba79f27e663c"
+        },
         ".agents/evidence/logs/pre-m3-final-preflight-20261017.log": {
           "mode": "100644",
           "object_id": "806adcb0b8040d89b0adc7cf575f0c8357110c84"
@@ -565,7 +581,7 @@
         },
         ".agents/evidence/logs/pre-m3-workflow-static-20261017.log": {
           "mode": "100644",
-          "object_id": "c39e0b4fcdb17afe369d0f71b13647a612375087"
+          "object_id": "f9ce63f0f3b031f639d481c717892bb9b2bb8491"
         },
         ".agents/plans/G1-consistency-hardening.md": {
           "mode": "100644",
@@ -605,7 +621,7 @@
         },
         ".github/workflows/preflight.yml": {
           "mode": "100644",
-          "object_id": "ac1749ae06e291bec6d6f4d4063b89c8b43e26d9"
+          "object_id": "89e39169fc37251cfe87ec3ee836ac6ebbe127b2"
         },
         ".gitignore": {
           "mode": "100644",
@@ -649,7 +665,7 @@
         },
         "docs/02-management/RISK_REGISTER.md": {
           "mode": "100644",
-          "object_id": "4667e35e0642b9ed533f2ca5cf2fcda73be4734b"
+          "object_id": "1a54306a3e033b291ce1dce9c7c1e47bfe669c8f"
         },
         "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
           "mode": "100644",
@@ -701,7 +717,7 @@
         },
         "docs/05-operations/REPRODUCIBILITY.md": {
           "mode": "100644",
-          "object_id": "f0c0aa4e5c4af5902dd16cf4900c7be82aac22dc"
+          "object_id": "14510a25bce30240f81cca54bec450e7d2e9c330"
         },
         "docs/05-operations/SETUP.md": {
           "mode": "100644",
@@ -713,7 +729,7 @@
         },
         "docs/06-quality/TEST_STRATEGY.md": {
           "mode": "100644",
-          "object_id": "2ba0a8318b99eb3bd3a6b0edb9b5f4e0b94751a7"
+          "object_id": "a53f8e99861b3d5f28a4df08afa92f682759ef57"
         },
         "pyproject.toml": {
           "mode": "100644",
@@ -840,9 +856,9 @@
           "object_id": "5be7bf92574229c232a364a7c9c03830a50524ee"
         }
       },
-      "manifest_sha256": "ce2a26c51fca58aaae9a14bea43b4f074ecc79d8606031484a63c808f4d10648",
-      "state_sha256": "f5d6f5007b0093e482778982dea479e2e4a2931043b6709efe999b839f6794bb",
-      "handoff_sha256": "c6ba052fff17b8c0b1de2827a1a37e3318eba1254bb58ed94450dce79c443259"
+      "manifest_sha256": "6a66c9d3aed99353ab67e117db6aa1eef7b65bd626585ea39f6446d67bff19c1",
+      "state_sha256": "b5c599d6d3f50aec9eadb347a4193d72de12db04a918a98b9b8050469ccefd65",
+      "handoff_sha256": "ca8bac1caec1f93a06a6ad9db672d30ceef8c0c519c73b1c9e92e7f854d20706"
     }
   },
   "g1_baseline": {
@@ -37465,6 +37481,826 @@
         "manifest_sha256": "8e78d99cb58a281532d1e044e30bbd1005038945c1d6c84d1c037bd27ac01a02",
         "state_sha256": "e28ebc89e2c883e31d83ef29908c56758c9bbb9b7424dc5c718275075acf6ad9",
         "handoff_sha256": "469603a28b64f730db19cd5a234ddec0afb8e40fe63988bb99d05e07ca9999a1"
+      }
+    },
+    {
+      "id": "cp-80b9ac6b-20261016T175642629607Z",
+      "created_at_utc": "2026-10-16T17:56:42Z",
+      "workspace_id": "f2b773ab-6bd0-44ba-8ae8-c18e5bb9d3f2",
+      "workspace_git": {
+        "scope": "workspace",
+        "branch": "feature/pre-m3-readiness",
+        "head": "80b9ac6be2a947fd50fb9d2ab286c00ee53cb45d",
+        "status_entries": [
+          " M .agents/state/PROJECT_STATE.yaml",
+          " M .agents/state/SESSION_HANDOFF.md"
+        ],
+        "status_sha256": "7b4b2dafa57cc1138e89cc551592418ab4bdb684a1f8e50a89f69fbcbbac99bb",
+        "repo_file_hashes": {
+          ".git": "8e5c8dc34316f8797ac92b4fbf61a88dea57ecc2d7d51884f91a781e68986751",
+          ".gitignore": "1828249263215f6182229194dd1c662907d115310da5ca5a0c65ad207ed2ae3c",
+          ".python-version": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d",
+          "AGENTS.md": "d37ebbe8fdb94fabe7c039d8b89c3beaa36584d6d5eb09934f714941129463cd",
+          "README.md": "d7f5f9f3783db63f6a7d3793c5b318e6d3c50dd588d5f90610ea82fcef7a79fb",
+          "atari-videochess-rl-roadmap.html": "6243782e9acefa5bc6db41e3a544c691a730b341d218dc8824fe95c3e36deebf",
+          "pyproject.toml": "7be065e3664844a7774e9d85c4eabb06526e427e4e3e9f2f8e52f090fd600cc8",
+          "uv.lock": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+          ".agents/PLANS.md": "ed50b3ccc51cbe29123630c5069ab2d00f7428751ca67f1e64bd15558bd044d2",
+          ".agents/evidence/BLK-001-diagnostic-20261015-r2.zip": "91b0d03907b1b6764f18991880596f9c09b90986ad982b05f106bed948f96a32",
+          ".agents/evidence/BLK-001-diagnostic-20261015.md": "4b6b63311d027628d832d9c036f78dc7a8c457ab7c976df79dfc5ce21be25355",
+          ".agents/evidence/G1-10-recovery-verification.md": "39e05a96034d4eaa4f22f0dec72670afacbd9b48bcfcc41ed81f8a718d3a5f65",
+          ".agents/evidence/G1-git-baseline-verification.md": "13772b3438b30d440baac4caeeceb564017a5216ea9409d7b9412390d4b96f65",
+          ".agents/evidence/G1-hardening-verification.md": "0963f26840d2c393525fd10bba32f13e5ff3a51210a87d3d731b2ba96bd09380",
+          ".agents/evidence/G1-portability-consistency-verification.md": "f1fa95b9c2e7415ff0ff8a9e452920f7c8a29c77ea3ce3fabfc77fb744b7ad0e",
+          ".agents/evidence/M0-001-verification.md": "1f0dfba9ba36a3ce03f21e951e0af4a1b53d3b3b26970dd0c3aaaab76aaa3333",
+          ".agents/evidence/M0-acceptance.md": "089a86c5e50c0e5be698dff2dbc83643c58968b883e03c6e5c85b3d5cad28f14",
+          ".agents/evidence/M0-authorization.md": "2e7f62983b98cc79e1d25168da031bf2269c7364d8551956d41744a91ed58205",
+          ".agents/evidence/M0-final-technical-verification.md": "b64899752217a9fe55ae1a646ebb7b694956cb2164f804bbe2f47ff6340ca9c3",
+          ".agents/evidence/M0-finalization-verification.md": "9202f9c41518eb448efaac49ffbcee4cd2384c0435ebcca21fb31843a1d6f7b8",
+          ".agents/evidence/M1-04-experiment-budget.md": "d78af2e2a065c2346fc432bd932a82ce2cd3791da50c0656ef3bb65342efc7b0",
+          ".agents/evidence/M1-04-experiment-campaign-20261016.md": "d3904c02809eca3fc860e29282f1f84f04577f3eef915170321150d242b179f4",
+          ".agents/evidence/M1-04-terminal-success-20261016-README.md": "50caf22af54409544032fdbacc5472924cf2da61242ee53acc705b2932e0b521",
+          ".agents/evidence/M1-04-terminal-verification.md": "71da18ef2567fbad10e004e9636e0b8fcc966d6a19cb5fd85b91a6cdd5085ff5",
+          ".agents/evidence/M1-G2-final-verification-20261016.md": "779bcdf25dc68acfd376609b665c98aa2a6f49b9c11e36078774c8778b1a9124",
+          ".agents/evidence/M1-authorization.md": "9985e9917dc8fe938b2c48c23da4868334b98d2a7bc2eba7f5a72b9a1a32d117",
+          ".agents/evidence/M1-feasibility-verification.md": "5685a3d254895386af221e67a3fd9ad3967d99c1102e49881ae034f0ed2d74e8",
+          ".agents/evidence/M2-acceptance-20261016.md": "0bebbc354f217690c701a5a78a76462ccc8dce0642a7d2c0b3881993cda98097",
+          ".agents/evidence/M2-artifact-manifest-20261016.sha256": "9c430d7ea03b30ecf80b95ecc010bc79455bd76613a60639139b6022316c9805",
+          ".agents/evidence/M2-authorization-20261016.md": "eae0b9009e27efb29eb4d36dfc9698bd07fd0f4f0a92920ad4a2336a06a84a56",
+          ".agents/evidence/M2-baseline-benchmark-20261016.json": "681e795b613630d55a2e470bd0887a7975407db9d849b319ae09d4e1c995893a",
+          ".agents/evidence/M2-baseline-benchmark-repeat-20261016.json": "b08f856b33804529fd147f1a028998a7ec8cd0c7c0bbf98fbf17d3c86caeb1f2",
+          ".agents/evidence/M2-baseline-results-20261016.md": "c1055d384e9610a855f3a2e43d45d9af07c6bbda998193f1fb2f563407d70d3e",
+          ".agents/evidence/M2-github-delivery-20261016.md": "42d5632586270a4046ae246501c13f0896431ba60ec6264ad9f26b4c8f815480",
+          ".agents/evidence/M2-post-review-hardening-20261016.md": "a923d2f19039578568d0966a93131eb3e6ec1e03160debbb1f7166cbe7669dd1",
+          ".agents/evidence/M2-post-review-hardening-benchmark-20261016.json": "9fd9b123f9bdec862f60caad6df44c94978ee665102fd891f9341778123c4ec1",
+          ".agents/evidence/M2-post-review-hardening-benchmark-repeat-20261016.json": "b9a54b025fabccfd7ef3f437870c8d7178559bc19b75142b3f102b033c45825f",
+          ".agents/evidence/M2-post-review-hardening-manifest-20261016.sha256": "884c556956052ace727c59dc9a49dbbea5fc8ff24b7823ed58b7657b15627889",
+          ".agents/evidence/POST-M2-INTEGRATION-VERIFICATION-20261017.md": "2cdfdaa03c453ea8f64fa1b4f16a42889b39e66507b8ae6933288262177c064f",
+          ".agents/evidence/PRE-M2-readiness-20261016.md": "397e9b0a2d2be421383bc346aa6621ed2dc9af1f1749a1a5c9f63c006a2f4d42",
+          ".agents/evidence/PRE-M2-refinement-20261016.md": "d13517e34d24ae56dedd9cf66d1bce554d4b948dbbc5f1ccadc262099d81bdb4",
+          ".agents/evidence/PRE-M3-readiness-20261017.md": "78e0d3ffdb538bbe53f0716846b2a5e54e2b82f7d8e42297c8f5ae666e408f75",
+          ".agents/evidence/logs/BLK-001-context-export-final-20261015.log": "37e091c00350cc962aac2115b2c1a522fa2ffebd71b03f2bd12e45a9f8aff4a6",
+          ".agents/evidence/logs/BLK-001-final-remote-cleanclone-20261015.log": "cc22299114e2da660c85ff548dade90fc74409a2076131820f17719627e9709b",
+          ".agents/evidence/logs/BLK-001-full-suite-20261015.log": "b85c0d3902d3ee25d64b1e80ab14338672b9d84eb503e37835463ef63670703d",
+          ".agents/evidence/logs/BLK-001-full-suite-final2-20261015.log": "db96a482f772ef7d41fc3b9becfd50fb77a7d01a80f25efaabc676323f98f907",
+          ".agents/evidence/logs/BLK-001-m1-suite-20261015.log": "76625627dad842447ca42ae9a4d3717b5a9a6bde6d37ea4f4ee4bd37a7150f87",
+          ".agents/evidence/logs/BLK-001-m1-suite-final2-20261015.log": "5f5e3985404a73c152c99b9afd81e20d0bf5e68067e5af05cfed5cab358c7d70",
+          ".agents/evidence/logs/BLK-001-remote-cleanclone-20261015.log": "69264bd7f358dfb10e160120c46a94bbc609b79d201287bc71f098ce1473110e",
+          ".agents/evidence/logs/M1-all-artifact-rgb-integrity-20261016.log": "0bc528c419db20220a4c117d456f67b5cf3699e2533a9da5e12e295c4d0ddd86",
+          ".agents/evidence/logs/M1-campaign1-mode0-loss-seed20261016.log": "b509402aea410d87d453bc8b2d57550698f624e134427357c027521b8c13fec9",
+          ".agents/evidence/logs/M1-campaign2-mode4-loss-seed20261016.log": "6918e6580902ea0e30a32755291c272aba332e0b87d21af5453757ec6920f860",
+          ".agents/evidence/logs/M1-campaign3-mode4-wait-seed20261016.log": "3e2e5e581dcbce8a1de0eaf8e8998bbc935a1f8286b84b9d25fdb21c7bdb8a8e",
+          ".agents/evidence/logs/M1-campaign4-mode4-queenmate-seed20261017.log": "d73bfb12c06b60024b66bffab1ed94e005f357a9b5058835ef7d8f6dd5193622",
+          ".agents/evidence/logs/M1-campaign5-terminal-replay-seed20261017.log": "48ce0a53404fb1ca6348dfb5fc230013c39bf0c7e6445aecf054c8e53cc2f548",
+          ".agents/evidence/logs/M1-final-focused-suite-20261016.log": "be44fa4f22f3cfa5c95b27fe3711284a85a0ef287f0ad520283ccb6bb154ec82",
+          ".agents/evidence/logs/M1-final-lock-check-20261016.log": "b6d1918481b82bf303525c328b3cdb5806b040668ca3379932571506a10e9bd1",
+          ".agents/evidence/logs/M1-final-preflight-20261016.log": "73ed75aa7d99b248f791b69dd2b6188f0f59837781174bb76ca12357bf85afb8",
+          ".agents/evidence/logs/M1-full-suite-baseline-20261016.log": "8675c18ed563348e2e3673645c9a50ecaf234d0c0d13cfe0ccff80f5ead4d14a",
+          ".agents/evidence/logs/M1-full-suite-final-20261016.log": "51557870c29f5202febabf923cd3565ecf7e13fddb5da75cf39d33fa55033edc",
+          ".agents/evidence/logs/M1-opponent-readiness-regression-20261016.log": "01a19a7fd888432ae95cae39c1b9dac0731e48f73dd856aa9daaf716df74ed27",
+          ".agents/evidence/logs/M1-post-push-cleanclone-20261016.log": "4b9bdc47b77bb34fad08d9e7aa805b9d2242afeb095c86e7fe6dec374c67c41f",
+          ".agents/evidence/logs/M1-terminal-evidence-integrity-20261016.log": "c2173e065d93e99779f4e5fe3c2282be7c420fede8db0defa9d54dccd9fd5264",
+          ".agents/evidence/logs/M1-terminal-runner-regression-20261016.log": "e3cca90d0de520f7f4e9d3069bd2e9d6022045e40c31a3fec9f5aa768f46a30c",
+          ".agents/evidence/logs/M1-terminal-runner-regression-pass1-20261016.log": "b8086b3a7b97d6a02a7a5f0fbe0628e8ffbe07fd38a6ccd68e207f7ea210af1c",
+          ".agents/evidence/logs/M1-terminal-runner-regression-pass2-20261016.log": "709fda8156cdd16788b66569e980acaf003d2e50cdb6cf9067f1b265529d0375",
+          ".agents/evidence/logs/M2-baseline-benchmark-final-20261016.log": "fef5d5044088b09e6c693ea2de213eec2d95cc530e84f2d55c4e8718aa17ef32",
+          ".agents/evidence/logs/M2-baseline-reproducibility-20261016.log": "4083655abddd8aaf61b230f145ed2fc19ed2c9f922186f56a079fd15eb31de65",
+          ".agents/evidence/logs/M2-focused-suite-final-20261016.log": "14e5f0ea639ed2a93edda07fc1b786917320b8bf7d17d0fc5d6884a007a40afb",
+          ".agents/evidence/logs/M2-full-suite-complete-state-20261016.log": "bce2184719ba09cc50d8b7b67974c4b9b735ea4387655fc6cc2652ec63fbe16b",
+          ".agents/evidence/logs/M2-full-suite-final-20261016.log": "4e776374ce9f3da02746b9acb36477f91683bd2ca095c819d6ce513f1129d475",
+          ".agents/evidence/logs/M2-full-suite-postcheckpoint-20261016.log": "7d3dd6bdcb89fc8371504d6c9742c45b938c0e33afc5b91a962c3bd98929e312",
+          ".agents/evidence/logs/M2-full-suite-precheckpoint-pass-20261016.log": "976dba40f0c47d31894751bad4e9ac75af5ff1d960707d6f1904daa900e73029",
+          ".agents/evidence/logs/M2-github-delivery-20261016.log": "1d4771ef6fafb26a41d7a120b710745de6f3e463270760265f82506a13c18e6c",
+          ".agents/evidence/logs/M2-post-review-benchmark-official-20261016.log": "b8e4e8e407e26a4460350cb03f8aada0028c7e76c15cfdb95fa9aefd1b9a2ca2",
+          ".agents/evidence/logs/M2-post-review-benchmark-repeat-20261016.log": "897165f4174db3167d9085ed9a5318bd1a5843a69affd997e907bb56029072bb",
+          ".agents/evidence/logs/M2-post-review-benchmark-verification-20261016.log": "61a8c2c634be0fdf8f6cc2fe7bf3230a773de11e8b198d4f981cb69310ea6d08",
+          ".agents/evidence/logs/M2-post-review-development-diagnostic-failure-20261016.log": "34cdb9047cde536c10c5b78040375cea24b4921a88e3b0e814aab3552ae4f9ab",
+          ".agents/evidence/logs/M2-post-review-final-preflight-20261016.log": "41c7b4f6cd1696199452f1f0cb28a13ffe769a2b43f25e8508d104aa0e3ccf6c",
+          ".agents/evidence/logs/M2-post-review-final-preflight-f420-20261016.log": "b30898ebfb9fcd731915801bfd1d1f1af797e439faf9544b74ea151baabed233",
+          ".agents/evidence/logs/M2-post-review-focused-suite-20261016.log": "d696e8c692bd769a9b0eaf8edfdbbeecb77b9a1c990b83d017a6e98c9609c508",
+          ".agents/evidence/logs/M2-post-review-full-suite-20261016.log": "7386ff000534a665f6f4acc18e992003f4f8a24d5d5c80c171bbe45a1752bf07",
+          ".agents/evidence/logs/M2-post-review-full-suite-dirty-checkpoint-failure-20261016.log": "5de2f5e8c9523cf8d87753832b5a9f051061d2452701c4a0eb865bcab2836d04",
+          ".agents/evidence/logs/M2-post-review-full-suite-final-20261016.log": "2e7bfa2ef2942f7318232aaf581b189db38e2d680ee011b94bd328446aaa4601",
+          ".agents/evidence/logs/M2-post-review-github-preflight-20261016.log": "611b7d27e18a486007f1b20a25370fb0cf62187d4dc0f4085ac4e765447bbb0f",
+          ".agents/evidence/logs/M2-preflight-complete-state-20261016.log": "01dc6a395e5ad661b7708a60d24edaa3bcfef9531a5daa0c182185ea5fa5922a",
+          ".agents/evidence/logs/M2-preflight-final-20261016.log": "fa9419ad82c55f9f53c760d03130cec7ea8db11f0bfe3554b4c4c165b177cf9c",
+          ".agents/evidence/logs/PRE-M2-cleanclone-20261016.log": "14a2279634c6d060a30aa2c966ce3cd4a2584d1ef547c5feaf917531d4d3b55a",
+          ".agents/evidence/logs/PRE-M2-context-export-20261016.log": "6a62716eeb520b14c21e07b2ac8b2fce1c05ac0c18a02b6fbe26e95483256f54",
+          ".agents/evidence/logs/PRE-M2-context-export-final-20261016.log": "750fea11c16ff4dc849b913a1ce3ce4b6798cb94cee0e878f13b5cf621445529",
+          ".agents/evidence/logs/PRE-M2-preflight-final2-20261016.log": "0641512be6308b9cb483a3013a0802008d3ed72f45b1a36b30dfc55ac837723e",
+          ".agents/evidence/logs/PRE-M2-refinement-preflight-20261016.log": "5ea3e5ffeae0c6f8e177dc2ca31af976a136e2f7e2db77d6f392892e810c68c1",
+          ".agents/evidence/logs/PRE-M2-refinement-tests-20261016.log": "6d75fb862e012a0c0fdcdba7e94bc5cb2795611b12c2236e1ffde0dfa262b90d",
+          ".agents/evidence/logs/pre-m3-final-preflight-20261017.log": "c5cee9294b6fad016dbab627c2d37761befe20d76c0a822155a81f48018ad419",
+          ".agents/evidence/logs/pre-m3-full-suite-20261017.log": "fc4110f3300648159b67753ddd1acc254224379d878200752151394dfdde5923",
+          ".agents/evidence/logs/pre-m3-lock-check-20261017.log": "37b9dfa14552b2a07b105bb86de755cbfa1d0b3419166fb16bd389e74341608c",
+          ".agents/evidence/logs/pre-m3-workflow-static-20261017.log": "6192d1db48fdf9a3af67cad4334f66325de010a0e4e589f1ef351397340e842d",
+          ".agents/plans/G1-consistency-hardening.md": "45a50f2439d9059db2b1b672d668a56d4ccb3724b362938f45489f6957be5437",
+          ".agents/plans/M00-bootstrap.md": "9c7b045f7efd20c60f01e2b23224ccac12d7a659699f0f43e6bc1ff286671f7f",
+          ".agents/plans/M01-ale-feasibility.md": "1f719f2335f9c07dd97e4691119003a37b53646bd9b95b42cacf0516cafaf1b9",
+          ".agents/plans/M02-chess-foundation.md": "a0cd5d210fb404ca0eb5d6a8297dd721944a558ff29d19860515881d184d475c",
+          ".agents/plans/M03-expert-dataset.md": "95676d4cc0eb613953e93a3e93137c8debf26fbcae5fc49ff606564cc1f783a5",
+          ".agents/skills/export-review-bundle/SKILL.md": "02623443e4833824a7c2606e5d4cb9ea1d79e0b5d8c436741933978142932942",
+          ".agents/state/BLOCKERS.md": "396ca3385fea6710c81491ee1f93553eb3a9f4b2cb17f3792fdec1137e3011fc",
+          ".agents/state/SESSION_HANDOFF.md": "c6ba052fff17b8c0b1de2827a1a37e3318eba1254bb58ed94450dce79c443259",
+          ".agents/state/VERIFIED_FINDINGS.md": "e30fbd843a66a0f797ceea88b41b898a15785501c70bfab86cfd2c79d6589ee8",
+          ".agents/tasks/BACKLOG.yaml": "0ca944f50fe5cfcaf462f09625e1f3edce6c0df1954fa368a5a9a86f83b9a3fc",
+          ".github/workflows/preflight.yml": "365e59991b5249164378d9a6f27fa41bf92eadc3ac89ba74335de66c4e3539cb",
+          "docs/01-foundation/PROJECT_OVERVIEW.md": "e4498200362b8d6cd5c3faf10ca3120d9e9cdc5af55c0457f6521001eddb9c0b",
+          "docs/01-foundation/REQUIREMENTS.md": "a687c39ff96a6e9d0be4fe5e44a7cbf81148d9516dff23f42420e8345c638c34",
+          "docs/01-foundation/ROADMAP.md": "fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf",
+          "docs/02-management/EXECUTION_PLAN.md": "a71a322a1b68b011ce28a1222fca328837803341ed3366848f10d467d1192535",
+          "docs/02-management/RISK_REGISTER.md": "b91cbb48ad90cdc532b1b9b54e1074dda86dc9a95dfedc75c22b92b6249422bc",
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": "c6bc9c1dce13ff42c92abc5ce761f08f66ecd6f02065139068cf5ddc6e4f0753",
+          "docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md": "a6f01eba162ebaa2254ba31e082ab28ab2d69580a34a3ff2b05f17f3bc75b854",
+          "docs/03-technical/ACTION_ADAPTER.md": "7e13686f6ee923dcc9d5bdc4d3564b374bafda71f1ea4b491f42d25d722cccf5",
+          "docs/03-technical/ALE_ENVIRONMENT.md": "20c1c629a9dd94c4a27afc7d4aaaf2591420d5d2635553112e44d633945646a7",
+          "docs/03-technical/ARCHITECTURE.md": "2a4470130e7660c2836831415f67712eddaa47a0d306cf3318e31bc3e13d5e64",
+          "docs/03-technical/BOARD_EXTRACTION.md": "8677057d948bb602c30bcbe63148066c4e635592cb36d442f3187b62ade8ec05",
+          "docs/03-technical/MDP_SPEC.md": "2f386120c0806b365d5aa1202cb0a68b6214278bbf8cd5c74d8f7d497c8f62d2",
+          "docs/04-research/DATASET_SPEC.md": "a49874a3ec3ab2da8e0f5be1044414b0b549bf8483a812166891f712335d3b50",
+          "docs/04-research/DECISION_REGISTER.md": "7b0d6f7dfdf98a6483f6df2f0e35ee067f72a62b01425fe7cd20d1c563d83c0d",
+          "docs/04-research/EXPERIMENT_PROTOCOL.md": "53f794ecc68450c56bf2e96c39bcede2eb7f0de39a062da072a27a2986def4a7",
+          "docs/04-research/STOCKFISH_TEACHER.md": "6494540c8d77751450dad6e77eb6c14b42277b1f8f51ea927e0bc2eb2de8ef06",
+          "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": "900136c5cb891a9f6b6b505838bd239f0046cb813af9b9825acc11532b875b22",
+          "docs/05-operations/REPRODUCIBILITY.md": "bcfd0156ea11694ded5c3fc67101b89f0b0529dc541fc43e32a90c5d7b88f4aa",
+          "docs/05-operations/SETUP.md": "05776d5f0e9bcf5931807fbbcca46ae583d37f25ebaf116308572f6874025a89",
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": "395741bc505bbc0c0dd3fcb63187f198303e538c064da32fc58c9389e93373a5",
+          "docs/06-quality/TEST_STRATEGY.md": "60674dcee76e877f8b9855d8921727ee60e32ca24ae9abbf52609212058c81b3",
+          "scripts/agent_checkpoint.py": "f007fc697afda5ec344e7340b115c88598b25323b5a4d69d0f8929f4c6a7e98d",
+          "scripts/agent_preflight.py": "7f24cf19f659603f2d96907eae790f1df07ff8212cfc321db2f4c47e641f026e",
+          "scripts/export_review_bundle.py": "7ed9a3a22dc2435f157840ad710f6fb8af183118830acb0b91cdbe47fa2930c0",
+          "scripts/run_m1_demo.py": "8b6d9651896abe1fd320a45479101be48e5b624809ad3450c4c03e4bd44276b5",
+          "scripts/run_m1_terminal_experiment.py": "c9519d149c4bacf9c1e0ef8fcb99c1f8b292c5688f0ad97c5baf99bfe021338e",
+          "tests/test_agent_context.py": "8f6c6e8420c5c0683677ecb82272ff6f22f9c6a52032f1f22c17c9b98f09fcd8",
+          "tests/test_export_review_bundle.py": "3d9684586b76aa73f794b936b336f8529237f1797cfe19645cc64ce74239db6c",
+          "tests/test_m0_smoke.py": "ba6303fc4c6b9f06b03bb1259a8084083c595b278e163d7f1ca710ef7bf77594",
+          "tests/test_m1_ale_integration.py": "7b01601620e7af90f700f47d10e905ec51bfac02a2583b059734456f5a2ee9ff",
+          "tests/test_m1_control.py": "922b889082f054cceb299d3092e27a6eafc125a774eaab9daa04536c9c8448be",
+          "tests/test_m1_environment.py": "62b80652d0dbe73f9342788ce1b0cdeac0e3748f23991e5635e202f80ced90c3",
+          "tests/test_m1_episode.py": "f09aa6293dde46e914e12e87ef76558ec217ea1fc44a76558c79f47aa578a3aa",
+          "tests/test_m1_shadow.py": "19bd94ca9eece7d4317788f08df85fe46911d706a43665a437c6596446e99ffc",
+          "tests/test_m1_terminal_cli.py": "049e92159537ec90136135278ae060a33cfaae6cd1dcb10de4ef5234e696d942",
+          "tests/test_m1_vision.py": "e36315af24d76e89027f3eeb2b46a3740615d3c03fff3172365531eaa2b8f11c",
+          "tests/test_m2_baselines.py": "11bfb42880ccc2b9b72f3342f457d791a7d83413e2994e904237ff308a57ebf5",
+          "tests/test_m2_benchmark.py": "b7d3245290c53de32dfa7064560a8d9d9f830e29e7162b5f552351b7e3b0ff54",
+          "tests/test_m2_simulator.py": "0b6423cac5cbc1575abf847842f0df2de3605fbd171a479527f4abbc186e28c0",
+          "tests/fixtures/g1-recovery-baseline.json": "a48deb7bbd5f1a67e21c66b4f5feec22c08f169b6dcc3d44b89248a30a8aa0df",
+          "videochess_rl/__init__.py": "6288a2698f98216834cce812d32cd8ecc95da5a2bdce96ebf891c22b1d30e009",
+          "videochess_rl/baselines.py": "95eccb0780bb82ce823e198a95066d4f60d669b0b60257f13b5d734b047fbf19",
+          "videochess_rl/benchmark.py": "bb13c555ce1f81254faffd07822248ef022ff706a7fd7ecc1e97b3f9243af3aa",
+          "videochess_rl/controller.py": "ee82e40f5e68c319f7e22e14e15e721f13ffc331b02f76e39b0684c19e075103",
+          "videochess_rl/demo.py": "221d4327433d2a877c215e9bd474009e938c07d6df19cc0dcd34f24765df3c37",
+          "videochess_rl/environment.py": "e00047d0f046d994f230712797d5b3b85264b73815301ef498b3b12aeb86dcff",
+          "videochess_rl/episode.py": "de5df684201cbba9a72310691b4fbab09e4fb6f5d2e75b4cc024e92ac632c069",
+          "videochess_rl/shadow.py": "b342062ce2a6e176ed872d90ecbab584c5f0fb4bc0bb057b6d007694ac7d5149",
+          "videochess_rl/simulator.py": "2b0ee123a9ed3dd7f5b020acb42ce296f8590db6154914f03acbb8ffac5e7d80",
+          "videochess_rl/vision.py": "8f3a3b0a142bb91e3f7cd58dd29a596a01982f03cd7324929638a1fa5811b770"
+        },
+        "unhashed_large_files": [],
+        "unreadable_files": [],
+        "artifact_dirs_requiring_manifest": [
+          "artifacts"
+        ],
+        "excluded_directories": [
+          "artifacts"
+        ],
+        "excluded_symlink_files": 0
+      },
+      "portable_git": {
+        "format_version": 1,
+        "tracked_manifest": {
+          ".agents/PLANS.md": {
+            "mode": "100644",
+            "object_id": "1c1b78d477af82837465daf21c1de62c32c07c84"
+          },
+          ".agents/evidence/BLK-001-diagnostic-20261015-r2.zip": {
+            "mode": "100644",
+            "object_id": "515428242de14038ca2bc968d82f877ec3d887f5"
+          },
+          ".agents/evidence/BLK-001-diagnostic-20261015.md": {
+            "mode": "100644",
+            "object_id": "a7030eb72285b6f9c17b98d0bc32b468eab795f0"
+          },
+          ".agents/evidence/G1-10-recovery-verification.md": {
+            "mode": "100644",
+            "object_id": "6ff27d51b9cf51803d8ca8c863066253ae6297bc"
+          },
+          ".agents/evidence/G1-git-baseline-verification.md": {
+            "mode": "100644",
+            "object_id": "c3c79107166243fe35ae2d8e9f270b8a46e0ffe9"
+          },
+          ".agents/evidence/G1-hardening-verification.md": {
+            "mode": "100644",
+            "object_id": "949549fa06ad46bc3076ac462e7ccba7cdc70fbf"
+          },
+          ".agents/evidence/G1-portability-consistency-verification.md": {
+            "mode": "100644",
+            "object_id": "5120604c17c3a481431701154d2783058ff78dcd"
+          },
+          ".agents/evidence/M0-001-verification.md": {
+            "mode": "100644",
+            "object_id": "0899b37e78e7244661bebb1fcea242bc66114e57"
+          },
+          ".agents/evidence/M0-acceptance.md": {
+            "mode": "100644",
+            "object_id": "99c6b35c927fc0eea29dad671ba59744e52c6644"
+          },
+          ".agents/evidence/M0-authorization.md": {
+            "mode": "100644",
+            "object_id": "4682598c5d00e2e9f0cb8f0a46171cdcc6de748a"
+          },
+          ".agents/evidence/M0-final-technical-verification.md": {
+            "mode": "100644",
+            "object_id": "219fa2bb8620f94faf680d956d1042d714ac9c94"
+          },
+          ".agents/evidence/M0-finalization-verification.md": {
+            "mode": "100644",
+            "object_id": "ba82a757f3cf0075d28c5435dd866dda2d7f34aa"
+          },
+          ".agents/evidence/M1-04-experiment-budget.md": {
+            "mode": "100644",
+            "object_id": "aa948644a729f6f24eb79431974faf3f70411818"
+          },
+          ".agents/evidence/M1-04-experiment-campaign-20261016.md": {
+            "mode": "100644",
+            "object_id": "12952333bf440b41bb014343e266daaafe71d241"
+          },
+          ".agents/evidence/M1-04-terminal-success-20261016-README.md": {
+            "mode": "100644",
+            "object_id": "f27ec2fe6a906f0f49c816dc5326640623a981e8"
+          },
+          ".agents/evidence/M1-04-terminal-verification.md": {
+            "mode": "100644",
+            "object_id": "8ade958bcfd55af2d57206aae0ab1d101bcbbd76"
+          },
+          ".agents/evidence/M1-G2-final-verification-20261016.md": {
+            "mode": "100644",
+            "object_id": "1dd022d7eec276274123f65c0e212e03b6e89661"
+          },
+          ".agents/evidence/M1-authorization.md": {
+            "mode": "100644",
+            "object_id": "07d0ac7de9ec5ef4f29d1a02ed83ca2ba619e938"
+          },
+          ".agents/evidence/M1-feasibility-verification.md": {
+            "mode": "100644",
+            "object_id": "c733b714d754690af07ca7d018a1b5ea65b0b3df"
+          },
+          ".agents/evidence/M2-acceptance-20261016.md": {
+            "mode": "100644",
+            "object_id": "fcc14ddc302c14db81130852920ddd5ef5f4a24f"
+          },
+          ".agents/evidence/M2-artifact-manifest-20261016.sha256": {
+            "mode": "100644",
+            "object_id": "f04cd874744c4ffee50702473015dea6a19a06cf"
+          },
+          ".agents/evidence/M2-authorization-20261016.md": {
+            "mode": "100644",
+            "object_id": "a10349b59771281f20f7f089dffe239f495c39e7"
+          },
+          ".agents/evidence/M2-baseline-benchmark-20261016.json": {
+            "mode": "100644",
+            "object_id": "863d6ebcaa3b1eafbaf784f69bb8f6bfd46e0148"
+          },
+          ".agents/evidence/M2-baseline-benchmark-repeat-20261016.json": {
+            "mode": "100644",
+            "object_id": "42582daaf44b7b0dd5918d8d6c67771b1b63eaae"
+          },
+          ".agents/evidence/M2-baseline-results-20261016.md": {
+            "mode": "100644",
+            "object_id": "efa94b05596425b06b6ab8064ed5d0b88ed86d13"
+          },
+          ".agents/evidence/M2-github-delivery-20261016.md": {
+            "mode": "100644",
+            "object_id": "7ee6d218e250a1af740240e864acf59c61fbcafa"
+          },
+          ".agents/evidence/M2-post-review-hardening-20261016.md": {
+            "mode": "100644",
+            "object_id": "4ae1fbedf2b0a878e81dc10cdf0bff4a32248358"
+          },
+          ".agents/evidence/M2-post-review-hardening-benchmark-20261016.json": {
+            "mode": "100644",
+            "object_id": "435d1f4065b5ae50d1ab27f25ca0443202c1573a"
+          },
+          ".agents/evidence/M2-post-review-hardening-benchmark-repeat-20261016.json": {
+            "mode": "100644",
+            "object_id": "49f57bf1ba76c6bcd31b3e54d879c5ec4da81e1c"
+          },
+          ".agents/evidence/M2-post-review-hardening-manifest-20261016.sha256": {
+            "mode": "100644",
+            "object_id": "0fcd4b0aa4110aec741ba10ac3033aefb9a23c37"
+          },
+          ".agents/evidence/POST-M2-INTEGRATION-VERIFICATION-20261017.md": {
+            "mode": "100644",
+            "object_id": "18adb1d57a390cefa0e4e6d85d43fdaf6854f0cc"
+          },
+          ".agents/evidence/PRE-M2-readiness-20261016.md": {
+            "mode": "100644",
+            "object_id": "759ac59a7934d8db1a7cd9b7c9c171b53acf5efb"
+          },
+          ".agents/evidence/PRE-M2-refinement-20261016.md": {
+            "mode": "100644",
+            "object_id": "6a3f22aecfe297cea939fe1314dd72a9cdf824af"
+          },
+          ".agents/evidence/PRE-M3-readiness-20261017.md": {
+            "mode": "100644",
+            "object_id": "b526b824d02d5adb785684d4cec3271b43be8e5f"
+          },
+          ".agents/evidence/logs/BLK-001-context-export-final-20261015.log": {
+            "mode": "100644",
+            "object_id": "5866698a9a6036c3ef2576f4367a3a287f98f2d0"
+          },
+          ".agents/evidence/logs/BLK-001-final-remote-cleanclone-20261015.log": {
+            "mode": "100644",
+            "object_id": "3db60fa55a2340e9f90e12aec9ded9ddc40f2112"
+          },
+          ".agents/evidence/logs/BLK-001-full-suite-20261015.log": {
+            "mode": "100644",
+            "object_id": "340cf4693a378b9e961eb7e719ad619a3dcf3f9e"
+          },
+          ".agents/evidence/logs/BLK-001-full-suite-final2-20261015.log": {
+            "mode": "100644",
+            "object_id": "fa616cde607f43f7c41643cf238e115e47442209"
+          },
+          ".agents/evidence/logs/BLK-001-m1-suite-20261015.log": {
+            "mode": "100644",
+            "object_id": "d389fe8292618c15cbe7645196b8e8c54f4cc098"
+          },
+          ".agents/evidence/logs/BLK-001-m1-suite-final2-20261015.log": {
+            "mode": "100644",
+            "object_id": "b3b4d5e78ea8e2f946a0958d47a53cbb0107d343"
+          },
+          ".agents/evidence/logs/BLK-001-remote-cleanclone-20261015.log": {
+            "mode": "100644",
+            "object_id": "e8b10a50b47882a6cd6ce2919eea05d84b455943"
+          },
+          ".agents/evidence/logs/M1-all-artifact-rgb-integrity-20261016.log": {
+            "mode": "100644",
+            "object_id": "dd4fc09245ffabaacab0b5e73b508ad770edffcb"
+          },
+          ".agents/evidence/logs/M1-campaign1-mode0-loss-seed20261016.log": {
+            "mode": "100644",
+            "object_id": "cdc25fcd2418af7a16cc29452e89356550cfd0d8"
+          },
+          ".agents/evidence/logs/M1-campaign2-mode4-loss-seed20261016.log": {
+            "mode": "100644",
+            "object_id": "29ae09a8506f4118d3571519c67c7a0ac7a333ec"
+          },
+          ".agents/evidence/logs/M1-campaign3-mode4-wait-seed20261016.log": {
+            "mode": "100644",
+            "object_id": "9cfde7a22444904eb6915e3eda7ef485d66da18b"
+          },
+          ".agents/evidence/logs/M1-campaign4-mode4-queenmate-seed20261017.log": {
+            "mode": "100644",
+            "object_id": "2a9b7960d8b64ef08de013805838e3b2b89786aa"
+          },
+          ".agents/evidence/logs/M1-campaign5-terminal-replay-seed20261017.log": {
+            "mode": "100644",
+            "object_id": "1e9c007bacdabc37ee0bf8ebe8a7117e289f0259"
+          },
+          ".agents/evidence/logs/M1-final-focused-suite-20261016.log": {
+            "mode": "100644",
+            "object_id": "47790e5df340bb8d7c0a2152acc1c2140da6fefe"
+          },
+          ".agents/evidence/logs/M1-final-lock-check-20261016.log": {
+            "mode": "100644",
+            "object_id": "068cc083c8c03eccc87f17ff571c1676dbcf00e0"
+          },
+          ".agents/evidence/logs/M1-final-preflight-20261016.log": {
+            "mode": "100644",
+            "object_id": "db807293307bc27dbd49a207968ba0bde2a42ae8"
+          },
+          ".agents/evidence/logs/M1-full-suite-baseline-20261016.log": {
+            "mode": "100644",
+            "object_id": "e7322cf6511487a68eb8eb68249b742f4e79f623"
+          },
+          ".agents/evidence/logs/M1-full-suite-final-20261016.log": {
+            "mode": "100644",
+            "object_id": "3cddde148af548780cd69f62994aee068bbd53fd"
+          },
+          ".agents/evidence/logs/M1-opponent-readiness-regression-20261016.log": {
+            "mode": "100644",
+            "object_id": "3f60c8c687ad75f40d44b5f086f8f058f10559a7"
+          },
+          ".agents/evidence/logs/M1-post-push-cleanclone-20261016.log": {
+            "mode": "100644",
+            "object_id": "02a928953762d4e14fe4a9703f5aa38f09ad31b0"
+          },
+          ".agents/evidence/logs/M1-terminal-evidence-integrity-20261016.log": {
+            "mode": "100644",
+            "object_id": "4ca15fa197a4deefc51d3508d1543d716a7f4d52"
+          },
+          ".agents/evidence/logs/M1-terminal-runner-regression-20261016.log": {
+            "mode": "100644",
+            "object_id": "dcf7b6dcb3606b28a446763c7b728984fa63da69"
+          },
+          ".agents/evidence/logs/M1-terminal-runner-regression-pass1-20261016.log": {
+            "mode": "100644",
+            "object_id": "3b95e3228623ba891f07321785486254ea547ddb"
+          },
+          ".agents/evidence/logs/M1-terminal-runner-regression-pass2-20261016.log": {
+            "mode": "100644",
+            "object_id": "db0e55c100c7414054aa37f8f171f9fa3e4d4652"
+          },
+          ".agents/evidence/logs/M2-baseline-benchmark-final-20261016.log": {
+            "mode": "100644",
+            "object_id": "1e3a7db23e37daf26f20a8fcccb9f11c3c2c63b5"
+          },
+          ".agents/evidence/logs/M2-baseline-reproducibility-20261016.log": {
+            "mode": "100644",
+            "object_id": "2c4a1b828d578b2d96c9f04d336bfca1b23b8596"
+          },
+          ".agents/evidence/logs/M2-focused-suite-final-20261016.log": {
+            "mode": "100644",
+            "object_id": "aa9e80667b9b0d34c183dd60fccf8844ea95a67e"
+          },
+          ".agents/evidence/logs/M2-full-suite-complete-state-20261016.log": {
+            "mode": "100644",
+            "object_id": "8e1bcb660c12270ef158ae8d9e2d243bf66f7c2f"
+          },
+          ".agents/evidence/logs/M2-full-suite-final-20261016.log": {
+            "mode": "100644",
+            "object_id": "917f9c54ca1ea713fa911fd02ed04461e5fa1410"
+          },
+          ".agents/evidence/logs/M2-full-suite-postcheckpoint-20261016.log": {
+            "mode": "100644",
+            "object_id": "73c6294eec4373a0ca18b8271a0a0da3c67c494a"
+          },
+          ".agents/evidence/logs/M2-full-suite-precheckpoint-pass-20261016.log": {
+            "mode": "100644",
+            "object_id": "5e75029c8a6201cba250b33a509fa62bae0489b9"
+          },
+          ".agents/evidence/logs/M2-github-delivery-20261016.log": {
+            "mode": "100644",
+            "object_id": "59b8a44de987692db750926eaa1e64a2845f0d9a"
+          },
+          ".agents/evidence/logs/M2-post-review-benchmark-official-20261016.log": {
+            "mode": "100644",
+            "object_id": "1deb9337f476c97735beaf961491f084ed2f107f"
+          },
+          ".agents/evidence/logs/M2-post-review-benchmark-repeat-20261016.log": {
+            "mode": "100644",
+            "object_id": "71a27675c942bcdb5cf5b2f3951e773ade67fc65"
+          },
+          ".agents/evidence/logs/M2-post-review-benchmark-verification-20261016.log": {
+            "mode": "100644",
+            "object_id": "88258f49755f4b8ef48bdc9ac3cecdbc28bf72fa"
+          },
+          ".agents/evidence/logs/M2-post-review-development-diagnostic-failure-20261016.log": {
+            "mode": "100644",
+            "object_id": "aa443e967724dceccfa70c85b24c977c3f56feba"
+          },
+          ".agents/evidence/logs/M2-post-review-final-preflight-20261016.log": {
+            "mode": "100644",
+            "object_id": "260d0ebc4bf4ad922a9c8c0d9de9fee9c5cd82e4"
+          },
+          ".agents/evidence/logs/M2-post-review-final-preflight-f420-20261016.log": {
+            "mode": "100644",
+            "object_id": "c9e6ee63c0efdb9bbfae68adc7817290fae841ad"
+          },
+          ".agents/evidence/logs/M2-post-review-focused-suite-20261016.log": {
+            "mode": "100644",
+            "object_id": "12232302a3de225bbe527eac363850e34980546f"
+          },
+          ".agents/evidence/logs/M2-post-review-full-suite-20261016.log": {
+            "mode": "100644",
+            "object_id": "15dee800cd061539495ae2d69176c4c6a4895bd2"
+          },
+          ".agents/evidence/logs/M2-post-review-full-suite-dirty-checkpoint-failure-20261016.log": {
+            "mode": "100644",
+            "object_id": "23e03576c9f6416a688ceb475d5ddbc6d384aebd"
+          },
+          ".agents/evidence/logs/M2-post-review-full-suite-final-20261016.log": {
+            "mode": "100644",
+            "object_id": "ac20f4db394e2b60db0eb7aa028f4229168e5cc6"
+          },
+          ".agents/evidence/logs/M2-post-review-github-preflight-20261016.log": {
+            "mode": "100644",
+            "object_id": "c2f1f9bf0b63688887c5d39319ac3b09e520324d"
+          },
+          ".agents/evidence/logs/M2-preflight-complete-state-20261016.log": {
+            "mode": "100644",
+            "object_id": "deccd0477348acd16d01ddbdd7cb23aeda533109"
+          },
+          ".agents/evidence/logs/M2-preflight-final-20261016.log": {
+            "mode": "100644",
+            "object_id": "e480ba1bdfd116413b0cea1a8d2073c51ae0e53f"
+          },
+          ".agents/evidence/logs/PRE-M2-cleanclone-20261016.log": {
+            "mode": "100644",
+            "object_id": "b6cc8c87d3129d63d2e79084ae4966a073849a13"
+          },
+          ".agents/evidence/logs/PRE-M2-context-export-20261016.log": {
+            "mode": "100644",
+            "object_id": "0275a44a64e1916793fbb1ce09a8a067e21452ef"
+          },
+          ".agents/evidence/logs/PRE-M2-context-export-final-20261016.log": {
+            "mode": "100644",
+            "object_id": "c9f7b35c829337569e72d7c8b6af7bccb2c52c48"
+          },
+          ".agents/evidence/logs/PRE-M2-preflight-final2-20261016.log": {
+            "mode": "100644",
+            "object_id": "d94de422e531cb75689cb47a3c79546727039447"
+          },
+          ".agents/evidence/logs/PRE-M2-refinement-preflight-20261016.log": {
+            "mode": "100644",
+            "object_id": "4686c5add95464d371a8e7ca87286f26ac0fce52"
+          },
+          ".agents/evidence/logs/PRE-M2-refinement-tests-20261016.log": {
+            "mode": "100644",
+            "object_id": "d50b150d468c68eaa38b650237592c7852b3f345"
+          },
+          ".agents/evidence/logs/pre-m3-final-preflight-20261017.log": {
+            "mode": "100644",
+            "object_id": "806adcb0b8040d89b0adc7cf575f0c8357110c84"
+          },
+          ".agents/evidence/logs/pre-m3-full-suite-20261017.log": {
+            "mode": "100644",
+            "object_id": "07a70d7026c98f308034305413283dd6995cafc1"
+          },
+          ".agents/evidence/logs/pre-m3-lock-check-20261017.log": {
+            "mode": "100644",
+            "object_id": "58f9f1974f3d5b04b3895124d9dacd7f83398816"
+          },
+          ".agents/evidence/logs/pre-m3-workflow-static-20261017.log": {
+            "mode": "100644",
+            "object_id": "c39e0b4fcdb17afe369d0f71b13647a612375087"
+          },
+          ".agents/plans/G1-consistency-hardening.md": {
+            "mode": "100644",
+            "object_id": "a371486eaf564cf62503c6a2de683888e09b3b9d"
+          },
+          ".agents/plans/M00-bootstrap.md": {
+            "mode": "100644",
+            "object_id": "9a546c32e71394fb65b0dceb44d8b3a9db44a5aa"
+          },
+          ".agents/plans/M01-ale-feasibility.md": {
+            "mode": "100644",
+            "object_id": "f3953462dfe8a90c63b0f8ef4e56a18698f332cd"
+          },
+          ".agents/plans/M02-chess-foundation.md": {
+            "mode": "100644",
+            "object_id": "77ea2239e27de0332288d83e722192b2c150578c"
+          },
+          ".agents/plans/M03-expert-dataset.md": {
+            "mode": "100644",
+            "object_id": "c210b01d04b10cba26e73551c9c8cb6763b85fb5"
+          },
+          ".agents/skills/export-review-bundle/SKILL.md": {
+            "mode": "100644",
+            "object_id": "9c94b136d7f6b78a99ffcdda780b2a20d712678d"
+          },
+          ".agents/state/BLOCKERS.md": {
+            "mode": "100644",
+            "object_id": "3f201bd032e78cfba08a0f307f0b5631ce17f7ff"
+          },
+          ".agents/state/VERIFIED_FINDINGS.md": {
+            "mode": "100644",
+            "object_id": "1e0e40e2dfc9a65d107efe568621ec18ebfd413c"
+          },
+          ".agents/tasks/BACKLOG.yaml": {
+            "mode": "100644",
+            "object_id": "0d1a310a07eb3db040f70701b90b20aaae8e5d32"
+          },
+          ".github/workflows/preflight.yml": {
+            "mode": "100644",
+            "object_id": "ac1749ae06e291bec6d6f4d4063b89c8b43e26d9"
+          },
+          ".gitignore": {
+            "mode": "100644",
+            "object_id": "1f47241035421aa3dd73732d084b533e3fad7763"
+          },
+          ".python-version": {
+            "mode": "100644",
+            "object_id": "e4fba2183587225f216eeada4c78dfab6b2e65f5"
+          },
+          "AGENTS.md": {
+            "mode": "100644",
+            "object_id": "1aff494964fb5b9844f29589a53b83c2b6489e51"
+          },
+          "README.md": {
+            "mode": "100644",
+            "object_id": "7e3c5988c2b3027eee3d1fbb2620b310eeed2ec8"
+          },
+          "artifacts/m1/MANIFEST-20261015.sha256": {
+            "mode": "100644",
+            "object_id": "5cf175efa20ceb07087191d370ddae44f09ae893"
+          },
+          "atari-videochess-rl-roadmap.html": {
+            "mode": "100644",
+            "object_id": "78f34984b1f10c9921974a96c8648112876017fa"
+          },
+          "docs/01-foundation/PROJECT_OVERVIEW.md": {
+            "mode": "100644",
+            "object_id": "58211222d1e9659834db323b17ead1636cc8ac3b"
+          },
+          "docs/01-foundation/REQUIREMENTS.md": {
+            "mode": "100644",
+            "object_id": "a0945c81090ce53da3a1b1684c597b6d361957df"
+          },
+          "docs/01-foundation/ROADMAP.md": {
+            "mode": "100644",
+            "object_id": "3d6517b186feb24fb95702fffefc1a568266bf37"
+          },
+          "docs/02-management/EXECUTION_PLAN.md": {
+            "mode": "100644",
+            "object_id": "57cc25116b0657cb910a00c88fc04dba51ba9621"
+          },
+          "docs/02-management/RISK_REGISTER.md": {
+            "mode": "100644",
+            "object_id": "4667e35e0642b9ed533f2ca5cf2fcda73be4734b"
+          },
+          "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md": {
+            "mode": "100644",
+            "object_id": "97db1a054605b8aa3c94697a75f2ebf1d80d3e5e"
+          },
+          "docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md": {
+            "mode": "100644",
+            "object_id": "bcc2ca0c26c100b068b4f784263f551a9ea3d1a9"
+          },
+          "docs/03-technical/ACTION_ADAPTER.md": {
+            "mode": "100644",
+            "object_id": "0418810e8a4a429426db702f8ea06504ea6d6eec"
+          },
+          "docs/03-technical/ALE_ENVIRONMENT.md": {
+            "mode": "100644",
+            "object_id": "c79b627bca0b052953b7b224af38487f645a2ca0"
+          },
+          "docs/03-technical/ARCHITECTURE.md": {
+            "mode": "100644",
+            "object_id": "ba03bfe2283a161647ec8b21014d3b331a5fcece"
+          },
+          "docs/03-technical/BOARD_EXTRACTION.md": {
+            "mode": "100644",
+            "object_id": "2c15930a72b5dd3232f0509cb43cc9fe3336d149"
+          },
+          "docs/03-technical/MDP_SPEC.md": {
+            "mode": "100644",
+            "object_id": "84c75462935e6038c40d2c4b65a990e463a7d5dc"
+          },
+          "docs/04-research/DATASET_SPEC.md": {
+            "mode": "100644",
+            "object_id": "727417a71d94827f74172603b6472e763e8b540f"
+          },
+          "docs/04-research/DECISION_REGISTER.md": {
+            "mode": "100644",
+            "object_id": "1e8d49e37f6fa87089bd25383606c11e52b0f1d3"
+          },
+          "docs/04-research/EXPERIMENT_PROTOCOL.md": {
+            "mode": "100644",
+            "object_id": "18c6d02100d92b906897b39ba44485d2a5b1f75e"
+          },
+          "docs/04-research/STOCKFISH_TEACHER.md": {
+            "mode": "100644",
+            "object_id": "c5de7fd5bc8b4a6557ca551829a2006fe2202f71"
+          },
+          "docs/05-operations/M1-ALE-REPRODUCIBILITY.md": {
+            "mode": "100644",
+            "object_id": "327056de1f8900508ed5cf4e94c92f1fa041a6b5"
+          },
+          "docs/05-operations/REPRODUCIBILITY.md": {
+            "mode": "100644",
+            "object_id": "f0c0aa4e5c4af5902dd16cf4900c7be82aac22dc"
+          },
+          "docs/05-operations/SETUP.md": {
+            "mode": "100644",
+            "object_id": "8255761d45367521f6428aece17d882807055146"
+          },
+          "docs/06-quality/ACCEPTANCE_CRITERIA.md": {
+            "mode": "100644",
+            "object_id": "47e4cb03e6067424f07f6fa2c543869a5e96c3f2"
+          },
+          "docs/06-quality/TEST_STRATEGY.md": {
+            "mode": "100644",
+            "object_id": "2ba0a8318b99eb3bd3a6b0edb9b5f4e0b94751a7"
+          },
+          "pyproject.toml": {
+            "mode": "100644",
+            "object_id": "af61e2b43ca0e55def303fd48d797285119d0c70"
+          },
+          "scripts/agent_checkpoint.py": {
+            "mode": "100644",
+            "object_id": "6f4f0ca28dbc837dce01ab788903c2e43a58b1d8"
+          },
+          "scripts/agent_preflight.py": {
+            "mode": "100644",
+            "object_id": "322932885074db6e8dc5a098a90dd96de393e760"
+          },
+          "scripts/export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "5fe121a545a759d487af574bd67c32b25f1fbd8f"
+          },
+          "scripts/run_m1_demo.py": {
+            "mode": "100644",
+            "object_id": "7c39a1eaf33278f1d4b04804a52bb07a19125885"
+          },
+          "scripts/run_m1_terminal_experiment.py": {
+            "mode": "100755",
+            "object_id": "81bb04daa85f56f737b8db0bf5e3141cc40e976a"
+          },
+          "tests/fixtures/g1-recovery-baseline.json": {
+            "mode": "100644",
+            "object_id": "e6bad6a18ef49b42487ef8c388d803e16b7a64e3"
+          },
+          "tests/test_agent_context.py": {
+            "mode": "100644",
+            "object_id": "7beb47465be506a263e3a03bbe9ab9b36f7fdb65"
+          },
+          "tests/test_export_review_bundle.py": {
+            "mode": "100644",
+            "object_id": "7e36d44e58d292afd40ce951ab87f006ae17be47"
+          },
+          "tests/test_m0_smoke.py": {
+            "mode": "100644",
+            "object_id": "06fc374a092bb537b521656c195a90db48f6f1ab"
+          },
+          "tests/test_m1_ale_integration.py": {
+            "mode": "100644",
+            "object_id": "0c51af91636ffd64f56e96b391dc45689619396b"
+          },
+          "tests/test_m1_control.py": {
+            "mode": "100644",
+            "object_id": "78b487cd107250f012fa491b78292353e7da726d"
+          },
+          "tests/test_m1_environment.py": {
+            "mode": "100644",
+            "object_id": "394f0aa1ee8243e1f95121fdb7a31e1d406741a7"
+          },
+          "tests/test_m1_episode.py": {
+            "mode": "100644",
+            "object_id": "eaa1f211aa0f4ab1ad107ee9c7508937ae51f6d9"
+          },
+          "tests/test_m1_shadow.py": {
+            "mode": "100644",
+            "object_id": "ee085a1693595c5a265081f24f186032c39b4e7e"
+          },
+          "tests/test_m1_terminal_cli.py": {
+            "mode": "100644",
+            "object_id": "c31f0b6bef1f66d9f5b54a03c44576bb637203af"
+          },
+          "tests/test_m1_vision.py": {
+            "mode": "100644",
+            "object_id": "a69e3b463b6c00a38adcdc4f6f2b4948e94e39a2"
+          },
+          "tests/test_m2_baselines.py": {
+            "mode": "100644",
+            "object_id": "49daaefc59b0a4f80f6bf0b62a0849327e9491d1"
+          },
+          "tests/test_m2_benchmark.py": {
+            "mode": "100644",
+            "object_id": "7a799df8d2572faba8c7a1f1d3fb88bf40ec90cb"
+          },
+          "tests/test_m2_simulator.py": {
+            "mode": "100644",
+            "object_id": "341f804c55d0ea772f3f5c30e27a0c305ff8bfc8"
+          },
+          "uv.lock": {
+            "mode": "100644",
+            "object_id": "a122403ed28fba3956a138b886e5d65791e1c516"
+          },
+          "videochess_rl/__init__.py": {
+            "mode": "100644",
+            "object_id": "1dd9a23ede9e748cc14d9da2ad7b7f0b4f1fde98"
+          },
+          "videochess_rl/baselines.py": {
+            "mode": "100644",
+            "object_id": "d473331fbec5447c8b4d0a7b02e1867cac554923"
+          },
+          "videochess_rl/benchmark.py": {
+            "mode": "100644",
+            "object_id": "8e6b8a574537b10d094f5c37db671e409fab7cbb"
+          },
+          "videochess_rl/controller.py": {
+            "mode": "100644",
+            "object_id": "875212221d304659ca99755e4d1d09e05903c244"
+          },
+          "videochess_rl/demo.py": {
+            "mode": "100644",
+            "object_id": "5a35b608d5323f8139cbed675c76b2ecef33adfe"
+          },
+          "videochess_rl/environment.py": {
+            "mode": "100644",
+            "object_id": "5617ef3abf556ce16e23210b6b855a79debd4efa"
+          },
+          "videochess_rl/episode.py": {
+            "mode": "100644",
+            "object_id": "70b24e0e8f7055cdd5fc460032de213d213b3eda"
+          },
+          "videochess_rl/shadow.py": {
+            "mode": "100644",
+            "object_id": "d971e7db7026c21afc86f3cca3864fa745d32454"
+          },
+          "videochess_rl/simulator.py": {
+            "mode": "100644",
+            "object_id": "19d9d46246dffbff3f74981604e253d3824d1053"
+          },
+          "videochess_rl/vision.py": {
+            "mode": "100644",
+            "object_id": "5be7bf92574229c232a364a7c9c03830a50524ee"
+          }
+        },
+        "manifest_sha256": "ce2a26c51fca58aaae9a14bea43b4f074ecc79d8606031484a63c808f4d10648",
+        "state_sha256": "f5d6f5007b0093e482778982dea479e2e4a2931043b6709efe999b839f6794bb",
+        "handoff_sha256": "c6ba052fff17b8c0b1de2827a1a37e3318eba1254bb58ed94450dce79c443259"
       }
     }
   ]

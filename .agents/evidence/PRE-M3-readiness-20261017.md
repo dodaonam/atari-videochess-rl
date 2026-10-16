@@ -113,7 +113,7 @@ Verified baseline checks:
 - Local M1 dated manifest verification: 1,214 and 1,388 entries matched. Legacy unversioned list has 327 absent paths and remains untouched.
 - Existing repository evidence records a 180-test complete M0/M1/M2 suite at M2 review. This is historical baseline, not the Pre-M3 final run.
 
-Final local test counts, timestamps, branch revision, logs, checkpoint, preflight, clean-clone, remote CI, and PR details are recorded after their actual execution in the final version of this file. Do not infer that those checks passed from this plan.
+Local verification and delivery evidence is recorded in the sections below; each remote check status is tied to its actual branch SHA and run URL.
 
 ## Mission acceptance matrix
 
@@ -138,9 +138,9 @@ Final local test counts, timestamps, branch revision, logs, checkpoint, prefligh
 | PM3-17 | PASS | EXPERIMENT_PROTOCOL.md defines staged provenance and metrics. |
 | PM3-18 | PASS | M03 plan maps canonical M3-01 through M3-04 to modules/tests/evidence. |
 | PM3-19 | PASS | Decision register keeps O-01/O-04/O-06/O-07 and owner choices unresolved. |
-| PM3-20 | PENDING | Requires final relevant tests, preflight, checkpoint and clean-clone recovery evidence. |
-| PM3-21 | PENDING | Requires feature branch commit and push. |
-| PM3-22 | PENDING | Requires one open, unmerged PR against initial-idea. |
+| PM3-20 | PASS locally; final remote check pending | Full local suite, checkpoint preflight, and clean-clone context/export tests have passed; final PR check will verify the final tree after the last checkpoint. |
+| PM3-21 | PASS | Feature branch was pushed without force; final checkpoint/report commit is still being prepared. |
+| PM3-22 | PASS | PR #2 is open against initial-idea and remains unmerged. |
 
 ## Explicit non-work
 
@@ -163,7 +163,7 @@ No production data code, full archive download, PGN ingestion, bulk Stockfish la
 | D05 — Experiment methodology | Separated M3 data, M4 supervised, M5 simulator RL, M6 ALE, and M7 reporting metrics and provenance. | Final M4–M7 specifications remain deferred to their milestones. | Complete. |
 | E01 — M3 architecture and plan | Added M03 plan with packages, CLI boundaries, streaming, resume, tests, caps, evidence, and M3-01–04 mapping. | Implementation and data generation await G3 plus explicit M3 authorization. | Complete; plan is review-ready, not authorizing. |
 | E02 — Documentation/governance | Added dataset, teacher, experiment, reproducibility, decision, inventory, integration, and README material; synchronized canonical records. | Owner decisions and deferred M4–M7 documents remain open by design. | Complete. |
-| F01 — Verification and delivery | Offline lock check and full 180-test suite passed; workflow assertions passed; final checkpoint/preflight and GitHub delivery are recorded below when completed. | Clean-clone, remote CI, push, and PR were still pending at this report stage. | In progress at this report stage. |
+| F01 — Verification and delivery | Full 180-test local suite, 57-test clean-clone subset, checkpoint preflight, lock check, and workflow assertions passed. | Remote CI has had two diagnosed failures; final checkpoint and final PR run remain pending. | In progress; no test was weakened. |
 
 ## Local verification evidence
 
@@ -171,6 +171,18 @@ No production data code, full archive download, PGN ingestion, bulk Stockfish la
 - Initial diagnostic run before refreshing the workspace checkpoint exited 1 because test_project_context_can_be_recovered_without_chat_history asserted git_snapshot_matches while the current work had not yet been checkpointed. The subsequent checkpoint recorded the workspace; preflight then reported both Git and workspace snapshots matching, and the full rerun passed. The initial output was streamed rather than retained as a separate complete log; this note preserves the observed failure and resolution.
 - Offline lock consistency: uv offline lock check, exit 0; retained log logs/pre-m3-lock-check-20261017.log; SHA-256 37b9dfa14552b2a07b105bb86de755cbfa1d0b3419166fb16bd389e74341608c.
 - Checkpoint preflight: agent_checkpoint.py wrote cp-27dd9f73-20261016T175118702486Z; subsequent agent_preflight.py passed. It reported the expected separately manifested local artifacts directory and ordinary tracked changes since the portable baseline. Retained preflight log logs/pre-m3-final-preflight-20261017.log; SHA-256 c5cee9294b6fad016dbab627c2d37761befe20d76c0a822155a81f48018ad419.
-- Workflow YAML parse and permission, pinned-action, branch, timeout, and test-scope assertions passed; retained log logs/pre-m3-workflow-static-20261017.log; SHA-256 6192d1db48fdf9a3af67cad4334f66325de010a0e4e589f1ef351397340e842d. Two earlier custom-checker assertions were corrected because the checker expected test filenames where the workflow uses module names and counted steps without an action as action references; the workflow YAML itself parsed successfully.
+- Workflow YAML parse and permission, pinned-action, branch, timeout, and test-scope assertions passed; retained log logs/pre-m3-workflow-static-20261017.log; SHA-256 756e2e1138ad3ec7de05ab54210838a214dc67741e131a89da627bcb4897e6ce. Two earlier custom-checker assertions were corrected because the checker expected test filenames where the workflow uses module names and counted steps without an action as action references; the workflow YAML itself parsed successfully.
 
-Delivery, final checkpoint, clean-clone recovery, remote CI, and PR evidence are completed in the final update to this record. No production dataset or model artifact was created.
+No production dataset or model artifact was created.
+
+
+## Clean-clone and remote workflow findings
+
+- A fresh clone of feature commit b86c894f6009556a6c116f222ecf31999d90ff00 was created at /tmp/atari-videochess-rl-pre-m3-cleanclone. Agent preflight passed with only ARTIFACT_MANIFEST_REQUIRED for absent ignored artifacts. The standard-library context and review-bundle test modules passed: 57 tests, one expected skip, 67.670 seconds. Logs: logs/pre-m3-cleanclone-preflight-20261017.log (SHA-256 6b497ebb2d4a248941c23b276df882d861ad24bccac60d9332b8bfd5c58e2009) and logs/pre-m3-cleanclone-tests-20261017.log (SHA-256 79106c757a217e69fb074cd7ad442cf6c63abd940ffedfd96edc8fc710b5d1d0).
+- PR #2 was opened against initial-idea at feature commit b86c894f6009556a6c116f222ecf31999d90ff00. First remote run 38943663614 failed because default shallow checkout did not contain the G1 baseline tree used by a recovery test. Workflow now sets checkout fetch-depth to 0; tests were not weakened.
+- Second remote run 38943914513 reached the historical fixture but failed clean-clone snapshot assertions because the branch had changes after its previous checkpoint. The final checkpoint must be refreshed after all tracked work is staged and must be the last ordinary-content mutation before final push. That run's job log is available at https://github.com/dodaonam/atari-videochess-rl/actions/runs/38943914513/job/117118125083.
+- A new final PR run after the checkpoint commit is required; status and run URL are added here only after GitHub reports its actual conclusion.
+
+## State growth disposition
+
+After the two readiness checkpoints, PROJECT_STATE.yaml was 2,130,794 bytes with 94 checkpoint-history entries, above 2 MiB. Its semantic checksum and portable Git manifest validated. Historical records were preserved. RSK-010 now requires a reviewed migration design before sustained further growth; this is an operational follow-up, not a pretext to truncate history.

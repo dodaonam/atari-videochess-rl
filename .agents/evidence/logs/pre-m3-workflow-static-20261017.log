@@ -1,2 +1,1 @@
-Workflow YAML parse and bounded-permission/action/test assertions: PASS
-No project dependency install, ALE, Stockfish, dataset, or model operation in workflow.
+Workflow YAML, permissions, pinned actions, full-history fixture access, base, timeout, and bounded tests: PASS

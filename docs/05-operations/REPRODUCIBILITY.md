@@ -49,7 +49,7 @@ Use these evidence categories distinctly:
 
 Record retention, backup owner, access control, and deletion date for each large release before collecting it. Keep raw public-game data only as needed and only under the approved source terms. Prefer transformed records with opaque source IDs and no player display names in published outputs.
 
-At the Pre-M3 starting checkpoint, **PROJECT_STATE.yaml** was 2,035,944 bytes and had 92 retained checkpoint-history entries. Its history preserves full workspace snapshots and continues to grow. Do not truncate history or rewrite it without a schema migration and independent recovery tests. Track growth; if it approaches the 2 MiB ordinary-hash boundary, prepare a reviewed migration that externalizes immutable checkpoint details while keeping the current canonical snapshot and portable manifest verifiable.
+At the Pre-M3 starting checkpoint, **PROJECT_STATE.yaml** was 2,035,944 bytes with 92 retained checkpoint-history entries. After two readiness checkpoints it reached 2,130,794 bytes with 94 entries, crossing the 2 MiB ordinary-file hash boundary. The current semantic state checksum and portable tracked manifest still validate it. Do not truncate history or rewrite it in this mission. Schedule a reviewed migration before further sustained checkpoint growth; externalize only immutable historical details and prove clean-clone recovery while retaining the current canonical snapshot and portable manifest.
 
 ## 5. Safe execution defaults
 
