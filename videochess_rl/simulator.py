@@ -246,22 +246,21 @@ class ChessSimulator:
 
         before = self._board.copy(stack=True)
         canonical_action = chess.Move.from_uci(action_uci)
-        self._board.push(canonical_action)
         opponent_uci: str | None = None
-
-        outcome = self._board.outcome(claim_draw=False)
-        if outcome is None:
-            try:
+        try:
+            self._board.push(canonical_action)
+            outcome = self._board.outcome(claim_draw=False)
+            if outcome is None:
                 opponent_move = self._choose_opponent_move()
                 opponent_uci = opponent_move.uci()
                 self._board.push(opponent_move)
-            except BaseException:
-                # Roll back the entire attempted chess transition, including
-                # agent move, but not policy-local state or consumed RNG.
-                self._board = before
-                self._stopped = True
-                raise
-            outcome = self._board.outcome(claim_draw=False)
+                outcome = self._board.outcome(claim_draw=False)
+        except BaseException:
+            # Roll back the entire attempted chess transition, including the
+            # agent move, but not policy-local state or consumed RNG.
+            self._board = before
+            self._stopped = True
+            raise
 
         self._episode_decisions += 1
         terminated = outcome is not None
