@@ -1,0 +1,10 @@
+verified_at_utc=2026-10-16T15:44:46Z
+repository=https://github.com/dodaonam/atari-videochess-rl
+base_branch=11b6dfe67c961bca3d5d693d87a1f27448983487
+feature_branch=cedd14c59eaa9a7bc682d2ffc78527098b4497a9
+command=gh pr view 1 --json number,url,state,isDraft,mergedAt,headRefName,headRefOid,baseRefName,changedFiles,autoMergeRequest
+{"autoMergeRequest":null,"baseRefName":"initial-idea","changedFiles":36,"headRefName":"feature/m2-chess-foundation","headRefOid":"cedd14c59eaa9a7bc682d2ffc78527098b4497a9","isDraft":false,"mergedAt":null,"number":1,"state":"OPEN","url":"https://github.com/dodaonam/atari-videochess-rl/pull/1"}
+command=gh pr checks 1
+no checks reported on the 'feature/m2-chess-foundation' branch
+gh_pr_checks_exit_code=1
+interpretation=no checks are reported; no CI success is claimed
