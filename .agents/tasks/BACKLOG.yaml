@@ -1750,13 +1750,13 @@
         {
           "kind": "file",
           "path": ".agents/evidence/M2-post-review-hardening-20261016.md",
-          "detail": "Consolidated evidence-backed disposition of F-01 through F-08, HC-01 through HC-14, hardening changes through b3fc810, current focused/full verification, corrected benchmark, and GitHub delivery handoff.",
+          "detail": "Consolidated evidence-backed disposition of F-01 through F-08, HC-01 through HC-14, hardening changes through b3fc810, 58 focused and 180 repository tests, corrected benchmark, and GitHub delivery handoff.",
           "provenance": {
             "status": "verified",
             "executed_at_utc": null,
-            "recorded_at_utc": "2026-10-16T15:53:14Z",
+            "recorded_at_utc": "2026-10-16T15:56:29Z",
             "exit_code": null,
-            "git_revision": "b3fc8105a5dbf543267a77be77f6a8c6c76ab8e2",
+            "git_revision": "57c6bde8f3cd9fdaf0a6fe4ec283c93fb8cf037a",
             "log_path": null
           }
         },
@@ -1850,11 +1850,24 @@
             "git_revision": "b3fc8105a5dbf543267a77be77f6a8c6c76ab8e2",
             "log_path": ".agents/evidence/logs/M2-post-review-full-suite-dirty-checkpoint-failure-20261016.log"
           }
+        },
+        {
+          "kind": "test",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "PASS: 180 repository tests in 80.286 s, including clean-clone context recovery, M0, M1/ALE, and M2.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T15:54:51Z",
+            "recorded_at_utc": "2026-10-16T15:56:29Z",
+            "exit_code": 0,
+            "git_revision": "57c6bde8f3cd9fdaf0a6fe4ec283c93fb8cf037a",
+            "log_path": ".agents/evidence/logs/M2-post-review-full-suite-20261016.log"
+          }
         }
       ],
       "next_action": "",
       "plan_ref": ".agents/plans/M02-chess-foundation.md"
     }
   ],
-  "updated_at_utc": "2026-10-16T15:53:14Z"
+  "updated_at_utc": "2026-10-16T15:56:29Z"
 }
