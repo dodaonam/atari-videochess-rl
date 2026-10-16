@@ -202,3 +202,10 @@ Findings are append-only historical observations. FND-021 and FND-022 record the
 - **Finding:** Offline uv lock check passed with no installation. The inspected host reported Python 3.12.3, python-chess 1.11.2, Gymnasium 1.4.0, ALE-Py 0.11.2, and CPU PyTorch 2.14.1. Its local Stockfish binary identifies as version 19 and matches the M0 executable SHA-256; its retained GPL text matches the M0 license hash. The dated local M1 manifests for 2026-10-15 and 2026-10-16 verified 1,214 and 1,388 entries. The older unversioned manifest lists 327 absent paths and was not treated as current.
 - **Evidence:** PRE-M3-readiness-20261017.md; M0-final-technical-verification.md; local ignored artifact manifests in the primary checkout.
 - **Impact:** No dependency addition or Stockfish search is needed for the proposed parser design. Local artifact evidence remains separate from clean-clone tracked evidence. O-01/O-07 still govern engine use.
+
+## FND-029 — Checkpointed-tree recovery and PR validation
+
+- **Status:** verified 2026-10-16
+- **Finding:** A clean clone of feature commit 843a0bc728370ff9bc8e7a21884c7e05b82eb7c1 passed agent preflight with the portable tracked manifest matching. GitHub Actions run 38944551579 passed the same checkpointed commit with preflight and the bounded standard-library context/export suite. PR #2 targets initial-idea and remains open and unmerged.
+- **Evidence:** PRE-M3-readiness-20261017.md; logs/pre-m3-final-tip-cleanclone-preflight-20261017.log; GitHub Actions https://github.com/dodaonam/atari-videochess-rl/actions/runs/38944551579; PR https://github.com/dodaonam/atari-videochess-rl/pull/2.
+- **Impact:** Pre-M3 readiness and delivery checks pass. G3 remains unapproved, M3 remains unauthorized, and O-01 through O-08 remain open.
