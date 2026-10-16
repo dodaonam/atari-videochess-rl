@@ -3,11 +3,51 @@
 from __future__ import annotations
 
 import json
+import random
 import tempfile
 import unittest
 from pathlib import Path
 
-from videochess_rl.benchmark import run_baseline_benchmark
+import chess
+
+from videochess_rl.benchmark import _play_game, run_baseline_benchmark
+from videochess_rl.simulator import Observation
+
+
+class FirstLegalPolicy:
+    policy_id = "test_first_legal"
+
+    @property
+    def config(self) -> dict[str, object]:
+        return {}
+
+    def choose_move(self, observation, legal_moves, rng):
+        del observation, rng
+        return chess.Move.from_uci(sorted(move.uci() for move in legal_moves)[0])
+
+
+class FailingAgent:
+    policy_id = "test_failure"
+
+    @property
+    def config(self) -> dict[str, object]:
+        return {}
+
+    def choose_move(self, observation: Observation, legal_moves, rng: random.Random) -> chess.Move:
+        del observation, legal_moves, rng
+        raise RuntimeError("simulated agent failure")
+
+
+class InterruptingAgent:
+    policy_id = "test_interrupt"
+
+    @property
+    def config(self) -> dict[str, object]:
+        return {}
+
+    def choose_move(self, observation: Observation, legal_moves, rng: random.Random) -> chess.Move:
+        del observation, legal_moves, rng
+        raise KeyboardInterrupt
 
 
 class BenchmarkTests(unittest.TestCase):
@@ -75,6 +115,43 @@ class BenchmarkTests(unittest.TestCase):
             run_baseline_benchmark([-1], max_decisions=1)
         with self.assertRaises(ValueError):
             run_baseline_benchmark([1], max_decisions=0)
+
+    def test_external_failure_is_recorded_without_becoming_a_chess_result(self) -> None:
+        game = _play_game(
+            agent=FailingAgent(),
+            opponent=FirstLegalPolicy(),
+            color=chess.WHITE,
+            seed=61,
+            agent_seed=62,
+            max_decisions=1,
+            source_revision="test-revision",
+        )
+
+        self.assertEqual(game["status"], "external_failure")
+        self.assertTrue(game["external_failure_or_interruption"])
+        self.assertEqual(game["failure_type"], "RuntimeError")
+        self.assertFalse(game["terminated"])
+        self.assertFalse(game["truncated"])
+        self.assertIsNone(game["agent_wdl"])
+        self.assertIsNone(game["outcome_result_white_perspective"])
+
+    def test_interrupt_is_recorded_separately_from_failure_and_termination(self) -> None:
+        game = _play_game(
+            agent=InterruptingAgent(),
+            opponent=FirstLegalPolicy(),
+            color=chess.BLACK,
+            seed=63,
+            agent_seed=64,
+            max_decisions=1,
+            source_revision="test-revision",
+        )
+
+        self.assertEqual(game["status"], "interrupted")
+        self.assertTrue(game["external_failure_or_interruption"])
+        self.assertEqual(game["failure_type"], "KeyboardInterrupt")
+        self.assertFalse(game["terminated"])
+        self.assertFalse(game["truncated"])
+        self.assertIsNone(game["agent_wdl"])
 
 
 if __name__ == "__main__":
