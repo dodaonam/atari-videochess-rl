@@ -2,7 +2,7 @@
 
 - **Plan ID:** M02
 - **Milestone:** M2 — Chess foundation, associated with G3
-- **Plan status:** in_progress; current direct user authorization is recorded in `.agents/evidence/M2-authorization-20261016.md`
+- **Plan status:** in_progress; direct user authorization is recorded in `.agents/evidence/M2-authorization-20261016.md`; final checkpointed full-suite verification remains
 - **Task:** M2-001 in [BACKLOG.yaml](../tasks/BACKLOG.yaml), in progress
 - **Dependencies:** M1-001 complete; G2 approved
 - **Requirements:** B-03, B-05, B-06, B-07, B-08; unresolved approvals O-01, O-06, O-07, O-08 in [REQUIREMENTS.md](../../docs/01-foundation/REQUIREMENTS.md)
@@ -11,7 +11,7 @@
 
 ## Objective
 
-Implement and verify a small standard-chess simulator using the locked `python-chess` dependency. Establish stable legal-move identity, the agreed agent/opponent transition, agent-perspective terminal rewards, automatic chess outcomes, and explicit truncation. Add two lightweight baselines and a small seeded benchmark. Implementation and acceptance remain unverified until their evidence is recorded.
+The implementation, focused M2 checks, and seeded benchmark are complete. Refresh the final checkpoint and pass the full-suite recovery check and preflight before closing the task. See the [acceptance record](../evidence/M2-acceptance-20261016.md) and [benchmark report](../evidence/M2-baseline-results-20261016.md).
 
 ## Scope
 
@@ -57,16 +57,16 @@ Stable UCI conversion can remain at the simulator boundary; a separate action-en
 
 ## Acceptance evidence mapping
 
-| Criterion | Minimum future evidence |
+| Criterion | Completion evidence |
 |---|---|
-| M2-01 | Reviewed simulator contract covering complete rules state/history, legal `Move` actions, agent/opponent boundary, fixed perspective, terminal reward, automatic outcomes, truncation, and simulator/ALE separation. |
-| M2-02 | Focused tests for ordinary and supported special moves, legal-action identity, invalid-action non-mutation, checkmate, stalemate, insufficient material, automatic fivefold/75-move outcomes, and truncation. |
-| M2-03 | Completed seeded games by both random-legal and heuristic baselines, with per-game policy/opponent, color, seed, outcome, length, and reproducibility evidence; disclose truncated runs. |
-| M2-04 | Result records/tests that label simulator metrics separately and prevent them from being reported as ALE performance. |
+| M2-01 | Contract is implemented in `videochess_rl/simulator.py` and specified in `docs/03-technical/MDP_SPEC.md`; acceptance record reports PASS. |
+| M2-02 | Rule, history, action-safety, reward, terminal, truncation, reset, and opponent-error tests pass; acceptance record reports PASS. |
+| M2-03 | Both baselines completed seeded games across both colors; per-game records and a repeat comparison are retained; acceptance record reports PASS. |
+| M2-04 | Simulator/ALE metric labels and tests keep sources separate; acceptance record reports PASS. |
 
-These are evidence expectations, not M2 results. Canonical acceptance wording remains in `ACCEPTANCE_CRITERIA.md`.
+Canonical acceptance wording remains in `ACCEPTANCE_CRITERIA.md`; per-criterion execution details are in `.agents/evidence/M2-acceptance-20261016.md`.
 
-## Implementation sequence after authorization
+## Implementation sequence completed
 
 1. Re-read canonical state/backlog, this plan, MDP specification, accepted ADR-0002, and acceptance criteria. The current direct user authorization is recorded in the evidence path above.
 2. Verify the locked `python-chess` API for `Board.outcome(claim_draw=False)` and standard move UCI semantics. Define a small reset/step/result interface before coding.
@@ -76,7 +76,7 @@ These are evidence expectations, not M2 results. Canonical acceptance wording re
 6. Add seeded random-legal and simple heuristic selectors; verify both return legal moves.
 7. Run a small seeded benchmark across both colors, retaining per-game records and reporting completed/truncated counts without Elo claims.
 8. Run focused and full applicable tests, preflight, and reproducibility checks. Preserve actual command, duration, exit code, revision, and sanitized evidence.
-9. Evaluate M2-01 through M2-04 against evidence independently. Do not start M3 or later without separate authorization.
+9. Evaluate M2-01 through M2-04 against retained evidence; all four pass. M3 and later remain outside the current authorization.
 
 ## Verification commands after implementation
 
@@ -101,4 +101,4 @@ Use the existing locked environment documented in [SETUP.md](../../docs/05-opera
 
 ## Checkpoint and recovery
 
-At execution start and after meaningful state changes, refresh the checkpoint and preflight; use canonical state and backlog for live status. Preserve untracked files and local ALE evidence. Mark acceptance only after implementation and verification evidence exists.
+M2 acceptance and benchmark evidence are linked above. The final checkpoint, full-suite recovery check, and preflight are required before completion. G3 remains unapproved. Preserve all local ALE evidence. M3 requires separate authorization and prerequisite review.

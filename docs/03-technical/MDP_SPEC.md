@@ -1,8 +1,8 @@
 # Chess Simulator MDP Specification
 
-**Status:** Accepted M2 contract under ADR-0002. Simulator implementation and M2-01 through M2-04 verification are in progress and remain unverified until recorded.
+**Status:** Accepted M2 contract under ADR-0002. Simulator implementation and M2-specific checks are recorded in [the M2 acceptance record](../../.agents/evidence/M2-acceptance-20261016.md); final checkpointed repository verification is pending. M4/M5 model choices remain open.
 
-**Purpose:** Specify the smallest standard-chess decision process needed for M2 while preserving clear interfaces to future M3 PGN/teacher data, M4 supervised learning, M5 Double DQN, and M6 ALE integration. The accepted foundational choices are recorded in [ADR-0002](../02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md). M2-01 through M2-04 remain unverified.
+**Purpose:** Specify the smallest standard-chess decision process needed for M2 while preserving clear interfaces to future M3 PGN/teacher data, M4 supervised learning, M5 Double DQN, and M6 ALE integration. The accepted foundational choices are recorded in [ADR-0002](../02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md); implementation and acceptance evidence are recorded in the linked M2 acceptance record.
 
 ## 1. Decision process
 
@@ -65,7 +65,7 @@ Use terminal-outcome reward only:
 | Simulator decision limit at a valid agent-decision boundary | 0 | false | true |
 | Invalid move | No transition; reject without mutation | — | — |
 
-Use the pinned `python-chess` rules engine's automatic outcome check, equivalent to `Board.outcome(claim_draw=False)`. This includes checkmate, stalemate, insufficient material, automatic fivefold repetition, and the automatic seventy-five-move rule. Voluntary draw-claim actions are excluded from the project's active scope; there is no action, interface, or planned extension for them. Do not write custom chess adjudication when the library supplies the required automatic outcomes. Confirm the exact behavior against the locked library during authorized M2 implementation.
+Use the pinned `python-chess` rules engine's automatic outcome check, equivalent to `Board.outcome(claim_draw=False)`. This includes checkmate, stalemate, insufficient material, automatic fivefold repetition, and the automatic seventy-five-move rule. Voluntary draw-claim actions are excluded from the project's active scope; there is no action, interface, or planned extension for them. Do not write custom chess adjudication when the library supplies the required automatic outcomes. The locked library behavior is exercised by the M2 simulator tests.
 
 M2 uses an agent-decision limit checked after a complete transition, so truncation returns the valid next-agent state. Any separately added total-ply or wall-clock cap must also report truncation (or an external runner stop for host interruption); it must never fabricate a chess result. Preserve the final valid Board, flags, and explicit stop reason separately.
 
@@ -81,7 +81,7 @@ For M6, the current ALE RGB observation and verified move history remain the sou
 
 ## 7. M2 verification contracts
 
-These are future checks, not passing tests:
+The implementation and focused tests cover these contracts; see the [M2 acceptance record](../../.agents/evidence/M2-acceptance-20261016.md) for exact commands, results, and retained logs:
 
 1. Position serialization is deterministic; FEN round trips preserve position fields, while a replay from the initial position preserves the move history used by the rules engine.
 2. Generated actions equal `Board.legal_moves`; stable UCI identities round-trip for ordinary moves, captures, all four promotions, castling, and en passant, regardless of candidate enumeration order.

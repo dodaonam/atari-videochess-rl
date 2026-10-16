@@ -76,7 +76,7 @@ The runner writes JSON traces and raw RGB frames under ignored `artifacts/m1/`. 
 
 ## M2 chess simulator verification design
 
-M2 implementation tests have not been created or run. When M2 is explicitly authorized, keep chess rules in python-chess and use focused unit, simulator-integration, seeded-episode, and benchmark checks. The minimum evidence for M2-01 through M2-04 is mapped in the [M02 plan](../../.agents/plans/M02-chess-foundation.md); the contracts are owned by [MDP_SPEC.md](../03-technical/MDP_SPEC.md).
+M2 implementation and focused checks cover M2-01 through M2-04; actual outcomes and retained logs are in the [M2 acceptance record](../../.agents/evidence/M2-acceptance-20261016.md). The final checkpointed repository suite is pending. Keep chess rules in python-chess and use focused unit, simulator-integration, seeded-episode, and benchmark checks. The contracts are owned by [MDP_SPEC.md](../03-technical/MDP_SPEC.md).
 
 | Layer | Required checks | Expected evidence |
 |---|---|---|
@@ -87,7 +87,7 @@ M2 implementation tests have not been created or run. When M2 is explicitly auth
 | Seeded episode tests | Same seed, agent color, opponent identity/configuration, and initial state reproduce move/outcome records. Random-legal and lightweight heuristic baselines return legal moves and complete bounded games. | Per-game traces with seed, policy identities, colors, moves, outcome, length, and truncation count. Incomplete games are not reported as completed. |
 | Benchmark and metric separation | Run a small seeded set of games between identified baselines; record W/D/L, lengths, completion/truncation counts, external failures or interruptions, configuration, and revision. Keep simulator results separate from ALE results. | Per-game records and aggregate summary; schema/report checks prevent simulator metrics being labeled as ALE. Truncations and failures are excluded from W/D/L; no unsupported Elo claim. |
 
-M2 tests should remain focused on the acceptance contract; do not implement M4/M5 scoring, replay, target networks, or training tests as part of the simulator. M2 acceptance evidence maps to M2-01 through M2-04 in [ACCEPTANCE_CRITERIA.md](ACCEPTANCE_CRITERIA.md). [ADR-0002](../02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md) is accepted for the foundational simulator contract; it does not mark any test as passed.
+M2 tests remain focused on the acceptance contract; M4/M5 scoring, replay, target networks, and training are outside the simulator. M2 acceptance criteria are M2-01 through M2-04 in [ACCEPTANCE_CRITERIA.md](ACCEPTANCE_CRITERIA.md). [ADR-0002](../02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md) is accepted for the foundational simulator contract; test results are recorded separately in the acceptance record.
 
 ## Future project test layers
 

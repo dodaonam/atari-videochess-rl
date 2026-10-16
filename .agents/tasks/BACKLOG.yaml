@@ -1538,11 +1538,141 @@
             "git_revision": "11b6dfe67c961bca3d5d693d87a1f27448983487",
             "log_path": ".agents/evidence/M2-authorization-20261016.md"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M2-acceptance-20261016.md",
+          "detail": "Criterion-by-criterion M2-01 through M2-04 review with implementation references and execution outcomes.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-16T07:41:33Z",
+            "exit_code": null,
+            "git_revision": "74008b8c8705809330ef218ba3d5bd9e1b5335ab",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M2-baseline-results-20261016.md",
+          "detail": "Seeded baseline results and semantic reproducibility comparison.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-16T07:41:33Z",
+            "exit_code": null,
+            "git_revision": "74008b8c8705809330ef218ba3d5bd9e1b5335ab",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M2-baseline-benchmark-20261016.json",
+          "detail": "Official per-game benchmark record; structured result SHA-256 is recorded in the report and manifest.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-16T07:41:33Z",
+            "exit_code": null,
+            "git_revision": "74008b8c8705809330ef218ba3d5bd9e1b5335ab",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M2-baseline-benchmark-repeat-20261016.json",
+          "detail": "Independent repeated per-game result; semantic records match official run.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-16T07:41:33Z",
+            "exit_code": null,
+            "git_revision": "74008b8c8705809330ef218ba3d5bd9e1b5335ab",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M2-artifact-manifest-20261016.sha256",
+          "detail": "Hashes for tracked benchmark JSON and local ignored raw benchmark outputs.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-16T07:41:33Z",
+            "exit_code": null,
+            "git_revision": "74008b8c8705809330ef218ba3d5bd9e1b5335ab",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "test",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m2_simulator tests.test_m2_baselines tests.test_m2_benchmark -v",
+          "result": "PASS: 41 focused M2 tests.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T07:39:04Z",
+            "recorded_at_utc": "2026-10-16T07:41:33Z",
+            "exit_code": 0,
+            "git_revision": "74008b8c8705809330ef218ba3d5bd9e1b5335ab",
+            "log_path": ".agents/evidence/logs/M2-focused-suite-final-20261016.log"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "PASS: 163 repository tests; 81.795 seconds.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T07:34:02Z",
+            "recorded_at_utc": "2026-10-16T07:41:33Z",
+            "exit_code": 0,
+            "git_revision": "74008b8c8705809330ef218ba3d5bd9e1b5335ab",
+            "log_path": ".agents/evidence/logs/M2-full-suite-precheckpoint-pass-20261016.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.benchmark --seeds 20261016 20261017 --max-decisions 400 --output .agents/evidence/M2-baseline-benchmark-20261016.json",
+          "result": "PASS: 8 games completed, 0 truncations, 0 failures or interruptions.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T07:35:51Z",
+            "recorded_at_utc": "2026-10-16T07:41:33Z",
+            "exit_code": 0,
+            "git_revision": "74008b8c8705809330ef218ba3d5bd9e1b5335ab",
+            "log_path": ".agents/evidence/logs/M2-baseline-benchmark-final-20261016.log"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/logs/M2-baseline-reproducibility-20261016.log",
+          "detail": "Official and repeated benchmark configurations, summaries, and semantic per-game fields match.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-16T07:41:33Z",
+            "exit_code": null,
+            "git_revision": "74008b8c8705809330ef218ba3d5bd9e1b5335ab",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "FAIL: 162 passed; clean-clone recovery reported a stale Git snapshot before the required checkpoint refresh. All M2 tests passed; the failure is retained and followed by a post-checkpoint rerun.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T07:39:04Z",
+            "recorded_at_utc": "2026-10-16T07:41:33Z",
+            "exit_code": 1,
+            "git_revision": "74008b8c8705809330ef218ba3d5bd9e1b5335ab",
+            "log_path": ".agents/evidence/logs/M2-full-suite-final-20261016.log"
+          }
         }
       ],
-      "next_action": "Implement M2 simulator, baselines, benchmark, tests, acceptance evidence, and documentation under the current direct authorization; keep G3 unapproved and O-01 through O-08 open.",
+      "next_action": "Refresh the checkpoint, pass preflight and rerun the full suite after the checkpoint; then finalize M2 evidence, push the branch, and open the unmerged PR.",
       "plan_ref": ".agents/plans/M02-chess-foundation.md"
     }
   ],
-  "updated_at_utc": "2026-10-16T07:18:56Z"
+  "updated_at_utc": "2026-10-16T07:42:15Z"
 }

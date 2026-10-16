@@ -4,7 +4,7 @@
 
 ## Current status
 
-No active technical or infrastructure blocker is recorded. G0, G1, and G2 are approved; M0-001 is completed and user-accepted; M1-001 is complete under `.agents/evidence/M1-G2-final-verification-20261016.md`. M2-001 is in progress under the direct authorization recorded in `.agents/evidence/M2-authorization-20261016.md`; this does not approve G3. BLK-001 is resolved with phase-specific RGB control, explicit runner stop categories, and two repeatable real ALE terminal/reward traces. The terminal screen does not show a parseable final board, and the exact ROM-level target-FIRE polling mechanism remains unknown; the runner retains the last verified FEN and stops safely. O-01 through O-08 remain unresolved in `REQUIREMENTS.md`; RAM remains diagnostic-only and no assignment-compliance claim is made.
+No active technical or infrastructure blocker is recorded. G0, G1, and G2 are approved; M0-001 is completed and user-accepted; M1-001 is complete under `.agents/evidence/M1-G2-final-verification-20261016.md`. M2-001 is in progress; its implementation and M2-specific acceptance evidence are recorded in `.agents/evidence/M2-acceptance-20261016.md`, with final checkpointed recovery verification pending. This does not approve G3. BLK-001 is resolved with phase-specific RGB control, explicit runner stop categories, and two repeatable real ALE terminal/reward traces. The terminal screen does not show a parseable final board, and the exact ROM-level target-FIRE polling mechanism remains unknown; the runner retains the last verified FEN and stops safely. O-01 through O-08 remain unresolved in `REQUIREMENTS.md`; RAM remains diagnostic-only and no assignment-compliance claim is made.
 
 ## Record format
 
