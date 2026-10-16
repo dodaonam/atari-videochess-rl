@@ -1,9 +1,9 @@
 # ADR-0002: Chess MDP Action and Perspective
 
-- **Status:** Proposed; the user-directed scope exclusion below is recorded, but the full technical recommendation has not been accepted as an ADR.
+- **Status:** Accepted for the M2 foundational simulator contract on 2026-10-16. The M4/M5 neural action-scoring preference remains proposed, not accepted.
 - **Date:** 2026-10-16
-- **Decision owner:** Project user for acceptance; Codex prepared the technical recommendation.
-- **Scope:** Proposed M2 simulator contract and compatibility with M3–M6. This ADR does not authorize M2 implementation, data use, Stockfish use, model training, or ALE experiments.
+- **Decision owner:** Project user, who explicitly delegated the technical acceptance decision in the conversation on 2026-10-16; Codex prepared the technical recommendation.
+- **Scope:** Accepted M2 foundational simulator contract and compatibility boundaries for M3–M6. Later neural model and scoring choices remain proposals. This record itself does not change M2 task status or authorize M3+, dataset use, Stockfish use, model training, or ALE experiments.
 - **Evidence:** [REQUIREMENTS.md](../../01-foundation/REQUIREMENTS.md), [MDP_SPEC.md](../../03-technical/MDP_SPEC.md), [M02 plan](../../../.agents/plans/M02-chess-foundation.md), and the project dependency lock.
 
 ## Context
@@ -12,18 +12,18 @@ M2 needs ordinary legal chess moves with stable identity, reproducible transitio
 
 ## User-authorized scope decision
 
-The user explicitly removed all voluntary draw-claim functionality from active project scope. The simulator action space contains legal chess moves only. No claim actions, claim interfaces, claim encoding, claim-policy output, claim supervision, claim tests, or later extension are planned. This scope decision does not accept the remaining technical recommendations in this ADR.
+The user explicitly removed all voluntary draw-claim functionality from active project scope. The simulator action space contains legal chess moves only. No claim actions, claim interfaces, claim encoding, claim-policy output, claim supervision, claim tests, or later extension are planned. That earlier scope decision is preserved; the M2 foundational technical contract below was subsequently accepted under the user's delegated authority. This acceptance does not extend to M4/M5 model architecture.
 
-## Proposed technical contract
+## Accepted M2 foundational technical contract
 
 1. **Move identity:** Use only legal `python-chess.Move` actions. Serialize them as UCI for stable records and references, including promotion choice. Validate against the current Board before mutation; reject an illegal/stale action without changing state. Candidate-list ordering is never an action ID.
 2. **Rules state and observation:** One `python-chess.Board` with its move stack owns simulator rules and history. FEN records position fields but cannot restore full repetition history. Define a read-only agent observation separately from this rules state; if a compact model view omits history, mark and test the resulting partial-observation limitation. Do not prescribe a neural tensor in M2.
 3. **Agent perspective:** Keep one agent color fixed within an episode and sample both colors across episodes. Board colors remain absolute. Reward is always from the episode agent's perspective; convert White-perspective PGN, teacher, or ALE values only at explicit tested boundaries.
 4. **Transition boundary:** One agent move followed, while the game remains live, by at most one configured opponent reply. Return control at the next decision by the same agent. If the agent is Black, the opponent plays White's opening move during reset. The opponent policy/configuration is fixed and recorded for the episode.
 5. **Reward and outcomes:** Use terminal-only reward: agent win `+1`, loss `-1`, automatic draw `0`, otherwise `0`. Use the locked library's automatic outcomes, equivalent to `Board.outcome(claim_draw=False)`: checkmate, stalemate, insufficient material, automatic fivefold repetition, and automatic seventy-five-move rule. Simulator limits are truncations with a valid final state, not chess results.
-6. **Later action scoring:** Prefer an action-conditioned legal-candidate scorer `Q(s,a)` as a candidate M4/M5 architecture: select a semantic UCI move from the current legal set, and evaluate that same move with the target scorer. A fixed global move vocabulary remains a concise alternative if later model constraints justify it. Neither choice is implemented in M2 or established as computationally optimal.
+6. **Deferred model option, not accepted here:** An action-conditioned legal-candidate scorer `Q(s,a)` remains a provisional M4/M5 architecture candidate. A fixed global move vocabulary remains an alternative. Neither scoring architecture is required by M2, approved by this ADR, implemented, or established as computationally optimal.
 
-The recommendation and implementation verification are detailed in [MDP_SPEC.md](../../03-technical/MDP_SPEC.md). M2 defines stable move semantics only; neural heads, candidate batching, replay, target networks, and Double DQN targets belong to later authorized milestones.
+The accepted M2 contract and its implementation verification requirements are detailed in [MDP_SPEC.md](../../03-technical/MDP_SPEC.md). M2 defines stable move semantics only; neural heads, candidate batching, replay, target networks, and Double DQN targets belong to later authorized milestones.
 
 ## Alternatives considered
 
@@ -41,9 +41,11 @@ The recommendation and implementation verification are detailed in [MDP_SPEC.md]
 - Any future model observation that omits history relevant to automatic repetition outcomes may be partially observable. Validate this boundary before M5 without requiring raw history as a neural tensor by default.
 - Confirm automatic outcome behavior against the locked python-chess version during M2. Keep those simulator results separate from Atari terminal/reward evidence.
 
-## Review boundary
+## Acceptance and implementation boundary
 
-The MDP specification and this ADR are ready for review before M2. The user-directed move-only scope is settled. Stable UCI move identity, fixed agent color, agent-move/opponent-reply steps, terminal-only reward, automatic outcomes, and explicit truncation form the proposed M2 contract; their exact behavior must be verified during implementation. Neural action-scoring choice and observation tensorization are not M2 blockers and remain for M4/M5 design. M2 still requires its separate explicit authorization in canonical project state.
+The project user explicitly delegated technical approval responsibility on 2026-10-16. Following independent review, the M2 foundational choices in items 1–5 above are accepted: stable UCI move identity, one authoritative Board/history state, distinct observations, fixed agent color, agent-move/opponent-reply transitions, terminal-only agent-perspective rewards, automatic outcomes, and explicit truncation. Their correctness must still be established by actual M2 implementation tests and acceptance evidence. Model observation tensorization and the preferred neural action-scoring architecture remain open for M4/M5.
+
+ADR acceptance is not an M2-01–M2-04 acceptance result. M2 implementation must follow the repository's separately recorded task authorization and canonical checkpoint workflow; this ADR update does not itself mark M2 started or modify G3 gate approval. No permission is granted for M3+ work, paid compute, or unresolved external/instructor approvals.
 
 ## References
 
