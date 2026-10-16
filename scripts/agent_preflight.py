@@ -400,10 +400,47 @@ def _validate_state(state: dict[str, object], errors: list[dict[str, str]]) -> N
         errors.append({"code": code, "path": STATE_REL, "message": "Unknown engineering.next_milestone_status."})
     if not isinstance(engineering["start_authorized"], bool) or not isinstance(engineering["hold_reason"], str):
         errors.append({"code": code, "path": STATE_REL, "message": "Invalid engineering authorization/hold fields."})
+    authorization_record = engineering.get("start_authorization_record")
+    if engineering.get("start_authorized") is True:
+        required_record_keys = (
+            "authorization_id", "task_id", "milestone", "authority",
+            "authorized_at_utc", "scope", "evidence_path",
+        )
+        if not isinstance(authorization_record, dict) or any(key not in authorization_record for key in required_record_keys):
+            errors.append({"code": "MILESTONE_AUTHORIZATION_EVIDENCE", "path": STATE_REL, "message": "An authorized milestone requires a structured direct-authorization record with task, scope, timestamp, and evidence path."})
+        else:
+            if not isinstance(authorization_record["authorization_id"], str) or not authorization_record["authorization_id"].strip():
+                errors.append({"code": "MILESTONE_AUTHORIZATION_EVIDENCE", "path": STATE_REL, "message": "Authorization record needs a non-empty authorization_id."})
+            if authorization_record["authority"] != "direct_user_or_pm_instruction":
+                errors.append({"code": "MILESTONE_AUTHORIZATION_EVIDENCE", "path": STATE_REL, "message": "Authorization must cite a direct user/PM instruction; plans and completed dependencies are not authority."})
+            if authorization_record["milestone"] != engineering.get("next_milestone"):
+                errors.append({"code": "MILESTONE_AUTHORIZATION_EVIDENCE", "path": STATE_REL, "message": "Authorization record milestone must match engineering.next_milestone."})
+            if not isinstance(authorization_record["task_id"], str) or not TASK_ID.fullmatch(authorization_record["task_id"]):
+                errors.append({"code": "MILESTONE_AUTHORIZATION_EVIDENCE", "path": STATE_REL, "message": "Authorization record task_id must be a task ID."})
+            if not isinstance(authorization_record["scope"], str) or not authorization_record["scope"].strip():
+                errors.append({"code": "MILESTONE_AUTHORIZATION_EVIDENCE", "path": STATE_REL, "message": "Authorization record must state its bounded scope."})
+            timestamp = authorization_record["authorized_at_utc"]
+            if not isinstance(timestamp, str) or not timestamp.endswith("Z"):
+                errors.append({"code": "MILESTONE_AUTHORIZATION_EVIDENCE", "path": STATE_REL, "message": "Authorization timestamp must be UTC ISO 8601 ending in Z."})
+            else:
+                try:
+                    datetime.fromisoformat(timestamp[:-1] + "+00:00")
+                except ValueError:
+                    errors.append({"code": "MILESTONE_AUTHORIZATION_EVIDENCE", "path": STATE_REL, "message": "Authorization timestamp is not valid ISO 8601."})
+            evidence_path = authorization_record["evidence_path"]
+            if not _relative_path(evidence_path) or not evidence_path.startswith(".agents/evidence/"):
+                errors.append({"code": "MILESTONE_AUTHORIZATION_EVIDENCE", "path": STATE_REL, "message": "Authorization evidence_path must be a repository-relative .agents/evidence/ path."})
     if governance.get("current_gate") == "G1" and "G1" not in governance.get("approved_gates", []) and engineering.get("start_authorized"):
         errors.append({"code": code, "path": STATE_REL, "message": "M0/M1 cannot be authorized before G1 approval."})
     if engineering.get("next_milestone") == "M0" and not engineering.get("start_authorized") and engineering.get("next_milestone_status") != "pending_user_approval":
         errors.append({"code": code, "path": STATE_REL, "message": "Unapproved M0 must be pending_user_approval."})
+    if engineering.get("start_authorized") is True and (
+        engineering.get("next_milestone_status") != "in_progress"
+        or engineering.get("active_milestone") != engineering.get("next_milestone")
+    ):
+        errors.append({"code": "MILESTONE_AUTHORIZATION_MISMATCH", "path": STATE_REL, "message": "An explicitly authorized milestone must be the active next milestone with in_progress status."})
+    if engineering.get("next_milestone_status") == "in_progress" and engineering.get("start_authorized") is not True:
+        errors.append({"code": "MILESTONE_AUTHORIZATION_MISMATCH", "path": STATE_REL, "message": "An in-progress milestone requires separate explicit start authorization."})
 
     task_refs = state["task_refs"]
     if not isinstance(task_refs, dict):
@@ -504,6 +541,48 @@ def _parse_blockers(text: str) -> set[str]:
     return ids
 
 
+def _load_gate_milestone_coverage(root: Path) -> dict[str, set[str]]:
+    """Read milestone coverage from ADR-0001 instead of maintaining a second crosswalk."""
+    path = root / "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md"
+    try:
+        text = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeError):
+        return {}
+    coverage: dict[str, set[str]] = {}
+    row = re.compile(r"(?m)^\s*\|\s*(G[0-5])\s+—[^|]*\|\s*([^|]+)\|")
+    milestone = re.compile(r"M([0-7])(?:\s*[–-]\s*M?([0-7]))?")
+    for gate, description in row.findall(text):
+        covered: set[str] = set()
+        for match in milestone.finditer(description):
+            first = int(match.group(1))
+            last = int(match.group(2)) if match.group(2) is not None else first
+            covered.update(f"M{number}" for number in range(first, last + 1))
+        if covered:
+            coverage[gate] = covered
+    return coverage
+
+
+def _load_m7_gate_criteria(root: Path) -> dict[str, set[str]]:
+    """Read M7's split G4/G5 acceptance ownership from the canonical criteria file."""
+    path = root / "docs/06-quality/ACCEPTANCE_CRITERIA.md"
+    try:
+        text = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeError):
+        return {}
+    allocation = re.search(r"(?m)^M7 remains one engineering milestone,.*$", text)
+    if allocation is None:
+        return {}
+    coverage: dict[str, set[str]] = {}
+    pattern = re.compile(r"(G[0-5]) owns the [^.;]*? (M7-\d{2})[–-](?:M7-)?(\d{2})")
+    for gate, first_id, last_number in pattern.findall(allocation.group(0)):
+        first_number = int(first_id[-2:])
+        last_number = int(last_number)
+        coverage.setdefault(gate, set()).update(
+            f"M7-{number:02d}" for number in range(first_number, last_number + 1)
+        )
+    return coverage
+
+
 def _load_acceptance_ids(root: Path, errors: list[dict[str, str]]) -> set[str]:
     rel = "docs/06-quality/ACCEPTANCE_CRITERIA.md"
     try:
@@ -528,6 +607,8 @@ def _check_task_graph(backlog: dict[str, object], root: Path, state: dict[str, o
     if not isinstance(raw_tasks, list):
         errors.append({"code": code, "path": rel, "message": "tasks must be a list."})
         return {}, {}
+    gate_coverage = _load_gate_milestone_coverage(root)
+    m7_gate_criteria = _load_m7_gate_criteria(root)
     tasks: dict[str, dict[str, object]] = {}
     for index, task in enumerate(raw_tasks):
         where = f"{rel}:tasks[{index}]"
@@ -554,6 +635,26 @@ def _check_task_graph(backlog: dict[str, object], root: Path, state: dict[str, o
             errors.append({"code": "TASK_SCHEMA", "path": where, "message": "Incomplete tasks require an explicit next_action string."})
         if not isinstance(task["milestone"], str) or task["milestone"] != task_id.rsplit("-", 1)[0]:
             errors.append({"code": "TASK_SCHEMA", "path": where, "message": "Task milestone must match its ID prefix."})
+        required_gate = task.get("requires_user_gate_approval")
+        if required_gate is not None and (not isinstance(required_gate, str) or not GATE_ID.fullmatch(required_gate)):
+            errors.append({"code": "TASK_SCHEMA", "path": where, "message": "requires_user_gate_approval must be null or a G0–G5 ID."})
+        if isinstance(required_gate, str) and isinstance(task.get("milestone"), str):
+            milestone = task["milestone"]
+            task_criteria = task.get("acceptance_criteria_ids", [])
+            circular = milestone != "M7" and milestone in gate_coverage.get(required_gate, set())
+            if milestone == "M7" and milestone in gate_coverage.get(required_gate, set()):
+                covered_criteria = m7_gate_criteria.get(required_gate)
+                if covered_criteria is None:
+                    errors.append({"code": "GATE_ACCEPTANCE_COVERAGE_UNRESOLVED", "path": where, "message": f"{required_gate} covers part of M7 in ADR-0001 but its criterion allocation could not be read from ACCEPTANCE_CRITERIA.md."})
+                elif isinstance(task_criteria, list):
+                    task_criterion_ids = {item for item in task_criteria if isinstance(item, str)}
+                    circular = bool(task_criterion_ids & covered_criteria)
+            if circular:
+                errors.append({"code": "TASK_GATE_CIRCULAR", "path": where, "message": f"{required_gate} covers this task's {milestone} acceptance work in the canonical crosswalk and cannot be required before starting it; use separate milestone authorization."})
+        if isinstance(required_gate, str) and task.get("status") == "in_progress":
+            governance = state.get("governance", {}) if isinstance(state, dict) else {}
+            if not isinstance(governance, dict) or required_gate not in governance.get("approved_gates", []):
+                errors.append({"code": "TASK_GATE_NOT_APPROVED", "path": where, "message": f"In-progress task {task_id} requires already approved upstream gate {required_gate}."})
         plan_ref = task.get("plan_ref")
         if plan_ref is not None and (not _relative_path(plan_ref) or not (root / plan_ref).is_file()):
             errors.append({"code": "TASK_PLAN_MISSING", "path": where, "message": f"Task plan_ref is missing or not repository-relative: {plan_ref!r}."})
@@ -704,6 +805,37 @@ def _check_task_graph(backlog: dict[str, object], root: Path, state: dict[str, o
         visit(task_id)
     if cycle_found:
         errors.append({"code": "DEPENDENCY_CYCLE", "path": rel, "message": "Task dependencies contain a cycle."})
+
+    engineering = state.get("engineering", {}) if isinstance(state, dict) else {}
+    if isinstance(engineering, dict):
+        authorized = engineering.get("start_authorized") is True
+        milestone = engineering.get("next_milestone")
+        authorization = engineering.get("start_authorization_record")
+        if authorized and isinstance(authorization, dict):
+            task_id = authorization.get("task_id")
+            active_task_id = state.get("task_refs", {}).get("active_task_id") if isinstance(state.get("task_refs"), dict) else None
+            task = tasks.get(task_id) if isinstance(task_id, str) else None
+            if active_task_id != task_id or not isinstance(task, dict) or task.get("status") != "in_progress" or task.get("milestone") != milestone:
+                errors.append({"code": "MILESTONE_AUTHORIZATION_EVIDENCE", "path": rel, "message": "Authorization must identify the active in-progress task for the explicitly authorized milestone."})
+            else:
+                path = authorization.get("evidence_path")
+                matches = [
+                    item for item in task.get("evidence", [])
+                    if isinstance(item, dict) and item.get("kind") == "file"
+                    and item.get("path") == path
+                    and isinstance(item.get("provenance"), dict)
+                    and item["provenance"].get("status") == "manual_verified"
+                    and isinstance(item.get("result"), str)
+                    and "direct" in item["result"].lower()
+                    and "authoriz" in item["result"].lower()
+                ]
+                if not matches:
+                    errors.append({"code": "MILESTONE_AUTHORIZATION_EVIDENCE", "path": rel, "message": "The active task must cite a manual_verified evidence file recording the direct authorization."})
+        for task_id, task in tasks.items():
+            if task.get("status") != "in_progress" or not isinstance(task.get("milestone"), str) or not re.fullmatch(r"M[0-7]", task["milestone"]):
+                continue
+            if not authorized or task.get("milestone") != milestone:
+                errors.append({"code": "MILESTONE_AUTHORIZATION_MISMATCH", "path": rel, "message": f"In-progress engineering task {task_id} must match the explicitly authorized next milestone."})
 
     refs = state.get("task_refs", {}) if isinstance(state, dict) else {}
     if isinstance(refs, dict):

@@ -161,6 +161,8 @@ def make_fixture(root: Path) -> None:
             path.write_text("# Requirements\n## 6. Open approvals and evidence needed\n| O-01 | Assignment/instructor rules | User approval |\n", encoding="utf-8")
         elif rel == "docs/06-quality/ACCEPTANCE_CRITERIA.md":
             path.write_text("# Criteria\n| ID | Pass condition | Evidence |\n|---|---|---|\n| G1-01 | Inventory is audited. | File list. |\n| G1-02 | Mapping is recorded. | ADR. |\n| M0-01 | M0 passes. | Evidence. |\n", encoding="utf-8")
+        elif rel == "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md":
+            path.write_text((REPO / rel).read_text(encoding="utf-8"), encoding="utf-8")
         elif rel == "AGENTS.md":
             path.write_text("# Agent rules\nSee [requirements](docs/01-foundation/REQUIREMENTS.md).\n", encoding="utf-8")
         else:
@@ -794,22 +796,57 @@ class AgentContextRecoveryTests(unittest.TestCase):
                 "next_milestone_status": "in_progress",
                 "start_authorized": True,
                 "hold_reason": "",
+                "start_authorization_record": {
+                    "authorization_id": "fixture-m1-auth-001",
+                    "task_id": "M1-001",
+                    "milestone": "M1",
+                    "authority": "direct_user_or_pm_instruction",
+                    "authorized_at_utc": "2026-10-15T06:24:49Z",
+                    "scope": "Synthetic state-transition fixture; no M1 work is performed.",
+                    "evidence_path": ".agents/evidence/M1-authorization-fixture.md",
+                },
             })
+            state["task_refs"].update({"active_task_id": "M1-001", "next_task_id": "M1-001"})
             state["governance"]["next_user_action"] = "Complete the synthetic M1 transition before M2 review."
+            auth_path = source / ".agents/evidence/M1-authorization-fixture.md"
+            auth_path.parent.mkdir(parents=True, exist_ok=True)
+            auth_result = "The project authority directly authorized this synthetic M1 state transition only."
+            auth_path.write_text(auth_result + "\n", encoding="utf-8")
+            backlog_path = source / ".agents/tasks/BACKLOG.yaml"
+            backlog = json.loads(backlog_path.read_text(encoding="utf-8"))
+            backlog["tasks"].append({
+                "id": "M1-001", "title": "Synthetic M1 authorization transition", "milestone": "M1",
+                "status": "in_progress", "next_action": "Fixture only.", "depends_on": ["M0-001"],
+                "requires_user_gate_approval": None, "acceptance_criteria_ids": ["M1-01"],
+                "blocker_ids": [], "evidence": [{
+                    "kind": "file", "path": ".agents/evidence/M1-authorization-fixture.md",
+                    "detail": "Synthetic direct authorization evidence; no milestone work is performed.",
+                    "result": auth_result,
+                    "provenance": {"status": "manual_verified", "executed_at_utc": "2026-10-15T06:24:49Z",
+                        "recorded_at_utc": "2026-10-15T06:24:49Z", "exit_code": None,
+                        "git_revision": git(source, "rev-parse", "HEAD"),
+                        "log_path": ".agents/evidence/M1-authorization-fixture.md"},
+                }],
+            })
             write_json(state_path, state)
+            write_json(backlog_path, backlog)
             checkpoint_and_commit(source, "fixture M1 active")
             clone_and_assert(source, "m1-clone", "M1", "in_progress", True)
 
-            state_path, state, _, _ = state_and_backlog(source)
+            state_path, state, backlog_path, backlog = state_and_backlog(source)
             state["engineering"].update({
                 "active_milestone": None,
                 "next_milestone": "M2",
                 "next_milestone_status": "pending_user_approval",
                 "start_authorized": False,
+                "start_authorization_record": None,
                 "hold_reason": "M2 awaits explicit user authorization.",
             })
+            state["task_refs"].update({"active_task_id": None, "next_task_id": None})
+            backlog["tasks"] = [task for task in backlog["tasks"] if task["id"] != "M1-001"]
             state["governance"]["next_user_action"] = "Review synthetic M1 completion before authorizing M2."
             write_json(state_path, state)
+            write_json(backlog_path, backlog)
             checkpoint_and_commit(source, "fixture M1 to M2")
             clone_and_assert(source, "m2-clone", "M2", "pending_user_approval", False)
 
@@ -872,6 +909,134 @@ class AgentContextRecoveryTests(unittest.TestCase):
         result = self.run_script(PREFLIGHT)
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("STATE_SCHEMA", result.stdout + result.stderr)
+
+    def test_preflight_detects_gate_coverage_used_as_its_own_start_prerequisite(self) -> None:
+        coverage = agent_preflight._load_gate_milestone_coverage(self.root)
+        self.assertEqual(coverage["G3"], {"M2", "M3", "M4", "M5"})
+        self.assertEqual(coverage["G4"], {"M6", "M7"})
+        self.assertEqual(agent_preflight._load_m7_gate_criteria(REPO), {
+            "G4": {"M7-01", "M7-02", "M7-03"},
+            "G5": {"M7-04", "M7-05"},
+        })
+
+        for milestone, gate in (("M3", "G3"), ("M4", "G3"), ("M5", "G3"), ("M6", "G4")):
+            with self.subTest(milestone=milestone, gate=gate):
+                task_id = f"{milestone}-001"
+                backlog = {
+                    "format": "JSON-compatible YAML 1.2", "schema_version": 2,
+                    "project_id": "atari-videochess-rl", "tasks": [{
+                        "id": task_id, "title": "Fixture", "milestone": milestone,
+                        "status": "pending", "next_action": "Await explicit authorization.",
+                        "depends_on": [], "requires_user_gate_approval": gate,
+                        "acceptance_criteria_ids": ["M3-01"], "blocker_ids": [], "evidence": [],
+                    }],
+                }
+                state = {"task_refs": {"active_task_id": None, "next_task_id": task_id}}
+                errors: list[dict[str, str]] = []
+                agent_preflight._check_task_graph(backlog, self.root, state, set(), {"M3-01"}, errors)
+                self.assertIn("TASK_GATE_CIRCULAR", {item["code"] for item in errors})
+
+        for gate, criterion, should_be_circular in (
+            ("G4", "M7-01", True), ("G5", "M7-04", True), ("G4", "M7-04", False),
+        ):
+            with self.subTest(milestone="M7", gate=gate, criterion=criterion):
+                task = {
+                    "id": "M7-001", "title": "Fixture", "milestone": "M7",
+                    "status": "pending", "next_action": "Await upstream gate if required.",
+                    "depends_on": [], "requires_user_gate_approval": gate,
+                    "acceptance_criteria_ids": [criterion], "blocker_ids": [], "evidence": [],
+                }
+                backlog = {"format": "JSON-compatible YAML 1.2", "schema_version": 2,
+                    "project_id": "atari-videochess-rl", "tasks": [task]}
+                errors: list[dict[str, str]] = []
+                agent_preflight._check_task_graph(
+                    backlog, REPO, {"task_refs": {"active_task_id": None, "next_task_id": "M7-001"}},
+                    set(), {criterion}, errors,
+                )
+                is_circular = "TASK_GATE_CIRCULAR" in {item["code"] for item in errors}
+                self.assertEqual(is_circular, should_be_circular)
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            incomplete_root = Path(temp_dir)
+            adr_path = incomplete_root / "docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md"
+            adr_path.parent.mkdir(parents=True, exist_ok=True)
+            adr_path.write_text((REPO / adr_path.relative_to(incomplete_root)).read_text(encoding="utf-8"), encoding="utf-8")
+            task = {
+                "id": "M7-001", "title": "Fixture", "milestone": "M7",
+                "status": "pending", "next_action": "Await criterion allocation.",
+                "depends_on": [], "requires_user_gate_approval": "G4",
+                "acceptance_criteria_ids": ["M7-01"], "blocker_ids": [], "evidence": [],
+            }
+            errors: list[dict[str, str]] = []
+            agent_preflight._check_task_graph(
+                {"format": "JSON-compatible YAML 1.2", "schema_version": 2,
+                    "project_id": "atari-videochess-rl", "tasks": [task]},
+                incomplete_root, {"task_refs": {"active_task_id": None, "next_task_id": "M7-001"}},
+                set(), {"M7-01"}, errors,
+            )
+            self.assertIn("GATE_ACCEPTANCE_COVERAGE_UNRESOLVED", {item["code"] for item in errors})
+
+    def test_m3_can_be_explicitly_authorized_while_g3_remains_unapproved(self) -> None:
+        state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
+        state["engineering"].update({
+            "active_milestone": "M3", "next_milestone": "M3",
+            "next_milestone_status": "in_progress", "start_authorized": True,
+            "hold_reason": "",
+            "start_authorization_record": {
+                "authorization_id": "test-m3-auth-001", "task_id": "M3-001",
+                "milestone": "M3", "authority": "direct_user_or_pm_instruction",
+                "authorized_at_utc": "2026-10-17T00:00:00Z", "scope": "Synthetic authorization fixture only.",
+                "evidence_path": ".agents/evidence/M3-authorization-fixture.md",
+            },
+        })
+        state["task_refs"].update({"active_task_id": "M3-001", "next_task_id": "M3-001"})
+        task = {
+            "id": "M3-001", "title": "Fixture", "milestone": "M3",
+            "status": "in_progress", "next_action": "Continue explicitly authorized fixture work.",
+            "depends_on": [], "requires_user_gate_approval": None,
+            "acceptance_criteria_ids": ["M3-01"], "blocker_ids": [], "evidence": [{
+                "kind": "file", "path": ".agents/evidence/M3-authorization-fixture.md",
+                "detail": "Synthetic direct authorization evidence for preflight behavior only.",
+                "result": "The project authority directly authorized this synthetic M3 fixture.",
+                "provenance": {"status": "manual_verified", "executed_at_utc": "2026-10-17T00:00:00Z",
+                    "recorded_at_utc": "2026-10-17T00:00:00Z", "exit_code": None,
+                    "git_revision": "a" * 40, "log_path": ".agents/evidence/M3-authorization-fixture.md"},
+            }],
+        }
+        backlog = {
+            "format": "JSON-compatible YAML 1.2", "schema_version": 2,
+            "project_id": "atari-videochess-rl", "tasks": [task],
+        }
+        evidence_path = self.root / ".agents/evidence/M3-authorization-fixture.md"
+        evidence_path.parent.mkdir(parents=True, exist_ok=True)
+        evidence_path.write_text(task["evidence"][0]["result"] + "\n", encoding="utf-8")
+        errors: list[dict[str, str]] = []
+        agent_preflight._validate_state(state, errors)
+        agent_preflight._check_task_graph(
+            backlog, self.root, state, set(), {"M3-01"}, errors,
+        )
+        self.assertEqual(errors, [])
+        self.assertNotIn("G3", state["governance"]["approved_gates"])
+
+    def test_start_authorized_boolean_without_direct_record_is_rejected(self) -> None:
+        state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
+        state["engineering"].update({
+            "active_milestone": "M3", "next_milestone": "M3",
+            "next_milestone_status": "in_progress", "start_authorized": True,
+            "hold_reason": "",
+        })
+        errors: list[dict[str, str]] = []
+        agent_preflight._validate_state(state, errors)
+        self.assertIn("MILESTONE_AUTHORIZATION_EVIDENCE", {item["code"] for item in errors})
+
+    def test_a_plan_reference_does_not_set_milestone_start_authorization(self) -> None:
+        state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
+        self.assertEqual(state["engineering"]["next_milestone"], "M3")
+        self.assertFalse(state["engineering"]["start_authorized"])
+        self.assertEqual(state["engineering"]["next_milestone_status"], "pending_user_approval")
+        report = agent_preflight.build_report(REPO)
+        self.assertTrue(report["ok"], report["errors"])
+        self.assertFalse(report["summary"]["engineering_start_authorized"])
 
     def test_g1_cannot_be_ready_with_incomplete_g1_tasks(self) -> None:
         path = self.root / ".agents/state/PROJECT_STATE.yaml"

@@ -1,0 +1,40 @@
+Agent context preflight: PASS
+Governance: G2 (approved); approved: G0, G1, G2
+Next engineering milestone: M3 — not started (pending user approval)
+Next task: M3-001 (pending) — Build and verify the expert dataset
+Next task action: Await independent Pre-M3 PR review, G3 approval, and separate explicit M3 authorization. Resolve source/assignment/engine/storage decisions as applicable before any source acquisition or processing.
+Next task dependencies: M2-001
+Next task acceptance criteria: M3-01, M3-02, M3-03, M3-04
+Tasks: done=11, in_progress=0, pending=1, blocked=0, cancelled=0
+Completed task IDs: G1-001, G1-002, G1-003, G1-004, G1-005, G1-006, G1-007, G1-008, M0-001, M1-001, M2-001
+In progress task IDs: none
+Pending task IDs: M3-001
+Blocked task IDs: none
+Active blockers: none recorded
+Open confirmations:
+  O-01: Assignment/instructor rules for ALE observation extraction, action wrappers, custom PyTorch RL, Stockfish training use, and any engine use in offline evaluation.
+  O-02: Whether full-game performance on actual ALE is a hard submission requirement or a research target with an accepted fallback.
+  O-03: Whether the approximate three-week estimate is still the project deadline.
+  O-04: Actual Colab entitlement/quota, GPU availability, storage, and whether paid compute is allowed.
+  O-05: ALE/ROM runtime behavior, RAM mapping, game modes, difficulty behavior, and official evaluation settings.
+  O-06: PGN/tactical data sources, licenses, permitted use, and expected scale.
+  O-07: Stockfish version/search limits and whether it may be a benchmark opponent or offline evaluator.
+  O-08: Opponent pool and rating method for any Elo claim.
+Relevant decisions: docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md, docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md
+Acceptance criteria recognized: 51
+Last verified Git: feature/pre-m3-readiness @ 27dd9f73d2bf7545e194fe40391d0cae5f9b9003
+Live Git: feature/pre-m3-readiness @ 27dd9f73d2bf7545e194fe40391d0cae5f9b9003
+Roadmap source: exact match; 19 sections; SHA-256 fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf
+Git recovery: portable HEAD matches, but local tracked or state changes remain.
+Workspace Git status: matches checkpoint
+Portable tracked baseline: matches
+Portable Git index: matches checkpoint
+Hashed ordinary-file snapshot: differs
+Content hashes: 154 ordinary files verified by SHA-256.
+Not content-verified by this hash map: PROJECT_STATE self-reference, chat history/credential-like paths, temp files, symlinks, and the excluded directories listed below.
+Excluded directories: artifacts
+Artifact directories requiring independent manifests: artifacts
+Last verified dirty paths (19):  M .agents/state/PROJECT_STATE.yaml;  M .agents/state/SESSION_HANDOFF.md;  M .agents/state/VERIFIED_FINDINGS.md;  M .agents/tasks/BACKLOG.yaml;  M README.md;  M docs/01-foundation/PROJECT_OVERVIEW.md;  M docs/01-foundation/REQUIREMENTS.md;  M docs/02-management/RISK_REGISTER.md;  M docs/03-technical/ARCHITECTURE.md;  M docs/06-quality/TEST_STRATEGY.md; ?? .agents/evidence/POST-M2-INTEGRATION-VERIFICATION-20261017.md; ?? .agents/evidence/PRE-M3-readiness-20261017.md; ?? .agents/plans/M03-expert-dataset.md; ?? .github/workflows/preflight.yml; ?? docs/04-research/DATASET_SPEC.md; ?? docs/04-research/DECISION_REGISTER.md; ?? docs/04-research/EXPERIMENT_PROTOCOL.md; ?? docs/04-research/STOCKFISH_TEACHER.md; ?? docs/05-operations/REPRODUCIBILITY.md
+Next user action: Independently review the open Pre-M3 readiness PR against initial-idea and decide the owner/instructor questions in docs/04-research/DECISION_REGISTER.md. G3 approval and explicit M3 authorization are separate prerequisites; keep M3 not started and do not acquire data before authorization.
+WARNING WORKTREE_CONTENT_DRIFT [.]: Tracked worktree changes exist after the portable baseline checkpoint:  M .agents/state/VERIFIED_FINDINGS.md;  M .agents/tasks/BACKLOG.yaml;  M README.md;  M docs/01-foundation/PROJECT_OVERVIEW.md;  M docs/01-foundation/REQUIREMENTS.md;  M docs/02-management/RISK_REGISTER.md;  M docs/03-technical/ARCHITECTURE.md;  M docs/06-quality/TEST_STRATEGY.md.
+WARNING ARTIFACT_MANIFEST_REQUIRED [.]: Artifact/data directories are excluded from content hashing and require independent manifest verification: artifacts.

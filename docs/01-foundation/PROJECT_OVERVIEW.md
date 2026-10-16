@@ -1,11 +1,11 @@
 # Project Overview
 
 **Audience:** Project owner, instructors/reviewers, and engineering agents.<br>
-**Status:** G1 bootstrap summary; normative constraints remain in [`REQUIREMENTS.md`](REQUIREMENTS.md).
+**Status:** Project overview; normative constraints remain in [`REQUIREMENTS.md`](REQUIREMENTS.md). M0–M2 implementation is present on the integration branch. Live gate, task, and authorization status are owned by canonical state and backlog.
 
 ## Purpose
 
-Build and study a chess-playing reinforcement-learning agent for ALE `VideoChess-v5`. The roadmap's research direction combines expert/Stockfish-supervised pretraining with separately measured RL and evaluation on actual Atari Video Chess.
+Build and study a chess-playing reinforcement-learning agent for ALE `VideoChess-v5`. Independently implemented Double DQN learning from simulator transitions is the central course deliverable. Expert-game data and optional Stockfish-supervised preparation are bounded support experiments; they must not displace implementation, evaluation, and explanation of RL. The roadmap's research direction and actual Atari evaluation remain preserved as separate evidence tracks.
 
 ## Research evidence tracks
 
@@ -23,3 +23,7 @@ Build and study a chess-playing reinforcement-learning agent for ALE `VideoChess
 ## Current status source
 
 This overview does not own live phase or task status. Read `.agents/state/PROJECT_STATE.yaml` and `.agents/tasks/BACKLOG.yaml`. [`ADR-0001`](../02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md) is the sole canonical G/M crosswalk; `EXECUTION_PLAN.md` owns engineering order, dependencies, deliverables, and the fixed-file inventory.
+
+## Implementation boundary
+
+The integrated repository includes the technical bootstrap, verified ALE feasibility layer, and accepted python-chess simulator/baselines. Expert-data contracts are proposed in `docs/04-research/`; no production M3 dataset, supervised model, Double DQN trainer, or learned Atari inference path is implemented. The source, Stockfish, assignment, compute, evaluation, and M3 authorization questions remain in `REQUIREMENTS.md`.

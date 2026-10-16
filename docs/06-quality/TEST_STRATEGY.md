@@ -15,6 +15,7 @@
 `tests/test_agent_context.py` exercises:
 
 - valid and malformed JSON-compatible YAML state/backlog schemas;
+- gate-to-milestone circularity, the partial M7 G4/G5 acceptance allocation, and direct milestone authorization evidence separate from gate approval or plan references;
 - duplicate/missing task IDs, unknown dependencies, dependency cycles, and missing evidence on completed tasks;
 - valid and broken repository-relative Markdown links (external URLs are not fetched);
 - blocker/task consistency and unresolved approval reporting;
@@ -99,5 +100,19 @@ M2 tests remain focused on the acceptance contract; M4/M5 scoring, replay, targe
 | Data integrity | Teacher score perspective, split leakage, provenance, hashes | M3/M4 changes. |
 | Training/evaluation | Reproducible pretraining/RL runs, fixed opponent pools/seeds, checkpoints, raw metrics | Only after the relevant milestone and compute authorization. |
 | Delivery/recovery | Fresh-session handoff, artifact references, end-to-end reproduction | G1 and M7 gates. |
+
+## Pull request CI boundary
+
+The bounded workflow in .github/workflows/preflight.yml runs on pull requests targeting initial-idea. It uses pinned GitHub-maintained actions, read-only repository permissions, Python 3.12, agent preflight, and the standard-library context/review-bundle test modules. It installs no project dependencies, downloads no dataset, launches no Stockfish search, allocates no GPU, and runs no ALE gameplay. Its coverage protects governance, links, checkpoint/recovery behavior, and review-bundle safety; it is not a replacement for the locked full suite or M1/M2 integration tests. Checkout fetches full Git history because a recovery fixture reconstructs the recorded G1 baseline revision.
+
+The workflow does not configure branch protection or a mandatory status check. GitHub Actions execution is limited to the standard public-repository runner. Review actual PR check results before merge; no local run can claim a remote workflow passed.
+
+## M3 data integrity tests
+
+The Pre-M3 synthetic contract vectors in `tests/fixtures/pre_m3_identity_vectors.json` are exercised by `tests/test_pre_m3_contracts.py`. They verify deterministic identity hashes, board signature versus replay-state identity (clocks, repetition, castling, en passant, and transposition), source-game versus normalized-game identity when headers differ, promotion UCI identity, game-group split assignment, candidate inheritance/purge, and detection of a collapsed holdout. This tiny oracle is not a production parser or dataset implementation.
+
+When M3 is separately authorized, add focused synthetic PGN fixtures and implementation tests in line with [DATASET_SPEC.md](../04-research/DATASET_SPEC.md). Cover source/hash approval gates, archive/member byte and path caps, PGN streaming/quarantine, standard-chess replay, game-reference/history reconstruction, stable legal UCI candidates, played-move legality, perspective conversion, deterministic sampling/splits, exact board overlap audits, teacher score/MultiPV/mate semantics, output manifests, and interrupted-run recovery. Candidate/teacher rows must inherit their parent sample's split and be purged with it. Fixtures must be authored, synthetic, and contain no downloaded public games or player identities.
+
+Current canonical M3-02 requires an authorized real bounded Stockfish 19 run. Fake-UCI and configuration tests are necessary contract checks but do not pass M3-02; a PGN-only output is an intermediate artifact. The real engine run and any data acquisition remain gated by the source, assignment, and teacher approvals in `REQUIREMENTS.md`.
 
 Never use a G1 context-tool test to imply M0/M1 readiness. M0 smoke checks are separate from M1 ALE resets, observation capture, control calibration, training, or Colab runtime work.
