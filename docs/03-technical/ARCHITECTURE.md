@@ -1,6 +1,6 @@
 # System Architecture
 
-**Status:** M1/ALE slice is implemented and verified as cited. M2 implementation is in place; final checkpointed repository verification is pending. M3–M7 remain unstarted. This document describes boundaries, not a claim that unimplemented components exist.
+**Status:** M1/ALE slice is implemented and verified as cited. M2 implementation and M2-01 through M2-04 are verified in [the M2 acceptance record](../../.agents/evidence/M2-acceptance-20261016.md); M3–M7 remain unstarted. This document describes boundaries, not a claim that unimplemented components exist.
 
 **Purpose:** Explain how the verified Atari interface and proposed chess learning pipeline fit together while preserving separate sources of truth.
 
@@ -25,7 +25,7 @@ M1-01 through M1-06 are accepted and G2 is approved in the [final verification r
 
 | Milestone | Proposed component and output | Maturity |
 |---|---|---|
-| M2 | Standard-chess simulator, explicit MDP, stable UCI identities for legal moves, random-legal and heuristic baselines, seeded simulator records. | Implementation and M2-specific checks are complete; final repository verification is pending. G3 remains unapproved. |
+| M2 | Standard-chess simulator, explicit MDP, stable UCI identities for legal moves, random-legal and heuristic baselines, seeded simulator records. | Implemented and verified under M2-001; G3 remains unapproved. |
 | M3 | Provenance-aware PGN parsing and separately identified Stockfish teacher labels, with leakage-safe splits. | Proposed; no data downloaded; O-01, O-06 and O-07 remain open. |
 | M4 | Supervised pretraining from explicitly selected behavior or teacher targets; saved pretraining checkpoint and evaluation. | Proposed; no model or training code exists. |
 | M5 | Direct PyTorch Double DQN in the chess simulator with legal-move selection, replay/target networks and separately configured curriculum. | Proposed; no RL training code exists. |

@@ -2,8 +2,8 @@
 
 - **Plan ID:** M02
 - **Milestone:** M2 — Chess foundation, associated with G3
-- **Plan status:** in_progress; direct user authorization is recorded in `.agents/evidence/M2-authorization-20261016.md`; final checkpointed full-suite verification remains
-- **Task:** M2-001 in [BACKLOG.yaml](../tasks/BACKLOG.yaml), in progress
+- **Plan status:** complete; direct authorization and completion evidence are recorded under `.agents/evidence/`
+- **Task:** M2-001 in [BACKLOG.yaml](../tasks/BACKLOG.yaml), done
 - **Dependencies:** M1-001 complete; G2 approved
 - **Requirements:** B-03, B-05, B-06, B-07, B-08; unresolved approvals O-01, O-06, O-07, O-08 in [REQUIREMENTS.md](../../docs/01-foundation/REQUIREMENTS.md)
 - **Acceptance:** M2-01 through M2-04 in [ACCEPTANCE_CRITERIA.md](../../docs/06-quality/ACCEPTANCE_CRITERIA.md)
@@ -11,7 +11,7 @@
 
 ## Objective
 
-The implementation, focused M2 checks, and seeded benchmark are complete. Refresh the final checkpoint and pass the full-suite recovery check and preflight before closing the task. See the [acceptance record](../evidence/M2-acceptance-20261016.md) and [benchmark report](../evidence/M2-baseline-results-20261016.md).
+Implemented and verified a small standard-chess simulator using the locked `python-chess` dependency. Established stable legal-move identity, the agreed agent/opponent transition, agent-perspective terminal rewards, automatic chess outcomes, explicit truncation, two lightweight baselines, and a small seeded benchmark. See the [acceptance record](../evidence/M2-acceptance-20261016.md) and [benchmark report](../evidence/M2-baseline-results-20261016.md).
 
 ## Scope
 
@@ -101,4 +101,4 @@ Use the existing locked environment documented in [SETUP.md](../../docs/05-opera
 
 ## Checkpoint and recovery
 
-M2 acceptance and benchmark evidence are linked above. The final checkpoint, full-suite recovery check, and preflight are required before completion. G3 remains unapproved. Preserve all local ALE evidence. M3 requires separate authorization and prerequisite review.
+M2 acceptance and benchmark evidence are linked above. The final checkpoint, full-suite recovery check, and preflight passed. G3 remains unapproved. Preserve all local ALE evidence. M3 requires separate authorization and prerequisite review.

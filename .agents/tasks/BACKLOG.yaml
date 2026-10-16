@@ -1512,7 +1512,7 @@
       "id": "M2-001",
       "title": "Implement and verify the chess foundation",
       "milestone": "M2",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "M1-001"
       ],
@@ -1668,11 +1668,37 @@
             "git_revision": "74008b8c8705809330ef218ba3d5bd9e1b5335ab",
             "log_path": ".agents/evidence/logs/M2-full-suite-final-20261016.log"
           }
+        },
+        {
+          "kind": "test",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "PASS: 163 repository tests, including clean-clone recovery.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T07:44:04Z",
+            "recorded_at_utc": "2026-10-16T07:45:47Z",
+            "exit_code": 0,
+            "git_revision": "f5987e09d3cfa3f7ab5a50f401ec8e41329f0316",
+            "log_path": ".agents/evidence/logs/M2-full-suite-postcheckpoint-20261016.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "PASS: agent context preflight passed; artifact manifest warning reviewed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-16T07:43:58Z",
+            "recorded_at_utc": "2026-10-16T07:45:47Z",
+            "exit_code": 0,
+            "git_revision": "f5987e09d3cfa3f7ab5a50f401ec8e41329f0316",
+            "log_path": ".agents/evidence/logs/M2-preflight-final-20261016.log"
+          }
         }
       ],
-      "next_action": "Refresh the checkpoint, pass preflight and rerun the full suite after the checkpoint; then finalize M2 evidence, push the branch, and open the unmerged PR.",
+      "next_action": "",
       "plan_ref": ".agents/plans/M02-chess-foundation.md"
     }
   ],
-  "updated_at_utc": "2026-10-16T07:42:15Z"
+  "updated_at_utc": "2026-10-16T07:45:47Z"
 }

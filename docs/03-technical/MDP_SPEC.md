@@ -1,6 +1,6 @@
 # Chess Simulator MDP Specification
 
-**Status:** Accepted M2 contract under ADR-0002. Simulator implementation and M2-specific checks are recorded in [the M2 acceptance record](../../.agents/evidence/M2-acceptance-20261016.md); final checkpointed repository verification is pending. M4/M5 model choices remain open.
+**Status:** Accepted M2 contract under ADR-0002. Simulator implementation and M2-01 through M2-04 are verified in [the M2 acceptance record](../../.agents/evidence/M2-acceptance-20261016.md). M4/M5 model choices remain open.
 
 **Purpose:** Specify the smallest standard-chess decision process needed for M2 while preserving clear interfaces to future M3 PGN/teacher data, M4 supervised learning, M5 Double DQN, and M6 ALE integration. The accepted foundational choices are recorded in [ADR-0002](../02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md); implementation and acceptance evidence are recorded in the linked M2 acceptance record.
 

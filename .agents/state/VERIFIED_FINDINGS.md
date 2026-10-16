@@ -167,7 +167,7 @@ Findings are append-only historical observations. FND-021 and FND-022 record the
 - **Status:** verified 2026-10-16
 - **Finding:** The history-preserving `python-chess` simulator, fixed agent perspective, validated semantic moves, one-reply transition, automatic outcomes, decision-boundary truncation, and rollback on opponent errors are implemented. M2-01 and M2-02 pass; the focused M2 suite passed 41 tests. The full repository suite also passed 163 tests before final checkpoint synchronization; a subsequent clean-clone recovery test exposed only that the final documentation edits needed a refreshed checkpoint, retained as a failed run and rerun after checkpointing.
 - **Evidence:** `videochess_rl/simulator.py`; `tests/test_m2_simulator.py`; `.agents/evidence/M2-acceptance-20261016.md`; `.agents/evidence/logs/M2-focused-suite-final-20261016.log`; `.agents/evidence/logs/M2-full-suite-precheckpoint-pass-20261016.log`; retained failure `.agents/evidence/logs/M2-full-suite-final-20261016.log`.
-- **Impact:** The M2-specific behavior and focused tests pass. Keep M2-001 in progress until the post-checkpoint full-suite rerun and final preflight pass. G3 remains unapproved; M3 is not authorized.
+- **Impact:** The M2-specific behavior, focused tests, post-checkpoint 163-test suite, clean-clone recovery, and final preflight pass. M2-001 is complete; G3 remains unapproved and M3 is not authorized.
 
 ## FND-024 — Seeded baseline benchmark completed and replayed
 

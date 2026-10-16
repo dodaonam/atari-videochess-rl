@@ -76,7 +76,7 @@ The runner writes JSON traces and raw RGB frames under ignored `artifacts/m1/`. 
 
 ## M2 chess simulator verification design
 
-M2 implementation and focused checks cover M2-01 through M2-04; actual outcomes and retained logs are in the [M2 acceptance record](../../.agents/evidence/M2-acceptance-20261016.md). The final checkpointed repository suite is pending. Keep chess rules in python-chess and use focused unit, simulator-integration, seeded-episode, and benchmark checks. The contracts are owned by [MDP_SPEC.md](../03-technical/MDP_SPEC.md).
+M2 implementation and verification for M2-01 through M2-04 are complete; actual outcomes and retained logs are in the [M2 acceptance record](../../.agents/evidence/M2-acceptance-20261016.md). Keep chess rules in python-chess and use focused unit, simulator-integration, seeded-episode, and benchmark checks. The contracts are owned by [MDP_SPEC.md](../03-technical/MDP_SPEC.md).
 
 | Layer | Required checks | Expected evidence |
 |---|---|---|
