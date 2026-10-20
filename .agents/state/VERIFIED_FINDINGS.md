@@ -251,3 +251,10 @@ Findings are append-only historical observations. FND-021 and FND-022 record the
 - **Finding:** At corrective-hardening recovery, `PROJECT_STATE.yaml` was 2,229,784 bytes with 96 history entries. Existing semantic checksum and portable manifest validation pass; historical entries remain intact. A lossless migration design is assigned before the first sustained M3 checkpoint-heavy run, with earlier triggers at 4 MiB, 128 entries, or a measured checkpoint taking over 5 seconds.
 - **Evidence:** `docs/02-management/RISK_REGISTER.md` RSK-010; `docs/05-operations/REPRODUCIBILITY.md`; final corrective preflight/checkpoint evidence in `.agents/evidence/PRE-M3-readiness-20261017.md`.
 - **Impact:** No migration or truncation was performed. The state file is already above the ordinary file hash boundary; preflight relies on its semantic checksum plus portable manifest and clean-clone recovery.
+
+## FND-036 — Stockfish teacher search and failure handling are time-bounded
+
+- **Status:** verified by focused synthetic UCI tests (2026-10-20)
+- **Finding:** A regression test confirmed that python-chess's engine timeout alone does not cap a UCI search when the search limit contains only nodes. M3 teacher searches now apply a node cap and `movetime`, kill an unresponsive process with a separate watchdog, record the per-root time/grace, clear the transposition hash between roots, reject a missing root PV action, and preserve partial/error records. Synthetic UCI coverage exercises successful MultiPV output, malformed PV, a process that ignores the time command, and a missing binary. This fix does not replace the required bounded real Stockfish 19 run.
+- **Evidence:** `videochess_rl/data/teacher.py`; `tests/test_m3_data.py::M3ContractTests.test_synthetic_end_to_end_release_is_reconstructible_and_hashed`; implementation commit `953c1924372ee5a153c78308c4fab44e0d104ebf`.
+- **Impact:** The teacher failure path is testable and resource-bounded; rerun the real authorized subset and verify its sidecar before treating M3-02 as final.

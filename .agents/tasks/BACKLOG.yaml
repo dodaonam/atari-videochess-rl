@@ -1951,11 +1951,39 @@
             "git_revision": "2271b836f4dcf52e62e84413a4c456899138e953",
             "log_path": ".agents/evidence/M3-authorization-20261020.md"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-source-manifest-20261020.json",
+          "detail": "Portable retrieval manifest for the owner-authorized May 2022 Lichess Elite source, including archive/member hashes, ZIP CRC, HTTP metadata, limits, and the rights boundary.",
+          "result": "The authorized source was retrieved after the source decision; the archive/member hashes and ZIP integrity were verified. Third-party package rights remain unstated and no redistribution is authorized.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-20T16:26:58Z",
+            "exit_code": null,
+            "git_revision": "953c1924372ee5a153c78308c4fab44e0d104ebf",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-execution-20261020.md",
+          "detail": "Dated M3 execution report with the pilot, full source scan, provisional split/teacher results, rights boundary, resource use, and remaining deterministic-repeat/final-teacher tasks.",
+          "result": "Initial source-backed dataset and real teacher analysis are recorded; M3-03 reproducibility and final M3-02 evidence remain pending.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-20T16:26:58Z",
+            "exit_code": null,
+            "git_revision": "953c1924372ee5a153c78308c4fab44e0d104ebf",
+            "log_path": null
+          }
         }
       ],
-      "next_action": "Implement and validate the bounded source-backed M3 pipeline, complete real Stockfish 19 teacher evidence and M3-01 through M3-04 acceptance evidence, then open one PR to initial-idea and keep it unmerged.",
+      "next_action": "From clean committed code, build and verify a fresh training-support release, repeat it with identical source/config/code and compare semantic hashes, rerun bounded real Stockfish 19 analysis with the hardened time cap, finish M3-01 through M3-04 evidence, then open one PR to initial-idea and leave it unmerged.",
       "plan_ref": ".agents/plans/M03-expert-dataset.md"
     }
   ],
-  "updated_at_utc": "2026-10-16T17:46:05Z"
+  "updated_at_utc": "2026-10-20T16:27:00Z"
 }

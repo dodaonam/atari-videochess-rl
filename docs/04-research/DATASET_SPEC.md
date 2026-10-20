@@ -1,6 +1,6 @@
 # M3 Dataset and Provenance Contract
 
-**Status:** M3 implementation contract. The May 2022 Lichess Elite source was selected and bounded internal use authorized on 2026-10-20. The archive was retrieved and hash-verified, and a 355,535-game source scan produced a reproducible 1,000-game / 20,000-requested-position training-support release on 2026-10-20. Portable source, release, and teacher manifests are under `.agents/evidence/`; bulk archive and records remain in ignored local artifact storage. The third-party package license remains unstated/unverified.
+**Status:** M3 implementation contract. The May 2022 Lichess Elite source was selected and bounded internal use authorized on 2026-10-20. The archive was retrieved and hash-verified, and a full 355,535-game source scan produced an initial 1,000-game / 20,000-requested-position training-support release on 2026-10-20; a clean deterministic repeat is still pending. Portable source, pilot, release, and teacher manifests are under `.agents/evidence/`; bulk archive and records remain in ignored local artifact storage. The third-party package license remains unstated/unverified.
 **Owner:** Dataset shape, lineage, validation, sampling, and split semantics for M3.
 **Related records:** [REQUIREMENTS.md](../01-foundation/REQUIREMENTS.md) owns O-06; [M03 plan](../../.agents/plans/M03-expert-dataset.md) owns execution order; [decision register](DECISION_REGISTER.md) records owner choices.
 

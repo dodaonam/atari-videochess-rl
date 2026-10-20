@@ -1,0 +1,55 @@
+{
+  "authorization_id": "M3-001-owner-20261020",
+  "code_revision": "45f068e39a2d516cf5a6a4ed3c9f53671ca5d776",
+  "code_tree_sha256": "66a816b04883b1159db86e5d417f34ade70a8d9b357bd9977eae658918c5d311",
+  "config_sha256": "ddc5f371c350e507c1b32066438fa070a7ae9f528910e7f473593a8a9cacb88d",
+  "dirty_code_tree": false,
+  "outputs": [
+    {
+      "bytes": 1462,
+      "path": "config.json",
+      "sha256": "8285113b6e26473d5b506082fd9dad3fa48d82c3de1a9618f6eed8926a12539f"
+    },
+    {
+      "bytes": 549828,
+      "path": "games.jsonl",
+      "sha256": "f9a3d1bdf6c7860eb91bf61660aacc3961393edd9b7905b53f089437ee466ef8"
+    },
+    {
+      "bytes": 15491559,
+      "path": "positions.jsonl",
+      "sha256": "aa132b51fd90caa805f347f5f36f5cbca091b5fe9811599a36cc60f2b9a47ab7"
+    },
+    {
+      "bytes": 0,
+      "path": "rejections.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 5060,
+      "path": "source_manifest.json",
+      "sha256": "f2ff571ce81a47b1191f7b57c2f2d16c48ebde6b334aeb6e82d7b173dc2b2935"
+    },
+    {
+      "bytes": 1175979,
+      "path": "split.json",
+      "sha256": "29ad1531fa25c48b655a8e0f4d63549eafb03b171764635f706ce0afd450aeb3"
+    },
+    {
+      "bytes": 1268963,
+      "path": "stats.json",
+      "sha256": "2cda8fea2005a49e3cacf0486d0082f066d8f5d9a8361e15c726bffe69283961"
+    }
+  ],
+  "release_id": "24bb40a33f4dfbc024ac8dc3a670d67b6c19841295d964226bfc6b1d14e2887e",
+  "schema": "videochess-release/1.0",
+  "schema_versions": [
+    "videochess-game/1.0",
+    "videochess-position/1.0",
+    "videochess-split/1.0"
+  ],
+  "source_archive_sha256": "ad374c8fd9fb2fe5f03c1297aa1d47cbbce5caedf6e6e2d387ee816930afdb11",
+  "source_decision_id": "M3-SOURCE-ELITE-2022-05-LOCAL-20261020",
+  "source_member_sha256": "0f88f18836be7e321aa1e0211b618e78d4e92065c126c45c95a6a55c1500a8e6",
+  "split_assignment_sha256": "0f299f8e5cfb3817e8ee9a03c08f4723fea2f0547cd52364b31aa43cfdbd5f9d"
+}
