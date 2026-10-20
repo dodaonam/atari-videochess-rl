@@ -12,7 +12,7 @@ The third-party May 2022 package has no stated license. The owner authorized bou
 - Feature branch: `feature/m3-expert-dataset`, created from the verified integration baseline. Existing local work in the original checkout was preserved.
 - Data and teacher runs used clean committed implementation revision `29c411bfd48dca8f1d463c758078175092639ccb`.
 - Implementation commits before final evidence refresh: `94b20f0`, `8faf3ba`, `7195b2a`, `45f068e`, `953c192`, `29c411b`.
-- Exactly one M3 PR is intended, targeting `initial-idea`; its URL, final pushed SHA, and remote verification are recorded in the final delivery report/PR metadata after creation. It must remain unmerged.
+- Exactly one M3 PR is open: [PR #3](https://github.com/dodaonam/atari-videochess-rl/pull/3), targeting `initial-idea`. It remains unmerged for PM review; the current head and final GitHub check are recorded in PR metadata.
 - The archive, PGN, release JSONL, full split ledger/statistics, engine binary, credentials, and model artifacts are not tracked. Portable manifests and sanitized evidence logs are tracked.
 - M0–M2 history remains intact. No README change, dependency install, model training, M4–M7 implementation, commit-history rewrite, merge, or G3 approval was performed.
 
@@ -76,7 +76,7 @@ These are implementation evidence results. Independent PM review is still requir
 - Lock check: `uv lock --check --python /usr/bin/python3` passed; no dependency installation or lock change.
 - Compile check: `python -m compileall -q videochess_rl/data tests/test_m3_data.py` passed.
 - Agent preflight: passed at `29c411b`, zero errors and one expected `ARTIFACT_MANIFEST_REQUIRED` warning reviewed against the source/release/teacher manifests. The execution log records checkpoint `cp-29c411bf-20261020T174944823949Z`; a final checkpoint and post-checkpoint preflight are part of delivery verification.
-- Clean-clone recovery and GitHub Actions for the final pushed SHA: to be recorded after PR delivery; CI is limited to the workflow's declared preflight/context tests and is not evidence of M3 data or real Stockfish execution. Full local command results and raw-log hashes are in `.agents/evidence/logs/M3-final-verification-20261020.log`.
+- Clean clone at `472005991f35580b7df4e3e2b5a2876798ae1ae6`: agent preflight passed; all 211 tests passed. Timestamps, exit codes, and raw-log hashes are in `.agents/evidence/logs/M3-clean-clone-final-4720059.log`. GitHub Actions context job passed on that SHA (run 39470754745); it covers context/preflight only, not M3 data or real Stockfish. The later head adds only this delivery evidence and is being rechecked on its own final SHA. Full local test logs are in `.agents/evidence/logs/M3-final-verification-20261020.log`.
 
 ## H. Engineering audit
 

@@ -2168,11 +2168,37 @@
             "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
             "log_path": ".agents/evidence/logs/M3-final-verification-20261020.log"
           }
+        },
+        {
+          "kind": "test",
+          "command": "python -m unittest discover -s tests -v",
+          "result": "PASS",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-20T18:01:46Z",
+            "recorded_at_utc": "2026-10-20T18:02:27Z",
+            "exit_code": 0,
+            "git_revision": "472005991f35580b7df4e3e2b5a2876798ae1ae6",
+            "log_path": ".agents/evidence/logs/M3-clean-clone-final-4720059.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "PASS",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-20T18:01:52Z",
+            "recorded_at_utc": "2026-10-20T18:01:53Z",
+            "exit_code": 0,
+            "git_revision": "472005991f35580b7df4e3e2b5a2876798ae1ae6",
+            "log_path": ".agents/evidence/logs/M3-clean-clone-final-4720059.log"
+          }
         }
       ],
       "next_action": "Project Manager: independently review M3 PR #3 (https://github.com/dodaonam/atari-videochess-rl/pull/3) against M3-01 through M3-04. Keep the PR open and unmerged until acceptance. Keep G3 unapproved; do not mark M3 done or begin M4–M7 without separate authorization.",
       "plan_ref": ".agents/plans/M03-expert-dataset.md"
     }
   ],
-  "updated_at_utc": "2026-10-20T17:58:35Z"
+  "updated_at_utc": "2026-10-20T18:02:27Z"
 }
