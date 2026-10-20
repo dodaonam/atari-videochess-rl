@@ -7,6 +7,7 @@ import json
 import math
 import os
 import platform
+import threading
 import time
 from collections.abc import Mapping
 from pathlib import Path
@@ -79,6 +80,35 @@ def _engine_config(engine: chess.engine.SimpleEngine, requested: dict[str, Any])
     return result
 
 
+def _terminate_engine(engine: chess.engine.SimpleEngine) -> None:
+    """Close the protocol and kill a subprocess that does not exit promptly."""
+    try:
+        engine.close()
+    except Exception:
+        pass
+    try:
+        transport = getattr(engine, "transport", None)
+        process = transport.get_extra_info("subprocess") if transport is not None else None
+        if process is not None and process.poll() is None:
+            process.kill()
+            process.wait(timeout=2)
+    except Exception:
+        pass
+
+
+def _kill_engine_process(engine: chess.engine.SimpleEngine) -> bool:
+    """Interrupt a UCI subprocess without cancelling python-chess's future."""
+    try:
+        transport = getattr(engine, "transport", None)
+        process = transport.get_extra_info("subprocess") if transport is not None else None
+        if process is not None and process.poll() is None:
+            process.kill()
+            return True
+    except Exception:
+        pass
+    return False
+
+
 def run_teacher(
     release_dir: Path, games_path: Path, output_dir: Path, *,
     engine_path: Path, expected_engine_sha256: str,
@@ -141,9 +171,13 @@ def run_teacher(
         "max_positions": max_positions, "nodes_per_position": nodes_per_position,
         "multipv": multipv, "threads": threads, "hash_mib": hash_mib,
         "timeout_seconds": format(timeout_seconds, ".3f"),
+        "watchdog_grace_seconds": format(min(2.0, timeout_seconds * 0.1), ".3f"),
+        "clear_hash_between_positions": True,
         "max_wall_seconds": max_wall_seconds,
         "max_output_bytes": max_output_bytes,
         "node_budget_semantics": "one UCI nodes limit per root position search, shared across its MultiPV lines",
+        "time_budget_semantics": "UCI movetime cap per root position, also used as the python-chess protocol response deadline",
+        "watchdog_grace_semantics": "min(2 seconds, 10 percent of the per-root cap, remaining run wall budget after the cap)",
         "raw_root_perspective": "side_to_move",
         "normalization": {
             "id": "cp-tanh-400/v1",
@@ -178,12 +212,17 @@ def run_teacher(
     result_rows: list[dict[str, Any]] = []
     failures: list[dict[str, Any]] = []
     engine = None
+    engine_usable = True
     effective_options: dict[str, Any] = {}
     engine_id: dict[str, Any] = {}
     output_dir.mkdir(parents=True, exist_ok=False)
 
-    def status_row(position: dict[str, Any], status: str, reason: str) -> dict[str, Any]:
-        return {
+    def status_row(
+        position: dict[str, Any], status: str, reason: str,
+        search_time_cap_seconds: float | None = None,
+        watchdog_grace_seconds: float | None = None,
+    ) -> dict[str, Any]:
+        row = {
             "schema": TEACHER_SCHEMA, "teacher_run_id": teacher_run_id,
             "teacher_config_sha256": teacher_config_sha,
             "dataset_release_id": release["release_id"],
@@ -193,6 +232,11 @@ def run_teacher(
             "root_perspective": "side_to_move", "status": status,
             "reason": reason[:240],
         }
+        if search_time_cap_seconds is not None:
+            row["search_time_cap_seconds"] = round(search_time_cap_seconds, 6)
+        if watchdog_grace_seconds is not None:
+            row["watchdog_grace_seconds"] = round(watchdog_grace_seconds, 6)
+        return row
 
     try:
         engine = chess.engine.SimpleEngine.popen_uci(str(engine_path), timeout=timeout_seconds)
@@ -200,7 +244,7 @@ def run_teacher(
         if "Stockfish 19" not in engine_id.get("name", ""):
             raise TeacherError(f"UCI identity is not Stockfish 19: {engine_id.get('name', 'unknown')}")
         supported = engine.options
-        missing = [name for name in ("Threads", "Hash", "MultiPV", "UCI_Chess960") if name not in supported]
+        missing = [name for name in ("Threads", "Hash", "MultiPV", "UCI_Chess960", "Clear Hash") if name not in supported]
         if missing:
             raise TeacherError(f"Stockfish is missing required UCI options: {missing}")
         configure_options = {"Threads": threads, "Hash": hash_mib}
@@ -211,18 +255,22 @@ def run_teacher(
         effective_options = _engine_config(engine, configure_options)
         for position_index, position in enumerate(selected):
             elapsed_total = time.monotonic() - started
-            if elapsed_total > max_wall_seconds:
+            remaining_wall = max_wall_seconds - elapsed_total
+            if remaining_wall <= 0.01:
                 for remaining in selected[position_index:]:
                     failure = {"sample_id": remaining["sample_id"], "status": "not_attempted", "reason": "teacher wall-time cap reached"}
                     failures.append(failure)
                     result_rows.append(status_row(remaining, "not_attempted", failure["reason"]))
                 break
+            position_time_cap = min(timeout_seconds, remaining_wall)
+            watchdog_grace = min(2.0, position_time_cap * 0.1, max(0.0, remaining_wall - position_time_cap))
             game = games.get(position["game_id"])
             if game is None:
                 failure = {"sample_id": position["sample_id"], "status": "error", "reason": "missing parent game"}
                 failures.append(failure)
                 result_rows.append(status_row(position, "error", failure["reason"]))
                 continue
+            search_timed_out = threading.Event()
             try:
                 board = reconstruct_position(game, position["ply_index"])
                 if canonical_fen(board) != position["fen"]:
@@ -233,13 +281,26 @@ def run_teacher(
                     result_rows.append(status_row(position, "terminal", failure["reason"]))
                     continue
                 before = time.monotonic()
-                clear_hash = {"Clear Hash": None} if "Clear Hash" in supported else {}
-                if clear_hash:
-                    engine.configure(clear_hash)
-                infos = engine.analyse(
-                    board, chess.engine.Limit(nodes=nodes_per_position),
-                    multipv=multipv,
+                engine.configure({"Clear Hash": None})
+                def expire_search() -> None:
+                    if _kill_engine_process(engine):
+                        search_timed_out.set()
+
+                watchdog = threading.Timer(
+                    timeout_seconds + watchdog_grace,
+                    expire_search,
                 )
+                watchdog.daemon = True
+                watchdog.start()
+                try:
+                    infos = engine.analyse(
+                        board, chess.engine.Limit(nodes=nodes_per_position, time=position_time_cap),
+                        multipv=multipv,
+                    )
+                finally:
+                    watchdog.cancel()
+                if search_timed_out.is_set():
+                    raise TimeoutError("Stockfish did not return before the per-position watchdog")
                 # python-chess owns these options because they follow each
                 # board/search. Verify their effective values after searching.
                 effective_options.update(_engine_config(engine, {
@@ -252,7 +313,9 @@ def run_teacher(
                 for rank, info in enumerate(infos, 1):
                     pv = info.get("pv") or []
                     first_move = pv[0].uci() if pv else None
-                    if first_move is not None and first_move not in position["legal_moves_uci"]:
+                    if first_move is None:
+                        raise TeacherError("engine returned no usable principal variation/root action")
+                    if first_move not in position["legal_moves_uci"]:
                         raise TeacherError(f"engine returned illegal root action {first_move}")
                     raw_score, white_score = _score_data(info, board)
                     if raw_score is None:
@@ -284,14 +347,23 @@ def run_teacher(
                     "root_fen": position["fen"],
                     "split": position["split"], "split_id": position["split_id"],
                     "root_perspective": "side_to_move",
+                    "search_time_cap_seconds": round(position_time_cap, 6),
+                    "watchdog_grace_seconds": round(watchdog_grace, 6),
                     "status": "ok", "multipv_lines": lines,
                     "engine": {"name": engine_id.get("name"), "author": engine_id.get("author"), "binary_sha256": binary_sha},
                 })
             except (chess.engine.EngineError, TimeoutError, OSError, TeacherError, ValueError) as exc:
-                reason = f"{type(exc).__name__}: {str(exc)[:240]}"
+                reason = (
+                    f"TimeoutError: Stockfish exceeded {position_time_cap:.3f}s search cap plus {watchdog_grace:.3f}s watchdog grace"
+                    if search_timed_out.is_set() else f"{type(exc).__name__}: {str(exc)[:240]}"
+                )
                 failures.append({"sample_id": position["sample_id"], "status": "error", "reason": reason})
-                result_rows.append(status_row(position, "error", reason))
-                if engine is None or getattr(engine, "returncode", None) is not None:
+                result_rows.append(status_row(position, "error", reason, position_time_cap, watchdog_grace))
+                if isinstance(exc, (chess.engine.EngineError, TimeoutError, OSError)):
+                    engine_usable = False
+                    if engine is not None:
+                        _terminate_engine(engine)
+                if engine is None or not engine_usable or getattr(engine, "returncode", None) is not None:
                     for remaining in selected[position_index + 1:]:
                         failure = {"sample_id": remaining["sample_id"], "status": "not_attempted", "reason": "engine exited after a position failure"}
                         failures.append(failure)
@@ -309,13 +381,12 @@ def run_teacher(
         raise TeacherError(f"Stockfish teacher run failed: {type(exc).__name__}: {exc}") from exc
     finally:
         if engine is not None:
-            try:
-                engine.quit()
-            except Exception:
+            if engine_usable:
                 try:
-                    engine.close()
+                    engine.quit()
                 except Exception:
                     pass
+            _terminate_engine(engine)
     elapsed_total = round(time.monotonic() - started, 3)
     successful_rows = [row for row in result_rows if row["status"] == "ok"]
     if not successful_rows:
@@ -361,8 +432,22 @@ def run_teacher(
         },
         "search": {
             "requested_options": requested_options, "effective_options": effective_options,
-            "limit_type": "nodes", "nodes_per_root_position": nodes_per_position,
+            "limit_type": "nodes_and_time", "nodes_per_root_position": nodes_per_position,
             "node_budget_semantics": teacher_config["node_budget_semantics"],
+            "time_budget_semantics": teacher_config["time_budget_semantics"],
+            "watchdog_grace_semantics": teacher_config["watchdog_grace_semantics"],
+            "max_search_time_cap_seconds": timeout_seconds,
+            "watchdog_grace_seconds": min(2.0, timeout_seconds * 0.1),
+            "search_watchdog_seconds": timeout_seconds + min(2.0, timeout_seconds * 0.1),
+            "applied_search_time_caps_seconds": [
+                row["search_time_cap_seconds"] for row in result_rows
+                if row.get("search_time_cap_seconds") is not None
+            ],
+            "applied_watchdog_graces_seconds": [
+                row["watchdog_grace_seconds"] for row in result_rows
+                if row.get("watchdog_grace_seconds") is not None
+            ],
+            "clear_hash_between_positions": True,
             "reported_nodes_per_analyzed_root": root_nodes,
             "reported_nodes_total": sum(root_nodes),
             "multipv": multipv, "threads": threads, "hash_mib": hash_mib,
@@ -471,6 +556,8 @@ def verify_teacher_run(
     seen: set[str] = set()
     score_types = {"cp": 0, "mate": 0}
     nodes_by_root: list[int] = []
+    applied_time_caps: list[float] = []
+    applied_watchdog_graces: list[float] = []
     success_count = 0
     failure_rows: list[dict[str, str]] = []
     with rows_path.open("r", encoding="utf-8") as stream:
@@ -482,6 +569,18 @@ def verify_teacher_run(
             seen.add(sample_id)
             if row.get("schema") != TEACHER_SCHEMA or row.get("teacher_run_id") != expected_run_id:
                 raise TeacherError(f"teacher row schema/run identity mismatch at line {line_number}")
+            applied_time_cap = row.get("search_time_cap_seconds")
+            applied_grace = row.get("watchdog_grace_seconds")
+            if applied_time_cap is not None:
+                if (isinstance(applied_time_cap, bool) or not isinstance(applied_time_cap, (int, float))
+                        or not 0 < applied_time_cap <= float(config["timeout_seconds"])):
+                    raise TeacherError(f"teacher per-position time cap is invalid at line {line_number}")
+                applied_time_caps.append(float(applied_time_cap))
+            if applied_grace is not None:
+                if (isinstance(applied_grace, bool) or not isinstance(applied_grace, (int, float))
+                        or not 0 <= applied_grace <= min(2.0, float(applied_time_cap) * 0.1) + 1e-6):
+                    raise TeacherError(f"teacher watchdog grace is invalid at line {line_number}")
+                applied_watchdog_graces.append(float(applied_grace))
             if row.get("dataset_release_id") != release_check["release_id"]:
                 raise TeacherError(f"teacher row dataset identity mismatch at line {line_number}")
             position = positions[sample_id]
@@ -550,6 +649,11 @@ def verify_teacher_run(
         raise TeacherError("teacher manifest position totals differ from result rows")
     if failure_rows != manifest.get("positions_failed_or_unattempted"):
         raise TeacherError("teacher failure summary differs from result rows")
+    search = manifest.get("search", {})
+    if applied_time_caps != search.get("applied_search_time_caps_seconds"):
+        raise TeacherError("teacher per-position search caps differ from the manifest")
+    if applied_watchdog_graces != search.get("applied_watchdog_graces_seconds"):
+        raise TeacherError("teacher watchdog grace values differ from the manifest")
     if score_types != manifest.get("multipv_score_types") or nodes_by_root != manifest.get("search", {}).get("reported_nodes_per_analyzed_root"):
         raise TeacherError("teacher score/node summaries differ from result rows")
     return {

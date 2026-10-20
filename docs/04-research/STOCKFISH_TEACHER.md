@@ -53,12 +53,12 @@ Every teacher run has an immutable config and run ID. Record:
 - binary relative provenance, binary SHA-256, release/archive checksum, license identifier and retained license-text hash;
 - UCI handshake transcript with paths and environment details sanitized;
 - Threads, Hash MiB, MultiPV, Chess960 setting, tablebase setting, and any other non-default UCI option;
-- search limit type and value, such as nodes or depth; wall time is a watchdog, not an interchangeable search limit;
+- search limits and values, including the node cap and a per-root `movetime` cap; also record the separate process watchdog/grace;
 - root board FEN, side to move, history replay hash, candidate list, and root-move restriction if used;
 - raw best-move/PV UCI strings, score type, raw value, engine-reported perspective, depth, seldepth, nodes, and elapsed time;
 - teacher configuration hash, code revision, dataset/source hash, per-position status, and failure reason.
 
-Use one engine thread for the first pilot and a fixed, bounded hash allocation. Prefer a node limit for repeatable workload; also set a wall-time watchdog and record both consumed nodes and elapsed time. A node limit does not promise bit-for-bit identical results across engine builds, CPU instruction sets, transposition-table state, or library versions. Use a fresh engine game / clear hash for independent positions unless a documented experiment deliberately carries search state between positions.
+Use one engine thread for the first pilot and a fixed, bounded hash allocation. The M3 runner applies both a node cap and a per-root `movetime` cap, then uses a process watchdog to kill an engine that fails to return within the cap plus its recorded grace. It records consumed nodes and elapsed time. A node limit does not promise bit-for-bit identical results across engine builds, CPU instruction sets, transposition-table state, or library versions. Clear the hash between root positions unless a documented experiment deliberately carries search state between positions.
 
 Initial candidate protocol proposal, not a measured run setting: one thread, Hash at most 256 MiB, MultiPV at most 3, and a starting cap of 50,000 nodes per root in the tiny timing pilot. The M3 mission authorizes a bounded run below these ceilings; select actual limits from measured throughput and record them in run evidence. Any expanded role or label campaign needs separate review and must protect the Double DQN schedule.
 

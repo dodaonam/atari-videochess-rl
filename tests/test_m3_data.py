@@ -616,6 +616,79 @@ class M3ContractTests(unittest.TestCase):
             self.assertEqual(teacher_verified["positions_analyzed"], 2)
             self.assertEqual(teacher_manifest["multipv_score_types"]["cp"], 6)
 
+            invalid_engine = temp / "fake-stockfish-invalid-pv"
+            invalid_script = fake_engine.read_text(encoding="utf-8")
+            invalid_script = invalid_script.replace("multipv = 1\nboard =", "multipv = 1\ngo_count = 0\nboard =")
+            invalid_script = invalid_script.replace(
+                'elif command == "go":\n',
+                'elif command == "go":\n        go_count += 1\n',
+            ).replace(
+                'pv {move.uci()}")',
+                'pv {"a1a1" if go_count == 1 else move.uci()}")',
+            )
+            self.assertIn('"a1a1" if go_count == 1', invalid_script)
+            self.assertNotEqual(invalid_script, fake_engine.read_text(encoding="utf-8"))
+            invalid_engine.write_text(invalid_script, encoding="utf-8")
+            invalid_engine.chmod(0o755)
+            invalid_sha = hashlib.sha256(invalid_engine.read_bytes()).hexdigest()
+            invalid_dir = temp / "teacher-invalid-pv"
+            with self.assertRaisesRegex(TeacherError, "no successful position records"):
+                run_teacher(
+                    output, output / "games.jsonl", invalid_dir,
+                    engine_path=invalid_engine, expected_engine_sha256=invalid_sha,
+                    license_path=license_path, expected_license_sha256=license_sha,
+                    max_positions=1, sample_seed=9, nodes_per_position=500,
+                    multipv=3, threads=1, hash_mib=64, timeout_seconds=5,
+                    max_wall_seconds=60, authorization_id=AUTHORIZATION_ID,
+                    source_decision_id=SOURCE_DECISION_ID, confirm_write=True,
+                    code_revision="a" * 40, allow_synthetic_source_for_test=True,
+                )
+            invalid_partial = json.loads((invalid_dir / "teacher.partial.jsonl").read_text(encoding="utf-8").splitlines()[0])
+            self.assertEqual(invalid_partial["status"], "error")
+            self.assertIn("no usable principal variation/root action", invalid_partial["reason"])
+            self.assertTrue((invalid_dir / "failure.json").is_file())
+
+            timeout_engine = temp / "fake-stockfish-timeout"
+            timeout_script = fake_engine.read_text(encoding="utf-8").replace(
+                "import chess\n\nmultipv = 1",
+                "import chess\nimport time\n\nmultipv = 1",
+            ).replace(
+                '    elif command == "go":\n        moves = sorted(board.legal_moves, key=lambda move: move.uci())',
+                '    elif command == "go":\n        time.sleep(3)\n        moves = sorted(board.legal_moves, key=lambda move: move.uci())',
+            )
+            self.assertIn("time.sleep(3)", timeout_script)
+            timeout_engine.write_text(timeout_script, encoding="utf-8")
+            timeout_engine.chmod(0o755)
+            timeout_sha = hashlib.sha256(timeout_engine.read_bytes()).hexdigest()
+            timeout_dir = temp / "teacher-timeout"
+            with self.assertRaisesRegex(TeacherError, "no successful position records"):
+                run_teacher(
+                    output, output / "games.jsonl", timeout_dir,
+                    engine_path=timeout_engine, expected_engine_sha256=timeout_sha,
+                    license_path=license_path, expected_license_sha256=license_sha,
+                    max_positions=1, sample_seed=9, nodes_per_position=500,
+                    multipv=3, threads=1, hash_mib=64, timeout_seconds=0.5,
+                    max_wall_seconds=60, authorization_id=AUTHORIZATION_ID,
+                    source_decision_id=SOURCE_DECISION_ID, confirm_write=True,
+                    code_revision="a" * 40, allow_synthetic_source_for_test=True,
+                )
+            self.assertTrue((timeout_dir / "teacher.partial.jsonl").is_file())
+            self.assertTrue((timeout_dir / "failure.json").is_file())
+            timeout_partial = json.loads((timeout_dir / "teacher.partial.jsonl").read_text(encoding="utf-8").splitlines()[0])
+            self.assertEqual(timeout_partial["status"], "error")
+
+            with self.assertRaisesRegex(TeacherError, "binary is missing"):
+                run_teacher(
+                    output, output / "games.jsonl", temp / "teacher-missing-engine",
+                    engine_path=temp / "missing-stockfish", expected_engine_sha256="0" * 64,
+                    license_path=license_path, expected_license_sha256=license_sha,
+                    max_positions=1, sample_seed=9, nodes_per_position=500,
+                    multipv=3, threads=1, hash_mib=64, timeout_seconds=5,
+                    max_wall_seconds=60, authorization_id=AUTHORIZATION_ID,
+                    source_decision_id=SOURCE_DECISION_ID, confirm_write=True,
+                    code_revision="a" * 40, allow_synthetic_source_for_test=True,
+                )
+
     def test_release_refuses_existing_target(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             target = Path(directory) / "release"

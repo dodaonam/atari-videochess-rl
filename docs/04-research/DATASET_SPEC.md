@@ -1,6 +1,6 @@
 # M3 Dataset and Provenance Contract
 
-**Status:** M3 implementation contract. The May 2022 Lichess Elite source was selected and bounded internal use authorized on 2026-10-20; archive retrieval and ingestion have not yet been performed. Its third-party package license remains unstated/unverified.
+**Status:** M3 implementation contract. The May 2022 Lichess Elite source was selected and bounded internal use authorized on 2026-10-20. The archive was retrieved and hash-verified, and a 355,535-game source scan produced a reproducible 1,000-game / 20,000-requested-position training-support release on 2026-10-20. Portable source, release, and teacher manifests are under `.agents/evidence/`; bulk archive and records remain in ignored local artifact storage. The third-party package license remains unstated/unverified.
 **Owner:** Dataset shape, lineage, validation, sampling, and split semantics for M3.
 **Related records:** [REQUIREMENTS.md](../01-foundation/REQUIREMENTS.md) owns O-06; [M03 plan](../../.agents/plans/M03-expert-dataset.md) owns execution order; [decision register](DECISION_REGISTER.md) records owner choices.
 
@@ -16,7 +16,7 @@ The official rated-standard fallback is published as monthly `.pgn.zst` archives
 
 **Decision and boundary:** The owner authorized bounded internal academic research and local derived-dataset generation from this exact package despite its unstated third-party license. This is project-scope authorization, not a public-rights grant or legal determination. Keep the archive and bulk derived records in ignored local storage; do not upload or redistribute them. Preserve remaining license uncertainty and stop if an explicit conflicting restriction is found. Official Lichess rated-standard and broadcast exports are not substitute sources under this decision.
 
-At the start of M3, no archive had been downloaded. Retrieval facts, integrity values, and sample-derived statistics are recorded only after the bounded source command succeeds; no publisher-reported value is treated as a local measurement.
+At M3 initiation, no archive had been downloaded. The bounded retrieval completed after the source decision was recorded. Actual archive/member measurements and the full source-backed dataset statistics are recorded in [M3 execution evidence](../../.agents/evidence/M3-execution-20261020.md); publisher-reported values remain separately identified.
 
 ### Facts and unknowns to carry into M3
 
