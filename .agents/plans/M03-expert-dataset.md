@@ -2,11 +2,11 @@
 
 - **Plan ID:** M03
 - **Milestone:** M3 — Expert dataset, within the engineering sequence owned by **EXECUTION_PLAN.md**
-- **Plan status:** ready for independent review; this plan is not authorization to execute M3
-- **Canonical task:** M3-001 in **BACKLOG.yaml**, pending owner/instructor prerequisites and separate M3 authorization
+- **Plan status:** in progress under direct owner authorization recorded in the M3-001 authorization evidence
+- **Canonical task:** M3-001 in **BACKLOG.yaml**, in progress under direct owner authorization
 - **Dependencies:** M2-001 complete and G2 approved; retain G3 unapproved until its closure review. G3 covers M2–M5 and is not a prerequisite to start M3.
 - **Acceptance:** M3-01 through M3-04 in **docs/06-quality/ACCEPTANCE_CRITERIA.md**
-- **Requirements:** B-04, B-05, B-07; O-01, O-04, O-06, and O-07 remain open
+- **Requirements:** B-04, B-05, B-07; see scoped owner decisions in REQUIREMENTS.md and DECISION_REGISTER.md
 - **Relevant decision:** accepted **ADR-0002** for stable UCI action identity, Board history, and color perspective; it does not approve data, Stockfish, or neural architecture
 - **Contracts:** [DATASET_SPEC.md](../../docs/04-research/DATASET_SPEC.md), [STOCKFISH_TEACHER.md](../../docs/04-research/STOCKFISH_TEACHER.md), [EXPERIMENT_PROTOCOL.md](../../docs/04-research/EXPERIMENT_PROTOCOL.md), [RL_FIRST_ALIGNMENT.md](../../docs/04-research/RL_FIRST_ALIGNMENT.md), [REPRODUCIBILITY.md](../../docs/05-operations/REPRODUCIBILITY.md)
 
@@ -18,13 +18,13 @@ Create the smallest reproducible, provenance-preserving, leakage-audited expert 
 
 Before any source retrieval or processing:
 
-1. The PM/owner records a separate, explicit M3 start authorization in the task evidence and project state. G3 approval is not a start prerequisite; G3 closes only after its covered M2–M5 work and G3 review conditions are satisfied. A plan, completed M2 dependency, or readiness PR is not authorization.
-2. The source and use decision O-06 is resolved for a specific archive, terms, retention, transformation, and any intended distribution.
-3. O-01/O-07 are resolved before Stockfish searches, labels, engine-opponent use, or offline engine evaluation. PGN-only output may be an intermediate M3 artifact if its source is approved; it does not by itself pass M3-02 or complete M3.
-4. O-04 is resolved before external storage, Colab, paid compute, or limits beyond verified local resources.
-5. A bounded source profile confirms archive size, PGN member/header behavior, and parser feasibility. Do not use publisher game-count/size listings as measured local evidence.
+1. Direct M3-001 authorization is recorded in the task evidence and project state. G3 approval is not a start prerequisite and remains unapproved.
+2. The owner approved bounded local/internal use of the exact source; the decision and third-party rights uncertainty are recorded before retrieval. No redistribution is authorized.
+3. The owner confirmed bounded Stockfish 19 offline teacher use for this project. This does not authorize engine inference, an engine opponent, or offline benchmark evaluation. PGN-only output is an intermediate and cannot pass M3-02.
+4. This mission uses local CPU/storage only. Colab, cloud storage, and paid compute remain unauthorized and are not needed.
+5. A bounded source profile must confirm actual archive/member sizes and header behavior before full processing. Publisher counts/sizes are not local measurements.
 
-The May 2022 Lichess Elite package remains a candidate, not an approved source. Its publisher listing reports 355,535 games and 93 MB but does not state a license. The official Lichess rated-standard export and official broadcast data are alternatives with different sizes, distributions, and terms. Never ingest a source until the decision is recorded.
+The owner selected and authorized bounded internal academic use of the May 2022 Lichess Elite package. The source/use decision and rights limitation are recorded in .agents/evidence/M3-source-decision-20261020.md. The publisher listing reports 355,535 games and 93 MB but states no package license; official Lichess CC0 terms apply to official exports and do not establish terms for this third-party package. Keep the archive and bulk derived records local and do not redistribute them. Stop if an explicit conflicting restriction is found.
 
 ## Scope
 
