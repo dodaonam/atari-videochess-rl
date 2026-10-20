@@ -2170,9 +2170,9 @@
           }
         }
       ],
-      "next_action": "After one PR is created against initial-idea, leave it open and unmerged for independent PM review of M3-01 through M3-04. Keep G3 unapproved; do not mark M3 done or begin M4–M7 without separate authorization.",
+      "next_action": "Project Manager: independently review M3 PR #3 (https://github.com/dodaonam/atari-videochess-rl/pull/3) against M3-01 through M3-04. Keep the PR open and unmerged until acceptance. Keep G3 unapproved; do not mark M3 done or begin M4–M7 without separate authorization.",
       "plan_ref": ".agents/plans/M03-expert-dataset.md"
     }
   ],
-  "updated_at_utc": "2026-10-20T16:27:00Z"
+  "updated_at_utc": "2026-10-20T17:58:35Z"
 }
