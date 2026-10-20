@@ -1020,6 +1020,7 @@ class AgentContextRecoveryTests(unittest.TestCase):
 
     def test_start_authorized_boolean_without_direct_record_is_rejected(self) -> None:
         state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
+        state["engineering"].pop("start_authorization_record", None)
         state["engineering"].update({
             "active_milestone": "M3", "next_milestone": "M3",
             "next_milestone_status": "in_progress", "start_authorized": True,
@@ -1029,14 +1030,17 @@ class AgentContextRecoveryTests(unittest.TestCase):
         agent_preflight._validate_state(state, errors)
         self.assertIn("MILESTONE_AUTHORIZATION_EVIDENCE", {item["code"] for item in errors})
 
-    def test_a_plan_reference_does_not_set_milestone_start_authorization(self) -> None:
+    def test_direct_m3_authorization_is_reflected_in_live_state(self) -> None:
         state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
         self.assertEqual(state["engineering"]["next_milestone"], "M3")
-        self.assertFalse(state["engineering"]["start_authorized"])
-        self.assertEqual(state["engineering"]["next_milestone_status"], "pending_user_approval")
+        self.assertTrue(state["engineering"]["start_authorized"])
+        self.assertEqual(state["engineering"]["next_milestone_status"], "in_progress")
+        authorization = state["engineering"]["start_authorization_record"]
+        self.assertEqual(authorization["authorization_id"], "M3-001-owner-20261020")
+        self.assertEqual(authorization["task_id"], "M3-001")
         report = agent_preflight.build_report(REPO)
         self.assertTrue(report["ok"], report["errors"])
-        self.assertFalse(report["summary"]["engineering_start_authorized"])
+        self.assertTrue(report["summary"]["engineering_start_authorized"])
 
     def test_g1_cannot_be_ready_with_incomplete_g1_tasks(self) -> None:
         path = self.root / ".agents/state/PROJECT_STATE.yaml"

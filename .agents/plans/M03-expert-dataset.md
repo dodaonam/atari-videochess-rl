@@ -39,8 +39,8 @@ The owner selected and authorized bounded internal academic use of the May 2022 
 
 ## Exclusions
 
-- No data download, ingestion, or production dataset generation until the source gate is approved.
-- No bulk Stockfish labels or engine opponent/evaluation until O-01/O-07 permit that role.
+- No source other than the specifically selected May 2022 package under its recorded local/internal-use boundary.
+- No Stockfish opponent, inference, benchmark, or offline evaluation role; this mission permits only bounded offline teacher labels.
 - No neural model, supervised training, checkpoint, simulator RL, M6/ALE play, or M7 evaluation.
 - No fixed model architecture, feature planes, global action vocabulary, loss weighting, or Q-value initialization.
 - No Colab/GPU or paid storage/compute without separate approval.
@@ -75,21 +75,21 @@ Planned CLI shape:
 - profile an already authorized source with a maximum archive-byte, game, and header-sample limit;
 - validate a source manifest and PGN stream without writing a release;
 - build a dataset from an approved local archive with required explicit caps;
-- optionally label a deterministic capped position list only when teacher config and O-01/O-07 approval IDs are supplied;
+- label a deterministic capped position list under the recorded M3 authorization and source-decision IDs; broader O-01/O-07 questions do not extend this exact teacher scope;
 - verify an existing release manifest and report all mismatches.
 
 No default command downloads a URL or processes all input. CLI output states the exact source/config hashes and planned limits before any write. A separate affirmative option is required to start each write-producing command.
 
 ## Processing and recovery sequence
 
-1. Re-read state/backlog and inspect explicit M3 authorization, O-01/O-04/O-06/O-07, plan, ADR-0002, and acceptance criteria.
+1. Re-read state/backlog and inspect explicit M3 authorization, the scoped O-01/O-04/O-06/O-07 decisions, plan, ADR-0002, and acceptance criteria.
 2. Confirm source approval and capture terms/provenance; measure actual archive byte ceiling and expected disk use.
 3. Download only within approved scope to a staging path; retain original bytes read-only, verify SHA-256/ZIP CRC/member size, and record retrieval facts. If source has no published checksum, record that fact and compute a local digest after retrieval.
 4. Run a no-output profile on a capped game/header sample. Review observed header, variant, result, rating, time-control, comments/variation, parse-error, and player-identifier statistics.
 5. Validate/replay games one at a time. Quarantine errors with stable reason codes and source ordinals; never discard silently.
 6. Generate game rows and deterministic bounded position samples. Store initial FEN and full UCI move sequence once per game; each position references `game_id` plus `ply_index`, current FEN, `history_state_id`, legal UCI moves, played UCI move, and White/side-to-move result. This stage may produce a validated PGN-only intermediate, not a completed M3 release.
 7. Deduplicate normalized game sequences while retaining source aliases. Assign normalized-game groups using the versioned hash rule. Choose a board-signature owner only among partitions where it occurs; purge other partition rows and every candidate/teacher record attached to them without moving groups, retain an audit ledger, report coverage distortion, and fail/warn on configured holdout thresholds.
-8. Validate the PGN-only intermediate before teacher analysis. Then, only with O-01/O-07 and explicit bounded-run authorization, run deterministic limited Stockfish 19 analysis. Record actual binary/license hashes/UCI identity/options, node limit, MultiPV, root perspective, raw cp/mate/WDL types, normalization, elapsed time, and per-position errors. MultiPV is not exhaustive. This real run is required for canonical M3-02; fake-engine tests do not pass the criterion.
+8. Validate the PGN-only intermediate before teacher analysis. Under the exact recorded M3 owner authorization, run deterministic limited Stockfish 19 analysis. Record actual binary/license hashes/UCI identity/options, node limit, MultiPV, root perspective, raw cp/mate/WDL types, normalization, elapsed time, and per-position errors. MultiPV is not exhaustive. This real run is required for canonical M3-02; fake-engine tests do not pass the criterion.
 9. Read the approved PGN member directly as a bounded stream. Reject path traversal, absolute/backslash/symlink/duplicate members, encrypted data, corrupt CRC, unsupported encoding, configured compressed/decompressed/member/game/ratio excesses, and output collisions. Never extract arbitrary archive paths. Apply per-tier compressed/decompressed ceilings, a per-member ceiling, a proposed 200:1 early compression-ratio stop, fixed-chunk streaming byte enforcement, single-game/comment bounds, disk reserve, and OS-enforced memory limits. These initial ceilings are proposals and must be confirmed against a permitted source profile before acquisition.
 10. Write atomic run-specific batch segments and a monotonic journal. Resume only when source/member/schema/config/code/parser identities and every committed segment hash match; reject gaps, overlaps, and duplicate sample IDs. A mismatch preserves the staging artifact and requires a new run ID.
 11. Validate foreign keys, legal candidates, replay-state IDs, split/holdout invariants, counts, and hashes. Atomically finalize on the same filesystem to a previously nonexistent release path. Interrupted or PGN-only runs remain staging/intermediate and are not reported as completed M3.

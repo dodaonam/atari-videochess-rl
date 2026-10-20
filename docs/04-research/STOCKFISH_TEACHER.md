@@ -1,6 +1,6 @@
 # Stockfish Teacher and Supervised Targets
 
-**Status:** Proposed protocol only. O-01 and O-07 remain open; no engine analysis or labeling was run for Pre-M3. Under the current canonical M3 acceptance criteria, an authorized real teacher run is required to pass M3-02; this document or a fake-engine test alone is insufficient.
+**Status:** The owner authorized bounded Stockfish 19 teacher labeling for M3 on 2026-10-20. The broader O-01/O-07 instructor and non-teacher role questions remain open. No engine analysis or labeling was run for Pre-M3. Under the current canonical M3 acceptance criteria, an actual real teacher run is required to pass M3-02; this document or a fake-engine test alone is insufficient.
 **Related records:** [M03 plan](../../.agents/plans/M03-expert-dataset.md), [dataset contract](DATASET_SPEC.md), [experiment protocol](EXPERIMENT_PROTOCOL.md), and [owner decision register](DECISION_REGISTER.md).
 
 ## 1. Keep target meanings separate
@@ -29,7 +29,7 @@ At least one simpler baseline is legal random selection or a fixed transparent h
 |---|---|---|---|
 | Played-move behavior cloning | Lowest data and compute complexity; target exists in each accepted PGN position. | Expert actions are demonstrations, not optimality certificates; game context and time controls affect behavior. | Optional, small, and time-boxed baseline only if it does not delay Double DQN. |
 | Position outcome prediction | Uses game result without engine; provides a distinct outcome baseline. | Outcome is noisy and highly dependent on both players and later moves. | Optional multi-task experiment, not merged into move labels. |
-| Teacher top-k ranking | Adds engine-preferred candidates and interpretable ranking signal. | Requires engine permission and CPU; MultiPV covers only its returned lines. | Optional after O-01/O-07 and a measured pilot. |
+| Teacher top-k ranking | Adds engine-preferred candidates and interpretable ranking signal. | MultiPV covers only its returned lines; it is not a label for every legal move. | Bounded M3 teacher labeling is authorized; any expanded ranking experiment is optional and must not delay Double DQN. |
 | Every-legal-move candidate scores | Provides broad candidate supervision. | Approximately one restricted-root search per legal move, often dozens of searches per position. | Defer unless a measured pilot and assignment value justify the cost. |
 | Value regression from Stockfish | Dense board signal and simple storage. | Score scale, mate discontinuity, search noise, and perspective can be mistaken for probability or RL return. | Store raw data separately; transform only in a named M4 experiment. |
 
@@ -60,7 +60,7 @@ Every teacher run has an immutable config and run ID. Record:
 
 Use one engine thread for the first pilot and a fixed, bounded hash allocation. Prefer a node limit for repeatable workload; also set a wall-time watchdog and record both consumed nodes and elapsed time. A node limit does not promise bit-for-bit identical results across engine builds, CPU instruction sets, transposition-table state, or library versions. Use a fresh engine game / clear hash for independent positions unless a documented experiment deliberately carries search state between positions.
 
-Initial candidate protocol proposal, not an approved setting: one thread, Hash at most 256 MiB, MultiPV at most 3, and a starting cap of 50,000 nodes per root in the tiny timing pilot. Measure the pilot before choosing any larger cap. The exact cap, label coverage, and use of Stockfish require O-01/O-07 resolution and are not set by this document.
+Initial candidate protocol proposal, not a measured run setting: one thread, Hash at most 256 MiB, MultiPV at most 3, and a starting cap of 50,000 nodes per root in the tiny timing pilot. The M3 mission authorizes a bounded run below these ceilings; select actual limits from measured throughput and record them in run evidence. Any expanded role or label campaign needs separate review and must protect the Double DQN schedule.
 
 ### M3 completion pathway (mandatory acceptance alignment)
 
@@ -123,5 +123,5 @@ The archive ceiling applies only to the publisher-reported 93 MB Elite candidate
 
 The current project already locks python-chess. PGN parsing, ZIP access, JSON Lines, gzip, SHA-256, and manifests can use the existing package and Python standard library. Do not add a data-frame/database dependency for M3. If the approved source is a Zstandard stream, decide separately whether to add a pinned Zstandard Python package or require a documented host utility; do not hide that dependency.
 
-No Stockfish search, offline evaluation, benchmark-opponent use, labels, model training, or inference integration is authorized by this contract. M3 must wait for the source/use decision O-06 and for the assignment/engine-role decisions O-01 and O-07 wherever the selected task needs them.
+The project owner’s 2026-10-20 mission authorizes this M3 task's bounded Stockfish 19 offline teacher labels. The older proposed authority boundary above is superseded only for that exact scope. Stockfish remains excluded from inference, opponent, and offline benchmark roles. O-01/O-07 retain broader instructor and role questions; if authoritative course rules contradict this scoped project direction, stop the affected operation and record the evidence.
 
