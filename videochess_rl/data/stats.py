@@ -210,7 +210,12 @@ def summarize_dataset(
             "status": "unavailable",
             "reason": "The selected Elite package is documented as omitting clock times; clock comments are not retained in the release.",
         },
-        "rating_metadata": dict(sorted(rating.items())),
+        # Preserve both states even when one count is zero. Release verification
+        # recomputes this availability summary from the game records.
+        "rating_metadata": {
+            "one_or_more_missing": rating["one_or_more_missing"],
+            "both_present": rating["both_present"],
+        },
         "time_control_distribution": dict(sorted(times.items())),
         "header_key_frequency": dict(sorted(Counter(
             key for game in games for key in game.get("header_keys", [])

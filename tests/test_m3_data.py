@@ -32,6 +32,7 @@ from videochess_rl.data.source import (
     SourceError, download_archive, hash_member, inspect_zip, validate_source_manifest,
 )
 from videochess_rl.data.split import SplitError, board_signature_owner, split_and_purge
+from videochess_rl.data.stats import summarize_dataset
 from videochess_rl.data.teacher import TeacherError, _cp_transform, _score_data, run_teacher, verify_teacher_run
 from videochess_rl.data.cli import _resolve_engine_path
 from tests.test_pre_m3_contracts import FIXTURE
@@ -798,6 +799,26 @@ class M3ContractTests(unittest.TestCase):
             batch.write_text("{}\n", encoding="utf-8")
             with self.assertRaises(ExportError):
                 write_batches(run_dir, games, positions, input_identity=identity, batch_size=1, resume=True)
+
+    def test_rating_metadata_reports_zero_count_categories(self) -> None:
+        game = {
+            "game_id": "a" * 64, "moves_uci": ["e2e4"], "ply_count": 1,
+            "white_elo": 2400, "black_elo": 2300,
+            "time_control": "300+0", "date": "2026.01.01", "header_keys": [],
+        }
+        source = {
+            "source_id": "test-source", "publisher": "synthetic",
+            "archive_sha256": "b" * 64, "archive_bytes": 1,
+            "member": {"name": "games.pgn"}, "member_sha256": "c" * 64,
+            "member_bytes": 1,
+        }
+        summary = summarize_dataset(
+            [game], [], [], {}, {}, sampling={}, resources={},
+            config_sha256="d" * 64, source_manifest=source,
+        )
+        self.assertEqual(summary["rating_metadata"], {
+            "one_or_more_missing": 0, "both_present": 1,
+        })
 
     def test_synthetic_end_to_end_release_is_reconstructible_and_hashed(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
