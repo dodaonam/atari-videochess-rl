@@ -1,0 +1,64 @@
+M3 FINAL LOCAL VERIFICATION LOG
+All results below were produced on committed implementation revision 29c411bfd48dca8f1d463c758078175092639ccb. No dependency installation, lockfile change, or system configuration change was made.
+
+[focused M3 tests]
+Command: python -m unittest discover -s tests -p test_m3_data.py -v
+Started UTC: 2026-10-20T17:49:58Z
+Finished UTC: 2026-10-20T17:50:02Z
+Result: PASS
+Exit code: 0
+Raw log SHA-256: eee7e35187eaeeee9ac98a4aef2eee97df29cbdc7c7578d810acc8ca914bdaba
+Note: 19 tests passed.
+
+[initial full suite attempt]
+Command: python -m unittest discover -s tests -v
+Started UTC: 2026-10-20T17:50:02Z
+Finished UTC: 2026-10-20T17:50:42Z
+Result: FAIL
+Exit code: 1
+Raw log SHA-256: 0410dab93a75922923a8c319458018e64ee0224317cabb6664956b080a236174
+Note: 211 tests ran; one M0 smoke test could not find the existing verified host Stockfish binary because the isolated worktree PATH omitted its host environment bin directory. No code or test was changed.
+
+[full repository suite rerun]
+Command: python -m unittest discover -s tests -v
+Environment: PATH was prefixed with /home/dodaonam/Projects/atari-videochess-rl/.venv/bin, which contains the verified Stockfish 19 symlink.
+Started UTC: 2026-10-20T17:51:04Z
+Finished UTC: 2026-10-20T17:51:44Z
+Result: PASS
+Exit code: 0
+Raw log SHA-256: 13e25963cf48a3a50c175170c19f4aa68dac7d596942f888ae2f9cfca6234302
+Note: All 211 tests passed using the existing verified Stockfish host binary.
+
+[lock verification]
+Command: uv lock --check --python /usr/bin/python3
+Started UTC: 2026-10-20T17:51:44Z
+Finished UTC: 2026-10-20T17:51:44Z
+Result: PASS
+Exit code: 0
+Raw log SHA-256: b43e125c16bfafce81915ef4b5191e265891911a8a005e61f8a525f1427ff529
+
+[compile check]
+Command: python -m compileall -q videochess_rl/data tests/test_m3_data.py
+Started UTC: 2026-10-20T17:51:44Z
+Finished UTC: 2026-10-20T17:51:44Z
+Result: PASS
+Exit code: 0
+Raw log SHA-256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+
+[agent preflight]
+Command: python3 scripts/agent_preflight.py
+Started UTC: 2026-10-20T17:51:44Z
+Finished UTC: 2026-10-20T17:51:44Z
+Result: PASS
+Exit code: 0
+Raw log SHA-256: 07ca3a5cd604955914d559e5606ae28d7c78324f53677867e10d4de1aca95fba
+
+[diff whitespace check]
+Command: git diff --check
+Started UTC: 2026-10-20T17:51:44Z
+Finished UTC: 2026-10-20T17:51:44Z
+Result: PASS
+Exit code: 0
+Raw log SHA-256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+
+Preflight reported no errors and one expected ARTIFACT_MANIFEST_REQUIRED warning for ignored local artifacts; those are independently covered by the M3 source/release/teacher manifests.

@@ -1,0 +1,302 @@
+{
+  "artifact_storage": {
+    "cloud_or_paid_compute_used": false,
+    "git_tracked_bulk_data": false,
+    "repeat_release": "artifacts/m3/training-support/release-r4",
+    "source_archive": "artifacts/m3/source/lichess_elite_2022-05.zip",
+    "teacher_run": "artifacts/m3/teacher-training-support/teacher-r2",
+    "training_support_release": "artifacts/m3/training-support/release-r3"
+  },
+  "authorization_id": "M3-001-owner-20261020",
+  "build_identity": {
+    "code_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+    "code_tree_sha256": "84f9e8823d154248f104a95e11ebb84982c3891a6bfe4f4fb49f43d9dc90913b",
+    "config_path": "configs/data/m3-training-support.toml",
+    "config_sha256": "33186c332a956e006da473b4e37046e3cb953fd775d67be1906050ea4ed6a69f",
+    "dirty_code_tree": false,
+    "max_elapsed_seconds": 7200,
+    "max_games": 1000,
+    "max_output_bytes": 2147483648,
+    "max_positions": 20000,
+    "max_positions_per_game": 32,
+    "max_workers": 1,
+    "memory_mib": 1024,
+    "sampling_seeds": {
+      "game": 20261020,
+      "position": 20261022,
+      "split": 20261023
+    },
+    "schema_versions": [
+      "videochess-game/1.0",
+      "videochess-position/1.0",
+      "videochess-split/1.0"
+    ]
+  },
+  "dataset": {
+    "board_signatures_cross_split_after": 0,
+    "board_signatures_cross_split_before": 142,
+    "config_sha256": "33186c332a956e006da473b4e37046e3cb953fd775d67be1906050ea4ed6a69f",
+    "distinct_history_states_after": 18765,
+    "distinct_history_states_before": 18809,
+    "distribution_shift_after_purge_fraction": {
+      "ply_band": {
+        "early_10_39": 0.01257784928378658,
+        "late_80_plus": 0.006600840772264915,
+        "middle_40_79": 0.013078212580444282,
+        "opening_0_9": -0.032256902636495735
+      },
+      "side_to_move": {
+        "black": 0.00592788042350012,
+        "white": -0.00592788042350012
+      },
+      "side_to_move_result": {
+        "draw": 0.0006030932115424492,
+        "loss": -0.0007775275067469223,
+        "win": 0.00017443429520452858
+      },
+      "white_result": {
+        "draw": 0.0006030932115424492,
+        "loss": 4.305584388625272e-05,
+        "win": -0.0006461490554287019
+      }
+    },
+    "game_counts_by_split": {
+      "test": 103,
+      "train": 795,
+      "validation": 102
+    },
+    "game_lengths_plies": {
+      "max": 517,
+      "median": 79,
+      "min": 8,
+      "p10": 42,
+      "p90": 131
+    },
+    "games_accepted_before_dedup": 355353,
+    "games_quarantined": 182,
+    "games_rejected": 0,
+    "games_seen": 355535,
+    "holdout_retention": {
+      "test": 0.9562993956299396,
+      "train": 0.9662364087238507,
+      "validation": 0.9495758718190387
+    },
+    "legal_candidate_rows_after_purge": 578351,
+    "legal_candidate_rows_before_purge": 597164,
+    "legal_candidates_per_position": {
+      "max": 64,
+      "median": 32,
+      "min": 1,
+      "p10": 13,
+      "p90": 43
+    },
+    "manifest_listed_output_bytes": 39868538,
+    "normalized_duplicate_groups": 134,
+    "normalized_duplicate_observations": 411,
+    "opening_concentration": {
+      "hhi": 0.003114,
+      "largest_prefix_group_games": 34,
+      "unique_8_ply_prefixes": 755
+    },
+    "output_hashes": {
+      "config.json": "a644e952b47d339cd38955f9129b535596db9f42b0337e1b23167350f5df4110",
+      "games.jsonl": "526fc9966d4521dee92fc4bb7e011d9a59fce1dc703810a0ed3d6edbb2e154c7",
+      "positions.jsonl": "0063f88788649e50141da68f67eb0708fb54f444cd892ff4ca4383cceae5af64",
+      "rejections.jsonl": "fce94dc0c721fb84b45ccb812667b712030f4f327901d1a7ee19b4392524a42e",
+      "source_manifest.json": "f2ff571ce81a47b1191f7b57c2f2d16c48ebde6b334aeb6e82d7b173dc2b2935",
+      "split.json": "5fd790f76cb5a7da7fd0d209e7e33fd2e8979cdfe1df7678d634f7bf798abeab",
+      "stats.json": "0d1bd564c8f3624fba5dbbeef6cf8d513d56ad587b408917304d3bc397364e0c"
+    },
+    "positions_after_purge": {
+      "test": 2057,
+      "train": 15196,
+      "validation": 2015
+    },
+    "positions_before_purge": {
+      "test": 2151,
+      "train": 15727,
+      "validation": 2122
+    },
+    "positions_retained_after_purge": 19268,
+    "positions_selected_before_purge": 20000,
+    "purged_candidate_rows": 18813,
+    "purged_samples": 732,
+    "release_directory_bytes": 39870594,
+    "release_id": "9e3944e1e35ca0d774e479a49d9b93eb769d14e52ffec4bc6f886bd4695b8991",
+    "release_manifest_sha256": "574bcc52c3b6ad91c64c283a8f93ab05eb5a7e07ca138fa5d3e2da26edb09ada",
+    "required_metadata_missing": {
+      "black_elo": 0,
+      "date": 0,
+      "time_control": 0,
+      "white_elo": 0
+    },
+    "selected_games": 1000,
+    "source_duplicates": 0,
+    "split_assignment_sha256": "84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e"
+  },
+  "r3": {
+    "disk_free_before_bytes": 41349103616,
+    "disk_required_with_reserve_bytes": 5662328254,
+    "exit_code": 0,
+    "finished_at_utc": "2026-10-20T17:00:10Z",
+    "peak_rss_mib": 288.96,
+    "pipeline_elapsed_seconds": 1856.379,
+    "raw_log_sha256": "1b1b4712b62f7c25671d91db40fcd33426d9120891eccfacce4ff6b7ef39d85d",
+    "run_id": "m3-training-support-20261020-r3",
+    "started_at_utc": "2026-10-20T16:29:13Z",
+    "verified_at": {
+      "source_release": {
+        "exit_code": 0,
+        "finished_at_utc": "2026-10-20T17:01:21Z",
+        "started_at_utc": "2026-10-20T17:00:27Z"
+      },
+      "source_release_teacher": {
+        "exit_code": 0,
+        "finished_at_utc": "2026-10-20T17:05:44Z",
+        "started_at_utc": "2026-10-20T17:03:58Z"
+      }
+    },
+    "wrapper_child_system_cpu_seconds": 0.781,
+    "wrapper_child_user_cpu_seconds": 1852.28
+  },
+  "r4": {
+    "disk_free_before_bytes": 41225904128,
+    "disk_required_with_reserve_bytes": 5662328254,
+    "exit_code": 0,
+    "finished_at_utc": "2026-10-20T17:36:45Z",
+    "peak_rss_mib": 289.04,
+    "pipeline_elapsed_seconds": 1840.553,
+    "raw_log_sha256": "aba4ff4abc4884ce37cf5decaba457f6d4b4e6ba965c29bfbf77ab7a19b8f92a",
+    "run_id": "m3-training-support-20261020-r4",
+    "started_at_utc": "2026-10-20T17:06:04Z",
+    "verified_at": {
+      "source_release_teacher": {
+        "exit_code": 0,
+        "finished_at_utc": "2026-10-20T17:39:12Z",
+        "started_at_utc": "2026-10-20T17:37:27Z"
+      }
+    },
+    "wrapper_child_system_cpu_seconds": 0.796,
+    "wrapper_child_user_cpu_seconds": 1836.481
+  },
+  "repeat_comparison": {
+    "all_file_bytes_identical": true,
+    "compared_files": {
+      "config.json": {
+        "match": true,
+        "r3": "a644e952b47d339cd38955f9129b535596db9f42b0337e1b23167350f5df4110",
+        "r4": "a644e952b47d339cd38955f9129b535596db9f42b0337e1b23167350f5df4110"
+      },
+      "games.jsonl": {
+        "match": true,
+        "r3": "526fc9966d4521dee92fc4bb7e011d9a59fce1dc703810a0ed3d6edbb2e154c7",
+        "r4": "526fc9966d4521dee92fc4bb7e011d9a59fce1dc703810a0ed3d6edbb2e154c7"
+      },
+      "manifest.json": {
+        "match": true,
+        "r3": "574bcc52c3b6ad91c64c283a8f93ab05eb5a7e07ca138fa5d3e2da26edb09ada",
+        "r4": "574bcc52c3b6ad91c64c283a8f93ab05eb5a7e07ca138fa5d3e2da26edb09ada"
+      },
+      "manifest.sha256": {
+        "match": true,
+        "r3": "91824243a528ae91ecf216e88da1d9e4b3bc9b0f2b87170c3b98653052f7ff87",
+        "r4": "91824243a528ae91ecf216e88da1d9e4b3bc9b0f2b87170c3b98653052f7ff87"
+      },
+      "positions.jsonl": {
+        "match": true,
+        "r3": "0063f88788649e50141da68f67eb0708fb54f444cd892ff4ca4383cceae5af64",
+        "r4": "0063f88788649e50141da68f67eb0708fb54f444cd892ff4ca4383cceae5af64"
+      },
+      "rejections.jsonl": {
+        "match": true,
+        "r3": "fce94dc0c721fb84b45ccb812667b712030f4f327901d1a7ee19b4392524a42e",
+        "r4": "fce94dc0c721fb84b45ccb812667b712030f4f327901d1a7ee19b4392524a42e"
+      },
+      "source_manifest.json": {
+        "match": true,
+        "r3": "f2ff571ce81a47b1191f7b57c2f2d16c48ebde6b334aeb6e82d7b173dc2b2935",
+        "r4": "f2ff571ce81a47b1191f7b57c2f2d16c48ebde6b334aeb6e82d7b173dc2b2935"
+      },
+      "split.json": {
+        "match": true,
+        "r3": "5fd790f76cb5a7da7fd0d209e7e33fd2e8979cdfe1df7678d634f7bf798abeab",
+        "r4": "5fd790f76cb5a7da7fd0d209e7e33fd2e8979cdfe1df7678d634f7bf798abeab"
+      },
+      "stats.json": {
+        "match": true,
+        "r3": "0d1bd564c8f3624fba5dbbeef6cf8d513d56ad587b408917304d3bc397364e0c",
+        "r4": "0d1bd564c8f3624fba5dbbeef6cf8d513d56ad587b408917304d3bc397364e0c"
+      }
+    },
+    "comparison_finished_at_utc": "2026-10-20T17:37:22Z",
+    "result": "PASS",
+    "same_file_names": true,
+    "same_release_id": true,
+    "semantic_manifest_fields_equal": {
+      "config_sha256": true,
+      "outputs": true,
+      "release_id": true,
+      "schema": true,
+      "schema_versions": true,
+      "source_archive_sha256": true,
+      "source_member_sha256": true,
+      "split_assignment_sha256": true
+    }
+  },
+  "schema": "videochess-m3-reproducibility-evidence/1.0",
+  "source": {
+    "archive_bytes": 97163552,
+    "archive_sha256": "ad374c8fd9fb2fe5f03c1297aa1d47cbbce5caedf6e6e2d387ee816930afdb11",
+    "archive_url": "https://database.nikonoel.fr/lichess_elite_2022-05.zip",
+    "crc_verified": true,
+    "member_bytes": 326476031,
+    "member_crc32": "eaf7e457",
+    "member_name": "lichess_elite_2022-05.pgn",
+    "member_sha256": "0f88f18836be7e321aa1e0211b618e78d4e92065c126c45c95a6a55c1500a8e6",
+    "publisher": "Lichess Elite Database (third-party curated package)",
+    "retrieved_at_utc": "2026-10-20T15:25:10Z",
+    "rights_boundary": "bounded internal academic research; local retention; no upload or redistribution of archive or bulk derived game records"
+  },
+  "source_decision_id": "M3-SOURCE-ELITE-2022-05-LOCAL-20261020",
+  "teacher": {
+    "engine_binary_sha256": "0f83d24cc46d2c66c60f16001af5444873bc112b7d028594513426894c12da19",
+    "engine_name": "Stockfish 19",
+    "license_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+    "manifest_sha256": "4a2cb32ed163a215b661dc9b3801a4cb17f20a408dd5aab9e3219456d36d7891",
+    "mate_handling": "signed mate distance retained in its own type; no arbitrary centipawn constant and no scalar normalization",
+    "movetime_cap_seconds": 30.0,
+    "multipv_score_types": {
+      "cp": 377,
+      "mate": 3
+    },
+    "nodes_per_root": 5000,
+    "normalization": {
+      "formula": "tanh(cp / 400.0), rounded to 8 decimal places",
+      "id": "cp-tanh-400/v1",
+      "scope": "centipawn scores only; mate scores remain typed and have no normalized scalar"
+    },
+    "positions_analyzed": 128,
+    "positions_failed_or_unattempted": 0,
+    "positions_selected": 128,
+    "reported_nodes_total": 640363,
+    "run_id": "e431381ddcf7f62e89d2a82cca55dff916c3823d2928995c0c08370e477116e3",
+    "score_perspective": "side_to_move; White conversion stored separately",
+    "search_elapsed_seconds": 2.768,
+    "settings": {
+      "Hash": 64,
+      "MultiPV": 3,
+      "Threads": 1,
+      "UCI_Chess960": false,
+      "UCI_ShowWDL": true
+    },
+    "sidecar_bytes": 323862,
+    "sidecar_path": "artifacts/m3/teacher-training-support/teacher-r2/teacher.jsonl",
+    "sidecar_sha256": "d1f0620beb6eb985ec36c85a5eb6846917656221f3c5a2171e4eecc38c879d6f",
+    "teacher_command_exit_code": 0,
+    "teacher_command_finished_at_utc": "2026-10-20T17:03:37Z",
+    "teacher_command_started_at_utc": "2026-10-20T17:01:51Z",
+    "teacher_raw_log_sha256": "4a2cb32ed163a215b661dc9b3801a4cb17f20a408dd5aab9e3219456d36d7891",
+    "throughput_positions_per_second": 46.2428,
+    "watchdog_grace_seconds": 2.0
+  }
+}

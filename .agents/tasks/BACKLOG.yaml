@@ -1941,7 +1941,7 @@
         {
           "kind": "file",
           "path": ".agents/evidence/M3-authorization-20261020.md",
-          "detail": "Direct owner authorization for M3-001 implementation, bounded source use, Stockfish teacher run, and one open/unmerged PR; G3 remains unapproved.",
+          "detail": "Direct M3-001 owner authorization, bounded activity scope, and G3 boundary.",
           "result": "The project owner directly authorized M3-001 and its bounded local/internal source, offline Stockfish 19 teacher, implementation, verification, commit/push, and PR scope.",
           "provenance": {
             "status": "manual_verified",
@@ -1954,34 +1954,223 @@
         },
         {
           "kind": "file",
-          "path": ".agents/evidence/M3-source-manifest-20261020.json",
-          "detail": "Portable retrieval manifest for the owner-authorized May 2022 Lichess Elite source, including archive/member hashes, ZIP CRC, HTTP metadata, limits, and the rights boundary.",
-          "result": "The authorized source was retrieved after the source decision; the archive/member hashes and ZIP integrity were verified. Third-party package rights remain unstated and no redistribution is authorized.",
+          "path": ".agents/evidence/M3-source-decision-20261020.md",
+          "detail": "Source decision recorded before retrieval; bounded local/internal use only.",
+          "result": "The exact May 2022 package was selected and authorized for local/internal academic research; no archive or bulk-derived-record redistribution is permitted.",
           "provenance": {
             "status": "verified",
             "executed_at_utc": null,
-            "recorded_at_utc": "2026-10-20T16:26:58Z",
+            "recorded_at_utc": "2026-10-20T17:48:26Z",
             "exit_code": null,
-            "git_revision": "953c1924372ee5a153c78308c4fab44e0d104ebf",
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-source-terms-20261020.md",
+          "detail": "Publisher/upstream terms inspection, page hashes, and remaining package-rights uncertainty.",
+          "result": "Third-party package license remains unstated; official Lichess CC0 terms are not attributed to the curated package.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-20T17:48:26Z",
+            "exit_code": null,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-source-manifest-20261020.json",
+          "detail": "Actual archive/member identity, retrieval metadata, CRC, limits, rights boundary, and SHA-256.",
+          "result": "The source was retrieved after the recorded decision; ZIP CRC and archive/member hashes are verified.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-20T17:48:26Z",
+            "exit_code": null,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-pilot-manifest-20261020.json",
+          "detail": "Verified 200-game source pilot release manifest and measured counts.",
+          "result": "The source pilot completed and source/archive/release verification passed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-20T17:48:26Z",
+            "exit_code": null,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-release-manifest-r3-20261020.json",
+          "detail": "Canonical local training-support release manifest generated at code revision 29c411b.",
+          "result": "Release ID 9e3944e1...b8991; 1,000 selected games and 19,268 positions after leakage purge; bulk files remain local.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-20T17:48:26Z",
+            "exit_code": null,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-teacher-manifest-r2-20261020.json",
+          "detail": "Hardened Stockfish 19 real-run manifest with effective options, typed scores, perspective, normalization, mate policy, and sample identity.",
+          "result": "128 of 128 positions analyzed; 377 centipawn and 3 mate MultiPV lines; no failures/timeouts.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-20T17:48:26Z",
+            "exit_code": null,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-reproducibility-r3-r4-20261020.json",
+          "detail": "Full r3/r4 run metadata, measured resource use, per-file hashes, split stats, and exact repeat comparison.",
+          "result": "Two clean builds at the same source/config/code produced byte-identical nine-file releases; both source/release/teacher verifications passed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-20T17:48:26Z",
+            "exit_code": null,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/logs/M3-source-teacher-repro-20261020.log",
+          "detail": "Sanitized source retrieval, pilot, full builds, teacher run, verification, and repeat-comparison execution log.",
+          "result": "Retained UTC times, commands, full revisions, exit codes, raw-log hashes, and measured source/teacher/dataset summary.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-20T17:48:26Z",
+            "exit_code": null,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
             "log_path": null
           }
         },
         {
           "kind": "file",
           "path": ".agents/evidence/M3-execution-20261020.md",
-          "detail": "Dated M3 execution report with the pilot, full source scan, provisional split/teacher results, rights boundary, resource use, and remaining deterministic-repeat/final-teacher tasks.",
-          "result": "Initial source-backed dataset and real teacher analysis are recorded; M3-03 reproducibility and final M3-02 evidence remain pending.",
+          "detail": "M3 execution summary, acceptance matrix, source/data/teacher metrics, limitations, and RL-first handoff.",
+          "result": "Runtime evidence for M3-01 through M3-04 is ready for independent PM review; no self-acceptance or merge is claimed.",
           "provenance": {
             "status": "verified",
             "executed_at_utc": null,
-            "recorded_at_utc": "2026-10-20T16:26:58Z",
+            "recorded_at_utc": "2026-10-20T17:48:26Z",
             "exit_code": null,
-            "git_revision": "953c1924372ee5a153c78308c4fab44e0d104ebf",
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
             "log_path": null
+          }
+        },
+        {
+          "kind": "test",
+          "command": "python -m unittest discover -s tests -p test_m3_data.py -v",
+          "result": "PASS",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-20T17:49:58Z",
+            "recorded_at_utc": "2026-10-20T17:50:02Z",
+            "exit_code": 0,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": ".agents/evidence/logs/M3-final-verification-20261020.log"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "python -m unittest discover -s tests -v",
+          "result": "FAIL",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-20T17:50:02Z",
+            "recorded_at_utc": "2026-10-20T17:50:42Z",
+            "exit_code": 1,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": ".agents/evidence/logs/M3-final-verification-20261020.log"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "python -m unittest discover -s tests -v",
+          "result": "PASS",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-20T17:51:04Z",
+            "recorded_at_utc": "2026-10-20T17:51:44Z",
+            "exit_code": 0,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": ".agents/evidence/logs/M3-final-verification-20261020.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "uv lock --check --python /usr/bin/python3",
+          "result": "PASS",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-20T17:51:44Z",
+            "recorded_at_utc": "2026-10-20T17:51:44Z",
+            "exit_code": 0,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": ".agents/evidence/logs/M3-final-verification-20261020.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python -m compileall -q videochess_rl/data tests/test_m3_data.py",
+          "result": "PASS",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-20T17:51:44Z",
+            "recorded_at_utc": "2026-10-20T17:51:44Z",
+            "exit_code": 0,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": ".agents/evidence/logs/M3-final-verification-20261020.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "PASS",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-20T17:51:44Z",
+            "recorded_at_utc": "2026-10-20T17:51:44Z",
+            "exit_code": 0,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": ".agents/evidence/logs/M3-final-verification-20261020.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "git diff --check",
+          "result": "PASS",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-20T17:51:44Z",
+            "recorded_at_utc": "2026-10-20T17:51:44Z",
+            "exit_code": 0,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": ".agents/evidence/logs/M3-final-verification-20261020.log"
           }
         }
       ],
-      "next_action": "From clean committed code, build and verify a fresh training-support release, repeat it with identical source/config/code and compare semantic hashes, rerun bounded real Stockfish 19 analysis with the hardened time cap, finish M3-01 through M3-04 evidence, then open one PR to initial-idea and leave it unmerged.",
+      "next_action": "After one PR is created against initial-idea, leave it open and unmerged for independent PM review of M3-01 through M3-04. Keep G3 unapproved; do not mark M3 done or begin M4–M7 without separate authorization.",
       "plan_ref": ".agents/plans/M03-expert-dataset.md"
     }
   ],

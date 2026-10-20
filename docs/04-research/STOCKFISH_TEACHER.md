@@ -1,6 +1,6 @@
 # Stockfish Teacher and Supervised Targets
 
-**Status:** The owner authorized bounded Stockfish 19 teacher labeling for M3 on 2026-10-20. The broader O-01/O-07 instructor and non-teacher role questions remain open. No engine analysis or labeling was run for Pre-M3. Under the current canonical M3 acceptance criteria, an actual real teacher run is required to pass M3-02; this document or a fake-engine test alone is insufficient.
+**Status:** The owner authorized bounded Stockfish 19 teacher labeling for M3 on 2026-10-20. A real run on 128 deterministic positions completed on 2026-10-20 using the existing verified host binary; all positions produced records, including 377 centipawn and 3 mate MultiPV lines. The broader O-01/O-07 instructor and non-teacher role questions remain open. The manifest and sanitized execution evidence are under `.agents/evidence/`.
 **Related records:** [M03 plan](../../.agents/plans/M03-expert-dataset.md), [dataset contract](DATASET_SPEC.md), [experiment protocol](EXPERIMENT_PROTOCOL.md), and [owner decision register](DECISION_REGISTER.md).
 
 ## 1. Keep target meanings separate
@@ -41,7 +41,7 @@ Behavior cloning remains a supporting baseline, not the project's academic resul
 
 The repository's M0 evidence records a manual host prerequisite of Stockfish 19, not a Python dependency. The recorded Linux x86-64 archive SHA-256 is 9defc0d4e55d49c65a6d042f3e571a39fcea499ade6dbe741b53b8c65e03611f; the executable SHA-256 is 0f83d24cc46d2c66c60f16001af5444873bc112b7d028594513426894c12da19. The pinned GPL-3.0 license copy and its digest are documented in [SETUP.md](../05-operations/SETUP.md) and **.agents/evidence/M0-final-technical-verification.md**.
 
-Pre-M3 did not install, upgrade, or run a search with Stockfish. The repository's default locked Python dependencies do not install the engine. A future label run must record the actual UCI identification string and binary hash from the host used for that run; the historic M0 hash is not proof that another host has the same executable.
+Pre-M3 did not install, upgrade, or run a search with Stockfish. The M3 run used the existing host executable and license copy, rechecking their hashes. It used one thread, Hash 64 MiB, MultiPV 3, one UCI node cap of 5,000 shared across the returned lines and a 30-second UCI movetime cap per root. A separate process watchdog enforced the cap plus a recorded two-second maximum grace. The root score is stored from side-to-move perspective with a separate White conversion. Centipawns use `tanh(cp / 400.0)` rounded to eight decimals; signed mate distance remains typed and has no scalar normalization. The exact engine identity, effective options, per-position limits, sample identity, and hashes are in [the M3 teacher manifest](../../.agents/evidence/M3-teacher-manifest-r2-20261020.json). The historic M0 hash alone is not proof that another host has the same executable.
 
 Do not copy the GPL engine binary into Git, a dataset release, or a model package. Keep its license with the host binary. The inference path must remain engine-free.
 
@@ -68,9 +68,9 @@ M3 has two technically distinct stages and one formal acceptance condition:
 
 1. **PGN data engineering:** once M3, source, and applicable storage permissions are explicitly authorized, profile and process a bounded approved source, create game/position records, validate lineage, and produce leakage statistics. This can create a valid intermediate PGN-only artifact.
 2. **Teacher interface and contract tests:** typed score records and fake-UCI tests verify parser behavior, perspective conversion, MultiPV rank, mate typing, failure paths, and config serialization. These tests do not establish an engine version or actual search setting.
-3. **Authorized bounded real teacher run:** use the approved engine binary on a deterministic capped position subset; record actual UCI identity, binary/license hashes, effective options, node limit, scores, perspective, normalization formula, mate handling, failures, and run/sample hashes. Keep its output as an optional teacher sidecar rather than overwriting PGN behavior/result rows.
+3. **Authorized bounded real teacher run:** completed for M3 on 128 deterministic positions with no failed/unattempted positions. The teacher sidecar remains separate from PGN behavior/result rows. Future expanded label coverage is optional and must not delay Double DQN.
 
-Under the unchanged canonical [M3-02 criterion](../06-quality/ACCEPTANCE_CRITERIA.md), formal M3 completion requires step 3 with evidence for the actual version/settings and semantics. A PGN-only release is an intermediate result and leaves M3-02 pending, so M3 cannot be marked fully complete. If assignment rules prohibit teacher use, M3-02 stays pending until the project owner/instructor formally changes the acceptance scope through the canonical criteria/governance process. Codex must not waive or reinterpret M3-02. The default reference is the already recorded Stockfish 19 host build; no upgrade is proposed. Stockfish remains excluded from learned-agent inference in every path.
+The real-run evidence satisfies the technical evidence listed by unchanged canonical [M3-02](../06-quality/ACCEPTANCE_CRITERIA.md); independent PM review remains required before the milestone can be accepted. If an authoritative assignment rule contradicts the owner-scoped project permission, stop any affected future operation and follow that rule. The default reference remains the recorded Stockfish 19 host build; no upgrade is proposed. Stockfish remains excluded from learned-agent inference in every path.
 
 ### Score conventions
 

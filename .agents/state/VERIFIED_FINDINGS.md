@@ -194,67 +194,74 @@ Findings are append-only historical observations. FND-021 and FND-022 record the
 - **Status:** verified by current source-page inspection; terms remain unresolved
 - **Finding:** The third-party Lichess Elite listing reports May 2022 as 355,535 games/93 MB and describes standard games, no bullet, and a post-December-2021 2500+ versus 2300+ threshold. Its page does not state a license or archive checksum. Official Lichess database exports publish CC0 terms; official broadcast PGNs publish CC BY-SA 4.0. None of those official terms automatically establishes rights for the third-party filtered package.
 - **Evidence:** https://database.nikonoel.fr/; https://database.lichess.org/; DATASET_SPEC.md; DECISION_REGISTER.md.
-- **Impact:** O-06 remains open. No archive was downloaded or ingested; source selection and permitted use require owner approval.
+- **Impact:** At the Pre-M3 review time, no archive had been downloaded or ingested. The owner later authorized bounded local/internal use of the exact May 2022 package and M3 produced a measured local artifact; package rights uncertainty remains. See FND-037 and the M3 execution report.
 
 ## FND-028 — Locked runtime and local artifact manifests
 
 - **Status:** verified 2026-10-16
 - **Finding:** Offline uv lock check passed with no installation. The inspected host reported Python 3.12.3, python-chess 1.11.2, Gymnasium 1.4.0, ALE-Py 0.11.2, and CPU PyTorch 2.14.1. Its local Stockfish binary identifies as version 19 and matches the M0 executable SHA-256; its retained GPL text matches the M0 license hash. The dated local M1 manifests for 2026-10-15 and 2026-10-16 verified 1,214 and 1,388 entries. The older unversioned manifest lists 327 absent paths and was not treated as current.
 - **Evidence:** PRE-M3-readiness-20261017.md; M0-final-technical-verification.md; local ignored artifact manifests in the primary checkout.
-- **Impact:** No dependency addition or Stockfish search is needed for the proposed parser design. Local artifact evidence remains separate from clean-clone tracked evidence. O-01/O-07 still govern engine use.
+- **Impact:** At the 2026-10-16 review, no M3 search had been authorized or run. The owner later authorized one bounded M3 teacher run; broader O-01/O-07 roles remain separate. Local data/engine evidence stays distinct from clean-clone tracked evidence.
 
 ## FND-029 — Checkpointed-tree recovery and PR validation
 
 - **Status:** verified 2026-10-16
-- **Finding:** A clean clone of feature commit 843a0bc728370ff9bc8e7a21884c7e05b82eb7c1 passed agent preflight with the portable tracked manifest matching. GitHub Actions run 38944551579 passed the same checkpointed commit with preflight and the bounded standard-library context/export suite. PR #2 targets initial-idea and remains open and unmerged.
+- **Finding:** A clean clone of feature commit 843a0bc728370ff9bc8e7a21884c7e05b82eb7c1 passed agent preflight with the portable tracked manifest matching. GitHub Actions run 38944551579 passed the same checkpointed commit with preflight and the bounded standard-library context/export suite. PR #2 was later merged into `initial-idea` at `2271b836f4dcf52e62e84413a4c456899138e953` on 2026-10-16; GitHub records the merge at 2026-10-16T19:52:29Z.
 - **Evidence:** PRE-M3-readiness-20261017.md; logs/pre-m3-final-tip-cleanclone-preflight-20261017.log; GitHub Actions https://github.com/dodaonam/atari-videochess-rl/actions/runs/38944551579; PR https://github.com/dodaonam/atari-videochess-rl/pull/2.
-- **Impact:** Pre-M3 readiness and delivery checks pass. G3 remains unapproved, M3 remains unauthorized, and O-01 through O-08 remain open.
+- **Impact:** Pre-M3 readiness and delivery checks pass, and PR #2 is integrated. At the finding date M3 was not yet authorized; direct owner authorization on 2026-10-20 subsequently started M3 while G3 remained unapproved.
 
 ## FND-030 — Milestone authorization is distinct from gate closure
 
 - **Status:** verified by focused regression tests (2026-10-17)
-- **Finding:** G3 covers M2–M5 and G4 covers M6 plus only the evaluation portion of M7; neither gate's final closure is required to start the engineering work it covers. A covered milestone still requires a separate direct authorization record, active task/evidence match, and in-progress state before preflight permits it. G3 remains unapproved and M3 remains pending/unauthorized.
+- **Finding:** G3 covers M2–M5 and G4 covers M6 plus only the evaluation portion of M7; neither gate's final closure is required to start the engineering work it covers. A covered milestone still requires a separate direct authorization record, active task/evidence match, and in-progress state before preflight permits it. At the finding date M3 remained unauthorized; the owner authorized M3-001 on 2026-10-20 while G3 remained unapproved.
 - **Evidence:** `scripts/agent_preflight.py`; `tests/test_agent_context.py::test_preflight_detects_gate_coverage_used_as_its_own_start_prerequisite`; `tests/test_agent_context.py::test_m3_can_be_explicitly_authorized_while_g3_remains_unapproved`; `tests/test_agent_context.py::test_start_authorized_boolean_without_direct_record_is_rejected`; `.agents/evidence/PRE-M3-readiness-20261017.md` corrective-hardening section.
-- **Impact:** A future explicit M3 authorization can be represented without marking G3 complete; plans and Boolean status alone cannot authorize work. Current G3/M3 statuses have not changed.
+- **Impact:** The explicit M3 authorization is now represented in canonical state and task evidence without marking G3 complete. Plans and Boolean status alone still cannot authorize work.
 
 ## FND-031 — M3 identities and split behavior have deterministic synthetic oracles
 
 - **Status:** contract and regression checks verified (2026-10-17)
 - **Finding:** The proposed data contract distinguishes board-position signatures, replay-history state, source-game identity, normalized-game identity, position samples, and materialized UCI candidate identity. The synthetic suite verifies clock/repetition distinctions, castling/en-passant, transpositions, changed headers, promotions, deterministic hashes, candidate split inheritance/purge, and a holdout-collapse failure. These checks do not implement or profile a production dataset.
 - **Evidence:** `docs/04-research/DATASET_SPEC.md`; `tests/fixtures/pre_m3_identity_vectors.json`; `tests/test_pre_m3_contracts.py`; retained full-suite log `.agents/evidence/logs/pre-m3-corrective-full-suite-20261017.log`.
-- **Impact:** Future M3 implementation has test vectors and split invariants; actual source distributions and purge effects remain unmeasured until source approval.
+- **Impact:** The synthetic identity/split vectors remain the contract checks; the authorized source distribution and purge effects have since been measured and are recorded in FND-037.
 
 ## FND-032 — Current M3-02 cannot pass from PGN-only or mock-teacher work
 
 - **Status:** canonical acceptance alignment verified by document audit (2026-10-17)
 - **Finding:** Under the unchanged M3-02 criterion, a separately authorized real bounded Stockfish run with actual version/options/score semantics is required. PGN-only output may be an intermediate artifact; mock-UCI tests establish interface behavior only. If assignment policy prohibits teacher use, M3-02 remains pending until canonical acceptance is formally changed.
 - **Evidence:** `docs/06-quality/ACCEPTANCE_CRITERIA.md`; `docs/04-research/STOCKFISH_TEACHER.md`; `.agents/plans/M03-expert-dataset.md`; `docs/06-quality/TEST_STRATEGY.md`.
-- **Impact:** Stockfish 19 remains the reference; no search was run. O-01/O-07 and explicit M3 authorization remain prerequisites for real labeling.
+- **Impact:** Stockfish 19 remains the reference. The owner later authorized and completed the bounded real M3 run recorded in FND-037; unrelated engine roles remain unauthorized.
 
 ## FND-033 — M5 Double DQN can start before supervised pretraining completes
 
 - **Status:** RL-first planning alignment verified (2026-10-17)
 - **Finding:** The PM-directed contract keeps simulator-trained Double DQN as the central academic contribution. M5 core implementation and its first sanity run need not wait for a behavior-cloning M4 checkpoint; current M5-04 still requires a small pretraining-only checkpoint for the final paired comparison. Data breadth and teacher coverage are bounded, and the architecture remains open.
 - **Evidence:** `docs/04-research/RL_FIRST_ALIGNMENT.md`; `docs/04-research/EXPERIMENT_PROTOCOL.md`; `docs/02-management/EXECUTION_PLAN.md`; `docs/04-research/DECISION_REGISTER.md`.
-- **Impact:** The prior supervised-scope drift risk is mitigated in planning, not eliminated: deadline, compute, and instructor permissions remain unknown. No M4/M5 implementation or experiment was run.
+- **Impact:** The supervised-scope drift risk is mitigated, not eliminated. The presentation date is 2026-11-03 and the M3 local workload is measured; M4/M5 permissions and schedule remain to be handled before those milestones. No M4/M5 implementation or experiment was run.
 
-## FND-034 — M3 processing, resume, and release limits are specified but unmeasured
+## FND-034 — M3 source processing measured and release repeated
 
-- **Status:** proposed operational safeguards reviewed (2026-10-17)
-- **Finding:** The M03 plan requires archive/member and decompressed-byte ceilings, path/member checks, stream limits, memory/disk safeguards, immutable source/config/code identities, verified batch journals, and atomic release finalization. Proposed ceilings require comparison with an approved source sample; they are not measured throughput or execution authority.
-- **Evidence:** `docs/04-research/DATASET_SPEC.md` sections 8–9; `docs/04-research/STOCKFISH_TEACHER.md` resource tiers; `.agents/plans/M03-expert-dataset.md`.
-- **Impact:** A future executor has a fail-closed design; source-specific limits, output expansion, and CPU throughput remain unknown. No archive was acquired.
+- **Status:** source-backed builds and verified repeat completed; synthetic recovery tests passed (2026-10-20)
+- **Finding:** The authorized 97,163,552-byte ZIP and its 326,476,031-byte PGN member passed archive identity, CRC, streaming, and source-hash checks. Two clean builds at the same committed code/config completed in about 31 minutes each with about 289 MiB peak RSS and 39.9 MB output-directory size. The files, release identity, and source/config/code identities matched byte-for-byte. Interruption/resume invariants were exercised on synthetic fixtures; the production source release itself was generated as two fresh runs, not resumed.
+- **Evidence:** `.agents/evidence/M3-reproducibility-r3-r4-20261020.json`; `.agents/evidence/M3-release-manifest-r3-20261020.json`; `.agents/evidence/logs/M3-source-teacher-repro-20261020.log`.
+- **Impact:** The measured profile supports this bounded local tier; it does not authorize larger sources, broader roles, or cloud processing. Resume remains guarded by immutable source/config/code identity and verified batch journals.
 
 ## FND-035 — Checkpoint growth remains an operational follow-up, not corruption
 
 - **Status:** verified and dispositioned (2026-10-17)
-- **Finding:** At corrective-hardening recovery, `PROJECT_STATE.yaml` was 2,229,784 bytes with 96 history entries. Existing semantic checksum and portable manifest validation pass; historical entries remain intact. A lossless migration design is assigned before the first sustained M3 checkpoint-heavy run, with earlier triggers at 4 MiB, 128 entries, or a measured checkpoint taking over 5 seconds.
+- **Finding:** At corrective-hardening recovery, `PROJECT_STATE.yaml` was 2,229,784 bytes with 96 history entries. Existing semantic checksum and portable manifest validation pass; historical entries remain intact. The historical plan called for a lossless migration design before sustained checkpoint-heavy M3 work, with earlier triggers at 4 MiB, 128 entries, or a measured checkpoint taking over 5 seconds.
 - **Evidence:** `docs/02-management/RISK_REGISTER.md` RSK-010; `docs/05-operations/REPRODUCIBILITY.md`; final corrective preflight/checkpoint evidence in `.agents/evidence/PRE-M3-readiness-20261017.md`.
-- **Impact:** No migration or truncation was performed. The state file is already above the ordinary file hash boundary; preflight relies on its semantic checksum plus portable manifest and clean-clone recovery.
+- **Impact:** No history was truncated or migrated. M3 completed its full source scans without per-batch canonical checkpoints; the file measured 2,810,555 bytes / 107 entries before final handoff. The 2 MiB ordinary content-hash boundary is covered by the semantic-state checksum. No M3 measurement demonstrated that risky history migration was required; retain a lossless migration design as follow-up before future checkpoint-heavy work.
 
 ## FND-036 — Stockfish teacher search and failure handling are time-bounded
 
-- **Status:** verified by focused synthetic UCI tests (2026-10-20)
-- **Finding:** A regression test confirmed that python-chess's engine timeout alone does not cap a UCI search when the search limit contains only nodes. M3 teacher searches now apply a node cap and `movetime`, kill an unresponsive process with a separate watchdog, record the per-root time/grace, clear the transposition hash between roots, reject a missing root PV action, and preserve partial/error records. Synthetic UCI coverage exercises successful MultiPV output, malformed PV, a process that ignores the time command, and a missing binary. This fix does not replace the required bounded real Stockfish 19 run.
+- **Status:** verified by focused synthetic UCI tests and real bounded run (2026-10-20)
+- **Finding:** A regression test confirmed that python-chess's engine timeout alone does not cap a UCI search when the search limit contains only nodes. M3 teacher searches now apply a node cap and `movetime`, kill an unresponsive process with a separate watchdog, record the per-root time/grace, clear the transposition hash between roots, reject a missing root PV action, and preserve partial/error records. Synthetic UCI coverage exercises successful MultiPV output, malformed PV, a process that ignores the time command, and a missing binary; the hardened implementation then passed a separate real Stockfish 19 run.
 - **Evidence:** `videochess_rl/data/teacher.py`; `tests/test_m3_data.py::M3ContractTests.test_synthetic_end_to_end_release_is_reconstructible_and_hashed`; implementation commit `953c1924372ee5a153c78308c4fab44e0d104ebf`.
-- **Impact:** The teacher failure path is testable and resource-bounded; rerun the real authorized subset and verify its sidecar before treating M3-02 as final.
+- **Impact:** The failure path is testable and bounded. The hardened runner completed the real authorized 128-position Stockfish 19 subset with zero failed/unattempted positions, and the teacher sidecar passed verification against both byte-identical dataset releases; see FND-037.
+
+## FND-037 — M3 source-backed dataset, teacher, and reproducibility evidence completed
+
+- **Status:** verified by source-backed full runs and release checks (2026-10-20)
+- **Finding:** The selected May 2022 archive was downloaded only after the source decision; archive/member sizes, SHA-256, HTTP metadata, ZIP CRC, and license uncertainty are recorded. A full 355,535-record stream scan accepted 355,353 games, quarantined 182 empty records, selected 1,000 games and 20,000 positions, then purged 732 positions for cross-split board-signature overlap. The final 19,268 positions retain zero cross-split board signatures and pass the configured holdout minimum/retention checks. Two clean builds at revision `29c411bfd48dca8f1d463c758078175092639ccb` produced byte-identical files and release ID `9e3944e1e35ca0d774e479a49d9b93eb769d14e52ffec4bc6f886bd4695b8991`. The hardened Stockfish 19 run analyzed 128/128 deterministic samples; 377 MultiPV lines were typed centipawn and 3 mate, with zero failed/unattempted positions. The third-party source package license remains unstated; source and bulk data remain local and non-redistributable.
+- **Evidence:** `.agents/evidence/M3-authorization-20261020.md`; `.agents/evidence/M3-source-decision-20261020.md`; `.agents/evidence/M3-source-terms-20261020.md`; `.agents/evidence/M3-source-manifest-20261020.json`; `.agents/evidence/M3-release-manifest-r3-20261020.json`; `.agents/evidence/M3-teacher-manifest-r2-20261020.json`; `.agents/evidence/M3-reproducibility-r3-r4-20261020.json`; `.agents/evidence/logs/M3-source-teacher-repro-20261020.log`; `.agents/evidence/M3-execution-20261020.md`.
+- **Impact:** The four M3 criteria have runtime evidence for independent PM review. The task remains in progress until that independent review; G3 remains unapproved, and no M4–M7 work was started.
