@@ -10,6 +10,7 @@ import random
 import sys
 import tempfile
 import textwrap
+import time
 import unittest
 import zipfile
 from pathlib import Path
@@ -19,19 +20,20 @@ import chess
 import chess.pgn
 
 from videochess_rl.data.contracts import (
-    board_position_signature, canonical_fen, candidate_identity, config_identity,
-    digest, normalized_game_identity, replay_history_identity, sample_identity,
-    source_identity, validate_game_record, validate_position_record,
+    assign_game_split, board_position_signature, canonical_fen, candidate_identity, config_identity,
+    digest, normalized_game_identity, release_identity, replay_history_identity,
+    sample_identity, source_identity, validate_game_record, validate_position_record,
 )
 from videochess_rl.data.export import ExportError, verify_release, write_batches
 from videochess_rl.data.pgn import SourceLimitError, iter_pgn_games
-from videochess_rl.data.pipeline import build_dataset
+from videochess_rl.data.pipeline import PipelineError, build_dataset
 from videochess_rl.data.sampling import BottomKGroups, sample_positions
 from videochess_rl.data.source import (
     SourceError, download_archive, hash_member, inspect_zip, validate_source_manifest,
 )
-from videochess_rl.data.split import SplitError, split_and_purge
+from videochess_rl.data.split import SplitError, board_signature_owner, split_and_purge
 from videochess_rl.data.teacher import TeacherError, _cp_transform, _score_data, run_teacher, verify_teacher_run
+from videochess_rl.data.cli import _resolve_engine_path
 from tests.test_pre_m3_contracts import FIXTURE
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -80,6 +82,57 @@ def parse_text(text: str, *, max_games: int = 20, **kwargs):
         max_games_seen=max_games, max_game_bytes=8 * 1024 * 1024,
         max_total_decompressed_bytes=16 * 1024 * 1024, **kwargs,
     ))
+
+
+def pgn_for_moves(moves: list[str], result: str) -> str:
+    game = chess.pgn.Game()
+    game.headers.update({
+        "Event": "Terminal semantics fixture", "Site": "local",
+        "Date": "2026.01.01", "Round": "1", "White": "A", "Black": "B",
+        "Result": result,
+    })
+    board = game.board()
+    node = game
+    for uci in moves:
+        move = board.parse_uci(uci)
+        node = node.add_variation(move)
+        board.push(move)
+    return game.accept(chess.pgn.StringExporter(headers=True, variations=False, comments=False)) + "\n"
+
+
+def validation_game(record: dict) -> dict:
+    game = dict(record)
+    game["game_id"] = game.get("source_game_id") or "a" * 64
+    game["record_id"] = game["game_id"]
+    game["source_archive_sha256"] = "b" * 64
+    game["source_member_name"] = game.get("source_member_name") or "games.pgn"
+    game["source_member"] = game["source_member_name"]
+    return game
+
+
+def rewrite_release_file_manifest(release_dir: Path, relative_name: str) -> None:
+    manifest_path = release_dir / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    target = release_dir / relative_name
+    file_bytes = target.read_bytes()
+    for item in manifest["outputs"]:
+        if item["path"] == relative_name:
+            item["bytes"] = len(file_bytes)
+            item["sha256"] = hashlib.sha256(file_bytes).hexdigest()
+            break
+    else:
+        raise AssertionError(f"release manifest has no {relative_name}")
+    manifest["release_id"] = release_identity(
+        manifest["source_archive_sha256"], manifest["schema_versions"],
+        manifest["config_sha256"], manifest["code_revision"],
+        manifest["split_assignment_sha256"],
+        [[item["path"], item["bytes"], item["sha256"]] for item in manifest["outputs"]],
+    )
+    encoded = json.dumps(manifest, sort_keys=True, indent=2, ensure_ascii=False).encode("utf-8") + b"\n"
+    manifest_path.write_bytes(encoded)
+    (release_dir / "manifest.sha256").write_text(
+        hashlib.sha256(encoded).hexdigest() + "  manifest.json\n", encoding="ascii",
+    )
 
 
 def parsed_records(count: int = 12, plies: int = 16) -> tuple[str, list[dict]]:
@@ -197,10 +250,109 @@ class M3ContractTests(unittest.TestCase):
                 archive_sha256=archive_hash, member_name="games.pgn",
             )
             for row in rows:
-                sampler.add(row)
+                sampler.observe(row)
+            sampler.begin_selection()
+            for row in rows:
+                sampler.select(row)
+            sampler.verify_selection_complete()
             return [row["normalized_game_sha256"] for row in sampler.selected_records()]
         self.assertEqual(selected(games), selected(list(reversed(games))))
         self.assertEqual(len(selected(games)), 7)
+
+    def test_bottom_k_matches_full_information_oracle_after_late_conflicts(self) -> None:
+        source, base_games = parsed_records(count=32, plies=20)
+        seed, limit = 71, 9
+        archive_hash = "b" * 64
+        def oracle_rank(norm):
+            payload = json.dumps({
+                "domain": "videochess-game-sample/v1", "seed": seed,
+                "normalized_game_sha256": norm,
+            }, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False).encode("utf-8")
+            return hashlib.sha256(payload).hexdigest()
+
+        ranked = sorted(base_games, key=lambda row: (oracle_rank(row["normalized_game_sha256"]), row["normalized_game_sha256"]))
+        late_conflict = ranked[0]
+        ref_conflict_a, ref_conflict_b = ranked[limit + 2], ranked[limit + 3]
+        rows = [dict(row) for row in base_games]
+        duplicate = dict(late_conflict, source_game_id="c" * 64)
+        rows.extend((dict(late_conflict, source_game_id="d" * 64), duplicate))
+        rows.append(dict(late_conflict, pgn_result="1-0", source_game_id="e" * 64))
+        shared_ref = "f" * 64
+        for row in rows:
+            if row["normalized_game_sha256"] in {
+                ref_conflict_a["normalized_game_sha256"], ref_conflict_b["normalized_game_sha256"],
+            }:
+                row["source_game_ref_sha256"] = shared_ref
+
+        def oracle(records):
+            result_values = {}
+            ref_groups = {}
+            for row in records:
+                norm = row["normalized_game_sha256"]
+                result_values.setdefault(norm, set()).add(row["pgn_result"])
+                ref = row.get("source_game_ref_sha256")
+                if ref:
+                    ref_groups.setdefault(ref, set()).add(norm)
+            conflicted = {norm for norm, values in result_values.items() if len(values) > 1}
+            for groups in ref_groups.values():
+                if len(groups) > 1:
+                    conflicted.update(groups)
+            eligible = {
+                norm for norm in result_values if norm not in conflicted
+            }
+            return set(sorted(
+                eligible, key=lambda norm: (oracle_rank(norm), norm),
+            )[:limit])
+
+        expected = oracle(rows)
+        permutations = [list(rows), list(reversed(rows))]
+        rng = random.Random(2026)
+        for _ in range(6):
+            shuffled = list(rows)
+            rng.shuffle(shuffled)
+            permutations.append(shuffled)
+        for order_index, order in enumerate(permutations):
+            sampler = BottomKGroups(
+                seed=seed, max_games=limit, source_id=source,
+                archive_sha256=archive_hash, member_name="games.pgn",
+            )
+            for row in order:
+                sampler.observe(row)
+            sampler.begin_selection()
+            for row in order:
+                sampler.select(row)
+            sampler.verify_selection_complete()
+            actual = {row["normalized_game_sha256"] for row in sampler.selected_records()}
+            with self.subTest(permutation=order_index):
+                self.assertEqual(actual, expected)
+                self.assertEqual(sampler.normalized_duplicate_observations, 3)
+                self.assertEqual(sampler.normalized_duplicate_groups, 1)
+                self.assertEqual(len(sampler.conflicting_source_refs), 1)
+                self.assertNotIn(late_conflict["normalized_game_sha256"], actual)
+                self.assertNotIn(ref_conflict_a["normalized_game_sha256"], actual)
+                self.assertNotIn(ref_conflict_b["normalized_game_sha256"], actual)
+                self.assertEqual(len(actual), limit)
+
+    def test_bottom_k_tie_break_is_globally_lexicographic(self) -> None:
+        source, games = parsed_records(count=8, plies=20)
+        expected = sorted(row["normalized_game_sha256"] for row in games)[:3]
+        selected = []
+        for order in (games, list(reversed(games))):
+            sampler = BottomKGroups(
+                seed=3, max_games=3, source_id=source,
+                archive_sha256="b" * 64, member_name="games.pgn",
+            )
+            for row in order:
+                sampler.observe(row)
+            sampler.begin_selection()
+            # Force equal primary ranks to exercise the deterministic
+            # secondary ordering and worst-item eviction in the heap.
+            with patch("videochess_rl.data.sampling.game_sample_key", return_value="0" * 64):
+                for row in order:
+                    sampler.select(row)
+            sampler.verify_selection_complete()
+            selected.append(sorted(row["normalized_game_sha256"] for row in sampler.selected_records()))
+        self.assertEqual(selected, [expected, expected])
 
     def test_conflicting_reuse_of_one_source_reference_is_excluded(self) -> None:
         source, games = parsed_records(count=3, plies=20)
@@ -213,7 +365,11 @@ class M3ContractTests(unittest.TestCase):
             archive_sha256="b" * 64, member_name="games.pgn",
         )
         for row in games:
-            sampler.add(row)
+            sampler.observe(row)
+        sampler.begin_selection()
+        for row in games:
+            sampler.select(row)
+        sampler.verify_selection_complete()
         self.assertEqual(len(sampler.conflicting_source_refs), 1)
         self.assertEqual(len(sampler.conflicting_groups), 2)
         self.assertEqual(len(sampler.selected_records()), 1)
@@ -236,6 +392,100 @@ class M3ContractTests(unittest.TestCase):
         different = parse_text(mismatch, max_games=2)[0][1]
         self.assertEqual(missing.reason_code, "missing_or_incomplete_movetext_result")
         self.assertEqual(different.reason_code, "pgn_result_header_mismatch")
+
+    def test_automatic_terminal_results_match_board_outcome_but_external_results_remain_valid(self) -> None:
+        white_mate = ["e2e4", "e7e5", "d1h5", "b8c6", "f1c4", "g8f6", "h5f7"]
+        black_mate = ["f2f3", "e7e5", "g2g4", "d8h4"]
+        for label, moves, correct, wrong in (
+            ("white_mates", white_mate, "1-0", "0-1"),
+            ("black_mates", black_mate, "0-1", "1-0"),
+        ):
+            with self.subTest(label=label, result="correct"):
+                parsed = parse_text(pgn_for_moves(moves, correct), max_games=1)[0][1]
+                self.assertEqual(parsed.status, "accepted")
+                game = validation_game(parsed.game)
+                self.assertEqual(game["board_termination"]["termination"], "CHECKMATE")
+                validate_game_record(game)
+            with self.subTest(label=label, result="contradictory"):
+                parsed = parse_text(pgn_for_moves(moves, wrong), max_games=1)[0][1]
+                self.assertEqual(parsed.status, "quarantined")
+                self.assertEqual(parsed.reason_code, "pgn_terminal_result_mismatch")
+
+        cycle = ["g1f3", "g8f6", "f3g1", "f6g8"]
+        automatic_draw = cycle * 4
+        correct_draw = parse_text(pgn_for_moves(automatic_draw, "1/2-1/2"), max_games=1)[0][1]
+        self.assertEqual(correct_draw.status, "accepted")
+        draw_game = validation_game(correct_draw.game)
+        self.assertEqual(draw_game["board_termination"]["termination"], "FIVEFOLD_REPETITION")
+        validate_game_record(draw_game)
+        wrong_draw = parse_text(pgn_for_moves(automatic_draw, "1-0"), max_games=1)[0][1]
+        self.assertEqual(wrong_draw.reason_code, "pgn_terminal_result_mismatch")
+
+        resignation = parse_text(pgn_for_moves(["e2e4", "e7e5"], "1-0"), max_games=1)[0][1]
+        self.assertEqual(resignation.status, "accepted")
+        resignation_game = validation_game(resignation.game)
+        self.assertIsNone(resignation_game["board_termination"])
+        validate_game_record(resignation_game)
+
+    def test_game_validator_checks_result_and_board_termination_independently(self) -> None:
+        moves = ["f2f3", "e7e5", "g2g4", "d8h4"]
+        valid = validation_game(parse_text(pgn_for_moves(moves, "0-1"), max_games=1)[0][1].game)
+        contradictory = dict(valid, pgn_result="1-0", result="1-0", white_result="win")
+        with self.assertRaisesRegex(ValueError, "contradicts the reconstructed automatic terminal outcome"):
+            validate_game_record(contradictory)
+        missing_terminal = dict(valid)
+        missing_terminal.pop("board_termination")
+        with self.assertRaisesRegex(ValueError, "board_termination metadata"):
+            validate_game_record(missing_terminal)
+        nonterminal = validation_game(parse_text(pgn_for_moves(["e2e4"], "1-0"), max_games=1)[0][1].game)
+        nonterminal["board_termination"] = {"termination": "CHECKMATE", "winner": "white"}
+        with self.assertRaisesRegex(ValueError, "board_termination metadata"):
+            validate_game_record(nonterminal)
+
+    def test_position_result_perspectives_are_derived_from_parent_game_and_board(self) -> None:
+        _, parsed = parsed_records(count=1, plies=8)
+        base = validation_game(parsed[0])
+        for result, white_label in (("1-0", "win"), ("0-1", "loss"), ("1/2-1/2", "draw")):
+            game = dict(base, pgn_result=result, result=result, white_result=white_label)
+            rows_all = sample_positions(
+                [game], source_id=game["source_id"], seed=2,
+                max_positions_per_game=8, max_positions=8,
+            )
+            rows = [next(row for row in rows_all if row["side_to_move"] == side) for side in ("white", "black")]
+            for row in rows:
+                validate_position_record(row, game)
+                expected_side = white_label if row["side_to_move"] == "white" else {
+                    "win": "loss", "loss": "win", "draw": "draw",
+                }[white_label]
+                self.assertEqual(row["side_to_move_result"], expected_side)
+                for field in ("pgn_result", "white_result", "side_to_move_result", "result_white", "result_to_move"):
+                    corrupted = dict(row)
+                    if field == "pgn_result":
+                        corrupted[field] = "0-1" if result != "0-1" else "1-0"
+                    elif field == "white_result":
+                        corrupted[field] = "loss" if white_label != "loss" else "win"
+                    elif field == "side_to_move_result":
+                        corrupted[field] = "loss" if expected_side != "loss" else "win"
+                    elif field == "result_white":
+                        corrupted[field] = "0-1" if result != "0-1" else "1-0"
+                    else:
+                        corrupted[field] = 1 if row[field] != 1 else -1
+                    with self.subTest(result=result, side=row["side_to_move"], field=field):
+                        with self.assertRaisesRegex(ValueError, "game-result perspective"):
+                            validate_position_record(corrupted, game)
+
+        game = dict(base, pgn_result="1-0", result="1-0", white_result="win")
+        row = next(
+            item for item in sample_positions(
+                [game], source_id=game["source_id"], seed=2,
+                max_positions_per_game=game["ply_count"], max_positions=game["ply_count"],
+            ) if item["side_to_move"] == "white"
+        )
+        self.assertEqual(row["side_to_move_result"], "win")
+        row["side_to_move_result"] = "loss"
+        row["result_to_move"] = -1
+        with self.assertRaisesRegex(ValueError, "game-result perspective"):
+            validate_position_record(row, game)
 
     def test_illegal_move_and_automatic_terminal_trailing_moves_are_quarantined(self) -> None:
         illegal = "[Event \"Illegal\"]\n[Site \"local\"]\n[Date \"2026.01.01\"]\n[Round \"1\"]\n[White \"A\"]\n[Black \"B\"]\n[Result \"1-0\"]\n\n1. e4 e5 2. e5 1-0\n"
@@ -293,11 +543,13 @@ class M3ContractTests(unittest.TestCase):
                 "history_state_id": hashlib.sha256(f"history-{index}".encode()).hexdigest(),
                 "legal_moves_uci": ["e2e4", "d2d4"], "candidate_count": 2,
                 "played_move_uci": "e2e4",
-                "side_to_move": "white", "white_result": "draw", "ply_index": index,
+                "side_to_move": "white", "white_result": "draw", "pgn_result": "1/2-1/2",
+                "side_to_move_result": "draw", "ply_index": index,
                 "split": None,
             })
         kept, manifest = split_and_purge(games, positions, seed=22, min_holdout_positions=1)
         self.assertEqual(len(kept), len(positions))
+        self.assertEqual(manifest["holdout_warnings"], [])
         self.assertEqual(manifest["board_signatures_cross_split_after"], 0)
         assignments = dict(manifest["game_group_assignments"])
         self.assertTrue(all(row["split"] == assignments[row["normalized_game_sha256"]] for row in kept))
@@ -307,6 +559,47 @@ class M3ContractTests(unittest.TestCase):
             split_and_purge(games, collapsed_positions, seed=22, min_holdout_positions=1)
         self.assertIsNotNone(caught.exception.manifest)
         self.assertGreater(caught.exception.manifest["purged_candidate_count"], 0)
+
+    def test_holdout_retention_warning_is_retained_without_rejecting_a_valid_release(self) -> None:
+        seed = 73
+        groups: dict[str, list[str]] = {name: [] for name in ("train", "validation", "test")}
+        index = 0
+        while min(map(len, groups.values())) < 10:
+            normalized = hashlib.sha256(f"retention-game-{index}".encode()).hexdigest()
+            groups[assign_game_split(seed, normalized)].append(normalized)
+            index += 1
+        shared = next(
+            hashlib.sha256(f"shared-board-{candidate}".encode()).hexdigest()
+            for candidate in range(1000)
+            if board_signature_owner(seed, hashlib.sha256(f"shared-board-{candidate}".encode()).hexdigest(), {"train", "validation"}) == "train"
+        )
+        games = []
+        positions = []
+        for split_name, normalized_groups in groups.items():
+            for offset, normalized in enumerate(normalized_groups[:10]):
+                game_id = hashlib.sha256(f"retention-source-{normalized}".encode()).hexdigest()
+                games.append({"game_id": game_id, "normalized_game_sha256": normalized})
+                signature = shared if split_name in {"train", "validation"} and offset < 4 else hashlib.sha256(f"unique-{normalized}".encode()).hexdigest()
+                positions.append({
+                    "sample_id": hashlib.sha256(f"retention-sample-{normalized}".encode()).hexdigest(),
+                    "game_id": game_id, "normalized_game_sha256": normalized,
+                    "board_position_signature": signature,
+                    "history_state_id": hashlib.sha256(f"retention-history-{normalized}".encode()).hexdigest(),
+                    "legal_moves_uci": ["e2e4", "d2d4"], "candidate_count": 2,
+                    "played_move_uci": "e2e4", "side_to_move": "white",
+                    "white_result": "draw", "pgn_result": "1/2-1/2",
+                    "side_to_move_result": "draw", "ply_index": 0, "split": None,
+                })
+        kept, manifest = split_and_purge(
+            games, positions, seed=seed, min_holdout_positions=5,
+            min_holdout_retention=0.5,
+        )
+        self.assertTrue(manifest["release_valid"])
+        self.assertEqual(manifest["position_retention"]["validation"], 0.6)
+        self.assertGreaterEqual(manifest["position_retention"]["validation"], 0.5)
+        self.assertEqual(len(manifest["holdout_warnings"]), 1)
+        self.assertIn("validation", manifest["holdout_warnings"][0])
+        self.assertEqual(len(kept), sum(manifest["position_counts_after_purge"].values()))
 
     def test_zip_source_validation_checks_member_identity_size_and_path_safety(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -440,6 +733,32 @@ class M3ContractTests(unittest.TestCase):
                 with patch("videochess_rl.data.source.urllib.request.urlopen", return_value=FakeResponse(b"data")):
                     download_archive(SOURCE_URL, Path(directory) / "small.zip", max_bytes=3, retries=0)
 
+    def test_teacher_cli_engine_paths_are_portable_and_unambiguous(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            repository_engine = root / "bin" / "stockfish"
+            repository_engine.parent.mkdir()
+            repository_engine.write_text("#!/bin/sh\nexit 0\n", encoding="utf-8")
+            repository_engine.chmod(0o755)
+            absolute = root / "absolute-engine"
+            absolute.write_text("#!/bin/sh\nexit 0\n", encoding="utf-8")
+            absolute.chmod(0o755)
+            self.assertEqual(_resolve_engine_path(absolute, root), absolute.resolve())
+            self.assertEqual(_resolve_engine_path("bin/stockfish", root), repository_engine.resolve())
+
+            path_dir = root / "path-bin"
+            path_dir.mkdir()
+            path_engine = path_dir / "stockfish"
+            path_engine.write_text("#!/bin/sh\nexit 0\n", encoding="utf-8")
+            path_engine.chmod(0o755)
+            self.assertEqual(_resolve_engine_path("stockfish", root, search_path=str(path_dir)), path_engine.resolve())
+            with self.assertRaisesRegex(ValueError, "not found on PATH"):
+                _resolve_engine_path("missing-engine", root, search_path=str(path_dir))
+            with self.assertRaisesRegex(ValueError, "ambiguous on PATH"):
+                _resolve_engine_path("stockfish", root, search_path=os.pathsep.join((str(path_dir), str(repository_engine.parent))))
+            with self.assertRaisesRegex(ValueError, "escapes the repository root"):
+                _resolve_engine_path("../outside/stockfish", root)
+
     def test_stockfish_score_signs_and_mate_type_are_explicit(self) -> None:
         white_board = chess.Board()
         white_info = {"score": chess.engine.PovScore(chess.engine.Cp(75), chess.WHITE)}
@@ -484,7 +803,8 @@ class M3ContractTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             temp = Path(directory)
             source_id = source_identity("test", "https://example.invalid/", "synthetic")
-            texts = [make_game(index, plies=20)[0] for index in range(120)]
+            texts = [pgn_for_moves(["e2e4", "e7e5", "d1h5", "b8c6", "f1c4", "g8f6", "h5f7"], "1-0")]
+            texts.extend(make_game(index, plies=20)[0] for index in range(1, 120))
             member_text = "\n".join(texts)
             archive_path = temp / "synthetic.zip"
             member_sha, member_bytes = pgn_zip(archive_path, member_text)
@@ -543,6 +863,98 @@ class M3ContractTests(unittest.TestCase):
             self.assertEqual(canonical_fen(board), row["fen"])
             self.assertTrue(result["run_metrics"]["peak_rss_mib"] is None or result["run_metrics"]["peak_rss_mib"] > 0)
             self.assertEqual(result["release"]["source_decision_id"], SOURCE_DECISION_ID)
+
+            split_path = output / "split.json"
+            stats_path = output / "stats.json"
+            original_split_bytes = split_path.read_bytes()
+            original_stats_bytes = stats_path.read_bytes()
+            split_doc = json.loads(original_split_bytes)
+            stats_doc = json.loads(original_stats_bytes)
+            split_doc.pop("holdout_warnings", None)
+            stats_doc["splits"] = split_doc
+            split_path.write_text(json.dumps(split_doc, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+            stats_path.write_text(json.dumps(stats_doc, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+            rewrite_release_file_manifest(output, "split.json")
+            rewrite_release_file_manifest(output, "stats.json")
+            with self.assertRaisesRegex(ExportError, "holdout retention warnings"):
+                verify_release(output, allow_synthetic_source_for_test=True)
+            split_path.write_bytes(original_split_bytes)
+            stats_path.write_bytes(original_stats_bytes)
+            rewrite_release_file_manifest(output, "split.json")
+            rewrite_release_file_manifest(output, "stats.json")
+            self.assertEqual(verify_release(output, allow_synthetic_source_for_test=True), verified)
+
+            stats_doc = json.loads(original_stats_bytes)
+            stats_doc["distribution_shift_after_purge_fraction"]["side_to_move"]["white"] = 0.123
+            stats_path.write_text(json.dumps(stats_doc, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+            rewrite_release_file_manifest(output, "stats.json")
+            with self.assertRaisesRegex(ExportError, "distribution shifts"):
+                verify_release(output, allow_synthetic_source_for_test=True)
+            stats_path.write_bytes(original_stats_bytes)
+            rewrite_release_file_manifest(output, "stats.json")
+            self.assertEqual(verify_release(output, allow_synthetic_source_for_test=True), verified)
+
+            stats_doc = json.loads(original_stats_bytes)
+            ply_band = next(iter(stats_doc["positions_by_ply_band_before_purge"]))
+            stats_doc["positions_by_ply_band_before_purge"][ply_band] += 1
+            stats_path.write_text(json.dumps(stats_doc, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+            rewrite_release_file_manifest(output, "stats.json")
+            with self.assertRaisesRegex(ExportError, "dataset statistics do not recompute"):
+                verify_release(output, allow_synthetic_source_for_test=True)
+            stats_path.write_bytes(original_stats_bytes)
+            rewrite_release_file_manifest(output, "stats.json")
+            self.assertEqual(verify_release(output, allow_synthetic_source_for_test=True), verified)
+
+            expired_config = dict(config, max_elapsed_seconds=1)
+            expired_config_path = temp / "expired-config.json"
+            expired_config_path.write_text(json.dumps({"dataset": expired_config}), encoding="utf-8")
+            expired_output = temp / "releases" / "expired-release"
+            from videochess_rl.data import pipeline as pipeline_module
+            original_summary = pipeline_module.summarize_dataset
+
+            def delayed_summary(*args, **kwargs):
+                time.sleep(1.05)
+                return original_summary(*args, **kwargs)
+
+            with patch("videochess_rl.data.pipeline.summarize_dataset", side_effect=delayed_summary):
+                with self.assertRaisesRegex(PipelineError, "max elapsed seconds exceeded during quality statistics"):
+                    build_dataset(
+                        archive_path, source_path, expired_config_path, expired_output,
+                        run_id="synthetic-run-over-wall-cap", repository_root=ROOT,
+                        source_decision_path=SOURCE_DECISION, authorization_path=AUTHORIZATION,
+                        confirm_write=True, allow_synthetic_source_for_test=True,
+                    )
+            self.assertFalse(expired_output.exists())
+
+            original_release_bytes = {
+                path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+                for path in output.iterdir() if path.is_file()
+            }
+            for resume in (False, True):
+                with self.subTest(overwrite_resume=resume):
+                    with self.assertRaisesRegex(PipelineError, "refusing to overwrite existing release"):
+                        build_dataset(
+                            archive_path, source_path, config_path, output,
+                            run_id="overwrite-protection-regression", repository_root=ROOT,
+                            source_decision_path=SOURCE_DECISION, authorization_path=AUTHORIZATION,
+                            confirm_write=True, resume=resume, allow_synthetic_source_for_test=True,
+                        )
+            self.assertEqual(original_release_bytes, {
+                path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+                for path in output.iterdir() if path.is_file()
+            })
+            self.assertFalse((output.parent.parent / "runs" / "overwrite-protection-regression.staging").exists())
+            self.assertFalse((output.parent / f".{output.name}.overwrite-protection-regression.staging").exists())
+            dangling_target = output.parent / "dangling-release-link"
+            dangling_target.symlink_to(temp / "missing-target")
+            with self.assertRaisesRegex(PipelineError, "refusing to overwrite existing release"):
+                build_dataset(
+                    archive_path, source_path, config_path, dangling_target,
+                    run_id="dangling-symlink-protection", repository_root=ROOT,
+                    source_decision_path=SOURCE_DECISION, authorization_path=AUTHORIZATION,
+                    confirm_write=True, allow_synthetic_source_for_test=True,
+                )
+            self.assertTrue(dangling_target.is_symlink())
 
             fake_engine = temp / "fake-stockfish-19"
             fake_engine.write_text(textwrap.dedent(f"""\
@@ -649,12 +1061,13 @@ class M3ContractTests(unittest.TestCase):
             self.assertTrue((invalid_dir / "failure.json").is_file())
 
             timeout_engine = temp / "fake-stockfish-timeout"
+            timeout_pid_file = temp / "timeout-engine.pid"
             timeout_script = fake_engine.read_text(encoding="utf-8").replace(
                 "import chess\n\nmultipv = 1",
-                "import chess\nimport time\n\nmultipv = 1",
+                "import chess\nimport time\nimport os\n\nmultipv = 1",
             ).replace(
                 '    elif command == "go":\n        moves = sorted(board.legal_moves, key=lambda move: move.uci())',
-                '    elif command == "go":\n        time.sleep(3)\n        moves = sorted(board.legal_moves, key=lambda move: move.uci())',
+                f'    elif command == "go":\n        open({str(timeout_pid_file)!r}, "w").write(str(os.getpid()))\n        time.sleep(3)\n        moves = sorted(board.legal_moves, key=lambda move: move.uci())',
             )
             self.assertIn("time.sleep(3)", timeout_script)
             timeout_engine.write_text(timeout_script, encoding="utf-8")
@@ -676,6 +1089,118 @@ class M3ContractTests(unittest.TestCase):
             self.assertTrue((timeout_dir / "failure.json").is_file())
             timeout_partial = json.loads((timeout_dir / "teacher.partial.jsonl").read_text(encoding="utf-8").splitlines()[0])
             self.assertEqual(timeout_partial["status"], "error")
+            timeout_pid = int(timeout_pid_file.read_text(encoding="utf-8"))
+            with self.assertRaises(ProcessLookupError):
+                os.kill(timeout_pid, 0)
+
+            missing_bestmove_engine = temp / "fake-stockfish-no-bestmove"
+            missing_bestmove_pid = temp / "no-bestmove-engine.pid"
+            missing_bestmove_script = fake_engine.read_text(encoding="utf-8").replace(
+                "import chess\n\nmultipv = 1",
+                "import chess\nimport os\n\nmultipv = 1",
+            ).replace(
+                '    elif command == "go":\n        moves = sorted(board.legal_moves, key=lambda move: move.uci())',
+                f'    elif command == "go":\n        open({str(missing_bestmove_pid)!r}, "w").write(str(os.getpid()))\n        moves = sorted(board.legal_moves, key=lambda move: move.uci())',
+            ).replace(
+                'print(f"bestmove {moves[0].uci()}", flush=True)',
+                'print("info string intentionally omitted bestmove", flush=True)',
+            )
+            self.assertIn("intentionally omitted bestmove", missing_bestmove_script)
+            self.assertNotIn('print(f"bestmove', missing_bestmove_script)
+            missing_bestmove_engine.write_text(missing_bestmove_script, encoding="utf-8")
+            missing_bestmove_engine.chmod(0o755)
+            missing_bestmove_sha = hashlib.sha256(missing_bestmove_engine.read_bytes()).hexdigest()
+            missing_bestmove_dir = temp / "teacher-missing-bestmove"
+            with self.assertRaisesRegex(TeacherError, "no successful position records"):
+                run_teacher(
+                    output, output / "games.jsonl", missing_bestmove_dir,
+                    engine_path=missing_bestmove_engine, expected_engine_sha256=missing_bestmove_sha,
+                    license_path=license_path, expected_license_sha256=license_sha,
+                    max_positions=1, sample_seed=9, nodes_per_position=500,
+                    multipv=3, threads=1, hash_mib=64, timeout_seconds=0.5,
+                    max_wall_seconds=60, authorization_id=AUTHORIZATION_ID,
+                    source_decision_id=SOURCE_DECISION_ID, confirm_write=True,
+                    code_revision="a" * 40, allow_synthetic_source_for_test=True,
+                )
+            missing_bestmove_row = json.loads(
+                (missing_bestmove_dir / "teacher.partial.jsonl").read_text(encoding="utf-8").splitlines()[0]
+            )
+            self.assertEqual(missing_bestmove_row["status"], "error")
+            self.assertIn("watchdog", missing_bestmove_row["reason"])
+            missing_bestmove_process = int(missing_bestmove_pid.read_text(encoding="utf-8"))
+            with self.assertRaises(ProcessLookupError):
+                os.kill(missing_bestmove_process, 0)
+
+            bounded_dir = temp / "teacher-total-budget"
+            timeout_pid_file.unlink(missing_ok=True)
+            bounded_started = time.monotonic()
+            with self.assertRaisesRegex(TeacherError, "no successful position records"):
+                run_teacher(
+                    output, output / "games.jsonl", bounded_dir,
+                    engine_path=timeout_engine, expected_engine_sha256=timeout_sha,
+                    license_path=license_path, expected_license_sha256=license_sha,
+                    max_positions=1, sample_seed=9, nodes_per_position=500,
+                    multipv=3, threads=1, hash_mib=64, timeout_seconds=5,
+                    max_wall_seconds=1, authorization_id=AUTHORIZATION_ID,
+                    source_decision_id=SOURCE_DECISION_ID, confirm_write=True,
+                    code_revision="a" * 40, allow_synthetic_source_for_test=True,
+                )
+            bounded_elapsed = time.monotonic() - bounded_started
+            self.assertLess(bounded_elapsed, 3.5)
+            bounded_partial = json.loads((bounded_dir / "teacher.partial.jsonl").read_text(encoding="utf-8").splitlines()[0])
+            self.assertEqual(bounded_partial["status"], "error")
+            if timeout_pid_file.exists():
+                bounded_pid = int(timeout_pid_file.read_text(encoding="utf-8"))
+                with self.assertRaises(ProcessLookupError):
+                    os.kill(bounded_pid, 0)
+
+            for invalid_timeout, invalid_wall in (
+                (0.0, 10), (-1.0, 10), (0.0001, 10), (float("nan"), 10), (float("inf"), 10),
+                (1.0, 0), (1.0, -1), (1.0, float("nan")), (1.0, float("inf")),
+            ):
+                with self.subTest(invalid_timeout=invalid_timeout, invalid_wall=invalid_wall):
+                    with self.assertRaisesRegex(TeacherError, "timeout|wall-time budget"):
+                        run_teacher(
+                            output, output / "games.jsonl", temp / f"invalid-time-{len(list(temp.iterdir()))}",
+                            engine_path=fake_engine, expected_engine_sha256=engine_sha,
+                            license_path=license_path, expected_license_sha256=license_sha,
+                            max_positions=1, sample_seed=9, nodes_per_position=500,
+                            multipv=3, threads=1, hash_mib=64, timeout_seconds=invalid_timeout,
+                            max_wall_seconds=invalid_wall, authorization_id=AUTHORIZATION_ID,
+                            source_decision_id=SOURCE_DECISION_ID, confirm_write=True,
+                            code_revision="a" * 40, allow_synthetic_source_for_test=True,
+                        )
+
+            partial_engine = temp / "fake-stockfish-partial"
+            partial_script = timeout_script.replace("multipv = 1\nboard =", "multipv = 1\ngo_count = 0\nboard =")
+            partial_script = partial_script.replace(
+                f'    elif command == "go":\n        open({str(timeout_pid_file)!r}, "w").write(str(os.getpid()))\n        time.sleep(3)',
+                f'    elif command == "go":\n        go_count += 1\n        open({str(timeout_pid_file)!r}, "w").write(str(os.getpid()))\n        if go_count > 1:\n            time.sleep(3)',
+            )
+            self.assertIn("go_count > 1", partial_script)
+            partial_engine.write_text(partial_script, encoding="utf-8")
+            partial_engine.chmod(0o755)
+            partial_sha = hashlib.sha256(partial_engine.read_bytes()).hexdigest()
+            partial_dir = temp / "teacher-partial-timeout"
+            partial_manifest = run_teacher(
+                output, output / "games.jsonl", partial_dir,
+                engine_path=partial_engine, expected_engine_sha256=partial_sha,
+                license_path=license_path, expected_license_sha256=license_sha,
+                max_positions=3, sample_seed=9, nodes_per_position=500,
+                multipv=3, threads=1, hash_mib=64, timeout_seconds=0.4,
+                max_wall_seconds=30, authorization_id=AUTHORIZATION_ID,
+                source_decision_id=SOURCE_DECISION_ID, confirm_write=True,
+                code_revision="a" * 40, allow_synthetic_source_for_test=True,
+            )
+            partial_verified = verify_teacher_run(partial_dir, output, allow_synthetic_source_for_test=True)
+            self.assertEqual(partial_manifest["status"], "partial")
+            self.assertEqual(partial_manifest["positions_analyzed"], 1)
+            self.assertEqual(partial_verified["positions_analyzed"], 1)
+            partial_rows = [json.loads(line) for line in (partial_dir / "teacher.jsonl").read_text(encoding="utf-8").splitlines()]
+            self.assertEqual([row["status"] for row in partial_rows], ["ok", "error", "not_attempted"])
+            timeout_pid = int(timeout_pid_file.read_text(encoding="utf-8"))
+            with self.assertRaises(ProcessLookupError):
+                os.kill(timeout_pid, 0)
 
             with self.assertRaisesRegex(TeacherError, "binary is missing"):
                 run_teacher(
@@ -689,12 +1214,38 @@ class M3ContractTests(unittest.TestCase):
                     code_revision="a" * 40, allow_synthetic_source_for_test=True,
                 )
 
-    def test_release_refuses_existing_target(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            target = Path(directory) / "release"
-            target.mkdir()
-            self.assertTrue(target.exists())
+            original_positions = (output / "positions.jsonl").read_bytes()
+            position_rows = [json.loads(line) for line in original_positions.decode("utf-8").splitlines()]
+            position_rows[0]["pgn_result"] = "0-1" if position_rows[0]["pgn_result"] != "0-1" else "1-0"
+            changed_positions = b"".join(
+                json.dumps(row, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8") + b"\n"
+                for row in position_rows
+            )
+            (output / "positions.jsonl").write_bytes(changed_positions)
+            rewrite_release_file_manifest(output, "positions.jsonl")
+            with self.assertRaisesRegex(ValueError, "game-result perspective"):
+                verify_release(output, allow_synthetic_source_for_test=True)
+            (output / "positions.jsonl").write_bytes(original_positions)
+            rewrite_release_file_manifest(output, "positions.jsonl")
+            self.assertEqual(verify_release(output, allow_synthetic_source_for_test=True), verified)
 
+            original_games = (output / "games.jsonl").read_bytes()
+            game_rows = [json.loads(line) for line in original_games.decode("utf-8").splitlines()]
+            terminal_game = next(row for row in game_rows if row["board_termination"] is not None)
+            terminal_game["pgn_result"] = "0-1"
+            terminal_game["result"] = "0-1"
+            terminal_game["white_result"] = "loss"
+            changed_games = b"".join(
+                json.dumps(row, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8") + b"\n"
+                for row in game_rows
+            )
+            (output / "games.jsonl").write_bytes(changed_games)
+            rewrite_release_file_manifest(output, "games.jsonl")
+            with self.assertRaisesRegex(ValueError, "contradicts the reconstructed automatic terminal outcome"):
+                verify_release(output, allow_synthetic_source_for_test=True)
+            (output / "games.jsonl").write_bytes(original_games)
+            rewrite_release_file_manifest(output, "games.jsonl")
+            self.assertEqual(verify_release(output, allow_synthetic_source_for_test=True), verified)
 
 if __name__ == "__main__":
     unittest.main()

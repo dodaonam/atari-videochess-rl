@@ -1954,6 +1954,20 @@
         },
         {
           "kind": "file",
+          "path": ".agents/evidence/M3-corrective-authorization-20261021.md",
+          "detail": "Current direct owner authorization to harden the existing M3 implementation and PR #3 under the established source, teacher, compute, and milestone boundaries.",
+          "result": "The corrective mission is authorized on the existing M3-001 task; the PR remains open/unmerged, independent acceptance is pending, and G3 remains unapproved.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-20T19:51:55Z",
+            "recorded_at_utc": "2026-10-20T19:51:55Z",
+            "exit_code": null,
+            "git_revision": "ab73663dceb0bdb102be9d03ac76b484cdf64ee6",
+            "log_path": ".agents/evidence/M3-corrective-authorization-20261021.md"
+          }
+        },
+        {
+          "kind": "file",
           "path": ".agents/evidence/M3-source-decision-20261020.md",
           "detail": "Source decision recorded before retrieval; bounded local/internal use only.",
           "result": "The exact May 2022 package was selected and authorized for local/internal academic research; no archive or bulk-derived-record redistribution is permitted.",

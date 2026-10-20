@@ -121,6 +121,7 @@ def run_teacher(
     max_output_bytes: int = 64 * 1024 * 1024,
     allow_synthetic_source_for_test: bool = False,
 ) -> dict[str, Any]:
+    started = time.monotonic()
     if not confirm_write:
         raise TeacherError("teacher run requires explicit --confirm-write")
     if output_dir.exists():
@@ -131,6 +132,16 @@ def run_teacher(
         raise TeacherError("teacher options exceed the bounded M3 settings")
     if max_output_bytes < 1024 * 1024:
         raise TeacherError("teacher output cap must be at least 1 MiB")
+    if (isinstance(timeout_seconds, bool) or not isinstance(timeout_seconds, (int, float))
+            or not math.isfinite(timeout_seconds) or timeout_seconds <= 0):
+        raise TeacherError("per-position timeout must be finite and positive")
+    timeout_seconds = float(format(timeout_seconds, ".3f"))
+    if timeout_seconds <= 0:
+        raise TeacherError("per-position timeout must resolve to at least one millisecond")
+    if (isinstance(max_wall_seconds, bool) or not isinstance(max_wall_seconds, (int, float))
+            or not math.isfinite(max_wall_seconds) or max_wall_seconds <= 0):
+        raise TeacherError("total teacher wall-time budget must be finite and positive")
+    wall_deadline = started + float(max_wall_seconds)
     if not engine_path.is_file() or not os.access(engine_path, os.X_OK):
         raise TeacherError("verified Stockfish binary is missing or not executable")
     binary_sha, binary_bytes = sha256_file(engine_path)
@@ -176,8 +187,9 @@ def run_teacher(
         "max_wall_seconds": max_wall_seconds,
         "max_output_bytes": max_output_bytes,
         "node_budget_semantics": "one UCI nodes limit per root position search, shared across its MultiPV lines",
-        "time_budget_semantics": "UCI movetime cap per root position, also used as the python-chess protocol response deadline",
-        "watchdog_grace_semantics": "min(2 seconds, 10 percent of the per-root cap, remaining run wall budget after the cap)",
+        "time_budget_semantics": "UCI movetime is capped per root; python-chess response timeout is recorded per row; the external process watchdog kills an unresponsive engine at the recorded cap plus grace",
+        "watchdog_grace_semantics": "min(2 seconds, 10 percent of the per-root cap, remaining run wall budget after the cap); a 50 ms response reserve is kept when the total budget is nearly exhausted; the protocol join timeout follows the process kill deadline by 250 ms",
+        "total_wall_budget_semantics": "monotonic command budget starts before release verification and sample selection; it covers UCI startup, option setup, hash clearing, root searches, shutdown, sidecar serialization, and verification; engine blocking calls have watchdogs, bounded file phases are checked on completion and overruns are recorded partial; process kill/reap may add at most 2 seconds of cleanup tolerance",
         "raw_root_perspective": "side_to_move",
         "normalization": {
             "id": "cp-tanh-400/v1",
@@ -208,7 +220,7 @@ def run_teacher(
         "Threads": threads, "Hash": hash_mib, "MultiPV": multipv,
         "UCI_Chess960": False,
     }
-    started = time.monotonic()
+    engine_started: float | None = None
     result_rows: list[dict[str, Any]] = []
     failures: list[dict[str, Any]] = []
     engine = None
@@ -221,6 +233,7 @@ def run_teacher(
         position: dict[str, Any], status: str, reason: str,
         search_time_cap_seconds: float | None = None,
         watchdog_grace_seconds: float | None = None,
+        protocol_timeout_seconds: float | None = None,
     ) -> dict[str, Any]:
         row = {
             "schema": TEACHER_SCHEMA, "teacher_run_id": teacher_run_id,
@@ -236,10 +249,29 @@ def run_teacher(
             row["search_time_cap_seconds"] = round(search_time_cap_seconds, 6)
         if watchdog_grace_seconds is not None:
             row["watchdog_grace_seconds"] = round(watchdog_grace_seconds, 6)
+        if protocol_timeout_seconds is not None:
+            row["protocol_timeout_seconds"] = round(protocol_timeout_seconds, 6)
         return row
 
+    total_watchdog_expired = threading.Event()
+
+    def expire_total_budget() -> None:
+        total_watchdog_expired.set()
+        if engine is not None:
+            _kill_engine_process(engine)
+
     try:
-        engine = chess.engine.SimpleEngine.popen_uci(str(engine_path), timeout=timeout_seconds)
+        startup_remaining = wall_deadline - time.monotonic()
+        if startup_remaining <= 0:
+            for position in selected:
+                failure = {"sample_id": position["sample_id"], "status": "not_attempted", "reason": "teacher wall-time budget expired before UCI startup"}
+                failures.append(failure)
+                result_rows.append(status_row(position, "not_attempted", failure["reason"]))
+            raise TimeoutError("total teacher wall-time budget expired before UCI startup")
+        engine_started = time.monotonic()
+        engine = chess.engine.SimpleEngine.popen_uci(
+            str(engine_path), timeout=min(float(timeout_seconds), startup_remaining),
+        )
         engine_id = dict(engine.id)
         if "Stockfish 19" not in engine_id.get("name", ""):
             raise TeacherError(f"UCI identity is not Stockfish 19: {engine_id.get('name', 'unknown')}")
@@ -251,19 +283,32 @@ def run_teacher(
         if "UCI_ShowWDL" in supported:
             configure_options["UCI_ShowWDL"] = True
             requested_options["UCI_ShowWDL"] = True
-        engine.configure(configure_options)
+        configure_remaining = wall_deadline - time.monotonic()
+        if configure_remaining <= 0:
+            raise TimeoutError("total teacher wall-time budget expired during UCI startup")
+        configure_protocol_timeout = max(0.001, configure_remaining * 0.8)
+        engine.timeout = configure_protocol_timeout
+        configure_watchdog = threading.Timer(configure_remaining, expire_total_budget)
+        configure_watchdog.daemon = True
+        configure_watchdog.start()
+        try:
+            engine.configure(configure_options)
+        finally:
+            configure_watchdog.cancel()
+        if total_watchdog_expired.is_set():
+            raise TimeoutError("total teacher wall-time watchdog expired during engine configuration")
         effective_options = _engine_config(engine, configure_options)
         for position_index, position in enumerate(selected):
-            elapsed_total = time.monotonic() - started
-            remaining_wall = max_wall_seconds - elapsed_total
+            position_time_cap: float | None = None
+            watchdog_grace: float | None = None
+            protocol_timeout: float | None = None
+            remaining_wall = wall_deadline - time.monotonic()
             if remaining_wall <= 0.01:
                 for remaining in selected[position_index:]:
                     failure = {"sample_id": remaining["sample_id"], "status": "not_attempted", "reason": "teacher wall-time cap reached"}
                     failures.append(failure)
                     result_rows.append(status_row(remaining, "not_attempted", failure["reason"]))
                 break
-            position_time_cap = min(timeout_seconds, remaining_wall)
-            watchdog_grace = min(2.0, position_time_cap * 0.1, max(0.0, remaining_wall - position_time_cap))
             game = games.get(position["game_id"])
             if game is None:
                 failure = {"sample_id": position["sample_id"], "status": "error", "reason": "missing parent game"}
@@ -280,19 +325,61 @@ def run_teacher(
                     failures.append(failure)
                     result_rows.append(status_row(position, "terminal", failure["reason"]))
                     continue
+                clear_hash_remaining = wall_deadline - time.monotonic()
+                if clear_hash_remaining <= 0.01:
+                    for remaining in selected[position_index:]:
+                        failure = {"sample_id": remaining["sample_id"], "status": "not_attempted", "reason": "teacher wall-time budget reached before hash reset"}
+                        failures.append(failure)
+                        result_rows.append(status_row(remaining, "not_attempted", failure["reason"]))
+                    break
+                engine.timeout = max(0.001, clear_hash_remaining * 0.8)
+                clear_watchdog = threading.Timer(clear_hash_remaining, expire_total_budget)
+                clear_watchdog.daemon = True
+                clear_watchdog.start()
+                try:
+                    engine.configure({"Clear Hash": None})
+                finally:
+                    clear_watchdog.cancel()
+                if total_watchdog_expired.is_set():
+                    raise TimeoutError("total teacher wall-time watchdog expired while clearing engine hash")
+
+                remaining_wall = wall_deadline - time.monotonic()
+                if remaining_wall <= 0.01:
+                    for remaining in selected[position_index:]:
+                        failure = {"sample_id": remaining["sample_id"], "status": "not_attempted", "reason": "teacher wall-time budget reached before root search"}
+                        failures.append(failure)
+                        result_rows.append(status_row(remaining, "not_attempted", failure["reason"]))
+                    break
+                # Reserve a small bounded response window when the total wall
+                # deadline would otherwise be consumed entirely by movetime.
+                if remaining_wall <= 0.06:
+                    for remaining in selected[position_index:]:
+                        failure = {"sample_id": remaining["sample_id"], "status": "not_attempted", "reason": "teacher wall-time budget reserved for search cleanup"}
+                        failures.append(failure)
+                        result_rows.append(status_row(remaining, "not_attempted", failure["reason"]))
+                    break
+                position_time_cap = min(float(timeout_seconds), remaining_wall - 0.05)
+                watchdog_grace = min(2.0, position_time_cap * 0.1, max(0.0, remaining_wall - position_time_cap))
+                # The process watchdog fires first. Keep python-chess's
+                # wrapper timeout 250 ms later so it receives the engine
+                # termination signal rather than racing the watchdog timer.
+                protocol_timeout = watchdog_grace + 0.25
                 before = time.monotonic()
-                engine.configure({"Clear Hash": None})
                 def expire_search() -> None:
-                    if _kill_engine_process(engine):
-                        search_timed_out.set()
+                    search_timed_out.set()
+                    _kill_engine_process(engine)
 
                 watchdog = threading.Timer(
-                    timeout_seconds + watchdog_grace,
+                    position_time_cap + watchdog_grace,
                     expire_search,
                 )
                 watchdog.daemon = True
                 watchdog.start()
                 try:
+                    # Let python-chess cancel first; the external watchdog
+                    # kills an engine that ignores cancellation at the full
+                    # scheduled grace deadline.
+                    engine.timeout = protocol_timeout
                     infos = engine.analyse(
                         board, chess.engine.Limit(nodes=nodes_per_position, time=position_time_cap),
                         multipv=multipv,
@@ -349,16 +436,22 @@ def run_teacher(
                     "root_perspective": "side_to_move",
                     "search_time_cap_seconds": round(position_time_cap, 6),
                     "watchdog_grace_seconds": round(watchdog_grace, 6),
+                    "protocol_timeout_seconds": round(protocol_timeout, 6),
                     "status": "ok", "multipv_lines": lines,
                     "engine": {"name": engine_id.get("name"), "author": engine_id.get("author"), "binary_sha256": binary_sha},
                 })
             except (chess.engine.EngineError, TimeoutError, OSError, TeacherError, ValueError) as exc:
-                reason = (
-                    f"TimeoutError: Stockfish exceeded {position_time_cap:.3f}s search cap plus {watchdog_grace:.3f}s watchdog grace"
-                    if search_timed_out.is_set() else f"{type(exc).__name__}: {str(exc)[:240]}"
-                )
+                if total_watchdog_expired.is_set():
+                    reason = "TimeoutError: total teacher wall-time watchdog expired"
+                elif search_timed_out.is_set():
+                    reason = f"TimeoutError: Stockfish exceeded {position_time_cap:.3f}s search cap plus {watchdog_grace:.3f}s watchdog grace"
+                else:
+                    reason = f"{type(exc).__name__}: {str(exc)[:240]}"
                 failures.append({"sample_id": position["sample_id"], "status": "error", "reason": reason})
-                result_rows.append(status_row(position, "error", reason, position_time_cap, watchdog_grace))
+                result_rows.append(status_row(
+                    position, "error", reason, position_time_cap, watchdog_grace,
+                    protocol_timeout,
+                ))
                 if isinstance(exc, (chess.engine.EngineError, TimeoutError, OSError)):
                     engine_usable = False
                     if engine is not None:
@@ -370,6 +463,11 @@ def run_teacher(
                         result_rows.append(status_row(remaining, "not_attempted", failure["reason"]))
                     break
     except Exception as exc:
+        if not result_rows:
+            for position in selected:
+                failure = {"sample_id": position["sample_id"], "status": "not_attempted", "reason": f"teacher run stopped before analysis: {type(exc).__name__}"}
+                failures.append(failure)
+                result_rows.append(status_row(position, "not_attempted", failure["reason"]))
         if result_rows:
             partial = b"".join(json_line(row) for row in result_rows)
             if len(partial) <= max_output_bytes:
@@ -383,11 +481,15 @@ def run_teacher(
         if engine is not None:
             if engine_usable:
                 try:
+                    remaining = wall_deadline - time.monotonic()
+                    engine.timeout = min(2.0, max(0.001, remaining))
                     engine.quit()
                 except Exception:
                     pass
             _terminate_engine(engine)
-    elapsed_total = round(time.monotonic() - started, 3)
+    stopped_at = time.monotonic()
+    elapsed_total = round(stopped_at - started, 3)
+    engine_elapsed = round(stopped_at - engine_started, 3) if engine_started is not None else 0.0
     successful_rows = [row for row in result_rows if row["status"] == "ok"]
     if not successful_rows:
         partial = b"".join(json_line(row) for row in result_rows)
@@ -436,9 +538,11 @@ def run_teacher(
             "node_budget_semantics": teacher_config["node_budget_semantics"],
             "time_budget_semantics": teacher_config["time_budget_semantics"],
             "watchdog_grace_semantics": teacher_config["watchdog_grace_semantics"],
-            "max_search_time_cap_seconds": timeout_seconds,
-            "watchdog_grace_seconds": min(2.0, timeout_seconds * 0.1),
-            "search_watchdog_seconds": timeout_seconds + min(2.0, timeout_seconds * 0.1),
+            "total_wall_budget_semantics": teacher_config["total_wall_budget_semantics"],
+            "total_wall_budget_seconds": max_wall_seconds,
+            "configured_max_search_time_cap_seconds": timeout_seconds,
+            "configured_max_watchdog_grace_seconds": min(2.0, timeout_seconds * 0.1),
+            "configured_max_search_watchdog_seconds": timeout_seconds + min(2.0, timeout_seconds * 0.1),
             "applied_search_time_caps_seconds": [
                 row["search_time_cap_seconds"] for row in result_rows
                 if row.get("search_time_cap_seconds") is not None
@@ -447,11 +551,14 @@ def run_teacher(
                 row["watchdog_grace_seconds"] for row in result_rows
                 if row.get("watchdog_grace_seconds") is not None
             ],
+            "applied_protocol_timeouts_seconds": [
+                row["protocol_timeout_seconds"] for row in result_rows
+                if row.get("protocol_timeout_seconds") is not None
+            ],
             "clear_hash_between_positions": True,
             "reported_nodes_per_analyzed_root": root_nodes,
             "reported_nodes_total": sum(root_nodes),
             "multipv": multipv, "threads": threads, "hash_mib": hash_mib,
-            "wall_watchdog_seconds": timeout_seconds,
             "root_score_perspective": "side_to_move; White conversion stored separately",
         },
         "normalization": teacher_config["normalization"],
@@ -462,6 +569,10 @@ def run_teacher(
         "positions_analyzed": len(successful_rows),
         "positions_with_rows": len(result_rows),
         "positions_failed_or_unattempted": failures,
+        "engine_execution_elapsed_seconds": engine_elapsed,
+        "command_elapsed_seconds": elapsed_total,
+        "status": "complete" if not failures and elapsed_total <= max_wall_seconds else "partial",
+        "wall_budget_status": "within_budget" if elapsed_total <= max_wall_seconds else "overrun",
         "multipv_score_types": score_types,
         "teacher_config": teacher_config,
         "teacher_config_sha256": teacher_config_sha,
@@ -474,6 +585,26 @@ def run_teacher(
     manifest_bytes = json.dumps(manifest, sort_keys=True, indent=2, ensure_ascii=False).encode("utf-8") + b"\n"
     _write_new(output_dir / "manifest.json", manifest_bytes)
     _write_new(output_dir / "manifest.sha256", (hashlib.sha256(manifest_bytes).hexdigest() + "  manifest.json\n").encode("ascii"))
+    verify_teacher_run(output_dir, release_dir, allow_synthetic_source_for_test=allow_synthetic_source_for_test)
+    finalized_elapsed = round(time.monotonic() - started, 3)
+    manifest["command_elapsed_seconds"] = finalized_elapsed
+    manifest["elapsed_seconds"] = finalized_elapsed
+    manifest["throughput_positions_per_second"] = round(len(successful_rows) / finalized_elapsed, 4) if finalized_elapsed else None
+    manifest["status"] = "complete" if not failures and finalized_elapsed <= max_wall_seconds else "partial"
+    manifest["wall_budget_status"] = "within_budget" if finalized_elapsed <= max_wall_seconds else "overrun"
+    manifest_bytes = json.dumps(manifest, sort_keys=True, indent=2, ensure_ascii=False).encode("utf-8") + b"\n"
+    manifest_temp = output_dir / f".manifest-{os.getpid()}.partial"
+    with manifest_temp.open("xb") as stream:
+        stream.write(manifest_bytes)
+        stream.flush()
+        os.fsync(stream.fileno())
+    os.replace(manifest_temp, output_dir / "manifest.json")
+    checksum_temp = output_dir / f".manifest-sha256-{os.getpid()}.partial"
+    with checksum_temp.open("xb") as stream:
+        stream.write((hashlib.sha256(manifest_bytes).hexdigest() + "  manifest.json\n").encode("ascii"))
+        stream.flush()
+        os.fsync(stream.fileno())
+    os.replace(checksum_temp, output_dir / "manifest.sha256")
     verify_teacher_run(output_dir, release_dir, allow_synthetic_source_for_test=allow_synthetic_source_for_test)
     return manifest
 
@@ -489,6 +620,7 @@ def verify_teacher_run(
     if not checksum or checksum[0] != expected_manifest_sha:
         raise TeacherError("teacher manifest checksum mismatch")
     manifest = json.loads(manifest_bytes)
+    search = manifest.get("search", {})
     release_check = verify_release(release_dir, allow_synthetic_source_for_test=allow_synthetic_source_for_test)
     release_manifest = json.loads((release_dir / "manifest.json").read_text(encoding="utf-8"))
     if manifest.get("schema") != "videochess-teacher-run-manifest/1.0":
@@ -558,6 +690,7 @@ def verify_teacher_run(
     nodes_by_root: list[int] = []
     applied_time_caps: list[float] = []
     applied_watchdog_graces: list[float] = []
+    applied_protocol_timeouts: list[float] = []
     success_count = 0
     failure_rows: list[dict[str, str]] = []
     with rows_path.open("r", encoding="utf-8") as stream:
@@ -581,6 +714,16 @@ def verify_teacher_run(
                         or not 0 <= applied_grace <= min(2.0, float(applied_time_cap) * 0.1) + 1e-6):
                     raise TeacherError(f"teacher watchdog grace is invalid at line {line_number}")
                 applied_watchdog_graces.append(float(applied_grace))
+            applied_protocol_timeout = row.get("protocol_timeout_seconds")
+            if applied_protocol_timeout is not None:
+                if (isinstance(applied_protocol_timeout, bool)
+                        or not isinstance(applied_protocol_timeout, (int, float))
+                        or not math.isclose(
+                            applied_protocol_timeout, float(applied_grace or 0) + 0.25,
+                            rel_tol=0.0, abs_tol=1e-6,
+                        )):
+                    raise TeacherError(f"teacher protocol timeout is invalid at line {line_number}")
+                applied_protocol_timeouts.append(float(applied_protocol_timeout))
             if row.get("dataset_release_id") != release_check["release_id"]:
                 raise TeacherError(f"teacher row dataset identity mismatch at line {line_number}")
             position = positions[sample_id]
@@ -649,11 +792,36 @@ def verify_teacher_run(
         raise TeacherError("teacher manifest position totals differ from result rows")
     if failure_rows != manifest.get("positions_failed_or_unattempted"):
         raise TeacherError("teacher failure summary differs from result rows")
-    search = manifest.get("search", {})
+    if "status" in manifest:
+        max_wall = config.get("max_wall_seconds")
+        elapsed = manifest.get("elapsed_seconds")
+        if (isinstance(max_wall, bool) or not isinstance(max_wall, (int, float))
+                or not math.isfinite(max_wall) or max_wall <= 0):
+            raise TeacherError("teacher total wall-time limit is malformed")
+        if (isinstance(elapsed, bool) or not isinstance(elapsed, (int, float))
+                or not math.isfinite(elapsed) or elapsed < 0):
+            raise TeacherError("teacher elapsed time is malformed")
+        if manifest.get("command_elapsed_seconds") != elapsed:
+            raise TeacherError("teacher command elapsed time differs from the finalized wall-time measurement")
+        engine_elapsed = manifest.get("engine_execution_elapsed_seconds")
+        if (isinstance(engine_elapsed, bool) or not isinstance(engine_elapsed, (int, float))
+                or not math.isfinite(engine_elapsed) or not 0 <= engine_elapsed <= elapsed):
+            raise TeacherError("teacher engine execution time is malformed")
+        expected_status = "complete" if not failure_rows and elapsed <= max_wall else "partial"
+        if manifest.get("status") != expected_status:
+            raise TeacherError("teacher status does not reflect its failures or total wall-time budget")
+        expected_budget = "within_budget" if elapsed <= max_wall else "overrun"
+        if manifest.get("wall_budget_status") != expected_budget:
+            raise TeacherError("teacher wall-budget status does not match elapsed time")
+        if search.get("total_wall_budget_seconds") != max_wall:
+            raise TeacherError("teacher total wall-time budget differs between config and search metadata")
     if applied_time_caps != search.get("applied_search_time_caps_seconds"):
         raise TeacherError("teacher per-position search caps differ from the manifest")
     if applied_watchdog_graces != search.get("applied_watchdog_graces_seconds"):
         raise TeacherError("teacher watchdog grace values differ from the manifest")
+    if ("applied_protocol_timeouts_seconds" in search
+            and applied_protocol_timeouts != search.get("applied_protocol_timeouts_seconds")):
+        raise TeacherError("teacher protocol response timeouts differ from the manifest")
     if score_types != manifest.get("multipv_score_types") or nodes_by_root != manifest.get("search", {}).get("reported_nodes_per_analyzed_root"):
         raise TeacherError("teacher score/node summaries differ from result rows")
     return {

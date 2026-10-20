@@ -221,6 +221,16 @@ def parse_one_game(
     board_outcome = board.outcome(claim_draw=False)
     board_termination = None
     if board_outcome is not None:
+        expected_terminal_result = (
+            "1-0" if board_outcome.winner == chess.WHITE else
+            "0-1" if board_outcome.winner == chess.BLACK else "1/2-1/2"
+        )
+        if result != expected_terminal_result:
+            return ParseResult(
+                "quarantined", "pgn_terminal_result_mismatch",
+                "declared PGN result contradicts the reconstructed automatic terminal outcome",
+                stats={"header_bytes": header_bytes},
+            )
         board_termination = {
             "termination": board_outcome.termination.name,
             "winner": ("white" if board_outcome.winner else "black") if board_outcome.winner is not None else "draw",

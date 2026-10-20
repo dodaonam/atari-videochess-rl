@@ -10,12 +10,15 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from .contracts import (
-    GAME_SCHEMA, POSITION_SCHEMA, board_position_signature,
+    GAME_SCHEMA, LEGACY_SPLIT_SCHEMA, POSITION_SCHEMA, SPLIT_SCHEMA, board_position_signature,
     board_signature_owner, config_identity, reconstruct_position,
     release_identity, replay_history_identity, sample_identity,
     split_manifest_identity, validate_game_record, validate_position_record,
 )
 from .source import sha256_file, validate_source_manifest
+from .stats import (
+    STATS_SCHEMA, quality_distribution_shifts, summarize_dataset,
+)
 
 
 class ExportError(ValueError):
@@ -333,7 +336,7 @@ def write_release_files(
     output_rows = [[name, size, digest] for name, (size, digest) in outputs.items()]
     release_id = release_identity(
         source_manifest["archive_sha256"],
-        [GAME_SCHEMA, POSITION_SCHEMA, "videochess-split/1.0"],
+        [GAME_SCHEMA, POSITION_SCHEMA, SPLIT_SCHEMA],
         config["config_sha256"], config["code_revision"],
         split_manifest["split_assignment_sha256"], output_rows,
     )
@@ -344,7 +347,7 @@ def write_release_files(
         "source_member_sha256": source_manifest["member_sha256"],
         "source_decision_id": source_manifest["source_decision_id"],
         "authorization_id": source_manifest["authorization_id"],
-        "schema_versions": [GAME_SCHEMA, POSITION_SCHEMA, "videochess-split/1.0"],
+        "schema_versions": [GAME_SCHEMA, POSITION_SCHEMA, SPLIT_SCHEMA],
         "config_sha256": config["config_sha256"],
         "code_revision": config["code_revision"],
         "dirty_code_tree": config["dirty_code_tree"],
@@ -447,8 +450,27 @@ def verify_release(
     if any(len(splits) > 1 for splits in seen_board_splits.values()):
         raise ExportError("cross-split board-position overlap remains in release")
     split_doc = json.loads((release_dir / "split.json").read_text(encoding="utf-8"))
-    if split_doc.get("schema") != "videochess-split/1.0":
+    if split_doc.get("schema") not in {LEGACY_SPLIT_SCHEMA, SPLIT_SCHEMA}:
         raise ExportError("unsupported split manifest schema")
+    if split_doc.get("schema") not in manifest.get("schema_versions", []):
+        raise ExportError("release schema-version list does not include its split manifest version")
+    stats_doc = json.loads((release_dir / "stats.json").read_text(encoding="utf-8"))
+    quality_version = stats_doc.get("quality_report_version", 1)
+    if not isinstance(quality_version, int) or isinstance(quality_version, bool) or quality_version < 1:
+        raise ExportError("quality report version is malformed")
+    if quality_version >= 2 and (
+        split_doc.get("schema") != SPLIT_SCHEMA
+        or stats_doc.get("schema") != STATS_SCHEMA
+        or SPLIT_SCHEMA not in manifest.get("schema_versions", [])
+    ):
+        raise ExportError("quality report v2 requires the versioned split/statistics schema extensions")
+    if quality_version < 2 and split_doc.get("schema") == SPLIT_SCHEMA:
+        raise ExportError("split schema 1.1 requires quality report v2")
+    if split_doc.get("holdout_minimum") != config_doc.get("min_holdout_positions"):
+        raise ExportError("split holdout count minimum differs from the immutable release config")
+    configured_retention = config_doc.get("min_holdout_retention_basis_points", 5000) / 10_000
+    if split_doc.get("holdout_minimum_retention") != configured_retention:
+        raise ExportError("split holdout retention minimum differs from the immutable release config")
     assignments = dict(split_doc.get("game_group_assignments", []))
     for row in positions:
         if assignments.get(row["normalized_game_sha256"]) != row["split"]:
@@ -482,6 +504,7 @@ def verify_release(
             "board_position_signature": row["board_position_signature"],
             "history_state_id": row["history_state_id"], "split": row["split"],
             "side_to_move": row["side_to_move"], "white_result": row["white_result"],
+            "pgn_result": row["pgn_result"], "side_to_move_result": row["side_to_move_result"],
             "ply_index": row["ply_index"], "candidate_count": row["candidate_count"],
         })
     for row in purged:
@@ -490,17 +513,32 @@ def verify_release(
             "original_split", "owner_split", "side_to_move", "white_result", "ply_index", "candidate_count",
             "played_move_uci",
         }
+        if quality_version >= 2:
+            required.update({"pgn_result", "side_to_move_result"})
         if not required.issubset(row):
             raise ExportError("purge ledger row misses fields required for independent auditing")
+        game = games_by_id.get(row["game_id"])
+        if game is None:
+            raise ExportError("purged row references a missing game")
+        board = reconstruct_position(game, row["ply_index"])
+        expected_white = {"1-0": "win", "0-1": "loss", "1/2-1/2": "draw"}[game["pgn_result"]]
+        expected_to_move = expected_white if board.turn else {"win": "loss", "loss": "win", "draw": "draw"}[expected_white]
+        if quality_version >= 2 and (
+            row["pgn_result"] != game["pgn_result"]
+            or row["white_result"] != expected_white
+            or row["side_to_move_result"] != expected_to_move
+        ):
+            raise ExportError("purge ledger game-result perspectives do not match the reconstructed parent state")
         prior_rows.append({
             "sample_id": row["sample_id"], "game_id": row["game_id"],
             "board_position_signature": row["board_position_signature"],
             "history_state_id": row["history_state_id"], "split": row["original_split"],
             "side_to_move": row["side_to_move"], "white_result": row["white_result"],
+            "pgn_result": row.get("pgn_result", game["pgn_result"]),
+            "side_to_move_result": row.get("side_to_move_result", expected_to_move),
             "ply_index": row["ply_index"], "candidate_count": row["candidate_count"],
         })
-        game = games_by_id.get(row["game_id"])
-        if game is None or assignments.get(game["normalized_game_sha256"]) != row["original_split"]:
+        if assignments.get(game["normalized_game_sha256"]) != row["original_split"]:
             raise ExportError("purged row does not trace to a game in its original assigned split")
         board = reconstruct_position(game, row["ply_index"])
         legal = {move.uci() for move in board.legal_moves}
@@ -559,9 +597,31 @@ def verify_release(
         raise ExportError("position retention does not recompute")
     min_holdout = split_doc.get("holdout_minimum")
     min_retention = split_doc.get("holdout_minimum_retention")
+    warning_retention = split_doc.get("holdout_warning_retention", 0.8)
+    if (isinstance(warning_retention, bool) or not isinstance(warning_retention, (int, float))
+            or not 0 <= warning_retention <= 1):
+        raise ExportError("holdout warning retention threshold is malformed")
+    if quality_version >= 2 and warning_retention != 0.8:
+        raise ExportError("quality report v2 requires the documented 80% holdout warning threshold")
+    expected_warnings = [
+        f"{name} holdout retention is below the 80% warning threshold ({retention[name]:.4f})"
+        for name in ("validation", "test") if retention[name] < warning_retention
+    ]
+    if ((quality_version >= 2 and "holdout_warnings" not in split_doc)
+            or ("holdout_warnings" in split_doc and split_doc.get("holdout_warnings") != expected_warnings)):
+        raise ExportError("holdout retention warnings do not match the measured retention")
     for name in ("validation", "test"):
         if after_counts[name] < min_holdout or retention[name] < min_retention:
             raise ExportError(f"{name} holdout fails the recorded minimum/retention gate")
+    expected_holdout_failures = [
+        f"{name} holdout has {after_counts[name]} retained positions (minimum {min_holdout})"
+        for name in ("validation", "test") if after_counts[name] < min_holdout
+    ] + [
+        f"{name} retention {retention[name]:.4f} is below {min_retention:.4f}"
+        for name in ("validation", "test") if retention[name] < min_retention
+    ]
+    if split_doc.get("holdout_failures") != expected_holdout_failures:
+        raise ExportError("holdout failure summary does not recompute")
     if split_doc.get("purged_position_count") != len(purged):
         raise ExportError("purged position count does not match the audit ledger")
     if split_doc.get("purged_candidate_count") != sum(row["candidate_count"] for row in purged):
@@ -579,13 +639,79 @@ def verify_release(
     )
     if assignment_hash != split_doc.get("split_assignment_sha256") or assignment_hash != manifest.get("split_assignment_sha256"):
         raise ExportError("split assignment identity does not recompute")
-    stats_doc = json.loads((release_dir / "stats.json").read_text(encoding="utf-8"))
     if stats_doc.get("source", {}).get("source_id") != source_doc.get("source_id"):
         raise ExportError("dataset statistics source identity differs from source manifest")
     if stats_doc.get("selected_games") != len(games):
         raise ExportError("dataset statistics game count does not match release")
     if stats_doc.get("positions_selected_before_purge") != len(prior_rows) or stats_doc.get("positions_retained_after_purge") != len(positions):
         raise ExportError("dataset statistics position counts do not match release")
+    if stats_doc.get("splits") != split_doc:
+        raise ExportError("dataset statistics split summary differs from the split manifest")
+    if stats_doc.get("quality_report_version", 1) >= 2:
+        try:
+            recomputed_stats = summarize_dataset(
+                games, prior_rows, positions, split_doc, stats_doc["scan"],
+                sampling=stats_doc["sampling"],
+                resources=stats_doc["resource_measurements"],
+                config_sha256=config_hash, source_manifest=source_doc,
+            )
+        except (KeyError, TypeError, ValueError) as exc:
+            raise ExportError(f"dataset statistics cannot be recomputed from release rows: {exc}") from exc
+        expected_before = recomputed_stats["position_quality_before_purge"]
+        expected_after = recomputed_stats["position_quality_after_purge"]
+        if stats_doc.get("position_quality_before_purge") != expected_before:
+            raise ExportError("pre-purge quality distributions do not reconcile with release rows")
+        if stats_doc.get("position_quality_after_purge") != expected_after:
+            raise ExportError("post-purge quality distributions do not reconcile with release rows")
+        if stats_doc.get("distribution_shift_after_purge_fraction") != quality_distribution_shifts(expected_before, expected_after):
+            raise ExportError("reported quality distribution shifts do not reconcile with pre/post-purge rows")
+        candidate_counts = [row["candidate_count"] for row in prior_rows]
+        expected_candidate_histogram: dict[str, int] = {}
+        for candidate_count in candidate_counts:
+            key = str(candidate_count)
+            expected_candidate_histogram[key] = expected_candidate_histogram.get(key, 0) + 1
+        expected_candidate_histogram = dict(sorted(expected_candidate_histogram.items(), key=lambda item: int(item[0])))
+        if (stats_doc.get("legal_candidates", {}).get("total") != sum(candidate_counts)
+                or stats_doc.get("legal_candidates", {}).get("histogram") != expected_candidate_histogram):
+            raise ExportError("legal candidate statistics do not reconcile with pre-purge position rows")
+        expected_missing = {
+            "white_elo": sum(game.get("white_elo") is None for game in games),
+            "black_elo": sum(game.get("black_elo") is None for game in games),
+            "time_control": sum(not game.get("time_control") for game in games),
+            "date": sum(not game.get("date") for game in games),
+        }
+        if stats_doc.get("missing_metadata") != expected_missing:
+            raise ExportError("missing metadata counts do not reconcile with released game records")
+        expected_time_controls: dict[str, int] = {}
+        for game in games:
+            key = str(game.get("time_control") or "missing")
+            expected_time_controls[key] = expected_time_controls.get(key, 0) + 1
+        if stats_doc.get("time_control_distribution") != dict(sorted(expected_time_controls.items())):
+            raise ExportError("time-control statistics do not reconcile with released game records")
+        expected_rating_metadata = {
+            "one_or_more_missing": sum(game.get("white_elo") is None or game.get("black_elo") is None for game in games),
+            "both_present": sum(game.get("white_elo") is not None and game.get("black_elo") is not None for game in games),
+        }
+        if stats_doc.get("rating_metadata") != expected_rating_metadata:
+            raise ExportError("rating metadata availability counts do not reconcile with game records")
+        expected_headers: dict[str, int] = {}
+        for game in games:
+            for key in game.get("header_keys", []):
+                expected_headers[key] = expected_headers.get(key, 0) + 1
+        if stats_doc.get("header_key_frequency") != dict(sorted(expected_headers.items())):
+            raise ExportError("PGN header-key frequency does not reconcile with game records")
+        clock_report = stats_doc.get("clock_information", {})
+        if clock_report.get("status") != "unavailable" or not clock_report.get("reason"):
+            raise ExportError("unavailable clock metadata must be explicitly reported")
+        if stats_doc != recomputed_stats:
+            differing = sorted(
+                key for key in set(stats_doc) | set(recomputed_stats)
+                if stats_doc.get(key) != recomputed_stats.get(key)
+            )
+            raise ExportError(
+                "dataset statistics do not recompute from release rows, config, and source manifest: "
+                + ", ".join(differing[:12])
+            )
     rejection_counts: dict[str, dict[str, int]] = {"rejected": {}, "quarantined": {}}
     prior_rejection_ordinal = 0
     rejection_total = 0
@@ -610,6 +736,33 @@ def verify_release(
         raise ExportError("scan rejected-game count does not reconcile with the rejection ledger")
     if scan.get("games_quarantined") != sum(rejection_counts["quarantined"].values()):
         raise ExportError("scan quarantined-game count does not reconcile with the rejection ledger")
+    if quality_version >= 2:
+        source_conflicts = scan.get("conflicting_source_reference_sha256")
+        normalized_conflicts = scan.get("conflicting_normalized_game_sha256")
+        if (not isinstance(source_conflicts, list) or source_conflicts != sorted(set(source_conflicts))
+                or scan.get("conflicting_source_reference_count") != len(source_conflicts)):
+            raise ExportError("source-reference conflict identities/count do not reconcile")
+        if (not isinstance(normalized_conflicts, list) or normalized_conflicts != sorted(set(normalized_conflicts))
+                or scan.get("conflicting_normalized_groups") != len(normalized_conflicts)):
+            raise ExportError("normalized-game conflict identities/count do not reconcile")
+        for conflict_id in source_conflicts + normalized_conflicts:
+            if (not isinstance(conflict_id, str) or len(conflict_id) != 64
+                    or any(char not in "0123456789abcdef" for char in conflict_id)):
+                raise ExportError("conflict audit contains a malformed SHA-256 identity")
+        accepted_observations = scan.get("games_accepted_before_dedup")
+        duplicate_observations = scan.get("normalized_duplicate_observations")
+        audited_groups = scan.get("full_source_audit_groups")
+        if (not isinstance(accepted_observations, int) or not isinstance(duplicate_observations, int)
+                or not isinstance(audited_groups, int)
+                or accepted_observations - duplicate_observations != audited_groups):
+            raise ExportError("full-source normalized-game observation totals do not reconcile")
+        if (not isinstance(scan.get("normalized_duplicate_groups"), int)
+                or not 0 <= scan["normalized_duplicate_groups"] <= duplicate_observations):
+            raise ExportError("normalized-game duplicate group count is inconsistent")
+        if scan.get("games_accepted_selected") != len(games):
+            raise ExportError("selected-game count does not reconcile with scan statistics")
+        if scan.get("input_scan_complete") != (config_doc.get("sampling_mode") == "bottom_k"):
+            raise ExportError("source-scan completeness does not match the configured sampling mode")
     output_rows = [
         [item["path"], item["bytes"], item["sha256"]]
         for item in manifest["outputs"]

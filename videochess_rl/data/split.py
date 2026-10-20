@@ -6,7 +6,7 @@ from collections import defaultdict
 from typing import Any
 
 from .contracts import (
-    assign_game_split, board_signature_owner, split_manifest_identity,
+    SPLIT_SCHEMA, assign_game_split, board_signature_owner, split_manifest_identity,
 )
 
 
@@ -60,6 +60,8 @@ def split_and_purge(
                     "history_state_id": row["history_state_id"],
                     "side_to_move": row["side_to_move"],
                     "white_result": row["white_result"],
+                    "pgn_result": row["pgn_result"],
+                    "side_to_move_result": row["side_to_move_result"],
                     "ply_index": row["ply_index"],
                     "candidate_count": row["candidate_count"],
                     "played_move_uci": row["played_move_uci"],
@@ -84,6 +86,10 @@ def split_and_purge(
         f"{name} retention {retention[name]:.4f} is below {min_holdout_retention:.4f}"
         for name in ("validation", "test") if retention[name] < min_holdout_retention
     )
+    warnings = [
+        f"{name} holdout retention is below the 80% warning threshold ({retention[name]:.4f})"
+        for name in ("validation", "test") if retention[name] < 0.8
+    ]
     cross_split_signatures = sum(
         len({row["split"] for row in rows}) > 1 for rows in by_board.values()
     )
@@ -99,7 +105,7 @@ def split_and_purge(
     ]
     assignment_hash = split_manifest_identity(seed, game_assignments, owner_rows, purge_rows)
     split_manifest = {
-        "schema": "videochess-split/1.0",
+        "schema": SPLIT_SCHEMA,
         "split_seed": seed,
         "game_group_assignments": sorted(game_assignments),
         "board_signature_owners": sorted(owner_rows),
@@ -122,7 +128,9 @@ def split_and_purge(
         "purged_candidate_count": sum(row["candidate_count"] for row in purged),
         "holdout_minimum": min_holdout_positions,
         "holdout_minimum_retention": min_holdout_retention,
+        "holdout_warning_retention": 0.8,
         "holdout_failures": failures,
+        "holdout_warnings": warnings,
         "release_valid": not failures,
     }
     if failures:

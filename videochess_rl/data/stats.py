@@ -2,8 +2,13 @@
 
 from __future__ import annotations
 
+import math
 from collections import Counter
 from typing import Any
+
+import chess
+
+STATS_SCHEMA = "videochess-dataset-stats/1.1"
 
 
 def _distribution(rows: list[dict[str, Any]], field: str) -> Counter[str]:
@@ -42,23 +47,93 @@ def _quantiles(values: list[int]) -> dict[str, int | float | None]:
     return {"min": ordered[0], "p10": pick(0.10), "median": pick(0.50), "p90": pick(0.90), "max": ordered[-1]}
 
 
+def _rating_band(value: Any) -> str:
+    if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+        return "missing"
+    lower = (value // 100) * 100
+    return f"{lower}-{lower + 99}"
+
+
+def position_quality_distributions(
+    rows: list[dict[str, Any]], games_by_id: dict[str, dict[str, Any]],
+) -> dict[str, Any]:
+    """Summarize position and parent-game attributes for one purge phase."""
+    fields = {
+        "ply_band": Counter(), "side_to_move": Counter(), "pgn_result": Counter(),
+        "white_result": Counter(), "side_to_move_result": Counter(),
+        "candidate_count": Counter(), "white_elo_band": Counter(),
+        "black_elo_band": Counter(), "time_control": Counter(),
+        "repetition_context": Counter(), "split": Counter(),
+    }
+    board_signatures: set[str] = set()
+    history_states: set[str] = set()
+    candidate_rows = 0
+    for row in rows:
+        game = games_by_id.get(row.get("game_id"))
+        if game is None:
+            raise ValueError(f"quality statistics cannot find parent game {row.get('game_id')!r}")
+        fields["ply_band"][_ply_band(row["ply_index"])] += 1
+        fields["side_to_move"][str(row.get("side_to_move") or "missing")] += 1
+        fields["pgn_result"][str(row.get("pgn_result", game["pgn_result"]))] += 1
+        fields["white_result"][str(row.get("white_result") or "missing")] += 1
+        fields["side_to_move_result"][str(row.get("side_to_move_result") or "missing")] += 1
+        fields["candidate_count"][str(row["candidate_count"])] += 1
+        fields["white_elo_band"][_rating_band(game.get("white_elo"))] += 1
+        fields["black_elo_band"][_rating_band(game.get("black_elo"))] += 1
+        fields["time_control"][str(game.get("time_control") or "missing")] += 1
+        fields["split"][str(row.get("split") or "missing")] += 1
+        board = chess.Board(game["initial_fen"])
+        for uci in game["moves_uci"][:row["ply_index"]]:
+            board.push_uci(uci)
+        repetition = (
+            "threefold_current" if board.is_repetition(3) else
+            "repeated_before" if board.is_repetition(2) else "first_occurrence"
+        )
+        fields["repetition_context"][repetition] += 1
+        board_signatures.add(row["board_position_signature"])
+        history_states.add(row["history_state_id"])
+        candidate_rows += row["candidate_count"]
+    total = len(rows)
+    return {
+        "positions": total,
+        "candidate_rows": candidate_rows,
+        "distinct_board_signatures": len(board_signatures),
+        "distinct_replay_history_states": len(history_states),
+        "distributions": {name: _rate(counter, total) for name, counter in sorted(fields.items())},
+    }
+
+
+def quality_distribution_shifts(
+    before: dict[str, Any], after: dict[str, Any],
+) -> dict[str, dict[str, float]]:
+    """Return after-minus-before fractions for every retained quality field."""
+    shifts: dict[str, dict[str, float]] = {}
+    for field in sorted(before["distributions"]):
+        first = before["distributions"][field]
+        second = after["distributions"][field]
+        keys = set(first) | set(second)
+        shifts[field] = {
+            key: (second.get(key, {}).get("fraction", 0.0) - first.get(key, {}).get("fraction", 0.0))
+            for key in sorted(keys)
+        }
+    return shifts
+
+
 def summarize_dataset(
     games: list[dict[str, Any]], positions_before: list[dict[str, Any]],
     positions_after: list[dict[str, Any]], split_manifest: dict[str, Any],
     parse_counts: dict[str, Any], *, sampling: dict[str, Any],
     resources: dict[str, Any], config_sha256: str, source_manifest: dict[str, Any],
 ) -> dict[str, Any]:
+    games_by_id = {game["game_id"]: game for game in games}
+    quality_before = position_quality_distributions(positions_before, games_by_id)
+    quality_after = position_quality_distributions(positions_after, games_by_id)
     candidates = [row["candidate_count"] for row in positions_before]
     side = _distribution(positions_before, "side_to_move")
     result = _distribution(positions_before, "white_result")
     before_ply = Counter(_ply_band(row["ply_index"]) for row in positions_before)
     after_ply = Counter(_ply_band(row["ply_index"]) for row in positions_after)
-    before_side = _distribution(positions_before, "side_to_move")
-    after_side = _distribution(positions_after, "side_to_move")
-    before_result = _distribution(positions_before, "white_result")
-    after_result = _distribution(positions_after, "white_result")
     before_to_move_result = _distribution(positions_before, "side_to_move_result")
-    after_to_move_result = _distribution(positions_after, "side_to_move_result")
     positions_per_game = Counter(row["game_id"] for row in positions_before)
     position_pairs = len(positions_before) * (len(positions_before) - 1) // 2
     within_game_pairs = sum(count * (count - 1) // 2 for count in positions_per_game.values())
@@ -66,7 +141,9 @@ def summarize_dataset(
         " ".join(game["moves_uci"][:8]) for game in games
     )
     opening_total = sum(opening_prefixes.values())
-    opening_hhi = sum((count / opening_total) ** 2 for count in opening_prefixes.values()) if opening_total else 0.0
+    opening_hhi = math.fsum(
+        (count / opening_total) ** 2 for count in opening_prefixes.values()
+    ) if opening_total else 0.0
     rating = Counter()
     for game in games:
         if game.get("white_elo") is None or game.get("black_elo") is None:
@@ -75,16 +152,9 @@ def summarize_dataset(
             rating["both_present"] += 1
     times = Counter("missing" if not game.get("time_control") else str(game["time_control"]) for game in games)
 
-    def shift(before: Counter[str], after: Counter[str]) -> dict[str, float]:
-        before_n, after_n = sum(before.values()), sum(after.values())
-        keys = set(before) | set(after)
-        return {
-            key: (after[key] / after_n if after_n else 0.0) - (before[key] / before_n if before_n else 0.0)
-            for key in sorted(keys)
-        }
-
     return {
-        "schema": "videochess-dataset-stats/1.0",
+        "schema": STATS_SCHEMA,
+        "quality_report_version": 2,
         "source": {
             "source_id": source_manifest["source_id"],
             "publisher": source_manifest["publisher"],
@@ -109,7 +179,9 @@ def summarize_dataset(
             "unique_prefixes": len(opening_prefixes),
             "top_20_prefixes": [
                 {"uci_prefix": prefix, "games": count}
-                for prefix, count in opening_prefixes.most_common(20)
+                for prefix, count in sorted(
+                    opening_prefixes.items(), key=lambda item: (-item[1], item[0]),
+                )[:20]
             ],
             "hhi": round(opening_hhi, 8),
         },
@@ -130,10 +202,13 @@ def summarize_dataset(
         "positions_by_ply_band_before_purge": dict(sorted(before_ply.items())),
         "positions_by_ply_band_after_purge": dict(sorted(after_ply.items())),
         "distribution_shift_after_purge_fraction": {
-            "side_to_move": shift(before_side, after_side),
-            "white_result": shift(before_result, after_result),
-            "side_to_move_result": shift(before_to_move_result, after_to_move_result),
-            "ply_band": shift(before_ply, after_ply),
+            **quality_distribution_shifts(quality_before, quality_after),
+        },
+        "position_quality_before_purge": quality_before,
+        "position_quality_after_purge": quality_after,
+        "clock_information": {
+            "status": "unavailable",
+            "reason": "The selected Elite package is documented as omitting clock times; clock comments are not retained in the release.",
         },
         "rating_metadata": dict(sorted(rating.items())),
         "time_control_distribution": dict(sorted(times.items())),

@@ -40,6 +40,40 @@ def _json_print(value: Any) -> None:
     print(json.dumps(value, sort_keys=True, indent=2, ensure_ascii=False))
 
 
+def _resolve_engine_path(value: str | Path, root: Path, *, search_path: str | None = None) -> Path:
+    """Resolve explicit engine paths or one unambiguous executable name on PATH.
+
+    Absolute paths are used as given. Relative paths containing a directory
+    component are resolved under the repository root and may not escape it.
+    Bare names are resolved only through PATH; they never fall back to a
+    developer-specific project path or the repository root.
+    """
+    raw = Path(value).expanduser()
+    if raw.is_absolute():
+        candidate = raw
+    elif len(raw.parts) > 1:
+        resolved_root = root.resolve()
+        candidate = (resolved_root / raw).resolve()
+        if not candidate.is_relative_to(resolved_root):
+            raise ValueError("repository-relative engine path escapes the repository root")
+    else:
+        path_value = os.environ.get("PATH", "") if search_path is None else search_path
+        matches: set[Path] = set()
+        for entry in path_value.split(os.pathsep):
+            directory = Path(entry or os.curdir)
+            executable = directory / raw.name
+            if executable.is_file() and os.access(executable, os.X_OK):
+                matches.add(executable.resolve())
+        if not matches:
+            raise ValueError(f"engine executable {raw.name!r} was not found on PATH")
+        if len(matches) != 1:
+            raise ValueError(f"engine executable {raw.name!r} is ambiguous on PATH")
+        candidate = next(iter(matches))
+    if not candidate.is_file() or not os.access(candidate, os.X_OK):
+        raise ValueError(f"engine path is missing or not executable: {candidate}")
+    return candidate.resolve()
+
+
 def _set_memory_limit(mib: int) -> None:
     if mib < 128:
         raise ValueError("memory cap must be at least 128 MiB")
@@ -289,18 +323,14 @@ def command_teacher(args: argparse.Namespace) -> None:
     release = Path(args.release)
     games = Path(args.games) if args.games else release / "games.jsonl"
     output = Path(args.output)
-    engine = Path(args.engine)
+    engine = _resolve_engine_path(args.engine, root)
     license_file = Path(args.license)
-    for name, path in (("release", release), ("games", games), ("output", output), ("engine", engine), ("license", license_file)):
+    for name, path in (("release", release), ("games", games), ("output", output), ("license", license_file)):
         if not path.is_absolute():
-            if name == "engine" and not (root / path).exists():
-                path = Path("/home/dodaonam/Projects/atari-videochess-rl") / path
-            else:
-                path = root / path
+            path = root / path
         if name == "release": release = path
         elif name == "games": games = path
         elif name == "output": output = path
-        elif name == "engine": engine = path
         elif name == "license": license_file = path
     try:
         revision = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()

@@ -16,6 +16,8 @@ GAME_SCHEMA = "videochess-game/1.0"
 POSITION_SCHEMA = "videochess-position/1.0"
 CANDIDATE_SCHEMA = "videochess-candidate/1.0"
 TEACHER_SCHEMA = "videochess-teacher/1.0"
+SPLIT_SCHEMA = "videochess-split/1.1"
+LEGACY_SPLIT_SCHEMA = "videochess-split/1.0"
 _HEX64 = re.compile(r"^[0-9a-f]{64}$")
 
 
@@ -251,6 +253,8 @@ def validate_game_record(game: dict[str, Any]) -> None:
         raise ValueError("moves_uci must be a list of UCI strings")
     board = chess.Board(game["initial_fen"])
     for ply, uci in enumerate(moves):
+        if board.is_game_over(claim_draw=False):
+            raise ValueError(f"move sequence continues after automatic termination at ply {ply}")
         try:
             move = chess.Move.from_uci(uci)
         except ValueError as exc:
@@ -258,6 +262,24 @@ def validate_game_record(game: dict[str, Any]) -> None:
         if move not in board.legal_moves:
             raise ValueError(f"illegal UCI at ply {ply}: {uci}")
         board.push(move)
+    outcome = board.outcome(claim_draw=False)
+    expected_termination = None
+    if outcome is not None:
+        expected_winner = (
+            ("white" if outcome.winner else "black")
+            if outcome.winner is not None else "draw"
+        )
+        expected_termination = {
+            "termination": outcome.termination.name,
+            "winner": expected_winner,
+        }
+        expected_result = {
+            "white": "1-0", "black": "0-1", "draw": "1/2-1/2",
+        }[expected_winner]
+        if game["pgn_result"] != expected_result:
+            raise ValueError("PGN result contradicts the reconstructed automatic terminal outcome")
+    if game.get("board_termination") != expected_termination:
+        raise ValueError("board_termination metadata does not match the reconstructed automatic outcome")
     if normalized_game_identity(game["initial_fen"], moves) != game["normalized_game_sha256"]:
         raise ValueError("normalized game identity does not match moves")
     if game.get("ply_count") != len(moves):
@@ -329,10 +351,22 @@ def validate_position_record(
         raise ValueError("candidate set identity does not recompute")
     if position.get("played_candidate_id") != candidate_identity(position["sample_id"], position["played_move_uci"]):
         raise ValueError("played candidate identity does not recompute")
-    expected_to_move = {
-        "win": 1, "draw": 0, "loss": -1,
-    }.get(position.get("side_to_move_result"))
-    if position.get("result_white") != game["pgn_result"] or position.get("result_to_move") != expected_to_move:
+    expected_white_result = {
+        "1-0": "win", "0-1": "loss", "1/2-1/2": "draw",
+    }[game["pgn_result"]]
+    expected_side_result = expected_white_result
+    if board.turn == chess.BLACK:
+        expected_side_result = {
+            "win": "loss", "draw": "draw", "loss": "win",
+        }[expected_white_result]
+    expected_to_move = {"win": 1, "draw": 0, "loss": -1}[expected_side_result]
+    if (
+        position.get("pgn_result") != game["pgn_result"]
+        or position.get("white_result") != expected_white_result
+        or position.get("side_to_move_result") != expected_side_result
+        or position.get("result_white") != game["pgn_result"]
+        or position.get("result_to_move") != expected_to_move
+    ):
         raise ValueError("position game-result perspective does not match its parent game")
     if position.get("sampling_config_sha256") is None or position.get("sampling_id") is None:
         raise ValueError("position sampling provenance is missing")

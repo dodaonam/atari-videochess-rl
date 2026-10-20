@@ -130,7 +130,7 @@ def _parse_source(
                         counts["header_bytes_total"] += result.stats["header_bytes"]
                     if result.status == "accepted" and result.game is not None:
                         counts["games_accepted_before_dedup"] += 1
-                        grouper.add(result.game)
+                        grouper.observe(result.game)
                     elif result.status == "rejected":
                         counts["games_rejected"] += 1
                         reject_reasons[result.reason_code or "unknown"] += 1
@@ -188,15 +188,92 @@ def _parse_source(
     finally:
         (run_dir / "scan-progress.json").unlink(missing_ok=True)
 
+    # A second bounded pass retains full records only after all duplicate and
+    # source-reference conflicts are known. This makes selection the global
+    # bottom-k over eligible groups rather than a reservoir that can be left
+    # short by a late conflict.
+    grouper.begin_selection()
+    selection_metrics: dict[str, Any] = {}
+    selection_counts: Counter[str] = Counter()
+    selection_reasons: Counter[str] = Counter()
+    try:
+        with __import__("zipfile").ZipFile(archive, "r") as bundle:
+            with bundle.open(member_name, "r") as member:
+                iterator = iter_pgn_games(
+                    member,
+                    source_id=source_id,
+                    archive_sha256=archive_hash,
+                    member_name=member_name,
+                    max_games_seen=config["max_input_games_seen"],
+                    max_game_bytes=config["max_game_bytes"],
+                    max_total_decompressed_bytes=config["max_total_decompressed_bytes"],
+                    max_header_bytes=config["max_header_bytes"],
+                    max_header_value_bytes=config["max_header_value_bytes"],
+                    max_comment_bytes=config["max_comment_bytes"],
+                    stream_stats=selection_metrics,
+                    complete_scan=complete_scan,
+                )
+                for _, result in iterator:
+                    selection_counts["games_seen"] += 1
+                    if result.status == "accepted" and result.game is not None:
+                        selection_counts["games_accepted_before_dedup"] += 1
+                        grouper.select(result.game)
+                    elif result.status == "rejected":
+                        selection_counts["games_rejected"] += 1
+                        selection_reasons[f"rejected:{result.reason_code or 'unknown'}"] += 1
+                    else:
+                        selection_counts["games_quarantined"] += 1
+                        selection_reasons[f"quarantined:{result.reason_code or 'unknown'}"] += 1
+                    if time.monotonic() - started > config["max_elapsed_seconds"]:
+                        raise SourceLimitError("max elapsed seconds exceeded during bottom-k selection pass")
+        if selection_counts != Counter({
+            "games_seen": counts["games_seen"],
+            "games_accepted_before_dedup": counts["games_accepted_before_dedup"],
+            "games_rejected": counts["games_rejected"],
+            "games_quarantined": counts["games_quarantined"],
+        }):
+            raise PipelineError("selection pass game counts differ from the full-source audit pass")
+        expected_reasons = Counter({
+            **{f"rejected:{reason}": count for reason, count in reject_reasons.items()},
+            **{f"quarantined:{reason}": count for reason, count in quarantine_reasons.items()},
+        })
+        if selection_reasons != expected_reasons:
+            raise PipelineError("selection pass rejection classifications differ from the audited source pass")
+        if selection_metrics.get("stream_sha256") != stream_metrics.get("stream_sha256"):
+            raise PipelineError("selection pass PGN bytes differ from the audited source pass")
+        if selection_metrics.get("decompressed_bytes_read") != stream_metrics.get("decompressed_bytes_read"):
+            raise PipelineError("selection pass PGN byte count differs from the audited source pass")
+        if complete_scan and (
+            selection_metrics.get("stream_sha256") != source_manifest["member_sha256"]
+            or selection_metrics.get("decompressed_bytes_read") != source_manifest["member_bytes"]
+        ):
+            raise PipelineError("selection pass differs from the approved complete PGN member")
+        grouper.verify_selection_complete()
+    except Exception as exc:
+        _write_failure(run_dir, {
+            "status": "incomplete", "failure_type": type(exc).__name__,
+            "reason": str(exc)[:500], "games_seen": counts["games_seen"],
+            "selection_games_seen": selection_counts["games_seen"],
+            "elapsed_seconds": round(time.monotonic() - started, 3),
+            "input_identity": input_identity,
+        })
+        if isinstance(exc, (PipelineError, SourceLimitError, ExportError, SplitError)):
+            raise
+        raise PipelineError(f"bottom-k selection pass failed: {type(exc).__name__}: {exc}") from exc
+
     games = grouper.selected_records()
     if len(games) > config["max_games"]:
         raise PipelineError("selected unique game count exceeds configured cap")
     duplicate_counts = {
         "source_level_duplicates": grouper.source_level_duplicates,
         "conflicting_source_reference_count": len(grouper.conflicting_source_refs),
+        "conflicting_source_reference_sha256": sorted(grouper.conflicting_source_refs),
         "normalized_duplicate_groups": grouper.normalized_duplicate_groups,
         "normalized_duplicate_observations": grouper.normalized_duplicate_observations,
         "conflicting_normalized_groups": len(grouper.conflicting_groups),
+        "conflicting_normalized_game_sha256": sorted(grouper.conflicting_groups),
+        "full_source_audit_groups": len(grouper.normalized_results),
+        "full_source_audit_index_bytes_estimate": grouper.audit_memory_bytes(),
     }
     for game in games:
         game["source_archive_sha256"] = archive_hash
@@ -222,7 +299,10 @@ def _parse_source(
         "parse_rejection_records": rejection_count,
         "parse_rejection_ledger_sha256": sha256_file(rejection_path)[0],
         "input_scan_complete": complete_scan,
-        "member_stream": stream_metrics,
+        "member_stream": {
+            "audit_pass": stream_metrics,
+            "selection_pass": selection_metrics,
+        },
     }
     return games, positions, parse_counts
 
@@ -276,9 +356,10 @@ def build_dataset(
     confirm_write: bool, resume: bool = False,
     allow_synthetic_source_for_test: bool = False,
 ) -> dict[str, Any]:
+    build_started = time.monotonic()
     if not confirm_write:
         raise PipelineError("build requires explicit --confirm-write")
-    if output_path.exists():
+    if output_path.exists() or output_path.is_symlink():
         raise PipelineError(f"refusing to overwrite existing release: {output_path}")
     source_manifest = json.loads(source_manifest_path.read_text(encoding="utf-8"))
     config_doc = json.loads(config_path.read_text(encoding="utf-8")) if config_path.suffix == ".json" else None
@@ -288,6 +369,15 @@ def build_dataset(
             config_doc = tomllib.load(stream)
     config = dict(config_doc.get("dataset", config_doc))
     _validate_config(config)
+
+    def enforce_elapsed(phase: str) -> None:
+        elapsed = time.monotonic() - build_started
+        if elapsed > config["max_elapsed_seconds"]:
+            raise PipelineError(
+                f"max elapsed seconds exceeded during {phase}: "
+                f"{elapsed:.3f}s > {config['max_elapsed_seconds']}s"
+            )
+
     if not source_decision_path.is_file() or not authorization_path.is_file():
         raise PipelineError("source decision or M3 authorization evidence is missing")
     if allow_synthetic_source_for_test and source_manifest.get("test_fixture") is True:
@@ -337,6 +427,7 @@ def build_dataset(
     source_id = source_manifest["source_id"]
     if source_manifest["member"]["name"] != source_manifest.get("member_name"):
         raise PipelineError("source manifest member names disagree")
+    enforce_elapsed("source archive verification")
 
     expanded_config = {
         **config,
@@ -356,7 +447,7 @@ def build_dataset(
     release_staging = output_path.parent / f".{output_path.name}.{run_id}.staging"
     if release_staging.exists():
         raise PipelineError(f"incomplete release staging already exists; preserve and inspect: {release_staging}")
-    if output_path.exists():
+    if output_path.exists() or output_path.is_symlink():
         raise PipelineError(f"release already exists: {output_path}")
     run_identity = {
         "schema": "videochess-run/1.0", "run_id": run_id,
@@ -371,7 +462,6 @@ def build_dataset(
         "authorization_id": source_manifest["authorization_id"],
         "source_decision_id": source_manifest["source_decision_id"],
     }
-    started = time.monotonic()
     # Fail before source processing if peak staging plus release and a 20% reserve
     # cannot fit in the current filesystem. The exact row estimate is checked again.
     disk_free = shutil.disk_usage(output_path.parent).free
@@ -379,17 +469,20 @@ def build_dataset(
     preflight_estimate = int((declared_input + 2 * config["max_output_bytes"]) * 1.2)
     if disk_free < preflight_estimate:
         raise PipelineError(f"insufficient free disk for bounded peak estimate: need {preflight_estimate}, have {disk_free}")
+    enforce_elapsed("dataset preflight before source processing")
 
     try:
         games, positions_before, parse_counts = _parse_source(
             archive, source_manifest, config=expanded_config, source_id=source_id,
             run_dir=run_dir, input_identity=run_identity, resume=resume,
         )
+        enforce_elapsed("source parsing and bottom-k selection")
         positions, split_manifest = split_and_purge(
             games, positions_before, seed=config["split_seed"],
             min_holdout_positions=config["min_holdout_positions"],
             min_holdout_retention=config.get("min_holdout_retention_basis_points", 5000) / 10_000,
         )
+        enforce_elapsed("split assignment and board-overlap purge")
         for game in games:
             game["split"] = next(
                 split for group, split in split_manifest["game_group_assignments"]
@@ -401,6 +494,7 @@ def build_dataset(
         estimated_bytes += len(json.dumps(expanded_config, ensure_ascii=False).encode("utf-8"))
         if estimated_bytes > config["max_output_bytes"]:
             raise PipelineError(f"estimated output bytes {estimated_bytes} exceed cap {config['max_output_bytes']}")
+        enforce_elapsed("position sampling and output estimation")
         if shutil.disk_usage(output_path.parent).free < int((archive_bytes + 2 * estimated_bytes) * 1.2):
             raise PipelineError("free disk fell below measured peak estimate plus 20% reserve")
         sampling = {
@@ -426,10 +520,12 @@ def build_dataset(
             config_sha256=expanded_config["config_sha256"],
             source_manifest=source_manifest,
         )
+        enforce_elapsed("quality statistics")
         write_batches(
             run_dir, games, positions, input_identity=run_identity,
             batch_size=config["batch_size"], resume=resume,
         )
+        enforce_elapsed("batch writing and journal verification")
         manifest = write_release_files(
             release_staging, run_dir, positions, split_manifest, stats,
             source_manifest, expanded_config,
@@ -439,10 +535,11 @@ def build_dataset(
         verification = verify_release(
             release_staging, allow_synthetic_source_for_test=allow_synthetic_source_for_test,
         )
-        if output_path.exists():
+        enforce_elapsed("release serialization and semantic verification")
+        if output_path.exists() or output_path.is_symlink():
             raise PipelineError("release destination appeared before atomic finalization")
         os.rename(release_staging, output_path)
-        elapsed = round(time.monotonic() - started, 3)
+        elapsed = round(time.monotonic() - build_started, 3)
         metrics = {
             "schema": "videochess-run-metrics/1.0",
             "run_id": run_id, "release_id": manifest["release_id"],

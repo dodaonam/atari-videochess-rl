@@ -40,7 +40,14 @@ def make_source_game_id(
 
 
 class BottomKGroups:
-    """Retain the same lowest-ranked normalized games regardless of input order."""
+    """Audit every group, then select the globally lowest-ranked eligible groups.
+
+    Production callers use two passes: :meth:`observe` retains compact
+    normalized-result/source-reference metadata for the bounded source; after
+    :meth:`begin_selection`, :meth:`select` retains full game records only in
+    the bottom-k reservoir. A late conflict therefore cannot leave a vacancy
+    or allow a conflicted, previously evicted group back into the release.
+    """
 
     def __init__(self, *, seed: int, max_games: int, source_id: str,
                  archive_sha256: str, member_name: str):
@@ -52,8 +59,9 @@ class BottomKGroups:
         self.archive_sha256 = archive_sha256
         self.member_name = member_name
         self.groups: dict[str, Group] = {}
-        self.heap: list[tuple[int, str]] = []
-        self.seen_normalized: set[str] = set()
+        self.heap: list[tuple[int, bytes, str]] = []
+        self.normalized_results: dict[str, str] = {}
+        self.normalized_observations: Counter[str] = Counter()
         self.normalized_duplicate_observations = 0
         self.normalized_duplicate_groups = 0
         self.source_ref_seen: set[str] = set()
@@ -61,26 +69,40 @@ class BottomKGroups:
         self.conflicting_source_refs: set[str] = set()
         self.source_level_duplicates = 0
         self.conflicting_groups: set[str] = set()
-        self.occurrences: Counter[str] = Counter()
+        self.selection_occurrences: Counter[str] = Counter()
+        self._selection_started = False
 
     def _rank(self, normalized: str) -> int:
         return int(game_sample_key(self.seed, normalized), 16)
 
+    def _heap_entry(self, normalized: str) -> tuple[int, bytes, str]:
+        # The heap root is the worst retained key: highest rank, then
+        # lexicographically highest identity. Invert the secondary key so a
+        # standard min-heap preserves the documented (rank, identity) order
+        # even for the vanishingly rare SHA-256 rank collision.
+        reverse_identity = bytes(255 - value for value in normalized.encode("ascii"))
+        return (-self._rank(normalized), reverse_identity, normalized)
+
     def _trim_stale(self) -> None:
-        while self.heap and self.heap[0][1] not in self.groups:
+        while self.heap and self.heap[0][2] not in self.groups:
             heapq.heappop(self.heap)
         if len(self.heap) > max(16, 2 * self.max_games):
-            self.heap = [(-self._rank(key), key) for key in self.groups]
+            self.heap = [self._heap_entry(key) for key in self.groups]
             heapq.heapify(self.heap)
 
-    def add(self, record: dict[str, Any]) -> None:
+    def observe(self, record: dict[str, Any]) -> None:
+        """Add one accepted source observation to the compact full-source audit."""
         normalized = record["normalized_game_sha256"]
-        self.occurrences[normalized] += 1
-        occurrence = self.occurrences[normalized]
-        game_id = make_source_game_id(
-            record, source_id=self.source_id, archive_sha256=self.archive_sha256,
-            member_name=self.member_name, occurrence=occurrence,
-        )
+        result = record["pgn_result"]
+        prior_result = self.normalized_results.setdefault(normalized, result)
+        self.normalized_observations[normalized] += 1
+        observation_count = self.normalized_observations[normalized]
+        if observation_count > 1:
+            self.normalized_duplicate_observations += 1
+        if observation_count == 2:
+            self.normalized_duplicate_groups += 1
+        if prior_result != result:
+            self.conflicting_groups.add(normalized)
         ref = record.get("source_game_ref_sha256")
         if ref:
             if ref in self.source_ref_seen:
@@ -90,19 +112,33 @@ class BottomKGroups:
             if prior_normalized != normalized:
                 self.conflicting_source_refs.add(ref)
                 self.conflicting_groups.update((prior_normalized, normalized))
-                self.groups.pop(prior_normalized, None)
-                self.groups.pop(normalized, None)
-                return
 
+    def begin_selection(self) -> None:
+        """Start the record-retaining pass after the complete audit is known."""
+        self.groups.clear()
+        self.heap.clear()
+        self.selection_occurrences.clear()
+        self._selection_started = True
+
+    def select(self, record: dict[str, Any]) -> None:
+        """Feed a second-pass record into the bottom-k reservoir."""
+        if not self._selection_started:
+            raise ValueError("begin_selection() must follow the full-source audit pass")
+        normalized = record["normalized_game_sha256"]
+        expected_result = self.normalized_results.get(normalized)
+        if expected_result is None:
+            raise ValueError("selection pass found a normalized game absent from the audit pass")
+        self.selection_occurrences[normalized] += 1
         if normalized in self.conflicting_groups:
             return
-
-        if normalized in self.seen_normalized:
-            self.normalized_duplicate_observations += 1
-            if self.occurrences[normalized] == 2:
-                self.normalized_duplicate_groups += 1
-        else:
-            self.seen_normalized.add(normalized)
+        if record["pgn_result"] != expected_result:
+            raise ValueError("selection pass result differs from the audited normalized-game result")
+        occurrence = self.selection_occurrences[normalized]
+        game_id = make_source_game_id(
+            record, source_id=self.source_id, archive_sha256=self.archive_sha256,
+            member_name=self.member_name, occurrence=occurrence,
+        )
+        ref = record.get("source_game_ref_sha256")
         group = self.groups.get(normalized)
         if group is not None:
             group.source_game_ids.add(game_id)
@@ -122,18 +158,20 @@ class BottomKGroups:
             self.groups[normalized] = Group(
                 normalized, record["pgn_result"], candidate, {game_id}, {ref} if ref else set(),
             )
-            heapq.heappush(self.heap, (-rank, normalized))
+            heapq.heappush(self.heap, self._heap_entry(normalized))
             return
-        worst_rank, worst_group = self.heap[0]
-        if rank < -worst_rank or (rank == -worst_rank and normalized < worst_group):
+        worst_rank, _, worst_group = self.heap[0]
+        if (rank, normalized) < (-worst_rank, worst_group):
             heapq.heappop(self.heap)
             self.groups.pop(worst_group, None)
             self.groups[normalized] = Group(
                 normalized, record["pgn_result"], candidate, {game_id}, {ref} if ref else set(),
             )
-            heapq.heappush(self.heap, (-rank, normalized))
+            heapq.heappush(self.heap, self._heap_entry(normalized))
 
     def selected_records(self) -> list[dict[str, Any]]:
+        if not self._selection_started:
+            raise ValueError("selection pass has not started")
         rows: list[dict[str, Any]] = []
         for group in self.groups.values():
             record = dict(group.record)
@@ -143,6 +181,26 @@ class BottomKGroups:
             record["record_id"] = record["game_id"]
             rows.append(record)
         return sorted(rows, key=lambda row: row["normalized_game_sha256"])
+
+    def verify_selection_complete(self) -> None:
+        if self.normalized_observations != self.selection_occurrences:
+            raise ValueError("selection pass observations differ from the full-source audit pass")
+
+    def audit_memory_bytes(self) -> int:
+        """Approximate shallow Python storage for the compact global audit."""
+        import sys
+
+        containers = (
+            self.normalized_results, self.normalized_observations,
+            self.source_ref_to_normalized, self.source_ref_seen,
+            self.conflicting_source_refs, self.conflicting_groups,
+        )
+        size = sum(sys.getsizeof(container) for container in containers)
+        size += sum(sys.getsizeof(key) + sys.getsizeof(value) for key, value in self.normalized_results.items())
+        size += sum(sys.getsizeof(key) + sys.getsizeof(value) for key, value in self.normalized_observations.items())
+        size += sum(sys.getsizeof(key) + sys.getsizeof(value) for key, value in self.source_ref_to_normalized.items())
+        size += sum(sys.getsizeof(value) for values in (self.source_ref_seen, self.conflicting_source_refs, self.conflicting_groups) for value in values)
+        return size
 
 
 def sample_positions(
