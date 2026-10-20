@@ -18,6 +18,7 @@ from unittest.mock import patch
 
 import chess
 import chess.pgn
+import videochess_rl.data.teacher as teacher_module
 
 from videochess_rl.data.contracts import (
     assign_game_split, board_position_signature, canonical_fen, candidate_identity, config_identity,
@@ -1032,15 +1033,29 @@ class M3ContractTests(unittest.TestCase):
             engine_sha = hashlib.sha256(fake_engine.read_bytes()).hexdigest()
             license_sha = hashlib.sha256(license_path.read_bytes()).hexdigest()
             teacher_dir = temp / "teacher"
-            teacher_manifest = run_teacher(
-                output, output / "games.jsonl", teacher_dir,
-                engine_path=fake_engine, expected_engine_sha256=engine_sha,
-                license_path=license_path, expected_license_sha256=license_sha,
-                max_positions=2, sample_seed=9, nodes_per_position=500,
-                multipv=3, threads=1, hash_mib=64, timeout_seconds=5,
-                max_wall_seconds=60, authorization_id=AUTHORIZATION_ID,
-                source_decision_id=SOURCE_DECISION_ID, confirm_write=True,
-                code_revision="a" * 40, allow_synthetic_source_for_test=True,
+            original_teacher_verify = teacher_module.verify_teacher_run
+
+            def delayed_teacher_verify(*args, **kwargs):
+                verified_result = original_teacher_verify(*args, **kwargs)
+                time.sleep(0.2)
+                return verified_result
+
+            teacher_started = time.monotonic()
+            with patch("videochess_rl.data.teacher.verify_teacher_run", side_effect=delayed_teacher_verify):
+                teacher_manifest = run_teacher(
+                    output, output / "games.jsonl", teacher_dir,
+                    engine_path=fake_engine, expected_engine_sha256=engine_sha,
+                    license_path=license_path, expected_license_sha256=license_sha,
+                    max_positions=2, sample_seed=9, nodes_per_position=500,
+                    multipv=3, threads=1, hash_mib=64, timeout_seconds=5,
+                    max_wall_seconds=60, authorization_id=AUTHORIZATION_ID,
+                    source_decision_id=SOURCE_DECISION_ID, confirm_write=True,
+                    code_revision="a" * 40, allow_synthetic_source_for_test=True,
+                )
+            teacher_wall_elapsed = time.monotonic() - teacher_started
+            self.assertLessEqual(
+                teacher_wall_elapsed - teacher_manifest["command_elapsed_seconds"], 0.1,
+                "teacher command duration must include semantic sidecar verification",
             )
             teacher_verified = verify_teacher_run(
                 teacher_dir, output, allow_synthetic_source_for_test=True,

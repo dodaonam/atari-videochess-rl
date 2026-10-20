@@ -585,7 +585,14 @@ def run_teacher(
     manifest_bytes = json.dumps(manifest, sort_keys=True, indent=2, ensure_ascii=False).encode("utf-8") + b"\n"
     _write_new(output_dir / "manifest.json", manifest_bytes)
     _write_new(output_dir / "manifest.sha256", (hashlib.sha256(manifest_bytes).hexdigest() + "  manifest.json\n").encode("ascii"))
-    verify_teacher_run(output_dir, release_dir, allow_synthetic_source_for_test=allow_synthetic_source_for_test)
+    # This semantic verification is inside the command wall budget. The release
+    # was already fully verified above; the snapshot token avoids repeating its
+    # expensive board replay while still checking the release manifest and files.
+    verify_teacher_run(
+        output_dir, release_dir,
+        allow_synthetic_source_for_test=allow_synthetic_source_for_test,
+        _verified_release=verified,
+    )
     finalized_elapsed = round(time.monotonic() - started, 3)
     manifest["command_elapsed_seconds"] = finalized_elapsed
     manifest["elapsed_seconds"] = finalized_elapsed
@@ -605,12 +612,80 @@ def run_teacher(
         stream.flush()
         os.fsync(stream.fileno())
     os.replace(checksum_temp, output_dir / "manifest.sha256")
-    verify_teacher_run(output_dir, release_dir, allow_synthetic_source_for_test=allow_synthetic_source_for_test)
+    _verify_finalized_teacher_artifacts(
+        output_dir, manifest_bytes=manifest_bytes,
+        manifest_sha256=hashlib.sha256(manifest_bytes).hexdigest(),
+        results_sha256=row_sha, results_bytes=len(rows_bytes),
+        max_output_bytes=max_output_bytes,
+    )
     return manifest
+
+
+def _verify_finalized_teacher_artifacts(
+    teacher_dir: Path, *, manifest_bytes: bytes, manifest_sha256: str,
+    results_sha256: str, results_bytes: int, max_output_bytes: int,
+) -> None:
+    """Close atomic manifest publication with bounded hash and file-set checks.
+
+    Full PV and score semantics were verified immediately before final timing
+    was captured. This final check validates the exact finalized bytes without
+    repeating that expensive replay after the recorded command duration.
+    """
+    final_manifest = teacher_dir / "manifest.json"
+    final_bytes = final_manifest.read_bytes()
+    if final_bytes != manifest_bytes or hashlib.sha256(final_bytes).hexdigest() != manifest_sha256:
+        raise TeacherError("final teacher manifest bytes changed during atomic publication")
+    checksum = (teacher_dir / "manifest.sha256").read_text(encoding="ascii").strip().split()
+    if checksum != [manifest_sha256, "manifest.json"]:
+        raise TeacherError("final teacher manifest checksum file is inconsistent")
+    rows_path = teacher_dir / "teacher.jsonl"
+    rows_hash, rows_size = sha256_file(rows_path, max_bytes=max_output_bytes)
+    if (rows_hash, rows_size) != (results_sha256, results_bytes):
+        raise TeacherError("final teacher sidecar bytes changed during manifest publication")
+    actual_paths = {path.name for path in teacher_dir.iterdir() if path.is_file()}
+    if actual_paths != {"teacher.jsonl", "manifest.json", "manifest.sha256"}:
+        raise TeacherError("final teacher sidecar contains unexpected files")
+
+
+def _verify_release_snapshot(
+    release_dir: Path, verified_release: dict[str, Any],
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Confirm a previously validated release is unchanged without replaying it."""
+    manifest_bytes = (release_dir / "manifest.json").read_bytes()
+    manifest_sha = hashlib.sha256(manifest_bytes).hexdigest()
+    checksum = (release_dir / "manifest.sha256").read_text(encoding="ascii").strip().split()
+    if (not checksum or checksum[0] != manifest_sha
+            or manifest_sha != verified_release.get("manifest_sha256")):
+        raise TeacherError("verified dataset release manifest changed during teacher execution")
+    manifest = json.loads(manifest_bytes)
+    if manifest.get("release_id") != verified_release.get("release_id"):
+        raise TeacherError("verified dataset release identity changed during teacher execution")
+    expected_paths = {"manifest.json", "manifest.sha256"}
+    outputs = manifest.get("outputs")
+    if not isinstance(outputs, list):
+        raise TeacherError("verified dataset release output inventory is malformed")
+    seen: set[str] = set()
+    for item in outputs:
+        name = item.get("path") if isinstance(item, dict) else None
+        if not isinstance(name, str) or Path(name).name != name or name in seen:
+            raise TeacherError("verified dataset release output inventory is unsafe")
+        seen.add(name)
+        path = release_dir / name
+        if path.is_symlink() or not path.is_file():
+            raise TeacherError(f"verified dataset release output changed: {name}")
+        actual_sha, actual_bytes = sha256_file(path, max_bytes=item.get("bytes"))
+        if (actual_sha, actual_bytes) != (item.get("sha256"), item.get("bytes")):
+            raise TeacherError(f"verified dataset release output changed: {name}")
+    expected_paths.update(seen)
+    actual_paths = {path.name for path in release_dir.iterdir() if path.is_file()}
+    if actual_paths != expected_paths:
+        raise TeacherError("verified dataset release contains unlisted outputs")
+    return verified_release, manifest
 
 
 def verify_teacher_run(
     teacher_dir: Path, release_dir: Path, *, allow_synthetic_source_for_test: bool = False,
+    _verified_release: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Verify sidecar hashes, deterministic coverage, PV legality, and score semantics."""
     manifest_path = teacher_dir / "manifest.json"
@@ -621,8 +696,11 @@ def verify_teacher_run(
         raise TeacherError("teacher manifest checksum mismatch")
     manifest = json.loads(manifest_bytes)
     search = manifest.get("search", {})
-    release_check = verify_release(release_dir, allow_synthetic_source_for_test=allow_synthetic_source_for_test)
-    release_manifest = json.loads((release_dir / "manifest.json").read_text(encoding="utf-8"))
+    if _verified_release is None:
+        release_check = verify_release(release_dir, allow_synthetic_source_for_test=allow_synthetic_source_for_test)
+        release_manifest = json.loads((release_dir / "manifest.json").read_text(encoding="utf-8"))
+    else:
+        release_check, release_manifest = _verify_release_snapshot(release_dir, _verified_release)
     if manifest.get("schema") != "videochess-teacher-run-manifest/1.0":
         raise TeacherError("unsupported teacher run manifest schema")
     if manifest.get("dataset_release_id") != release_check["release_id"] or manifest.get("dataset_manifest_sha256") != release_check["manifest_sha256"]:
