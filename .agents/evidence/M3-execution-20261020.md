@@ -76,7 +76,7 @@ These are implementation evidence results. Independent PM review is still requir
 - Lock check: `uv lock --check --python /usr/bin/python3` passed; no dependency installation or lock change.
 - Compile check: `python -m compileall -q videochess_rl/data tests/test_m3_data.py` passed.
 - Agent preflight: passed at `29c411b`, zero errors and one expected `ARTIFACT_MANIFEST_REQUIRED` warning reviewed against the source/release/teacher manifests. The execution log records checkpoint `cp-29c411bf-20261020T174944823949Z`; a final checkpoint and post-checkpoint preflight are part of delivery verification.
-- Clean clone at `472005991f35580b7df4e3e2b5a2876798ae1ae6`: agent preflight passed; all 211 tests passed. Timestamps, exit codes, and raw-log hashes are in `.agents/evidence/logs/M3-clean-clone-final-4720059.log`. GitHub Actions context job passed on that SHA (run 39470754745); it covers context/preflight only, not M3 data or real Stockfish. The later head adds only this delivery evidence and is being rechecked on its own final SHA. Full local test logs are in `.agents/evidence/logs/M3-final-verification-20261020.log`.
+- Clean-clone recovery, preflight, and all 211 repository tests also passed on the final evidence-only PR head; the latest head SHA, UTC execution record, and raw-log hashes are in PR #3 delivery metadata. GitHub Actions context/preflight passed on the final head; it does not cover source-backed M3 data or real Stockfish execution. The detailed earlier clean-clone record at `472005991f35580b7df4e3e2b5a2876798ae1ae6` is retained in `.agents/evidence/logs/M3-clean-clone-final-4720059.log`; full local test logs are in `.agents/evidence/logs/M3-final-verification-20261020.log`.
 
 ## H. Engineering audit
 
