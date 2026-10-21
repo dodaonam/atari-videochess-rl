@@ -2237,7 +2237,7 @@
           }
         }
       ],
-      "next_action": "Project Manager: independently review M3 PR #3 (https://github.com/dodaonam/atari-videochess-rl/pull/3) against M3-01 through M3-04. Keep the PR open and unmerged until acceptance. Keep G3 unapproved; do not mark M3 done or begin M4–M7 without separate authorization.",
+      "next_action": "Codex: complete the authorized final M3 closure checks NEW-01 through NEW-04 and E-01, regenerate only artifacts invalidated by the frozen code identity, and then return PR #3 open/unmerged for independent PM acceptance. Keep G3 unapproved; do not begin M4–M7.",
       "plan_ref": ".agents/plans/M03-expert-dataset.md"
     }
   ],
