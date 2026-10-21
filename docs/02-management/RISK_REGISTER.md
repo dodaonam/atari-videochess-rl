@@ -18,3 +18,7 @@
 | RSK-012 | Dataset/pretraining scope consumes the schedule before meaningful Double DQN environment interaction, undermining the RL course objective. | High | Open; M3 bounded; M5 schedule still critical | M3 used a 1,000-game, 20,000-position support set and a 128-position teacher subset; no supervised model or RL code was added. Start the lean M4 behavior baseline only if it does not delay M5 core implementation, then prioritize real Double DQN simulator interaction and learning. Preserve random-init DDQN comparison and treat M4 as a supporting track. Recalculate the schedule against the 2026-11-03 presentation date before expanding data or labels. No M5 result has been produced. See [RL_FIRST_ALIGNMENT.md](../04-research/RL_FIRST_ALIGNMENT.md). |
 
 Do not mark a risk resolved based only on a proposed mitigation. Link verified findings, test evidence, or an ADR when the underlying uncertainty is actually resolved.
+
+### RSK-010 checkpoint observation — 2026-10-21
+
+Immediately before the final closure evidence update, `PROJECT_STATE.yaml` measured 4,058,998 bytes with 127 checkpoint-history entries. One final checkpoint is expected to produce entry 128; this is at, not above, the documented `>128` trigger. The state remains below 4 MiB (4,194,304 bytes). Preserve all history, measure the post-checkpoint size/write time, and reopen the migration review only if an actual trigger is crossed. This observation does not itself justify a history migration.

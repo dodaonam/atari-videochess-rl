@@ -1,0 +1,856 @@
+{
+  "artifact_producing_revision": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+  "artifact_retention": "Raw source, game/position releases, run staging journals, and teacher rows remain in ignored local artifacts/m3 paths; no bulk source or derived records are committed.",
+  "dataset_code_tree_sha256": "18defa5183708e68ac4e78d43e4618618b5b6640761b20b677153a614fd5966c",
+  "dataset_config_sha256": "c65a489ddafc964383613f1641599f1a1b660a244bcacc4da67b9bd4ed5c9e57",
+  "dataset_summary": {
+    "legal_candidates_after_purge": 578351,
+    "legal_candidates_before_purge": 597164,
+    "metadata": {
+      "clock_information": {
+        "reason": "The selected Elite package is documented as omitting clock times; clock comments are not retained in the release.",
+        "status": "unavailable"
+      },
+      "missing_metadata": {
+        "black_elo": 0,
+        "date": 0,
+        "time_control": 0,
+        "white_elo": 0
+      },
+      "ply_bands_after": {
+        "early_10_39": 7227,
+        "late_80_plus": 3475,
+        "middle_40_79": 6885,
+        "opening_0_9": 1681
+      },
+      "ply_bands_before": {
+        "early_10_39": 7250,
+        "late_80_plus": 3475,
+        "middle_40_79": 6885,
+        "opening_0_9": 2390
+      },
+      "rating_metadata": {
+        "both_present": 1000,
+        "one_or_more_missing": 0
+      },
+      "side_to_move_results_before": {
+        "draw": {
+          "count": 2394,
+          "fraction": 0.1197
+        },
+        "loss": {
+          "count": 8771,
+          "fraction": 0.43855
+        },
+        "win": {
+          "count": 8835,
+          "fraction": 0.44175
+        }
+      },
+      "time_control_distribution": {
+        "120+3": 1,
+        "1500+2": 1,
+        "180+0": 753,
+        "180+1": 2,
+        "180+2": 155,
+        "1800+0": 1,
+        "240+0": 1,
+        "240+2": 1,
+        "300+0": 41,
+        "300+1": 1,
+        "300+4": 1,
+        "300+5": 1,
+        "480+1": 1,
+        "480+6": 1,
+        "600+0": 38,
+        "600+5": 1
+      },
+      "white_results_before": {
+        "draw": {
+          "count": 2394,
+          "fraction": 0.1197
+        },
+        "loss": {
+          "count": 8356,
+          "fraction": 0.4178
+        },
+        "win": {
+          "count": 9250,
+          "fraction": 0.4625
+        }
+      }
+    },
+    "positions_retained_after_purge": 19268,
+    "positions_selected_before_purge": 20000,
+    "resource_profile": {
+      "max_archive_bytes": 157286400,
+      "max_elapsed_seconds": 7200,
+      "max_member_bytes": 2147483648,
+      "max_output_bytes": 2147483648,
+      "max_workers": 1,
+      "memory_mib": 1024
+    },
+    "selected_games": 1000,
+    "source_scan": {
+      "conflicting_normalized_groups": 33,
+      "conflicting_source_reference_count": 0,
+      "full_source_audit_groups": 354942,
+      "full_source_audit_index_bytes_estimate": 275087884,
+      "games_accepted_before_dedup": 355353,
+      "games_quarantined": 182,
+      "games_rejected": 0,
+      "games_seen": 355535,
+      "input_scan_complete": true,
+      "normalized_duplicate_groups": 134,
+      "normalized_duplicate_observations": 411,
+      "source_level_duplicates": 0
+    },
+    "split": {
+      "board_signatures_after": 18667,
+      "board_signatures_before": 18667,
+      "board_signatures_cross_split_after": 0,
+      "board_signatures_cross_split_before": 142,
+      "distinct_history_states_after": 18765,
+      "distinct_history_states_before": 18809,
+      "game_counts": {
+        "test": 103,
+        "train": 795,
+        "validation": 102
+      },
+      "holdout_failures": [],
+      "holdout_minimum": 500,
+      "holdout_minimum_retention": 0.5,
+      "holdout_warning_retention": 0.8,
+      "holdout_warnings": [],
+      "position_counts_after_purge": {
+        "test": 2057,
+        "train": 15196,
+        "validation": 2015
+      },
+      "position_counts_before_purge": {
+        "test": 2151,
+        "train": 15727,
+        "validation": 2122
+      },
+      "position_retention": {
+        "test": 0.9562993956299396,
+        "train": 0.9662364087238507,
+        "validation": 0.9495758718190387
+      },
+      "purged_candidate_count": 18813,
+      "purged_position_count": 732,
+      "split_assignment_sha256": "84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e"
+    }
+  },
+  "feature_branch": "feature/m3-expert-dataset",
+  "findings": {
+    "ADJACENT": "historical teacher schema 1.0 run-level status omission preserved with version-aware verifier and test",
+    "E-01": "final exact-SHA clean-clone run to be reported in the PR description after push (no source commit after tested SHA)",
+    "NEW-01": "confirmed and fixed; 50% hard floor; tests, new release and legacy schema verifications pass",
+    "NEW-02": "confirmed and fixed; partial CLI status exits 3 while preserving partial artifacts; regression tests pass",
+    "NEW-03": "confirmed and fixed; bounded finalization reserve, post-closure elapsed check, overrun downgraded; regression and real run pass",
+    "NEW-04": "confirmed and fixed; WDL/MultiPV semantic verification; hash-consistent tamper tests and real sidecar pass"
+  },
+  "historical_comparison": {
+    "corrective_r4_r5_byte_identical": true,
+    "corrective_release_id": "7b51ec3761ad28aa7a2882691b3c314d35115ab339769251ff2556e706a5b1d9",
+    "corrective_revision": "fbdd14d6bed487e5b1388034048eccdbe952ab48",
+    "final_positions_semantically_equal_corrective_r4_except_config_bound_identity_fields": [
+      "sampling_config_sha256",
+      "sampling_id"
+    ],
+    "final_r6_r7_byte_identical": true,
+    "legacy_teacher_schema_1_0_status_field_compatibility_verified": true,
+    "original_release_id": "9e3944e1e35ca0d774e479a49d9b93eb769d14e52ffec4bc6f886bd4695b8991",
+    "original_revision": "29c411bfd48dca8f1d463c758078175092639ccb"
+  },
+  "portable_sanitized_logs": [
+    {
+      "sanitization": "byte-preserved (no workspace path present)",
+      "sanitized_path": ".agents/evidence/logs/M3-final-closure-m3-40cd4e8.log",
+      "sanitized_sha256": "3583219437d638c95cb7417a966af4c239437491121ee7e6d182e3bb07a628e8",
+      "source_path": "artifacts/m3/logs/final-closure-m3-40cd4e8.log",
+      "source_sha256": "3583219437d638c95cb7417a966af4c239437491121ee7e6d182e3bb07a628e8"
+    },
+    {
+      "sanitization": "byte-preserved (no workspace path present)",
+      "sanitized_path": ".agents/evidence/logs/M3-final-closure-pre-m3-40cd4e8.log",
+      "sanitized_sha256": "f0c857e0b4558d37392d69873a9546ed422ce68084011e8fb287e8b65305d8df",
+      "source_path": "artifacts/m3/logs/final-closure-pre_m3-40cd4e8.log",
+      "source_sha256": "f0c857e0b4558d37392d69873a9546ed422ce68084011e8fb287e8b65305d8df"
+    },
+    {
+      "sanitization": "byte-preserved (no workspace path present)",
+      "sanitized_path": ".agents/evidence/logs/M3-final-closure-full-suite-40cd4e8.log",
+      "sanitized_sha256": "4edb25b77a383c7d7d1080fb8d1f888540687aab4c2485ba900e2344535ce37f",
+      "source_path": "artifacts/m3/logs/final-closure-full-40cd4e8.log",
+      "source_sha256": "4edb25b77a383c7d7d1080fb8d1f888540687aab4c2485ba900e2344535ce37f"
+    },
+    {
+      "sanitization": "absolute isolated-worktree path replaced with repository-relative .; otherwise byte-preserved",
+      "sanitized_path": ".agents/evidence/logs/M3-final-closure-build-r6.log",
+      "sanitized_sha256": "a4a6f32cbf025429685bf99e35de6cd83446c501b7816b8c7a4c5528a2834102",
+      "source_path": "artifacts/m3/logs/final-closure-build-r6.log",
+      "source_sha256": "8519d628e0f4f0d6fca70cced0c66d5177ce6bda2812d74bc8dc7a8b57e14b4b"
+    },
+    {
+      "sanitization": "absolute isolated-worktree path replaced with repository-relative .; otherwise byte-preserved",
+      "sanitized_path": ".agents/evidence/logs/M3-final-closure-build-r7.log",
+      "sanitized_sha256": "4713852f3d4ccaa59a4236cf211fcdca19f1222e82152f38351006a8769dbf6b",
+      "source_path": "artifacts/m3/logs/final-closure-build-r7.log",
+      "source_sha256": "d4c448bad8368e0ae6b0ded2322bc4687893e751c6063fcd719254013d575a9b"
+    },
+    {
+      "sanitization": "byte-preserved (no workspace path present)",
+      "sanitized_path": ".agents/evidence/logs/M3-final-closure-verify-r6.log",
+      "sanitized_sha256": "629989276af858d5b81680289636beea4ee2fcdb7b2fbe37f710416bb539ebe2",
+      "source_path": "artifacts/m3/logs/final-closure-verify-r6.log",
+      "source_sha256": "629989276af858d5b81680289636beea4ee2fcdb7b2fbe37f710416bb539ebe2"
+    },
+    {
+      "sanitization": "byte-preserved (no workspace path present)",
+      "sanitized_path": ".agents/evidence/logs/M3-final-closure-verify-r7.log",
+      "sanitized_sha256": "629989276af858d5b81680289636beea4ee2fcdb7b2fbe37f710416bb539ebe2",
+      "source_path": "artifacts/m3/logs/final-closure-verify-r7.log",
+      "source_sha256": "629989276af858d5b81680289636beea4ee2fcdb7b2fbe37f710416bb539ebe2"
+    },
+    {
+      "sanitization": "byte-preserved (no workspace path present)",
+      "sanitized_path": ".agents/evidence/logs/M3-final-closure-teacher-r1.log",
+      "sanitized_sha256": "71429e0f5993aed968454b1a94f3abba6a5c7d602ea698439495c59402b6c584",
+      "source_path": "artifacts/m3/logs/final-closure-teacher-r1.log",
+      "source_sha256": "71429e0f5993aed968454b1a94f3abba6a5c7d602ea698439495c59402b6c584"
+    },
+    {
+      "sanitization": "byte-preserved (no workspace path present)",
+      "sanitized_path": ".agents/evidence/logs/M3-final-closure-verify-teacher-r1.log",
+      "sanitized_sha256": "3fdb85f7d5201a84ef1e0240f9aa0f716b53d1d76c904bdb243b989cd2bac369",
+      "source_path": "artifacts/m3/logs/final-closure-verify-teacher-r1.log",
+      "source_sha256": "3fdb85f7d5201a84ef1e0240f9aa0f716b53d1d76c904bdb243b989cd2bac369"
+    },
+    {
+      "sanitization": "byte-preserved (no workspace path present)",
+      "sanitized_path": ".agents/evidence/logs/M3-final-closure-verify-historical-v1.log",
+      "sanitized_sha256": "bff72f3f3ab6970c607c470ecaea06ed6f31f1061aa1fb541e360e1e3f1ec3cf",
+      "source_path": "artifacts/m3/logs/final-closure-verify-historical-v1.log",
+      "source_sha256": "bff72f3f3ab6970c607c470ecaea06ed6f31f1061aa1fb541e360e1e3f1ec3cf"
+    },
+    {
+      "sanitization": "byte-preserved (no workspace path present)",
+      "sanitized_path": ".agents/evidence/logs/M3-final-closure-verify-corrective-r4.log",
+      "sanitized_sha256": "89c51dc1c9f3e8b700723321ac1e40a947523390fb3466d944c404f8377acb80",
+      "source_path": "artifacts/m3/logs/final-closure-verify-corrective-r4.log",
+      "source_sha256": "89c51dc1c9f3e8b700723321ac1e40a947523390fb3466d944c404f8377acb80"
+    },
+    {
+      "sanitization": "byte-preserved (no workspace path present)",
+      "sanitized_path": ".agents/evidence/logs/M3-final-closure-lock-check.log",
+      "sanitized_sha256": "0a145ea306648f6d62229bbf27f12735d92256ab494a9b9f7027759d778b8abc",
+      "source_path": "artifacts/m3/logs/final-closure-lock-40cd4e8.log",
+      "source_sha256": "0a145ea306648f6d62229bbf27f12735d92256ab494a9b9f7027759d778b8abc"
+    },
+    {
+      "sanitization": "byte-preserved (no workspace path present)",
+      "sanitized_path": ".agents/evidence/logs/M3-final-closure-preflight-40cd4e8.log",
+      "sanitized_sha256": "211e76c21e7926cb5a50e55c62e653f3b50fc1d7e017348578f50d7cfc13c8e0",
+      "source_path": "artifacts/m3/logs/final-closure-preflight-40cd4e8.log",
+      "source_sha256": "211e76c21e7926cb5a50e55c62e653f3b50fc1d7e017348578f50d7cfc13c8e0"
+    }
+  ],
+  "pr_number": 3,
+  "pr_state": "open/unmerged; final pushed HEAD and final clean-clone evidence are recorded in PR description after push",
+  "pr_target": "initial-idea",
+  "record_schema": "m3-final-closure-evidence/1.0",
+  "recorded_at_utc": "2026-10-21T14:22:43.246148+00:00",
+  "releases": [
+    {
+      "code_revision": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+      "code_tree_sha256": "18defa5183708e68ac4e78d43e4618618b5b6640761b20b677153a614fd5966c",
+      "config_sha256": "c65a489ddafc964383613f1641599f1a1b660a244bcacc4da67b9bd4ed5c9e57",
+      "elapsed_seconds": 4031.665,
+      "ended_utc": "2026-10-21T13:02:08.667821+00:00",
+      "estimated_disk_consumed_bytes": 109400064,
+      "exit_code": 0,
+      "free_disk_after_bytes": 40892145664,
+      "free_disk_before_bytes": 41001545728,
+      "label": "r6",
+      "local_path": "artifacts/m3/training-support/release-final-closure-r6",
+      "manifest_checksum_file_sha256": "5f4c968a8885548565496b7652a6b060adc8778cfeaffb58dd4b7b8b18b9a2ae",
+      "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+      "outputs": [
+        {
+          "bytes": 1465,
+          "path": "config.json",
+          "sha256": "75034de9d1dee2c48f56ecb1e7b54e11ae4c261fe9a95579ef69b0e93c00b304"
+        },
+        {
+          "bytes": 2764193,
+          "path": "games.jsonl",
+          "sha256": "526fc9966d4521dee92fc4bb7e011d9a59fce1dc703810a0ed3d6edbb2e154c7"
+        },
+        {
+          "bytes": 31992257,
+          "path": "positions.jsonl",
+          "sha256": "9db9676ecb64cc111e4310c83374348132ad4413cb0de7c1fe1878b89c89500d"
+        },
+        {
+          "bytes": 66744,
+          "path": "rejections.jsonl",
+          "sha256": "fce94dc0c721fb84b45ccb812667b712030f4f327901d1a7ee19b4392524a42e"
+        },
+        {
+          "bytes": 5060,
+          "path": "source_manifest.json",
+          "sha256": "f2ff571ce81a47b1191f7b57c2f2d16c48ebde6b334aeb6e82d7b173dc2b2935"
+        },
+        {
+          "bytes": 2473768,
+          "path": "split.json",
+          "sha256": "dbbcc00bdb5989fd8827c8e7beec3b4eea41f0bae3649ad9ffa2373b0d128193"
+        },
+        {
+          "bytes": 2691035,
+          "path": "stats.json",
+          "sha256": "3d0a217e94a826f38d54b402c921f145592c92760d39901c8b2cc2339dad68bd"
+        }
+      ],
+      "peak_rss_kib": 376148,
+      "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+      "run_command": [
+        "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python",
+        "-m",
+        "videochess_rl.data",
+        "build",
+        "--archive",
+        "artifacts/m3/source/lichess_elite_2022-05.zip",
+        "--source-manifest",
+        "artifacts/m3/source/source-manifest.json",
+        "--config",
+        "configs/data/m3-training-support.toml",
+        "--output",
+        "artifacts/m3/training-support/release-final-closure-r6",
+        "--run-id",
+        "m3-training-support-final-closure-r6",
+        "--confirm-write"
+      ],
+      "run_id": "m3-training-support-final-closure-r6",
+      "run_log_sha256": "8519d628e0f4f0d6fca70cced0c66d5177ce6bda2812d74bc8dc7a8b57e14b4b",
+      "started_utc": "2026-10-21T11:54:57.002657+00:00",
+      "verification": {
+        "games": 1000,
+        "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+        "output_bytes": 39994522,
+        "outputs_verified": 7,
+        "positions": 19268,
+        "rejections": 182,
+        "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+        "source_archive": {
+          "bytes": 97163552,
+          "sha256": "ad374c8fd9fb2fe5f03c1297aa1d47cbbce5caedf6e6e2d387ee816930afdb11"
+        },
+        "source_member": {
+          "bytes": 326476031,
+          "crc_verified": true,
+          "sha256": "0f88f18836be7e321aa1e0211b618e78d4e92065c126c45c95a6a55c1500a8e6"
+        }
+      }
+    },
+    {
+      "code_revision": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+      "code_tree_sha256": "18defa5183708e68ac4e78d43e4618618b5b6640761b20b677153a614fd5966c",
+      "config_sha256": "c65a489ddafc964383613f1641599f1a1b660a244bcacc4da67b9bd4ed5c9e57",
+      "elapsed_seconds": 4259.546,
+      "ended_utc": "2026-10-21T14:13:19.233987+00:00",
+      "estimated_disk_consumed_bytes": 94953472,
+      "exit_code": 0,
+      "free_disk_after_bytes": 40796938240,
+      "free_disk_before_bytes": 40891891712,
+      "label": "r7",
+      "local_path": "artifacts/m3/training-support/release-final-closure-r7",
+      "manifest_checksum_file_sha256": "5f4c968a8885548565496b7652a6b060adc8778cfeaffb58dd4b7b8b18b9a2ae",
+      "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+      "outputs": [
+        {
+          "bytes": 1465,
+          "path": "config.json",
+          "sha256": "75034de9d1dee2c48f56ecb1e7b54e11ae4c261fe9a95579ef69b0e93c00b304"
+        },
+        {
+          "bytes": 2764193,
+          "path": "games.jsonl",
+          "sha256": "526fc9966d4521dee92fc4bb7e011d9a59fce1dc703810a0ed3d6edbb2e154c7"
+        },
+        {
+          "bytes": 31992257,
+          "path": "positions.jsonl",
+          "sha256": "9db9676ecb64cc111e4310c83374348132ad4413cb0de7c1fe1878b89c89500d"
+        },
+        {
+          "bytes": 66744,
+          "path": "rejections.jsonl",
+          "sha256": "fce94dc0c721fb84b45ccb812667b712030f4f327901d1a7ee19b4392524a42e"
+        },
+        {
+          "bytes": 5060,
+          "path": "source_manifest.json",
+          "sha256": "f2ff571ce81a47b1191f7b57c2f2d16c48ebde6b334aeb6e82d7b173dc2b2935"
+        },
+        {
+          "bytes": 2473768,
+          "path": "split.json",
+          "sha256": "dbbcc00bdb5989fd8827c8e7beec3b4eea41f0bae3649ad9ffa2373b0d128193"
+        },
+        {
+          "bytes": 2691035,
+          "path": "stats.json",
+          "sha256": "3d0a217e94a826f38d54b402c921f145592c92760d39901c8b2cc2339dad68bd"
+        }
+      ],
+      "peak_rss_kib": 348836,
+      "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+      "run_command": [
+        "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python",
+        "-m",
+        "videochess_rl.data",
+        "build",
+        "--archive",
+        "artifacts/m3/source/lichess_elite_2022-05.zip",
+        "--source-manifest",
+        "artifacts/m3/source/source-manifest.json",
+        "--config",
+        "configs/data/m3-training-support.toml",
+        "--output",
+        "artifacts/m3/training-support/release-final-closure-r7",
+        "--run-id",
+        "m3-training-support-final-closure-r7",
+        "--confirm-write"
+      ],
+      "run_id": "m3-training-support-final-closure-r7",
+      "run_log_sha256": "d4c448bad8368e0ae6b0ded2322bc4687893e751c6063fcd719254013d575a9b",
+      "started_utc": "2026-10-21T13:02:19.688098+00:00",
+      "verification": {
+        "games": 1000,
+        "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+        "output_bytes": 39994522,
+        "outputs_verified": 7,
+        "positions": 19268,
+        "rejections": 182,
+        "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+        "source_archive": {
+          "bytes": 97163552,
+          "sha256": "ad374c8fd9fb2fe5f03c1297aa1d47cbbce5caedf6e6e2d387ee816930afdb11"
+        },
+        "source_member": {
+          "bytes": 326476031,
+          "crc_verified": true,
+          "sha256": "0f88f18836be7e321aa1e0211b618e78d4e92065c126c45c95a6a55c1500a8e6"
+        }
+      }
+    }
+  ],
+  "repeat_comparison": {
+    "all_files_equal": true,
+    "code_revision_r6": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+    "code_revision_r7": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+    "code_tree_sha256_r6": "18defa5183708e68ac4e78d43e4618618b5b6640761b20b677153a614fd5966c",
+    "code_tree_sha256_r7": "18defa5183708e68ac4e78d43e4618618b5b6640761b20b677153a614fd5966c",
+    "compared_utc": "2026-10-21T14:13:31.579582+00:00",
+    "config_sha256_r6": "c65a489ddafc964383613f1641599f1a1b660a244bcacc4da67b9bd4ed5c9e57",
+    "config_sha256_r7": "c65a489ddafc964383613f1641599f1a1b660a244bcacc4da67b9bd4ed5c9e57",
+    "files": [
+      {
+        "byte_equal": true,
+        "bytes_r6": 1465,
+        "bytes_r7": 1465,
+        "path": "config.json",
+        "sha256_r6": "75034de9d1dee2c48f56ecb1e7b54e11ae4c261fe9a95579ef69b0e93c00b304",
+        "sha256_r7": "75034de9d1dee2c48f56ecb1e7b54e11ae4c261fe9a95579ef69b0e93c00b304"
+      },
+      {
+        "byte_equal": true,
+        "bytes_r6": 2764193,
+        "bytes_r7": 2764193,
+        "path": "games.jsonl",
+        "sha256_r6": "526fc9966d4521dee92fc4bb7e011d9a59fce1dc703810a0ed3d6edbb2e154c7",
+        "sha256_r7": "526fc9966d4521dee92fc4bb7e011d9a59fce1dc703810a0ed3d6edbb2e154c7"
+      },
+      {
+        "byte_equal": true,
+        "bytes_r6": 1976,
+        "bytes_r7": 1976,
+        "path": "manifest.json",
+        "sha256_r6": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+        "sha256_r7": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12"
+      },
+      {
+        "byte_equal": true,
+        "bytes_r6": 80,
+        "bytes_r7": 80,
+        "path": "manifest.sha256",
+        "sha256_r6": "5f4c968a8885548565496b7652a6b060adc8778cfeaffb58dd4b7b8b18b9a2ae",
+        "sha256_r7": "5f4c968a8885548565496b7652a6b060adc8778cfeaffb58dd4b7b8b18b9a2ae"
+      },
+      {
+        "byte_equal": true,
+        "bytes_r6": 31992257,
+        "bytes_r7": 31992257,
+        "path": "positions.jsonl",
+        "sha256_r6": "9db9676ecb64cc111e4310c83374348132ad4413cb0de7c1fe1878b89c89500d",
+        "sha256_r7": "9db9676ecb64cc111e4310c83374348132ad4413cb0de7c1fe1878b89c89500d"
+      },
+      {
+        "byte_equal": true,
+        "bytes_r6": 66744,
+        "bytes_r7": 66744,
+        "path": "rejections.jsonl",
+        "sha256_r6": "fce94dc0c721fb84b45ccb812667b712030f4f327901d1a7ee19b4392524a42e",
+        "sha256_r7": "fce94dc0c721fb84b45ccb812667b712030f4f327901d1a7ee19b4392524a42e"
+      },
+      {
+        "byte_equal": true,
+        "bytes_r6": 5060,
+        "bytes_r7": 5060,
+        "path": "source_manifest.json",
+        "sha256_r6": "f2ff571ce81a47b1191f7b57c2f2d16c48ebde6b334aeb6e82d7b173dc2b2935",
+        "sha256_r7": "f2ff571ce81a47b1191f7b57c2f2d16c48ebde6b334aeb6e82d7b173dc2b2935"
+      },
+      {
+        "byte_equal": true,
+        "bytes_r6": 2473768,
+        "bytes_r7": 2473768,
+        "path": "split.json",
+        "sha256_r6": "dbbcc00bdb5989fd8827c8e7beec3b4eea41f0bae3649ad9ffa2373b0d128193",
+        "sha256_r7": "dbbcc00bdb5989fd8827c8e7beec3b4eea41f0bae3649ad9ffa2373b0d128193"
+      },
+      {
+        "byte_equal": true,
+        "bytes_r6": 2691035,
+        "bytes_r7": 2691035,
+        "path": "stats.json",
+        "sha256_r6": "3d0a217e94a826f38d54b402c921f145592c92760d39901c8b2cc2339dad68bd",
+        "sha256_r7": "3d0a217e94a826f38d54b402c921f145592c92760d39901c8b2cc2339dad68bd"
+      }
+    ],
+    "manifest_sha256_r6": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+    "manifest_sha256_r7": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+    "release_r6_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+    "release_r7_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890"
+  },
+  "source": {
+    "archive_bytes": 97163552,
+    "archive_path_local": "artifacts/m3/source/lichess_elite_2022-05.zip",
+    "archive_sha256": "ad374c8fd9fb2fe5f03c1297aa1d47cbbce5caedf6e6e2d387ee816930afdb11",
+    "crc_verified": true,
+    "member_bytes": 326476031,
+    "member_name": "lichess_elite_2022-05.pgn",
+    "member_sha256": "0f88f18836be7e321aa1e0211b618e78d4e92065c126c45c95a6a55c1500a8e6",
+    "source_decision_id": "M3-SOURCE-ELITE-2022-05-LOCAL-20261020",
+    "source_rights_note": "Owner-authorized local internal academic processing; upstream Lichess database CC0; third-party curated package license remains unstated/unverified; no redistribution."
+  },
+  "starting_reviewed_pr_head": "1af13b8b20715d3705c932012465d31c0d05a0a4",
+  "static_checks_at_artifact_revision": [
+    {
+      "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m compileall -q videochess_rl tests",
+      "ended_utc": "2026-10-21T14:15:59.268408+00:00",
+      "exit_code": 0,
+      "git_revision": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+      "log_path": "artifacts/m3/logs/final-closure-compile-40cd4e8.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "compile",
+      "started_utc": "2026-10-21T14:15:59.228893+00:00"
+    },
+    {
+      "command": "/home/dodaonam/.local/bin/uv lock --check",
+      "ended_utc": "2026-10-21T14:15:59.317097+00:00",
+      "exit_code": 0,
+      "git_revision": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+      "log_path": "artifacts/m3/logs/final-closure-lock-40cd4e8.log",
+      "log_sha256": "0a145ea306648f6d62229bbf27f12735d92256ab494a9b9f7027759d778b8abc",
+      "name": "lock",
+      "started_utc": "2026-10-21T14:15:59.268711+00:00"
+    },
+    {
+      "command": "git diff --check",
+      "ended_utc": "2026-10-21T14:15:59.319728+00:00",
+      "exit_code": 0,
+      "git_revision": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+      "log_path": "artifacts/m3/logs/final-closure-diff-40cd4e8.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "diff",
+      "started_utc": "2026-10-21T14:15:59.317372+00:00"
+    },
+    {
+      "command": "python3 scripts/agent_preflight.py",
+      "ended_utc": "2026-10-21T14:15:59.591956+00:00",
+      "exit_code": 0,
+      "git_revision": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+      "log_path": "artifacts/m3/logs/final-closure-preflight-40cd4e8.log",
+      "log_sha256": "211e76c21e7926cb5a50e55c62e653f3b50fc1d7e017348578f50d7cfc13c8e0",
+      "name": "preflight",
+      "started_utc": "2026-10-21T14:15:59.319847+00:00"
+    }
+  ],
+  "teacher": {
+    "code_revision": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+    "dataset_manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+    "dataset_release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+    "elapsed_seconds": 135.54,
+    "engine": {
+      "author": "the Stockfish developers (see AUTHORS file)",
+      "binary_bytes": 103153472,
+      "binary_sha256": "0f83d24cc46d2c66c60f16001af5444873bc112b7d028594513426894c12da19",
+      "host_binary_reference": "existing M0 Stockfish 19 installation",
+      "license": "GPL-3.0; host binary/license are not redistributed",
+      "license_bytes": 35149,
+      "license_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "name": "Stockfish 19",
+      "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39"
+    },
+    "execution": {
+      "child_max_rss_kib": 325524,
+      "command": [
+        "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python",
+        "-m",
+        "videochess_rl.data",
+        "teacher",
+        "--release",
+        "artifacts/m3/training-support/release-final-closure-r6",
+        "--output",
+        "artifacts/m3/teacher-training-support/teacher-final-closure-r1",
+        "--engine",
+        "/home/dodaonam/Projects/atari-videochess-rl/.venv/share/stockfish/stockfish",
+        "--engine-sha256",
+        "0f83d24cc46d2c66c60f16001af5444873bc112b7d028594513426894c12da19",
+        "--license",
+        "/home/dodaonam/Projects/atari-videochess-rl/.venv/share/stockfish/Copying.txt",
+        "--license-sha256",
+        "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+        "--max-positions",
+        "128",
+        "--seed",
+        "20261025",
+        "--nodes",
+        "5000",
+        "--multipv",
+        "3",
+        "--threads",
+        "1",
+        "--hash-mib",
+        "64",
+        "--timeout-seconds",
+        "30",
+        "--max-wall-seconds",
+        "1800",
+        "--max-output-bytes",
+        "67108864",
+        "--confirm-write"
+      ],
+      "disk_consumed_bytes_estimate": 17346560,
+      "elapsed_seconds": 135.54,
+      "ended_utc": "2026-10-21T13:08:13.558516+00:00",
+      "exit_code": 0,
+      "free_disk_after_bytes": 40873914368,
+      "free_disk_before_bytes": 40891260928,
+      "log_path": "artifacts/m3/logs/final-closure-teacher-r1.log",
+      "log_sha256": "71429e0f5993aed968454b1a94f3abba6a5c7d602ea698439495c59402b6c584",
+      "revision": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+      "started_utc": "2026-10-21T13:05:58.020485+00:00"
+    },
+    "local_path": "artifacts/m3/teacher-training-support/teacher-final-closure-r1",
+    "manifest_checksum_file_sha256": "b5d6f29218b87c4ec877c752ff037c6efa97cf007949ec6ae9547905b33951df",
+    "manifest_sha256": "71429e0f5993aed968454b1a94f3abba6a5c7d602ea698439495c59402b6c584",
+    "multipv_score_types": {
+      "cp": 377,
+      "mate": 3
+    },
+    "peak_rss_kib": 325524,
+    "positions_analyzed": 128,
+    "positions_failed_or_unattempted": 0,
+    "positions_selected": 128,
+    "run_id": "58febd814bb6bdd6fa67b990a1e4906ada14c31fafa265829fb49b7d3c203272",
+    "schema": "videochess-teacher-run-manifest/1.1",
+    "status": "complete",
+    "teacher_code_tree_sha256": "9f614140d8703d3e1bbe4d8c33e902c01ca541a7df9e1abe726fcd071e96edbb",
+    "teacher_config": {
+      "clear_hash_between_positions": true,
+      "finalization_reserve_seconds": 2.0,
+      "hash_mib": 64,
+      "max_output_bytes": 67108864,
+      "max_positions": 128,
+      "max_wall_seconds": 1800,
+      "multipv": 3,
+      "node_budget_semantics": "one UCI nodes limit per root position search, shared across its MultiPV lines",
+      "nodes_per_position": 5000,
+      "normalization": {
+        "formula": "tanh(cp / 400.0), rounded to 8 decimal places",
+        "id": "cp-tanh-400/v1",
+        "scope": "centipawn scores only; mate scores remain typed and have no normalized scalar"
+      },
+      "raw_root_perspective": "side_to_move",
+      "sample_seed": 20261025,
+      "schema": "videochess-teacher/1.1",
+      "threads": 1,
+      "time_budget_semantics": "UCI movetime is capped per root; python-chess response timeout is recorded per row; the external process watchdog kills an unresponsive engine at the recorded cap plus grace",
+      "timeout_seconds": "30.000",
+      "total_wall_budget_semantics": "monotonic command budget starts before release verification and sample selection; it covers UCI startup, option setup, hash clearing, root searches, shutdown, sidecar serialization, semantic verification, and finalized-file checks. Searches preserve a 2-second in-budget reserve for final manifest/checksum publication and file-inventory/hash closure. The manifest elapsed measurement ends after semantic verification and before final manifest publication; it records the reserve and a conservative upper bound. The runner measures actual elapsed after final closure and downgrades any deadline crossing to partial/overrun. Process kill/reap may add at most 2 seconds of cleanup tolerance, and any resulting deadline crossing remains partial/overrun.",
+      "watchdog_grace_seconds": "2.000",
+      "watchdog_grace_semantics": "min(2 seconds, 10 percent of the per-root cap, remaining run wall budget after the cap and finalization reserve); a 50 ms response reserve is kept when the total budget is nearly exhausted; the protocol join timeout follows the process kill deadline by 250 ms"
+    },
+    "teacher_results": {
+      "bytes": 382758,
+      "path": "teacher.jsonl",
+      "sha256": "9add961adc73013776d96c8b84467b0f73a8edd310c13b0f55b0cfc9c5f70d65"
+    },
+    "verification": {
+      "command": [
+        "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python",
+        "-m",
+        "videochess_rl.data",
+        "verify",
+        "--release",
+        "artifacts/m3/training-support/release-final-closure-r6",
+        "--teacher-run",
+        "artifacts/m3/teacher-training-support/teacher-final-closure-r1"
+      ],
+      "elapsed_seconds": 283.484,
+      "ended_utc": "2026-10-21T13:13:10.389396+00:00",
+      "exit_code": 0,
+      "log_path": "artifacts/m3/logs/final-closure-verify-teacher-r1.log",
+      "log_sha256": "3fdb85f7d5201a84ef1e0240f9aa0f716b53d1d76c904bdb243b989cd2bac369",
+      "revision": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+      "started_utc": "2026-10-21T13:08:26.907610+00:00"
+    }
+  },
+  "tests_at_artifact_revision": [
+    {
+      "command": "python -m unittest discover -s tests -p test_m3_data.py -v",
+      "ended_at_utc": "2026-10-21T11:52:15Z",
+      "exit_code": 0,
+      "git_revision": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+      "log_path": "artifacts/m3/logs/final-closure-m3-40cd4e8.log",
+      "log_sha256": "3583219437d638c95cb7417a966af4c239437491121ee7e6d182e3bb07a628e8",
+      "name": "m3",
+      "started_at_utc": "2026-10-21T11:51:46Z",
+      "summary": "OK"
+    },
+    {
+      "command": "python -m unittest discover -s tests -p test_pre_m3_contracts.py -v",
+      "ended_at_utc": "2026-10-21T11:52:15Z",
+      "exit_code": 0,
+      "git_revision": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+      "log_path": "artifacts/m3/logs/final-closure-pre_m3-40cd4e8.log",
+      "log_sha256": "f0c857e0b4558d37392d69873a9546ed422ce68084011e8fb287e8b65305d8df",
+      "name": "pre_m3",
+      "started_at_utc": "2026-10-21T11:52:15Z",
+      "summary": "OK"
+    },
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "ended_at_utc": "2026-10-21T11:53:21Z",
+      "exit_code": 0,
+      "git_revision": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+      "log_path": "artifacts/m3/logs/final-closure-full-40cd4e8.log",
+      "log_sha256": "4edb25b77a383c7d7d1080fb8d1f888540687aab4c2485ba900e2344535ce37f",
+      "name": "full",
+      "started_at_utc": "2026-10-21T11:52:15Z",
+      "summary": "OK"
+    }
+  ],
+  "verification_runs": {
+    "corrective-r4": {
+      "command": [
+        "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python",
+        "-m",
+        "videochess_rl.data",
+        "verify",
+        "--release",
+        "artifacts/m3/training-support/release-corrected-20261021-r4"
+      ],
+      "elapsed_seconds": 118.473,
+      "ended_utc": "2026-10-21T14:20:03.018503+00:00",
+      "exit_code": 0,
+      "log_path": "artifacts/m3/logs/final-closure-verify-corrective-r4.log",
+      "log_sha256": "89c51dc1c9f3e8b700723321ac1e40a947523390fb3466d944c404f8377acb80",
+      "revision": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+      "started_utc": "2026-10-21T14:18:04.547786+00:00"
+    },
+    "historical-v1": {
+      "command": [
+        "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python",
+        "-m",
+        "videochess_rl.data",
+        "verify",
+        "--release",
+        "artifacts/m3/training-support/release-r4"
+      ],
+      "elapsed_seconds": 85.227,
+      "ended_utc": "2026-10-21T14:18:04.545538+00:00",
+      "exit_code": 0,
+      "log_path": "artifacts/m3/logs/final-closure-verify-historical-v1.log",
+      "log_sha256": "bff72f3f3ab6970c607c470ecaea06ed6f31f1061aa1fb541e360e1e3f1ec3cf",
+      "revision": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+      "started_utc": "2026-10-21T14:16:39.320118+00:00"
+    },
+    "r6": {
+      "command": [
+        "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python",
+        "-m",
+        "videochess_rl.data",
+        "verify",
+        "--release",
+        "artifacts/m3/training-support/release-final-closure-r6",
+        "--source-manifest",
+        "artifacts/m3/source/source-manifest.json",
+        "--archive",
+        "artifacts/m3/source/lichess_elite_2022-05.zip"
+      ],
+      "elapsed_seconds": 128.9,
+      "ended_utc": "2026-10-21T13:05:30.838999+00:00",
+      "exit_code": 0,
+      "log_path": "artifacts/m3/logs/final-closure-verify-r6.log",
+      "log_sha256": "629989276af858d5b81680289636beea4ee2fcdb7b2fbe37f710416bb539ebe2",
+      "revision": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+      "started_utc": "2026-10-21T13:03:21.939386+00:00"
+    },
+    "r7": {
+      "command": [
+        "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python",
+        "-m",
+        "videochess_rl.data",
+        "verify",
+        "--release",
+        "artifacts/m3/training-support/release-final-closure-r7",
+        "--source-manifest",
+        "artifacts/m3/source/source-manifest.json",
+        "--archive",
+        "artifacts/m3/source/lichess_elite_2022-05.zip"
+      ],
+      "elapsed_seconds": 118.014,
+      "ended_utc": "2026-10-21T14:15:36.759147+00:00",
+      "exit_code": 0,
+      "log_path": "artifacts/m3/logs/final-closure-verify-r7.log",
+      "log_sha256": "629989276af858d5b81680289636beea4ee2fcdb7b2fbe37f710416bb539ebe2",
+      "revision": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+      "started_utc": "2026-10-21T14:13:38.746987+00:00"
+    },
+    "teacher-r1": {
+      "command": [
+        "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python",
+        "-m",
+        "videochess_rl.data",
+        "verify",
+        "--release",
+        "artifacts/m3/training-support/release-final-closure-r6",
+        "--teacher-run",
+        "artifacts/m3/teacher-training-support/teacher-final-closure-r1"
+      ],
+      "elapsed_seconds": 283.484,
+      "ended_utc": "2026-10-21T13:13:10.389396+00:00",
+      "exit_code": 0,
+      "log_path": "artifacts/m3/logs/final-closure-verify-teacher-r1.log",
+      "log_sha256": "3fdb85f7d5201a84ef1e0240f9aa0f716b53d1d76c904bdb243b989cd2bac369",
+      "revision": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+      "started_utc": "2026-10-21T13:08:26.907610+00:00"
+    }
+  }
+}

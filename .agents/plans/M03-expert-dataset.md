@@ -132,3 +132,7 @@ After interruption, validate every completed output row and its partial manifest
 - Canonical state/backlog reflect only evidence that exists; M3 completion is not inferred from a plan.
 - A reviewable M3 implementation PR is pushed against **initial-idea**, remains open/unmerged, and documents limitations and negative results.
 
+## Final corrective closure record (2026-10-21)
+
+The final remaining correctness/operational findings NEW-01 through NEW-04 are addressed at artifact-producing revision `40cd4e88bcaf987033a27f5f73995c5f44f21fb5`. Two source-backed closure releases (`r6`/`r7`) match byte-for-byte, each independently verifies against the authorized archive, and a new bounded Stockfish 19 sidecar is verified against their shared release ID. The detailed dispositions, reproduction instructions, identities, test matrix, and limitations are in [the final closure report](../evidence/M3-final-closure-20261021.md) and [machine-readable record](../evidence/M3-final-closure-record-20261021.json). PR #3 remains open/unmerged; M3-001 remains in progress pending PM acceptance; G3 is unapproved. Final exact-PR-HEAD clean-clone verification is recorded in the PR description to avoid a self-referential evidence commit.
+

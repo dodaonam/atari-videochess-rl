@@ -2235,11 +2235,39 @@
             "git_revision": "fbdd14d6bed487e5b1388034048eccdbe952ab48",
             "log_path": ".agents/evidence/logs/M3-final-full-suite-20261021.log"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-final-closure-20261021.md",
+          "detail": "Final corrective closure for NEW-01 through NEW-04 and E-01, source-backed r6/r7 repeat, final Stockfish 19 sidecar, acceptance dispositions and PM handoff.",
+          "result": "NEW-01 through NEW-04 corrected and technically verified; r6/r7 match byte-for-byte and pass source verification; bounded 128-position Stockfish 19 sidecar is release-bound and passes independent verification. M3-01 through M3-04 are technically ready for independent PM review; M3-001 remains in_progress, PR #3 remains open/unmerged, and G3 remains unapproved.",
+          "provenance": {
+            "status": "verified",
+            "recorded_at_utc": "2026-10-21T14:23:28Z",
+            "git_revision": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+            "executed_at_utc": null,
+            "exit_code": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-final-closure-record-20261021.json",
+          "detail": "Portable machine-readable source, release, repeat, teacher, verification, test and sanitized-log identities for final closure.",
+          "result": "Release r6/r7 share identity f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890 and match across all nine files; teacher sidecar is linked to that release. Final exact-PR-HEAD clean-clone record is supplied in PR #3 description after push to avoid SHA circularity.",
+          "provenance": {
+            "status": "verified",
+            "recorded_at_utc": "2026-10-21T14:23:28Z",
+            "git_revision": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+            "executed_at_utc": null,
+            "exit_code": null,
+            "log_path": null
+          }
         }
       ],
-      "next_action": "Codex: complete the authorized final M3 closure checks NEW-01 through NEW-04 and E-01, regenerate only artifacts invalidated by the frozen code identity, and then return PR #3 open/unmerged for independent PM acceptance. Keep G3 unapproved; do not begin M4–M7.",
+      "next_action": "PM: independently review the final closure report and machine record, verify the exact-SHA clean-clone evidence and GitHub check scope in PR #3, then record M3 acceptance or return findings. Do not merge before acceptance; G3 remains unapproved.",
       "plan_ref": ".agents/plans/M03-expert-dataset.md"
     }
   ],
-  "updated_at_utc": "2026-10-21T02:26:39Z"
+  "updated_at_utc": "2026-10-21T14:23:28Z"
 }
