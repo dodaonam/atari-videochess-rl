@@ -91,6 +91,8 @@ Exact successful command timestamps, exit codes, and sanitized test logs are ind
 
 M4/M5/M6/M7 were not implemented or started. No model training or GPU/Colab/cloud/paid resource was used. The dataset is immediately reconstructible as legal state + UCI action for a small supervised baseline; teacher values remain separate from PGN outcomes, simulator rewards, and Double DQN Q-values. The next research priority is independent PyTorch Double DQN with genuine simulator interaction, subject to its own authorization and readiness checks.
 
+The corrective-evidence checkpoint `cp-fbdd14d6-20261021T022727431901Z` preserved all prior history; at that checkpoint, `PROJECT_STATE.yaml` measured 3,862,087 bytes with 124 entries, close to but below the documented 4 MiB/128-entry follow-up triggers. The later documentation-only sync also preserves checkpoint history. No history migration or truncation was performed.
+
 ## 8. Project Manager review checklist
 
 1. Confirm commits and the final branch head on PR #3, target `initial-idea`, open and unmerged.
