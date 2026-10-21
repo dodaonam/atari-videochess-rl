@@ -18,6 +18,7 @@ import chess.engine
 
 from .contracts import (
     LEGACY_TEACHER_MANIFEST_SCHEMA, LEGACY_TEACHER_SCHEMA,
+    PREVIOUS_TEACHER_MANIFEST_SCHEMA,
     TEACHER_MANIFEST_SCHEMA, TEACHER_SCHEMA, canonical_fen,
     candidate_identity, config_identity, digest,
     reconstruct_position, sample_set_identity, validate_position_record,
@@ -33,6 +34,9 @@ class TeacherError(RuntimeError):
 FINALIZATION_RESERVE_SECONDS = 2.0
 FINALIZATION_RETURN_MARGIN_SECONDS = 0.05
 WDL_SCALE_ID = "permille-total-1000/v1"
+COMMAND_ELAPSED_PROJECTION_SEMANTICS = (
+    "semantic_elapsed_plus_finalization_reserve_and_return_margin; estimate_only_not_a_guaranteed_upper_bound"
+)
 
 
 def _cp_transform(cp: int) -> str:
@@ -250,8 +254,8 @@ def run_teacher(
         "watchdog_grace_semantics": "min(2 seconds, 10 percent of the per-root cap, remaining run wall budget after the cap and finalization reserve); a 50 ms response reserve is kept when the total budget is nearly exhausted; the protocol join timeout follows the process kill deadline by 250 ms",
         "total_wall_budget_semantics": (
             "monotonic command budget starts before release verification and sample selection; it covers UCI startup, option setup, hash clearing, root searches, shutdown, sidecar serialization, semantic verification, and finalized-file checks. "
-            "Searches preserve a 2-second in-budget reserve for final manifest/checksum publication and file-inventory/hash closure. "
-            "The manifest elapsed measurement ends after semantic verification and before final manifest publication; it records the reserve and a conservative upper bound. "
+            "Searches preserve a 2-second planned reserve for final manifest/checksum publication and file-inventory/hash closure. "
+            "The manifest elapsed measurement ends after semantic verification and before final manifest publication; command_elapsed_projection_seconds adds the planned reserve and response margin as an estimate, not a guaranteed upper bound. "
             "The runner measures actual elapsed after final closure and downgrades any deadline crossing to partial/overrun. "
             "Process kill/reap may add at most 2 seconds of cleanup tolerance, and any resulting deadline crossing remains partial/overrun."
         ),
@@ -675,9 +679,10 @@ def run_teacher(
         "after_semantic_verification_before_final_manifest_publication"
     )
     manifest["finalization_reserve_seconds"] = FINALIZATION_RESERVE_SECONDS
-    manifest["command_elapsed_upper_bound_seconds"] = round(
+    manifest["command_elapsed_projection_seconds"] = round(
         semantic_elapsed + FINALIZATION_RESERVE_SECONDS + FINALIZATION_RETURN_MARGIN_SECONDS, 3,
     )
+    manifest["command_elapsed_projection_semantics"] = COMMAND_ELAPSED_PROJECTION_SEMANTICS
     manifest["throughput_positions_per_second"] = round(len(successful_rows) / semantic_elapsed, 4) if semantic_elapsed else None
     reserve_available = (
         semantic_elapsed + FINALIZATION_RESERVE_SECONDS + FINALIZATION_RETURN_MARGIN_SECONDS
@@ -795,7 +800,10 @@ def verify_teacher_run(
     else:
         release_check, release_manifest = _verify_release_snapshot(release_dir, _verified_release)
     manifest_schema = manifest.get("schema")
-    if manifest_schema not in {LEGACY_TEACHER_MANIFEST_SCHEMA, TEACHER_MANIFEST_SCHEMA}:
+    if manifest_schema not in {
+        LEGACY_TEACHER_MANIFEST_SCHEMA, PREVIOUS_TEACHER_MANIFEST_SCHEMA,
+        TEACHER_MANIFEST_SCHEMA,
+    }:
         raise TeacherError("unsupported teacher run manifest schema")
     if manifest.get("dataset_release_id") != release_check["release_id"] or manifest.get("dataset_manifest_sha256") != release_check["manifest_sha256"]:
         raise TeacherError("teacher run is bound to a different dataset release")
@@ -809,11 +817,12 @@ def verify_teacher_run(
     teacher_schema = config.get("schema")
     if teacher_schema not in {LEGACY_TEACHER_SCHEMA, TEACHER_SCHEMA}:
         raise TeacherError("unsupported teacher row schema")
-    expected_manifest_schema = (
-        LEGACY_TEACHER_MANIFEST_SCHEMA
-        if teacher_schema == LEGACY_TEACHER_SCHEMA else TEACHER_MANIFEST_SCHEMA
+    valid_manifest_schemas = (
+        {LEGACY_TEACHER_MANIFEST_SCHEMA}
+        if teacher_schema == LEGACY_TEACHER_SCHEMA
+        else {PREVIOUS_TEACHER_MANIFEST_SCHEMA, TEACHER_MANIFEST_SCHEMA}
     )
-    if manifest_schema != expected_manifest_schema:
+    if manifest_schema not in valid_manifest_schemas:
         raise TeacherError("teacher row and manifest schema versions do not match")
     if manifest.get("normalization") != config.get("normalization"):
         raise TeacherError("teacher normalization differs from its configuration")
@@ -1036,16 +1045,24 @@ def verify_teacher_run(
             expected_boundary = "after_semantic_verification_before_final_manifest_publication"
             if manifest.get("command_elapsed_measurement_boundary") != expected_boundary:
                 raise TeacherError("teacher elapsed measurement boundary is missing or unsupported")
-            upper_bound = manifest.get("command_elapsed_upper_bound_seconds")
-            expected_upper_bound = round(
+            expected_projection = round(
                 elapsed + FINALIZATION_RESERVE_SECONDS + FINALIZATION_RETURN_MARGIN_SECONDS, 3,
             )
-            if upper_bound != expected_upper_bound:
-                raise TeacherError("teacher command elapsed upper bound does not include finalization reserve")
+            if manifest_schema == PREVIOUS_TEACHER_MANIFEST_SCHEMA:
+                # Historical 1.1 used this misleading field name for a planned
+                # reserve projection. It was never a measured guaranteed bound.
+                if manifest.get("command_elapsed_upper_bound_seconds") != expected_projection:
+                    raise TeacherError("legacy teacher finalization projection does not match its reserve")
+            else:
+                if (manifest.get("command_elapsed_projection_seconds") != expected_projection
+                        or manifest.get("command_elapsed_projection_semantics")
+                        != COMMAND_ELAPSED_PROJECTION_SEMANTICS
+                        or "command_elapsed_upper_bound_seconds" in manifest):
+                    raise TeacherError("teacher finalization projection metadata is missing or malformed")
             observed = manifest.get("finalization_observed_elapsed_seconds")
             if observed is None:
                 expected_budget = (
-                    "within_budget" if expected_upper_bound <= max_wall
+                    "within_budget" if expected_projection <= max_wall
                     else "finalization_reserve_exhausted"
                 )
             else:

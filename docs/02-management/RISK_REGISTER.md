@@ -22,3 +22,7 @@ Do not mark a risk resolved based only on a proposed mitigation. Link verified f
 ### RSK-010 checkpoint observation — 2026-10-21
 
 Immediately before the final closure evidence update, `PROJECT_STATE.yaml` measured 4,058,998 bytes with 127 checkpoint-history entries. One final checkpoint is expected to produce entry 128; this is at, not above, the documented `>128` trigger. The state remains below 4 MiB (4,194,304 bytes). Preserve all history, measure the post-checkpoint size/write time, and reopen the migration review only if an actual trigger is crossed. This observation does not itself justify a history migration.
+
+### RSK-010 final pre-merge observation — 2026-10-21
+
+Before final verifier closure, `PROJECT_STATE.yaml` measured 4,130,517 bytes with 128 checkpoint-history entries. The exact-SHA clean-clone recovery requirement needs one final portable checkpoint after the corrective code, evidence, and canonical references are staged; this will cross the `>128` entry trigger and may cross 4 MiB. That single checkpoint is necessary for final context recovery, not a routine repeated snapshot. Preserve all history, record the actual checkpoint duration and resulting size in the PR handoff, and perform no additional same-tree checkpoint. No history migration is included in this M3 closure; prepare and test a lossless migration before the next checkpoint-heavy task. The risk remains open as an operational maintenance item and does not alter M3 acceptance.

@@ -18,7 +18,8 @@ CANDIDATE_SCHEMA = "videochess-candidate/1.0"
 LEGACY_TEACHER_SCHEMA = "videochess-teacher/1.0"
 TEACHER_SCHEMA = "videochess-teacher/1.1"
 LEGACY_TEACHER_MANIFEST_SCHEMA = "videochess-teacher-run-manifest/1.0"
-TEACHER_MANIFEST_SCHEMA = "videochess-teacher-run-manifest/1.1"
+PREVIOUS_TEACHER_MANIFEST_SCHEMA = "videochess-teacher-run-manifest/1.1"
+TEACHER_MANIFEST_SCHEMA = "videochess-teacher-run-manifest/1.2"
 SPLIT_SCHEMA = "videochess-split/1.1"
 LEGACY_SPLIT_SCHEMA = "videochess-split/1.0"
 _HEX64 = re.compile(r"^[0-9a-f]{64}$")
@@ -144,6 +145,18 @@ def sample_set_identity(sample_ids: list[str]) -> str:
     return digest({
         "domain": "videochess-sample-set/v1",
         "sample_ids": sorted(set(sample_ids)),
+    })
+
+
+def sampling_run_identity(
+    source_id: str, seed: int, sampling_config_sha256: str,
+) -> str:
+    """Identify a deterministic position-sampling run without replacing sample IDs."""
+    return digest({
+        "domain": "videochess-sampling-run/v1",
+        "source_id": source_id,
+        "seed": seed,
+        "sampling_config_sha256": sampling_config_sha256,
     })
 
 

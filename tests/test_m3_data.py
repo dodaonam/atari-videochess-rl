@@ -14,6 +14,7 @@ import textwrap
 import time
 import unittest
 import zipfile
+from copy import deepcopy
 from pathlib import Path
 from unittest.mock import patch
 
@@ -39,6 +40,7 @@ from videochess_rl.data.teacher import (
     TeacherError, _cp_transform, _score_data, _wdl_data, run_teacher, verify_teacher_run,
 )
 from videochess_rl.data import cli as cli_module
+from videochess_rl.data import split as split_module
 from videochess_rl.data.cli import _resolve_engine_path
 from tests.test_pre_m3_contracts import FIXTURE
 
@@ -187,6 +189,57 @@ def pgn_zip(path: Path, pgn_text: str, name: str = "games.pgn") -> tuple[str, in
     with zipfile.ZipFile(path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
         archive.writestr(name, pgn_text.encode("utf-8"))
     return hash_member(path, name, max_decompressed_bytes=16 * 1024 * 1024)
+
+
+def build_synthetic_release(temp: Path, *, max_positions: int = 200) -> Path:
+    """Build a small source-backed release for adversarial verifier tests."""
+    source_id = source_identity("test", "https://example.invalid/", "synthetic")
+    texts = [pgn_for_moves(
+        ["e2e4", "e7e5", "d1h5", "b8c6", "f1c4", "g8f6", "h5f7"], "1-0",
+    )]
+    texts.extend(make_game(index, plies=20)[0] for index in range(1, 120))
+    archive_path = temp / "synthetic.zip"
+    member_sha, member_bytes = pgn_zip(archive_path, "\n".join(texts))
+    archive_sha = hashlib.sha256(archive_path.read_bytes()).hexdigest()
+    inspected = inspect_zip(
+        archive_path, max_archive_bytes=1_000_000,
+        max_member_bytes=1_000_000, max_total_uncompressed_bytes=1_000_000,
+    )
+    source_manifest = {
+        "schema": "videochess-source-manifest/1.0", "source_id": source_id,
+        "test_fixture": True, "publisher": "synthetic test fixture",
+        "archive_sha256": archive_sha, "archive_bytes": archive_path.stat().st_size,
+        "archive_path": archive_path.name, "source_decision_id": SOURCE_DECISION_ID,
+        "authorization_id": AUTHORIZATION_ID, "license_status": RIGHTS_STATUS,
+        "member": inspected["member"], "member_name": "games.pgn",
+        "member_sha256": member_sha, "member_bytes": member_bytes,
+    }
+    source_path = temp / "source.json"
+    source_path.write_text(json.dumps(source_manifest), encoding="utf-8")
+    config = {
+        "schema_version": "videochess-dataset/1.0", "sampling_mode": "source_window",
+        "seed": 42, "sampling_seed": 43, "split_seed": 44,
+        "max_games": 120, "max_input_games_seen": 200,
+        "max_positions": max_positions, "max_positions_per_game": 2,
+        "min_holdout_positions": 2, "min_holdout_retention_basis_points": 5000,
+        "max_archive_bytes": 1_000_000, "max_member_bytes": 1_000_000,
+        "max_total_decompressed_bytes": 1_000_000, "max_compression_ratio": 200,
+        "max_output_bytes": 10_000_000, "max_elapsed_seconds": 600,
+        "max_workers": 1, "memory_mib": 1024,
+        "max_game_bytes": 1_000_000, "max_header_bytes": 100_000,
+        "max_header_value_bytes": 10_000, "max_comment_bytes": 100_000,
+        "batch_size": 25,
+    }
+    config_path = temp / "config.json"
+    config_path.write_text(json.dumps({"dataset": config}), encoding="utf-8")
+    output = temp / "releases" / "synthetic-release"
+    build_dataset(
+        archive_path, source_path, config_path, output,
+        run_id="synthetic-run-001", repository_root=ROOT,
+        source_decision_path=SOURCE_DECISION, authorization_path=AUTHORIZATION,
+        confirm_write=True, allow_synthetic_source_for_test=True,
+    )
+    return output
 
 
 class M3ContractTests(unittest.TestCase):
@@ -977,6 +1030,187 @@ class M3ContractTests(unittest.TestCase):
             "one_or_more_missing": 0, "both_present": 1,
         })
 
+    def test_release_verifier_recomputes_game_group_split_rule(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            release = build_synthetic_release(root)
+            verify_release(release, allow_synthetic_source_for_test=True)
+            games_path = release / "games.jsonl"
+            positions_path = release / "positions.jsonl"
+            games = [json.loads(line) for line in games_path.read_text(encoding="utf-8").splitlines()]
+            config = json.loads((release / "config.json").read_text(encoding="utf-8"))
+            split = json.loads((release / "split.json").read_text(encoding="utf-8"))
+            stats = json.loads((release / "stats.json").read_text(encoding="utf-8"))
+            source = json.loads((release / "source_manifest.json").read_text(encoding="utf-8"))
+            positions_before = sample_positions(
+                games, source_id=config["source_id"], seed=config["sampling_seed"],
+                max_positions_per_game=config["max_positions_per_game"],
+                max_positions=config["max_positions"],
+                sampling_config_sha256=config["config_sha256"],
+            )
+            original_assignments = dict(split["game_group_assignments"])
+            target_group = next(
+                group for group, partition in sorted(original_assignments.items())
+                if partition == "train"
+            )
+            forged_assignments = dict(original_assignments)
+            forged_assignments[target_group] = "validation"
+            altered_before = deepcopy(positions_before)
+            with patch.object(
+                split_module, "assign_game_split",
+                side_effect=lambda seed, group: forged_assignments[group],
+            ):
+                retained, forged_split = split_and_purge(
+                    games, altered_before, seed=config["split_seed"],
+                    min_holdout_positions=config["min_holdout_positions"],
+                    min_holdout_retention=config.get("min_holdout_retention_basis_points", 5000) / 10_000,
+                )
+            for game in games:
+                game["split"] = game["split_id"] = forged_assignments[game["normalized_game_sha256"]]
+            forged_stats = summarize_dataset(
+                games, altered_before, retained, forged_split, stats["scan"],
+                sampling=stats["sampling"], resources=stats["resource_measurements"],
+                config_sha256=config["config_sha256"], source_manifest=source,
+            )
+            games_path.write_bytes(b"".join(
+                json.dumps(row, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode() + b"\n"
+                for row in games
+            ))
+            positions_path.write_bytes(b"".join(
+                json.dumps(row, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode() + b"\n"
+                for row in retained
+            ))
+            (release / "split.json").write_text(
+                json.dumps(forged_split, sort_keys=True, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
+            (release / "stats.json").write_text(
+                json.dumps(forged_stats, sort_keys=True, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
+            manifest_path = release / "manifest.json"
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            manifest["split_assignment_sha256"] = forged_split["split_assignment_sha256"]
+            manifest_path.write_text(json.dumps(manifest, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+            for name in ("games.jsonl", "positions.jsonl", "split.json", "stats.json"):
+                rewrite_release_file_manifest(release, name)
+            with self.assertRaisesRegex(ExportError, "deterministic normalized-game split"):
+                verify_release(release, allow_synthetic_source_for_test=True)
+
+    def test_release_verifier_rejects_boolean_split_seed_even_with_consistent_hashes(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            release = build_synthetic_release(Path(directory))
+            verify_release(release, allow_synthetic_source_for_test=True)
+            config_path = release / "config.json"
+            config = json.loads(config_path.read_text(encoding="utf-8"))
+            config["split_seed"] = True
+            config_path.write_text(
+                json.dumps(config, sort_keys=True, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
+            rewrite_release_file_manifest(release, "config.json")
+            config = json.loads(config_path.read_text(encoding="utf-8"))
+            sampling_id = digest({
+                "domain": "videochess-sampling-run/v1", "source_id": config["source_id"],
+                "seed": config["sampling_seed"],
+                "sampling_config_sha256": config["config_sha256"],
+            })
+            positions_path = release / "positions.jsonl"
+            rows = [json.loads(line) for line in positions_path.read_text(encoding="utf-8").splitlines()]
+            for row in rows:
+                row["sampling_config_sha256"] = config["config_sha256"]
+                row["sampling_id"] = sampling_id
+            positions_path.write_bytes(b"".join(
+                json.dumps(row, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode() + b"\n"
+                for row in rows
+            ))
+            rewrite_release_file_manifest(release, "positions.jsonl")
+            stats_path = release / "stats.json"
+            stats = json.loads(stats_path.read_text(encoding="utf-8"))
+            stats["sampling"]["split_seed"] = True
+            stats_path.write_text(
+                json.dumps(stats, sort_keys=True, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
+            rewrite_release_file_manifest(release, "stats.json")
+            with self.assertRaisesRegex(ExportError, "split_seed must be a positive integer"):
+                verify_release(release, allow_synthetic_source_for_test=True)
+
+    def test_release_verifier_binds_sampling_fields_to_release_config(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            release = build_synthetic_release(Path(directory))
+            verify_release(release, allow_synthetic_source_for_test=True)
+            altered = Path(directory) / "altered-provenance"
+            shutil.copytree(release, altered)
+            positions_path = altered / "positions.jsonl"
+            rows = [json.loads(line) for line in positions_path.read_text(encoding="utf-8").splitlines()]
+            rows[0]["sampling_config_sha256"] = "1" * 64
+            rows[0]["sampling_id"] = "2" * 64
+            rows[1]["sampling_config_sha256"] = "3" * 64
+            rows[1]["sampling_id"] = "4" * 64
+            positions_path.write_bytes(b"".join(
+                json.dumps(row, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode() + b"\n"
+                for row in rows
+            ))
+            rewrite_release_file_manifest(altered, "positions.jsonl")
+            with self.assertRaisesRegex(ExportError, "sampling provenance"):
+                verify_release(altered, allow_synthetic_source_for_test=True)
+
+    def test_release_verifier_reconstructs_sampled_ply_membership(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            release = build_synthetic_release(Path(directory))
+            verify_release(release, allow_synthetic_source_for_test=True)
+            altered = Path(directory) / "altered-sampling-seed"
+            shutil.copytree(release, altered)
+            config_path = altered / "config.json"
+            config = json.loads(config_path.read_text(encoding="utf-8"))
+            config["sampling_seed"] += 1
+            config["config_sha256"] = config_identity({k: v for k, v in config.items() if k != "config_sha256"})
+            sampling_id = digest({
+                "domain": "videochess-sampling-run/v1", "source_id": config["source_id"],
+                "seed": config["sampling_seed"], "sampling_config_sha256": config["config_sha256"],
+            })
+            config_path.write_text(json.dumps(config, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+            positions_path = altered / "positions.jsonl"
+            rows = [json.loads(line) for line in positions_path.read_text(encoding="utf-8").splitlines()]
+            for row in rows:
+                row["sampling_config_sha256"] = config["config_sha256"]
+                row["sampling_id"] = sampling_id
+            positions_path.write_bytes(b"".join(
+                json.dumps(row, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode() + b"\n"
+                for row in rows
+            ))
+            games = [json.loads(line) for line in (altered / "games.jsonl").read_text(encoding="utf-8").splitlines()]
+            positions_before = sample_positions(
+                games, source_id=config["source_id"], seed=config["sampling_seed"] - 1,
+                max_positions_per_game=config["max_positions_per_game"],
+                max_positions=config["max_positions"],
+                sampling_config_sha256="0" * 64,
+            )
+            split = json.loads((altered / "split.json").read_text(encoding="utf-8"))
+            assignments = dict(split["game_group_assignments"])
+            for row in positions_before:
+                row["split"] = row["split_id"] = assignments[row["normalized_game_sha256"]]
+            retained_ids = {row["sample_id"] for row in rows}
+            purged_ids = {row["sample_id"] for row in split["purged_samples"]}
+            positions_after = [row for row in positions_before if row["sample_id"] in retained_ids]
+            stats = json.loads((altered / "stats.json").read_text(encoding="utf-8"))
+            source = json.loads((altered / "source_manifest.json").read_text(encoding="utf-8"))
+            stats = summarize_dataset(
+                games, positions_before, positions_after, split, stats["scan"],
+                sampling={**stats["sampling"], "seed": config["sampling_seed"]},
+                resources=stats["resource_measurements"], config_sha256=config["config_sha256"],
+                source_manifest=source,
+            )
+            (altered / "stats.json").write_text(
+                json.dumps(stats, sort_keys=True, indent=2, ensure_ascii=False) + "\n", encoding="utf-8",
+            )
+            rewrite_release_file_manifest(altered, "config.json")
+            rewrite_release_file_manifest(altered, "positions.jsonl")
+            rewrite_release_file_manifest(altered, "stats.json")
+            with self.assertRaisesRegex(ExportError, "deterministic position sampling selection"):
+                verify_release(altered, allow_synthetic_source_for_test=True)
+
     def test_synthetic_end_to_end_release_is_reconstructible_and_hashed(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             temp = Path(directory)
@@ -1114,10 +1348,30 @@ class M3ContractTests(unittest.TestCase):
             lowered_config_path = lowered_policy / "config.json"
             lowered_config = json.loads(lowered_config_path.read_text(encoding="utf-8"))
             lowered_config["min_holdout_retention_basis_points"] = 1000
+            lowered_config["config_sha256"] = config_identity({
+                key: value for key, value in lowered_config.items() if key != "config_sha256"
+            })
             lowered_config_path.write_text(
                 json.dumps(lowered_config, sort_keys=True, indent=2, ensure_ascii=False) + "\n",
                 encoding="utf-8",
             )
+            lowered_sampling_id = digest({
+                "domain": "videochess-sampling-run/v1",
+                "source_id": lowered_config["source_id"],
+                "seed": lowered_config["sampling_seed"],
+                "sampling_config_sha256": lowered_config["config_sha256"],
+            })
+            lowered_position_path = lowered_policy / "positions.jsonl"
+            lowered_positions = [
+                json.loads(line) for line in lowered_position_path.read_text(encoding="utf-8").splitlines()
+            ]
+            for position in lowered_positions:
+                position["sampling_config_sha256"] = lowered_config["config_sha256"]
+                position["sampling_id"] = lowered_sampling_id
+            lowered_position_path.write_bytes(b"".join(
+                json.dumps(row, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode() + b"\n"
+                for row in lowered_positions
+            ))
             lowered_split_path = lowered_policy / "split.json"
             lowered_split = json.loads(lowered_split_path.read_text(encoding="utf-8"))
             lowered_split["holdout_minimum_retention"] = 0.1
@@ -1132,7 +1386,7 @@ class M3ContractTests(unittest.TestCase):
                 json.dumps(lowered_stats, sort_keys=True, indent=2, ensure_ascii=False) + "\n",
                 encoding="utf-8",
             )
-            for changed_name in ("config.json", "split.json", "stats.json"):
+            for changed_name in ("config.json", "positions.jsonl", "split.json", "stats.json"):
                 rewrite_release_file_manifest(lowered_policy, changed_name)
             with self.assertRaisesRegex(ExportError, "5000 through 10000 basis points"):
                 verify_release(lowered_policy, allow_synthetic_source_for_test=True)
@@ -1315,8 +1569,8 @@ class M3ContractTests(unittest.TestCase):
                 )
             teacher_wall_elapsed = time.monotonic() - teacher_started
             self.assertLessEqual(
-                teacher_wall_elapsed, teacher_manifest["command_elapsed_upper_bound_seconds"] + 0.1,
-                "the bounded finalization reserve must cover post-manifest verification",
+                teacher_wall_elapsed, teacher_manifest["command_elapsed_projection_seconds"] + 0.1,
+                "ordinary finalization should fit within its planned reserve projection",
             )
             self.assertEqual(
                 teacher_manifest["command_elapsed_measurement_boundary"],
@@ -1328,6 +1582,7 @@ class M3ContractTests(unittest.TestCase):
             )
             self.assertEqual(teacher_manifest["positions_analyzed"], 2)
             self.assertEqual(teacher_verified["positions_analyzed"], 2)
+            self.assertEqual(teacher_manifest["schema"], "videochess-teacher-run-manifest/1.2")
             self.assertEqual(teacher_manifest["multipv_score_types"]["cp"], 6)
             self.assertTrue(all(
                 line["wdl_side_to_move"] is not None
@@ -1337,6 +1592,30 @@ class M3ContractTests(unittest.TestCase):
                 and line["wdl_method"] == "UCI_ShowWDL"
                 for line in json.loads((teacher_dir / "teacher.jsonl").read_text().splitlines()[0])["multipv_lines"]
             ))
+
+            previous_manifest_dir = temp / "teacher-manifest-v1.1"
+            shutil.copytree(teacher_dir, previous_manifest_dir)
+            previous_manifest_path = previous_manifest_dir / "manifest.json"
+            previous_manifest = json.loads(previous_manifest_path.read_text(encoding="utf-8"))
+            previous_manifest["schema"] = "videochess-teacher-run-manifest/1.1"
+            previous_manifest["command_elapsed_upper_bound_seconds"] = previous_manifest.pop(
+                "command_elapsed_projection_seconds",
+            )
+            previous_manifest.pop("command_elapsed_projection_semantics")
+            previous_manifest_bytes = json.dumps(
+                previous_manifest, sort_keys=True, indent=2, ensure_ascii=False,
+            ).encode("utf-8") + b"\n"
+            previous_manifest_path.write_bytes(previous_manifest_bytes)
+            (previous_manifest_dir / "manifest.sha256").write_text(
+                hashlib.sha256(previous_manifest_bytes).hexdigest() + "  manifest.json\n",
+                encoding="ascii",
+            )
+            self.assertEqual(
+                verify_teacher_run(
+                    previous_manifest_dir, output, allow_synthetic_source_for_test=True,
+                )["positions_analyzed"],
+                2,
+            )
 
             legacy_teacher_dir = temp / "teacher-legacy-v1"
             shutil.copytree(teacher_dir, legacy_teacher_dir)
@@ -1386,6 +1665,7 @@ class M3ContractTests(unittest.TestCase):
             for key in (
                 "command_elapsed_seconds", "command_elapsed_measurement_boundary",
                 "command_elapsed_upper_bound_seconds", "finalization_reserve_seconds",
+                "command_elapsed_projection_seconds", "command_elapsed_projection_semantics",
                 "finalization_observed_elapsed_seconds", "status", "wall_budget_status",
             ):
                 legacy_manifest.pop(key, None)
@@ -1409,6 +1689,34 @@ class M3ContractTests(unittest.TestCase):
             valid_result_bytes = (teacher_dir / "teacher.jsonl").read_bytes()
             valid_manifest_bytes = (teacher_dir / "manifest.json").read_bytes()
             valid_checksum_bytes = (teacher_dir / "manifest.sha256").read_bytes()
+            valid_teacher_manifest = json.loads(valid_manifest_bytes)
+
+            def verify_tampered_teacher_manifest(mutator, message: str) -> None:
+                manifest = deepcopy(valid_teacher_manifest)
+                mutator(manifest)
+                encoded = json.dumps(manifest, sort_keys=True, indent=2, ensure_ascii=False).encode() + b"\n"
+                (teacher_dir / "manifest.json").write_bytes(encoded)
+                (teacher_dir / "manifest.sha256").write_text(
+                    hashlib.sha256(encoded).hexdigest() + "  manifest.json\n", encoding="ascii",
+                )
+                with self.assertRaisesRegex(TeacherError, message):
+                    verify_teacher_run(teacher_dir, output, allow_synthetic_source_for_test=True)
+                (teacher_dir / "manifest.json").write_bytes(valid_manifest_bytes)
+                (teacher_dir / "manifest.sha256").write_bytes(valid_checksum_bytes)
+
+            verify_tampered_teacher_manifest(
+                lambda manifest: manifest.__setitem__(
+                    "command_elapsed_projection_seconds",
+                    manifest["command_elapsed_projection_seconds"] + 0.1,
+                ),
+                "finalization projection metadata",
+            )
+            verify_tampered_teacher_manifest(
+                lambda manifest: manifest.__setitem__(
+                    "command_elapsed_projection_semantics", "guaranteed upper bound",
+                ),
+                "finalization projection metadata",
+            )
 
             def verify_tampered_teacher(mutator, message: str) -> None:
                 rows = json.loads(json.dumps(valid_teacher_rows))
@@ -1504,10 +1812,51 @@ class M3ContractTests(unittest.TestCase):
             self.assertEqual(slow_publish_manifest["status"], "complete")
             self.assertLessEqual(
                 slow_publish_elapsed,
-                slow_publish_manifest["command_elapsed_upper_bound_seconds"] + 0.1,
+                slow_publish_manifest["command_elapsed_projection_seconds"] + 0.1,
             )
             self.assertEqual(
                 verify_teacher_run(slow_publish_dir, output, allow_synthetic_source_for_test=True)["positions_analyzed"],
+                1,
+            )
+
+            delayed_finalize_dir = temp / "teacher-finalization-longer-than-reserve"
+
+            def finalize_past_reserve(*args, **kwargs):
+                checked = original_finalized_check(*args, **kwargs)
+                time.sleep(2.2)
+                return checked
+
+            delayed_finalize_started = time.monotonic()
+            with patch.object(
+                teacher_module, "_verify_finalized_teacher_artifacts",
+                side_effect=finalize_past_reserve,
+            ):
+                delayed_finalize_manifest = run_teacher(
+                    output, output / "games.jsonl", delayed_finalize_dir,
+                    engine_path=fake_engine, expected_engine_sha256=engine_sha,
+                    license_path=license_path, expected_license_sha256=license_sha,
+                    max_positions=1, sample_seed=9, nodes_per_position=500,
+                    multipv=3, threads=1, hash_mib=64, timeout_seconds=5,
+                    max_wall_seconds=60, authorization_id=AUTHORIZATION_ID,
+                    source_decision_id=SOURCE_DECISION_ID, confirm_write=True,
+                    code_revision="a" * 40, allow_synthetic_source_for_test=True,
+                )
+            delayed_finalize_elapsed = time.monotonic() - delayed_finalize_started
+            self.assertEqual(delayed_finalize_manifest["status"], "complete")
+            self.assertNotIn("command_elapsed_upper_bound_seconds", delayed_finalize_manifest)
+            self.assertLess(
+                delayed_finalize_manifest["command_elapsed_projection_seconds"],
+                delayed_finalize_elapsed,
+                "the explicit projection may be exceeded without implying a guarantee",
+            )
+            self.assertEqual(
+                delayed_finalize_manifest["command_elapsed_projection_semantics"],
+                "semantic_elapsed_plus_finalization_reserve_and_return_margin; estimate_only_not_a_guaranteed_upper_bound",
+            )
+            self.assertEqual(
+                verify_teacher_run(
+                    delayed_finalize_dir, output, allow_synthetic_source_for_test=True,
+                )["positions_analyzed"],
                 1,
             )
 

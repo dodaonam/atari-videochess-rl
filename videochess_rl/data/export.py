@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import heapq
 import json
 import os
 import shutil
@@ -10,9 +11,10 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from .contracts import (
-    GAME_SCHEMA, LEGACY_SPLIT_SCHEMA, POSITION_SCHEMA, SPLIT_SCHEMA, board_position_signature,
-    board_signature_owner, config_identity, reconstruct_position,
-    release_identity, replay_history_identity, sample_identity,
+    GAME_SCHEMA, LEGACY_SPLIT_SCHEMA, POSITION_SCHEMA, SPLIT_SCHEMA, assign_game_split,
+    board_position_signature, board_signature_owner, config_identity, ply_sample_key,
+    reconstruct_position, release_identity, replay_history_identity, sample_identity,
+    sampling_run_identity,
     split_manifest_identity, validate_game_record, validate_position_record,
 )
 from .source import sha256_file, validate_source_manifest
@@ -24,6 +26,43 @@ from .split import MIN_HOLDOUT_RETENTION
 
 class ExportError(ValueError):
     """Dataset output, journal, or release failed validation."""
+
+
+def _expected_sample_ids(
+    games: list[dict[str, Any]], *, source_id: str, seed: int,
+    max_positions_per_game: int, max_positions: int,
+) -> set[str]:
+    """Recompute the released position sample from game records and caps.
+
+    This deliberately computes only deterministic references. It does not
+    trust or reconstruct identities from the position rows being verified.
+    The inner and outer n-smallest operations preserve the producer's exact
+    lexicographic rank/tie-break semantics while bounding temporary storage
+    to one game's cap plus the release-wide position cap.
+    """
+    if max_positions_per_game < 1 or max_positions < 1:
+        raise ExportError("sampling position limits must be positive integers")
+
+    def ranked_per_game():
+        for game in games:
+            local_limit = min(max_positions_per_game, max_positions, game["ply_count"])
+            ranked = heapq.nsmallest(
+                local_limit,
+                (
+                    (ply_sample_key(seed, source_id, game["game_id"], ply), game["game_id"], ply)
+                    for ply in range(game["ply_count"])
+                ),
+            )
+            yield from ranked
+
+    selected = heapq.nsmallest(max_positions, ranked_per_game())
+    games_by_id = {game["game_id"]: game for game in games}
+    return {
+        sample_identity(
+            source_id, game_id, games_by_id[game_id]["normalized_game_sha256"], ply,
+        )
+        for _, game_id, ply in selected
+    }
 
 
 def json_line(value: dict[str, Any]) -> bytes:
@@ -430,6 +469,18 @@ def verify_release(
         raise ExportError("release config source_id differs from source manifest")
     if config_doc.get("code_revision") != manifest.get("code_revision") or config_doc.get("code_tree_sha256") != manifest.get("code_tree_sha256"):
         raise ExportError("release code identity differs from release manifest")
+    sampling_seed = config_doc.get("sampling_seed")
+    sampling_limit = config_doc.get("max_positions")
+    per_game_limit = config_doc.get("max_positions_per_game")
+    for name, value in (
+        ("sampling_seed", sampling_seed), ("max_positions", sampling_limit),
+        ("max_positions_per_game", per_game_limit),
+    ):
+        if isinstance(value, bool) or not isinstance(value, int) or value < 1:
+            raise ExportError(f"release sampling field {name} must be a positive integer")
+    expected_sampling_id = sampling_run_identity(
+        config_doc["source_id"], sampling_seed, config_hash,
+    )
     games = _load_jsonl(release_dir / "games.jsonl")
     positions = _load_jsonl(release_dir / "positions.jsonl")
     games_by_id = {row["game_id"]: row for row in games}
@@ -447,6 +498,11 @@ def verify_release(
         if game is None:
             raise ExportError(f"dangling game_id in position {row.get('sample_id')}")
         validate_position_record(row, game)
+        if (row.get("sampling_config_sha256") != config_hash
+                or row.get("sampling_id") != expected_sampling_id):
+            raise ExportError(
+                f"position sampling provenance does not match release config at sample {row.get('sample_id')}"
+            )
         seen_board_splits.setdefault(row["board_position_signature"], set()).add(row["split"])
     if any(len(splits) > 1 for splits in seen_board_splits.values()):
         raise ExportError("cross-split board-position overlap remains in release")
@@ -456,6 +512,17 @@ def verify_release(
     if split_doc.get("schema") not in manifest.get("schema_versions", []):
         raise ExportError("release schema-version list does not include its split manifest version")
     stats_doc = json.loads((release_dir / "stats.json").read_text(encoding="utf-8"))
+    expected_sampling = {
+        "method": config_doc.get("sampling_mode"),
+        "seed": sampling_seed,
+        "game_seed": config_doc.get("seed"),
+        "split_seed": config_doc.get("split_seed"),
+        "max_games": config_doc.get("max_games"),
+        "max_positions": sampling_limit,
+        "max_positions_per_game": per_game_limit,
+    }
+    if stats_doc.get("sampling") != expected_sampling:
+        raise ExportError("dataset sampling statistics do not match the immutable release config")
     quality_version = stats_doc.get("quality_report_version", 1)
     if not isinstance(quality_version, int) or isinstance(quality_version, bool) or quality_version < 1:
         raise ExportError("quality report version is malformed")
@@ -487,6 +554,14 @@ def verify_release(
     if isinstance(split_minimum, bool) or not isinstance(split_minimum, int) or split_minimum < 1:
         raise ExportError("split holdout position minimum is malformed")
     assignments = dict(split_doc.get("game_group_assignments", []))
+    split_seed = split_doc.get("split_seed")
+    configured_split_seed = config_doc.get("split_seed")
+    if (isinstance(configured_split_seed, bool)
+            or not isinstance(configured_split_seed, int) or configured_split_seed < 1):
+        raise ExportError("release config split_seed must be a positive integer")
+    if (isinstance(split_seed, bool) or not isinstance(split_seed, int) or split_seed < 1
+            or split_seed != configured_split_seed):
+        raise ExportError("split seed differs from the immutable release config")
     for row in positions:
         if assignments.get(row["normalized_game_sha256"]) != row["split"]:
             raise ExportError("position split does not inherit its normalized game assignment")
@@ -496,6 +571,12 @@ def verify_release(
         raise ExportError("duplicate normalized-game assignments in split manifest")
     if set(assignments) != {game["normalized_game_sha256"] for game in games}:
         raise ExportError("split manifest game groups do not cover the release games exactly")
+    expected_assignments = {
+        group: assign_game_split(split_seed, group)
+        for group in {game["normalized_game_sha256"] for game in games}
+    }
+    if assignments != expected_assignments:
+        raise ExportError("game-group assignment does not match the deterministic normalized-game split rule")
     expected_game_counts = {
         name: sum(split == name for split in assignments.values())
         for name in ("train", "validation", "test")
@@ -509,6 +590,15 @@ def verify_release(
     purged_ids = [row.get("sample_id") for row in purged]
     if len(set(purged_ids)) != len(purged_ids) or retained_ids.intersection(purged_ids):
         raise ExportError("purge ledger contains duplicate or retained sample IDs")
+    try:
+        expected_samples = _expected_sample_ids(
+            games, source_id=config_doc["source_id"], seed=sampling_seed,
+            max_positions_per_game=per_game_limit, max_positions=sampling_limit,
+        )
+    except (KeyError, TypeError, ValueError) as exc:
+        raise ExportError(f"deterministic position sampling cannot be recomputed: {exc}") from exc
+    if expected_samples != retained_ids.union(purged_ids):
+        raise ExportError("retained and purged sample IDs do not match deterministic position sampling selection")
     owner_map = dict(split_doc.get("board_signature_owners", []))
     if len(owner_map) != len(split_doc.get("board_signature_owners", [])):
         raise ExportError("duplicate board signature owners")

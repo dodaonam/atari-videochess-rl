@@ -2263,6 +2263,20 @@
             "exit_code": null,
             "log_path": null
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-premerge-final-verification-20261021.md",
+          "detail": "Final pre-merge verifier audit for deterministic split/sample invariants and teacher elapsed projection semantics.",
+          "result": "R-01 and R-02 were reproduced and fixed with hash-consistent negative tests; R-03 is corrected using versioned estimate-only metadata while preserving historical verification. M3-001 remains in progress pending independent PM acceptance.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-21T15:55:19Z",
+            "exit_code": null,
+            "git_revision": "df1efcfb55ef6df7786f65728ae76b7a825ca920",
+            "log_path": null
+          }
         }
       ],
       "next_action": "PM: independently review the final closure report and machine record, verify the exact-SHA clean-clone evidence and GitHub check scope in PR #3, then record M3 acceptance or return findings. Do not merge before acceptance; G3 remains unapproved.",

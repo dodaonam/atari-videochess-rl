@@ -12,6 +12,7 @@ import chess
 from .contracts import (
     board_position_signature, canonical_fen, candidate_identity, digest,
     game_sample_key, ply_sample_key, replay_history_identity, sample_identity,
+    sampling_run_identity,
 )
 
 
@@ -215,10 +216,7 @@ def sample_positions(
         "seed": seed, "max_positions_per_game": max_positions_per_game,
         "max_positions": max_positions,
     })
-    sampling_id = digest({
-        "domain": "videochess-sampling-run/v1", "source_id": source_id,
-        "seed": seed, "sampling_config_sha256": sampling_config_sha256,
-    })
+    sampling_id = sampling_run_identity(source_id, seed, sampling_config_sha256)
     ranked: list[tuple[str, str, int]] = []
     for game in games:
         local = sorted(
