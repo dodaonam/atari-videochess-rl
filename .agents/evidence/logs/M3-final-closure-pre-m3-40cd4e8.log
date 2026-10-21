@@ -1,0 +1,13 @@
+test_candidate_identity_is_bound_to_parent_sample_and_uci (test_pre_m3_contracts.PreM3ContractTests.test_candidate_identity_is_bound_to_parent_sample_and_uci) ... ok
+test_canonical_identity_hash_reference_vectors (test_pre_m3_contracts.PreM3ContractTests.test_canonical_identity_hash_reference_vectors) ... ok
+test_castling_and_en_passant_semantics_are_in_board_signature (test_pre_m3_contracts.PreM3ContractTests.test_castling_and_en_passant_semantics_are_in_board_signature) ... ok
+test_clock_and_repetition_context_are_not_lost_in_state_identity (test_pre_m3_contracts.PreM3ContractTests.test_clock_and_repetition_context_are_not_lost_in_state_identity) ... ok
+test_promotion_uci_identity_preserves_all_underpromotions (test_pre_m3_contracts.PreM3ContractTests.test_promotion_uci_identity_preserves_all_underpromotions) ... ok
+test_source_config_teacher_split_and_release_hash_vectors (test_pre_m3_contracts.PreM3ContractTests.test_source_config_teacher_split_and_release_hash_vectors) ... ok
+test_split_vectors_keep_candidate_rows_together_and_detect_holdout_collapse (test_pre_m3_contracts.PreM3ContractTests.test_split_vectors_keep_candidate_rows_together_and_detect_holdout_collapse) ... ok
+test_transposition_and_header_duplicates_have_distinct_identity_layers (test_pre_m3_contracts.PreM3ContractTests.test_transposition_and_header_duplicates_have_distinct_identity_layers) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.003s
+
+OK

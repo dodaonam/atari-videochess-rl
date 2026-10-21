@@ -1,0 +1,104 @@
+M3 SOURCE, DATASET, AND TEACHER EXECUTION LOG
+Sanitized retained evidence; no host absolute paths, player names, or source records.
+Source license uncertainty: third-party package terms unstated; bounded local/internal use only; no redistribution.
+
+[source fetch]
+Command: python -m videochess_rl.data fetch <authorized May 2022 URL> --archive artifacts/m3/source/lichess_elite_2022-05.zip --manifest artifacts/m3/source/source-manifest.json --max-archive-bytes 157286400 --max-member-bytes 536870912 --max-total-decompressed-bytes 536870912 --max-compression-ratio 200 --max-future-output-bytes 2147483648 --timeout-seconds 45 --retries 2 --confirm-write
+Started UTC: 2026-10-20T15:24:46Z
+Finished UTC: 2026-10-20T15:25:13Z
+Git revision: 45f068e39a2d516cf5a6a4ed3c9f53671ca5d776
+Result: PASS
+Exit code: 0
+Raw log SHA-256: 7b33507e093cb81a0180a180ec128f09413baaf38f49d1c799d89f5d87c2d83e
+
+[pilot build]
+Command: python -m videochess_rl.data build --archive artifacts/m3/source/lichess_elite_2022-05.zip --source-manifest artifacts/m3/source/source-manifest.json --config configs/data/m3-pilot.toml --output artifacts/m3/pilot/release-r1 --run-id m3-pilot-20261020-r1 --confirm-write
+Started UTC: 2026-10-20T15:25:32Z
+Finished UTC: 2026-10-20T15:26:38Z
+Git revision: 45f068e39a2d516cf5a6a4ed3c9f53671ca5d776
+Result: PASS
+Exit code: 0
+Raw log SHA-256: c4d62aaac2c8586afc8cefa8c368efd14988f3a5b75c8edb16d8774f0de580d2
+
+[pilot verify]
+Command: python -m videochess_rl.data verify --release artifacts/m3/pilot/release-r1 --source-manifest artifacts/m3/source/source-manifest.json --archive artifacts/m3/source/lichess_elite_2022-05.zip
+Started UTC: 2026-10-20T15:27:40Z
+Finished UTC: 2026-10-20T15:28:04Z
+Git revision: 45f068e39a2d516cf5a6a4ed3c9f53671ca5d776
+Result: PASS
+Exit code: 0
+Raw log SHA-256: f55e6c4ca6d9ba852d42138bb1ebede891cabce959a827f7cd072fdcce38aac9
+
+[training-support r3 build]
+Command: python -m videochess_rl.data build --archive artifacts/m3/source/lichess_elite_2022-05.zip --source-manifest artifacts/m3/source/source-manifest.json --config configs/data/m3-training-support.toml --output artifacts/m3/training-support/release-r3 --run-id m3-training-support-20261020-r3 --confirm-write
+Started UTC: 2026-10-20T16:29:13Z
+Finished UTC: 2026-10-20T17:00:10Z
+Git revision: 29c411bfd48dca8f1d463c758078175092639ccb
+Result: PASS
+Exit code: 0
+Raw log SHA-256: 1b1b4712b62f7c25671d91db40fcd33426d9120891eccfacce4ff6b7ef39d85d
+Child CPU seconds (user/system): 1852.28 / 0.781
+Disk free/reserve bytes before build: 41349103616 / 5662328254
+
+[r3 release verify]
+Command: python -m videochess_rl.data verify --release artifacts/m3/training-support/release-r3 --source-manifest artifacts/m3/source/source-manifest.json --archive artifacts/m3/source/lichess_elite_2022-05.zip
+Started UTC: 2026-10-20T17:00:27Z
+Finished UTC: 2026-10-20T17:01:21Z
+Git revision: 29c411bfd48dca8f1d463c758078175092639ccb
+Result: PASS
+Exit code: 0
+Raw log SHA-256: 555530df6dcfe22a48336be54072adc7b5352c0ba0b4dcbc5a85a8a5b2f4287f
+
+[Stockfish 19 teacher r2]
+Command: python -m videochess_rl.data teacher --release artifacts/m3/training-support/release-r3 --output artifacts/m3/teacher-training-support/teacher-r2 --engine <host Stockfish 19> --max-positions 128 --seed 20261025 --nodes 5000 --multipv 3 --threads 1 --hash-mib 64 --timeout-seconds 30 --max-wall-seconds 1800 --max-output-bytes 67108864 --confirm-write
+Started UTC: 2026-10-20T17:01:51Z
+Finished UTC: 2026-10-20T17:03:37Z
+Git revision: 29c411bfd48dca8f1d463c758078175092639ccb
+Result: PASS
+Exit code: 0
+Raw log SHA-256: 4a2cb32ed163a215b661dc9b3801a4cb17f20a408dd5aab9e3219456d36d7891
+Child CPU seconds (user/system): 105.722 / 0.571
+
+[r3 release and teacher verify]
+Command: python -m videochess_rl.data verify --release artifacts/m3/training-support/release-r3 --source-manifest artifacts/m3/source/source-manifest.json --archive artifacts/m3/source/lichess_elite_2022-05.zip --teacher-run artifacts/m3/teacher-training-support/teacher-r2
+Started UTC: 2026-10-20T17:03:58Z
+Finished UTC: 2026-10-20T17:05:44Z
+Git revision: 29c411bfd48dca8f1d463c758078175092639ccb
+Result: PASS
+Exit code: 0
+Raw log SHA-256: 420131834641250100997ba0bd620b9a23f849075684c190bf0ad569480e9c78
+
+[training-support r4 repeat build]
+Command: python -m videochess_rl.data build --archive artifacts/m3/source/lichess_elite_2022-05.zip --source-manifest artifacts/m3/source/source-manifest.json --config configs/data/m3-training-support.toml --output artifacts/m3/training-support/release-r4 --run-id m3-training-support-20261020-r4 --confirm-write
+Started UTC: 2026-10-20T17:06:04Z
+Finished UTC: 2026-10-20T17:36:45Z
+Git revision: 29c411bfd48dca8f1d463c758078175092639ccb
+Result: PASS
+Exit code: 0
+Raw log SHA-256: aba4ff4abc4884ce37cf5decaba457f6d4b4e6ba965c29bfbf77ab7a19b8f92a
+Child CPU seconds (user/system): 1836.481 / 0.796
+Disk free/reserve bytes before build: 41225904128 / 5662328254
+
+[r3/r4 byte comparison]
+Command: python3 inline comparison of SHA-256 for all release files and semantic manifest fields
+Started UTC: 2026-10-20T17:37:22Z
+Finished UTC: 2026-10-20T17:37:22Z
+Git revision: 29c411bfd48dca8f1d463c758078175092639ccb
+Result: PASS
+Exit code: 0
+Comparison record SHA-256: 44bb2041540f68afd269beb60e40cfad1bd9acbcd1d0bf18ee644cf27e4f8b53
+
+[r4 release and teacher verify]
+Command: python -m videochess_rl.data verify --release artifacts/m3/training-support/release-r4 --source-manifest artifacts/m3/source/source-manifest.json --archive artifacts/m3/source/lichess_elite_2022-05.zip --teacher-run artifacts/m3/teacher-training-support/teacher-r2
+Started UTC: 2026-10-20T17:37:27Z
+Finished UTC: 2026-10-20T17:39:12Z
+Git revision: 29c411bfd48dca8f1d463c758078175092639ccb
+Result: PASS
+Exit code: 0
+Raw log SHA-256: 420131834641250100997ba0bd620b9a23f849075684c190bf0ad569480e9c78
+
+Source archive: 97,163,552 bytes; SHA-256 ad374c8fd9fb2fe5f03c1297aa1d47cbbce5caedf6e6e2d387ee816930afdb11.
+PGN member: lichess_elite_2022-05.pgn; 326,476,031 bytes; CRC32 eaf7e457; SHA-256 0f88f18836be7e321aa1e0211b618e78d4e92065c126c45c95a6a55c1500a8e6.
+Training-support release: 1,000 selected games; 20,000 positions before purge; 19,268 retained; 182 empty-game quarantines; zero rejected games.
+Release ID: 9e3944e1e35ca0d774e479a49d9b93eb769d14e52ffec4bc6f886bd4695b8991. All nine r3/r4 files matched byte-for-byte.
+Teacher: 128/128 positions; 377 centipawn and 3 mate MultiPV records; zero failures/timeouts; Stockfish 19 host binary verified by SHA-256.

@@ -62,7 +62,7 @@ printf '%s  %s\n' \
 ln -sfn ../share/stockfish/stockfish .venv/bin/stockfish
 ```
 
-The archive SHA-256 is `9defc0d4e55d49c65a6d042f3e571a39fcea499ade6dbe741b53b8c65e03611f`; the extracted executable SHA-256 is `0f83d24cc46d2c66c60f16001af5444873bc112b7d028594513426894c12da19`. Retain `.venv/share/stockfish/Copying.txt` with the executable. It is GPL-3.0; any later redistribution must also meet the license's source-code or source-pointer terms. The M0 smoke check performs only a UCI handshake/readiness ping; it does not analyze positions or use Stockfish as an opponent, labeler, evaluator, or inference dependency while O-01/O-07 remain unresolved. This manual fetch requires `curl`, `tar`, `find`, `install`, and `sha256sum` on the host, plus network access to the official release and source-tag URLs.
+The archive SHA-256 is `9defc0d4e55d49c65a6d042f3e571a39fcea499ade6dbe741b53b8c65e03611f`; the extracted executable SHA-256 is `0f83d24cc46d2c66c60f16001af5444873bc112b7d028594513426894c12da19`. Retain `.venv/share/stockfish/Copying.txt` with the executable. It is GPL-3.0; any later redistribution must also meet the license's source-code or source-pointer terms. The M0 smoke check performs only a UCI handshake/readiness ping and grants no search permission by itself. A separate owner authorization now permits only the bounded M3 offline teacher run documented in [STOCKFISH_TEACHER.md](../04-research/STOCKFISH_TEACHER.md). Engine inference, opponent use, offline evaluation, and expanded M3 labeling remain outside that authorization. This manual fetch requires `curl`, `tar`, `find`, `install`, and `sha256sum` on the host, plus network access to the official release and source-tag URLs.
 
 ### ALE-Py ROM and VideoChess environment
 

@@ -1,0 +1,22 @@
+M3 CLEAN-CLONE DELIVERY VERIFICATION
+
+[clean-clone full repository suite]
+Command: python -m unittest discover -s tests -v
+Environment: pre-existing host Python environment with the verified Stockfish 19 executable on PATH; no dependencies installed.
+Started UTC: 2026-10-20T18:01:46Z
+Finished UTC: 2026-10-20T18:02:27Z
+Git revision: 472005991f35580b7df4e3e2b5a2876798ae1ae6
+Result: PASS
+Exit code: 0
+Tests: 211 passed.
+Raw log SHA-256: 53ade2380efc9cb5bd35bc33532e987ecaf8883bfde1ac66bf6ef676237d5316
+
+[clean-clone agent preflight]
+Command: python3 scripts/agent_preflight.py
+Started UTC: 2026-10-20T18:01:52Z
+Finished UTC: 2026-10-20T18:01:53Z
+Git revision: 472005991f35580b7df4e3e2b5a2876798ae1ae6
+Result: PASS
+Exit code: 0
+Raw log SHA-256: ea3a42e7a1a284c22c923cfa54d0ca18d7ea6e2738dc4c9665855245b33d1c5d
+Note: one expected ARTIFACT_MANIFEST_REQUIRED warning was reviewed; local M3 source/release/teacher outputs are covered by independent manifests and are intentionally absent from Git.

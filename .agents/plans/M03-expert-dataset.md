@@ -2,11 +2,11 @@
 
 - **Plan ID:** M03
 - **Milestone:** M3 — Expert dataset, within the engineering sequence owned by **EXECUTION_PLAN.md**
-- **Plan status:** ready for independent review; this plan is not authorization to execute M3
-- **Canonical task:** M3-001 in **BACKLOG.yaml**, pending owner/instructor prerequisites and separate M3 authorization
+- **Plan status:** in progress under direct owner authorization recorded in the M3-001 authorization evidence
+- **Canonical task:** M3-001 in **BACKLOG.yaml**, in progress under direct owner authorization
 - **Dependencies:** M2-001 complete and G2 approved; retain G3 unapproved until its closure review. G3 covers M2–M5 and is not a prerequisite to start M3.
 - **Acceptance:** M3-01 through M3-04 in **docs/06-quality/ACCEPTANCE_CRITERIA.md**
-- **Requirements:** B-04, B-05, B-07; O-01, O-04, O-06, and O-07 remain open
+- **Requirements:** B-04, B-05, B-07; see scoped owner decisions in REQUIREMENTS.md and DECISION_REGISTER.md
 - **Relevant decision:** accepted **ADR-0002** for stable UCI action identity, Board history, and color perspective; it does not approve data, Stockfish, or neural architecture
 - **Contracts:** [DATASET_SPEC.md](../../docs/04-research/DATASET_SPEC.md), [STOCKFISH_TEACHER.md](../../docs/04-research/STOCKFISH_TEACHER.md), [EXPERIMENT_PROTOCOL.md](../../docs/04-research/EXPERIMENT_PROTOCOL.md), [RL_FIRST_ALIGNMENT.md](../../docs/04-research/RL_FIRST_ALIGNMENT.md), [REPRODUCIBILITY.md](../../docs/05-operations/REPRODUCIBILITY.md)
 
@@ -18,13 +18,13 @@ Create the smallest reproducible, provenance-preserving, leakage-audited expert 
 
 Before any source retrieval or processing:
 
-1. The PM/owner records a separate, explicit M3 start authorization in the task evidence and project state. G3 approval is not a start prerequisite; G3 closes only after its covered M2–M5 work and G3 review conditions are satisfied. A plan, completed M2 dependency, or readiness PR is not authorization.
-2. The source and use decision O-06 is resolved for a specific archive, terms, retention, transformation, and any intended distribution.
-3. O-01/O-07 are resolved before Stockfish searches, labels, engine-opponent use, or offline engine evaluation. PGN-only output may be an intermediate M3 artifact if its source is approved; it does not by itself pass M3-02 or complete M3.
-4. O-04 is resolved before external storage, Colab, paid compute, or limits beyond verified local resources.
-5. A bounded source profile confirms archive size, PGN member/header behavior, and parser feasibility. Do not use publisher game-count/size listings as measured local evidence.
+1. Direct M3-001 authorization is recorded in the task evidence and project state. G3 approval is not a start prerequisite and remains unapproved.
+2. The owner approved bounded local/internal use of the exact source; the decision and third-party rights uncertainty are recorded before retrieval. No redistribution is authorized.
+3. The owner confirmed bounded Stockfish 19 offline teacher use for this project. This does not authorize engine inference, an engine opponent, or offline benchmark evaluation. PGN-only output is an intermediate and cannot pass M3-02.
+4. This mission uses local CPU/storage only. Colab, cloud storage, and paid compute remain unauthorized and are not needed.
+5. A bounded source profile must confirm actual archive/member sizes and header behavior before full processing. Publisher counts/sizes are not local measurements.
 
-The May 2022 Lichess Elite package remains a candidate, not an approved source. Its publisher listing reports 355,535 games and 93 MB but does not state a license. The official Lichess rated-standard export and official broadcast data are alternatives with different sizes, distributions, and terms. Never ingest a source until the decision is recorded.
+The owner selected and authorized bounded internal academic use of the May 2022 Lichess Elite package. The source/use decision and rights limitation are recorded in .agents/evidence/M3-source-decision-20261020.md. The publisher listing reports 355,535 games and 93 MB but states no package license; official Lichess CC0 terms apply to official exports and do not establish terms for this third-party package. Keep the archive and bulk derived records local and do not redistribute them. Stop if an explicit conflicting restriction is found.
 
 ## Scope
 
@@ -39,8 +39,8 @@ The May 2022 Lichess Elite package remains a candidate, not an approved source. 
 
 ## Exclusions
 
-- No data download, ingestion, or production dataset generation until the source gate is approved.
-- No bulk Stockfish labels or engine opponent/evaluation until O-01/O-07 permit that role.
+- No source other than the specifically selected May 2022 package under its recorded local/internal-use boundary.
+- No Stockfish opponent, inference, benchmark, or offline evaluation role; this mission permits only bounded offline teacher labels.
 - No neural model, supervised training, checkpoint, simulator RL, M6/ALE play, or M7 evaluation.
 - No fixed model architecture, feature planes, global action vocabulary, loss weighting, or Q-value initialization.
 - No Colab/GPU or paid storage/compute without separate approval.
@@ -75,21 +75,21 @@ Planned CLI shape:
 - profile an already authorized source with a maximum archive-byte, game, and header-sample limit;
 - validate a source manifest and PGN stream without writing a release;
 - build a dataset from an approved local archive with required explicit caps;
-- optionally label a deterministic capped position list only when teacher config and O-01/O-07 approval IDs are supplied;
+- label a deterministic capped position list under the recorded M3 authorization and source-decision IDs; broader O-01/O-07 questions do not extend this exact teacher scope;
 - verify an existing release manifest and report all mismatches.
 
 No default command downloads a URL or processes all input. CLI output states the exact source/config hashes and planned limits before any write. A separate affirmative option is required to start each write-producing command.
 
 ## Processing and recovery sequence
 
-1. Re-read state/backlog and inspect explicit M3 authorization, O-01/O-04/O-06/O-07, plan, ADR-0002, and acceptance criteria.
+1. Re-read state/backlog and inspect explicit M3 authorization, the scoped O-01/O-04/O-06/O-07 decisions, plan, ADR-0002, and acceptance criteria.
 2. Confirm source approval and capture terms/provenance; measure actual archive byte ceiling and expected disk use.
 3. Download only within approved scope to a staging path; retain original bytes read-only, verify SHA-256/ZIP CRC/member size, and record retrieval facts. If source has no published checksum, record that fact and compute a local digest after retrieval.
 4. Run a no-output profile on a capped game/header sample. Review observed header, variant, result, rating, time-control, comments/variation, parse-error, and player-identifier statistics.
 5. Validate/replay games one at a time. Quarantine errors with stable reason codes and source ordinals; never discard silently.
 6. Generate game rows and deterministic bounded position samples. Store initial FEN and full UCI move sequence once per game; each position references `game_id` plus `ply_index`, current FEN, `history_state_id`, legal UCI moves, played UCI move, and White/side-to-move result. This stage may produce a validated PGN-only intermediate, not a completed M3 release.
 7. Deduplicate normalized game sequences while retaining source aliases. Assign normalized-game groups using the versioned hash rule. Choose a board-signature owner only among partitions where it occurs; purge other partition rows and every candidate/teacher record attached to them without moving groups, retain an audit ledger, report coverage distortion, and fail/warn on configured holdout thresholds.
-8. Validate the PGN-only intermediate before teacher analysis. Then, only with O-01/O-07 and explicit bounded-run authorization, run deterministic limited Stockfish 19 analysis. Record actual binary/license hashes/UCI identity/options, node limit, MultiPV, root perspective, raw cp/mate/WDL types, normalization, elapsed time, and per-position errors. MultiPV is not exhaustive. This real run is required for canonical M3-02; fake-engine tests do not pass the criterion.
+8. Validate the PGN-only intermediate before teacher analysis. Under the exact recorded M3 owner authorization, run deterministic limited Stockfish 19 analysis. Record actual binary/license hashes/UCI identity/options, node limit, MultiPV, root perspective, raw cp/mate/WDL types, normalization, elapsed time, and per-position errors. MultiPV is not exhaustive. This real run is required for canonical M3-02; fake-engine tests do not pass the criterion.
 9. Read the approved PGN member directly as a bounded stream. Reject path traversal, absolute/backslash/symlink/duplicate members, encrypted data, corrupt CRC, unsupported encoding, configured compressed/decompressed/member/game/ratio excesses, and output collisions. Never extract arbitrary archive paths. Apply per-tier compressed/decompressed ceilings, a per-member ceiling, a proposed 200:1 early compression-ratio stop, fixed-chunk streaming byte enforcement, single-game/comment bounds, disk reserve, and OS-enforced memory limits. These initial ceilings are proposals and must be confirmed against a permitted source profile before acquisition.
 10. Write atomic run-specific batch segments and a monotonic journal. Resume only when source/member/schema/config/code/parser identities and every committed segment hash match; reject gaps, overlaps, and duplicate sample IDs. A mismatch preserves the staging artifact and requires a new run ID.
 11. Validate foreign keys, legal candidates, replay-state IDs, split/holdout invariants, counts, and hashes. Atomically finalize on the same filesystem to a previously nonexistent release path. Interrupted or PGN-only runs remain staging/intermediate and are not reported as completed M3.
@@ -131,4 +131,12 @@ After interruption, validate every completed output row and its partial manifest
 - Leakage summary, dataset statistics, SHA-256 manifest, tests, logs, and artifact location are retained.
 - Canonical state/backlog reflect only evidence that exists; M3 completion is not inferred from a plan.
 - A reviewable M3 implementation PR is pushed against **initial-idea**, remains open/unmerged, and documents limitations and negative results.
+
+## Final corrective closure record (2026-10-21)
+
+The final remaining correctness/operational findings NEW-01 through NEW-04 are addressed at artifact-producing revision `40cd4e88bcaf987033a27f5f73995c5f44f21fb5`. Two source-backed closure releases (`r6`/`r7`) match byte-for-byte, each independently verifies against the authorized archive, and a new bounded Stockfish 19 sidecar is verified against their shared release ID. The detailed dispositions, reproduction instructions, identities, test matrix, and limitations are in [the final closure report](../evidence/M3-final-closure-20261021.md) and [machine-readable record](../evidence/M3-final-closure-record-20261021.json). PR #3 remains open/unmerged; M3-001 remains in progress pending PM acceptance; G3 is unapproved. Final exact-PR-HEAD clean-clone verification is recorded in the PR description to avoid a self-referential evidence commit.
+
+## Final pre-merge verifier review (2026-10-21)
+
+R-01 and R-02 were independently reproduced: a self-consistent split manifest could assign normalized groups contrary to the versioned hash rule, and valid-looking sampling hashes did not prove that selected plies followed the configured deterministic bottom-K algorithm. `verify_release()` now recomputes group assignments and selected sample IDs from the released game rows, binds row provenance to config, validates split/sampling seeds, and requires the selected IDs to reconcile with retained rows plus purge ledger. The added tests rebind related hashes/manifests before checking these semantic failures. R-03 was corrected without changing historical teacher identities: manifest 1.2 names the elapsed field as a projection and explicitly marks it estimate-only; legacy 1.1 projection semantics and 1.0 verification remain supported. The final findings and release/teacher identity impact are in [the pre-merge verification record](../evidence/M3-premerge-final-verification-20261021.md). Final code/clean-clone test results are recorded against the exact pushed SHA in PR #3; M3-001 remains review-pending.
 

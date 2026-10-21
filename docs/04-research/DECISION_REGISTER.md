@@ -1,6 +1,6 @@
-# Pre-M3 Owner Decision Register
+# M3 Owner Decision Register
 
-This register summarizes decisions still owned by the project owner or instructor. A recommendation does not change the canonical approval status. O-01 through O-08 remain open in [REQUIREMENTS.md](../01-foundation/REQUIREMENTS.md). Independent design and repository work may continue where stated below.
+This register summarizes remaining owner/instructor decisions and scoped confirmations. A scoped owner decision does not resolve broader assignment or external-rights questions. Current M3 confirmations are recorded in .agents/evidence/M3-authorization-20261020.md and .agents/evidence/M3-source-decision-20261020.md; live requirements retain unresolved portions.
 
 ## Approval priority for future work
 
@@ -8,84 +8,56 @@ The open items have different timing. This table classifies the first activity e
 
 | ID | Needed before | Can proceed while unresolved |
 |---|---|---|
-| **O-06** | Retrieving or ingesting any PGN/tactical source; retention or public release of its derived records. | Synthetic schemas, parser tests, and local design. This is the first required M3 source decision. |
-| **O-01** | Any Stockfish training/search role, M4/M5 custom training if assignment rules are not already explicit, and M6 observation/action-wrapper work. | Source-free design; approved PGN-only data engineering if assignment scope permits; existing accepted M0–M2 work remains historical. |
-| **O-07** | Any Stockfish label/analysis, engine opponent, or offline engine evaluation. It directly gates the real teacher run required to pass current M3-02. | PGN-only intermediate pipeline and fake-engine contract tests. |
-| **O-03** | Choosing a feasible M3/M4/M5 scope, duration, and experiment priority. Resolve before selecting a larger tier; exact remaining deadline is not in evidence. | Small, bounded local preparation once other required permissions exist. |
+| **O-06** | Any new source, public release, or use beyond the exact owner-authorized local/internal May 2022 package. | Synthetic schemas and the already authorized bounded local dataset run. Third-party package rights remain unverified; do not upload or redistribute bulk records. |
+| **O-01** | Instructor-specific restrictions for custom PyTorch RL, ALE observation/action wrappers, or engine-derived training beyond the exact M3 teacher scope. | The owner-authorized bounded M3 work and existing M0–M2 behavior. Follow any authoritative course rule that contradicts that scoped direction. |
+| **O-07** | Stockfish inference, engine-opponent use, offline engine evaluation, or teacher labeling beyond the bounded M3 run. | The owner-authorized 128-position Stockfish 19 M3 teacher run. |
+| **O-03** | Any expansion of M4/M5 scope or duration that could displace Double DQN implementation and interaction. | The confirmed 2026-11-03 presentation date and bounded M3 implementation. Recalculate the remaining schedule before later work. |
 | **O-04** | Paid/cloud compute or external storage; any processing/training exceeding verified local resource limits. GPU training needs a fresh entitlement/storage check. | Work within confirmed local disk/RAM/CPU caps; no paid or cloud allocation. |
 | **O-02** | Final M6/ALE acceptance plan and fallback claim. | M3–M5 simulator experiments and ALE technical preparation that does not assert assignment acceptance. |
 | **O-05** | M6 reported ALE configuration, mode/RAM assumptions, and gameplay/evaluation claims. | M3 data and M5 simulator tests; do not use unverified mappings for ALE actions. |
 | **O-08** | Any Elo claim or calibrated rating comparison in M7. | Raw W/D/L and clearly named random/heuristic simulator comparisons without Elo. |
 
-O-06 and the applicable portion of O-01/O-07 are the direct M3 gates. O-03 should be resolved early to keep the dataset and teacher scope proportionate. O-04 is conditional on storage/compute tier. O-02/O-05/O-08 are later integration/reporting gates, not blanket blockers for M3 design.
+For the current M3 scope, the owner authorized bounded local/internal use of the selected source and bounded Stockfish 19 teacher analysis; the presentation date is 2026-11-03. The source-backed dataset and 128-position teacher sidecar were generated and verified on local CPU. The third-party package license remains unstated, so the archive and bulk derived records remain local and non-redistributable. Broader Stockfish roles, instructor-specific requirements, cloud/paid resources, and unrelated future decisions remain open. O-02/O-05/O-08 are later integration/reporting gates, not blanket blockers for M3 design.
 
 ## O-01 — Assignment and instructor permissions
 
-**Decision needed:** Confirm whether the assignment permits ALE observation extraction/action wrappers, custom PyTorch RL, Stockfish-derived training labels, and offline engine evaluation.
+**Owner-confirmed M3 scope:** The owner authorized bounded Stockfish teacher labeling for offline training in M3 and reiterates that Stockfish is forbidden in learned-agent inference. This does not establish instructor rules for all other activities.
 
-**Verified facts:** The roadmap proposes ALE extraction, direct PyTorch RL, and optional Stockfish supervision; Stockfish is excluded from inference. M0/M1/M2 are already accepted, but that does not establish instructor policy for future supervised/engine use.
+**Remaining decision:** Confirm assignment/instructor rules for ALE observation extraction/action wrappers, custom PyTorch RL, and any offline engine evaluation. No authoritative course rule contradicting the M3 scope has been supplied in this session.
 
-**Uncertainty:** Assignment rules and the instructor's interpretation have not been provided in canonical records.
-
-**Options:** Approve the planned scope; allow only a subset such as a small behavior-only baseline without engine use; or restrict the work further. A PGN-only artifact remains an intermediate if real teacher use is prohibited under the current M3-02 criterion.
-
-**Recommendation / trade-off:** Ask the instructor for a written scope answer before any teacher search or training. Keep the Double DQN simulator experiment central. A narrower permission may allow source-approved PGN engineering or an optional behavior-only baseline, but it does not satisfy M3-02; if teacher use is prohibited, formally revise canonical M3 acceptance before claiming M3 complete.
-
-**Authority:** Instructor for assignment rules; project owner records the decision. **M3 impact:** M3 parsing and provenance design can continue, but any restricted label/training operation must wait. Independent repository and source-documentation work can continue.
+**Authority:** Instructor for assignment rules; project owner authorizes the scoped M3 project activity. **M3 impact:** The bounded M3 teacher operation is authorized by the owner record; follow any authoritative course rule if one is supplied that contradicts it. Other roles remain out of scope.
 
 ## O-06 — Data source, license, and use policy
 
-**Decision needed:** Select the source and approve permitted retrieval, transformation, retention, publication, and any redistribution of derived records.
+**Owner decision:** The owner selected the Lichess Elite May 2022 package and authorized bounded internal academic research use with local retention and no redistribution. The exact decision is in .agents/evidence/M3-source-decision-20261020.md; this is not a public-rights grant or a legal determination.
 
-**Verified facts:** The publisher's listing rechecked 2026-10-17 reports the May 2022 Elite package as 355,535 games/93 MB, standard games with bullet excluded, and a 2500+ versus 2300+ filter since December 2021. It identifies Lichess Open Database as origin but provides no license/checksum for its filtered package. The official Lichess page states its own exports are CC0, publishes SHA-256 checksums, and lists May 2022 rated-standard as 28.8 GB/89,300,578 games; it also reports embedded White-perspective Stockfish comments in about 6% of standard games without a uniform teacher protocol. The official broadcast archive is separate CC BY-SA 4.0 (May 2022: 5,695 games/3.55 MB). These are publisher-reported values; no archive was downloaded or locally measured. See [Elite listing](https://database.nikonoel.fr/) and [official Lichess database](https://database.lichess.org/).
+**Verified source-page evidence (rechecked 2026-10-20):** The publisher describes standard games, excludes bullet, and says that from December 2021 it selected 2500+ versus 2300+ rated players. It lists May 2022 at 355,535 games/93 MB. The page links the zip but states no package license or checksum. The official Lichess database page states CC0 for official database exports; that statement does not establish terms for this third-party filtered package. These are publisher-reported figures, not local archive measurements.
 
-**Uncertainty:** The Elite archive's license, May archive checksum, exact PGN header distribution, sample quality, and source retention/redistribution terms are unverified. Official-source month size and profile for the intended 2022 subset also need confirmation.
+**Remaining uncertainty:** The third-party package license and redistribution rights remain unstated/unverified. Retrieval facts, PGN member hash, source-scan counts, metadata coverage, sample quality, and holdout behavior are measured in [M3 execution evidence](../../.agents/evidence/M3-execution-20261020.md); those measurements do not resolve package rights.
 
-**Options:** (1) obtain authoritative terms for the Elite package; (2) use an official CC0 rated-standard export and filter locally, accepting a larger source; (3) use smaller official broadcast PGNs under CC BY-SA 4.0, accepting share-alike obligations and a different data distribution.
-
-**Recommendation / trade-off:** Keep Elite as a candidate only if an authoritative rights statement suitable for the intended use is obtained. If not, the PM-directed fallback is an official CC0 source, but its 2022 rated-standard archive is 28.8 GB compressed and requires a source-specific budget, streaming design, and reduced bounded sample plan. Official broadcasts are smaller but tournament-centered and share-alike. Do not download any source until O-06 and explicit M3 authorization are recorded.
-
-**Authority:** Project owner, with instructor/legal policy confirmation as required by the assignment. **M3 impact:** O-06 blocks acquisition/ingestion and any public release decision. Schema, synthetic tests, and parser design can continue independently.
+**Boundary:** Process only within the owner-authorized local/internal research scope. Keep the original archive and bulk derived game records out of Git and do not upload or redistribute them. Stop if an explicit conflicting restriction is found. Seek separate evidence/authorization for public release or any new source/use. Official Lichess exports and CC BY-SA broadcast data are not selected; do not switch to the 28.8 GB official monthly archive without a new source-specific budget.
 
 ## O-07 — Stockfish version and role
 
-**Decision needed:** Approve the engine version, search budget, MultiPV coverage, and whether Stockfish may label data, serve as a benchmark opponent, or evaluate offline.
+**Owner-confirmed scope:** Stockfish 19 is selected and bounded offline teacher labeling is authorized for this M3 run. Engine use in inference is forbidden. Benchmark-opponent use and offline engine evaluation require separate authorization.
 
-**Verified facts:** M0 recorded a manual Stockfish 19 Linux x86-64 binary, archive/executable hashes, and GPL-3.0 license. The project does not install the engine through Python dependencies. M0 used only a UCI readiness handshake; no position search, label, opponent, evaluator, or inference use was approved there.
+**Verified facts:** M0 recorded a manual Stockfish 19 Linux x86-64 executable SHA-256 of 0f83d24cc46d2c66c60f16001af5444873bc112b7d028594513426894c12da19 and GPL text SHA-256 of 3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986. Both hashes were rechecked on the host. The bounded M3 run analyzed 128/128 selected positions with one thread, Hash 64 MiB, MultiPV 3, 5,000 nodes and 30 seconds maximum UCI movetime per root; it produced 377 centipawn and 3 mate lines with no failed positions. Full run identity and score semantics are in [M3 teacher evidence](../../.agents/evidence/M3-teacher-manifest-r2-20261020.json).
 
-**Uncertainty:** Assignment permission, approved search limits, how much of the dataset should be labeled, and future host binary availability are unresolved.
-
-**Options:** No engine use; bounded top-3 MultiPV labels on a deterministic sample; or exhaustive legal-candidate evaluations with much higher CPU cost.
-
-**Recommendation / trade-off:** Preserve Stockfish 19 until an explicit version decision; if allowed, start with one thread, a measured node cap, MultiPV=3, a strict sample ceiling, and no inference/opponent use. This bounds cost and preserves raw provenance but does not provide exhaustive candidate labels.
-
-**Authority:** Instructor for allowed role; project owner for version/budget. **M3 impact:** Teacher labels and M3-02 details requiring an active analysis config wait. PGN-only parsing and played-move targets can continue.
+**Remaining uncertainty:** No instructor-specific course rule was supplied. Future host availability, opponent use, and offline benchmark use remain separate questions.
 
 ## O-04 — Compute and storage permissions
 
-**Decision needed:** Confirm local disk/storage quota, whether persistent external storage is approved, Colab entitlement/quota, and whether paid compute is allowed.
+**Owner-confirmed M3 scope:** Use local CPU and local storage only. No Colab allocation, cloud upload/storage, or paid compute is used or authorized by this mission.
 
-**Verified facts:** PGN parsing/splitting is primarily CPU/IO. Stockfish labeling is CPU-bound. GPU demand belongs to later M4 training, not M3 ingestion. No current Colab quota, GPU, storage, or paid-compute entitlement is verified.
+**Verified facts:** Before source retrieval, the host reported 40,886,706,176 bytes available on the repository filesystem, 31 GiB physical RAM, and 21 GiB available RAM. Workloads still require hard process and output caps. Colab quota/GPU availability and paid-compute entitlement are not verified.
 
-**Uncertainty:** Available free capacity, retention/backup location, and any paid-resource approval.
-
-**Options:** Keep M3 to a local bounded pilot; use approved external persistent storage for larger artifacts; or use a later approved cloud environment. Paid compute remains a separate choice.
-
-**Recommendation / trade-off:** Start with a small local pilot and measure bytes/throughput before requesting more resources. This reduces risk but may constrain the dataset scale.
-
-**Authority:** Project owner for storage/paid compute; account owner for provider entitlement. **M3 impact:** Numeric caps must fit verified local capacity. Independent schema and synthetic validation work can continue.
+**Remaining decision:** Recheck Colab quota and obtain separate authorization if a later milestone requires external resources; paid use remains a separate approval.
 
 ## O-03 — Remaining deadline and schedule
 
-**Decision needed:** Confirm the actual submission deadline and remaining time available for M3, M4, simulator Double DQN, and ALE integration.
+**Owner-confirmed deadline:** The presentation date is Tuesday, 2026-11-03, recorded in the M3 authorization evidence. Fourteen calendar days remained on 2026-10-20; thirteen remain as of 2026-10-21. M3 was kept to a 1,000-game / 20,000-position support dataset and a 128-position teacher subset so M5 can start promptly.
 
-**Verified facts:** The original roadmap gives only an approximate three-week estimate; no current dated deadline or instructor calendar is recorded in canonical evidence. M1/M2 are complete, but source, teacher, compute, and instructor approvals remain open.
-
-**Uncertainty:** Calendar time, expected reporting time, and any course checkpoints are unknown.
-
-**Options / recommendation:** Confirm the final due date and major required review dates before selecting a medium/larger data tier. If the remaining window is short, use the smallest source-approved M3 sample that meets M3-01–04 and protect the Double DQN implementation, learning run, and paired comparison budget first.
-
-**Authority:** Project owner, with instructor dates where applicable. **M3 impact:** Does not block source-free contracts or a minimal authorized pilot; it blocks defensible larger workload and seed-count choices.
+**Remaining uncertainty:** Any earlier course checkpoint or reporting deadline is not separately recorded. Keep M3 data and teacher scope small so M5 Double DQN receives priority; reconfirm only if the owner or instructor changes the date.
 
 ## O-02 — Actual ALE performance requirement and fallback
 

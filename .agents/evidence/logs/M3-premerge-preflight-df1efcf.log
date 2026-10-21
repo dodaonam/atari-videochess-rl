@@ -1,0 +1,47 @@
+START_UTC=2026-10-21T15:45:09.391806425Z
+COMMAND=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/agent_preflight.py
+Agent context preflight: PASS
+Governance: G2 (approved); approved: G0, G1, G2
+Next engineering milestone: M3 — in_progress
+Active task: M3-001 — Build and verify the expert dataset
+Active task next action: PM: independently review the final closure report and machine record, verify the exact-SHA clean-clone evidence and GitHub check scope in PR #3, then record M3 acceptance or return findings. Do not merge before acceptance; G3 remains unapproved.
+Next task: M3-001 (in_progress) — Build and verify the expert dataset
+Next task dependencies: M2-001
+Next task acceptance criteria: M3-01, M3-02, M3-03, M3-04
+Tasks: done=11, in_progress=1, pending=0, blocked=0, cancelled=0
+Completed task IDs: G1-001, G1-002, G1-003, G1-004, G1-005, G1-006, G1-007, G1-008, M0-001, M1-001, M2-001
+In progress task IDs: M3-001
+Pending task IDs: none
+Blocked task IDs: none
+Active blockers: none recorded
+Open confirmations:
+  O-01: Assignment/instructor rules for ALE observation extraction/action wrappers, custom PyTorch RL, and offline engine evaluation. The owner explicitly authorized Stockfish only for bounded offline training/teacher labeling in this M3 project scope.
+  O-02: Whether full-game performance on actual ALE is a hard submission requirement or a research target with an accepted fallback.
+  O-03: Future course checkpoints and any date changes. The owner confirmed the presentation date is Tuesday, 2026-11-03.
+  O-04: Actual Colab entitlement/quota, GPU availability, cloud storage, and whether paid compute is allowed. The owner selected local CPU for M3; no external compute/storage is used in this mission.
+  O-05: ALE/ROM runtime behavior, RAM mapping, game modes, difficulty behavior, and official evaluation settings.
+  O-06: Public redistribution rights and any new source/use beyond the scoped May 2022 archive. For M3, the owner authorized bounded internal academic use of the exact Lichess Elite May 2022 package with local retention and no redistribution; its third-party package license remains unstated/unverified.
+  O-07: Broader Stockfish roles: benchmark opponent, offline engine evaluation, and instructor-specific limits outside the M3 teacher-label scope.
+  O-08: Opponent pool and rating method for any Elo claim.
+Relevant decisions: docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md, docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md
+Acceptance criteria recognized: 51
+Last verified Git: feature/m3-expert-dataset @ 40cd4e88bcaf987033a27f5f73995c5f44f21fb5
+Live Git: feature/m3-expert-dataset @ df1efcfb55ef6df7786f65728ae76b7a825ca920
+Roadmap source: exact match; 19 sections; SHA-256 fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf
+Git recovery: portable HEAD matches, but local tracked or state changes remain.
+Workspace Git status: differs from checkpoint
+Portable tracked baseline: matches
+Portable Git index: matches checkpoint
+Hashed ordinary-file snapshot: differs
+Content hashes: 237 ordinary files verified by SHA-256.
+Not content-verified by this hash map: PROJECT_STATE self-reference, chat history/credential-like paths, temp files, symlinks, and the excluded directories listed below.
+Excluded directories: artifacts, tests/__pycache__, videochess_rl/__pycache__, videochess_rl/data/__pycache__
+Artifact directories requiring independent manifests: artifacts
+Last verified dirty paths (22): A  .agents/evidence/M3-final-closure-20261021.md; A  .agents/evidence/M3-final-closure-record-20261021.json; A  .agents/evidence/logs/M3-final-closure-build-r6.log; A  .agents/evidence/logs/M3-final-closure-build-r7.log; A  .agents/evidence/logs/M3-final-closure-full-suite-40cd4e8.log; A  .agents/evidence/logs/M3-final-closure-lock-check.log; A  .agents/evidence/logs/M3-final-closure-m3-40cd4e8.log; A  .agents/evidence/logs/M3-final-closure-pre-m3-40cd4e8.log; A  .agents/evidence/logs/M3-final-closure-preflight-40cd4e8.log; A  .agents/evidence/logs/M3-final-closure-teacher-r1.log; A  .agents/evidence/logs/M3-final-closure-verify-corrective-r4.log; A  .agents/evidence/logs/M3-final-closure-verify-historical-v1.log; A  .agents/evidence/logs/M3-final-closure-verify-r6.log; A  .agents/evidence/logs/M3-final-closure-verify-r7.log; A  .agents/evidence/logs/M3-final-closure-verify-teacher-r1.log; M  .agents/plans/M03-expert-dataset.md; M  .agents/state/VERIFIED_FINDINGS.md; M  .agents/tasks/BACKLOG.yaml; M  docs/02-management/RISK_REGISTER.md; M  docs/05-operations/REPRODUCIBILITY.md; MM .agents/state/PROJECT_STATE.yaml; MM .agents/state/SESSION_HANDOFF.md
+New/changed dirty paths since checkpoint:  M docs/04-research/DATASET_SPEC.md;  M docs/04-research/STOCKFISH_TEACHER.md;  M tests/test_m3_data.py;  M videochess_rl/data/contracts.py;  M videochess_rl/data/export.py;  M videochess_rl/data/sampling.py;  M videochess_rl/data/teacher.py
+Dirty paths no longer present since checkpoint: A  .agents/evidence/M3-final-closure-20261021.md; A  .agents/evidence/M3-final-closure-record-20261021.json; A  .agents/evidence/logs/M3-final-closure-build-r6.log; A  .agents/evidence/logs/M3-final-closure-build-r7.log; A  .agents/evidence/logs/M3-final-closure-full-suite-40cd4e8.log; A  .agents/evidence/logs/M3-final-closure-lock-check.log; A  .agents/evidence/logs/M3-final-closure-m3-40cd4e8.log; A  .agents/evidence/logs/M3-final-closure-pre-m3-40cd4e8.log; A  .agents/evidence/logs/M3-final-closure-preflight-40cd4e8.log; A  .agents/evidence/logs/M3-final-closure-teacher-r1.log; A  .agents/evidence/logs/M3-final-closure-verify-corrective-r4.log; A  .agents/evidence/logs/M3-final-closure-verify-historical-v1.log; A  .agents/evidence/logs/M3-final-closure-verify-r6.log; A  .agents/evidence/logs/M3-final-closure-verify-r7.log; A  .agents/evidence/logs/M3-final-closure-verify-teacher-r1.log; M  .agents/plans/M03-expert-dataset.md; M  .agents/state/VERIFIED_FINDINGS.md; M  .agents/tasks/BACKLOG.yaml; M  docs/02-management/RISK_REGISTER.md; M  docs/05-operations/REPRODUCIBILITY.md
+Next user action: PM: review the final corrective closure evidence in M3 PR #3 against M3-01 through M3-04, independently accept or return findings, and leave the PR unmerged until acceptance. G3 remains unapproved; do not begin M4–M7 without separate authorization.
+WARNING WORKTREE_CONTENT_DRIFT [.]: Tracked worktree changes exist after the portable baseline checkpoint:  M docs/04-research/DATASET_SPEC.md;  M docs/04-research/STOCKFISH_TEACHER.md;  M tests/test_m3_data.py;  M videochess_rl/data/contracts.py;  M videochess_rl/data/export.py;  M videochess_rl/data/sampling.py;  M videochess_rl/data/teacher.py.
+WARNING ARTIFACT_MANIFEST_REQUIRED [.]: Artifact/data directories are excluded from content hashing and require independent manifest verification: artifacts.
+END_UTC=2026-10-21T15:45:09.677787180Z
+EXIT_CODE=0

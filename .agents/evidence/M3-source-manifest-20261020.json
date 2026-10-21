@@ -1,0 +1,100 @@
+{
+  "approval_evidence": {
+    "authorization_path": ".agents/evidence/M3-authorization-20261020.md",
+    "authorization_sha256": "fc3637132c3c44f630b685ba3e0a0f867ffe3b8ad0635501f80c46128dc2546c",
+    "source_decision_path": ".agents/evidence/M3-source-decision-20261020.md",
+    "source_decision_sha256": "7fc830a3df24a5f41b6c784826fbbdab4700a2026fd19e5450cd72f4b7c4b0b7"
+  },
+  "approval_id": "M3-001-owner-20261020",
+  "archive_bytes": 97163552,
+  "archive_filename": "lichess_elite_2022-05.zip",
+  "archive_member": {
+    "compressed_bytes": 97163352,
+    "compression": "8",
+    "crc32": "eaf7e457",
+    "name": "lichess_elite_2022-05.pgn",
+    "uncompressed_bytes": 326476031
+  },
+  "archive_path": "artifacts/m3/source/lichess_elite_2022-05.zip",
+  "archive_sha256": "ad374c8fd9fb2fe5f03c1297aa1d47cbbce5caedf6e6e2d387ee816930afdb11",
+  "archive_url": "https://database.nikonoel.fr/lichess_elite_2022-05.zip",
+  "authorization_id": "M3-001-owner-20261020",
+  "canonical_source_url": "https://database.nikonoel.fr/",
+  "code_revision": "45f068e39a2d516cf5a6a4ed3c9f53671ca5d776",
+  "compression_ratio": 3.3600737755527414,
+  "crc_verified": true,
+  "declared_total_uncompressed_bytes": 326476031,
+  "disk_preflight": {
+    "free_bytes_before_download": 41482985472,
+    "future_output_cap_bytes": 2147483648,
+    "projected_peak_bytes_with_20_percent_reserve": 5986949529
+  },
+  "filter_config_sha256": null,
+  "filter_config_unknown_reason": "The third-party publisher does not publish its filter implementation/configuration; its page summary is captured in the terms evidence.",
+  "license_name": null,
+  "license_status": "third_party_license_unstated_internal_use_owner_authorized_no_redistribution",
+  "license_unknown_reason": "publisher page does not state a license for this filtered third-party package",
+  "license_url": null,
+  "member": {
+    "compressed_bytes": 97163352,
+    "compression": "8",
+    "crc32": "eaf7e457",
+    "name": "lichess_elite_2022-05.pgn",
+    "uncompressed_bytes": 326476031
+  },
+  "member_bytes": 326476031,
+  "member_crc": "eaf7e457",
+  "member_name": "lichess_elite_2022-05.pgn",
+  "member_sha256": "0f88f18836be7e321aa1e0211b618e78d4e92065c126c45c95a6a55c1500a8e6",
+  "original_data_provenance": "Lichess games selected and repackaged by the third-party Lichess Elite Database publisher",
+  "parser_name": "python-chess PGN reader",
+  "published_archive_checksum": null,
+  "publisher": "Lichess Elite Database (third-party curated package)",
+  "publisher_reported_compressed_size": "93 MB",
+  "publisher_reported_games": 355535,
+  "python_chess_version": "1.11.2",
+  "python_version": "3.12.3",
+  "retrieval": {
+    "archive_bytes": 97163552,
+    "archive_path": "lichess_elite_2022-05.zip",
+    "archive_sha256": "ad374c8fd9fb2fe5f03c1297aa1d47cbbce5caedf6e6e2d387ee816930afdb11",
+    "attempt": 1,
+    "final_url": "https://database.nikonoel.fr/lichess_elite_2022-05.zip",
+    "http_headers": {
+      "accept-ranges": "bytes",
+      "content-length": "97163552",
+      "content-type": "application/zip",
+      "etag": "\"62ab691b-5ca9920\"",
+      "last-modified": "Thu, 16 Jun 2022 17:32:11 GMT"
+    },
+    "http_status": 200,
+    "retrieved_at_utc": "2026-10-20T15:25:10Z",
+    "url": "https://database.nikonoel.fr/lichess_elite_2022-05.zip"
+  },
+  "retrieval_limits": {
+    "max_archive_bytes": 157286400,
+    "max_compression_ratio": 200,
+    "max_member_bytes": 536870912,
+    "max_total_decompressed_bytes": 536870912
+  },
+  "retrieved_at_utc": "2026-10-20T15:25:10Z",
+  "rights_boundary": "bounded internal academic research; local retention; no upload or redistribution of archive or bulk derived game records",
+  "rights_evidence_path": ".agents/evidence/M3-source-terms-20261020.md",
+  "rights_evidence_sha256": "cad9b8f4acdd784afb9ac9a3aa0450049f1cfe5245ca8f378e8d1ec4ebebbe54",
+  "schema": "videochess-source-manifest/1.0",
+  "schema_version": "videochess-source-manifest/1.0",
+  "source_decision_id": "M3-SOURCE-ELITE-2022-05-LOCAL-20261020",
+  "source_id": "c7232596d76de66dd76aa578d12c2d8c317c4c4270ebfa62f330d631fefa3a90",
+  "source_notes": "Publisher reports standard games, excludes bullet, and since December 2021 uses the 2500+ versus 2300+ filter; this is not independently verified for each record.",
+  "source_page_sha256": "b0bc850f67e5064e3ca9369b5ff0e91cdb0030a8af5f928e9aefa35a219ec88a",
+  "source_terms_evidence": {
+    "checked_at_utc": "2026-10-20T14:53:45Z",
+    "path": ".agents/evidence/M3-source-terms-20261020.md",
+    "publisher_page_sha256": "b0bc850f67e5064e3ca9369b5ff0e91cdb0030a8af5f928e9aefa35a219ec88a",
+    "sha256": "cad9b8f4acdd784afb9ac9a3aa0450049f1cfe5245ca8f378e8d1ec4ebebbe54",
+    "upstream_terms_page_sha256": "2b1db536724631cd0a21e24bff3693b26037676e4f91489072f584be51e24b0d"
+  },
+  "upstream_data_origin": "Lichess game data; official Lichess database exports state CC0 for official exports",
+  "upstream_license_note": "CC0 is stated for official Lichess database exports only and is not attributed to this third-party package",
+  "zip_entry_count": 1
+}

@@ -1020,6 +1020,7 @@ class AgentContextRecoveryTests(unittest.TestCase):
 
     def test_start_authorized_boolean_without_direct_record_is_rejected(self) -> None:
         state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
+        state["engineering"].pop("start_authorization_record", None)
         state["engineering"].update({
             "active_milestone": "M3", "next_milestone": "M3",
             "next_milestone_status": "in_progress", "start_authorized": True,
@@ -1029,14 +1030,42 @@ class AgentContextRecoveryTests(unittest.TestCase):
         agent_preflight._validate_state(state, errors)
         self.assertIn("MILESTONE_AUTHORIZATION_EVIDENCE", {item["code"] for item in errors})
 
-    def test_a_plan_reference_does_not_set_milestone_start_authorization(self) -> None:
+    def test_direct_m3_authorization_is_preserved_across_milestone_completion(self) -> None:
         state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
-        self.assertEqual(state["engineering"]["next_milestone"], "M3")
-        self.assertFalse(state["engineering"]["start_authorized"])
-        self.assertEqual(state["engineering"]["next_milestone_status"], "pending_user_approval")
+        backlog = json.loads((REPO / ".agents/tasks/BACKLOG.yaml").read_text(encoding="utf-8"))
+        m3 = next(task for task in backlog["tasks"] if task["id"] == "M3-001")
+        authorization_id = "M3-001-owner-20261020"
+        self.assertTrue((REPO / ".agents/evidence/M3-authorization-20261020.md").is_file())
+        self.assertTrue(any(
+            item.get("path") == ".agents/evidence/M3-authorization-20261020.md"
+            and item.get("provenance", {}).get("status") == "manual_verified"
+            for item in m3["evidence"]
+        ))
+        engineering = state["engineering"]
+        if m3["status"] == "in_progress":
+            self.assertEqual(engineering["next_milestone"], "M3")
+            self.assertTrue(engineering["start_authorized"])
+            self.assertEqual(engineering["next_milestone_status"], "in_progress")
+            authorization = engineering["start_authorization_record"]
+            self.assertEqual(authorization["authorization_id"], authorization_id)
+            self.assertEqual(authorization["task_id"], "M3-001")
+        elif m3["status"] == "done":
+            self.assertEqual(engineering["next_milestone"], "M4")
+            self.assertIsNone(engineering["active_milestone"])
+            self.assertFalse(engineering["start_authorized"])
+            self.assertEqual(engineering["next_milestone_status"], "pending_user_approval")
+            self.assertTrue(any(
+                item.get("path") == ".agents/evidence/M3-acceptance-20261021.md"
+                and item.get("provenance", {}).get("status") == "manual_verified"
+                for item in m3["evidence"]
+            ))
+            self.assertTrue((REPO / ".agents/evidence/M3-acceptance-20261021.md").is_file())
+        else:
+            self.fail(f"Unexpected M3 status: {m3['status']}")
+        self.assertNotIn("G3", state["governance"]["approved_gates"])
         report = agent_preflight.build_report(REPO)
         self.assertTrue(report["ok"], report["errors"])
-        self.assertFalse(report["summary"]["engineering_start_authorized"])
+        self.assertEqual(report["summary"]["engineering_start_authorized"], engineering["start_authorized"])
 
     def test_g1_cannot_be_ready_with_incomplete_g1_tasks(self) -> None:
         path = self.root / ".agents/state/PROJECT_STATE.yaml"

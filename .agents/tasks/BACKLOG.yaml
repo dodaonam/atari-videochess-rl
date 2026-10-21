@@ -1925,7 +1925,7 @@
       "id": "M3-001",
       "title": "Build and verify the expert dataset",
       "milestone": "M3",
-      "status": "pending",
+      "status": "done",
       "depends_on": [
         "M2-001"
       ],
@@ -1937,10 +1937,365 @@
         "M3-04"
       ],
       "blocker_ids": [],
-      "evidence": [],
-      "next_action": "Await independent Pre-M3 PR review and separate explicit M3 authorization. G3 is a closure gate covering M2–M5, not an M3 start prerequisite. Resolve O-06 before source acquisition; resolve O-01/O-07 before Stockfish use; resolve O-04 before external/paid compute or storage. A plan or completed dependency is not authorization.",
+      "evidence": [
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-authorization-20261020.md",
+          "detail": "Direct M3-001 owner authorization, bounded activity scope, and G3 boundary.",
+          "result": "The project owner directly authorized M3-001 and its bounded local/internal source, offline Stockfish 19 teacher, implementation, verification, commit/push, and PR scope.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-20T14:34:24Z",
+            "recorded_at_utc": "2026-10-20T14:34:24Z",
+            "exit_code": null,
+            "git_revision": "2271b836f4dcf52e62e84413a4c456899138e953",
+            "log_path": ".agents/evidence/M3-authorization-20261020.md"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-corrective-authorization-20261021.md",
+          "detail": "Current direct owner authorization to harden the existing M3 implementation and PR #3 under the established source, teacher, compute, and milestone boundaries.",
+          "result": "The corrective mission is authorized on the existing M3-001 task; the PR remains open/unmerged, independent acceptance is pending, and G3 remains unapproved.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-20T19:51:55Z",
+            "recorded_at_utc": "2026-10-20T19:51:55Z",
+            "exit_code": null,
+            "git_revision": "ab73663dceb0bdb102be9d03ac76b484cdf64ee6",
+            "log_path": ".agents/evidence/M3-corrective-authorization-20261021.md"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-source-decision-20261020.md",
+          "detail": "Source decision recorded before retrieval; bounded local/internal use only.",
+          "result": "The exact May 2022 package was selected and authorized for local/internal academic research; no archive or bulk-derived-record redistribution is permitted.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-20T17:48:26Z",
+            "exit_code": null,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-source-terms-20261020.md",
+          "detail": "Publisher/upstream terms inspection, page hashes, and remaining package-rights uncertainty.",
+          "result": "Third-party package license remains unstated; official Lichess CC0 terms are not attributed to the curated package.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-20T17:48:26Z",
+            "exit_code": null,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-source-manifest-20261020.json",
+          "detail": "Actual archive/member identity, retrieval metadata, CRC, limits, rights boundary, and SHA-256.",
+          "result": "The source was retrieved after the recorded decision; ZIP CRC and archive/member hashes are verified.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-20T17:48:26Z",
+            "exit_code": null,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-pilot-manifest-20261020.json",
+          "detail": "Verified 200-game source pilot release manifest and measured counts.",
+          "result": "The source pilot completed and source/archive/release verification passed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-20T17:48:26Z",
+            "exit_code": null,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-release-manifest-r3-20261020.json",
+          "detail": "Canonical local training-support release manifest generated at code revision 29c411b.",
+          "result": "Release ID 9e3944e1...b8991; 1,000 selected games and 19,268 positions after leakage purge; bulk files remain local.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-20T17:48:26Z",
+            "exit_code": null,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-teacher-manifest-r2-20261020.json",
+          "detail": "Hardened Stockfish 19 real-run manifest with effective options, typed scores, perspective, normalization, mate policy, and sample identity.",
+          "result": "128 of 128 positions analyzed; 377 centipawn and 3 mate MultiPV lines; no failures/timeouts.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-20T17:48:26Z",
+            "exit_code": null,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-reproducibility-r3-r4-20261020.json",
+          "detail": "Full r3/r4 run metadata, measured resource use, per-file hashes, split stats, and exact repeat comparison.",
+          "result": "Two clean builds at the same source/config/code produced byte-identical nine-file releases; both source/release/teacher verifications passed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-20T17:48:26Z",
+            "exit_code": null,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/logs/M3-source-teacher-repro-20261020.log",
+          "detail": "Sanitized source retrieval, pilot, full builds, teacher run, verification, and repeat-comparison execution log.",
+          "result": "Retained UTC times, commands, full revisions, exit codes, raw-log hashes, and measured source/teacher/dataset summary.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-20T17:48:26Z",
+            "exit_code": null,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-execution-20261020.md",
+          "detail": "M3 execution summary, acceptance matrix, source/data/teacher metrics, limitations, and RL-first handoff.",
+          "result": "Runtime evidence for M3-01 through M3-04 is ready for independent PM review; no self-acceptance or merge is claimed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-20T17:48:26Z",
+            "exit_code": null,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "test",
+          "command": "python -m unittest discover -s tests -p test_m3_data.py -v",
+          "result": "PASS",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-20T17:49:58Z",
+            "recorded_at_utc": "2026-10-20T17:50:02Z",
+            "exit_code": 0,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": ".agents/evidence/logs/M3-final-verification-20261020.log"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "python -m unittest discover -s tests -v",
+          "result": "PASS (218 tests)",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-21T02:25:46Z",
+            "recorded_at_utc": "2026-10-21T02:26:39Z",
+            "exit_code": 0,
+            "git_revision": "fbdd14d6bed487e5b1388034048eccdbe952ab48",
+            "log_path": ".agents/evidence/logs/M3-final-full-suite-20261021.log"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "python -m unittest discover -s tests -v",
+          "result": "PASS (218 tests)",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-21T02:25:46Z",
+            "recorded_at_utc": "2026-10-21T02:26:39Z",
+            "exit_code": 0,
+            "git_revision": "fbdd14d6bed487e5b1388034048eccdbe952ab48",
+            "log_path": ".agents/evidence/logs/M3-final-full-suite-20261021.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "uv lock --check --python /usr/bin/python3",
+          "result": "PASS",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-20T17:51:44Z",
+            "recorded_at_utc": "2026-10-20T17:51:44Z",
+            "exit_code": 0,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": ".agents/evidence/logs/M3-final-verification-20261020.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python -m compileall -q videochess_rl/data tests/test_m3_data.py",
+          "result": "PASS",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-20T17:51:44Z",
+            "recorded_at_utc": "2026-10-20T17:51:44Z",
+            "exit_code": 0,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": ".agents/evidence/logs/M3-final-verification-20261020.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "PASS",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-20T17:51:44Z",
+            "recorded_at_utc": "2026-10-20T17:51:44Z",
+            "exit_code": 0,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": ".agents/evidence/logs/M3-final-verification-20261020.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "git diff --check",
+          "result": "PASS",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-20T17:51:44Z",
+            "recorded_at_utc": "2026-10-20T17:51:44Z",
+            "exit_code": 0,
+            "git_revision": "29c411bfd48dca8f1d463c758078175092639ccb",
+            "log_path": ".agents/evidence/logs/M3-final-verification-20261020.log"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "python -m unittest discover -s tests -v",
+          "result": "PASS (218 tests)",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-21T02:25:46Z",
+            "recorded_at_utc": "2026-10-21T02:26:39Z",
+            "exit_code": 0,
+            "git_revision": "fbdd14d6bed487e5b1388034048eccdbe952ab48",
+            "log_path": ".agents/evidence/logs/M3-final-full-suite-20261021.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "PASS",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-20T18:01:52Z",
+            "recorded_at_utc": "2026-10-20T18:01:53Z",
+            "exit_code": 0,
+            "git_revision": "472005991f35580b7df4e3e2b5a2876798ae1ae6",
+            "log_path": ".agents/evidence/logs/M3-clean-clone-final-4720059.log"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-corrective-hardening-20261021.md",
+          "detail": "Corrective-hardening finding audit, corrected source-backed r4 release/repeat, real Stockfish run, acceptance matrix, and PM review guide.",
+          "result": "F-01 through F-08 and adjacent F-09 through F-11 are technically resolved; corrected release r4/r5 match byte-for-byte, the corrected release and 128-position Stockfish 19 sidecar verify, and M3-01 through M3-04 evidence is ready for independent PM review. M3 remains in_progress; no self-acceptance or merge is claimed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-21T02:18:13Z",
+            "exit_code": null,
+            "git_revision": "fbdd14d6bed487e5b1388034048eccdbe952ab48",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "test",
+          "command": "python -m unittest discover -s tests -v",
+          "result": "PASS (218 tests)",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-21T02:25:46Z",
+            "recorded_at_utc": "2026-10-21T02:26:39Z",
+            "exit_code": 0,
+            "git_revision": "fbdd14d6bed487e5b1388034048eccdbe952ab48",
+            "log_path": ".agents/evidence/logs/M3-final-full-suite-20261021.log"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-final-closure-20261021.md",
+          "detail": "Final corrective closure for NEW-01 through NEW-04 and E-01, source-backed r6/r7 repeat, final Stockfish 19 sidecar, acceptance dispositions and PM handoff.",
+          "result": "NEW-01 through NEW-04 corrected and technically verified; r6/r7 match byte-for-byte and pass source verification; bounded 128-position Stockfish 19 sidecar is release-bound and passes independent verification. M3-01 through M3-04 are technically ready for independent PM review; M3-001 remains in_progress, PR #3 remains open/unmerged, and G3 remains unapproved.",
+          "provenance": {
+            "status": "verified",
+            "recorded_at_utc": "2026-10-21T14:23:28Z",
+            "git_revision": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+            "executed_at_utc": null,
+            "exit_code": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-final-closure-record-20261021.json",
+          "detail": "Portable machine-readable source, release, repeat, teacher, verification, test and sanitized-log identities for final closure.",
+          "result": "Release r6/r7 share identity f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890 and match across all nine files; teacher sidecar is linked to that release. Final exact-PR-HEAD clean-clone record is supplied in PR #3 description after push to avoid SHA circularity.",
+          "provenance": {
+            "status": "verified",
+            "recorded_at_utc": "2026-10-21T14:23:28Z",
+            "git_revision": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+            "executed_at_utc": null,
+            "exit_code": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-premerge-final-verification-20261021.md",
+          "detail": "Final pre-merge verifier audit for deterministic split/sample invariants and teacher elapsed projection semantics.",
+          "result": "R-01 and R-02 were reproduced and fixed with hash-consistent negative tests; R-03 is corrected using versioned estimate-only metadata while preserving historical verification. M3-001 remains in progress pending independent PM acceptance.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-21T15:55:19Z",
+            "exit_code": null,
+            "git_revision": "df1efcfb55ef6df7786f65728ae76b7a825ca920",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-acceptance-20261021.md",
+          "detail": "Formal independent owner-delegated PM acceptance of M3-01 through M3-04 after final GitHub source, regression, evidence and exact-SHA clean-clone review.",
+          "result": "**Status:** ACCEPTED, based on the independent PM technical audit and the project owner's explicit authorization in this conversation to complete all remaining M3 closure and integration tasks.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-21T16:32:13Z",
+            "recorded_at_utc": "2026-10-21T16:32:13Z",
+            "exit_code": null,
+            "git_revision": "e32e1e63ab5ee9078a51f9214698f28174565a09",
+            "log_path": ".agents/evidence/M3-acceptance-20261021.md"
+          }
+        }
+      ],
+      "next_action": "",
       "plan_ref": ".agents/plans/M03-expert-dataset.md"
     }
   ],
-  "updated_at_utc": "2026-10-16T17:46:05Z"
+  "updated_at_utc": "2026-10-21T16:32:13Z"
 }

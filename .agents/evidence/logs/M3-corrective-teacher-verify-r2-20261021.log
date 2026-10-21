@@ -1,0 +1,30 @@
+{
+  "games": 1000,
+  "manifest_sha256": "77e217423e187278c584b8f566a846fd606bddaadad19179b7bef63959bd5abe",
+  "output_bytes": 39994522,
+  "outputs_verified": 7,
+  "positions": 19268,
+  "rejections": 182,
+  "release_id": "7b51ec3761ad28aa7a2882691b3c314d35115ab339769251ff2556e706a5b1d9",
+  "source_archive": {
+    "bytes": 97163552,
+    "sha256": "ad374c8fd9fb2fe5f03c1297aa1d47cbbce5caedf6e6e2d387ee816930afdb11"
+  },
+  "source_member": {
+    "bytes": 326476031,
+    "crc_verified": true,
+    "sha256": "0f88f18836be7e321aa1e0211b618e78d4e92065c126c45c95a6a55c1500a8e6"
+  },
+  "teacher": {
+    "manifest_sha256": "b784da3e56b7f2176698d282f5c82ebc37ef6f8e7ef144eeebabdae44de18dd8",
+    "multipv_score_types": {
+      "cp": 377,
+      "mate": 3
+    },
+    "positions_analyzed": 128,
+    "positions_failed_or_unattempted": 0,
+    "positions_selected": 128,
+    "results_sha256": "bfda27465cee467d0c961fc16cc41aa1177397069f966fef33bd67fd1a405b29",
+    "teacher_run_id": "ba4a109064e05ac5d0ec966892745f04fefea014faa8287d977e94fc5f685826"
+  }
+}
