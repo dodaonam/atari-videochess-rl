@@ -92,6 +92,12 @@ python -m videochess_rl.data verify \
 
 The real teacher subset used the same release, 128 positions, sample seed 20261025, 5,000 nodes per root, MultiPV 3, one thread, Hash 64 MiB, 30 seconds maximum UCI movetime per root, 30-second protocol deadline, two-second maximum process-watchdog grace, 1,800-second total wall limit, and 64 MiB output cap. It completed all 128 positions with 377 centipawn and 3 mate MultiPV rows. The exact teacher manifest SHA-256 is `4a2cb32ed163a215b661dc9b3801a4cb17f20a408dd5aab9e3219456d36d7891`; the sidecar SHA-256 is `d1f0620beb6eb985ec36c85a5eb6846917656221f3c5a2171e4eecc38c879d6f`. Centipawns use `tanh(cp / 400.0)`, rounded to eight decimals; signed mate distances remain typed and unnormalized. Stockfish is not part of inference.
 
+### Corrective-hardened release and teacher (2026-10-21)
+
+The corrective revision `fbdd14d6bed487e5b1388034048eccdbe952ab48` supersedes the historical release for M3 review; it does not rewrite it. Two new source-backed builds, r4 and r5, used the same immutable archive/member, `m3-training-support.toml`, and fixed seeds. Both generated release ID `7b51ec3761ad28aa7a2882691b3c314d35115ab339769251ff2556e706a5b1d9`; the independent file comparison found all nine release files byte-identical. The r4 manifest SHA-256 is `77e217423e187278c584b8f566a846fd606bddaadad19179b7bef63959bd5abe`. Seven manifest outputs total 39,994,522 bytes. The release retained 19,268 of 20,000 selected positions after 732 board-overlap purges, with zero cross-split board signatures and validation/test retention of 94.96%/95.63%. All 33 full-source normalized-result conflict groups were excluded before bottom-K selection. Full run identities, hashes, statistics, comparison, and sanitized logs are linked from `.agents/evidence/M3-corrective-hardening-20261021.md`.
+
+The corrected source/release verification rechecked the archive SHA-256 `ad374c8fd9fb2fe5f03c1297aa1d47cbbce5caedf6e6e2d387ee816930afdb11`, PGN-member SHA-256 `0f88f18836be7e321aa1e0211b618e78d4e92065c126c45c95a6a55c1500a8e6`, and ZIP CRC. Its bounded Stockfish teacher run is separately bound to the corrected release and is documented in `.agents/evidence/M3-corrective-hardening-20261021.md`; the historical teacher-r2 above remains bound only to historical r3/r4. Source and bulk-derived artifacts remain local ignored files and are not in Git.
+
 Teacher reproduction requires the existing Stockfish 19 executable and retained GPL text to match the recorded hashes. With `SF19` and `SF19_LICENSE` set to those verified local paths:
 
 ```bash
