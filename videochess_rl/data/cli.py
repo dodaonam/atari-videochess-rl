@@ -318,7 +318,7 @@ def command_verify(args: argparse.Namespace) -> None:
     _json_print(result)
 
 
-def command_teacher(args: argparse.Namespace) -> None:
+def command_teacher(args: argparse.Namespace) -> int:
     root = repository_root()
     release = Path(args.release)
     games = Path(args.games) if args.games else release / "games.jsonl"
@@ -349,6 +349,11 @@ def command_teacher(args: argparse.Namespace) -> None:
         max_output_bytes=args.max_output_bytes,
     )
     _json_print(result)
+    if result.get("status") == "complete":
+        return 0
+    if result.get("status") == "partial":
+        return 3
+    raise TeacherError(f"teacher returned an unsupported final status: {result.get('status')!r}")
 
 
 def parser() -> argparse.ArgumentParser:
@@ -426,8 +431,8 @@ def main(argv: list[str] | None = None) -> int:
             _set_memory_limit(config.get("memory_mib", 1024))
         elif args.command == "teacher":
             _set_memory_limit(args.memory_mib if hasattr(args, "memory_mib") else 1024)
-        args.func(args)
-        return 0
+        result = args.func(args)
+        return result if type(result) is int else 0
     except (ValueError, SourceError, PipelineError, ExportError, TeacherError, OSError, zipfile.BadZipFile) as exc:
         print(f"error: {type(exc).__name__}: {exc}", file=sys.stderr)
         return 2

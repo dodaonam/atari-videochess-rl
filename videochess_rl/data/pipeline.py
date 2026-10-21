@@ -20,7 +20,7 @@ from .export import ExportError, _write_new, verify_release, write_batches, writ
 from .pgn import SourceLimitError, iter_pgn_games
 from .sampling import BottomKGroups, sample_positions
 from .source import inspect_zip, sha256_file, validate_source_manifest
-from .split import SplitError, split_and_purge
+from .split import MIN_HOLDOUT_RETENTION, SplitError, split_and_purge
 from .stats import summarize_dataset
 
 
@@ -343,8 +343,15 @@ def _validate_config(config: dict[str, Any]) -> None:
     if config["max_workers"] != 1:
         raise PipelineError("M3 source parsing is single-worker only")
     for field in required - {"sampling_mode"}:
-        if not isinstance(config[field], int) or config[field] < 1:
+        if isinstance(config[field], bool) or not isinstance(config[field], int) or config[field] < 1:
             raise PipelineError(f"{field} must be a positive integer")
+    retention_basis_points = config.get("min_holdout_retention_basis_points", 5000)
+    if (isinstance(retention_basis_points, bool)
+            or not isinstance(retention_basis_points, int)
+            or not int(MIN_HOLDOUT_RETENTION * 10_000) <= retention_basis_points <= 10_000):
+        raise PipelineError(
+            "min_holdout_retention_basis_points must be an integer from 5000 through 10000"
+        )
     if config["sampling_mode"] == "bottom_k" and config["max_input_games_seen"] <= config["max_games"]:
         raise PipelineError("bottom_k scan cap must cover the full source beyond the selected game cap")
 

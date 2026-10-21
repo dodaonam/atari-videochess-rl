@@ -7,6 +7,7 @@ import io
 import json
 import os
 import random
+import shutil
 import sys
 import tempfile
 import textwrap
@@ -27,14 +28,17 @@ from videochess_rl.data.contracts import (
 )
 from videochess_rl.data.export import ExportError, verify_release, write_batches
 from videochess_rl.data.pgn import SourceLimitError, iter_pgn_games
-from videochess_rl.data.pipeline import PipelineError, build_dataset
+from videochess_rl.data.pipeline import PipelineError, _validate_config, build_dataset
 from videochess_rl.data.sampling import BottomKGroups, sample_positions
 from videochess_rl.data.source import (
     SourceError, download_archive, hash_member, inspect_zip, validate_source_manifest,
 )
 from videochess_rl.data.split import SplitError, board_signature_owner, split_and_purge
 from videochess_rl.data.stats import summarize_dataset
-from videochess_rl.data.teacher import TeacherError, _cp_transform, _score_data, run_teacher, verify_teacher_run
+from videochess_rl.data.teacher import (
+    TeacherError, _cp_transform, _score_data, _wdl_data, run_teacher, verify_teacher_run,
+)
+from videochess_rl.data import cli as cli_module
 from videochess_rl.data.cli import _resolve_engine_path
 from tests.test_pre_m3_contracts import FIXTURE
 
@@ -116,6 +120,16 @@ def rewrite_release_file_manifest(release_dir: Path, relative_name: str) -> None
     manifest_path = release_dir / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     target = release_dir / relative_name
+    if relative_name == "config.json":
+        config_doc = json.loads(target.read_text(encoding="utf-8"))
+        config_payload = dict(config_doc)
+        config_payload.pop("config_sha256", None)
+        config_doc["config_sha256"] = config_identity(config_payload)
+        target.write_text(
+            json.dumps(config_doc, sort_keys=True, indent=2, ensure_ascii=False) + "\n",
+            encoding="utf-8",
+        )
+        manifest["config_sha256"] = config_doc["config_sha256"]
     file_bytes = target.read_bytes()
     for item in manifest["outputs"]:
         if item["path"] == relative_name:
@@ -133,6 +147,23 @@ def rewrite_release_file_manifest(release_dir: Path, relative_name: str) -> None
     encoded = json.dumps(manifest, sort_keys=True, indent=2, ensure_ascii=False).encode("utf-8") + b"\n"
     manifest_path.write_bytes(encoded)
     (release_dir / "manifest.sha256").write_text(
+        hashlib.sha256(encoded).hexdigest() + "  manifest.json\n", encoding="ascii",
+    )
+
+
+def rewrite_teacher_rows(teacher_dir: Path, rows: list[dict]) -> None:
+    data = b"".join(
+        json.dumps(row, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8") + b"\n"
+        for row in rows
+    )
+    (teacher_dir / "teacher.jsonl").write_bytes(data)
+    manifest_path = teacher_dir / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["results"]["bytes"] = len(data)
+    manifest["results"]["sha256"] = hashlib.sha256(data).hexdigest()
+    encoded = json.dumps(manifest, sort_keys=True, indent=2, ensure_ascii=False).encode("utf-8") + b"\n"
+    manifest_path.write_bytes(encoded)
+    (teacher_dir / "manifest.sha256").write_text(
         hashlib.sha256(encoded).hexdigest() + "  manifest.json\n", encoding="ascii",
     )
 
@@ -603,6 +634,64 @@ class M3ContractTests(unittest.TestCase):
         self.assertIn("validation", manifest["holdout_warnings"][0])
         self.assertEqual(len(kept), sum(manifest["position_counts_after_purge"].values()))
 
+    def test_holdout_retention_policy_cannot_be_lowered_by_config_or_split_call(self) -> None:
+        base = {
+            "sampling_mode": "bottom_k", "seed": 1, "sampling_seed": 2, "split_seed": 3,
+            "max_games": 1, "max_input_games_seen": 2, "max_positions": 1,
+            "max_positions_per_game": 1, "min_holdout_positions": 1,
+            "max_archive_bytes": 1, "max_member_bytes": 1,
+            "max_total_decompressed_bytes": 1, "max_output_bytes": 1,
+            "max_elapsed_seconds": 1, "max_workers": 1, "memory_mib": 128,
+            "max_game_bytes": 1, "max_header_bytes": 1,
+            "max_header_value_bytes": 1, "max_comment_bytes": 1, "batch_size": 1,
+        }
+        _validate_config(base)  # Omitted optional setting means the documented 50% minimum.
+        for threshold in (5000, 6000, 10000):
+            with self.subTest(threshold=threshold):
+                _validate_config(dict(base, min_holdout_retention_basis_points=threshold))
+        for threshold in (0, -1, 4999, 10001, True, False, 5000.0, "5000", None):
+            with self.subTest(invalid_threshold=threshold):
+                with self.assertRaisesRegex(PipelineError, "min_holdout_retention_basis_points"):
+                    _validate_config(dict(base, min_holdout_retention_basis_points=threshold))
+        with self.assertRaisesRegex(PipelineError, "min_holdout_positions"):
+            _validate_config(dict(base, min_holdout_positions=True))
+
+        seed = 91
+        games = []
+        positions = []
+        present: set[str] = set()
+        index = 0
+        while len(present) < 3:
+            normalized = hashlib.sha256(f"retention-policy-game-{index}".encode()).hexdigest()
+            split_name = assign_game_split(seed, normalized)
+            if split_name not in present:
+                game_id = hashlib.sha256(f"retention-policy-source-{normalized}".encode()).hexdigest()
+                games.append({"game_id": game_id, "normalized_game_sha256": normalized})
+                positions.append({
+                    "sample_id": hashlib.sha256(f"retention-policy-sample-{normalized}".encode()).hexdigest(),
+                    "game_id": game_id, "normalized_game_sha256": normalized,
+                    "board_position_signature": hashlib.sha256(f"retention-policy-board-{normalized}".encode()).hexdigest(),
+                    "history_state_id": hashlib.sha256(f"retention-policy-history-{normalized}".encode()).hexdigest(),
+                    "legal_moves_uci": ["e2e4"], "candidate_count": 1,
+                    "played_move_uci": "e2e4", "side_to_move": "white",
+                    "white_result": "draw", "pgn_result": "1/2-1/2",
+                    "side_to_move_result": "draw", "ply_index": 0, "split": None,
+                })
+                present.add(split_name)
+            index += 1
+        _, retained = split_and_purge(
+            games, positions, seed=seed, min_holdout_positions=1,
+            min_holdout_retention=0.75,
+        )
+        self.assertEqual(retained["holdout_minimum_retention"], 0.75)
+        for threshold in (0, -0.1, 0.4999, 1.0001, float("nan"), float("inf"), True, "0.5"):
+            with self.subTest(invalid_split_threshold=threshold):
+                with self.assertRaisesRegex(ValueError, "holdout"):
+                    split_and_purge(
+                        [], [], seed=seed, min_holdout_positions=1,
+                        min_holdout_retention=threshold,
+                    )
+
     def test_zip_source_validation_checks_member_identity_size_and_path_safety(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -761,6 +850,61 @@ class M3ContractTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "escapes the repository root"):
                 _resolve_engine_path("../outside/stockfish", root)
 
+    def test_teacher_cli_returns_nonzero_for_partial_and_preserves_partial_artifact(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            temp = Path(directory)
+            engine = temp / "stockfish"
+            engine.write_text("#!/bin/sh\nexit 0\n", encoding="utf-8")
+            engine.chmod(0o755)
+            license_path = temp / "license.txt"
+            license_path.write_text("fixture license\n", encoding="utf-8")
+            engine_sha = hashlib.sha256(engine.read_bytes()).hexdigest()
+            license_sha = hashlib.sha256(license_path.read_bytes()).hexdigest()
+
+            def partial_run(*args, **kwargs):
+                output_dir = Path(args[2])
+                output_dir.mkdir(parents=True)
+                (output_dir / "teacher.partial.jsonl").write_text('{"status":"ok"}\n', encoding="utf-8")
+                return {"status": "partial", "positions_selected": 2, "positions_analyzed": 1}
+
+            common = [
+                "teacher", "--release", str(temp / "release"), "--engine", str(engine),
+                "--engine-sha256", engine_sha, "--license", str(license_path),
+                "--license-sha256", license_sha, "--max-positions", "2", "--confirm-write",
+            ]
+            partial_output = temp / "partial-run"
+            stdout = io.StringIO()
+            with (
+                patch.object(cli_module, "repository_root", return_value=ROOT),
+                patch.object(cli_module, "_set_memory_limit"),
+                patch.object(cli_module, "run_teacher", side_effect=partial_run),
+                patch("sys.stdout", stdout),
+            ):
+                partial_exit = cli_module.main(common + ["--output", str(partial_output)])
+            self.assertEqual(partial_exit, 3)
+            self.assertTrue((partial_output / "teacher.partial.jsonl").is_file())
+            self.assertEqual(json.loads(stdout.getvalue())["status"], "partial")
+
+            stdout = io.StringIO()
+            with (
+                patch.object(cli_module, "repository_root", return_value=ROOT),
+                patch.object(cli_module, "_set_memory_limit"),
+                patch.object(cli_module, "run_teacher", return_value={"status": "complete", "positions_analyzed": 2}),
+                patch("sys.stdout", stdout),
+            ):
+                complete_exit = cli_module.main(common + ["--output", str(temp / "complete-run")])
+            self.assertEqual(complete_exit, 0)
+            self.assertEqual(json.loads(stdout.getvalue())["status"], "complete")
+
+            with (
+                patch.object(cli_module, "repository_root", return_value=ROOT),
+                patch.object(cli_module, "_set_memory_limit"),
+                patch.object(cli_module, "run_teacher", return_value={"status": "error"}),
+                patch("sys.stdout", io.StringIO()),
+            ):
+                with self.assertRaisesRegex(TeacherError, "unsupported final status"):
+                    cli_module.command_teacher(cli_module.parser().parse_args(common + ["--output", str(temp / "bad-status")]))
+
     def test_stockfish_score_signs_and_mate_type_are_explicit(self) -> None:
         white_board = chess.Board()
         white_info = {"score": chess.engine.PovScore(chess.engine.Cp(75), chess.WHITE)}
@@ -778,6 +922,18 @@ class M3ContractTests(unittest.TestCase):
         self.assertEqual(raw_mate, {"type": "mate", "value": 3, "perspective": "side_to_move"})
         self.assertEqual(white_mate, {"type": "mate", "value": -3, "perspective": "white"})
         self.assertEqual(_cp_transform(0), "0.00000000")
+        white_wdl = chess.engine.PovWdl(chess.engine.Wdl(700, 200, 100), chess.WHITE)
+        self.assertEqual(
+            _wdl_data({"wdl": white_wdl}, chess.WHITE),
+            ({"wins": 700, "draws": 200, "losses": 100}, {"wins": 700, "draws": 200, "losses": 100}),
+        )
+        self.assertEqual(
+            _wdl_data({"wdl": white_wdl}, chess.BLACK),
+            ({"wins": 100, "draws": 200, "losses": 700}, {"wins": 700, "draws": 200, "losses": 100}),
+        )
+        self.assertEqual(_wdl_data({}, chess.WHITE), (None, None))
+        with self.assertRaisesRegex(TeacherError, "WDL values"):
+            _wdl_data({"wdl": chess.engine.PovWdl(chess.engine.Wdl(800, 300, 100), chess.WHITE)}, chess.WHITE)
 
     def test_batch_journal_resume_and_hash_validation(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -885,6 +1041,101 @@ class M3ContractTests(unittest.TestCase):
             self.assertEqual(canonical_fen(board), row["fen"])
             self.assertTrue(result["run_metrics"]["peak_rss_mib"] is None or result["run_metrics"]["peak_rss_mib"] > 0)
             self.assertEqual(result["release"]["source_decision_id"], SOURCE_DECISION_ID)
+
+            legacy_release = temp / "release-legacy-split-v1"
+            shutil.copytree(output, legacy_release)
+            legacy_split_path = legacy_release / "split.json"
+            legacy_split = json.loads(legacy_split_path.read_text(encoding="utf-8"))
+            legacy_split["schema"] = "videochess-split/1.0"
+            legacy_split.pop("holdout_warnings", None)
+            for row in legacy_split["purged_samples"]:
+                row.pop("pgn_result", None)
+                row.pop("side_to_move_result", None)
+            legacy_split_path.write_text(
+                json.dumps(legacy_split, sort_keys=True, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
+            legacy_stats_path = legacy_release / "stats.json"
+            legacy_stats = json.loads(legacy_stats_path.read_text(encoding="utf-8"))
+            legacy_stats["schema"] = "videochess-dataset-stats/1.0"
+            legacy_stats["quality_report_version"] = 1
+            legacy_stats["splits"] = legacy_split
+            legacy_stats_path.write_text(
+                json.dumps(legacy_stats, sort_keys=True, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
+            legacy_manifest = json.loads((legacy_release / "manifest.json").read_text(encoding="utf-8"))
+            legacy_manifest["schema_versions"] = [
+                "videochess-game/1.0", "videochess-position/1.0", "videochess-split/1.0",
+            ]
+            (legacy_release / "manifest.json").write_text(
+                json.dumps(legacy_manifest, sort_keys=True, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
+            rewrite_release_file_manifest(legacy_release, "split.json")
+            rewrite_release_file_manifest(legacy_release, "stats.json")
+            # Refresh the release schema list and all dependent hashes after the
+            # controlled v1 conversion so the verifier exercises compatibility,
+            # not a superficial checksum failure.
+            legacy_manifest = json.loads((legacy_release / "manifest.json").read_text(encoding="utf-8"))
+            legacy_manifest["schema_versions"] = [
+                "videochess-game/1.0", "videochess-position/1.0", "videochess-split/1.0",
+            ]
+            (legacy_release / "manifest.json").write_text(
+                json.dumps(legacy_manifest, sort_keys=True, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
+            from videochess_rl.data.contracts import release_identity
+            legacy_outputs = []
+            for item in legacy_manifest["outputs"]:
+                content = (legacy_release / item["path"]).read_bytes()
+                item["bytes"] = len(content)
+                item["sha256"] = hashlib.sha256(content).hexdigest()
+                legacy_outputs.append([item["path"], item["bytes"], item["sha256"]])
+            legacy_manifest["release_id"] = release_identity(
+                legacy_manifest["source_archive_sha256"], legacy_manifest["schema_versions"],
+                legacy_manifest["config_sha256"], legacy_manifest["code_revision"],
+                legacy_manifest["split_assignment_sha256"], legacy_outputs,
+            )
+            legacy_manifest_bytes = json.dumps(
+                legacy_manifest, sort_keys=True, indent=2, ensure_ascii=False,
+            ).encode("utf-8") + b"\n"
+            (legacy_release / "manifest.json").write_bytes(legacy_manifest_bytes)
+            (legacy_release / "manifest.sha256").write_text(
+                hashlib.sha256(legacy_manifest_bytes).hexdigest() + "  manifest.json\n",
+                encoding="ascii",
+            )
+            legacy_verified = verify_release(legacy_release, allow_synthetic_source_for_test=True)
+            self.assertEqual(legacy_verified["games"], verified["games"])
+            self.assertEqual(legacy_verified["positions"], verified["positions"])
+
+            lowered_policy = temp / "release-lowered-holdout-policy"
+            shutil.copytree(output, lowered_policy)
+            lowered_config_path = lowered_policy / "config.json"
+            lowered_config = json.loads(lowered_config_path.read_text(encoding="utf-8"))
+            lowered_config["min_holdout_retention_basis_points"] = 1000
+            lowered_config_path.write_text(
+                json.dumps(lowered_config, sort_keys=True, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
+            lowered_split_path = lowered_policy / "split.json"
+            lowered_split = json.loads(lowered_split_path.read_text(encoding="utf-8"))
+            lowered_split["holdout_minimum_retention"] = 0.1
+            lowered_split_path.write_text(
+                json.dumps(lowered_split, sort_keys=True, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
+            lowered_stats_path = lowered_policy / "stats.json"
+            lowered_stats = json.loads(lowered_stats_path.read_text(encoding="utf-8"))
+            lowered_stats["splits"] = lowered_split
+            lowered_stats_path.write_text(
+                json.dumps(lowered_stats, sort_keys=True, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
+            for changed_name in ("config.json", "split.json", "stats.json"):
+                rewrite_release_file_manifest(lowered_policy, changed_name)
+            with self.assertRaisesRegex(ExportError, "5000 through 10000 basis points"):
+                verify_release(lowered_policy, allow_synthetic_source_for_test=True)
 
             split_path = output / "split.json"
             stats_path = output / "stats.json"
@@ -1022,7 +1273,7 @@ class M3ContractTests(unittest.TestCase):
                     elif command == "go":
                         moves = sorted(board.legal_moves, key=lambda move: move.uci())
                         for rank, move in enumerate(moves[:multipv], 1):
-                            print(f"info depth 1 seldepth 1 multipv {{rank}} score cp 32 nodes 95 pv {{move.uci()}}")
+                            print(f"info depth 1 seldepth 1 multipv {{rank}} score cp 32 nodes 95 wdl 500 400 100 pv {{move.uci()}}")
                         print(f"bestmove {{moves[0].uci()}}", flush=True)
                     elif command == "quit":
                         break
@@ -1041,7 +1292,17 @@ class M3ContractTests(unittest.TestCase):
                 return verified_result
 
             teacher_started = time.monotonic()
-            with patch("videochess_rl.data.teacher.verify_teacher_run", side_effect=delayed_teacher_verify):
+            original_finalized_check = teacher_module._verify_finalized_teacher_artifacts
+
+            def delayed_finalized_check(*args, **kwargs):
+                checked = original_finalized_check(*args, **kwargs)
+                time.sleep(0.15)
+                return checked
+
+            with (
+                patch("videochess_rl.data.teacher.verify_teacher_run", side_effect=delayed_teacher_verify),
+                patch("videochess_rl.data.teacher._verify_finalized_teacher_artifacts", side_effect=delayed_finalized_check),
+            ):
                 teacher_manifest = run_teacher(
                     output, output / "games.jsonl", teacher_dir,
                     engine_path=fake_engine, expected_engine_sha256=engine_sha,
@@ -1054,15 +1315,197 @@ class M3ContractTests(unittest.TestCase):
                 )
             teacher_wall_elapsed = time.monotonic() - teacher_started
             self.assertLessEqual(
-                teacher_wall_elapsed - teacher_manifest["command_elapsed_seconds"], 0.1,
-                "teacher command duration must include semantic sidecar verification",
+                teacher_wall_elapsed, teacher_manifest["command_elapsed_upper_bound_seconds"] + 0.1,
+                "the bounded finalization reserve must cover post-manifest verification",
             )
+            self.assertEqual(
+                teacher_manifest["command_elapsed_measurement_boundary"],
+                "after_semantic_verification_before_final_manifest_publication",
+            )
+            self.assertEqual(teacher_manifest["status"], "complete")
             teacher_verified = verify_teacher_run(
                 teacher_dir, output, allow_synthetic_source_for_test=True,
             )
             self.assertEqual(teacher_manifest["positions_analyzed"], 2)
             self.assertEqual(teacher_verified["positions_analyzed"], 2)
             self.assertEqual(teacher_manifest["multipv_score_types"]["cp"], 6)
+            self.assertTrue(all(
+                line["wdl_side_to_move"] is not None
+                and sum(line["wdl_side_to_move"].values()) == 1000
+                and line["wdl_perspective"] == "side_to_move"
+                and line["wdl_scale"] == "permille-total-1000/v1"
+                and line["wdl_method"] == "UCI_ShowWDL"
+                for line in json.loads((teacher_dir / "teacher.jsonl").read_text().splitlines()[0])["multipv_lines"]
+            ))
+
+            valid_teacher_rows = [
+                json.loads(line)
+                for line in (teacher_dir / "teacher.jsonl").read_text(encoding="utf-8").splitlines()
+            ]
+            valid_result_bytes = (teacher_dir / "teacher.jsonl").read_bytes()
+            valid_manifest_bytes = (teacher_dir / "manifest.json").read_bytes()
+            valid_checksum_bytes = (teacher_dir / "manifest.sha256").read_bytes()
+
+            def verify_tampered_teacher(mutator, message: str) -> None:
+                rows = json.loads(json.dumps(valid_teacher_rows))
+                mutator(rows)
+                rewrite_teacher_rows(teacher_dir, rows)
+                with self.assertRaisesRegex(TeacherError, message):
+                    verify_teacher_run(teacher_dir, output, allow_synthetic_source_for_test=True)
+                (teacher_dir / "teacher.jsonl").write_bytes(valid_result_bytes)
+                (teacher_dir / "manifest.json").write_bytes(valid_manifest_bytes)
+                (teacher_dir / "manifest.sha256").write_bytes(valid_checksum_bytes)
+
+            def first_wdl(rows):
+                return rows[0]["multipv_lines"][0]
+
+            verify_tampered_teacher(
+                lambda rows: first_wdl(rows).__setitem__("wdl_side_to_move", {"wins": "500", "draws": 400, "losses": 100}),
+                "WDL must use integer",
+            )
+            verify_tampered_teacher(
+                lambda rows: first_wdl(rows).__setitem__("wdl_side_to_move", {"wins": -1, "draws": 400, "losses": 601}),
+                "WDL must use integer",
+            )
+            verify_tampered_teacher(
+                lambda rows: first_wdl(rows).__setitem__("wdl_side_to_move", {"wins": 500, "draws": 400, "losses": 101}),
+                "WDL must use integer",
+            )
+            verify_tampered_teacher(
+                lambda rows: first_wdl(rows).__setitem__("wdl_perspective", "white"),
+                "WDL perspective/scale/method",
+            )
+            verify_tampered_teacher(
+                lambda rows: first_wdl(rows).__setitem__(
+                    "wdl_white",
+                    {"wins": first_wdl(rows)["wdl_white"]["losses"],
+                     "draws": first_wdl(rows)["wdl_white"]["draws"],
+                     "losses": first_wdl(rows)["wdl_white"]["wins"]},
+                ),
+                "WDL color perspective conversion",
+            )
+            verify_tampered_teacher(
+                lambda rows: rows[0]["multipv_lines"][1].update({
+                    "pv_uci": list(rows[0]["multipv_lines"][0]["pv_uci"]),
+                    "first_move_uci": rows[0]["multipv_lines"][0]["first_move_uci"],
+                    "candidate_id": candidate_identity(
+                        rows[0]["sample_id"], rows[0]["multipv_lines"][0]["first_move_uci"],
+                    ),
+                }),
+                "MultiPV root actions are duplicated",
+            )
+            verify_tampered_teacher(
+                lambda rows: rows[0]["multipv_lines"][1].__setitem__("rank", 1),
+                "ranks are not unique and contiguous",
+            )
+            verify_tampered_teacher(
+                lambda rows: (
+                    rows[0]["multipv_lines"][0].__setitem__("rank", 2),
+                    rows[0]["multipv_lines"][1].__setitem__("rank", 1),
+                ),
+                "ranks are not unique and contiguous",
+            )
+
+            missing_optional_wdl = json.loads(json.dumps(valid_teacher_rows))
+            for row in missing_optional_wdl:
+                for line in row.get("multipv_lines", []):
+                    for key in ("wdl_side_to_move", "wdl_white", "wdl_perspective", "wdl_scale", "wdl_method"):
+                        line.pop(key, None)
+            rewrite_teacher_rows(teacher_dir, missing_optional_wdl)
+            verify_teacher_run(teacher_dir, output, allow_synthetic_source_for_test=True)
+            (teacher_dir / "teacher.jsonl").write_bytes(valid_result_bytes)
+            (teacher_dir / "manifest.json").write_bytes(valid_manifest_bytes)
+            (teacher_dir / "manifest.sha256").write_bytes(valid_checksum_bytes)
+
+            original_manifest_publisher = teacher_module._publish_teacher_manifest
+
+            def slow_manifest_publisher(*args, **kwargs):
+                time.sleep(0.15)
+                return original_manifest_publisher(*args, **kwargs)
+
+            slow_publish_dir = temp / "teacher-slow-manifest-publication"
+            slow_publish_started = time.monotonic()
+            with patch.object(teacher_module, "_publish_teacher_manifest", side_effect=slow_manifest_publisher):
+                slow_publish_manifest = run_teacher(
+                    output, output / "games.jsonl", slow_publish_dir,
+                    engine_path=fake_engine, expected_engine_sha256=engine_sha,
+                    license_path=license_path, expected_license_sha256=license_sha,
+                    max_positions=1, sample_seed=9, nodes_per_position=500,
+                    multipv=3, threads=1, hash_mib=64, timeout_seconds=5,
+                    max_wall_seconds=30, authorization_id=AUTHORIZATION_ID,
+                    source_decision_id=SOURCE_DECISION_ID, confirm_write=True,
+                    code_revision="a" * 40, allow_synthetic_source_for_test=True,
+                )
+            slow_publish_elapsed = time.monotonic() - slow_publish_started
+            self.assertEqual(slow_publish_manifest["status"], "complete")
+            self.assertLessEqual(
+                slow_publish_elapsed,
+                slow_publish_manifest["command_elapsed_upper_bound_seconds"] + 0.1,
+            )
+            self.assertEqual(
+                verify_teacher_run(slow_publish_dir, output, allow_synthetic_source_for_test=True)["positions_analyzed"],
+                1,
+            )
+
+            original_semantic_verify = teacher_module.verify_teacher_run
+
+            def slow_semantic_verify(*args, **kwargs):
+                checked = original_semantic_verify(*args, **kwargs)
+                time.sleep(1.4)
+                return checked
+
+            reserve_dir = temp / "teacher-finalization-reserve-exhausted"
+            with patch.object(teacher_module, "verify_teacher_run", side_effect=slow_semantic_verify):
+                reserve_manifest = run_teacher(
+                    output, output / "games.jsonl", reserve_dir,
+                    engine_path=fake_engine, expected_engine_sha256=engine_sha,
+                    license_path=license_path, expected_license_sha256=license_sha,
+                    max_positions=1, sample_seed=9, nodes_per_position=500,
+                    multipv=3, threads=1, hash_mib=64, timeout_seconds=5,
+                    max_wall_seconds=3, authorization_id=AUTHORIZATION_ID,
+                    source_decision_id=SOURCE_DECISION_ID, confirm_write=True,
+                    code_revision="a" * 40, allow_synthetic_source_for_test=True,
+                )
+            self.assertEqual(reserve_manifest["positions_analyzed"], 1)
+            self.assertEqual(reserve_manifest["status"], "partial")
+            self.assertEqual(reserve_manifest["wall_budget_status"], "finalization_reserve_exhausted")
+            self.assertEqual(
+                verify_teacher_run(reserve_dir, output, allow_synthetic_source_for_test=True)["positions_analyzed"],
+                1,
+            )
+
+            finalization_calls = 0
+
+            def slow_finalized_check(*args, **kwargs):
+                nonlocal finalization_calls
+                finalization_calls += 1
+                checked = original_finalized_check(*args, **kwargs)
+                if finalization_calls == 1:
+                    time.sleep(4.1)
+                return checked
+
+            overrun_dir = temp / "teacher-finalization-overrun"
+            overrun_started = time.monotonic()
+            with patch.object(teacher_module, "_verify_finalized_teacher_artifacts", side_effect=slow_finalized_check):
+                overrun_manifest = run_teacher(
+                    output, output / "games.jsonl", overrun_dir,
+                    engine_path=fake_engine, expected_engine_sha256=engine_sha,
+                    license_path=license_path, expected_license_sha256=license_sha,
+                    max_positions=1, sample_seed=9, nodes_per_position=500,
+                    multipv=3, threads=1, hash_mib=64, timeout_seconds=5,
+                    max_wall_seconds=4, authorization_id=AUTHORIZATION_ID,
+                    source_decision_id=SOURCE_DECISION_ID, confirm_write=True,
+                    code_revision="a" * 40, allow_synthetic_source_for_test=True,
+                )
+            overrun_wall_elapsed = time.monotonic() - overrun_started
+            self.assertGreater(overrun_wall_elapsed, 4)
+            self.assertEqual(overrun_manifest["status"], "partial")
+            self.assertEqual(overrun_manifest["wall_budget_status"], "overrun")
+            self.assertGreater(overrun_manifest["finalization_observed_elapsed_seconds"], 4)
+            self.assertEqual(
+                verify_teacher_run(overrun_dir, output, allow_synthetic_source_for_test=True)["positions_analyzed"],
+                1,
+            )
 
             invalid_engine = temp / "fake-stockfish-invalid-pv"
             invalid_script = fake_engine.read_text(encoding="utf-8")
@@ -1184,7 +1627,8 @@ class M3ContractTests(unittest.TestCase):
             bounded_elapsed = time.monotonic() - bounded_started
             self.assertLess(bounded_elapsed, 3.5)
             bounded_partial = json.loads((bounded_dir / "teacher.partial.jsonl").read_text(encoding="utf-8").splitlines()[0])
-            self.assertEqual(bounded_partial["status"], "error")
+            self.assertEqual(bounded_partial["status"], "not_attempted")
+            self.assertIn("reserve", bounded_partial["reason"])
             if timeout_pid_file.exists():
                 bounded_pid = int(timeout_pid_file.read_text(encoding="utf-8"))
                 with self.assertRaises(ProcessLookupError):
@@ -1237,6 +1681,44 @@ class M3ContractTests(unittest.TestCase):
             timeout_pid = int(timeout_pid_file.read_text(encoding="utf-8"))
             with self.assertRaises(ProcessLookupError):
                 os.kill(timeout_pid, 0)
+
+            engine_error = temp / "fake-stockfish-engine-error"
+            error_script = fake_engine.read_text(encoding="utf-8").replace(
+                "import sys\nimport chess",
+                "import sys\nimport os\nimport chess",
+            ).replace(
+                "multipv = 1\nboard = chess.Board()",
+                "multipv = 1\ngo_count = 0\nboard = chess.Board()",
+            ).replace(
+                'elif command == "go":\n        moves = sorted(board.legal_moves, key=lambda move: move.uci())',
+                'elif command == "go":\n        go_count += 1\n        if go_count > 1:\n            os._exit(7)\n        moves = sorted(board.legal_moves, key=lambda move: move.uci())',
+            )
+            self.assertIn("os._exit(7)", error_script)
+            engine_error.write_text(error_script, encoding="utf-8")
+            engine_error.chmod(0o755)
+            engine_error_sha = hashlib.sha256(engine_error.read_bytes()).hexdigest()
+            engine_error_dir = temp / "teacher-engine-error"
+            engine_error_manifest = run_teacher(
+                output, output / "games.jsonl", engine_error_dir,
+                engine_path=engine_error, expected_engine_sha256=engine_error_sha,
+                license_path=license_path, expected_license_sha256=license_sha,
+                max_positions=3, sample_seed=9, nodes_per_position=500,
+                multipv=3, threads=1, hash_mib=64, timeout_seconds=5,
+                max_wall_seconds=30, authorization_id=AUTHORIZATION_ID,
+                source_decision_id=SOURCE_DECISION_ID, confirm_write=True,
+                code_revision="a" * 40, allow_synthetic_source_for_test=True,
+            )
+            error_rows = [
+                json.loads(line)
+                for line in (engine_error_dir / "teacher.jsonl").read_text(encoding="utf-8").splitlines()
+            ]
+            self.assertEqual(engine_error_manifest["status"], "partial")
+            self.assertEqual(engine_error_manifest["positions_analyzed"], 1)
+            self.assertEqual([row["status"] for row in error_rows], ["ok", "error", "not_attempted"])
+            self.assertEqual(
+                verify_teacher_run(engine_error_dir, output, allow_synthetic_source_for_test=True)["positions_analyzed"],
+                1,
+            )
 
             with self.assertRaisesRegex(TeacherError, "binary is missing"):
                 run_teacher(

@@ -17,7 +17,9 @@ import chess
 import chess.engine
 
 from .contracts import (
-    TEACHER_SCHEMA, canonical_fen, candidate_identity, config_identity, digest,
+    LEGACY_TEACHER_MANIFEST_SCHEMA, LEGACY_TEACHER_SCHEMA,
+    TEACHER_MANIFEST_SCHEMA, TEACHER_SCHEMA, canonical_fen,
+    candidate_identity, config_identity, digest,
     reconstruct_position, sample_set_identity, validate_position_record,
 )
 from .export import _write_new, json_line, verify_release
@@ -26,6 +28,11 @@ from .source import sha256_file
 
 class TeacherError(RuntimeError):
     """Teacher configuration or bounded engine run failed."""
+
+
+FINALIZATION_RESERVE_SECONDS = 2.0
+FINALIZATION_RETURN_MARGIN_SECONDS = 0.05
+WDL_SCALE_ID = "permille-total-1000/v1"
 
 
 def _cp_transform(cp: int) -> str:
@@ -53,16 +60,67 @@ def _score_data(info: dict[str, Any], board: chess.Board) -> tuple[dict[str, Any
     return raw, {"type": "cp", "value": white_cp, "unit": "centipawn", "perspective": "white"}
 
 
-def _wdl_data(info: dict[str, Any], turn: chess.Color) -> dict[str, int] | None:
+def _wdl_triplet(value: Any) -> dict[str, int]:
+    fields = ("wins", "draws", "losses")
+    if not all(hasattr(value, field) for field in fields):
+        raise TeacherError("engine returned a malformed WDL record")
+    triplet = {field: getattr(value, field) for field in fields}
+    if (any(type(number) is not int or not 0 <= number <= 1000 for number in triplet.values())
+            or sum(triplet.values()) != 1000):
+        raise TeacherError("Stockfish WDL values must be integer per-mille counts totaling 1000")
+    return triplet
+
+
+def _validate_wdl_payload(value: Any, field: str) -> dict[str, int]:
+    keys = {"wins", "draws", "losses"}
+    if not isinstance(value, Mapping) or set(value) != keys:
+        raise TeacherError(f"teacher {field} WDL fields are malformed")
+    triplet = {key: value[key] for key in ("wins", "draws", "losses")}
+    if (any(type(number) is not int or not 0 <= number <= 1000 for number in triplet.values())
+            or sum(triplet.values()) != 1000):
+        raise TeacherError(f"teacher {field} WDL must use integer per-mille counts totaling 1000")
+    return triplet
+
+
+def _wdl_data(
+    info: dict[str, Any], turn: chess.Color,
+) -> tuple[dict[str, int] | None, dict[str, int] | None]:
     value = info.get("wdl")
     if value is None:
-        return None
+        return None, None
     if hasattr(value, "pov"):
-        value = value.pov(turn)
-    fields = ("wins", "draws", "losses")
-    if all(hasattr(value, field) for field in fields):
-        return {field: int(getattr(value, field)) for field in fields}
-    return None
+        return _wdl_triplet(value.pov(turn)), _wdl_triplet(value.pov(chess.WHITE))
+    side_to_move = _wdl_triplet(value)
+    white = side_to_move if turn == chess.WHITE else {
+        "wins": side_to_move["losses"],
+        "draws": side_to_move["draws"],
+        "losses": side_to_move["wins"],
+    }
+    return side_to_move, white
+
+
+def _publish_teacher_manifest(teacher_dir: Path, manifest_bytes: bytes) -> str:
+    """Atomically publish manifest and checksum into a uniquely created run."""
+    manifest_sha = hashlib.sha256(manifest_bytes).hexdigest()
+    suffix = f"{os.getpid()}-{time.monotonic_ns()}"
+    manifest_temp = teacher_dir / f".manifest-{suffix}.partial"
+    checksum_temp = teacher_dir / f".manifest-sha256-{suffix}.partial"
+    try:
+        with manifest_temp.open("xb") as stream:
+            stream.write(manifest_bytes)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(manifest_temp, teacher_dir / "manifest.json")
+        checksum_bytes = (manifest_sha + "  manifest.json\n").encode("ascii")
+        with checksum_temp.open("xb") as stream:
+            stream.write(checksum_bytes)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(checksum_temp, teacher_dir / "manifest.sha256")
+    finally:
+        manifest_temp.unlink(missing_ok=True)
+        checksum_temp.unlink(missing_ok=True)
+    return manifest_sha
 
 
 def _engine_config(engine: chess.engine.SimpleEngine, requested: dict[str, Any]) -> dict[str, Any]:
@@ -185,11 +243,18 @@ def run_teacher(
         "watchdog_grace_seconds": format(min(2.0, timeout_seconds * 0.1), ".3f"),
         "clear_hash_between_positions": True,
         "max_wall_seconds": max_wall_seconds,
+        "finalization_reserve_seconds": FINALIZATION_RESERVE_SECONDS,
         "max_output_bytes": max_output_bytes,
         "node_budget_semantics": "one UCI nodes limit per root position search, shared across its MultiPV lines",
         "time_budget_semantics": "UCI movetime is capped per root; python-chess response timeout is recorded per row; the external process watchdog kills an unresponsive engine at the recorded cap plus grace",
-        "watchdog_grace_semantics": "min(2 seconds, 10 percent of the per-root cap, remaining run wall budget after the cap); a 50 ms response reserve is kept when the total budget is nearly exhausted; the protocol join timeout follows the process kill deadline by 250 ms",
-        "total_wall_budget_semantics": "monotonic command budget starts before release verification and sample selection; it covers UCI startup, option setup, hash clearing, root searches, shutdown, sidecar serialization, and verification; engine blocking calls have watchdogs, bounded file phases are checked on completion and overruns are recorded partial; process kill/reap may add at most 2 seconds of cleanup tolerance",
+        "watchdog_grace_semantics": "min(2 seconds, 10 percent of the per-root cap, remaining run wall budget after the cap and finalization reserve); a 50 ms response reserve is kept when the total budget is nearly exhausted; the protocol join timeout follows the process kill deadline by 250 ms",
+        "total_wall_budget_semantics": (
+            "monotonic command budget starts before release verification and sample selection; it covers UCI startup, option setup, hash clearing, root searches, shutdown, sidecar serialization, semantic verification, and finalized-file checks. "
+            "Searches preserve a 2-second in-budget reserve for final manifest/checksum publication and file-inventory/hash closure. "
+            "The manifest elapsed measurement ends after semantic verification and before final manifest publication; it records the reserve and a conservative upper bound. "
+            "The runner measures actual elapsed after final closure and downgrades any deadline crossing to partial/overrun. "
+            "Process kill/reap may add at most 2 seconds of cleanup tolerance, and any resulting deadline crossing remains partial/overrun."
+        ),
         "raw_root_perspective": "side_to_move",
         "normalization": {
             "id": "cp-tanh-400/v1",
@@ -303,9 +368,9 @@ def run_teacher(
             watchdog_grace: float | None = None
             protocol_timeout: float | None = None
             remaining_wall = wall_deadline - time.monotonic()
-            if remaining_wall <= 0.01:
+            if remaining_wall <= FINALIZATION_RESERVE_SECONDS + FINALIZATION_RETURN_MARGIN_SECONDS:
                 for remaining in selected[position_index:]:
-                    failure = {"sample_id": remaining["sample_id"], "status": "not_attempted", "reason": "teacher wall-time cap reached"}
+                    failure = {"sample_id": remaining["sample_id"], "status": "not_attempted", "reason": "teacher wall-time reserve reached before root search"}
                     failures.append(failure)
                     result_rows.append(status_row(remaining, "not_attempted", failure["reason"]))
                 break
@@ -326,14 +391,15 @@ def run_teacher(
                     result_rows.append(status_row(position, "terminal", failure["reason"]))
                     continue
                 clear_hash_remaining = wall_deadline - time.monotonic()
-                if clear_hash_remaining <= 0.01:
+                if clear_hash_remaining <= FINALIZATION_RESERVE_SECONDS + FINALIZATION_RETURN_MARGIN_SECONDS:
                     for remaining in selected[position_index:]:
                         failure = {"sample_id": remaining["sample_id"], "status": "not_attempted", "reason": "teacher wall-time budget reached before hash reset"}
                         failures.append(failure)
                         result_rows.append(status_row(remaining, "not_attempted", failure["reason"]))
                     break
-                engine.timeout = max(0.001, clear_hash_remaining * 0.8)
-                clear_watchdog = threading.Timer(clear_hash_remaining, expire_total_budget)
+                clear_hash_budget = clear_hash_remaining - FINALIZATION_RESERVE_SECONDS
+                engine.timeout = max(0.001, clear_hash_budget * 0.8)
+                clear_watchdog = threading.Timer(clear_hash_budget, expire_total_budget)
                 clear_watchdog.daemon = True
                 clear_watchdog.start()
                 try:
@@ -344,7 +410,7 @@ def run_teacher(
                     raise TimeoutError("total teacher wall-time watchdog expired while clearing engine hash")
 
                 remaining_wall = wall_deadline - time.monotonic()
-                if remaining_wall <= 0.01:
+                if remaining_wall <= FINALIZATION_RESERVE_SECONDS + FINALIZATION_RETURN_MARGIN_SECONDS:
                     for remaining in selected[position_index:]:
                         failure = {"sample_id": remaining["sample_id"], "status": "not_attempted", "reason": "teacher wall-time budget reached before root search"}
                         failures.append(failure)
@@ -352,14 +418,20 @@ def run_teacher(
                     break
                 # Reserve a small bounded response window when the total wall
                 # deadline would otherwise be consumed entirely by movetime.
-                if remaining_wall <= 0.06:
+                if remaining_wall <= FINALIZATION_RESERVE_SECONDS + FINALIZATION_RETURN_MARGIN_SECONDS + 0.01:
                     for remaining in selected[position_index:]:
-                        failure = {"sample_id": remaining["sample_id"], "status": "not_attempted", "reason": "teacher wall-time budget reserved for search cleanup"}
+                        failure = {"sample_id": remaining["sample_id"], "status": "not_attempted", "reason": "teacher wall-time budget reserved for search cleanup and finalization"}
                         failures.append(failure)
                         result_rows.append(status_row(remaining, "not_attempted", failure["reason"]))
                     break
-                position_time_cap = min(float(timeout_seconds), remaining_wall - 0.05)
-                watchdog_grace = min(2.0, position_time_cap * 0.1, max(0.0, remaining_wall - position_time_cap))
+                position_time_cap = min(
+                    float(timeout_seconds),
+                    remaining_wall - FINALIZATION_RESERVE_SECONDS - FINALIZATION_RETURN_MARGIN_SECONDS,
+                )
+                watchdog_grace = min(
+                    2.0, position_time_cap * 0.1,
+                    max(0.0, remaining_wall - position_time_cap - FINALIZATION_RESERVE_SECONDS),
+                )
                 # The process watchdog fires first. Keep python-chess's
                 # wrapper timeout 250 ms later so it receives the engine
                 # termination signal rather than racing the watchdog timer.
@@ -408,7 +480,7 @@ def run_teacher(
                     if raw_score is None:
                         raise TeacherError("engine returned no root score")
                     cp_value = raw_score["value"] if raw_score["type"] == "cp" else None
-                    wdl = _wdl_data(info, board.turn)
+                    wdl_side_to_move, wdl_white = _wdl_data(info, board.turn)
                     lines.append({
                         "rank": rank,
                         "pv_uci": [move.uci() for move in pv],
@@ -419,7 +491,11 @@ def run_teacher(
                         "transformed_target": _cp_transform(cp_value) if cp_value is not None else None,
                         "transform_id": "cp-tanh-400/v1" if cp_value is not None else None,
                         "mate_normalization": "mate retained as signed mate distance; no centipawn substitution" if raw_score["type"] == "mate" else None,
-                        "wdl_side_to_move": wdl,
+                        "wdl_side_to_move": wdl_side_to_move,
+                        "wdl_white": wdl_white,
+                        "wdl_perspective": "side_to_move" if wdl_side_to_move is not None else None,
+                        "wdl_scale": WDL_SCALE_ID if wdl_side_to_move is not None else None,
+                        "wdl_method": "UCI_ShowWDL" if wdl_side_to_move is not None else None,
                         "depth": info.get("depth"),
                         "seldepth": info.get("seldepth"),
                         "nodes": info.get("nodes"),
@@ -517,7 +593,7 @@ def run_teacher(
         for line in record["multipv_lines"]:
             score_types[line["raw_score_side_to_move"]["type"]] += 1
     manifest = {
-        "schema": "videochess-teacher-run-manifest/1.0",
+        "schema": TEACHER_MANIFEST_SCHEMA,
         "teacher_run_id": teacher_run_id,
         "dataset_release_id": release["release_id"],
         "dataset_manifest_sha256": verified["manifest_sha256"],
@@ -571,8 +647,6 @@ def run_teacher(
         "positions_failed_or_unattempted": failures,
         "engine_execution_elapsed_seconds": engine_elapsed,
         "command_elapsed_seconds": elapsed_total,
-        "status": "complete" if not failures and elapsed_total <= max_wall_seconds else "partial",
-        "wall_budget_status": "within_budget" if elapsed_total <= max_wall_seconds else "overrun",
         "multipv_score_types": score_types,
         "teacher_config": teacher_config,
         "teacher_config_sha256": teacher_config_sha,
@@ -592,32 +666,49 @@ def run_teacher(
         output_dir, release_dir,
         allow_synthetic_source_for_test=allow_synthetic_source_for_test,
         _verified_release=verified,
+        _allow_finalizing=True,
     )
-    finalized_elapsed = round(time.monotonic() - started, 3)
-    manifest["command_elapsed_seconds"] = finalized_elapsed
-    manifest["elapsed_seconds"] = finalized_elapsed
-    manifest["throughput_positions_per_second"] = round(len(successful_rows) / finalized_elapsed, 4) if finalized_elapsed else None
-    manifest["status"] = "complete" if not failures and finalized_elapsed <= max_wall_seconds else "partial"
-    manifest["wall_budget_status"] = "within_budget" if finalized_elapsed <= max_wall_seconds else "overrun"
+    semantic_elapsed = round(time.monotonic() - started, 3)
+    manifest["command_elapsed_seconds"] = semantic_elapsed
+    manifest["elapsed_seconds"] = semantic_elapsed
+    manifest["command_elapsed_measurement_boundary"] = (
+        "after_semantic_verification_before_final_manifest_publication"
+    )
+    manifest["finalization_reserve_seconds"] = FINALIZATION_RESERVE_SECONDS
+    manifest["command_elapsed_upper_bound_seconds"] = round(
+        semantic_elapsed + FINALIZATION_RESERVE_SECONDS + FINALIZATION_RETURN_MARGIN_SECONDS, 3,
+    )
+    manifest["throughput_positions_per_second"] = round(len(successful_rows) / semantic_elapsed, 4) if semantic_elapsed else None
+    reserve_available = (
+        semantic_elapsed + FINALIZATION_RESERVE_SECONDS + FINALIZATION_RETURN_MARGIN_SECONDS
+        <= max_wall_seconds
+    )
+    manifest["status"] = "complete" if not failures and reserve_available else "partial"
+    manifest["wall_budget_status"] = "within_budget" if reserve_available else "finalization_reserve_exhausted"
     manifest_bytes = json.dumps(manifest, sort_keys=True, indent=2, ensure_ascii=False).encode("utf-8") + b"\n"
-    manifest_temp = output_dir / f".manifest-{os.getpid()}.partial"
-    with manifest_temp.open("xb") as stream:
-        stream.write(manifest_bytes)
-        stream.flush()
-        os.fsync(stream.fileno())
-    os.replace(manifest_temp, output_dir / "manifest.json")
-    checksum_temp = output_dir / f".manifest-sha256-{os.getpid()}.partial"
-    with checksum_temp.open("xb") as stream:
-        stream.write((hashlib.sha256(manifest_bytes).hexdigest() + "  manifest.json\n").encode("ascii"))
-        stream.flush()
-        os.fsync(stream.fileno())
-    os.replace(checksum_temp, output_dir / "manifest.sha256")
+    manifest_sha = _publish_teacher_manifest(output_dir, manifest_bytes)
     _verify_finalized_teacher_artifacts(
         output_dir, manifest_bytes=manifest_bytes,
-        manifest_sha256=hashlib.sha256(manifest_bytes).hexdigest(),
+        manifest_sha256=manifest_sha,
         results_sha256=row_sha, results_bytes=len(rows_bytes),
         max_output_bytes=max_output_bytes,
     )
+    observed_elapsed = time.monotonic() - started
+    if observed_elapsed + FINALIZATION_RETURN_MARGIN_SECONDS > max_wall_seconds:
+        manifest["status"] = "partial"
+        if observed_elapsed > max_wall_seconds:
+            manifest["wall_budget_status"] = "overrun"
+        else:
+            manifest["wall_budget_status"] = "finalization_reserve_exhausted"
+        manifest["finalization_observed_elapsed_seconds"] = round(observed_elapsed, 3)
+        manifest_bytes = json.dumps(manifest, sort_keys=True, indent=2, ensure_ascii=False).encode("utf-8") + b"\n"
+        manifest_sha = _publish_teacher_manifest(output_dir, manifest_bytes)
+        _verify_finalized_teacher_artifacts(
+            output_dir, manifest_bytes=manifest_bytes,
+            manifest_sha256=manifest_sha,
+            results_sha256=row_sha, results_bytes=len(rows_bytes),
+            max_output_bytes=max_output_bytes,
+        )
     return manifest
 
 
@@ -627,9 +718,10 @@ def _verify_finalized_teacher_artifacts(
 ) -> None:
     """Close atomic manifest publication with bounded hash and file-set checks.
 
-    Full PV and score semantics were verified immediately before final timing
-    was captured. This final check validates the exact finalized bytes without
-    repeating that expensive replay after the recorded command duration.
+    Full PV and score semantics were verified before publication. This final
+    bounded check closes the manifest/checksum and result-file identity. Its
+    time is covered by the reserved finalization budget and checked against the
+    monotonic command deadline before a complete result is returned.
     """
     final_manifest = teacher_dir / "manifest.json"
     final_bytes = final_manifest.read_bytes()
@@ -686,6 +778,7 @@ def _verify_release_snapshot(
 def verify_teacher_run(
     teacher_dir: Path, release_dir: Path, *, allow_synthetic_source_for_test: bool = False,
     _verified_release: dict[str, Any] | None = None,
+    _allow_finalizing: bool = False,
 ) -> dict[str, Any]:
     """Verify sidecar hashes, deterministic coverage, PV legality, and score semantics."""
     manifest_path = teacher_dir / "manifest.json"
@@ -701,7 +794,8 @@ def verify_teacher_run(
         release_manifest = json.loads((release_dir / "manifest.json").read_text(encoding="utf-8"))
     else:
         release_check, release_manifest = _verify_release_snapshot(release_dir, _verified_release)
-    if manifest.get("schema") != "videochess-teacher-run-manifest/1.0":
+    manifest_schema = manifest.get("schema")
+    if manifest_schema not in {LEGACY_TEACHER_MANIFEST_SCHEMA, TEACHER_MANIFEST_SCHEMA}:
         raise TeacherError("unsupported teacher run manifest schema")
     if manifest.get("dataset_release_id") != release_check["release_id"] or manifest.get("dataset_manifest_sha256") != release_check["manifest_sha256"]:
         raise TeacherError("teacher run is bound to a different dataset release")
@@ -712,6 +806,15 @@ def verify_teacher_run(
     config = manifest.get("teacher_config")
     if not isinstance(config, dict) or config_identity(config) != manifest.get("teacher_config_sha256"):
         raise TeacherError("teacher configuration identity does not recompute")
+    teacher_schema = config.get("schema")
+    if teacher_schema not in {LEGACY_TEACHER_SCHEMA, TEACHER_SCHEMA}:
+        raise TeacherError("unsupported teacher row schema")
+    expected_manifest_schema = (
+        LEGACY_TEACHER_MANIFEST_SCHEMA
+        if teacher_schema == LEGACY_TEACHER_SCHEMA else TEACHER_MANIFEST_SCHEMA
+    )
+    if manifest_schema != expected_manifest_schema:
+        raise TeacherError("teacher row and manifest schema versions do not match")
     if manifest.get("normalization") != config.get("normalization"):
         raise TeacherError("teacher normalization differs from its configuration")
     results = manifest.get("results", {})
@@ -751,7 +854,7 @@ def verify_teacher_run(
     if sample_sha != manifest.get("sample_ids_sha256"):
         raise TeacherError("teacher deterministic sample selection does not recompute")
     expected_run_id = digest({
-        "domain": "videochess-teacher-run/v1", "teacher_schema_version": TEACHER_SCHEMA,
+        "domain": "videochess-teacher-run/v1", "teacher_schema_version": teacher_schema,
         "dataset_release_id": release_check["release_id"],
         "teacher_config_sha256": manifest["teacher_config_sha256"],
         "engine_sha256": manifest["engine"]["binary_sha256"],
@@ -778,7 +881,7 @@ def verify_teacher_run(
             if sample_id not in selected_ids or sample_id in seen:
                 raise TeacherError(f"teacher row sample identity is unexpected or duplicated at line {line_number}")
             seen.add(sample_id)
-            if row.get("schema") != TEACHER_SCHEMA or row.get("teacher_run_id") != expected_run_id:
+            if row.get("schema") != teacher_schema or row.get("teacher_run_id") != expected_run_id:
                 raise TeacherError(f"teacher row schema/run identity mismatch at line {line_number}")
             applied_time_cap = row.get("search_time_cap_seconds")
             applied_grace = row.get("watchdog_grace_seconds")
@@ -824,10 +927,12 @@ def verify_teacher_run(
                 raise TeacherError(f"teacher MultiPV count is invalid at line {line_number}")
             nodes_by_root.append(max((entry.get("nodes") or 0 for entry in lines), default=0))
             prior_rank = 0
-            for entry in lines:
+            root_moves: set[str] = set()
+            for expected_rank, entry in enumerate(lines, 1):
                 rank = entry.get("rank", 0)
-                if not isinstance(rank, int) or rank <= prior_rank:
-                    raise TeacherError(f"teacher MultiPV ranks are not increasing at line {line_number}")
+                if (isinstance(rank, bool) or not isinstance(rank, int)
+                        or rank != expected_rank or rank <= prior_rank):
+                    raise TeacherError(f"teacher MultiPV ranks are not unique and contiguous from 1 at line {line_number}")
                 prior_rank = rank
                 pv = entry.get("pv_uci", [])
                 if not pv or entry.get("first_move_uci") != pv[0]:
@@ -835,6 +940,9 @@ def verify_teacher_run(
                 move = chess.Move.from_uci(pv[0])
                 if move not in root_board.legal_moves:
                     raise TeacherError(f"teacher PV root action is illegal at line {line_number}")
+                if pv[0] in root_moves:
+                    raise TeacherError(f"teacher MultiPV root actions are duplicated at line {line_number}")
+                root_moves.add(pv[0])
                 if candidate_identity(sample_id, pv[0]) != entry.get("candidate_id"):
                     raise TeacherError(f"teacher candidate identity mismatch at line {line_number}")
                 line_board = root_board.copy()
@@ -863,6 +971,34 @@ def verify_teacher_run(
                         raise TeacherError(f"mate score was incorrectly normalized at line {line_number}")
                 else:
                     raise TeacherError(f"unknown teacher score type at line {line_number}")
+                wdl_side = entry.get("wdl_side_to_move")
+                wdl_white = entry.get("wdl_white")
+                wdl_perspective = entry.get("wdl_perspective")
+                wdl_scale = entry.get("wdl_scale")
+                wdl_method = entry.get("wdl_method")
+                if wdl_side is None:
+                    if any(value is not None for value in (wdl_white, wdl_perspective, wdl_scale, wdl_method)):
+                        raise TeacherError(f"teacher WDL metadata exists without a WDL value at line {line_number}")
+                else:
+                    wdl_side = _validate_wdl_payload(wdl_side, "side-to-move")
+                    if teacher_schema == TEACHER_SCHEMA and (
+                        wdl_white is None or wdl_perspective != "side_to_move"
+                        or wdl_scale != WDL_SCALE_ID or wdl_method != "UCI_ShowWDL"
+                    ):
+                        raise TeacherError(f"teacher WDL perspective/scale/method is missing or invalid at line {line_number}")
+                    if wdl_white is not None:
+                        wdl_white = _validate_wdl_payload(wdl_white, "White")
+                        expected_white_wdl = (
+                            wdl_side if position["side_to_move"] == "white" else {
+                                "wins": wdl_side["losses"],
+                                "draws": wdl_side["draws"],
+                                "losses": wdl_side["wins"],
+                            }
+                        )
+                        if wdl_white != expected_white_wdl:
+                            raise TeacherError(f"teacher WDL color perspective conversion is invalid at line {line_number}")
+                    elif teacher_schema == TEACHER_SCHEMA:
+                        raise TeacherError(f"teacher White-perspective WDL is missing at line {line_number}")
                 score_types[raw["type"]] += 1
     if seen != set(selected_ids):
         raise TeacherError("teacher sidecar does not contain one status row per selected sample")
@@ -870,6 +1006,8 @@ def verify_teacher_run(
         raise TeacherError("teacher manifest position totals differ from result rows")
     if failure_rows != manifest.get("positions_failed_or_unattempted"):
         raise TeacherError("teacher failure summary differs from result rows")
+    if "status" not in manifest and not _allow_finalizing:
+        raise TeacherError("teacher manifest is not finalized")
     if "status" in manifest:
         max_wall = config.get("max_wall_seconds")
         elapsed = manifest.get("elapsed_seconds")
@@ -880,17 +1018,49 @@ def verify_teacher_run(
                 or not math.isfinite(elapsed) or elapsed < 0):
             raise TeacherError("teacher elapsed time is malformed")
         if manifest.get("command_elapsed_seconds") != elapsed:
-            raise TeacherError("teacher command elapsed time differs from the finalized wall-time measurement")
+            raise TeacherError("teacher command elapsed time differs from its recorded measurement")
         engine_elapsed = manifest.get("engine_execution_elapsed_seconds")
         if (isinstance(engine_elapsed, bool) or not isinstance(engine_elapsed, (int, float))
                 or not math.isfinite(engine_elapsed) or not 0 <= engine_elapsed <= elapsed):
             raise TeacherError("teacher engine execution time is malformed")
-        expected_status = "complete" if not failure_rows and elapsed <= max_wall else "partial"
+        if manifest_schema == LEGACY_TEACHER_MANIFEST_SCHEMA:
+            expected_status = "complete" if not failure_rows and elapsed <= max_wall else "partial"
+            expected_budget = "within_budget" if elapsed <= max_wall else "overrun"
+        else:
+            reserve = manifest.get("finalization_reserve_seconds")
+            if (isinstance(reserve, bool) or not isinstance(reserve, (int, float))
+                    or reserve != FINALIZATION_RESERVE_SECONDS
+                    or reserve != config.get("finalization_reserve_seconds")):
+                raise TeacherError("teacher finalization reserve differs from its versioned configuration")
+            expected_boundary = "after_semantic_verification_before_final_manifest_publication"
+            if manifest.get("command_elapsed_measurement_boundary") != expected_boundary:
+                raise TeacherError("teacher elapsed measurement boundary is missing or unsupported")
+            upper_bound = manifest.get("command_elapsed_upper_bound_seconds")
+            expected_upper_bound = round(
+                elapsed + FINALIZATION_RESERVE_SECONDS + FINALIZATION_RETURN_MARGIN_SECONDS, 3,
+            )
+            if upper_bound != expected_upper_bound:
+                raise TeacherError("teacher command elapsed upper bound does not include finalization reserve")
+            observed = manifest.get("finalization_observed_elapsed_seconds")
+            if observed is None:
+                expected_budget = (
+                    "within_budget" if expected_upper_bound <= max_wall
+                    else "finalization_reserve_exhausted"
+                )
+            else:
+                if (isinstance(observed, bool) or not isinstance(observed, (int, float))
+                        or not math.isfinite(observed) or observed < elapsed
+                        or observed + FINALIZATION_RETURN_MARGIN_SECONDS <= max_wall):
+                    raise TeacherError("teacher finalized elapsed observation is malformed or does not explain partial status")
+                expected_budget = "overrun" if observed > max_wall else "finalization_reserve_exhausted"
+            expected_status = (
+                "complete" if not failure_rows and expected_budget == "within_budget"
+                else "partial"
+            )
         if manifest.get("status") != expected_status:
-            raise TeacherError("teacher status does not reflect its failures or total wall-time budget")
-        expected_budget = "within_budget" if elapsed <= max_wall else "overrun"
+            raise TeacherError("teacher status does not reflect failures and finalized wall-time policy")
         if manifest.get("wall_budget_status") != expected_budget:
-            raise TeacherError("teacher wall-budget status does not match elapsed time")
+            raise TeacherError("teacher wall-budget status does not match its measured reserve/overrun")
         if search.get("total_wall_budget_seconds") != max_wall:
             raise TeacherError("teacher total wall-time budget differs between config and search metadata")
     if applied_time_caps != search.get("applied_search_time_caps_seconds"):

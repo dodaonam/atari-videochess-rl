@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
+import math
 from typing import Any
 
 from .contracts import (
@@ -18,11 +19,20 @@ class SplitError(ValueError):
         self.manifest = manifest
 
 
+MIN_HOLDOUT_RETENTION = 0.5
+
+
 def split_and_purge(
     games: list[dict[str, Any]], positions: list[dict[str, Any]], *, seed: int,
     min_holdout_positions: int, min_holdout_retention: float = 0.5,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
-    if min_holdout_positions < 1 or not 0.0 <= min_holdout_retention <= 1.0:
+    if (isinstance(min_holdout_positions, bool) or not isinstance(min_holdout_positions, int)
+            or min_holdout_positions < 1):
+        raise ValueError("min_holdout_positions must be a positive integer")
+    if (isinstance(min_holdout_retention, bool)
+            or not isinstance(min_holdout_retention, (int, float))
+            or not math.isfinite(min_holdout_retention)
+            or not MIN_HOLDOUT_RETENTION <= min_holdout_retention <= 1.0):
         raise ValueError("invalid holdout limits")
     assignment_by_group: dict[str, str] = {}
     game_assignments: list[list[str]] = []

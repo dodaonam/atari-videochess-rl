@@ -19,6 +19,7 @@ from .source import sha256_file, validate_source_manifest
 from .stats import (
     STATS_SCHEMA, quality_distribution_shifts, summarize_dataset,
 )
+from .split import MIN_HOLDOUT_RETENTION
 
 
 class ExportError(ValueError):
@@ -466,11 +467,25 @@ def verify_release(
         raise ExportError("quality report v2 requires the versioned split/statistics schema extensions")
     if quality_version < 2 and split_doc.get("schema") == SPLIT_SCHEMA:
         raise ExportError("split schema 1.1 requires quality report v2")
-    if split_doc.get("holdout_minimum") != config_doc.get("min_holdout_positions"):
+    configured_minimum = config_doc.get("min_holdout_positions")
+    if (isinstance(configured_minimum, bool) or not isinstance(configured_minimum, int)
+            or configured_minimum < 1):
+        raise ExportError("release config holdout position minimum is malformed")
+    if split_doc.get("holdout_minimum") != configured_minimum:
         raise ExportError("split holdout count minimum differs from the immutable release config")
-    configured_retention = config_doc.get("min_holdout_retention_basis_points", 5000) / 10_000
+    retention_basis_points = config_doc.get("min_holdout_retention_basis_points", 5000)
+    if (isinstance(retention_basis_points, bool)
+            or not isinstance(retention_basis_points, int)
+            or not int(MIN_HOLDOUT_RETENTION * 10_000) <= retention_basis_points <= 10_000):
+        raise ExportError(
+            "release config holdout retention must be an integer from 5000 through 10000 basis points"
+        )
+    configured_retention = retention_basis_points / 10_000
     if split_doc.get("holdout_minimum_retention") != configured_retention:
         raise ExportError("split holdout retention minimum differs from the immutable release config")
+    split_minimum = split_doc.get("holdout_minimum")
+    if isinstance(split_minimum, bool) or not isinstance(split_minimum, int) or split_minimum < 1:
+        raise ExportError("split holdout position minimum is malformed")
     assignments = dict(split_doc.get("game_group_assignments", []))
     for row in positions:
         if assignments.get(row["normalized_game_sha256"]) != row["split"]:
@@ -595,8 +610,11 @@ def verify_release(
     }
     if split_doc.get("position_retention") != retention:
         raise ExportError("position retention does not recompute")
-    min_holdout = split_doc.get("holdout_minimum")
+    min_holdout = split_minimum
     min_retention = split_doc.get("holdout_minimum_retention")
+    if (isinstance(min_retention, bool) or not isinstance(min_retention, (int, float))
+            or not MIN_HOLDOUT_RETENTION <= min_retention <= 1.0):
+        raise ExportError("split holdout retention minimum is below the mandatory 50% policy or malformed")
     warning_retention = split_doc.get("holdout_warning_retention", 0.8)
     if (isinstance(warning_retention, bool) or not isinstance(warning_retention, (int, float))
             or not 0 <= warning_retention <= 1):
@@ -611,7 +629,11 @@ def verify_release(
             or ("holdout_warnings" in split_doc and split_doc.get("holdout_warnings") != expected_warnings)):
         raise ExportError("holdout retention warnings do not match the measured retention")
     for name in ("validation", "test"):
-        if after_counts[name] < min_holdout or retention[name] < min_retention:
+        if after_counts[name] < min_holdout or retention[name] < MIN_HOLDOUT_RETENTION:
+            raise ExportError(
+                f"{name} holdout fails the mandatory minimum position/50% retention gate"
+            )
+        if retention[name] < min_retention:
             raise ExportError(f"{name} holdout fails the recorded minimum/retention gate")
     expected_holdout_failures = [
         f"{name} holdout has {after_counts[name]} retained positions (minimum {min_holdout})"
