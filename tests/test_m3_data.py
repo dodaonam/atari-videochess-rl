@@ -1338,6 +1338,70 @@ class M3ContractTests(unittest.TestCase):
                 for line in json.loads((teacher_dir / "teacher.jsonl").read_text().splitlines()[0])["multipv_lines"]
             ))
 
+            legacy_teacher_dir = temp / "teacher-legacy-v1"
+            shutil.copytree(teacher_dir, legacy_teacher_dir)
+            legacy_manifest_path = legacy_teacher_dir / "manifest.json"
+            legacy_manifest = json.loads(legacy_manifest_path.read_text(encoding="utf-8"))
+            legacy_config = dict(legacy_manifest["teacher_config"])
+            legacy_config["schema"] = "videochess-teacher/1.0"
+            legacy_config.pop("finalization_reserve_seconds", None)
+            legacy_config_sha = config_identity(legacy_config)
+            legacy_run_id = digest({
+                "domain": "videochess-teacher-run/v1",
+                "teacher_schema_version": "videochess-teacher/1.0",
+                "dataset_release_id": legacy_manifest["dataset_release_id"],
+                "teacher_config_sha256": legacy_config_sha,
+                "engine_sha256": legacy_manifest["engine"]["binary_sha256"],
+                "engine_license_sha256": legacy_manifest["engine"]["license_sha256"],
+                "code_revision": legacy_manifest["code_revision"],
+                "code_tree_sha256": legacy_manifest["code_tree_sha256"],
+                "sample_ids_sha256": legacy_manifest["sample_ids_sha256"],
+            })
+            legacy_rows = [
+                json.loads(line)
+                for line in (teacher_dir / "teacher.jsonl").read_text(encoding="utf-8").splitlines()
+            ]
+            for row in legacy_rows:
+                row["schema"] = "videochess-teacher/1.0"
+                row["teacher_run_id"] = legacy_run_id
+                row["teacher_config_sha256"] = legacy_config_sha
+                for line in row.get("multipv_lines", []):
+                    for key in ("wdl_white", "wdl_perspective", "wdl_scale", "wdl_method"):
+                        line.pop(key, None)
+            legacy_rows_bytes = b"".join(
+                json.dumps(row, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8") + b"\n"
+                for row in legacy_rows
+            )
+            (legacy_teacher_dir / "teacher.jsonl").write_bytes(legacy_rows_bytes)
+            legacy_manifest.update({
+                "schema": "videochess-teacher-run-manifest/1.0",
+                "teacher_run_id": legacy_run_id,
+                "teacher_config": legacy_config,
+                "teacher_config_sha256": legacy_config_sha,
+                "results": {
+                    "path": "teacher.jsonl", "bytes": len(legacy_rows_bytes),
+                    "sha256": hashlib.sha256(legacy_rows_bytes).hexdigest(),
+                },
+            })
+            for key in (
+                "command_elapsed_seconds", "command_elapsed_measurement_boundary",
+                "command_elapsed_upper_bound_seconds", "finalization_reserve_seconds",
+                "finalization_observed_elapsed_seconds", "status", "wall_budget_status",
+            ):
+                legacy_manifest.pop(key, None)
+            legacy_manifest_bytes = json.dumps(
+                legacy_manifest, sort_keys=True, indent=2, ensure_ascii=False,
+            ).encode("utf-8") + b"\n"
+            legacy_manifest_path.write_bytes(legacy_manifest_bytes)
+            (legacy_teacher_dir / "manifest.sha256").write_text(
+                hashlib.sha256(legacy_manifest_bytes).hexdigest() + "  manifest.json\n",
+                encoding="ascii",
+            )
+            legacy_verified = verify_teacher_run(
+                legacy_teacher_dir, output, allow_synthetic_source_for_test=True,
+            )
+            self.assertEqual(legacy_verified["positions_analyzed"], 2)
+
             valid_teacher_rows = [
                 json.loads(line)
                 for line in (teacher_dir / "teacher.jsonl").read_text(encoding="utf-8").splitlines()

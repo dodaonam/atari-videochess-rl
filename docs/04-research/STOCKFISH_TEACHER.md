@@ -88,7 +88,7 @@ The real-run evidence satisfies the technical evidence listed by unchanged canon
 - Store missing, illegal, failed, or aborted analyses with explicit status. Never impute a teacher score silently.
 - Terminal positions have no legal candidate to search; record terminal status and outcome separately.
 
-Teacher schema 1.1 also requires contiguous unique MultiPV ranks beginning at 1, unique root moves across returned lines, legal candidate identities, and legal full PVs. This checks the returned alternatives without assuming that MultiPV covers every legal move. Schema 1.0 sidecars remain readable under their original manifest/row identity versions; verifiers do not reinterpret their old run IDs as 1.1 identities.
+Teacher schema 1.1 also requires contiguous unique MultiPV ranks beginning at 1, unique root moves across returned lines, legal candidate identities, and legal full PVs. This checks the returned alternatives without assuming that MultiPV covers every legal move. Schema 1.0 sidecars remain readable under their original manifest/row identity versions; verifiers do not reinterpret their old run IDs as 1.1 identities. The historical 1.0 manifest contract did not require a run-level `status`; outcome counts and per-position statuses remain authoritative for those records. New 1.1 manifests require explicit final `complete`/`partial` status and wall-budget evidence.
 
 ## 5. MultiPV versus exhaustive candidate scoring
 

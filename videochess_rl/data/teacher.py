@@ -1006,7 +1006,8 @@ def verify_teacher_run(
         raise TeacherError("teacher manifest position totals differ from result rows")
     if failure_rows != manifest.get("positions_failed_or_unattempted"):
         raise TeacherError("teacher failure summary differs from result rows")
-    if "status" not in manifest and not _allow_finalizing:
+    if ("status" not in manifest and manifest_schema != LEGACY_TEACHER_MANIFEST_SCHEMA
+            and not _allow_finalizing):
         raise TeacherError("teacher manifest is not finalized")
     if "status" in manifest:
         max_wall = config.get("max_wall_seconds")
