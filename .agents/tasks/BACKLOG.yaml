@@ -1925,7 +1925,7 @@
       "id": "M3-001",
       "title": "Build and verify the expert dataset",
       "milestone": "M3",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "M2-001"
       ],
@@ -2277,11 +2277,25 @@
             "git_revision": "df1efcfb55ef6df7786f65728ae76b7a825ca920",
             "log_path": null
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-acceptance-20261021.md",
+          "detail": "Formal independent owner-delegated PM acceptance of M3-01 through M3-04 after final GitHub source, regression, evidence and exact-SHA clean-clone review.",
+          "result": "ACCEPTED: M3-001 complete at engineering PR HEAD e32e1e63ab5ee9078a51f9214698f28174565a09; G3 remains unapproved; M4-M7 require separate owner authorization.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-21T16:32:13Z",
+            "recorded_at_utc": "2026-10-21T16:32:13Z",
+            "exit_code": null,
+            "git_revision": "e32e1e63ab5ee9078a51f9214698f28174565a09",
+            "log_path": ".agents/evidence/M3-acceptance-20261021.md"
+          }
         }
       ],
-      "next_action": "PM: independently review the final closure report and machine record, verify the exact-SHA clean-clone evidence and GitHub check scope in PR #3, then record M3 acceptance or return findings. Do not merge before acceptance; G3 remains unapproved.",
+      "next_action": "",
       "plan_ref": ".agents/plans/M03-expert-dataset.md"
     }
   ],
-  "updated_at_utc": "2026-10-21T14:23:28Z"
+  "updated_at_utc": "2026-10-21T16:32:13Z"
 }
