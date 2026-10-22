@@ -32,6 +32,15 @@ from agent_preflight import (
     _sha_text,
     build_report,
 )
+from checkpoint_history import (
+    POINTER_KEY as CHECKPOINT_HISTORY_POINTER_KEY,
+    CheckpointHistoryError,
+    _record_from_checkpoint,
+    apply_archive_append,
+    inspect_history_storage,
+    prepare_archive_append,
+    rollback_archive_append,
+)
 
 MARKER = re.compile(r"(?m)^<!-- checkpoint-id: ([^\s]+) -->$")
 TEMP_AGE_SECONDS = 600
@@ -255,22 +264,42 @@ def checkpoint(root: Path, recover_partials: bool, dry_run: bool) -> tuple[int, 
     except RuntimeError as exc:
         return 1, f"Could not capture the portable Git index: {exc}"
     if _checkpoint_is_current(state, handoff, snapshot, repo_hashes, inventory, tracked_manifest):
+        if CHECKPOINT_HISTORY_POINTER_KEY in state:
+            inspection = inspect_history_storage(root, state)
+            if inspection.errors:
+                details = "; ".join(f"{code}: {message}" for code, message in inspection.errors)
+                return 1, f"Checkpoint history archive failed integrity verification; refusing no-op: {details}"
         return 0, "Checkpoint already matches state, handoff, Git index, and workspace contents; no new history entry was written."
 
     history = state.get("checkpoint_history", [])
     if not isinstance(history, list):
         return 1, "checkpoint_history is malformed; inspect canonical state before checkpointing."
     previous = state.get("last_checkpoint")
-    if isinstance(previous, dict) and isinstance(previous.get("id"), str):
-        if not any(isinstance(item, dict) and item.get("id") == previous["id"] for item in history):
-            history.append({
-                "id": previous["id"],
-                "created_at_utc": previous.get("created_at_utc", ""),
-                "workspace_id": previous.get("workspace_id"),
-                "workspace_git": previous.get("git", {}),
-                "portable_git": previous.get("portable_git"),
-            })
-    state["checkpoint_history"] = history
+    archive_plan = None
+    if CHECKPOINT_HISTORY_POINTER_KEY in state:
+        if history:
+            return 1, "Archived checkpoint history requires an empty inline history; run preflight and inspect canonical state."
+        if isinstance(previous, dict) and isinstance(previous.get("id"), str):
+            try:
+                archived_record = _record_from_checkpoint(previous)
+                archive_plan = prepare_archive_append(root, state, archived_record)
+            except CheckpointHistoryError as exc:
+                return 1, f"Could not prepare a lossless checkpoint-history append: {exc}"
+        if archive_plan is not None and archive_plan.appended:
+            state[CHECKPOINT_HISTORY_POINTER_KEY] = archive_plan.pointer
+        # The archive is the canonical full-history storage after migration.
+        state["checkpoint_history"] = []
+    else:
+        if isinstance(previous, dict) and isinstance(previous.get("id"), str):
+            if not any(isinstance(item, dict) and item.get("id") == previous["id"] for item in history):
+                history.append({
+                    "id": previous["id"],
+                    "created_at_utc": previous.get("created_at_utc", ""),
+                    "workspace_id": previous.get("workspace_id"),
+                    "workspace_git": previous.get("git", {}),
+                    "portable_git": previous.get("portable_git"),
+                })
+        state["checkpoint_history"] = history
 
     checkpoint_id = _checkpoint_id(str(snapshot["head"]))
     if workspace_id_would_be_created:
@@ -307,6 +336,8 @@ def checkpoint(root: Path, recover_partials: bool, dry_run: bool) -> tuple[int, 
 
     if dry_run:
         lines = [f"Would write checkpoint {checkpoint_id}.", f"Git snapshot contains {len(snapshot['status_entries'])} dirty path entries."]
+        if archive_plan is not None and archive_plan.appended:
+            lines.append("Would append the prior checkpoint to the verified history archive.")
         if workspace_id_would_be_created:
             lines.append("Would create a local Git workspace identity; dry-run leaves Git config unchanged.")
         if recover_partials:
@@ -328,6 +359,8 @@ def checkpoint(root: Path, recover_partials: bool, dry_run: bool) -> tuple[int, 
                 return 1, "Checkpoint exceeds the PROJECT_STATE size limit after workspace identity resolution; no state or handoff files were written."
 
     try:
+        if archive_plan is not None and archive_plan.appended:
+            apply_archive_append(root, archive_plan)
         _atomic_write(state_path, _render_state(state))
         _atomic_write(handoff_path, refreshed_handoff)
         # Capture the final status and file inventory after both writes. PROJECT_STATE
@@ -360,6 +393,8 @@ def checkpoint(root: Path, recover_partials: bool, dry_run: bool) -> tuple[int, 
                 _restore_git_config_values(root, WORKSPACE_CONFIG_KEY, workspace_config_values)
             except (OSError, RuntimeError) as rollback_exc:
                 rollback_errors.append(f".git/config ({WORKSPACE_CONFIG_KEY}): {rollback_exc}")
+        if archive_plan is not None and archive_plan.appended:
+            rollback_errors.extend(rollback_archive_append(root, archive_plan.previous_bytes))
         if rollback_errors:
             return 1, (
                 "Checkpoint failed and rollback was incomplete; inspect canonical files and rerun "

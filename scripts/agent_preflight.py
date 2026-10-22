@@ -15,6 +15,10 @@ from datetime import datetime
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
+from checkpoint_history import ARCHIVE_REL as CHECKPOINT_HISTORY_ARCHIVE_REL
+from checkpoint_history import POINTER_KEY as CHECKPOINT_HISTORY_POINTER_KEY
+from checkpoint_history import inspect_history_storage
+
 SCHEMA_VERSION = 2
 STATE_REL = ".agents/state/PROJECT_STATE.yaml"
 ROADMAP_REL = "docs/01-foundation/ROADMAP.md"
@@ -101,11 +105,16 @@ def _repo_file_hash_inventory(root: Path) -> tuple[dict[str, str], dict[str, obj
             if path.is_symlink():
                 continue
             rel = path.relative_to(root).as_posix()
-            if name in HASH_EXCLUDED_DIRS:
+            if name in HASH_EXCLUDED_DIRS or rel == CHECKPOINT_HISTORY_ARCHIVE_REL:
                 excluded_dirs.append(rel)
             if name in ARTIFACT_DIR_NAMES:
                 artifact_dirs.append(rel)
-        dirs[:] = sorted(name for name in dirs if name not in HASH_EXCLUDED_DIRS and not (base / name).is_symlink())
+        dirs[:] = sorted(
+            name for name in dirs
+            if name not in HASH_EXCLUDED_DIRS
+            and (base / name).relative_to(root).as_posix() != CHECKPOINT_HISTORY_ARCHIVE_REL
+            and not (base / name).is_symlink()
+        )
         for name in sorted(files):
             path = base / name
             rel = path.relative_to(root).as_posix()
@@ -203,7 +212,12 @@ def _portable_path(path: str) -> bool:
     # Never fingerprint credential or conversation content. Git status still
     # reports tracked edits to these paths; ordinary tracked files use the
     # portable manifest, excluding only the two self-referential controls.
-    return path not in PORTABLE_EXCLUDED_PATHS and not _sensitive_relative_path(path)
+    return (
+        path not in PORTABLE_EXCLUDED_PATHS
+        and path != CHECKPOINT_HISTORY_ARCHIVE_REL
+        and not path.startswith(CHECKPOINT_HISTORY_ARCHIVE_REL + "/")
+        and not _sensitive_relative_path(path)
+    )
 
 
 def _git_index_manifest(root: Path) -> dict[str, dict[str, str]]:
@@ -233,7 +247,7 @@ def _git_head_manifest(root: Path, include_control_files: bool = False) -> dict[
         mode, _object_type, object_id = metadata.decode("ascii").split(" ")
         path = os.fsdecode(encoded_path)
         if include_control_files:
-            if _sensitive_relative_path(path) or ".tmp-" in Path(path).name:
+            if _sensitive_relative_path(path) or ".tmp-" in Path(path).name or path == CHECKPOINT_HISTORY_ARCHIVE_REL or path.startswith(CHECKPOINT_HISTORY_ARCHIVE_REL + "/"):
                 continue
         elif not _portable_path(path):
             continue
@@ -314,7 +328,10 @@ def _validate_portable_snapshot(portable: object, errors: list[dict[str, str]]) 
 def _live_git_snapshot(root: Path) -> dict[str, object]:
     branch = _git(root, "branch", "--show-current") or "DETACHED"
     head = _git(root, "rev-parse", "HEAD")
-    raw = _git_bytes(root, "status", "--porcelain=v1", "--untracked-files=all").decode("utf-8", "surrogateescape")
+    raw = _git_bytes(
+        root, "status", "--porcelain=v1", "--untracked-files=all", "--", ".",
+        f":(exclude){CHECKPOINT_HISTORY_ARCHIVE_REL}/**",
+    ).decode("utf-8", "surrogateescape")
     entries = sorted(line for line in raw.splitlines() if line)
     return {
         "branch": branch,
@@ -360,15 +377,36 @@ def _validate_state(state: dict[str, object], errors: list[dict[str, str]]) -> N
     if state["project_id"] != "atari-videochess-rl":
         errors.append({"code": code, "path": STATE_REL, "message": "project_id must be atari-videochess-rl."})
     history = state.get("checkpoint_history", [])
-    if not isinstance(history, list) or any(
-        not isinstance(item, dict)
-        or not isinstance(item.get("id"), str)
-        or not isinstance(item.get("created_at_utc"), str)
-        or not isinstance(item.get("workspace_git", item.get("git")), dict)
-        or (item.get("workspace_id") is not None and (not isinstance(item.get("workspace_id"), str) or not WORKSPACE_ID.fullmatch(item["workspace_id"])))
-        for item in history
-    ):
-        errors.append({"code": code, "path": STATE_REL, "message": "checkpoint_history must preserve prior checkpoint IDs, timestamps, and workspace snapshots."})
+    if CHECKPOINT_HISTORY_POINTER_KEY not in state:
+        if not isinstance(history, list) or any(
+            not isinstance(item, dict)
+            or not isinstance(item.get("id"), str)
+            or not isinstance(item.get("created_at_utc"), str)
+            or not isinstance(item.get("workspace_git", item.get("git")), dict)
+            or (item.get("workspace_id") is not None and (not isinstance(item.get("workspace_id"), str) or not WORKSPACE_ID.fullmatch(item["workspace_id"])))
+            for item in history
+        ):
+            errors.append({"code": code, "path": STATE_REL, "message": "Legacy checkpoint_history must preserve prior checkpoint IDs, timestamps, and workspace snapshots."})
+    else:
+        archive_pointer = state.get(CHECKPOINT_HISTORY_POINTER_KEY)
+        if history != []:
+            errors.append({"code": code, "path": STATE_REL, "message": "Archived checkpoint history requires an empty inline checkpoint_history list."})
+        if not isinstance(archive_pointer, dict) or set(archive_pointer) != {
+            "format_version", "manifest_path", "manifest_sha256", "record_count", "logical_sha256",
+            "source_state_sha256", "source_backup_path", "source_backup_sha256",
+        }:
+            errors.append({"code": code, "path": STATE_REL, "message": "checkpoint_history_archive must match the versioned pointer schema."})
+        elif (
+            type(archive_pointer.get("format_version")) is not int
+            or archive_pointer.get("format_version") != 1
+            or archive_pointer.get("manifest_path") != f"{CHECKPOINT_HISTORY_ARCHIVE_REL}/manifest.json"
+            or not isinstance(archive_pointer.get("record_count"), int)
+            or isinstance(archive_pointer.get("record_count"), bool)
+            or archive_pointer.get("record_count", -1) < 0
+            or any(not isinstance(archive_pointer.get(key), str) or not SHA256.fullmatch(archive_pointer[key]) for key in ("manifest_sha256", "logical_sha256", "source_state_sha256", "source_backup_sha256"))
+            or not isinstance(archive_pointer.get("source_backup_path"), str)
+        ):
+            errors.append({"code": code, "path": STATE_REL, "message": "checkpoint_history_archive contains an unsupported version or invalid path/count/hash."})
 
     governance = state["governance"]
     if not isinstance(governance, dict):
@@ -1215,10 +1253,14 @@ def build_report(root: Path) -> dict[str, object]:
         roadmap_source = _validate_roadmap_source(root, errors)
     state = _load_json_yaml(root, STATE_REL, "STATE_SCHEMA", errors)
     backlog = _load_json_yaml(root, BACKLOG_REL, "BACKLOG_SCHEMA", errors)
+    history_inspection = None
     if state is None:
         state = {}
     else:
         _validate_state(state, errors)
+        history_inspection = inspect_history_storage(root, state)
+        for history_code, history_message in history_inspection.errors:
+            errors.append({"code": history_code, "path": CHECKPOINT_HISTORY_ARCHIVE_REL, "message": history_message})
     if backlog is None:
         backlog = {}
 
@@ -1318,6 +1360,9 @@ def build_report(root: Path) -> dict[str, object]:
             "decision_refs": decision_refs,
             "acceptance_criteria_ids": sorted(acceptance_ids),
             "last_checkpoint_id": snapshot.get("id") if isinstance(snapshot, dict) else None,
+            "checkpoint_history_storage": "archive" if isinstance(state, dict) and CHECKPOINT_HISTORY_POINTER_KEY in state else "legacy_inline",
+            "checkpoint_history_count": len(history_inspection.records) if history_inspection is not None else None,
+            "checkpoint_history_sha256": state.get(CHECKPOINT_HISTORY_POINTER_KEY, {}).get("logical_sha256") if isinstance(state, dict) and isinstance(state.get(CHECKPOINT_HISTORY_POINTER_KEY), dict) else None,
             "last_verified_branch": snapshot_branch,
             "last_verified_head": snapshot_head,
             "live_git_branch": live_branch,

@@ -96,3 +96,7 @@ The full-suite Stockfish failure is `test_stockfish_answers_uci_readiness_withou
 ### F-06 — Governance audit
 
 The M04 plan uses the standard `ready` plan status with owner-review and authorization in a separate note. ADR-0003 remains Proposed. M4-001 remains pending, `engineering.active_milestone` and active task remain null, `start_authorized` remains false, and G3 remains unapproved. R01–R08 are mission-local and do not mark any M4 acceptance criterion passed. The PR is not merged and auto-merge remains disabled.
+
+### Post-merge follow-up — 2026-10-23
+
+The preceding sections preserve the exact status and evidence of the Pre-M4 review/PR #4. PR #4 subsequently merged into `initial-idea` at `16fc01a3fe731c0a0be127026cc64d049c0cf550`. The separate RSK-010 migration work is recorded in [RSK-010 checkpoint-history migration evidence](RSK-010-checkpoint-history-migration-20261023.md). Its implementation is on a feature branch and is not yet integrated; therefore R07 remains conditional for the current integration branch and checkpoint-heavy work must wait for migration merge plus clean-clone verification. On 2026-10-23 the owner issued a direct conditional authorization for M4-001, recorded in [the conditional authorization evidence](M4-001-authorization-conditional-20261023.md); it is not operational while its entry conditions remain unmet. This follow-up does not change any formal M4 acceptance result or approve ADR-0003/G3. The accepted M3 raw release remains unavailable at its documented local path; O-01 remains open and ADR-0003 remains Proposed.
