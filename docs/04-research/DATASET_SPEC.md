@@ -1,6 +1,6 @@
 # M3 Dataset and Provenance Contract
 
-**Status:** The 2026-10-20 source-backed r3/r4 releases and teacher-r2 run are immutable historical evidence for revision `29c411bfd48dca8f1d463c758078175092639ccb`. Corrective hardening is regenerating a separate schema 1.1 release and teacher sidecar; the final artifact identities and acceptance evidence are recorded in the dated corrective report. The archive and bulk records remain in ignored local artifact storage. The third-party package license remains unstated/unverified; no redistribution is authorized.
+**Status:** M3-001 is complete and accepted. Final closure releases r6/r7 share release ID `f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890`; acceptance is recorded in `.agents/evidence/M3-acceptance-20261021.md`. Earlier r3/r4 and corrective releases remain immutable historical records. The archive and bulk release were retained as ignored local artifacts during M3 and are absent from the current checkout. The third-party package license remains unstated/unverified; no redistribution is authorized.
 **Owner:** Dataset shape, lineage, validation, sampling, and split semantics for M3.
 **Related records:** [REQUIREMENTS.md](../01-foundation/REQUIREMENTS.md) owns O-06; [M03 plan](../../.agents/plans/M03-expert-dataset.md) owns execution order; [decision register](DECISION_REGISTER.md) records owner choices.
 

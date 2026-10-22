@@ -2,6 +2,10 @@
 
 This register summarizes remaining owner/instructor decisions and scoped confirmations. A scoped owner decision does not resolve broader assignment or external-rights questions. Current M3 confirmations are recorded in .agents/evidence/M3-authorization-20261020.md and .agents/evidence/M3-source-decision-20261020.md; live requirements retain unresolved portions.
 
+M3-001 was accepted and merged in PR #3 on 2026-10-21; current status and acceptance are recorded in `.agents/state/PROJECT_STATE.yaml` and `.agents/evidence/M3-acceptance-20261021.md`. The release is not present in the current checkout. Its exact identity and local-only/rights boundary remain unchanged.
+
+For M4, [ADR-0003](../02-management/decisions/ADR-0003-pretraining-model-interface.md), [MODEL_DESIGN.md](../03-technical/MODEL_DESIGN.md), and [TRAINING_PROTOCOL.md](TRAINING_PROTOCOL.md) record a proposed behavior-cloning model and M5 interface. The proposal is not accepted yet, does not approve G3, and does not authorize M4. M4 remains pending separate owner authorization.
+
 ## Approval priority for future work
 
 The open items have different timing. This table classifies the first activity each one gates; it does not approve any activity.

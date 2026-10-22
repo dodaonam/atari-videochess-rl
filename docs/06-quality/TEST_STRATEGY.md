@@ -27,6 +27,7 @@
 - the distinction between SHA-256-verified files, large and unreadable files excluded from hashing, excluded directories, and artifact directories requiring independent manifests;
 - orphan temporary files, normal partial recovery, and `--dry-run --recover-partials` with no file or Git metadata mutation;
 - a one-invocation atomic checkpoint from a clean worktree and a fresh Python-process recovery summary.
+- compact checkpoint serialization that preserves every history object, no-op behavior for unchanged snapshots, and a pre-write 4 MiB projected-state guard that leaves canonical files untouched on refusal.
 
 Run from the repository root:
 
@@ -89,6 +90,24 @@ M2 implementation and verification for M2-01 through M2-04 are complete; actual 
 | Benchmark and metric separation | Run a small seeded set of games between identified baselines; record W/D/L, lengths, completion/truncation counts, external failures or interruptions, configuration, and revision. Keep simulator results separate from ALE results. | Per-game records and aggregate summary; schema/report checks prevent simulator metrics being labeled as ALE. Truncations and failures are excluded from W/D/L; no unsupported Elo claim. |
 
 M2 tests remain focused on the acceptance contract; M4/M5 scoring, replay, target networks, and training are outside the simulator. M2 acceptance criteria are M2-01 through M2-04 in [ACCEPTANCE_CRITERIA.md](ACCEPTANCE_CRITERIA.md). [ADR-0002](../02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md) is accepted for the foundational simulator contract; test results are recorded separately in the acceptance record.
+
+## Pre-M4 model-boundary contracts
+
+`tests/test_pre_m4_contracts.py` and `videochess_rl/action_contract.py` cover the input/action boundary only; they do not implement or train a neural model. Synthetic tests verify:
+
+- model-boundary canonical FEN uses legal-en-passant semantics while M2 raw FEN and M3 canonical FEN APIs remain unchanged;
+- a noncapturable or pinned en-passant target normalizes away, while a legally capturable en-passant square remains;
+- legal candidate ordering is stable lexical UCI, preserves promotion suffixes and maps the selected PGN UCI move exactly;
+- White/Black mover orientation, both castling sides, captures, en passant, checking moves, and all promotion pieces;
+- illegal moves are absent; checkmate, stalemate, fivefold repetition, and the seventy-five-move automatic draw return no candidates even when a drawn Board still has legal moves; full move history cannot be replaced by FEN for repetition-sensitive state.
+
+Run with the project environment:
+
+```bash
+python -m unittest discover -s tests -p 'test_pre_m4_contracts.py' -v
+```
+
+These tests establish synthetic contract behavior; they do not revalidate the unavailable real M3 release or establish M4/M5 learning performance. The proposed M4 model and full experiment gates remain in [MODEL_DESIGN.md](../03-technical/MODEL_DESIGN.md) and [TRAINING_PROTOCOL.md](../04-research/TRAINING_PROTOCOL.md).
 
 ## Future project test layers
 
