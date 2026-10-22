@@ -72,7 +72,7 @@ Before resuming work:
 
 Checkpoint before long-running work, after a significant change or gate result, after a blocker changes, and before handoff. Use `python3 scripts/agent_checkpoint.py`; then rerun preflight. The script snapshots both portable tracked content and local workspace observations, preserves the previous checkpoint in `checkpoint_history`, and updates the handoff pointer; it does not mark tasks done or change milestone status.
 
-Atomic writes leave the previous complete state intact if interrupted. Preflight reports orphan `.tmp-*` files and stale handoff IDs. Inspect the reported state and rerun checkpoint with `--recover-partials` to discard only old agent-owned temp files and refresh the pointer. Never read a temp file as canonical state.
+Each canonical file is replaced atomically on its own; the state and handoff pair is not a crash-transactional write. If a caught failure occurs after provisional writes, the checkpoint command restores the original state bytes, handoff bytes, and any local workspace identity it created. A process or power loss between separate file replacements can still leave a stale handoff pointer; preflight reports that condition, and a fresh checkpoint can refresh the pointer after the canonical state is inspected. Preflight also reports orphan `.tmp-*` files. Inspect the report and use `--recover-partials` only for old agent-owned temp files. Never read a temp file as canonical state.
 
 ## 6. Portable YAML and file handling
 

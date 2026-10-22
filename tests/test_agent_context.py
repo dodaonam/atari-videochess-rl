@@ -22,6 +22,7 @@ G1_BASELINE_REVISION = "9449b3f3508c55e1a34893a49c2670498310f78f"
 G1_RECOVERY_FIXTURE = REPO / "tests" / "fixtures" / "g1-recovery-baseline.json"
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(REPO / "scripts"))
+import agent_checkpoint
 import agent_preflight
 
 REQUIRED_FILES = [
@@ -478,6 +479,9 @@ class AgentContextRecoveryTests(unittest.TestCase):
         self.assertIn("no state or handoff files were written", result.stdout)
         self.assertEqual(state_path.read_bytes(), before_state)
         self.assertEqual(handoff_path.read_bytes(), before_handoff)
+        state_dir = self.root / ".agents/state"
+        self.assertEqual(list(state_dir.glob(".PROJECT_STATE.yaml.tmp-*")), [])
+        self.assertEqual(list(state_dir.glob(".SESSION_HANDOFF.md.tmp-*")), [])
         workspace_id_after_result = subprocess.run(
             ["git", "-C", str(self.root), "config", "--local", "--get", "codex.contextWorkspaceId"],
             capture_output=True,
@@ -485,6 +489,128 @@ class AgentContextRecoveryTests(unittest.TestCase):
         )
         workspace_id_after = workspace_id_after_result.stdout.strip() if workspace_id_after_result.returncode == 0 else None
         self.assertEqual(workspace_id_after, workspace_id_before)
+
+    def _prepare_post_write_checkpoint_failure(self) -> tuple[Path, Path, bytes, bytes, list[dict[str, object]]]:
+        commit_all(self.root, "post-write checkpoint failure fixture")
+        initial_code, initial_message = agent_checkpoint.checkpoint(self.root, False, False)
+        self.assertEqual(initial_code, 0, initial_message)
+        commit_all(self.root, "checkpoint baseline")
+
+        subprocess.run(
+            ["git", "-C", str(self.root), "config", "--local", "--unset-all", "codex.contextWorkspaceId"],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        state_path = self.root / ".agents/state/PROJECT_STATE.yaml"
+        handoff_path = self.root / ".agents/state/SESSION_HANDOFF.md"
+        before_state = state_path.read_bytes()
+        before_handoff = handoff_path.read_bytes()
+        expected_history = json.loads(before_state)["checkpoint_history"]
+        readme = self.root / "README.md"
+        readme.write_text(readme.read_text(encoding="utf-8") + "\npost-write failure fixture change\n", encoding="utf-8")
+
+        preflight = subprocess.run(
+            [sys.executable, str(PREFLIGHT), "--repo", str(self.root), "--json"],
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(preflight.returncode, 0, preflight.stderr + preflight.stdout)
+        self.assertTrue(json.loads(preflight.stdout)["ok"])
+        return state_path, handoff_path, before_state, before_handoff, expected_history
+
+    def _assert_post_write_failure_rolled_back(
+        self,
+        result: tuple[int, str],
+        state_path: Path,
+        handoff_path: Path,
+        before_state: bytes,
+        before_handoff: bytes,
+        expected_history: list[dict[str, object]],
+    ) -> None:
+        code, message = result
+        self.assertNotEqual(code, 0)
+        self.assertIn("original state, handoff, and local workspace identity were restored", message)
+        self.assertEqual(state_path.read_bytes(), before_state)
+        self.assertEqual(handoff_path.read_bytes(), before_handoff)
+
+        state = json.loads(state_path.read_bytes())
+        self.assertEqual(state["checkpoint_history"], expected_history)
+        marker = re.search(r"(?m)^<!-- checkpoint-id: ([^\s]+) -->$", handoff_path.read_text(encoding="utf-8"))
+        self.assertIsNotNone(marker)
+        self.assertEqual(state["last_checkpoint"]["id"], marker.group(1))
+        workspace_id = subprocess.run(
+            ["git", "-C", str(self.root), "config", "--local", "--get-all", "codex.contextWorkspaceId"],
+            capture_output=True,
+            text=True,
+        )
+        self.assertNotEqual(workspace_id.returncode, 0)
+
+        preflight = subprocess.run(
+            [sys.executable, str(PREFLIGHT), "--repo", str(self.root), "--json"],
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(preflight.returncode, 0, preflight.stderr + preflight.stdout)
+        report = json.loads(preflight.stdout)
+        self.assertTrue(report["ok"], report)
+        self.assertEqual(report["errors"], [])
+        self.assertIn("WORKTREE_CONTENT_DRIFT", {item["code"] for item in report["warnings"]})
+
+    def test_checkpoint_rolls_back_provisional_files_after_final_snapshot_failure(self) -> None:
+        (
+            state_path,
+            handoff_path,
+            before_state,
+            before_handoff,
+            expected_history,
+        ) = self._prepare_post_write_checkpoint_failure()
+        original_snapshot = agent_checkpoint._live_git_snapshot
+        calls = 0
+
+        def fail_final_snapshot(root: Path) -> dict[str, object]:
+            nonlocal calls
+            calls += 1
+            if calls == 2:
+                raise RuntimeError("injected final snapshot construction failure")
+            return original_snapshot(root)
+
+        with patch.object(agent_checkpoint, "_live_git_snapshot", side_effect=fail_final_snapshot):
+            result = agent_checkpoint.checkpoint(self.root, False, False)
+
+        self.assertEqual(calls, 2)
+        self.assertIn("injected final snapshot construction failure", result[1])
+        self._assert_post_write_failure_rolled_back(
+            result, state_path, handoff_path, before_state, before_handoff, expected_history,
+        )
+
+    def test_checkpoint_rolls_back_provisional_files_after_final_size_guard_failure(self) -> None:
+        (
+            state_path,
+            handoff_path,
+            before_state,
+            before_handoff,
+            expected_history,
+        ) = self._prepare_post_write_checkpoint_failure()
+        original_snapshot = agent_checkpoint._live_git_snapshot
+        calls = 0
+
+        def expand_final_snapshot(root: Path) -> dict[str, object]:
+            nonlocal calls
+            calls += 1
+            snapshot = original_snapshot(root)
+            if calls == 2:
+                snapshot["injected_expansion"] = "x" * (agent_checkpoint.MAX_CHECKPOINT_STATE_BYTES + 1)
+            return snapshot
+
+        with patch.object(agent_checkpoint, "_live_git_snapshot", side_effect=expand_final_snapshot):
+            result = agent_checkpoint.checkpoint(self.root, False, False)
+
+        self.assertEqual(calls, 2)
+        self.assertIn("final workspace snapshot exceeds the PROJECT_STATE size limit", result[1])
+        self._assert_post_write_failure_rolled_back(
+            result, state_path, handoff_path, before_state, before_handoff, expected_history,
+        )
 
     def test_staging_checkpoint_control_files_does_not_create_snapshot_drift(self) -> None:
         commit_all(self.root, "checkpoint control fixture")

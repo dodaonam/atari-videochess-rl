@@ -2,7 +2,8 @@
 
 - **Plan ID:** M04
 - **Milestone:** M4 — supervised pretraining, within the sequence owned by `docs/02-management/EXECUTION_PLAN.md`
-- **Plan status:** Ready for owner review; M4 remains pending and not authorized.
+- **Plan status:** `ready`
+- **Review/authorization note:** Ready for owner review; M4 remains pending and not authorized.
 - **Canonical task:** `M4-001` in `BACKLOG.yaml`, pending separate direct owner authorization.
 - **Dependency:** `M3-001` complete; accepted M3 release identity and split contracts are recorded in `.agents/evidence/M3-acceptance-20261021.md` and `.agents/evidence/M3-final-closure-record-20261021.json`.
 - **Plan and protocol:** [MODEL_DESIGN.md](../../docs/03-technical/MODEL_DESIGN.md), [TRAINING_PROTOCOL.md](../../docs/04-research/TRAINING_PROTOCOL.md), and proposed [ADR-0003](../../docs/02-management/decisions/ADR-0003-pretraining-model-interface.md).

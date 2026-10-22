@@ -20,12 +20,12 @@ The supported preflight/recovery scripts and context tests were reviewed. RSK-01
 |---|---|---|
 | R01 — Baseline and governance integrity | PASS | Remote baseline/merge ancestry, PR #3, M3 acceptance, task/state/schema consistency, and clean-clone preflight verified. M4 remains pending, inactive, and unauthorized; G3 remains unapproved. |
 | R02 — M3 data readiness | CONDITIONAL | Accepted release/split identity, provenance, checksums, counts, and non-redistribution boundary are documented and cross-checked. Raw release files are absent here, so current artifact re-hash and real-data loader execution remain an M4 entry prerequisite. |
-| R03 — M2/M3/M4 interface compatibility | PASS | `canonical_model_fen` and legal candidate boundary have 10 deterministic synthetic tests, including raw/legal/pinned en-passant, both sides, all promotions, castling, captures/check, terminal empty sets, UCI ordering, and repetition-history distinction. M2 and M3 serializers remain unchanged. The final 10/10 focused run is recorded in `logs/PRE-M4-contract-tests-20261022.log`. |
+| R03 — M2/M3/M4 semantic boundary | PASS (semantic boundary only) | The shared FEN/legal-candidate helper has 10 unit fixtures plus two synthetic integration fixtures that compare M2 observation/history replay to validated M3-style game and position records for White/Black to move and legal en passant. M2/M3 serializers are unchanged. This does not establish tensor feature parity, real-release loading, a neural adapter, or executed M5 compatibility. |
 | R04 — M4 model design readiness | PASS | `MODEL_DESIGN.md` specifies exact tensors, mover orientation, history/root limits, network blocks, estimated 121,897 parameters / 250,000 cap, output, masks, checkpoint metadata, costs, and rejected alternatives. ADR-0003 is Proposed, not accepted. |
 | R05 — M5 compatibility readiness | PASS | The design separates behavior logits from Q-values, specifies transferred encoders/hidden scorer and a reinitialized Q head, UCI-keyed legal selection/target evaluation, terminal/truncation rules to implement, paired initialization study, and M5/M6 validation requirements. This is a planned interface, not M5 implementation evidence. |
 | R06 — Training/evaluation protocol readiness | CONDITIONAL | Train/validation/test isolation, played-PGN target, baselines, seeds, initial hyperparameters, fixed sanity test, metrics, stopping/abort limits, 3-hour / 2-GiB caps, and paired M5 protocol are specified. O-01 must be resolved before M4 training; measured neural throughput does not exist. |
-| R07 — Checkpoint-history and recovery risk | PASS | Baseline 3,431,959 bytes / 131 entries remeasured. Compact serialization, unchanged-snapshot no-op, a 4 MiB pre-write guard with 64 KiB reserve, and preservation tests are in place. Clean-worktree checkpoint and recovery are verified; no history was dropped. RSK-010 remains open and lossless migration is required before sustained checkpoint-heavy work. |
-| R08 — Repository verification and handoff | PASS | At `ec5a248`, the full run's only failure is the unrelated M0 Stockfish-presence smoke check; all Pre-M4/M2/M3/context tests pass. Exact-commit clean-clone recovery and preflight pass; the changed-file/sensitive-artifact audit is clean; PR #4's bounded GitHub context/preflight job passes. The missing local Stockfish executable was not installed or fabricated. |
+| R07 — Checkpoint-history and recovery risk | CONDITIONAL | Size guard/no-op/history-preservation controls pass, and caught post-provisional failures restore state, handoff, and newly-created local workspace identity. RSK-010 remains open. At the reviewed `c3b6aa3` state size of 3,795,570 bytes / 137 records, about five same-size changed checkpoints fit by rough recent-growth arithmetic. Complete a lossless migration before a task expected to need more than four changed checkpoints, and before retrying any required checkpoint refused by the size guard. |
+| R08 — Repository verification and handoff | PASS | Final hardening verification is recorded below with exact SHAs, commands, counts, and retained logs. The full Python suite has one disclosed environment-dependent Stockfish smoke-test failure; the relevant hardening, M2/M3, context, preflight, and clean-clone checks pass. GitHub Actions is scoped to its context/preflight workflow. |
 
 ## Verification methodology and outcome
 
@@ -48,7 +48,7 @@ An earlier 236-test run at `b3cc514a3d381bf7dab70932379918ea8df7989c` had two fa
 
 The suite's single environmental failure does not cover a Pre-M4 code path. All applicable local checks and the PR's bounded GitHub checks pass; the missing executable is disclosed as an environment limitation, so R08 is PASS. PR #4 is open against `initial-idea`, has no auto-merge request, and remains unmerged. Its description carries the acceptance matrix, test summary, risk disposition, conditions, and explicit no-M4 statement. Historical test totals in M3 records are not used as evidence for this branch.
 
-The code/evidence commit at `ec5a248801dd2fde1e1fe3eff511c7103823119c` was reverified before opening PR #4. Full-suite output, exact-revision preflight details, and the successful GitHub Actions run are summarized in `logs/PRE-M4-final-validation-20261022.log`. The final documentation/checkpoint follow-up is confined to evidence and canonical recovery metadata; final-HEAD preflight and clean-clone recovery will be recorded in the PR description.
+The code/evidence commit at `ec5a248801dd2fde1e1fe3eff511c7103823119c` was reverified before opening PR #4. Full-suite output, exact-revision preflight details, and the successful GitHub Actions run are summarized in `logs/PRE-M4-final-validation-20261022.log`. This records the initial PR review stage; the exact final hardening head, tests, preflight, clean-clone recovery, and CI are superseded by the independent hardening supplement below.
 
 ## Readiness verdict and entry conditions
 
@@ -63,3 +63,36 @@ Conditions before an authorized M4 run:
 5. Before checkpoint-heavy work, inspect the current state size and obey the 4 MiB guard. RSK-010 remains open; complete and verify the lossless migration before a sustained checkpoint-heavy workload or before the guard blocks a required snapshot.
 
 No M4 model, loader, training code, or checkpoint was created. No M4 criterion is marked passed. M5/M6 implementation, model training, new data access, Stockfish use, ROM activity, Colab/GPU allocation, and cloud spending were not performed. The current canonical state remains: gate G2 approved; G3 unapproved; M4 is next and pending owner authorization; active milestone/task are null; `start_authorized` is false; `M4-001` is pending and depends on completed `M3-001`. The final exact Git HEAD and PR are identified by the feature branch/PR metadata; the portable checkpoint and clean-clone recovery evidence must match that final tree.
+
+## Independent final hardening review — 2026-10-22
+
+This supplement supersedes the initial review's R07 `PASS` classification and the initial 10-test-only description of R03. The earlier measured observations and test results above remain historical evidence for their stated revisions; they are not relabeled as final-head runs.
+
+### F-01 / F-03 — Checkpoint capacity and R07
+
+At reviewed PR baseline `c3b6aa32511267653c32e77a5f44e7c9c3047ce8`, `PROJECT_STATE.yaml` is 3,795,570 bytes and contains 137 checkpoint-history records. The size cap is 4,194,304 bytes, with a 65,536-byte reserve, so the reserved write boundary is 4,128,768 bytes and the remaining capacity is 333,198 bytes. At the observed recent changed-checkpoint growth of 60,047 bytes, this fits five same-size checkpoints with 32,963 bytes remaining. This is a rough estimate; the projected-size guard is authoritative. No history was removed. RSK-010 remains open and R07 is CONDITIONAL: complete and verify lossless migration before a task expected to need more than four changed checkpoints, and before retrying any required checkpoint rejected by the guard. This risk does not prohibit M4 categorically, but it constrains checkpoint-heavy work and does not authorize M4.
+
+The unchanged-snapshot no-op and pre-write size guard remain verified. The new post-write tests additionally force a final snapshot construction error and a final-size overflow after provisional writes; both restore the exact prior state and handoff bytes, preserve history and checkpoint IDs, restore the absent local workspace identity, leave no agent temp files, and leave preflight valid with only the expected dirty-source warning. This is rollback for caught exceptions, not a multi-file crash transaction. Process/power loss between atomic file replacements can still leave a stale handoff marker; preflight reports `HANDOFF_STALE`, and the normal checkpoint command repairs it after canonical state inspection. Rollback failure is reported as incomplete and requires preflight/manual inspection.
+
+### F-04 — R03 semantic-boundary evidence
+
+The existing ten low-level synthetic tests remain. Two additional integration fixtures build valid synthetic M3 game/position records, replay the same UCI sequence through the M2 simulator observation/history contract, then compare model-boundary canonical FEN, side to move, sorted legal UCI set, and played-candidate identity. One exercises White and Black to move; one exercises legal en passant reconstructed from move history. R03 is PASS only for this implemented semantic boundary. No tensor encoder, real M3 release loading, neural integration, or executed M5 behavior is claimed.
+
+### F-05 — Final verification provenance
+
+The table below identifies the exact revision on which each final command ran. `CODE_SHA` is the commit containing the corrective code and tests; a later evidence/checkpoint commit changes documentation and context metadata only. The final PR head is independently checked by preflight, clean-clone recovery, and GitHub Actions.
+
+| Scope | Git SHA | Command/environment | Result | Retained evidence |
+|---|---|---|---|---|
+| Full Python suite | `CODE_SHA` | `/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v`; Python 3.12.3, python-chess 1.11.2, existing CPU environment | Pending final run record | `logs/PRE-M4-hardening-full-suite-20261022.log` |
+| M2/M3/model contracts | `CODE_SHA` | `/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_pre_m4_contracts -v`; synthetic only | Pending final run record | `logs/PRE-M4-hardening-contracts-20261022.log` |
+| Checkpoint failure/recovery | `CODE_SHA` | Targeted `unittest` selection for two post-provisional rollback tests plus no-op, size-guard, and stale-handoff repair | Pending final run record | `logs/PRE-M4-hardening-checkpoint-20261022.log` |
+| Final canonical preflight | `FINAL_SHA` | `python3 scripts/agent_preflight.py --json`; clean clone | Pending final run record | `logs/PRE-M4-hardening-preflight-20261022.log` |
+| Clean-clone recovery | `FINAL_SHA` | `test_clean_clone_recovers_current_committed_state_without_local_artifacts` and direct preflight | Pending final run record | `logs/PRE-M4-hardening-clean-clone-20261022.log` |
+| GitHub CI | `FINAL_SHA` | Repository context/preflight workflow only; not the full chess test suite | Pending final run record | PR check/run URL |
+
+The full-suite Stockfish smoke test is reported with its exact environment failure and overall exit code; it is not described as a passing suite. No Stockfish executable was installed or substituted.
+
+### F-06 — Governance audit
+
+The M04 plan uses the standard `ready` plan status with owner-review and authorization in a separate note. ADR-0003 remains Proposed. M4-001 remains pending, `engineering.active_milestone` and active task remain null, `start_authorized` remains false, and G3 remains unapproved. R01–R08 are mission-local and do not mark any M4 acceptance criterion passed. The PR is not merged and auto-merge remains disabled.

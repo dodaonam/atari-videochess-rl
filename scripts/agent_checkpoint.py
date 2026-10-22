@@ -39,14 +39,12 @@ MAX_CHECKPOINT_STATE_BYTES = 4 * 1024 * 1024
 CHECKPOINT_STATE_SIZE_RESERVE_BYTES = 64 * 1024
 
 
-def _atomic_write(path: Path, content: str) -> None:
+def _atomic_write_bytes(path: Path, content: bytes) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary: str | None = None
     try:
         with tempfile.NamedTemporaryFile(
-            mode="w",
-            encoding="utf-8",
-            newline="\n",
+            mode="wb",
             prefix=f".{path.name}.tmp-",
             dir=path.parent,
             delete=False,
@@ -72,6 +70,44 @@ def _atomic_write(path: Path, content: str) -> None:
                 os.unlink(temporary)
             except FileNotFoundError:
                 pass
+
+
+def _atomic_write(path: Path, content: str) -> None:
+    _atomic_write_bytes(path, content.encode("utf-8"))
+
+
+def _git_config_values(root: Path, key: str) -> list[str]:
+    result = subprocess.run(
+        ["git", "-C", str(root), "config", "--local", "--get-all", key],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode == 0:
+        return result.stdout.splitlines()
+    if result.returncode == 1:
+        return []
+    raise RuntimeError(result.stderr.strip() or f"could not read local Git config {key}")
+
+
+def _restore_git_config_values(root: Path, key: str, values: list[str]) -> None:
+    unset = subprocess.run(
+        ["git", "-C", str(root), "config", "--local", "--unset-all", key],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if unset.returncode not in (0, 5):
+        raise RuntimeError(unset.stderr.strip() or f"could not clear local Git config {key}")
+    for value in values:
+        add = subprocess.run(
+            ["git", "-C", str(root), "config", "--local", "--add", key, value],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if add.returncode:
+            raise RuntimeError(add.stderr.strip() or f"could not restore local Git config {key}")
 
 
 def _partial_candidates(root: Path) -> tuple[list[Path], list[str]]:
@@ -195,11 +231,17 @@ def checkpoint(root: Path, recover_partials: bool, dry_run: bool) -> tuple[int, 
     state_path = root / STATE_REL
     handoff_path = root / HANDOFF_REL
     try:
-        state = json.loads(state_path.read_text(encoding="utf-8"))
-        handoff = handoff_path.read_text(encoding="utf-8")
+        original_state_bytes = state_path.read_bytes()
+        original_handoff_bytes = handoff_path.read_bytes()
+        state = json.loads(original_state_bytes.decode("utf-8"))
+        handoff = original_handoff_bytes.decode("utf-8")
         snapshot = _live_git_snapshot(root)
         workspace_id = _git_workspace_id(root)
         workspace_id_would_be_created = not bool(workspace_id and WORKSPACE_ID.fullmatch(workspace_id))
+        workspace_config_values = (
+            _git_config_values(root, WORKSPACE_CONFIG_KEY)
+            if workspace_id_would_be_created else []
+        )
     except (OSError, UnicodeError, json.JSONDecodeError, RuntimeError) as exc:
         return 1, f"Could not checkpoint canonical state: {exc}"
 
@@ -304,7 +346,31 @@ def checkpoint(root: Path, recover_partials: bool, dry_run: bool) -> tuple[int, 
             raise RuntimeError("final workspace snapshot exceeds the PROJECT_STATE size limit")
         _atomic_write(state_path, final_state)
     except (OSError, TypeError, KeyError, RuntimeError) as exc:
-        return 1, f"Atomic checkpoint write failed; rerun preflight and inspect agent temp files: {exc}"
+        rollback_errors: list[str] = []
+        for path, original_bytes in (
+            (state_path, original_state_bytes),
+            (handoff_path, original_handoff_bytes),
+        ):
+            try:
+                _atomic_write_bytes(path, original_bytes)
+            except (OSError, RuntimeError) as rollback_exc:
+                rollback_errors.append(f"{path.relative_to(root).as_posix()}: {rollback_exc}")
+        if workspace_id_would_be_created:
+            try:
+                _restore_git_config_values(root, WORKSPACE_CONFIG_KEY, workspace_config_values)
+            except (OSError, RuntimeError) as rollback_exc:
+                rollback_errors.append(f".git/config ({WORKSPACE_CONFIG_KEY}): {rollback_exc}")
+        if rollback_errors:
+            return 1, (
+                "Checkpoint failed and rollback was incomplete; inspect canonical files and rerun "
+                "preflight before recovery. Original failure: " + str(exc) + "; rollback: "
+                + "; ".join(rollback_errors)
+            )
+        return 1, (
+            "Checkpoint failed after provisional writes; original state, handoff, and local "
+            "workspace identity were restored. Rerun preflight; ordinary workspace changes "
+            "remain for a later checkpoint. Failure: " + str(exc)
+        )
 
     final_report = build_report(root)
     lines = [f"Checkpoint written: {checkpoint_id}.", f"Git snapshot captured {len(snapshot['status_entries'])} dirty path entries."]

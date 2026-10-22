@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-5e71f75e-20261022T154024349685Z -->
+<!-- checkpoint-id: cp-c3b6aa32-20261022T162122935175Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -15,6 +15,8 @@ This file is a pointer, not a status snapshot. Do not infer current phase, task 
 ## M3 closeout and Pre-M4 pointers
 
 M3 acceptance and integration are recorded in [M3 acceptance](../evidence/M3-acceptance-20261021.md) and [post-merge verification](../evidence/M3-postmerge-integration-verification-20261021.md); PR #3 is merged. Earlier dated M3 sections below preserve their review-stage context and are superseded for live status by those closeout records and canonical state/backlog. For the current readiness review, follow the [Pre-M4 readiness evidence](../evidence/PRE-M4-readiness-20261022.md), [M4 plan](../plans/M04-supervised-pretraining.md), [model design](../../docs/03-technical/MODEL_DESIGN.md), [training protocol](../../docs/04-research/TRAINING_PROTOCOL.md), and proposed [ADR-0003](../../docs/02-management/decisions/ADR-0003-pretraining-model-interface.md). These are review materials, not authorization; use canonical state/backlog for M4 status.
+
+For the independent final Pre-M4 hardening review, use the hardening supplement and exact-revision verification matrix in [PRE-M4-readiness-20261022.md](../evidence/PRE-M4-readiness-20261022.md), the checkpoint failure/rollback contract in [PLANS.md](../PLANS.md), and the updated RSK-010 boundary in [RISK_REGISTER.md](../../docs/02-management/RISK_REGISTER.md). R07 is conditional pending lossless history migration before checkpoint-heavy work; M4 remains pending separate authorization.
 
 ## Post-M2 and Pre-M3 review pointers
 
