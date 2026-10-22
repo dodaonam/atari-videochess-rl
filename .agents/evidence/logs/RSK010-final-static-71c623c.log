@@ -1,0 +1,31 @@
+revision=71c623cb31cee9b476d679a870aa5765d05e12ef
+python=3.12.3
+
+[preflight]
+command=python3 scripts/agent_preflight.py --json
+started_utc=2026-10-22T18:05:06+00:00
+finished_utc=2026-10-22T18:05:07+00:00
+exit_code=0
+ok=true; errors=0; warning=ARTIFACT_MANIFEST_REQUIRED only
+git_snapshot_matches=true; portable_index_matches=true
+engineering.active_milestone=null; engineering.start_authorized=false; M4-001=pending
+
+[history_verify]
+command=python3 scripts/migrate_checkpoint_history.py verify
+started_utc=2026-10-22T18:05:07+00:00
+finished_utc=2026-10-22T18:05:07+00:00
+exit_code=0
+archive_records=143; status=verified
+archive_logical_sha256=5e322d43cc168bc1b15f0c16d1f39e61da458a876c84970441e9e80ae79f753d
+
+[py_compile]
+command=python3 -m py_compile scripts/agent_checkpoint.py scripts/agent_preflight.py scripts/checkpoint_history.py scripts/migrate_checkpoint_history.py tests/test_checkpoint_history.py
+started_utc=2026-10-22T18:05:07+00:00
+finished_utc=2026-10-22T18:05:07+00:00
+exit_code=0
+
+[diff_check]
+command=git diff --check
+started_utc=2026-10-22T18:05:07+00:00
+finished_utc=2026-10-22T18:05:07+00:00
+exit_code=0

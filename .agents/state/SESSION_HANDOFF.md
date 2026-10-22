@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-0d6ce072-20261022T175917693718Z -->
+<!-- checkpoint-id: cp-71c623cb-20261022T181105110634Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -21,6 +21,8 @@ For the independent final Pre-M4 hardening review, use the hardening supplement 
 ## Post-merge checkpoint migration and M4 entry audit — 2026-10-23
 
 PR #4 is merged at `16fc01a3fe731c0a0be127026cc64d049c0cf550`. The lossless RSK-010 migration is implemented on the separate `feature/rsk010-lossless-checkpoint-history` branch and is not yet integrated; see [checkpoint-history operations](../../docs/05-operations/CHECKPOINT_HISTORY.md), [migration evidence](../evidence/RSK-010-checkpoint-history-migration-20261023.md), and the updated risk register. The owner issued direct conditional M4-001 authorization, preserved in [conditional authorization evidence](../evidence/M4-001-authorization-conditional-20261023.md); it is not operational until all listed entry conditions are verified. The exact accepted M3 release is absent from documented local paths, O-01 remains unresolved, and ADR-0003 remains Proposed. Therefore M4-001 remains pending; no active milestone/task or start authorization is recorded, and G3 remains unapproved. Review the migration PR and resolve the owner decisions before any M4 start transition.
+
+The migration is submitted as [draft PR #5](https://github.com/dodaonam/atari-videochess-rl/pull/5) against `initial-idea`. Its initial draft head was `71c623cb31cee9b476d679a870aa5765d05e12ef`; GitHub Actions run 39828940452 passed on that head, and final verification/evidence updates are being pushed before the PR is marked ready. Check the PR for the final pushed head's status. Neither the draft nor a passing workflow constitutes integration or M4 authorization.
 
 ## Post-M2 and Pre-M3 review pointers
 
