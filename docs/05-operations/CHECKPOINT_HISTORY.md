@@ -20,6 +20,8 @@ The checkpoint command verifies the archive even when the ordinary snapshot is u
 
 The canonical state remains small and no longer embeds the full history at each append. History is lossless, so total archive storage and the manifest still grow with the number of changed checkpoints. Appends are immutable and bounded per segment; they do not rewrite the historical records. Review repository/storage policy before the archive approaches 64 MiB. Do not delete or truncate records to meet that review threshold.
 
+Integrity verification currently reads and hashes the byte-exact source backup and every referenced segment on preflight and before archive appends. Verification I/O and decompression therefore grow with total archive size; no latency benchmark has been run near the 64 MiB review threshold. Include preflight/checkpoint latency and memory in that review before increasing the threshold or continuing a high-frequency checkpoint workload.
+
 ## Migration and verification
 
 From the repository root, preview without writing:
