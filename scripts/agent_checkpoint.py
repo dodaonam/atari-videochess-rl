@@ -37,7 +37,6 @@ from checkpoint_history import (
     CheckpointHistoryError,
     _record_from_checkpoint,
     apply_archive_append,
-    inspect_history_storage,
     prepare_archive_append,
     rollback_archive_append,
 )
@@ -264,11 +263,6 @@ def checkpoint(root: Path, recover_partials: bool, dry_run: bool) -> tuple[int, 
     except RuntimeError as exc:
         return 1, f"Could not capture the portable Git index: {exc}"
     if _checkpoint_is_current(state, handoff, snapshot, repo_hashes, inventory, tracked_manifest):
-        if CHECKPOINT_HISTORY_POINTER_KEY in state:
-            inspection = inspect_history_storage(root, state)
-            if inspection.errors:
-                details = "; ".join(f"{code}: {message}" for code, message in inspection.errors)
-                return 1, f"Checkpoint history archive failed integrity verification; refusing no-op: {details}"
         return 0, "Checkpoint already matches state, handoff, Git index, and workspace contents; no new history entry was written."
 
     history = state.get("checkpoint_history", [])

@@ -353,7 +353,7 @@ class CheckpointHistoryArchiveTests(unittest.TestCase):
         self.assertEqual((self.root / ".agents/state/PROJECT_STATE.yaml").read_bytes(), after_first)
         self.assertEqual(_preflight(self.root)["errors"], [])
 
-    def test_unchanged_checkpoint_refuses_noop_when_archive_integrity_fails(self) -> None:
+    def test_unchanged_checkpoint_rejects_corrupt_archive_before_noop(self) -> None:
         self.migrate(2)
         state_before = (self.root / ".agents/state/PROJECT_STATE.yaml").read_bytes()
         manifest = json.loads((self.root / archive.MANIFEST_REL).read_text(encoding="utf-8"))
@@ -361,11 +361,11 @@ class CheckpointHistoryArchiveTests(unittest.TestCase):
         segment.write_bytes(segment.read_bytes() + b"corrupt")
         corrupted_segment = segment.read_bytes()
 
-        with patch.object(agent_checkpoint, "build_report", return_value={"ok": True, "errors": [], "warnings": []}):
-            code, message = agent_checkpoint.checkpoint(self.root, False, False)
+        code, message = agent_checkpoint.checkpoint(self.root, False, False)
 
         self.assertEqual(code, 1)
-        self.assertIn("refusing no-op", message)
+        self.assertIn("Preflight errors prevent checkpoint", message)
+        self.assertIn("CHECKPOINT_HISTORY_CORRUPT", message)
         self.assertEqual((self.root / ".agents/state/PROJECT_STATE.yaml").read_bytes(), state_before)
         self.assertEqual(segment.read_bytes(), corrupted_segment)
 
