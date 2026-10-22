@@ -1,0 +1,8 @@
+Initial Pre-M4 full-suite diagnostic before refreshing the feature-branch checkpoint
+Revision: b3cc514a3d381bf7dab70932379918ea8df7989c
+Completion observed UTC: 2026-10-22T15:17:26.104Z
+Command: /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v
+Result: exit code 1; 236 tests ran in 73.149 seconds; 234 passed and two failed.
+Failure 1: clean-clone recovery compared against the old committed portable checkpoint. Refreshing and committing the feature checkpoint fixed this; the same recovery test passes at 234e550c58e92c7ac3cc5560c03176df57add471.
+Failure 2: Stockfish UCI readiness could not run because no Stockfish executable was available. It remains an environment-only limitation, not a Pre-M4 code change.
+SHA-256 of the unmodified raw captured output: c4af6ae628b5e49696dbba4b07d67f2acef9779d63ad40a0340a33710ca41bde

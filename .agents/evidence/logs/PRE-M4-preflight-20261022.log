@@ -1,0 +1,9 @@
+Pre-M4 exact-revision preflight
+Revision: 234e550c58e92c7ac3cc5560c03176df57add471
+Timestamp UTC: 2026-10-22T15:28:35.181Z
+Command: python3 scripts/agent_preflight.py --json
+Exit code: 0
+Result: ok=true; errors=[]; only warning ARTIFACT_MANIFEST_REQUIRED for the repository's artifact directory.
+Git snapshot mode: portable_commit_transition; portable baseline, semantic state, and repository content checks matched.
+Canonical state: G2 approved; G3 unapproved; M4 pending_user_approval; M4-001 pending; active milestone/task null; start_authorized=false.
+SHA-256 of the captured raw JSON output: 770e63b96430aab2f70e567558a1a179ed7915e85c140db8192c0295452fd936

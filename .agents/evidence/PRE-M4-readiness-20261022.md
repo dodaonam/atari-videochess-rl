@@ -33,11 +33,20 @@ The supported preflight/recovery scripts and context tests were reviewed. RSK-01
 - M3 evidence was checked against the accepted merge/acceptance records. Artifact availability was checked locally without attempting a download or regeneration.
 - Existing simulator, dataset, state/preflight, and checkpoint contracts were inspected. FEN cases were reproduced with synthetic `python-chess` Boards. The new helper tests cover contract behavior without training or loading the absent M3 release.
 - RSK-010 was measured at 3,431,959 bytes / 131 checkpoint records on `aba04d7`. In a separate clean worktree, a changed checkpoint took 0.905 s and added 58,132 bytes plus one record; a repeat took 0.400 s and changed neither bytes nor record count. A projected-size guard test confirms refusal happens before state, handoff, or workspace identity changes. Historical records were compared before/after and preserved.
+- The first feature checkpoint, `cp-b3cc514a-20261022T152651896862Z`, took 0.809 s; the resulting state was 3,551,699 bytes with 133 history-array entries. Its post-write preflight passed with only the artifact-manifest warning. The checkpoint preserves the complete prior history; the 4 MiB guard is a bounded capacity control, not a lossless archive migration.
 - The full initial clean-clone run collected 236 tests: 234 passed and 2 failed. One failure was the clean-clone recovery fixture, because the tested commit still contained the pre-feature portable checkpoint; final evidence will include a rerun after committing the refreshed checkpoint. The other is `test_stockfish_answers_uci_readiness_without_searching`, which cannot find `stockfish` in this environment. This environment-dependent smoke test was not repaired by installation or a fabricated engine. The final suite result below supersedes this initial diagnostic run.
 
 ## Final command evidence
 
-Final exact-revision commands, timestamps, exit codes, test counts, clean-clone recovery, and preflight outcome will be recorded here after the refreshed checkpoint commit. Historical test totals in M3 records are not used as evidence for this branch.
+At `234e550c58e92c7ac3cc5560c03176df57add471`, the full repository command `/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v` ran from 2026-10-22T15:27:05Z to 15:28:27.251Z (81.775 seconds), exit 1: 237 tests, 236 passed, one failure. The only failure was the existing M0 Stockfish-readiness smoke test because no Stockfish executable is available in this environment. The exact-commit clean-clone recovery test passed. Its sanitized record is `logs/PRE-M4-full-suite-20261022.log`; the initial pre-refresh diagnostic and correction are separately retained in `logs/PRE-M4-initial-suite-diagnostic-20261022.log`.
+
+Focused suite counts within the full run: Pre-M4 contracts 10/10, M2 simulator 37/37, M3 data 32/32, and the three checkpoint compaction/no-op/size-guard regressions passed. A separate M3 test invocation also passed 32/32 at parent revision `b3cc514a3d381bf7dab70932379918ea8df7989c`. Compileall of the changed Python implementation/tests and `git diff --check` completed successfully before this commit. The synthetic malformed-PV fixture prints parser diagnostics for its negative case; the test passes.
+
+At the same revision, `python3 scripts/agent_preflight.py --json` ran at 2026-10-22T15:28:35.181Z, exit 0: no errors, expected `ARTIFACT_MANIFEST_REQUIRED` warning only, portable baseline/state/content matched, and M4 remained pending/unauthorized. See `logs/PRE-M4-preflight-20261022.log`.
+
+An earlier 236-test run at `b3cc514a3d381bf7dab70932379918ea8df7989c` had two failures: the feature checkpoint had not yet been committed, so its clean-clone recovery fixture compared against the older portable baseline; and the missing Stockfish executable. After checkpoint refresh/commit, the recovery test passes at `234e550`; the only remaining failure is the missing executable. No dependency or binary was installed.
+
+The suite's single environmental failure does not cover a Pre-M4 code path. R08 remains conditional until exact-final-tree recovery/preflight and the PR's bounded checks are recorded below. Historical test totals in M3 records are not used as evidence for this branch.
 
 ## Readiness verdict and entry conditions
 
