@@ -25,7 +25,7 @@ The supported preflight/recovery scripts and context tests were reviewed. RSK-01
 | R05 — M5 compatibility readiness | PASS | The design separates behavior logits from Q-values, specifies transferred encoders/hidden scorer and a reinitialized Q head, UCI-keyed legal selection/target evaluation, terminal/truncation rules to implement, paired initialization study, and M5/M6 validation requirements. This is a planned interface, not M5 implementation evidence. |
 | R06 — Training/evaluation protocol readiness | CONDITIONAL | Train/validation/test isolation, played-PGN target, baselines, seeds, initial hyperparameters, fixed sanity test, metrics, stopping/abort limits, 3-hour / 2-GiB caps, and paired M5 protocol are specified. O-01 must be resolved before M4 training; measured neural throughput does not exist. |
 | R07 — Checkpoint-history and recovery risk | PASS | Baseline 3,431,959 bytes / 131 entries remeasured. Compact serialization, unchanged-snapshot no-op, a 4 MiB pre-write guard with 64 KiB reserve, and preservation tests are in place. Clean-worktree checkpoint and recovery are verified; no history was dropped. RSK-010 remains open and lossless migration is required before sustained checkpoint-heavy work. |
-| R08 — Repository verification and handoff | CONDITIONAL until final PR validation | Exact-branch full-suite/preflight, changed-file and sensitive-artifact review, final portable checkpoint, and remote PR checks are recorded below. The existing Stockfish-dependent M0 smoke test cannot run in this clean environment because the executable is absent; no software was installed. |
+| R08 — Repository verification and handoff | PASS | At `ec5a248`, the full run's only failure is the unrelated M0 Stockfish-presence smoke check; all Pre-M4/M2/M3/context tests pass. Exact-commit clean-clone recovery and preflight pass; the changed-file/sensitive-artifact audit is clean; PR #4's bounded GitHub context/preflight job passes. The missing local Stockfish executable was not installed or fabricated. |
 
 ## Verification methodology and outcome
 
@@ -46,7 +46,9 @@ At the same revision, `python3 scripts/agent_preflight.py --json` ran at 2026-10
 
 An earlier 236-test run at `b3cc514a3d381bf7dab70932379918ea8df7989c` had two failures: the feature checkpoint had not yet been committed, so its clean-clone recovery fixture compared against the older portable baseline; and the missing Stockfish executable. After checkpoint refresh/commit, the recovery test passes at `234e550`; the only remaining failure is the missing executable. No dependency or binary was installed.
 
-The suite's single environmental failure does not cover a Pre-M4 code path. R08 remains conditional until exact-final-tree recovery/preflight and the PR's bounded checks are recorded below. Historical test totals in M3 records are not used as evidence for this branch.
+The suite's single environmental failure does not cover a Pre-M4 code path. All applicable local checks and the PR's bounded GitHub checks pass; the missing executable is disclosed as an environment limitation, so R08 is PASS. PR #4 is open against `initial-idea`, has no auto-merge request, and remains unmerged. Its description carries the acceptance matrix, test summary, risk disposition, conditions, and explicit no-M4 statement. Historical test totals in M3 records are not used as evidence for this branch.
+
+The code/evidence commit at `ec5a248801dd2fde1e1fe3eff511c7103823119c` was reverified before opening PR #4. Full-suite output, exact-revision preflight details, and the successful GitHub Actions run are summarized in `logs/PRE-M4-final-validation-20261022.log`. The final documentation/checkpoint follow-up is confined to evidence and canonical recovery metadata; final-HEAD preflight and clean-clone recovery will be recorded in the PR description.
 
 ## Readiness verdict and entry conditions
 
