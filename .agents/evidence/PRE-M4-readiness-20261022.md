@@ -1,20 +1,54 @@
 # Pre-M4 Readiness — 2026-10-22
 
-**Status:** Draft while the exact-branch final test suite, checkpointed clean-clone recovery, documentation-link audit, and pull-request checks are pending. This mission-local record will own readiness checks R01–R08; those IDs do not extend the formal acceptance-criteria inventory.
+**Status:** Final readiness record for the proposed Pre-M4 change set. It is not M4 acceptance evidence and does not authorize M4. This mission-local record owns checks R01–R08; those IDs do not extend the formal acceptance-criteria inventory.
 
 ## Verified baseline
 
-The latest verified integration baseline is `initial-idea` at `aba04d7b30fa614e2e7e74789dd610a162dd2cf0`, parented by merged M3 integration commit `2867bd58f29331a7429c649fe9e82fe620157a4d`. PR #3 is merged. M3 acceptance, current artifacts, M4 authorization, and G3 status are recorded in the sections below as verification completes.
+The latest verified integration baseline is `origin/initial-idea` at `aba04d7b30fa614e2e7e74789dd610a162dd2cf0`; its parent is M3 integration commit `2867bd58f29331a7429c649fe9e82fe620157a4d` (PR #3, merged 2026-10-21). The local `initial-idea` ref at the start was stale at `2271b836f4dcf52e62e84413a4c456899138e953`. The primary checkout already had a deleted tracked `atari-videochess-rl-roadmap.html` and untracked `main.py` and `.agents/evidence/M1-04-terminal-success-20261016.zip`; these were observed before edits and preserved. Work was performed on a separate clean clone of the authorized feature branch so those local artifacts were not included.
+
+Canonical records at the verified baseline show G0–G2 approved; M0–M3 task records done; `engineering.active_milestone` and `task_refs.active_task_id` null; M4 next and pending owner authorization; `start_authorized: false`; G3 absent from approved gates. The formal M3 acceptance record marks M3-01 through M3-04 PASS. It identifies release `f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890`, manifest SHA-256 `be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12`, and split SHA-256 `84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e`; counts are 1,000 games / 19,268 retained positions, split 15,196 / 2,015 / 2,057. The accepted source record identifies a 97,163,552-byte archive with SHA-256 `ad374c8fd9fb2fe5f03c1297aa1d47cbbce5caedf6e6e2d387ee816930afdb11` and a 326,476,031-byte PGN member with SHA-256 `0f88f18836be7e321aa1e0211b618e78d4e92065c126c45c95a6a55c1500a8e6`; the accepted scan saw 355,535 games, accepted 355,353 observations, and quarantined 182 empty records. The third-party package license remains unstated; owner permission is limited to internal/local academic use of this exact package, with no redistribution. The accepted teacher sidecar covers only 128 positions (377 centipawn and 3 mate rows); it is not a full-dataset label source.
+
+Baseline evidence reviewed: `PROJECT_STATE.yaml`, `BACKLOG.yaml`, `SESSION_HANDOFF.md`, `BLOCKERS.md`, `VERIFIED_FINDINGS.md`, `PLANS.md`, all active M0–M4 plans, M0 acceptance, M1/G2 verification, M2 acceptance, M3 acceptance and post-merge integration evidence, the roadmap/requirements/engineering plan/acceptance criteria/test strategy, M2 simulator and M3 data implementation/contracts/tests, dependency configuration/lock, Git history and PR #1–#3 metadata. Historical pre-merge M3 records that still say “pending”, “in progress”, or “PR open” describe their dated status and were not rewritten; current status is represented by current canonical state and the post-merge acceptance record. The historical FND-039/FND-040 and M3 pre-merge reports remain preserved as dated evidence.
+
+The raw M3 source archive, release JSONL files, and teacher sidecar are not available in this checkout. `artifacts/` contains only a local M1 manifest. Therefore Pre-M4 verified the accepted release identity and historical source-backed evidence, but did not independently re-hash the unavailable raw release. The third-party curated source package's license remains unstated; this mission did not download, regenerate, or redistribute data. O-01 instructor/assignment guidance remains open and is an M4 run entry condition.
+
+The supported preflight/recovery scripts and context tests were reviewed. RSK-010 was remeasured at the merged baseline and exercised with an isolated clean-worktree checkpoint; full details and the fail-safe disposition are in R07 and the dated risk entry. Runtime for this verification was Python 3.12.3, python-chess 1.11.2, and CPU PyTorch 2.14.1 from the existing project environment; no dependency was installed or changed. `uv` and a Stockfish executable were unavailable in the clean clone. No ROM action, model implementation/training, external compute allocation, or dataset access occurred.
 
 ## R01–R08 readiness matrix
 
 | Check | Status | Evidence |
 |---|---|---|
-| R01 — Baseline and governance integrity | Pending final clean-clone verification | See baseline above and canonical state/backlog. |
-| R02 — M3 data readiness | Pending final artifact-availability review | See accepted M3 closure records and current artifact inventory. |
-| R03 — M2/M3/M4 interface compatibility | Pending recorded test logs | See `MODEL_DESIGN.md` and `test_pre_m4_contracts.py`. |
-| R04 — M4 model design readiness | Pending final design review | See proposed `MODEL_DESIGN.md` and ADR-0003. |
-| R05 — M5 compatibility readiness | Pending final interface review | See `MODEL_DESIGN.md` and M5 comparison protocol. |
-| R06 — Training/evaluation protocol readiness | Pending final protocol review | See `TRAINING_PROTOCOL.md`. |
-| R07 — Checkpoint-history and recovery risk | Pending final test log and clean-clone recovery | See RSK-010 in `RISK_REGISTER.md` and the checkpoint section of `REPRODUCIBILITY.md`. |
-| R08 — Repository verification and handoff | Pending full suite, final preflight, diff review, and PR checks | Complete after branch verification. |
+| R01 — Baseline and governance integrity | PASS | Remote baseline/merge ancestry, PR #3, M3 acceptance, task/state/schema consistency, and clean-clone preflight verified. M4 remains pending, inactive, and unauthorized; G3 remains unapproved. |
+| R02 — M3 data readiness | CONDITIONAL | Accepted release/split identity, provenance, checksums, counts, and non-redistribution boundary are documented and cross-checked. Raw release files are absent here, so current artifact re-hash and real-data loader execution remain an M4 entry prerequisite. |
+| R03 — M2/M3/M4 interface compatibility | PASS | `canonical_model_fen` and legal candidate boundary have 9 deterministic synthetic tests, including raw/legal/pinned en-passant, both sides, all promotions, castling, captures/check, terminal empty sets, UCI ordering, and repetition-history distinction. M2 and M3 serializers remain unchanged. |
+| R04 — M4 model design readiness | PASS | `MODEL_DESIGN.md` specifies exact tensors, mover orientation, history/root limits, network blocks, estimated 121,897 parameters / 250,000 cap, output, masks, checkpoint metadata, costs, and rejected alternatives. ADR-0003 is Proposed, not accepted. |
+| R05 — M5 compatibility readiness | PASS | The design separates behavior logits from Q-values, specifies transferred encoders/hidden scorer and a reinitialized Q head, UCI-keyed legal selection/target evaluation, terminal/truncation rules to implement, paired initialization study, and M5/M6 validation requirements. This is a planned interface, not M5 implementation evidence. |
+| R06 — Training/evaluation protocol readiness | CONDITIONAL | Train/validation/test isolation, played-PGN target, baselines, seeds, initial hyperparameters, fixed sanity test, metrics, stopping/abort limits, 3-hour / 2-GiB caps, and paired M5 protocol are specified. O-01 must be resolved before M4 training; measured neural throughput does not exist. |
+| R07 — Checkpoint-history and recovery risk | PASS | Baseline 3,431,959 bytes / 131 entries remeasured. Compact serialization, unchanged-snapshot no-op, a 4 MiB pre-write guard with 64 KiB reserve, and preservation tests are in place. Clean-worktree checkpoint and recovery are verified; no history was dropped. RSK-010 remains open and lossless migration is required before sustained checkpoint-heavy work. |
+| R08 — Repository verification and handoff | CONDITIONAL until final PR validation | Exact-branch full-suite/preflight, changed-file and sensitive-artifact review, final portable checkpoint, and remote PR checks are recorded below. The existing Stockfish-dependent M0 smoke test cannot run in this clean environment because the executable is absent; no software was installed. |
+
+## Verification methodology and outcome
+
+- Git baseline was fetched and compared before edits; the feature branch was created from the verified `origin/initial-idea` commit. The root checkout's pre-existing changes were left untouched.
+- M3 evidence was checked against the accepted merge/acceptance records. Artifact availability was checked locally without attempting a download or regeneration.
+- Existing simulator, dataset, state/preflight, and checkpoint contracts were inspected. FEN cases were reproduced with synthetic `python-chess` Boards. The new helper tests cover contract behavior without training or loading the absent M3 release.
+- RSK-010 was measured at 3,431,959 bytes / 131 checkpoint records on `aba04d7`. In a separate clean worktree, a changed checkpoint took 0.905 s and added 58,132 bytes plus one record; a repeat took 0.400 s and changed neither bytes nor record count. A projected-size guard test confirms refusal happens before state, handoff, or workspace identity changes. Historical records were compared before/after and preserved.
+- The full initial clean-clone run collected 236 tests: 234 passed and 2 failed. One failure was the clean-clone recovery fixture, because the tested commit still contained the pre-feature portable checkpoint; final evidence will include a rerun after committing the refreshed checkpoint. The other is `test_stockfish_answers_uci_readiness_without_searching`, which cannot find `stockfish` in this environment. This environment-dependent smoke test was not repaired by installation or a fabricated engine. The final suite result below supersedes this initial diagnostic run.
+
+## Final command evidence
+
+Final exact-revision commands, timestamps, exit codes, test counts, clean-clone recovery, and preflight outcome will be recorded here after the refreshed checkpoint commit. Historical test totals in M3 records are not used as evidence for this branch.
+
+## Readiness verdict and entry conditions
+
+**Verdict: GO WITH LIMITS.** The governance baseline, M2/M3/model interfaces, proposed network, supervised protocol, bounded compute plan, and checkpoint fail-safe are specified and covered to the levels noted in R01–R08. This verdict means M4 may be proposed for separate owner authorization; it does not start M4, accept ADR-0003, close G3, or pass any M4 criterion.
+
+Conditions before an authorized M4 run:
+
+1. Owner provides the exact accepted M3 release or separately authorizes a permitted recovery path. Verify the nine manifest-listed release files and split identities before tensorization. Do not download or rebuild from the package on this mission's authority.
+2. Resolve O-01 for behavior cloning and custom PyTorch training, and keep the existing bounded internal/local dataset-use and no-redistribution boundary.
+3. Owner reviews ADR-0003 and either accepts or amends the proposed feature/action architecture. That design review is separate from direct authorization of `M4-001`.
+4. Re-read canonical state/backlog and confirm M3-001 is done, M4 is pending, no milestone/task is active, `start_authorized` is false, and G3 remains unapproved. Only after direct owner authorization is recorded may the task/state transition to in-progress.
+5. Before checkpoint-heavy work, inspect the current state size and obey the 4 MiB guard. RSK-010 remains open; complete and verify the lossless migration before a sustained checkpoint-heavy workload or before the guard blocks a required snapshot.
+
+No M4 model, loader, training code, or checkpoint was created. No M4 criterion is marked passed. M5/M6 implementation, model training, new data access, Stockfish use, ROM activity, Colab/GPU allocation, and cloud spending were not performed. The current canonical state remains: gate G2 approved; G3 unapproved; M4 is next and pending owner authorization; active milestone/task are null; `start_authorized` is false; `M4-001` is pending and depends on completed `M3-001`. The final exact Git HEAD and PR are identified by the feature branch/PR metadata; the portable checkpoint and clean-clone recovery evidence must match that final tree.

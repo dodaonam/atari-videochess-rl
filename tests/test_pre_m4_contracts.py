@@ -108,6 +108,21 @@ class PreM4ChessContractTests(unittest.TestCase):
         self.assertFalse(stale.is_check())
         self.assertEqual(legal_action_candidates(stale), ())
 
+    def test_automatic_repetition_and_seventy_five_move_terminals_have_no_candidates(self) -> None:
+        fivefold = chess.Board()
+        cycle = ("g1f3", "g8f6", "f3g1", "f6g8")
+        for _ in range(4):
+            for uci in cycle:
+                fivefold.push_uci(uci)
+        self.assertTrue(fivefold.is_fivefold_repetition())
+        self.assertTrue(any(fivefold.legal_moves))
+        self.assertEqual(legal_action_candidates(fivefold), ())
+
+        seventy_five = chess.Board("4k3/8/8/8/8/8/4R3/4K3 w - - 150 76")
+        self.assertTrue(seventy_five.is_seventyfive_moves())
+        self.assertTrue(any(seventy_five.legal_moves))
+        self.assertEqual(legal_action_candidates(seventy_five), ())
+
     def test_fen_does_not_replace_history_for_repetition_sensitive_state(self) -> None:
         with_history = chess.Board()
         cycle = ("g1f3", "g8f6", "f3g1", "f6g8")

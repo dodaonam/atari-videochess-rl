@@ -74,7 +74,7 @@ Abort the run on a manifest/hash/count mismatch, missing expected split, invalid
 
 ## 6. M4 metrics and interpretation
 
-Report, by split and seed:
+Report train and validation metrics by seed while selecting the final checkpoint. After the validation-only checkpoint/seed choice is frozen, report test metrics once for that selected checkpoint; do not test every seed or use test values to choose among them:
 
 - legal-candidate negative log likelihood and top-1, top-3, and top-5 accuracy;
 - mean reciprocal rank of the played PGN move and the uniform-legal baseline values;
@@ -83,7 +83,7 @@ Report, by split and seed:
 - validation-selected epoch, train/validation curves, seed variability, and any failed/aborted runs;
 - p50/p95 single-position inference latency at representative candidate counts, examples/candidates per second, peak RSS, model/checkpoint bytes, and hardware/runtime versions.
 
-After freezing the checkpoint and all settings, evaluate the test partition once and record its results. Do not use test performance to select a seed, epoch, or model. Also run a bounded simulator-only greedy-policy check with Stockfish absent: for each of the existing `RandomLegalAgent` and `SimpleHeuristicAgent`, run 10 matched seeds as White and 10 as Black (40 games total), cap each game at the M2 maximum of 400 agent decisions, and impose a 20-minute aggregate cap. Record W/D/L, termination/truncation, decision count, and latency. If the cap interrupts the set, report an incomplete benchmark; do not substitute Elo or an Atari claim.
+After freezing the checkpoint and all settings, evaluate the test partition once for the selected checkpoint and record its results. Do not use test performance to select a seed, epoch, or model. Also run a bounded simulator-only greedy-policy check with the selected checkpoint and Stockfish absent: use seeds `20261030` through `20261039` for each of the existing `RandomLegalAgent` and `SimpleHeuristicAgent`, with each seed paired across both agent colors (40 games total). Cap each game at the M2 maximum of 400 agent decisions, and impose a 20-minute aggregate cap. Record W/D/L, termination/truncation, decision count, and latency. If the cap interrupts the set, report an incomplete benchmark; do not substitute Elo or an Atari claim.
 
 These metrics measure imitation of this PGN sample and a small M2 simulator behavior check. They do not prove best-move quality, general chess strength, Double DQN learning, transfer to new games, or actual Atari performance.
 

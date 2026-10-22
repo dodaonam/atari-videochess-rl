@@ -99,7 +99,7 @@ M2 tests remain focused on the acceptance contract; M4/M5 scoring, replay, targe
 - a noncapturable or pinned en-passant target normalizes away, while a legally capturable en-passant square remains;
 - legal candidate ordering is stable lexical UCI, preserves promotion suffixes and maps the selected PGN UCI move exactly;
 - White/Black mover orientation, both castling sides, captures, en passant, checking moves, and all promotion pieces;
-- illegal moves are absent, checkmate/stalemate return no candidates, and full move history cannot be replaced by FEN for repetition-sensitive state.
+- illegal moves are absent; checkmate, stalemate, fivefold repetition, and the seventy-five-move automatic draw return no candidates even when a drawn Board still has legal moves; full move history cannot be replaced by FEN for repetition-sensitive state.
 
 Run with the project environment:
 

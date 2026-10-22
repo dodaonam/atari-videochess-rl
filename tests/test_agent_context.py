@@ -444,6 +444,12 @@ class AgentContextRecoveryTests(unittest.TestCase):
         commit_all(self.root, "checkpoint size guard fixture")
         initial_checkpoint = self.run_script(CHECKPOINT)
         self.assertEqual(initial_checkpoint.returncode, 0, initial_checkpoint.stderr + initial_checkpoint.stdout)
+        subprocess.run(
+            ["git", "-C", str(self.root), "config", "--local", "--unset-all", "codex.contextWorkspaceId"],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
         state_path = self.root / ".agents/state/PROJECT_STATE.yaml"
         handoff_path = self.root / ".agents/state/SESSION_HANDOFF.md"
         state = json.loads(state_path.read_text(encoding="utf-8"))

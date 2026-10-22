@@ -1,6 +1,6 @@
 # Proposed M4 Model Design and M5 Interface
 
-**Status:** Recommended implementation contract for M4, pending owner review and separate M4 authorization. No neural model or training run exists yet. The architecture preference in ADR-0002 remains open until this proposal is accepted through the project decision process.
+**Status:** Recommended implementation contract for M4, pending owner review and separate M4 authorization. No neural model or training run exists yet. ADR-0002 accepts the M2 state/action foundation while leaving its M4/M5 scorer as a proposal; this document and ADR-0003 refine that proposal without accepting it.
 
 **Purpose:** Define a deterministic input/action boundary from M3 PGN positions and M2 simulator decisions, while keeping M4 behavior logits separate from M5 Double DQN values.
 
@@ -57,7 +57,7 @@ The neural caller also receives terminal status from `Board.outcome(claim_draw=F
 
 The target is an exact UCI move copied from M3 `played_move_uci`. At collation time only, the target UCI is resolved to its index in that row's candidate list. The loader fails if the target is absent or duplicated. M3 `played_candidate_id` remains an audit identity; the temporary row index is not stored as an action label.
 
-Batching pads the variable candidate count `N` and history length `T`. Loss and selection apply `candidate_mask`; terminal `N=0` rows are handled by the caller and never reduced with `max()` over an empty tensor. The raw candidate scorer should return finite scores; padding is excluded by the mask rather than by assigning an infinite model output.
+Batching pads the variable candidate count `N` and history length `T`. Loss and selection apply `candidate_mask`; checkmate, stalemate, fivefold repetition, and the seventy-five-move automatic draw have `N=0` and are handled by the caller, never reduced with `max()` over an empty tensor. `legal_action_candidates()` checks `Board.outcome(claim_draw=False)` before enumerating moves, because an automatic draw can be terminal while legal moves remain on the board. The raw candidate scorer should return finite scores; padding is excluded by the mask rather than by assigning an infinite model output.
 
 ## 5. Proposed network and output
 
@@ -69,7 +69,7 @@ Recommended small implementation:
 4. Candidate encoder: gather the board feature at each candidate's mover-oriented origin and destination squares and concatenate to 128 local board features; project to 64 with ReLU. Separately concatenate origin/destination embeddings (64×16 each), promotion embedding (5×8), and four binary flags (44 total); project to 32 with ReLU. Concatenate those two candidate vectors and project `Linear(96,64)` + ReLU. Output `[B,N,64]`.
 5. Shared scorer: concatenate the 128 pooled board, 64 history, 16 scalar, and 64 candidate features; apply `Linear(272,128)` + ReLU, then one scalar output layer per candidate.
 
-With the listed biases enabled, this design has an estimated 121,897 trainable parameters: board encoder 38,784; history encoder 29,936; state metadata 112; candidate embeddings/projections 17,992; shared scorer and logit head 35,073. M4 tests must assert the implemented count against the chosen module configuration. Set a 250,000-parameter hard cap for the initial model. Expected inference work is one board pass and one history pass per state plus an independent small scoring pass for each legal candidate: `O(8×8 board encoding + T history tokens + N candidate scores)`. At most the supplied legal candidates are scored; no fixed global move table or Stockfish call is involved. M5 can cache the absolute-history GRU state while appending verified plies, then score the next legal candidate list.
+With the listed biases enabled, this design has an estimated 121,897 trainable parameters: board encoder 38,784; history encoder 29,936; state metadata 112; candidate embeddings/projections 17,992; shared scorer and logit head 35,073. M4 tests must assert the implemented count against the chosen module configuration. Set a 250,000-parameter hard cap for the initial model. Expected work per decision includes authoritative Board reconstruction/history checks, terminal-outcome and legal-move enumeration, one board-encoder pass and one history-encoder pass, then an independent small scoring pass per legal candidate. The neural portion is `O(8×8 board encoding + T history tokens + N candidate scores)`; actual feature-building and inference latency must be measured. At most the supplied legal candidates are scored; no fixed global move table or Stockfish call is involved. M5 can cache the absolute-history GRU state while appending verified plies, then score the next legal candidate list.
 
 M4 returns `policy_logits [B,N]`: each scalar is an uncalibrated preference within that position's supplied legal set. Softmax is applied only over valid candidates when computing behavior probabilities. These logits are not a value estimate, reward, teacher centipawn score, or Q-value.
 

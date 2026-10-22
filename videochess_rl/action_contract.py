@@ -56,6 +56,8 @@ def legal_action_candidates(board: chess.Board) -> tuple[ActionCandidate, ...]:
         raise TypeError("board must be a python-chess Board")
     if board.chess960:
         raise ValueError("model contract supports standard chess, not Chess960")
+    if board.outcome(claim_draw=False) is not None:
+        return ()
 
     rank_flip = 56 if board.turn == chess.BLACK else 0
     candidates = []
