@@ -1,7 +1,7 @@
 # Project Overview
 
 **Audience:** Project owner, instructors/reviewers, and engineering agents.<br>
-**Status:** Project overview; normative constraints remain in [`REQUIREMENTS.md`](REQUIREMENTS.md). M0–M2 implementation is present on the integration branch. Live gate, task, and authorization status are owned by canonical state and backlog.
+**Status:** Project overview; normative constraints remain in [`REQUIREMENTS.md`](REQUIREMENTS.md). M0–M3 are implemented and accepted on the integration branch. The accepted M3 raw source/release/teacher artifacts are not present in every checkout. Live gate, task, and authorization status are owned by canonical state and backlog.
 
 ## Purpose
 
@@ -26,4 +26,4 @@ This overview does not own live phase or task status. Read `.agents/state/PROJEC
 
 ## Implementation boundary
 
-The integrated repository includes the technical bootstrap, verified ALE feasibility layer, and accepted python-chess simulator/baselines. Expert-data contracts are proposed in `docs/04-research/`; no production M3 dataset, supervised model, Double DQN trainer, or learned Atari inference path is implemented. The source, Stockfish, assignment, compute, evaluation, and M3 authorization questions remain in `REQUIREMENTS.md`.
+The integrated repository includes the technical bootstrap, verified ALE feasibility layer, accepted python-chess simulator/baselines, and M3 data pipeline. M3's source-backed release was accepted, but its raw source, release, and teacher artifacts are absent from this checkout; see the acceptance and post-merge records. The M4 model/training design is proposed only. No supervised model, Double DQN trainer, or learned Atari inference path is implemented. Remaining source-rights, assignment, compute, evaluation, and M4 authorization conditions are recorded in `REQUIREMENTS.md` and canonical state.

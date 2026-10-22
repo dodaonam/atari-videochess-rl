@@ -2295,7 +2295,27 @@
       ],
       "next_action": "",
       "plan_ref": ".agents/plans/M03-expert-dataset.md"
+    },
+    {
+      "id": "M4-001",
+      "title": "Implement and verify the bounded supervised behavior baseline",
+      "milestone": "M4",
+      "status": "pending",
+      "depends_on": [
+        "M3-001"
+      ],
+      "requires_user_gate_approval": null,
+      "blocker_ids": [],
+      "evidence": [],
+      "acceptance_criteria_ids": [
+        "M4-01",
+        "M4-02",
+        "M4-03",
+        "M4-04"
+      ],
+      "next_action": "Await owner review of the Pre-M4 readiness PR and a separate direct authorization for M4-001; do not start implementation or training before authorization.",
+      "plan_ref": ".agents/plans/M04-supervised-pretraining.md"
     }
   ],
-  "updated_at_utc": "2026-10-21T16:32:13Z"
+  "updated_at_utc": "2026-10-22T15:07:39Z"
 }

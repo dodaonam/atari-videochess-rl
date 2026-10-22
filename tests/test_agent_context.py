@@ -397,6 +397,89 @@ class AgentContextRecoveryTests(unittest.TestCase):
         self.assertNotIn("GIT_SNAPSHOT_DRIFT", after.stdout)
         self.assertNotIn("WORKTREE_CONTENT_DRIFT", after.stdout)
 
+    def test_checkpoint_compacts_serialization_without_changing_history(self) -> None:
+        commit_all(self.root, "compact checkpoint fixture")
+        state_path = self.root / ".agents/state/PROJECT_STATE.yaml"
+        before = json.loads(state_path.read_text(encoding="utf-8"))
+        expected_history = list(before.get("checkpoint_history", []))
+        previous = before["last_checkpoint"]
+        if not any(item.get("id") == previous["id"] for item in expected_history):
+            expected_history.append({
+                "id": previous["id"],
+                "created_at_utc": previous.get("created_at_utc", ""),
+                "workspace_id": previous.get("workspace_id"),
+                "workspace_git": previous.get("git", {}),
+                "portable_git": previous.get("portable_git"),
+            })
+
+        checkpoint = self.run_script(CHECKPOINT)
+
+        self.assertEqual(checkpoint.returncode, 0, checkpoint.stderr + checkpoint.stdout)
+        serialized = state_path.read_text(encoding="utf-8")
+        after = json.loads(serialized)
+        self.assertEqual(after["checkpoint_history"], expected_history)
+        self.assertEqual(serialized, json.dumps(after, separators=(",", ":"), ensure_ascii=False) + "\n")
+        self.assertEqual(serialized.count("\n"), 1)
+        self.assertEqual(self.run_script(PREFLIGHT).returncode, 0)
+
+    def test_repeated_checkpoint_does_not_append_unchanged_snapshot(self) -> None:
+        commit_all(self.root, "repeat checkpoint fixture")
+        first = self.run_script(CHECKPOINT)
+        self.assertEqual(first.returncode, 0, first.stderr + first.stdout)
+        state_path = self.root / ".agents/state/PROJECT_STATE.yaml"
+        handoff_path = self.root / ".agents/state/SESSION_HANDOFF.md"
+        state_before = state_path.read_bytes()
+        handoff_before = handoff_path.read_bytes()
+        history_before = json.loads(state_before)["checkpoint_history"]
+
+        second = self.run_script(CHECKPOINT)
+
+        self.assertEqual(second.returncode, 0, second.stderr + second.stdout)
+        self.assertIn("no new history entry was written", second.stdout)
+        self.assertEqual(state_path.read_bytes(), state_before)
+        self.assertEqual(handoff_path.read_bytes(), handoff_before)
+        self.assertEqual(json.loads(state_path.read_bytes())["checkpoint_history"], history_before)
+
+    def test_checkpoint_size_limit_fails_before_state_or_workspace_mutation(self) -> None:
+        commit_all(self.root, "checkpoint size guard fixture")
+        initial_checkpoint = self.run_script(CHECKPOINT)
+        self.assertEqual(initial_checkpoint.returncode, 0, initial_checkpoint.stderr + initial_checkpoint.stdout)
+        state_path = self.root / ".agents/state/PROJECT_STATE.yaml"
+        handoff_path = self.root / ".agents/state/SESSION_HANDOFF.md"
+        state = json.loads(state_path.read_text(encoding="utf-8"))
+        state["checkpoint_history"] = [
+            {
+                "id": f"cp-size-fixture-{index:03d}",
+                "created_at_utc": "2026-10-22T00:00:00Z",
+                "workspace_git": {"preserved_payload": "x" * 70_000},
+            }
+            for index in range(60)
+        ]
+        state["last_checkpoint"]["portable_git"]["state_sha256"] = agent_preflight._portable_state_sha256(state)
+        state_path.write_text(json.dumps(state, separators=(",", ":"), ensure_ascii=False) + "\n", encoding="utf-8")
+        readme = self.root / "README.md"
+        readme.write_text(readme.read_text(encoding="utf-8") + "\nContent change for size-guard fixture.\n", encoding="utf-8")
+        before_state = state_path.read_bytes()
+        before_handoff = handoff_path.read_bytes()
+        workspace_id_before_result = subprocess.run(
+            ["git", "-C", str(self.root), "config", "--local", "--get", "codex.contextWorkspaceId"], capture_output=True,
+        )
+        workspace_id_before = workspace_id_before_result.stdout.decode().strip() if workspace_id_before_result.returncode == 0 else None
+
+        result = self.run_script(CHECKPOINT)
+
+        self.assertNotEqual(result.returncode, 0, result.stdout)
+        self.assertIn("no state or handoff files were written", result.stdout)
+        self.assertEqual(state_path.read_bytes(), before_state)
+        self.assertEqual(handoff_path.read_bytes(), before_handoff)
+        workspace_id_after_result = subprocess.run(
+            ["git", "-C", str(self.root), "config", "--local", "--get", "codex.contextWorkspaceId"],
+            capture_output=True,
+            text=True,
+        )
+        workspace_id_after = workspace_id_after_result.stdout.strip() if workspace_id_after_result.returncode == 0 else None
+        self.assertEqual(workspace_id_after, workspace_id_before)
+
     def test_staging_checkpoint_control_files_does_not_create_snapshot_drift(self) -> None:
         commit_all(self.root, "checkpoint control fixture")
         checkpoint = self.run_script(CHECKPOINT)

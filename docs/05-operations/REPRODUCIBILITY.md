@@ -1,6 +1,6 @@
 # Reproducibility and Artifact Lifecycle
 
-**Status:** Operational contract with a source-backed M3 data release and bounded teacher run generated on 2026-10-20. The raw artifacts remain local and ignored; portable manifests and verification records are committed. No model was trained.
+**Status:** M3 was accepted and merged on 2026-10-21. The exact source-backed release and bounded teacher run are recorded in portable manifests, but raw artifacts are absent from this checkout. No model was trained; M4 remains pending owner authorization.
 **Canonical ownership:** [PROJECT_STATE.yaml](../../.agents/state/PROJECT_STATE.yaml) owns current phase and checkpoint; [BACKLOG.yaml](../../.agents/tasks/BACKLOG.yaml) owns task evidence; per-run manifests own experiment config and metrics.
 
 ## 1. Local development environment
@@ -58,6 +58,14 @@ The ordinary-file size trigger has fired: the state measured 2,810,555 bytes and
 After the 2026-10-21 corrective-evidence checkpoint (`cp-fbdd14d6-20261021T022727431901Z`), `PROJECT_STATE.yaml` measures 3,862,087 bytes with 124 retained entries. The configured 4 MiB and 128-entry triggers have not fired, but both are near. The checkpoint completed normally and preserved the prior history; no migration was attempted. Avoid unnecessary further checkpoints and design/test a lossless migration before any checkpoint-heavy follow-on work.
 
 M3 source acquisition must use the exact approved archive/member identity and bounded streaming. The official Lichess database uses `.pgn.zst` files; do not assume the Python environment has a Zstandard decoder. Confirm the selected source's actual format before retrieval and make any pinned dependency/host-tool choice separately. ZIP safety requirements, decompressed limits, and staging behavior are specified in [DATASET_SPEC.md](../04-research/DATASET_SPEC.md).
+
+### Current Pre-M4 checkpoint disposition — 2026-10-22
+
+At the verified `initial-idea` baseline `aba04d7b30fa614e2e7e74789dd610a162dd2cf0`, `PROJECT_STATE.yaml` was 3,431,959 bytes with 131 checkpoint-history entries. A historical pre-merge state at `e32e1e63` was 4,205,298 bytes with 129 entries; the post-merge compact JSON-compatible YAML representation measured 3,372,345 bytes with 130 entries, then 3,431,959 bytes with 131 entries. The full state and its history are preserved; formatting compaction explains the size decrease and is not a history migration.
+
+`agent_checkpoint.py` now writes compact JSON-compatible YAML, detects an unchanged state/handoff/index/workspace and avoids appending a duplicate history entry, and refuses a projected write above 4 MiB with a 64 KiB reserve before touching state, handoff, or local workspace identity. It does not truncate or alter existing history records. Regression tests cover semantic history preservation, repeated no-op behavior, and size-guard non-mutation. A clean base worktree probe preserved all 131 prior records in the first checkpoint (3,490,091 bytes, a 58,132-byte increase, 0.905 seconds); the immediate repeat changed neither state nor handoff and added no entry (0.400 seconds). Preflight passed in that probe, with only the expected uncommitted-script drift and artifact-manifest warnings. Meaningful future checkpoints still grow the history; perform and verify a lossless history migration before the fail-safe size guard is reached during a checkpoint-heavy task.
+
+The accepted M3 release ID and manifest SHA are `f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890` and `be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12`. `artifacts/m3/` is absent from this checkout. Use only the exact retained release after independently verifying its nine files against the accepted manifest. Historical build/reproduction commands below do not authorize downloading or rebuilding the source; if the exact accepted artifact cannot be located, stop and ask the owner for a permitted recovery path.
 
 ## 5. Safe execution defaults
 
