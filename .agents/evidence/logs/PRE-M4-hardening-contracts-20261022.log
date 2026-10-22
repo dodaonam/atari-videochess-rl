@@ -1,0 +1,24 @@
+revision: 181d6b2e9eb8e49b8cd5cf7aa0401f763d5678f8
+command: /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_pre_m4_contracts -v
+python: 3.12.3
+started_utc: 2026-10-22T16:23:37.152125+00:00
+finished_utc: 2026-10-22T16:23:37.296836+00:00
+exit_code: 0
+
+test_all_promotion_pieces_are_distinct_legal_candidates (tests.test_pre_m4_contracts.PreM4ChessContractTests.test_all_promotion_pieces_are_distinct_legal_candidates) ... ok
+test_automatic_repetition_and_seventy_five_move_terminals_have_no_candidates (tests.test_pre_m4_contracts.PreM4ChessContractTests.test_automatic_repetition_and_seventy_five_move_terminals_have_no_candidates) ... ok
+test_black_to_move_uses_mover_oriented_square_features (tests.test_pre_m4_contracts.PreM4ChessContractTests.test_black_to_move_uses_mover_oriented_square_features) ... ok
+test_candidate_order_and_identity_match_m2_and_m3_contracts (tests.test_pre_m4_contracts.PreM4ChessContractTests.test_candidate_order_and_identity_match_m2_and_m3_contracts) ... ok
+test_castling_captures_and_check_flags_come_from_the_authoritative_board (tests.test_pre_m4_contracts.PreM4ChessContractTests.test_castling_captures_and_check_flags_come_from_the_authoritative_board) ... ok
+test_fen_does_not_replace_history_for_repetition_sensitive_state (tests.test_pre_m4_contracts.PreM4ChessContractTests.test_fen_does_not_replace_history_for_repetition_sensitive_state) ... ok
+test_legal_en_passant_survives_normalization_and_has_stable_identity (tests.test_pre_m4_contracts.PreM4ChessContractTests.test_legal_en_passant_survives_normalization_and_has_stable_identity) ... ok
+test_m2_and_m3_history_reconstruction_preserves_en_passant_target (tests.test_pre_m4_contracts.PreM4ChessContractTests.test_m2_and_m3_history_reconstruction_preserves_en_passant_target) ... ok
+test_m2_observation_history_matches_m3_positions_for_white_and_black (tests.test_pre_m4_contracts.PreM4ChessContractTests.test_m2_observation_history_matches_m3_positions_for_white_and_black) ... ok
+test_model_fen_normalizes_unavailable_en_passant_target (tests.test_pre_m4_contracts.PreM4ChessContractTests.test_model_fen_normalizes_unavailable_en_passant_target) ... ok
+test_pinned_en_passant_is_not_encoded_as_a_legal_capture (tests.test_pre_m4_contracts.PreM4ChessContractTests.test_pinned_en_passant_is_not_encoded_as_a_legal_capture) ... ok
+test_terminal_mate_and_stalemate_have_empty_candidate_sets (tests.test_pre_m4_contracts.PreM4ChessContractTests.test_terminal_mate_and_stalemate_have_empty_candidate_sets) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.016s
+
+OK

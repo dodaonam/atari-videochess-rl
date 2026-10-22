@@ -37,7 +37,7 @@ The executor must also:
 - Reconfirm that the exact local/internal use boundary remains acceptable. The third-party curated package license is unstated; no bulk source or derived data may be uploaded or redistributed.
 - Resolve the applicable assignment/instructor rule for behavior cloning and custom PyTorch training under O-01 before any M4 run; this mission's design work does not close that question.
 - Use local CPU for the initial run. Any Colab/GPU, cloud storage, paid compute, new dataset use, or expanded teacher role requires separate authorization.
-- Check `PROJECT_STATE.yaml` size before checkpointing. The verified compact writer limits future state snapshots to 4 MiB and avoids duplicate unchanged snapshots; if the projected next state would exceed the bound, complete and verify a lossless migration before continuing.
+- Check `PROJECT_STATE.yaml` size before checkpointing. The 4 MiB compact-writer guard prevents an oversized write but is not indefinite history storage. RSK-010 remains open: complete and verify a lossless migration before a task expected to need more than two changed checkpoints at the then-current measured capacity, and before retrying any required checkpoint refused by the guard.
 
 ## 3. Data and state/action contracts
 

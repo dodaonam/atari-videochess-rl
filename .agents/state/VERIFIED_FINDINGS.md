@@ -307,3 +307,17 @@ Findings are append-only historical observations. FND-021 and FND-022 record the
 - **Finding:** M2's automatic-outcome boundary includes checkmate, stalemate, fivefold repetition, and the seventy-five-move rule. Fivefold repetition and the seventy-five-move rule can leave legal moves in `Board.legal_moves`; therefore `legal_action_candidates()` checks `Board.outcome(claim_draw=False)` before listing candidates. Automatic terminal positions yield an empty candidate set while claim-only draws remain outside the M2 action contract.
 - **Evidence:** `videochess_rl/action_contract.py`; `tests/test_pre_m4_contracts.py::PreM4ChessContractTests.test_automatic_repetition_and_seventy_five_move_terminals_have_no_candidates`; `.agents/evidence/PRE-M4-readiness-20261022.md`.
 - **Impact:** A future inference/Double DQN adapter will not score legal moves after an automatic terminal outcome. The simulator Board remains the rules/terminal source of truth; no terminal condition is inferred from a neural score.
+
+## FND-044 — Caught post-provisional checkpoint failures restore the prior pair
+
+- **Status:** verified by fault injection on code revision `181d6b2e9eb8e49b8cd5cf7aa0401f763d5678f8` (2026-10-22).
+- **Finding:** A final workspace-snapshot exception and a final serialized-size overflow, each injected after provisional state/handoff writes, both return failure and restore the exact original `PROJECT_STATE.yaml` and `SESSION_HANDOFF.md` bytes. The prior checkpoint IDs and full history remain unchanged; a workspace identity created for the failed attempt is restored to its original absence; no agent temp files remain. Actual preflight on the fixture succeeds with only expected dirty-source drift.
+- **Evidence:** `scripts/agent_checkpoint.py`; `tests/test_agent_context.py::AgentContextRecoveryTests.test_checkpoint_rolls_back_provisional_files_after_final_snapshot_failure`; `tests/test_agent_context.py::AgentContextRecoveryTests.test_checkpoint_rolls_back_provisional_files_after_final_size_guard_failure`; `.agents/evidence/logs/PRE-M4-hardening-checkpoint-20261022.log`.
+- **Impact:** Caught operational exceptions no longer leave a half-refreshed checkpoint pair. Separate atomic file replacements are still not a transaction against process/power loss; preflight detects a stale handoff marker, and incomplete rollback requires inspection before further work.
+
+## FND-045 — Synthetic M2 observations match validated M3 replay at the semantic boundary
+
+- **Status:** verified with deterministic synthetic records on code revision `181d6b2e9eb8e49b8cd5cf7aa0401f763d5678f8` (2026-10-22).
+- **Finding:** Two integration fixtures construct M3-style game and position records, replay matching UCI sequences through the M2 observation history, and compare canonical model FEN, mover, legal UCI set, and played-candidate identity. Coverage includes White/Black to move and legal en passant. The 12 Pre-M4 boundary tests pass; no real accepted M3 release, tensor encoder, neural adapter, or M5 execution is exercised.
+- **Evidence:** `tests/test_pre_m4_contracts.py::PreM4ChessContractTests.test_m2_observation_history_matches_m3_positions_for_white_and_black`; `tests/test_pre_m4_contracts.py::PreM4ChessContractTests.test_m2_and_m3_history_reconstruction_preserves_en_passant_target`; `.agents/evidence/logs/PRE-M4-hardening-contracts-20261022.log`.
+- **Impact:** R03 is PASS for the implemented semantic boundary only. R03 does not establish tensor feature parity or neural/M5 compatibility by execution.
