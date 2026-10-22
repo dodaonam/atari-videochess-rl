@@ -1,0 +1,11 @@
+pr=5
+workflow=Repository preflight
+run_id=39829724318
+head_sha=ff1581084839c134e3e31e211e8c6c79c591d1f0
+url=https://github.com/dodaonam/atari-videochess-rl/actions/runs/39829724318
+created_at_utc=2026-10-22T18:15:21Z
+completed_at_utc=2026-10-22T18:15:51Z
+status=completed
+conclusion=success
+workflow_scope=agent_preflight.py; tests.test_agent_context; tests.test_export_review_bundle
+scope_note=This GitHub workflow does not run the full repository chess/simulator suite.

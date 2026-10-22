@@ -83,4 +83,10 @@ The evidence/checkpoint commit following the tested implementation code passed a
 - At draft creation, GitHub's `context` workflow was pending at [run 39828940452](https://github.com/dodaonam/atari-videochess-rl/actions/runs/39828940452); it later passed on the initial draft head, not the later evidence-only final head. The PR body and owner handoff will carry final-head check status after the evidence commit is pushed.
 - The PR is not merged and no auto-merge is enabled. RSK-010 stays open on `initial-idea` until owner merge decision and a clean clone of the resulting integration commit passes both archive verification and preflight.
 
+### Final pre-closeout PR-head verification — `ff1581084839c134e3e31e211e8c6c79c591d1f0`
+
+GitHub Actions run [39829724318](https://github.com/dodaonam/atari-videochess-rl/actions/runs/39829724318) completed successfully on PR #5 head `ff1581084839c134e3e31e211e8c6c79c591d1f0` (created 2026-10-22 18:15:21 UTC; completed 18:15:51 UTC). It runs canonical preflight plus context and review-bundle tests. The exact run metadata is retained in [`RSK010-github-check-ff15810.log`](logs/RSK010-github-check-ff15810.log). A later evidence-only commit will receive a separate workflow run; before any merge decision, check the live PR head and require its workflow to pass.
+
+Immediately before this note, the final staged-tree local workflow-equivalent run used `git write-tree` `4a153ff76163f3980950bff4bf21000f728790fd` on top of code HEAD `e8966cb9272261b5d9beac1518f0fe77c433045d`: `tests.test_agent_context` plus `tests.test_export_review_bundle`, 66/66 passed, exit 0, 2026-10-22 18:14:32–18:15:02 UTC. The full-suite result remains 268/269, with the one environment-only missing-Stockfish smoke failure documented above.
+
 Earlier migration/test iterations are historical evidence and are not substituted for the exact-revision results above. Accepted M3 evidence and its historical test totals remain unchanged.
