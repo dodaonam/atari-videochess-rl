@@ -1,0 +1,14 @@
+PR #5 integration clean-clone recovery verification (sanitized)
+Started UTC: 2026-10-23T14:18:35Z
+Completed UTC: 2026-10-23T14:18:36Z
+Clone source: fetched local origin/initial-idea tracking ref; no worktree/untracked user data copied.
+Git revision: d9f0872c120fb2408343859c938257e3962f2e09
+Command: python3 scripts/migrate_checkpoint_history.py verify
+Exit code: 0
+Result: {"first_id": "cp-c410173e-20261014T154924847559Z", "last_id": "cp-ff158108-20261022T181646354735Z", "logical_sha256": "da88335f4091c2b8a95c15d70e7cd7951c3705d47a7dd921aa2cfc0ff803302a", "record_count": 148, "status": "verified", "storage": "archive"}
+Command: python3 scripts/agent_preflight.py --json
+Exit code: 0
+Preflight summary: {"engineering_start_authorized": false, "last_checkpoint_id": "cp-f847690c-20261022T182204998362Z", "live_git_head": "d9f0872c120fb2408343859c938257e3962f2e09", "portable_baseline_matches": true, "portable_index_matches": true}
+Errors: none
+Warnings: ARTIFACT_MANIFEST_REQUIRED only; ignored artifact directory requires independent manifest verification.
+No migration, checkpoint rewrite, or artifact data modification was performed.

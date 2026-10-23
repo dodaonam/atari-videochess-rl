@@ -32,7 +32,7 @@ The following is the current baseline **as stated by the roadmap and chat histor
 | B-01 | Target environment is ALE `VideoChess-v5`. | Verify the installed environment's observations, actions, rewards, and termination behavior before relying on source-described details. | Roadmap §§ I, III, XII. |
 | B-02 | Atari board-state extraction and an action wrapper are allowed by the project plan. | Use extracted state for chess-level decisions and translate moves into Atari actions; verify both against the emulator. | Roadmap §§ I, III–IV, XII. |
 | B-03 | The RL algorithm is to be implemented directly with PyTorch; Stable-Baselines and Ray RLlib are excluded by the roadmap. | Do not substitute an RL framework unless the user explicitly changes this constraint. | Roadmap § I. |
-| B-04 | Stockfish may provide training labels/opponents but must not be part of the agent's inference path. | The deployed policy selects moves without calling Stockfish. Offline engine evaluation still needs the assignment-policy confirmation in §6. | Roadmap §§ I, VIII, XI–XIII; chat history. |
+| B-04 | The roadmap discusses Stockfish labels/opponents, but each role requires explicit project scope and applicable course-policy evidence; Stockfish must not be part of the agent's inference path. | The owner has authorized bounded offline teacher assistance only within the recorded scope. This does not authorize opponent or benchmark use. The initial M4 behavior-only run excludes Stockfish. | Roadmap §§ I, VIII, XI–XIII; owner scope records; O-01/O-07 in §6. |
 | B-05 | Simulator and Atari evidence are distinct. | Identify the environment and method alongside every result; never label simulator results as Atari performance. | Roadmap §§ II, IX–XIII; chat history. |
 | B-06 | The roadmap reports ALE terminal reward from White's perspective. | Verify the installed environment's behavior and convert reward consistently to the acting agent's perspective, including when playing Black. | Roadmap §§ III, V, XII. |
 | B-07 | Experiments must be reproducible and evidence-backed. | Record source revision, config, seed, runtime/dependency versions, dataset identity, metrics, and checkpoint/artifact references. Do not invent or extrapolate results. | Roadmap §§ I, IV, XV, XVIII; chat history. |
@@ -41,9 +41,8 @@ The following is the current baseline **as stated by the roadmap and chat histor
 
 ## 4. Proposed design choices (not frozen requirements)
 
-These are starting points to test, not decisions proven optimal:
+ADR-0003 records the owner-accepted M4/M5 action-conditioned legal-candidate architecture. The items below remain starting proposals to test, not decisions proven optimal:
 
-- A future model may use action-conditioned afterstate scoring over legal chess moves, with Double DQN fine-tuning; this is a proposed M4/M5 direction, not an M2 simulator or action-encoding requirement.
 - `python-chess` as simulator/rule implementation, with a separate ALE adapter.
 - Terminal-outcome reward as the initial simulator baseline; potential-based shaping only as a separate experiment.
 - A small CNN and proposed feature planes; network size, channels, optimizer, and learning rates are initial values only.
@@ -75,11 +74,11 @@ Detailed acceptance criteria for M0–M7 are maintained only in [`ACCEPTANCE_CRI
 
 ## 6. Open approvals and evidence needed
 
-The current owner has resolved selected project-direction items for the authorized M3 scope; broader instructor, external-service, and future-use questions remain open. Do not extend a scoped decision beyond the exact permission recorded.
+Project-owner technical choices and external course policy are separate. The owner has confirmed custom PyTorch RL, Double DQN as the principal algorithm, the selected ALE environment and wrappers as project direction, a bounded supporting behavior-cloning stage, and the scoped Stockfish teacher role; ADR-0003 is accepted. These owner decisions do not prove that an instructor or assignment permits each technique. Do not reopen those project choices without new evidence, and do not invent external approval.
 
 | ID | Open item | Resolution path | Why it matters |
 |---|---|---|---|
-| O-01 | Assignment/instructor rules for ALE observation extraction/action wrappers, custom PyTorch RL, and offline engine evaluation. The owner explicitly authorized Stockfish only for bounded offline training/teacher labeling in this M3 project scope. | User/instructor confirmation for the remaining assignment-specific questions; owner scope is recorded in .agents/evidence/M3-authorization-20261020.md. | Establish permitted project scope; do not extend M3 teacher permission to inference, opponents, or offline benchmark evaluation. |
+| O-01 | **External confirmation pending:** whether course rules impose restrictions on the owner-selected ALE observation/action wrappers, custom PyTorch RL, behavior cloning, or the already scoped offline teacher role. Project-owner choices are settled; no authoritative course brief/instructor response establishing these permissions was found in the repository review. | Provide an authoritative assignment/course document or instructor response, then record only the verified restrictions. The owner-confirmed choices and distinction are in the 2026-10-23 closure evidence and Decision Register. | The conditional M4-001 authorization explicitly requires this external evidence before activation. Do not ask the owner to reselect the technical approach; do not represent absence of evidence as either approval or prohibition. |
 | O-02 | Whether full-game performance on actual ALE is a hard submission requirement or a research target with an accepted fallback. | User/instructor confirmation. | The roadmap calls Atari technical play mandatory but describes a simulator fallback if integration fails. Until clarified, retain full-game Atari as the target and fallback only as a disclosed limitation. |
 | O-03 | Future course checkpoints and any date changes. The owner confirmed the presentation date is Tuesday, 2026-11-03. | Reconfirm only if the owner or instructor changes the date. | M3/M4/M5 scope must protect the remaining Double DQN schedule. |
 | O-04 | Actual Colab entitlement/quota, GPU availability, cloud storage, and whether paid compute is allowed. The owner selected local CPU for M3; no external compute/storage is used in this mission. | Verify Colab quota and obtain separate authorization if a later milestone needs it; paid use requires separate approval. | No external allocation is needed for M3; current local capacity is measured in execution evidence. |

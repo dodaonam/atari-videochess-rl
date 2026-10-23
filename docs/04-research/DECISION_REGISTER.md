@@ -1,10 +1,10 @@
-# M3 Owner Decision Register
+# Project Owner and External Decision Register
 
-This register summarizes remaining owner/instructor decisions and scoped confirmations. A scoped owner decision does not resolve broader assignment or external-rights questions. Current M3 confirmations are recorded in .agents/evidence/M3-authorization-20261020.md and .agents/evidence/M3-source-decision-20261020.md; live requirements retain unresolved portions.
+This register distinguishes project-owner technical decisions from external course policy, third-party rights, and operational availability. Owner decisions do not establish instructor rules or third-party rights. M3 source/teacher scope remains in `.agents/evidence/M3-authorization-20261020.md` and `.agents/evidence/M3-source-decision-20261020.md`; the 2026-10-23 owner decisions are recorded in the accepted ADR and [closure evidence](../../.agents/evidence/PRE-M4-final-closure-20261023.md).
 
-M3-001 was accepted and merged in PR #3 on 2026-10-21; current status and acceptance are recorded in `.agents/state/PROJECT_STATE.yaml` and `.agents/evidence/M3-acceptance-20261021.md`. The release is not present in the current checkout. Its exact identity and local-only/rights boundary remain unchanged.
+M3-001 was accepted and merged in PR #3 on 2026-10-21. The accepted release is available in the owner's sibling M3 worktree and was read-only verified; see [M3 release verification](../../.agents/evidence/M3-release-local-verification-20261023.md). Its exact identity and local-only/no-redistribution boundary remain unchanged.
 
-For M4, [ADR-0003](../02-management/decisions/ADR-0003-pretraining-model-interface.md), [MODEL_DESIGN.md](../03-technical/MODEL_DESIGN.md), and [TRAINING_PROTOCOL.md](TRAINING_PROTOCOL.md) record a proposed behavior-cloning model and M5 interface. The proposal is not accepted yet, does not approve G3, and does not authorize M4. M4 remains pending separate owner authorization.
+For M4, [ADR-0003](../02-management/decisions/ADR-0003-pretraining-model-interface.md) is accepted as the action-conditioned legal-candidate scorer and M5 shared-representation/Q-head interface. Acceptance does not approve G3, start M4, or establish implementation or performance. `M4-001` remains pending under its conditional authorization because external O-01 evidence is not in the repository.
 
 ## Approval priority for future work
 
@@ -13,7 +13,7 @@ The open items have different timing. This table classifies the first activity e
 | ID | Needed before | Can proceed while unresolved |
 |---|---|---|
 | **O-06** | Any new source, public release, or use beyond the exact owner-authorized local/internal May 2022 package. | Synthetic schemas and the already authorized bounded local dataset run. Third-party package rights remain unverified; do not upload or redistribute bulk records. |
-| **O-01** | Instructor-specific restrictions for custom PyTorch RL, ALE observation/action wrappers, or engine-derived training beyond the exact M3 teacher scope. | The owner-authorized bounded M3 work and existing M0–M2 behavior. Follow any authoritative course rule that contradicts that scoped direction. |
+| **O-01** | External course-policy evidence about the owner-selected ALE observation/action wrappers, custom PyTorch RL, behavior cloning, and any applicable teacher role. The owner’s technical choices are settled; no authoritative assignment brief or instructor response was found in this repository review. | Repository/readiness documentation, synthetic contract tests, and local read-only M3 verification. The conditional M4-001 record still requires external policy evidence before activation; no M4 training is authorized by this register. |
 | **O-07** | Stockfish inference, engine-opponent use, offline engine evaluation, or teacher labeling beyond the bounded M3 run. | The owner-authorized 128-position Stockfish 19 M3 teacher run. |
 | **O-03** | Any expansion of M4/M5 scope or duration that could displace Double DQN implementation and interaction. | The confirmed 2026-11-03 presentation date and bounded M3 implementation. Recalculate the remaining schedule before later work. |
 | **O-04** | Paid/cloud compute or external storage; any processing/training exceeding verified local resource limits. GPU training needs a fresh entitlement/storage check. | Work within confirmed local disk/RAM/CPU caps; no paid or cloud allocation. |
@@ -23,13 +23,15 @@ The open items have different timing. This table classifies the first activity e
 
 For the current M3 scope, the owner authorized bounded local/internal use of the selected source and bounded Stockfish 19 teacher analysis; the presentation date is 2026-11-03. The source-backed dataset and 128-position teacher sidecar were generated and verified on local CPU. The third-party package license remains unstated, so the archive and bulk derived records remain local and non-redistributable. Broader Stockfish roles, instructor-specific requirements, cloud/paid resources, and unrelated future decisions remain open. O-02/O-05/O-08 are later integration/reporting gates, not blanket blockers for M3 design.
 
-## O-01 — Assignment and instructor permissions
+## O-01 — External assignment and instructor policy
 
-**Owner-confirmed M3 scope:** The owner authorized bounded Stockfish teacher labeling for offline training in M3 and reiterates that Stockfish is forbidden in learned-agent inference. This does not establish instructor rules for all other activities.
+**OWNER-CONFIRMED:** The owner selected `ALE/VideoChess-v5`, custom PyTorch, Double DQN as the principal RL algorithm, a supporting M4 behavior-cloning stage, and bounded offline Stockfish teacher assistance. Stable-Baselines and Ray RLlib are excluded. Stockfish is not part of the learned-agent inference path. ADR-0003 was accepted by direct owner decision on 2026-10-23. These are project choices, not proof of course permission.
 
-**Remaining decision:** Confirm assignment/instructor rules for ALE observation extraction/action wrappers, custom PyTorch RL, and any offline engine evaluation. No authoritative course rule contradicting the M3 scope has been supplied in this session.
+**EXTERNALLY VERIFIED:** No separate authoritative assignment/instructor document establishing or restricting wrappers, custom PyTorch, behavior cloning, or engine-assisted training was found among the repository's course/assignment materials. The project roadmap and owner decision ledger establish project intent only. Absence from this repository is neither approval nor prohibition.
 
-**Authority:** Instructor for assignment rules; project owner authorizes the scoped M3 project activity. **M3 impact:** The bounded M3 teacher operation is authorized by the owner record; follow any authoritative course rule if one is supplied that contradicts it. Other roles remain out of scope.
+**EXTERNAL CONFIRMATION PENDING:** The conditional M4-001 authorization requires an authoritative course brief or instructor response that addresses restrictions relevant to custom PyTorch RL, wrappers, behavior cloning, and any teacher role that will actually be used. The initial M4 behavior-only run excludes Stockfish; no inference, opponent, or offline engine benchmark is in scope. O-01 remains formally open until applicable external rules are evidenced. Do not ask the owner to reconfirm settled technical choices.
+
+**Owner/action:** Provide the authoritative course/assignment policy source or an instructor response, then record only its actual restrictions. If the rules are silent, record that fact with the source and authority; do not infer a blanket permission beyond the documented scope.
 
 ## O-06 — Data source, license, and use policy
 
