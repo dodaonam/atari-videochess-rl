@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-181d6b2e-20261022T162716612501Z -->
+<!-- checkpoint-id: cp-f847690c-20261022T182204998362Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -17,6 +17,12 @@ This file is a pointer, not a status snapshot. Do not infer current phase, task 
 M3 acceptance and integration are recorded in [M3 acceptance](../evidence/M3-acceptance-20261021.md) and [post-merge verification](../evidence/M3-postmerge-integration-verification-20261021.md); PR #3 is merged. Earlier dated M3 sections below preserve their review-stage context and are superseded for live status by those closeout records and canonical state/backlog. For the current readiness review, follow the [Pre-M4 readiness evidence](../evidence/PRE-M4-readiness-20261022.md), [M4 plan](../plans/M04-supervised-pretraining.md), [model design](../../docs/03-technical/MODEL_DESIGN.md), [training protocol](../../docs/04-research/TRAINING_PROTOCOL.md), and proposed [ADR-0003](../../docs/02-management/decisions/ADR-0003-pretraining-model-interface.md). These are review materials, not authorization; use canonical state/backlog for M4 status.
 
 For the independent final Pre-M4 hardening review, use the hardening supplement and exact-revision verification matrix in [PRE-M4-readiness-20261022.md](../evidence/PRE-M4-readiness-20261022.md), the checkpoint failure/rollback contract in [PLANS.md](../PLANS.md), and the updated RSK-010 boundary in [RISK_REGISTER.md](../../docs/02-management/RISK_REGISTER.md). R07 is conditional pending lossless history migration before checkpoint-heavy work; M4 remains pending separate authorization.
+
+## Post-merge checkpoint migration and M4 entry audit — 2026-10-23
+
+PR #4 is merged at `16fc01a3fe731c0a0be127026cc64d049c0cf550`. The lossless RSK-010 migration is implemented on the separate `feature/rsk010-lossless-checkpoint-history` branch and is not yet integrated; see [checkpoint-history operations](../../docs/05-operations/CHECKPOINT_HISTORY.md), [migration evidence](../evidence/RSK-010-checkpoint-history-migration-20261023.md), and the updated risk register. The owner issued direct conditional M4-001 authorization, preserved in [conditional authorization evidence](../evidence/M4-001-authorization-conditional-20261023.md); it is not operational until all listed entry conditions are verified. The exact accepted M3 release is absent from documented local paths, O-01 remains unresolved, and ADR-0003 remains Proposed. Therefore M4-001 remains pending; no active milestone/task or start authorization is recorded, and G3 remains unapproved. Review the migration PR and resolve the owner decisions before any M4 start transition.
+
+The migration is submitted as [PR #5](https://github.com/dodaonam/atari-videochess-rl/pull/5) against `initial-idea`, ready for owner review and not merged. At head `f847690cb7890c70dfed705c62cd7922cdd797b8`, GitHub Actions run 39830065154 passed and a clean clone verified the archive and preflight. This final evidence-only update may advance the branch; verify the live PR head and its own passing check before merge. Neither PR readiness nor a passing workflow constitutes integration or M4 authorization.
 
 ## Post-M2 and Pre-M3 review pointers
 

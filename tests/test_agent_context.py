@@ -6,6 +6,7 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -828,6 +829,11 @@ class AgentContextRecoveryTests(unittest.TestCase):
             legacy_state["last_checkpoint"].pop("workspace_id", None)
             legacy_state["last_checkpoint"]["git"].pop("scope", None)
             legacy_state.pop("checkpoint_history", None)
+            # This fixture intentionally models a pre-archive checkpoint. An
+            # archive pointer without its inline list or archive files is a
+            # malformed migrated state, not a legacy-format checkpoint.
+            legacy_state.pop("checkpoint_history_archive", None)
+            shutil.rmtree(legacy_clone / ".agents/state/checkpoint-history")
             legacy_git = legacy_state["last_checkpoint"]["git"]
             legacy_hashes = legacy_git.get("repo_file_hashes", {})
             legacy_head_paths = set(agent_preflight._git_head_manifest(legacy_clone, include_control_files=True)) - {".agents/state/PROJECT_STATE.yaml"}
@@ -842,7 +848,7 @@ class AgentContextRecoveryTests(unittest.TestCase):
                 for rel in legacy_head_paths
             )
             write_json(legacy_state_path, legacy_state)
-            git(legacy_clone, "add", ".agents/state/PROJECT_STATE.yaml")
+            git(legacy_clone, "add", "-A")
             subprocess.run(
                 ["git", "-C", str(legacy_clone), "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "legacy checkpoint format"],
                 check=True,

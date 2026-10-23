@@ -3,8 +3,8 @@
 - **Plan ID:** M04
 - **Milestone:** M4 — supervised pretraining, within the sequence owned by `docs/02-management/EXECUTION_PLAN.md`
 - **Plan status:** `ready`
-- **Review/authorization note:** Ready for owner review; M4 remains pending and not authorized.
-- **Canonical task:** `M4-001` in `BACKLOG.yaml`, pending separate direct owner authorization.
+- **Review/authorization note:** Ready for owner review; the owner recorded a direct conditional M4-001 authorization in `.agents/evidence/M4-001-authorization-conditional-20261023.md`. It is not operational until every listed entry condition is verified and owner decisions are recorded.
+- **Canonical task:** `M4-001` in `BACKLOG.yaml`, pending because the conditional authorization's entry conditions are unmet.
 - **Dependency:** `M3-001` complete; accepted M3 release identity and split contracts are recorded in `.agents/evidence/M3-acceptance-20261021.md` and `.agents/evidence/M3-final-closure-record-20261021.json`.
 - **Plan and protocol:** [MODEL_DESIGN.md](../../docs/03-technical/MODEL_DESIGN.md), [TRAINING_PROTOCOL.md](../../docs/04-research/TRAINING_PROTOCOL.md), and proposed [ADR-0003](../../docs/02-management/decisions/ADR-0003-pretraining-model-interface.md).
 - **Acceptance:** `M4-01` through `M4-04` in `docs/06-quality/ACCEPTANCE_CRITERIA.md`.
@@ -16,7 +16,7 @@ This plan does not start M4, authorize training, approve G3, or start M5. Its pr
 
 Implement and evaluate a bounded supervised behavior-cloning baseline using only the `played_move_uci` labels in the accepted M3 training split. Preserve validation and test partitions, save a pretraining-only checkpoint, and verify that the model chooses only among the simulator's semantic legal moves.
 
-In scope after separate authorization:
+In scope only after the recorded conditional authorization is operational:
 
 1. Implement the versioned model input/action contract and the proposed shared board/history/candidate scorer.
 2. Verify model shape, finite logits, gradients, deterministic legal-action masking, and checkpoint round-trip (`M4-01`).
@@ -28,7 +28,7 @@ Out of scope: new data acquisition or generation, expanded Stockfish labeling or
 
 ## 2. Entry conditions
 
-Before changing the task to `in_progress`, the owner must separately authorize `M4-001` in a direct instruction and canonical state/backlog evidence. A completed M3 dependency or this readiness plan is not authorization. G3 remains unapproved; do not add `requires_user_gate_approval: G3`, because G3 covers M4 and would create a circular start prerequisite under the existing governance model.
+Before changing the task to `in_progress`, verify and record activation of the owner's direct conditional authorization in `.agents/evidence/M4-001-authorization-conditional-20261023.md` and the required canonical state/backlog fields. This conditional instruction does not become operational merely because the plan or M3 dependency is ready. G3 remains unapproved; do not add `requires_user_gate_approval: G3`, because G3 covers M4 and would create a circular start prerequisite under the existing governance model.
 
 The executor must also:
 
@@ -37,7 +37,7 @@ The executor must also:
 - Reconfirm that the exact local/internal use boundary remains acceptable. The third-party curated package license is unstated; no bulk source or derived data may be uploaded or redistributed.
 - Resolve the applicable assignment/instructor rule for behavior cloning and custom PyTorch training under O-01 before any M4 run; this mission's design work does not close that question.
 - Use local CPU for the initial run. Any Colab/GPU, cloud storage, paid compute, new dataset use, or expanded teacher role requires separate authorization.
-- Check `PROJECT_STATE.yaml` size before checkpointing. The 4 MiB compact-writer guard prevents an oversized write but is not indefinite history storage. RSK-010 remains open: complete and verify a lossless migration before a task expected to need more than two changed checkpoints at the then-current measured capacity, and before retrying any required checkpoint refused by the guard.
+- Checkpoint-history migration is implemented on `feature/rsk010-lossless-checkpoint-history` and documented in [`CHECKPOINT_HISTORY.md`](../../docs/05-operations/CHECKPOINT_HISTORY.md), but remains unmerged. Before M4 starts, the owner must review/merge that migration PR and a clean clone of the resulting integration commit must pass archive verification and preflight. Until then, `initial-idea` retains the legacy state-size limit; do not start checkpoint-heavy M4 work there. After integration, preserve the full archive and review durable-storage policy before its lossless growth approaches 64 MiB. The 4 MiB state guard remains a final refusal boundary, not history storage.
 
 ## 3. Data and state/action contracts
 
@@ -90,4 +90,4 @@ Checkpoint only at meaningful state/gate transitions and before long runs. The c
 
 Primary risks: unavailable local M3 artifacts; unresolved third-party package license; small and potentially unrepresentative PGN sample; move-history model overfitting; CPU schedule; incomplete M6/ALE observability; and the M4/M5 weight-transfer boundary.
 
-M4 is complete only when `M4-01`–`M4-04` each have their required verified evidence, the behavior-only checkpoint and run manifest are hashed and reproducible, inference loads without Stockfish, all requested tests pass, and state/backlog record M4 complete. A strong supervised score is not a prerequisite for M5 and does not complete M5. Until separate authorization and those entry conditions are met, keep `M4-001` pending, `active_milestone: null`, and `start_authorized: false`.
+M4 is complete only when `M4-01`–`M4-04` each have their required verified evidence, the behavior-only checkpoint and run manifest are hashed and reproducible, inference loads without Stockfish, all requested tests pass, and state/backlog record M4 complete. A strong supervised score is not a prerequisite for M5 and does not complete M5. Until the conditional authorization is activated after all entry conditions are met, keep `M4-001` pending, `active_milestone: null`, and `start_authorized: false`.

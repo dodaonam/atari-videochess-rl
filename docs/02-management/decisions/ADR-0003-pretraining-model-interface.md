@@ -45,4 +45,4 @@ The complete input tensors, exact fields, history assumptions, loss/masks, check
 
 ## Acceptance and authorization boundary
 
-This ADR remains proposed until the project owner accepts or changes the recommendation through the repository's decision process. Even if accepted, it does not authorize M4: `M4-001` remains pending until a separate direct owner instruction is recorded in canonical state/backlog. M4 readiness, acceptance criteria, and M4 task status remain separate. G3 is not approved.
+This ADR remains proposed until the project owner accepts or changes the recommendation through the repository's decision process. Even if accepted, it does not itself authorize M4. The owner provided a direct conditional M4-001 authorization on 2026-10-23; its operational conditions and scope are recorded in `.agents/evidence/M4-001-authorization-conditional-20261023.md`. M4 remains pending until those entry conditions, including this ADR decision, are verified and the conditional authorization is activated through canonical state/backlog evidence. M4 readiness, acceptance criteria, and M4 task status remain separate. G3 is not approved.

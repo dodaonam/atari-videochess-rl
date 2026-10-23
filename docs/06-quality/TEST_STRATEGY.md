@@ -29,6 +29,14 @@
 - a one-invocation atomic checkpoint from a clean worktree and a fresh Python-process recovery summary.
 - compact checkpoint serialization that preserves every history object, no-op behavior for unchanged snapshots, and a pre-write 4 MiB projected-state guard that leaves canonical files untouched on refusal.
 
+`tests/test_checkpoint_history.py` separately covers the versioned history archive: exact logical-order preservation and original-state backup, interrupted/resumed migration, append and no-op behavior, size-bounded segments, caught rollback and pending roll-forward, corruption/unreferenced-file detection, stale handoff repair, and clean-clone recovery. Run it with the context suite when changing archive or checkpoint code:
+
+```bash
+python3 -m unittest tests.test_checkpoint_history tests.test_agent_context -v
+```
+
+The recovery format and operator commands are specified in [`CHECKPOINT_HISTORY.md`](../05-operations/CHECKPOINT_HISTORY.md). Archive integrity is checked by its state pointer and manifest; archive files must be committed with the pointer even though the per-checkpoint portable file manifest excludes them.
+
 Run from the repository root:
 
 ```bash

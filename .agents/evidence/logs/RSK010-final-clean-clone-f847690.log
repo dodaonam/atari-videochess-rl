@@ -1,0 +1,16 @@
+git_revision=f847690cb7890c70dfed705c62cd7922cdd797b8
+clone_type=clean clone of PR branch head
+
+[history_verify]
+command=python3 scripts/migrate_checkpoint_history.py verify
+started_utc=2026-10-22T18:21:34+00:00
+finished_utc=2026-10-22T18:21:35+00:00
+exit_code=0
+status=verified storage=archive archive_records=147 logical_sha256=dc0170d89efc52e3f32d30c1d189f58369a1685a335199e6ba0f202624ea6d5e
+
+[preflight]
+command=python3 scripts/agent_preflight.py --json
+started_utc=2026-10-22T18:21:35+00:00
+finished_utc=2026-10-22T18:21:35+00:00
+exit_code=0
+ok=True errors=0 warnings=['ARTIFACT_MANIFEST_REQUIRED'] git_snapshot_matches=True portable_index_matches=True start_authorized=False

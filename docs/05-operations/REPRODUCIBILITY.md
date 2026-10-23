@@ -145,3 +145,9 @@ The current release verifier recomputes every normalized-game split using the ve
 
 Teacher manifest schema 1.2 uses `command_elapsed_projection_seconds` and states that it is an estimate, not a guaranteed elapsed-time upper bound. The runner still checks actual monotonic elapsed after final output closure and records an overrun as partial. Historical schema 1.1's `command_elapsed_upper_bound_seconds` is accepted as the legacy reserve projection only, and schema 1.0 remains supported. The R-01–R-03 findings, exact commands, artifact identity impact, and final verifier outputs are documented in `.agents/evidence/M3-premerge-final-verification-20261021.md`.
 
+## 7. Checkpoint-history migration and recovery
+
+The versioned archive format, migration/recovery commands, crash boundaries, and clean-clone requirements are specified in [CHECKPOINT_HISTORY.md](CHECKPOINT_HISTORY.md). The implementation branch `feature/rsk010-lossless-checkpoint-history` migrated the merged baseline state from 3,919,833 bytes / 139 inline records to 65,811 bytes / 140 verified logical archive records, including the prior `last_checkpoint`. The original `PROJECT_STATE.yaml` bytes are retained in the archive backup and are verified against SHA-256 before any separate recovery copy is written. The compact state points to the manifest digest and aggregate ordered-history digest.
+
+Migration implementation and clean-clone tests are currently on an unmerged branch; this does not alter the storage format of `initial-idea`. Do not begin checkpoint-heavy M4 execution until the owner has reviewed/merged the migration and preflight has passed from a clean clone of the integrated commit. Archive files must be committed with the state pointer. The archive remains lossless and grows linearly, so review an authorized durable-storage strategy before the archive approaches 64 MiB. No old record may be deleted to satisfy that review trigger.
+
