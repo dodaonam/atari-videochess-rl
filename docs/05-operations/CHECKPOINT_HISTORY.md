@@ -1,6 +1,6 @@
 # Checkpoint History Archive and Recovery
 
-**Status:** Version 1 is implemented and verified on `feature/rsk010-lossless-checkpoint-history`. Integration into `initial-idea` is pending owner review and merge. The archive is committed project state; it is not an ignored cache.
+**Status:** Version 1 was integrated by PR #5 at `d9f0872c120fb2408343859c938257e3962f2e09`. Archive verification and canonical preflight pass on that integration revision. The archive is committed project state; it is not an ignored cache.
 
 ## Storage contract
 
