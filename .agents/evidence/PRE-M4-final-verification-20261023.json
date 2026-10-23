@@ -58,6 +58,50 @@
         "engineering_start_authorized": false,
         "checkpoint_history_count": 150
       }
+    },
+    {
+      "name": "clean_clone_pr_head",
+      "revision": "037cf3c0ae5726b9ef5652abc1589e928cdc97d4",
+      "branch": "feature/pre-m4-final-closure",
+      "started_at_utc": "2026-10-23T14:37:17Z",
+      "finished_at_utc": "2026-10-23T14:38:03Z",
+      "commands": [
+        {
+          "command": "git clone --single-branch --branch feature/pre-m4-final-closure https://github.com/dodaonam/atari-videochess-rl.git <temporary-clean-clone>",
+          "exit_code": 0
+        },
+        {
+          "command": "python3 scripts/migrate_checkpoint_history.py verify",
+          "exit_code": 0,
+          "result": "151 ordered archived records verified; logical SHA-256 a0fe2643223f2ada835de4ad85da44b034fed6e392ee3d3f881addb8b1996c2e"
+        },
+        {
+          "command": "python3 scripts/agent_preflight.py --json",
+          "exit_code": 0,
+          "result": "ok=true; no errors; expected ARTIFACT_MANIFEST_REQUIRED warning only; start_authorized=false; portable snapshot matches"
+        },
+        {
+          "command": "python3 -m unittest discover -s tests -p test_agent_context.py",
+          "exit_code": 0,
+          "tests": 47,
+          "passed": 47,
+          "runtime_seconds": 40.525
+        }
+      ],
+      "log_path": ".agents/evidence/logs/PRE-M4-pr6-clean-clone-20261023.log"
+    },
+    {
+      "name": "github_pr_check",
+      "revision": "037cf3c0ae5726b9ef5652abc1589e928cdc97d4",
+      "pull_request": 6,
+      "run_id": 39971111953,
+      "workflow": "Repository preflight",
+      "created_at_utc": "2026-10-23T14:36:44Z",
+      "completed_at_utc": "2026-10-23T14:37:24Z",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/39971111953",
+      "scope": "Repository context/preflight workflow; not the full Python unittest suite."
     }
   ],
   "other_evidence": [
@@ -75,7 +119,8 @@
     }
   ],
   "limitations": [
-    "The full suite exit code is 1 solely because the Stockfish UCI-readiness smoke test cannot find an executable in PATH.",
-    "This revision predates the final PR-head clean-clone and GitHub CI verification; those must be appended after push."
+    "The full Python suite exit is 1 solely because the existing M0 Stockfish UCI-readiness smoke test cannot find a Stockfish executable in PATH. No engine was installed or substituted.",
+    "GitHub Actions runs the repository context/preflight workflow only; the full Python suite was run locally and its environment limitation is reported separately.",
+    "M4-001 remains inactive until authoritative external O-01 course-policy evidence is recorded and the direct conditional authorization is activated in canonical state/backlog."
   ]
 }
