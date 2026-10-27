@@ -1,0 +1,8 @@
+Command: PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.model.cli run --release-dir /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6 --artifact-root /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4 --run-id m4-behavior-20261027-r4
+Started at UTC: 2026-10-27T16:00:40.648769Z
+Completed at UTC: 2026-10-27T16:22:19.931137Z
+Result: PASS: run completed with 19 verified artifacts; aggregate usage 3234.281 seconds including prior attempts; peak RSS 628350976 bytes.
+Exit code: 0
+
+Captured CLI output follows:
+{"artifact_directory": "/home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4", "artifact_file_count": 19, "elapsed_seconds_including_prior_release_verification": 3234.2810239830033, "peak_rss_bytes": 628350976, "run_id": "m4-behavior-20261027-r4", "source_revision": "7b3c9074a2d932fec6d7732ee08e99b9de10a135", "status": "completed"}
