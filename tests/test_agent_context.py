@@ -1316,7 +1316,7 @@ class AgentContextRecoveryTests(unittest.TestCase):
             self.assertEqual(authorization["task_id"], "M3-001")
         elif m3["status"] == "done":
             m4 = next(task for task in backlog["tasks"] if task["id"] == "M4-001")
-            self.assertIn(m4["status"], {"pending", "in_progress", "done"})
+            self.assertIn(m4["status"], {"pending", "in_progress", "blocked", "done"})
             self.assertTrue(any(
                 item.get("path") == ".agents/evidence/M3-acceptance-20261021.md"
                 and item.get("provenance", {}).get("status") == "manual_verified"
@@ -1335,6 +1335,14 @@ class AgentContextRecoveryTests(unittest.TestCase):
                 self.assertEqual(engineering["active_milestone"], "M4")
                 self.assertEqual(state["task_refs"]["active_task_id"], "M4-001")
                 self.assertEqual(state["task_refs"]["next_task_id"], "M4-001")
+                self.assertEqual(engineering["start_authorization_record"]["task_id"], "M4-001")
+            elif m4["status"] == "blocked":
+                self.assertEqual(engineering["active_milestone"], "M4")
+                self.assertEqual(engineering["next_milestone_status"], "blocked")
+                self.assertEqual(state["task_refs"]["active_task_id"], "M4-001")
+                self.assertEqual(state["task_refs"]["next_task_id"], "M4-001")
+                self.assertTrue(m4["blocker_ids"])
+                self.assertEqual(state["active_blocker_ids"], m4["blocker_ids"])
                 self.assertEqual(engineering["start_authorization_record"]["task_id"], "M4-001")
             else:
                 self.assertNotEqual(engineering["active_milestone"], "M4")

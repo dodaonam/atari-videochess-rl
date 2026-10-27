@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-d558bee2-20261027T134328314788Z -->
+<!-- checkpoint-id: cp-e5e42f70-20261027T141556728520Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -14,15 +14,17 @@ This file is a pointer, not a status snapshot. Do not infer current phase, task 
 
 ## Current M4 execution handoff
 
-### M4-001 active — 2026-10-27
+### M4-001 blocked — 2026-10-27
 
-M4-001 is in progress under the direct mission authorization in [M4-001 execution evidence](../evidence/M4-001-execution-authorization-20261027.md). O-01 remains closed internally; its absence of external instructor-policy evidence is informational and is not formal academic approval. ADR-0003 remains Accepted. G3 is unapproved, and M5/M6 have not started.
+M4-001 began under the direct mission authorization in [M4-001 execution evidence](../evidence/M4-001-execution-authorization-20261027.md) and is now blocked by BLK-002. Canonical state retains `start_authorized: true`; this technical gate blocker does not revoke authorization. O-01 remains closed internally; its absence of external instructor-policy evidence is informational and is not formal academic approval. ADR-0003 remains Accepted. G3 is unapproved, and M5/M6 have not started.
 
-The action-conditioned M4 model, feature/data loader, bounded trainer, engine-free inference adapter, checkpoint verifier, CLI, and focused tests are implemented on the active branch. Current source-level parameter count is 121,897. The fixed 128-example gate and all real-data training/evaluation evidence are still pending. Run the active M4 plan and protocol; do not infer acceptance from implementation or synthetic tests.
+The action-conditioned M4 model, feature/data loader, bounded trainer, engine-free inference adapter, checkpoint verifier, CLI, and focused tests are implemented on the M4 feature branch. Source-level tests measure 121,897 trainable parameters. The loader reverified and tensorized the exact M3 release. The fixed gate ran seed 20261022 for 500 updates: CE 0.02195480 passed, but legal top-1 126/128 (98.4375%) failed the required 127/128. A read-only diagnostic established two exact-input pairs with conflicting targets and the 126/128 maximum deterministic top-1. No full training, test evaluation, simulator benchmark, or pretrained checkpoint was produced. See [the blocker report](../evidence/M4-02-sanity-gate-blocker-20261027.md).
 
-Use the owner-approved M3 release at `/home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6`. The earlier read-only verification log is [.agents/evidence/logs/M4-release-verification-20261027.json](../evidence/logs/M4-release-verification-20261027.json). It does not replace the M4 loader's required immediate verifier before loading examples; the release has not yet been tensorized by the M4 runner. Keep source and generated M4 artifacts outside Git. See [the active M4 plan](../plans/M04-supervised-pretraining.md), [model design](../../docs/03-technical/MODEL_DESIGN.md), and [training protocol](../../docs/04-research/TRAINING_PROTOCOL.md).
+The owner-approved M3 release is at `/home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6`. The M4 loader and subsequent diagnostic verified all nine files, replayed positions, and confirmed the files unchanged. Reverify all nine files before any future load; keep source and generated M4 artifacts outside Git. See [the active M4 plan](../plans/M04-supervised-pretraining.md), [model design](../../docs/03-technical/MODEL_DESIGN.md), and [training protocol](../../docs/04-research/TRAINING_PROTOCOL.md).
 
 PR #6 merged into `initial-idea` at `89d085d1865d07b10660e82119488960f766d819` with clean-clone verification recorded in [final Pre-M4 closure](../evidence/PRE-M4-final-closure-20261027.md). PR #5 / RSK-010 is integrated; verify the archive with `python3 scripts/migrate_checkpoint_history.py verify` and preserve its append-only, lossless records.
+
+Next action: the project owner must record an explicit M4-02 protocol decision resolving the fixed-sample conflicting labels without modifying the accepted M3 release or ADR-0003 input contract. After that, update canonical state, transition M4-001 back to `in_progress`, and rerun the authorized gate. Do not start full training until the applicable gate passes. PR #6 is unrelated historical Pre-M4 integration; the M4 feature branch is not merged.
 
 ## M3 closeout and Pre-M4 pointers (historical)
 

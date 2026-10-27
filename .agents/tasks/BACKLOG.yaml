@@ -2300,12 +2300,14 @@
       "id": "M4-001",
       "title": "Implement and verify the bounded supervised behavior baseline",
       "milestone": "M4",
-      "status": "in_progress",
+      "status": "blocked",
       "depends_on": [
         "M3-001"
       ],
       "requires_user_gate_approval": null,
-      "blocker_ids": [],
+      "blocker_ids": [
+        "BLK-002"
+      ],
       "acceptance_criteria_ids": [
         "M4-01",
         "M4-02",
@@ -2462,11 +2464,79 @@
             "git_revision": "94220870c3abc9e8aa725db85fb0c6cebebdbb48",
             "log_path": ".agents/evidence/logs/M4-release-verification-20261027.txt"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M4-02-sanity-gate-blocker-20261027.md",
+          "detail": "Formal evidence for the fixed sanity-gate failure and exact-input structural upper bound; includes the two conflicting sample pairs and the minimum required owner-level protocol decision.",
+          "result": "M4-02 is blocked: exact duplicate model inputs with different played_move_uci targets cap deterministic top-1 at 126/128, while the unchanged criterion requires 127/128.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-27T13:50:46Z",
+            "exit_code": null,
+            "git_revision": "e5e42f703bfd3386c94de17b607aa5102b60201f",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.model.cli run --release-dir /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6 --artifact-root /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4 --run-id m4-behavior-20261027-r2",
+          "result": "FAIL: fixed 128-example gate exhausted 500 updates; cross-entropy 0.02195480 passed but legal top-1 was 126/128 (98.4375%), below the required 127/128. The run stopped before full training. CLI exit code 2.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T13:33:05.861961Z",
+            "recorded_at_utc": "2026-10-27T13:50:46Z",
+            "exit_code": 2,
+            "git_revision": "4562dddd80d302bdbb49e1191c97bd71ac7e9938",
+            "log_path": ".agents/evidence/logs/M4-sanity-gate-r2-20261027.txt"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python /tmp/atari-m4-work/scripts/diagnose_m4_gate_conflicts.py --gate-run /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r2 --release-dir /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6 --output .agents/evidence/logs/M4-02-sanity-gate-diagnostic-20261027.json",
+          "result": "PASS: the exact accepted M3 release was reverified and unchanged; two pairs of identical model inputs with conflicting labels impose a deterministic top-1 ceiling of 126/128, below the 127 required.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T13:44:09.463494Z",
+            "recorded_at_utc": "2026-10-27T13:50:46Z",
+            "exit_code": 0,
+            "git_revision": "e5e42f703bfd3386c94de17b607aa5102b60201f",
+            "log_path": ".agents/evidence/logs/M4-02-sanity-gate-diagnostic-20261027.txt"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m4_model tests.test_m4_data tests.test_m4_training tests.test_m4_checkpoint tests.test_agent_context tests.test_checkpoint_history tests.test_pre_m4_contracts tests.test_m2_simulator tests.test_m3_data -v",
+          "result": "PASS: exit 0; OK",
+          "detail": "Focused M4 model/data/training/checkpoint, context/recovery, M2 simulator, M3 data, and Pre-M4 contract suite: 191 tests in 93.922 seconds.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T14:02:47.465538Z",
+            "recorded_at_utc": "2026-10-27T14:15:30Z",
+            "exit_code": 0,
+            "git_revision": "e5e42f703bfd3386c94de17b607aa5102b60201f",
+            "log_path": ".agents/evidence/logs/M4-focused-tests-20261027.txt"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "PASS: exit 0; Ran 304 tests in 97.278s",
+          "detail": "Full repository regression: 304 tests. Python 3.12.3, PyTorch 2.14.1+cpu, python-chess 1.11.2, NumPy 2.5.4; configured Stockfish was available for the repository UCI readiness smoke test. Regression passage does not satisfy M4-02 or claim M4-03/M4-04.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T14:07:36.923942Z",
+            "recorded_at_utc": "2026-10-27T14:15:30Z",
+            "exit_code": 0,
+            "git_revision": "e5e42f703bfd3386c94de17b607aa5102b60201f",
+            "log_path": ".agents/evidence/logs/M4-full-suite-pass-20261027.txt"
+          }
         }
       ],
-      "next_action": "Implement the accepted versioned model/data/training/inference interfaces, pass the fixed 128-example gate before bounded full training, complete one frozen evaluation, and retain evidence; do not start M5/M6 or approve G3.",
+      "next_action": "Await a dated project-owner M4-02 protocol decision resolving the two conflicting labels without modifying the accepted M3 release; then rerun the exact fixed 128-example gate before full training.",
       "plan_ref": ".agents/plans/M04-supervised-pretraining.md"
     }
   ],
-  "updated_at_utc": "2026-10-23T14:17:26Z"
+  "updated_at_utc": "2026-10-27T14:15:30Z"
 }

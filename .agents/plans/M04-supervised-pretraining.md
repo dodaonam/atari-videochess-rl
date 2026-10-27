@@ -2,25 +2,25 @@
 
 - **Plan ID:** M04
 - **Milestone:** M4 — supervised pretraining, within the sequence owned by `docs/02-management/EXECUTION_PLAN.md`
-- **Plan status:** `in_progress`
-- **Authorization:** M4-001 is active under the direct 2026-10-27 execution mission recorded in `.agents/evidence/M4-001-execution-authorization-20261027.md`; the O-01 supersession remains in `.agents/evidence/M4-001-authorization-conditional-20261023.md`.
-- **Canonical task:** `M4-001` in `.agents/tasks/BACKLOG.yaml`, `in_progress`; model/data/training/inference/checkpoint code and focused tests are implemented on the feature branch. Real-data training and acceptance evidence remain pending.
+- **Plan status:** `blocked` by BLK-002 after the implementation and first required fixed-sample gate attempt.
+- **Authorization:** The direct M4-001 execution authorization recorded in `.agents/evidence/M4-001-execution-authorization-20261027.md` remains active; the task is blocked on BLK-002. The O-01 supersession remains in `.agents/evidence/M4-001-authorization-conditional-20261023.md`.
+- **Canonical task:** `M4-001` in `.agents/tasks/BACKLOG.yaml`, `blocked` by BLK-002; model/data/training/inference/checkpoint code and focused tests are implemented on the feature branch. The exact real M3 release was verified, replayed, and tensorized. The 128-example gate reached 126/128 legal top-1 after 500 updates and failed the required 127/128 threshold because two identical model-input pairs have conflicting labels. Full training, final test evaluation, simulator benchmarking, and pretrained checkpoint acceptance were not started.
 - **Dependency:** `M3-001` complete; accepted M3 release identity and split contracts are recorded in `.agents/evidence/M3-acceptance-20261021.md` and `.agents/evidence/M3-final-closure-record-20261021.json`.
 - **Plan and protocol:** [MODEL_DESIGN.md](../../docs/03-technical/MODEL_DESIGN.md), [TRAINING_PROTOCOL.md](../../docs/04-research/TRAINING_PROTOCOL.md), and accepted [ADR-0003](../../docs/02-management/decisions/ADR-0003-pretraining-model-interface.md).
 - **Acceptance:** `M4-01` through `M4-04` in `docs/06-quality/ACCEPTANCE_CRITERIA.md`.
 - **Readiness evidence:** `.agents/evidence/PRE-M4-final-closure-20261027.md` (final `R01`–`R08` and PM4 matrix); `.agents/evidence/PRE-M4-readiness-20261022.md` preserves the original dated review. These IDs are not formal acceptance criteria.
 
-This plan records the implementation and evidence work for the already authorized M4-001 task. The accepted design keeps behavior cloning a small support experiment for the project's Double DQN objective. M5 core work must not wait for M4, consistent with `EXECUTION_PLAN.md` and the current M5 acceptance contracts. This task does not approve G3 or start M5.
+This plan records the implementation and evidence work for the already authorized M4-001 task. The accepted design keeps behavior cloning a small support experiment for the project's Double DQN objective. M5 core work must not wait for M4, consistent with `EXECUTION_PLAN.md` and the current M5 acceptance contracts. This task does not approve G3 or start M5. Current blocker evidence is `.agents/evidence/M4-02-sanity-gate-blocker-20261027.md`; preserve the exact release and gate protocol unless a dated owner decision changes the criterion.
 
 ## 1. Objective and scope
 
 Implement and evaluate a bounded supervised behavior-cloning baseline using only the `played_move_uci` labels in the accepted M3 training split. Preserve validation and test partitions, save a pretraining-only checkpoint, and verify that the model chooses only among the simulator's semantic legal moves.
 
-In scope under the direct authorization, with canonical task/milestone state already transitioned to `in_progress`:
+In scope under the direct authorization, with canonical task/milestone state transitioned to `in_progress` when implementation began and now `blocked` on BLK-002:
 
 1. Implement the versioned model input/action contract and the accepted shared board/history/candidate scorer.
 2. Verify model shape, finite logits, gradients, deterministic legal-action masking, and checkpoint round-trip (`M4-01`).
-3. Demonstrate a fixed 128-example overfit sanity check before full training (`M4-02`).
+3. Demonstrate a fixed 128-example overfit sanity check before full training (`M4-02`). The first attempt failed at 500 updates. The read-only diagnostic established a 126/128 top-1 ceiling because two identical complete model inputs in the fixed sample have contradictory labels. Do not change the sample, target, model-input identity, threshold, or acceptance meaning without an explicit dated owner protocol decision; do not start full training until an authorized gate passes.
 4. Train the behavior baseline on the M3 train partition, select using validation only, preserve the test set for one final report, and keep Stockfish absent from inference (`M4-03`, `M4-04`).
 5. Store model/run artifacts outside Git with a manifest that identifies source revision, configuration, seeds, data release and split IDs, dependency versions, metrics, and checkpoint hashes.
 
@@ -28,11 +28,11 @@ Out of scope: new data acquisition or generation, expanded Stockfish labeling or
 
 ## 2. Entry conditions
 
-The owner authorization and Pre-M4 entry conditions are recorded in `.agents/evidence/M4-001-execution-authorization-20261027.md` and the dated addendum to `.agents/evidence/M4-001-authorization-conditional-20261023.md`. The task and milestone are `in_progress` because implementation has begun. G3 remains unapproved and is not a start prerequisite; do not add `requires_user_gate_approval: G3`.
+The owner authorization and Pre-M4 entry conditions are recorded in `.agents/evidence/M4-001-execution-authorization-20261027.md` and the dated addendum to `.agents/evidence/M4-001-authorization-conditional-20261023.md`. Implementation began under that authorization; the task and milestone are now `blocked` by BLK-002, while `start_authorized` remains true. After an authorized protocol resolution, return the task/milestone to `in_progress` before resuming. G3 remains unapproved and is not a start prerequisite; do not add `requires_user_gate_approval: G3`.
 
 The executor must also:
 
-- Confirm M3-001 still has status `done`, M4 is the active/next milestone, M4-001 is `in_progress`, its direct authorization remains valid, and G3 remains unapproved.
+- Confirm M3-001 still has status `done`, M4-001's direct authorization remains valid, G3 remains unapproved, and the canonical task/milestone status agrees with BLK-002. Do not restart M4 until its blocker is resolved by an explicit protocol decision and the canonical state transition is recorded.
 - The exact accepted release is outside Git and was independently reverified read-only at the owner-specified local sibling-worktree path; see `.agents/evidence/M3-release-local-verification-20261027.md`. The M4 run command uses this path and the loader reruns the verifier against all nine files before tensorization. The final run result must be retained in versioned evidence. Do not copy, upload, rebuild, or commit bulk data; if the release becomes unavailable, stop rather than rebuilding from the license-uncertain package.
 - Continue within the owner's established local/internal use boundary. The third-party curated package license is unstated; no bulk source or derived data may be uploaded or redistributed. Do not request another confirmation of this settled scope.
 - O-01 is closed for internal project planning and execution authorization by the owner's 2026-10-27 decision. No separate instructor-policy approval has been evidenced or is claimed; that absence is informational and is not an activation prerequisite. If an actual authoritative rule explicitly prohibits a selected activity, stop only that activity and record the concrete rule.
@@ -90,7 +90,7 @@ Checkpoint only at meaningful state/gate transitions and before long runs. The c
 
 Primary risks: the third-party package license remains unstated outside the bounded owner-authorized local use; the 1,000-game PGN sample may be unrepresentative; move-history model overfitting; CPU schedule; incomplete M6/ALE observability; and the untested M4/M5 weight-transfer boundary. Availability and integrity of the exact local M3 release were verified once and must be checked again immediately before training.
 
-M4 is complete only when `M4-01`–`M4-04` each have their required verified evidence, the behavior-only checkpoint and run manifest are hashed and reproducible, inference loads without Stockfish, all requested tests pass, and state/backlog record M4 complete. A strong supervised score is not a prerequisite for M5 and does not complete M5. M4-001 remains `in_progress` until all criteria and integration evidence pass; do not mark M4 accepted on the basis of source implementation or a training run alone.
+M4 is complete only when `M4-01`–`M4-04` each have their required verified evidence, the behavior-only checkpoint and run manifest are hashed and reproducible, inference loads without Stockfish, all requested tests pass, and state/backlog record M4 complete. A strong supervised score is not a prerequisite for M5 and does not complete M5. M4-001 currently remains `blocked` by BLK-002; do not mark M4 accepted on the basis of source implementation, passing unit tests, or the failed sanity run.
 
 ## 8. Acceptance evidence map for the active M4 executor
 
@@ -105,4 +105,4 @@ The checks below define required evidence; they are not passed by this plan. The
 
 M4 execution command: `python -m videochess_rl.model.cli run --release-dir /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6 --artifact-root /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4`. The runner enforces the recorded CPU, seed, memory, and aggregate limits and preserves run artifacts outside Git. The full locked regression command remains `uv run --locked --no-sync --project . python -m unittest discover -s tests -v`; if `uv` is unavailable but the existing verified `.venv` works, use its interpreter without installing dependencies and record the deviation.
 
-No M4 acceptance criterion is passed by this plan or by Pre-M4. `M4-001` is `in_progress` under the active direct authorization; O-01 does not require another owner or instructor confirmation. See current run evidence and canonical state before reporting any M4 acceptance result.
+This plan does not itself confer M4 acceptance. The feature-branch source/contract evidence supports M4-01; the real fixed gate failed M4-02; M4-03 and M4-04 were not run. `M4-001` is `blocked` by BLK-002 under still-valid direct owner authorization; O-01 does not require another owner or instructor confirmation. See the dated blocker report and canonical state before reporting any M4 result.
