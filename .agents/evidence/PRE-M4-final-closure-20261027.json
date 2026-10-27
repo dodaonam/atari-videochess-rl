@@ -1,7 +1,7 @@
 {
   "verification_id": "PRE-M4-final-closure-20261027",
-  "status": "premerge_verification_pass_postmerge_pending",
-  "recorded_at_utc": "2026-10-27T11:14:46Z",
+  "status": "complete",
+  "recorded_at_utc": "2026-10-27T11:36:01Z",
   "project_owner_decision": {
     "decision_id": "O-01-owner-close-20261027",
     "date": "2026-10-27",
@@ -12,15 +12,23 @@
   },
   "repository": {
     "pr_url": "https://github.com/dodaonam/atari-videochess-rl/pull/6",
-    "pr_state_at_verification": "open",
+    "pr_state_at_verification": "closed_merged",
     "base_branch": "initial-idea",
     "base_sha": "d9f0872c120fb2408343859c938257e3962f2e09",
     "head_branch": "feature/pre-m4-final-closure",
-    "head_sha": "7ba2a21d2436941c5a57bad41628738149a8ea1d",
+    "head_sha": "4bde469bc5199ccac3e87d75db205bcc2d9d53c4",
     "mergeable_at_verification": true,
-    "merge_sha": null,
-    "gates_approved": ["G0", "G1", "G2"],
-    "g3_approved": false
+    "merge_sha": "89d085d1865d07b10660e82119488960f766d819",
+    "gates_approved": [
+      "G0",
+      "G1",
+      "G2"
+    ],
+    "g3_approved": false,
+    "integration_branch_head_at_verification": "89d085d1865d07b10660e82119488960f766d819",
+    "merged_at_utc": "2026-10-27T11:27:37Z",
+    "merge_method": "merge",
+    "merged": true
   },
   "canonical_state": {
     "current_gate": "G2",
@@ -32,7 +40,8 @@
     "next_task_id": "M4-001",
     "next_task_status": "pending",
     "m4_acceptance_passed": [],
-    "g3_approved": false
+    "g3_approved": false,
+    "m4_started": false
   },
   "m3_release": {
     "artifact_location": "/home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
@@ -44,7 +53,11 @@
     "positions_retained": 19268,
     "positions_purged": 732,
     "rejections": 182,
-    "split_counts": {"train": 15196, "validation": 2015, "test": 2057},
+    "split_counts": {
+      "train": 15196,
+      "validation": 2015,
+      "test": 2057
+    },
     "cross_split_board_signature_overlap": 0,
     "file_count": 9,
     "verification_exit_code": 0,
@@ -54,15 +67,32 @@
   "checkpoint_archive": {
     "verification_exit_code": 0,
     "storage": "archive",
-    "record_count": 157,
-    "manifest_sha256": "8a8f18d00fbc455f30463729cf0eadbdd5beb8b8dea5fef50f01b613d495761d",
-    "logical_sha256": "17a29916db981da71f0b55ac41d13ff319e56f4a263ea73d677e84d3638440f4",
+    "record_count": 158,
+    "manifest_sha256": "7ef79d51d0084c791ce355f8040a093ed51ebdfbfab90de68a7ac439e4d74386",
+    "logical_sha256": "1e91619d8dff846c7753aa305447a7d812a1c0592db994679c1d03bea738bf12",
     "source_backup_sha256": "f799458940b6beb5f6ce220f0c47c7fd44e020c1f80a85bbe74451433d8ecca5",
-    "current_checkpoint_id": "cp-51cf998d-20261027T111143174905Z",
+    "current_checkpoint_id": "cp-7ba2a21d-20261027T112212896594Z",
     "current_checkpoint_is_archived": false,
-    "represented_checkpoint_identities": 158,
+    "represented_checkpoint_identities": 159,
     "clean_clone": true,
-    "verification_log": ".agents/evidence/logs/PRE-M4-pr6-7ba2a21-clean-archive-20261027.log"
+    "verification_log": ".agents/evidence/logs/PRE-M4-postmerge-89d085d-archive.log",
+    "premerge_7ba2a21": {
+      "verification_exit_code": 0,
+      "storage": "archive",
+      "record_count": 157,
+      "manifest_sha256": "8a8f18d00fbc455f30463729cf0eadbdd5beb8b8dea5fef50f01b613d495761d",
+      "logical_sha256": "17a29916db981da71f0b55ac41d13ff319e56f4a263ea73d677e84d3638440f4",
+      "source_backup_sha256": "f799458940b6beb5f6ce220f0c47c7fd44e020c1f80a85bbe74451433d8ecca5",
+      "current_checkpoint_id": "cp-51cf998d-20261027T111143174905Z",
+      "current_checkpoint_is_archived": false,
+      "represented_checkpoint_identities": 158,
+      "clean_clone": true,
+      "verification_log": ".agents/evidence/logs/PRE-M4-pr6-7ba2a21-clean-archive-20261027.log"
+    },
+    "last_archived_checkpoint_id": "cp-51cf998d-20261027T111143174905Z",
+    "verified_commit": "89d085d1865d07b10660e82119488960f766d819",
+    "verification_started_at_utc": "2026-10-27T11:32:30.111990+00:00",
+    "verification_completed_at_utc": "2026-10-27T11:32:30.371556+00:00"
   },
   "tests": {
     "python": "3.12.3",
@@ -100,20 +130,151 @@
       "command": "python3 scripts/agent_preflight.py",
       "exit_code": 0,
       "errors": 0,
-      "warnings": ["ARTIFACT_MANIFEST_REQUIRED"],
+      "warnings": [
+        "ARTIFACT_MANIFEST_REQUIRED"
+      ],
       "result": "passed",
       "log_path": ".agents/evidence/logs/PRE-M4-pr6-7ba2a21-clean-preflight-20261027.log"
     },
-    "git_diff_check_exit_code": 0
+    "git_diff_check_exit_code": 0,
+    "pr_candidate_7ba2a21": {
+      "commit_sha": "7ba2a21d2436941c5a57bad41628738149a8ea1d",
+      "focused": {
+        "command": "python -m unittest tests.test_agent_context tests.test_checkpoint_history -v",
+        "started_at_utc": "2026-10-27T11:12:22.757514Z",
+        "completed_at_utc": "2026-10-27T11:12:58.682046Z",
+        "exit_code": 0,
+        "test_count": 76,
+        "result": "passed",
+        "log_path": ".agents/evidence/logs/PRE-M4-pr6-7ba2a21-clean-focused-tests-20261027.log"
+      },
+      "full_suite": {
+        "command": "python -m unittest discover -s tests -v",
+        "started_at_utc": "2026-10-27T11:13:09.008996Z",
+        "completed_at_utc": "2026-10-27T11:14:46.441487Z",
+        "exit_code": 0,
+        "test_runtime_seconds": 96.687,
+        "test_count": 270,
+        "result": "passed",
+        "stockfish_uci_readiness_test": "passed; existing Stockfish 19 on PATH; no engine search",
+        "log_path": ".agents/evidence/logs/PRE-M4-pr6-7ba2a21-clean-full-suite-20261027.log"
+      },
+      "preflight": {
+        "command": "python3 scripts/agent_preflight.py",
+        "exit_code": 0,
+        "errors": 0,
+        "warnings": [
+          "ARTIFACT_MANIFEST_REQUIRED"
+        ],
+        "result": "passed",
+        "log_path": ".agents/evidence/logs/PRE-M4-pr6-7ba2a21-clean-preflight-20261027.log"
+      },
+      "log_paths": [
+        ".agents/evidence/logs/PRE-M4-pr6-7ba2a21-clean-preflight-20261027.log",
+        ".agents/evidence/logs/PRE-M4-pr6-7ba2a21-clean-archive-20261027.log",
+        ".agents/evidence/logs/PRE-M4-pr6-7ba2a21-clean-focused-tests-20261027.log",
+        ".agents/evidence/logs/PRE-M4-pr6-7ba2a21-clean-full-suite-20261027.log"
+      ]
+    },
+    "pr_head_4bde469": {
+      "verified_in_fresh_clean_clone": true,
+      "commit_sha": "4bde469bc5199ccac3e87d75db205bcc2d9d53c4",
+      "focused": {
+        "command": "python -m unittest tests.test_agent_context tests.test_checkpoint_history -v",
+        "exit_code": 0,
+        "test_count": 76,
+        "runtime_seconds": 36.069,
+        "result": "passed",
+        "log_path": ".agents/evidence/logs/PRE-M4-pr-final-4bde469-focused-tests.log"
+      },
+      "full_suite": {
+        "command": "python -m unittest discover -s tests -v",
+        "exit_code": 0,
+        "test_count": 270,
+        "runtime_seconds": 97.283,
+        "result": "passed",
+        "stockfish_uci_readiness_test": "passed; existing Stockfish 19 on PATH; no engine search",
+        "log_path": ".agents/evidence/logs/PRE-M4-pr-final-4bde469-full-suite.log"
+      },
+      "archive_record_count": 158,
+      "preflight_exit_code": 0,
+      "clean_worktree_after_verification": true
+    },
+    "postmerge_integration_89d085d": {
+      "verified_in_fresh_clean_clone": true,
+      "commit_sha": "89d085d1865d07b10660e82119488960f766d819",
+      "preflight": {
+        "command": "python3 scripts/agent_preflight.py --json",
+        "started_at_utc": "2026-10-27T11:32:30.371771+00:00",
+        "completed_at_utc": "2026-10-27T11:32:30.809537+00:00",
+        "exit_code": 0,
+        "ok": true,
+        "errors": 0,
+        "warnings": [
+          "ARTIFACT_MANIFEST_REQUIRED"
+        ],
+        "portable_baseline_matches": true,
+        "portable_index_matches": true,
+        "live_worktree_clean": true,
+        "m4_status": "ready_to_start",
+        "m4_start_authorized": true,
+        "m4_task_status": "pending",
+        "g3_approved": false,
+        "log_path": ".agents/evidence/logs/PRE-M4-postmerge-89d085d-preflight.log"
+      },
+      "focused": {
+        "command": "python -m unittest tests.test_agent_context tests.test_checkpoint_history -v",
+        "started_at_utc": "2026-10-27T11:28:15.103075+00:00",
+        "completed_at_utc": "2026-10-27T11:28:50.913822+00:00",
+        "exit_code": 0,
+        "test_count": 76,
+        "runtime_seconds": 35.666,
+        "result": "passed",
+        "log_path": ".agents/evidence/logs/PRE-M4-postmerge-89d085d-focused-tests.log"
+      },
+      "full_suite": {
+        "command": "python -m unittest discover -s tests -v",
+        "started_at_utc": "2026-10-27T11:28:59.001357+00:00",
+        "completed_at_utc": "2026-10-27T11:30:36.804016+00:00",
+        "exit_code": 0,
+        "test_count": 270,
+        "runtime_seconds": 97.114,
+        "result": "passed",
+        "stockfish_uci_readiness_test": "passed; existing Stockfish 19 on PATH; no engine search",
+        "log_path": ".agents/evidence/logs/PRE-M4-postmerge-89d085d-full-suite.log"
+      },
+      "whitespace_check": {
+        "command": "git show --check --oneline --no-renames HEAD",
+        "exit_code": 0
+      },
+      "clean_worktree_after_verification": true
+    }
   },
   "github_ci": {
-    "run_id": 40494322054,
-    "url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/40494322054",
+    "run_id": 40495781206,
+    "url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/40495781206",
     "name": "Repository preflight",
-    "commit_sha": "7ba2a21d2436941c5a57bad41628738149a8ea1d",
+    "commit_sha": "4bde469bc5199ccac3e87d75db205bcc2d9d53c4",
     "conclusion": "success",
-    "coverage": ["agent_preflight", "tests.test_agent_context", "tests.test_export_review_bundle"],
-    "full_python_regression_suite": false
+    "coverage": [
+      "agent_preflight",
+      "tests.test_agent_context",
+      "tests.test_export_review_bundle"
+    ],
+    "full_python_regression_suite": false,
+    "earlier_candidate_run": {
+      "run_id": 40494322054,
+      "url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/40494322054",
+      "name": "Repository preflight",
+      "commit_sha": "7ba2a21d2436941c5a57bad41628738149a8ea1d",
+      "conclusion": "success",
+      "coverage": [
+        "agent_preflight",
+        "tests.test_agent_context",
+        "tests.test_export_review_bundle"
+      ],
+      "full_python_regression_suite": false
+    }
   },
   "scope_limits": {
     "m4_neural_implementation_started": false,
@@ -124,11 +285,90 @@
     "m3_release_modified_or_copied": false,
     "new_dataset_or_runtime_allocated": false,
     "stockfish_search_run": false,
-    "postmerge_clean_clone_verification": "pending"
+    "postmerge_clean_clone_verification": "passed_at_89d085d1865d07b10660e82119488960f766d819"
   },
   "postmerge": {
-    "integration_sha": null,
-    "clean_clone_verification": "pending",
-    "final_worktree_clean": null
-  }
+    "pr6_merge_sha": "89d085d1865d07b10660e82119488960f766d819",
+    "integration_branch": "initial-idea",
+    "integration_branch_head_at_verification": "89d085d1865d07b10660e82119488960f766d819",
+    "clean_clone_verification": "passed",
+    "archive_verification": "passed_158_records",
+    "preflight": "passed_zero_errors_expected_artifact_manifest_warning",
+    "focused_tests": "76_passed",
+    "full_suite": "270_passed",
+    "final_worktree_clean": true,
+    "pr6_merged": true,
+    "manifest_sha256": "7ef79d51d0084c791ce355f8040a093ed51ebdfbfab90de68a7ac439e4d74386",
+    "logical_sha256": "1e91619d8dff846c7753aa305447a7d812a1c0592db994679c1d03bea738bf12"
+  },
+  "decision_audit": {
+    "o01_closed_for_internal_project_planning_and_execution_authorization": true,
+    "owner_decision_date": "2026-10-27",
+    "historical_external_confirmation_prerequisite_superseded_by_dated_addendum": true,
+    "external_instructor_policy_approval_claimed": false,
+    "authoritative_contradictory_course_rule_found_in_reviewed_repository_materials": false,
+    "external_evidence_is_informational_not_m4_entry_blocker": true
+  },
+  "acceptance_matrix": [
+    {
+      "id": "PM4-F01",
+      "status": "PASS"
+    },
+    {
+      "id": "PM4-F02",
+      "status": "PASS"
+    },
+    {
+      "id": "PM4-F03",
+      "status": "PASS"
+    },
+    {
+      "id": "PM4-F04",
+      "status": "PASS"
+    },
+    {
+      "id": "PM4-F05",
+      "status": "PASS"
+    },
+    {
+      "id": "PM4-F06",
+      "status": "PASS"
+    },
+    {
+      "id": "PM4-F07",
+      "status": "PASS"
+    },
+    {
+      "id": "PM4-F08",
+      "status": "PASS"
+    },
+    {
+      "id": "PM4-F09",
+      "status": "PASS"
+    },
+    {
+      "id": "PM4-F10",
+      "status": "PASS"
+    },
+    {
+      "id": "PM4-F11",
+      "status": "PASS"
+    },
+    {
+      "id": "PM4-F12",
+      "status": "PASS"
+    },
+    {
+      "id": "PM4-F13",
+      "status": "PASS"
+    },
+    {
+      "id": "PM4-F14",
+      "status": "PASS"
+    },
+    {
+      "id": "PM4-F15",
+      "status": "PASS"
+    }
+  ]
 }
