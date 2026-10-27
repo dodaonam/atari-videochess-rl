@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-f17933b1-20261027T165923807284Z -->
+<!-- checkpoint-id: cp-8f3d6d25-20261027T165938209094Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
