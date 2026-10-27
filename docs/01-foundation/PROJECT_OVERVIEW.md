@@ -1,7 +1,7 @@
 # Project Overview
 
 **Audience:** Project owner, instructors/reviewers, and engineering agents.<br>
-**Status:** Project overview; normative constraints remain in [`REQUIREMENTS.md`](REQUIREMENTS.md). M0–M3 are implemented and accepted on the integration branch. The accepted M3 raw source/release/teacher artifacts are not present in every checkout. Live gate, task, and authorization status are owned by canonical state and backlog.
+**Status:** Project overview; normative constraints remain in [`REQUIREMENTS.md`](REQUIREMENTS.md). M0–M3 are implemented and accepted on the integration branch. M3 artifacts are outside Git; the exact accepted local release was independently verified read-only during Pre-M4 and must be reverified before future use. Live status is owned by canonical state and backlog.
 
 ## Purpose
 
@@ -15,8 +15,8 @@ Build and study a chess-playing reinforcement-learning agent for ALE `VideoChess
 
 ## Project boundaries
 
-- The roadmap states that custom RL should use PyTorch, excludes Stable-Baselines/Ray RLlib, and forbids Stockfish from the inference path. Assignment-specific permissions still require confirmation in `REQUIREMENTS.md`.
-- ALE board extraction and action wrapping are the target integration path, subject to runtime and assignment checks.
+- The owner-selected project direction uses custom PyTorch Double DQN, excludes Stable-Baselines/Ray RLlib, and forbids Stockfish in inference. The 2026-10-27 owner decision closes O-01 for internal planning and execution; no instructor approval is claimed, and any actual explicit course prohibition must be followed.
+- ALE board extraction and action wrapping remain the target path. External instructor-policy evidence has not been established in the repository; that residual uncertainty is informational for M4-001 and does not require repeated owner confirmation.
 - A full-game Atari agent is the roadmap's technical target. The simulator fallback is a disclosed limitation, not an assumed waiver.
 - Approximate 1500 Elo is aspirational, not guaranteed. Any Elo claim requires a defined calibrated opponent pool.
 
@@ -26,4 +26,4 @@ This overview does not own live phase or task status. Read `.agents/state/PROJEC
 
 ## Implementation boundary
 
-The integrated repository includes the technical bootstrap, verified ALE feasibility layer, accepted python-chess simulator/baselines, and M3 data pipeline. M3's source-backed release was accepted, but its raw source, release, and teacher artifacts are absent from this checkout; see the acceptance and post-merge records. The M4 model/training design is proposed only. No supervised model, Double DQN trainer, or learned Atari inference path is implemented. Remaining source-rights, assignment, compute, evaluation, and M4 authorization conditions are recorded in `REQUIREMENTS.md` and canonical state.
+The integrated repository includes the technical bootstrap, verified ALE feasibility layer, accepted python-chess simulator/baselines, and M3 data pipeline. M3's source-backed release is accepted; its raw files remain outside Git, and the exact local release was independently verified read-only in this closure (see [verification evidence](../../.agents/evidence/M3-release-local-verification-20261027.md)). Reverify it before future use; no M4 neural loader has consumed it. ADR-0003's architecture and the M4 protocol are accepted/ready, but no supervised model, Double DQN trainer, or learned Atari inference path is implemented. M4-001 is authorized and ready to start, not started; G3 remains unapproved. The third-party package license is still unstated and bulk artifacts remain non-redistributable.

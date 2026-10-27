@@ -1239,6 +1239,50 @@ class AgentContextRecoveryTests(unittest.TestCase):
         self.assertEqual(errors, [])
         self.assertNotIn("G3", state["governance"]["approved_gates"])
 
+    def test_m4_authorization_can_be_ready_without_claiming_implementation_started(self) -> None:
+        state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
+        state["engineering"].update({
+            "active_milestone": None, "next_milestone": "M4",
+            "next_milestone_status": "ready_to_start", "start_authorized": True,
+            "hold_reason": "",
+            "start_authorization_record": {
+                "authorization_id": "M4-001-owner-20261027", "task_id": "M4-001",
+                "milestone": "M4", "authority": "direct_user_or_pm_instruction",
+                "authorized_at_utc": "2026-10-27T10:26:30Z",
+                "scope": "Synthetic authorization fixture only; no implementation is started.",
+                "evidence_path": ".agents/evidence/M4-authorization-fixture.md",
+            },
+        })
+        state["task_refs"].update({"active_task_id": None, "next_task_id": "M4-001"})
+        result = "The project owner directly authorized M4-001 for this synthetic fixture."
+        task = {
+            "id": "M4-001", "title": "Fixture", "milestone": "M4",
+            "status": "pending", "next_action": "Begin only when the executor starts the task.",
+            "depends_on": [], "requires_user_gate_approval": None,
+            "acceptance_criteria_ids": ["M4-01"], "blocker_ids": [], "evidence": [{
+                "kind": "file", "path": ".agents/evidence/M4-authorization-fixture.md",
+                "detail": "Synthetic direct authorization evidence for ready_to_start validation.",
+                "result": result,
+                "provenance": {"status": "manual_verified", "executed_at_utc": "2026-10-27T10:26:30Z",
+                    "recorded_at_utc": "2026-10-27T10:26:30Z", "exit_code": None,
+                    "git_revision": "a" * 40, "log_path": ".agents/evidence/M4-authorization-fixture.md"},
+            }],
+        }
+        backlog = {
+            "format": "JSON-compatible YAML 1.2", "schema_version": 2,
+            "project_id": "atari-videochess-rl", "tasks": [task],
+        }
+        evidence_path = self.root / ".agents/evidence/M4-authorization-fixture.md"
+        evidence_path.parent.mkdir(parents=True, exist_ok=True)
+        evidence_path.write_text(result + "\n", encoding="utf-8")
+        errors: list[dict[str, str]] = []
+        agent_preflight._validate_state(state, errors)
+        agent_preflight._check_task_graph(backlog, self.root, state, set(), {"M4-01"}, errors)
+        self.assertEqual(errors, [])
+        self.assertEqual(task["status"], "pending")
+        self.assertIsNone(state["engineering"]["active_milestone"])
+        self.assertNotIn("G3", state["governance"]["approved_gates"])
+
     def test_start_authorized_boolean_without_direct_record_is_rejected(self) -> None:
         state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
         state["engineering"].pop("start_authorization_record", None)
@@ -1273,8 +1317,14 @@ class AgentContextRecoveryTests(unittest.TestCase):
         elif m3["status"] == "done":
             self.assertEqual(engineering["next_milestone"], "M4")
             self.assertIsNone(engineering["active_milestone"])
-            self.assertFalse(engineering["start_authorized"])
-            self.assertEqual(engineering["next_milestone_status"], "pending_user_approval")
+            self.assertEqual(engineering["next_milestone_status"], "ready_to_start")
+            self.assertTrue(engineering["start_authorized"])
+            self.assertIsNone(engineering["active_milestone"])
+            self.assertIsNone(state["task_refs"]["active_task_id"])
+            self.assertEqual(state["task_refs"]["next_task_id"], "M4-001")
+            self.assertEqual(engineering["start_authorization_record"]["authorization_id"], "M4-001-owner-20261027")
+            m4 = next(task for task in backlog["tasks"] if task["id"] == "M4-001")
+            self.assertEqual(m4["status"], "pending")
             self.assertTrue(any(
                 item.get("path") == ".agents/evidence/M3-acceptance-20261021.md"
                 and item.get("provenance", {}).get("status") == "manual_verified"
@@ -1534,7 +1584,8 @@ class AgentContextRecoveryTests(unittest.TestCase):
             next_task = next(task for task in backlog["tasks"] if task["id"] == next_task_id)
             self.assertEqual(summary["next_task_acceptance_criteria_ids"], next_task["acceptance_criteria_ids"])
         self.assertEqual(summary["task_ids_by_status"]["done"], sorted(task["id"] for task in backlog["tasks"] if task["status"] == "done"))
-        self.assertEqual(summary["open_approval_ids"], [f"O-{index:02d}" for index in range(1, 9)])
+        self.assertEqual(summary["open_approval_ids"], [f"O-{index:02d}" for index in range(2, 9)])
+        self.assertNotIn("O-01", summary["open_approval_ids"])
         self.assertIn("docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md", summary["decision_refs"])
         self.assertTrue(summary["roadmap_source"]["matches"])
         self.assertTrue(summary["git_snapshot_matches"])

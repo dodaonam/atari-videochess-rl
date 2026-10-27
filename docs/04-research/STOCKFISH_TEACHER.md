@@ -1,6 +1,6 @@
 # Stockfish Teacher and Supervised Targets
 
-**Status:** The owner authorized bounded Stockfish 19 teacher labeling for M3 on 2026-10-20. A real run on 128 deterministic positions completed on 2026-10-20 using the existing verified host binary; all positions produced records, including 377 centipawn and 3 mate MultiPV lines. The broader O-01/O-07 instructor and non-teacher role questions remain open. The manifest and sanitized execution evidence are under `.agents/evidence/`.
+**Status:** The owner authorized bounded Stockfish 19 teacher labeling for M3 on 2026-10-20. A real run on 128 deterministic positions completed on 2026-10-20 using the existing verified host binary; all positions produced records, including 377 centipawn and 3 mate MultiPV lines. O-01 is closed for internal planning and execution by the 2026-10-27 owner decision; no instructor approval is claimed, and the absence of external policy evidence is informational for M4-001. O-07 still governs Stockfish roles beyond the bounded M3 teacher run and the M4 behavior-only protocol. The manifest and sanitized execution evidence are under `.agents/evidence/`.
 **Related records:** [M03 plan](../../.agents/plans/M03-expert-dataset.md), [dataset contract](DATASET_SPEC.md), [experiment protocol](EXPERIMENT_PROTOCOL.md), and [owner decision register](DECISION_REGISTER.md).
 
 ## 1. Keep target meanings separate
@@ -15,9 +15,9 @@
 | Simulator reward / return | Reward and discounted future reward from simulator transitions. | M5 RL evidence; do not substitute engine centipawns. |
 | Learned Q-value | Model estimate for a legal action and simulator return under a stated policy/training setup. | M5/M6 model output; not a teacher score by definition. |
 
-## 2. Optional M4 target recommendation
+## 2. M4 behavior-only target contract
 
-**RL-first priority:** the project must reserve its principal time and compute for independently implemented Double DQN trained from M2 simulator transitions. A small behavior-cloning model is an optional supervised-only baseline if it can be built without delaying the core M5 implementation or learning experiment. It is not a prerequisite to M5, the primary project result, or evidence of reinforcement learning.
+**RL-first priority:** the project reserves its principal objective for independently implemented Double DQN trained from M2 simulator transitions. The owner has authorized a bounded M4 behavior-cloning experiment as supporting evidence; it does not replace RL, establish playing strength, or block starting M5 core implementation. Follow the accepted architecture and the exact data/resource limits in [the M04 plan](../../.agents/plans/M04-supervised-pretraining.md) and [training protocol](TRAINING_PROTOCOL.md).
 
 If retained, train on a selected position's actually played UCI move using a policy loss restricted to that position's recorded legal moves. This needs no Stockfish labels. Report held-out legal top-1/top-k move accuracy and ranking metrics as behavior-prediction measures, not Elo, Q-value quality, simulator return, or Atari strength.
 
@@ -27,11 +27,11 @@ At least one simpler baseline is legal random selection or a fixed transparent h
 
 | Objective | Benefit | Main cost or risk | Disposition |
 |---|---|---|---|
-| Played-move behavior cloning | Lowest data and compute complexity; target exists in each accepted PGN position. | Expert actions are demonstrations, not optimality certificates; game context and time controls affect behavior. | Optional, small, and time-boxed baseline only if it does not delay Double DQN. |
+| Played-move behavior cloning | Lowest data and compute complexity; target exists in each accepted PGN position. | Expert actions are demonstrations, not optimality certificates; game context and time controls affect behavior. | Bounded supporting M4 experiment under the accepted behavior-only protocol; keep it small and do not let it displace Double DQN. |
 | Position outcome prediction | Uses game result without engine; provides a distinct outcome baseline. | Outcome is noisy and highly dependent on both players and later moves. | Optional multi-task experiment, not merged into move labels. |
-| Teacher top-k ranking | Adds engine-preferred candidates and interpretable ranking signal. | MultiPV covers only its returned lines; it is not a label for every legal move. | Bounded M3 teacher labeling is authorized; any expanded ranking experiment is optional and must not delay Double DQN. |
+| Teacher top-k ranking | Adds engine-preferred candidates and interpretable ranking signal. | MultiPV covers only its returned lines; it is not a label for every legal move. | The bounded M3 teacher run is complete. Teacher supervision is excluded from the initial M4 behavior-only run; any separate M4 teacher experiment requires explicit authorization and must not delay Double DQN. |
 | Every-legal-move candidate scores | Provides broad candidate supervision. | Approximately one restricted-root search per legal move, often dozens of searches per position. | Defer unless a measured pilot and assignment value justify the cost. |
-| Value regression from Stockfish | Dense board signal and simple storage. | Score scale, mate discontinuity, search noise, and perspective can be mistaken for probability or RL return. | Store raw data separately; transform only in a named M4 experiment. |
+| Value regression from Stockfish | Dense board signal and simple storage. | Score scale, mate discontinuity, search noise, and perspective can be mistaken for probability or RL return. | Excluded from the initial M4 behavior-only run. Any later separately authorized experiment must store raw data separately and use a named, versioned transform. |
 
 This recommendation does not freeze the neural architecture, legal-action scorer, loss weighting, feature representation, or Double DQN initialization.
 
@@ -131,7 +131,7 @@ The archive ceiling applies only to the publisher-reported 93 MB Elite candidate
 
 The current project already locks python-chess. PGN parsing, ZIP access, JSON Lines, gzip, SHA-256, and manifests can use the existing package and Python standard library. Do not add a data-frame/database dependency for M3. If the approved source is a Zstandard stream, decide separately whether to add a pinned Zstandard Python package or require a documented host utility; do not hide that dependency.
 
-The project owner’s 2026-10-20 mission authorizes this M3 task's bounded Stockfish 19 offline teacher labels. The older proposed authority boundary above is superseded only for that exact scope. Stockfish remains excluded from inference, opponent, and offline benchmark roles. O-01/O-07 retain broader instructor and role questions; if authoritative course rules contradict this scoped project direction, stop the affected operation and record the evidence.
+The project owner’s 2026-10-20 mission authorizes this M3 task's bounded Stockfish 19 offline teacher labels. Stockfish remains excluded from inference, opponent, and offline benchmark roles; the initial M4 run also excludes engine scores and teacher targets. O-01 is closed internally for the selected project direction, but no instructor approval is claimed. O-07 still gates broader roles; if an actual authoritative course rule contradicts an owner-selected activity, stop the affected operation and record the evidence.
 
 The corrective M3 run on 2026-10-21 analyzed 128 deterministic positions from corrected release `7b51ec3761ad28aa7a2882691b3c314d35115ab339769251ff2556e706a5b1d9`, at 5,000 nodes/root, MultiPV 3, one thread, 64 MiB hash, and a 1,800-second total command budget. It produced 377 centipawn and 3 typed mate rows with no failures or unattempted positions. The full command, including release validation and sample selection, took 114.243 seconds; engine search time was 2.985 seconds. Binary, license, release, run, sidecar, score, and independent verification identities are in [the corrective hardening evidence](../../.agents/evidence/M3-corrective-hardening-20261021.md). The earlier M3 teacher record is historical and remains linked to its original release.
 

@@ -68,6 +68,7 @@ ALLOWED_GATE_STATUSES = {"in_progress", "ready_for_user_review", "approved"}
 ALLOWED_MILESTONE_STATUSES = {
     "not_started",
     "pending_user_approval",
+    "ready_to_start",
     "in_progress",
     "blocked",
     "complete",
@@ -472,13 +473,17 @@ def _validate_state(state: dict[str, object], errors: list[dict[str, str]]) -> N
         errors.append({"code": code, "path": STATE_REL, "message": "M0/M1 cannot be authorized before G1 approval."})
     if engineering.get("next_milestone") == "M0" and not engineering.get("start_authorized") and engineering.get("next_milestone_status") != "pending_user_approval":
         errors.append({"code": code, "path": STATE_REL, "message": "Unapproved M0 must be pending_user_approval."})
-    if engineering.get("start_authorized") is True and (
-        engineering.get("next_milestone_status") != "in_progress"
-        or engineering.get("active_milestone") != engineering.get("next_milestone")
-    ):
-        errors.append({"code": "MILESTONE_AUTHORIZATION_MISMATCH", "path": STATE_REL, "message": "An explicitly authorized milestone must be the active next milestone with in_progress status."})
-    if engineering.get("next_milestone_status") == "in_progress" and engineering.get("start_authorized") is not True:
-        errors.append({"code": "MILESTONE_AUTHORIZATION_MISMATCH", "path": STATE_REL, "message": "An in-progress milestone requires separate explicit start authorization."})
+    milestone_status = engineering.get("next_milestone_status")
+    authorized = engineering.get("start_authorized") is True
+    if authorized:
+        if milestone_status == "in_progress" and active != engineering.get("next_milestone"):
+            errors.append({"code": "MILESTONE_AUTHORIZATION_MISMATCH", "path": STATE_REL, "message": "An in-progress authorized milestone must be the active next milestone."})
+        elif milestone_status == "ready_to_start" and active is not None:
+            errors.append({"code": "MILESTONE_AUTHORIZATION_MISMATCH", "path": STATE_REL, "message": "A ready_to_start milestone must not be active before implementation begins."})
+        elif milestone_status not in {"ready_to_start", "in_progress"}:
+            errors.append({"code": "MILESTONE_AUTHORIZATION_MISMATCH", "path": STATE_REL, "message": "An authorized milestone must be ready_to_start or in_progress."})
+    elif milestone_status in {"ready_to_start", "in_progress"}:
+        errors.append({"code": "MILESTONE_AUTHORIZATION_MISMATCH", "path": STATE_REL, "message": "A ready_to_start or in-progress milestone requires separate explicit start authorization."})
 
     task_refs = state["task_refs"]
     if not isinstance(task_refs, dict):
@@ -851,10 +856,27 @@ def _check_task_graph(backlog: dict[str, object], root: Path, state: dict[str, o
         authorization = engineering.get("start_authorization_record")
         if authorized and isinstance(authorization, dict):
             task_id = authorization.get("task_id")
-            active_task_id = state.get("task_refs", {}).get("active_task_id") if isinstance(state.get("task_refs"), dict) else None
+            refs = state.get("task_refs", {}) if isinstance(state.get("task_refs"), dict) else {}
+            active_task_id = refs.get("active_task_id")
+            next_task_id = refs.get("next_task_id")
             task = tasks.get(task_id) if isinstance(task_id, str) else None
-            if active_task_id != task_id or not isinstance(task, dict) or task.get("status") != "in_progress" or task.get("milestone") != milestone:
-                errors.append({"code": "MILESTONE_AUTHORIZATION_EVIDENCE", "path": rel, "message": "Authorization must identify the active in-progress task for the explicitly authorized milestone."})
+            running_match = (
+                engineering.get("next_milestone_status") == "in_progress"
+                and active_task_id == task_id
+                and isinstance(task, dict)
+                and task.get("status") == "in_progress"
+                and task.get("milestone") == milestone
+            )
+            ready_match = (
+                engineering.get("next_milestone_status") == "ready_to_start"
+                and active_task_id is None
+                and next_task_id == task_id
+                and isinstance(task, dict)
+                and task.get("status") == "pending"
+                and task.get("milestone") == milestone
+            )
+            if not (running_match or ready_match):
+                errors.append({"code": "MILESTONE_AUTHORIZATION_EVIDENCE", "path": rel, "message": "Authorization must identify either the pending next task in ready_to_start state or the active in-progress task."})
             else:
                 path = authorization.get("evidence_path")
                 matches = [
@@ -868,7 +890,7 @@ def _check_task_graph(backlog: dict[str, object], root: Path, state: dict[str, o
                     and "authoriz" in item["result"].lower()
                 ]
                 if not matches:
-                    errors.append({"code": "MILESTONE_AUTHORIZATION_EVIDENCE", "path": rel, "message": "The active task must cite a manual_verified evidence file recording the direct authorization."})
+                    errors.append({"code": "MILESTONE_AUTHORIZATION_EVIDENCE", "path": rel, "message": "The authorized task must cite a manual_verified evidence file recording the direct authorization."})
         for task_id, task in tasks.items():
             if task.get("status") != "in_progress" or not isinstance(task.get("milestone"), str) or not re.fullmatch(r"M[0-7]", task["milestone"]):
                 continue
@@ -1396,6 +1418,8 @@ def _format_human(report: dict[str, object]) -> str:
     milestone_status = summary["next_milestone_status"]
     if milestone_status == "pending_user_approval":
         milestone_phrase = "not started (pending user approval)"
+    elif milestone_status == "ready_to_start":
+        milestone_phrase = "ready to start (authorized; not started)"
     else:
         milestone_phrase = str(milestone_status)
     lines.append(f"Next engineering milestone: {summary['next_milestone']} — {milestone_phrase}")

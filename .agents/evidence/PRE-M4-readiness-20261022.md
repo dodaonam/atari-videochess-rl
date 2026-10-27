@@ -4,6 +4,8 @@
 
 > **Current-status pointer (2026-10-23):** The R02/R07 results below describe the evidence available at that dated review. Current closure is in [PRE-M4-final-closure-20261023.md](PRE-M4-final-closure-20261023.md): PR #5 migration is integrated and verified; the exact accepted M3 release was subsequently found in the sibling M3 worktree and verified read-only; ADR-0003 was accepted by the owner. This pointer preserves the historical findings and does not retroactively rewrite them. O-01 external course-policy evidence remains pending, so M4-001 is not activated.
 
+> **Current-status pointer (2026-10-27):** The 2026-10-23 O-01 and activation status above is historical. The project owner has closed O-01 for internal execution, without claiming instructor approval; [the 2026-10-27 final closure report](PRE-M4-final-closure-20261027.md) records the current readiness and verification.
+
 ## Verified baseline
 
 The latest verified integration baseline is `origin/initial-idea` at `aba04d7b30fa614e2e7e74789dd610a162dd2cf0`; its parent is M3 integration commit `2867bd58f29331a7429c649fe9e82fe620157a4d` (PR #3, merged 2026-10-21). The local `initial-idea` ref at the start was stale at `2271b836f4dcf52e62e84413a4c456899138e953`. The primary checkout already had a deleted tracked `atari-videochess-rl-roadmap.html` and untracked `main.py` and `.agents/evidence/M1-04-terminal-success-20261016.zip`; these were observed before edits and preserved. Work was performed on a separate clean clone of the authorized feature branch so those local artifacts were not included.

@@ -1,6 +1,6 @@
 # M4 Supervised Training Protocol
 
-**Status:** Protocol for the architecture accepted in [ADR-0003](../02-management/decisions/ADR-0003-pretraining-model-interface.md). No M4 model, training, checkpoint, or neural-throughput measurement has been produced. `M4-001` remains pending because its conditional authorization still requires authoritative O-01 course-policy evidence and canonical activation.
+**Status:** Ready-to-execute protocol for the architecture accepted in [ADR-0003](../02-management/decisions/ADR-0003-pretraining-model-interface.md). `M4-001` is authorized and ready to start but remains pending until implementation begins. No M4 model, training, checkpoint, or neural-throughput measurement has been produced. O-01 is closed for internal execution by the 2026-10-27 owner decision; external instructor-policy approval is not evidenced and is not claimed.
 
 **Objective:** Produce a small, reproducible behavior-cloning baseline that supports later Double DQN experiments. Supervised prediction is not reinforcement learning and is not a chess-strength or Atari-performance claim.
 
@@ -15,9 +15,9 @@ Use only the accepted M3 closure release:
 - Split assignment SHA-256: `84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e`.
 - The split is game-grouped and then purged to zero cross-split board-position signatures. Reuse its recorded assignment and do not re-split.
 
-All identities are supported by accepted M3 evidence and the exact local release was independently verified read-only in the sibling M3 worktree; see `.agents/evidence/M3-release-local-verification-20261023.md`. The raw release, source archive, and teacher sidecar remain outside this checkout and Git. No M4 data loading or training is claimed. Before training, re-run the project verifier against the configured local release path. Do not download, copy, upload or regenerate the license-uncertain package.
+All identities are supported by accepted M3 evidence. The exact owner-specified local release was independently reverified read-only during Pre-M4; see `.agents/evidence/M3-release-local-verification-20261027.md`. The raw release, source archive, and teacher sidecar remain outside this checkout and Git. No M4 neural data loading or training is claimed. Before any future load, re-run the project verifier against the configured local release path. Do not download, copy, upload or regenerate the license-uncertain package.
 
-Owner-confirmed technical direction is custom PyTorch, Double DQN as the principal RL method, and a bounded supporting behavior-cloning stage; Stockfish is not used by this initial behavior-only run or by inference. O-01 remains open only for authoritative external course-policy constraints on wrappers, custom implementations, behavior cloning, and any engine role. Obtain or locate that evidence before activating M4-001; this protocol does not invent instructor approval.
+Owner-confirmed technical direction is custom PyTorch, Double DQN as the principal RL method, and a bounded supporting behavior-cloning stage; Stockfish is not used by this initial behavior-only run or by inference. The 2026-10-27 owner decision closes O-01 for internal planning and execution and supersedes the former O-01-only M4 activation condition. No external instructor-policy approval has been evidenced or is claimed. If an actual authoritative rule explicitly prohibits a selected activity, stop that activity and record the conflict; absence of external evidence alone does not block M4-001.
 
 For this behavior-only experiment, the target is only the recorded `played_move_uci` in each valid M3 position. The move is a historical PGN action, not an optimality label. M3 validation already requires the move to be legal and present in the candidate set. The accepted 128-position Stockfish teacher sidecar is not used in this first run; broader M4 teacher training/evaluation use needs separate owner direction under the existing Stockfish boundary.
 
@@ -52,7 +52,7 @@ These are fixed starting values for the first authorized run, not optimized or p
 
 | Setting | Initial value / control |
 |---|---|
-| Model | Proposed action-conditioned architecture in `MODEL_DESIGN.md`; parameter cap 250,000 (estimated 121,897). |
+| Model | Accepted action-conditioned architecture in `MODEL_DESIGN.md`; parameter cap 250,000 (estimated 121,897, not measured). |
 | Objective | Legal-candidate behavior cross-entropy. |
 | Optimizer | AdamW; learning rate `3e-4`; weight decay `1e-4`. |
 | Physical batch | Up to 64 positions, bounded further by history-token and candidate-slot limits above. |

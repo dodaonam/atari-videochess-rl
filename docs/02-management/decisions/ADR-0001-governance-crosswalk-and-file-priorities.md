@@ -39,7 +39,7 @@ The conversation uses two different label systems. `G0–G5` describe documentat
 - This ADR is the sole owner of the accepted crosswalk and its classification rationale. `EXECUTION_PLAN.md` owns engineering order, dependencies, deliverables, and the fixed-file inventory; `ACCEPTANCE_CRITERIA.md` owns pass conditions and allocates M7-01–M7-03 to G4 evaluation and M7-04–M7-05 to G5 delivery; `PROJECT_STATE.yaml` owns live status.
 - G1 closes at user review. M0 remains not started until the user separately approves proceeding after G1.
 - G2–G5 and M0–M7 remain separate in future plans, tasks, reports, and validation.
-- Academic/external approvals O-01–O-08 in `REQUIREMENTS.md` remain open and are not resolved by this process ADR.
+- Academic/external approvals O-01–O-08 in `REQUIREMENTS.md` were open when this 2026-10-14 process ADR was accepted and were not resolved by it. The project owner later closed O-01 for internal execution on 2026-10-27; this ADR does not establish instructor approval. See the current requirements register.
 
 ## Supersession
 

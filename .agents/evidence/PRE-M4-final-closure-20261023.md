@@ -1,5 +1,7 @@
 # Final Pre-M4 Closure and M4 Execution Readiness — 2026-10-23
 
+> **Current-status pointer (2026-10-27):** This report preserves its 2026-10-23 findings and decision context. O-01 was closed for internal planning and execution authorization by the dated owner decision; the O-01-only M4 activation condition was superseded. The exact M3 release was reverified read-only, and the current R01–R08 results, PR #6 integration identity, and M4-001 readiness are recorded in [the 2026-10-27 final closure report](PRE-M4-final-closure-20261027.md). No instructor approval is claimed.
+
 ## Verdict
 
 **PRE-M4 COMPLETE — GO WITH LIMITS.** The integration, lossless checkpoint archive, accepted M3 release, accepted ADR-0003, semantic readiness, and bounded training protocol are verified and documented. **M4-001 is not activated:** the only remaining entry condition in its conditional authorization is authoritative external O-01 course-policy evidence. The project-owner technical choices are settled; no instructor permission is inferred. M4 training and model implementation have not started, no M4 acceptance criterion is passed, and G3 remains unapproved.
