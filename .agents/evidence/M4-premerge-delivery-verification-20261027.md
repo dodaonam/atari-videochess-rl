@@ -42,7 +42,17 @@ This workflow is a context/preflight check; the separate 124 focused and 313 ful
 
 At report time PR #8 is open and draft, merge state clean, and no required review decision is reported. The authorized executor may remove draft status and merge only after confirming the live head, status checks, and repository protections again. Post-merge integration and clean-clone verification remain required.
 
-Overall result: PASS — exact PR head f17933b12ce5cbc0b1b8bb9b0be71961caab6d37 passed clean-clone preflight, archive verification, artifact verification, 124 focused tests, and 313 full regression tests; the GitHub context check succeeded. PR merge remains pending.
+## Final PR-head recheck
+
+After the evidence-log repair, exact final proposed head `df942b5ff88687e7a6f5cd242d5e82939833f7e6` was checked again from the clean clone. The checkout was clean. Preflight exited 0 with zero errors and only the expected artifact-manifest warning; archive verification exited 0 with 184 records and logical SHA-256 `32e8055c7ce9ce217f53a20c5cedcee49198e4b0a02e0eaa04a4ed9fc6f0eac2`; artifact verification exited 0 for all 19 files and selected checkpoint SHA-256 `724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4`. The focused suite passed 124 tests in 45.768 seconds, and the full suite passed 313 tests in 98.918 seconds; both exited 0.
+
+- Integrity/preflight/archive/artifact log: `.agents/evidence/logs/M4-premerge-final-head-integrity-df942b5-20261027.txt`, SHA-256 `a95ec1887a08f56582d7299e405cc495d3af18721ec20781874d45172907188d`.
+- Focused log: `.agents/evidence/logs/M4-premerge-final-head-focused-df942b5-20261027.txt`, SHA-256 `a3cb682b160c2256b9a3a5df7421493ffe9afda26effe804dc351c79f0bfcf19`.
+- Full-suite log: `.agents/evidence/logs/M4-premerge-final-head-full-df942b5-20261027.txt`, SHA-256 `5ccb9fd73a88129b362e9ac2d38d651716a268f7da3451a4efc3d1f9130e5a5`.
+
+GitHub's `Repository preflight` context check succeeded on this exact head: [run 40546355626](https://github.com/dodaonam/atari-videochess-rl/actions/runs/40546355626/job/122337931230). The workflow is not the full Python suite. The branch protection API reports no classic protection and repository branch rulesets are empty; the PR reports merge state `CLEAN` and no review decision. Recheck the live head and checks immediately before merge.
+
+Overall result: PASS — exact proposed PR head df942b5ff88687e7a6f5cd242d5e82939833f7e6 passed clean-clone preflight, archive verification, artifact verification, 124 focused tests, and 313 full regression tests; the GitHub context check succeeded. PR merge remains pending.
 
 ## M4 status and boundaries
 
