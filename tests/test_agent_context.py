@@ -1315,22 +1315,30 @@ class AgentContextRecoveryTests(unittest.TestCase):
             self.assertEqual(authorization["authorization_id"], authorization_id)
             self.assertEqual(authorization["task_id"], "M3-001")
         elif m3["status"] == "done":
-            self.assertEqual(engineering["next_milestone"], "M4")
-            self.assertIsNone(engineering["active_milestone"])
-            self.assertEqual(engineering["next_milestone_status"], "ready_to_start")
-            self.assertTrue(engineering["start_authorized"])
-            self.assertIsNone(engineering["active_milestone"])
-            self.assertIsNone(state["task_refs"]["active_task_id"])
-            self.assertEqual(state["task_refs"]["next_task_id"], "M4-001")
-            self.assertEqual(engineering["start_authorization_record"]["authorization_id"], "M4-001-owner-20261027")
             m4 = next(task for task in backlog["tasks"] if task["id"] == "M4-001")
-            self.assertEqual(m4["status"], "pending")
+            self.assertIn(m4["status"], {"pending", "in_progress", "done"})
             self.assertTrue(any(
                 item.get("path") == ".agents/evidence/M3-acceptance-20261021.md"
                 and item.get("provenance", {}).get("status") == "manual_verified"
                 for item in m3["evidence"]
             ))
             self.assertTrue((REPO / ".agents/evidence/M3-acceptance-20261021.md").is_file())
+            if m4["status"] == "pending":
+                self.assertEqual(engineering["next_milestone"], "M4")
+                self.assertIsNone(engineering["active_milestone"])
+                self.assertEqual(engineering["next_milestone_status"], "ready_to_start")
+                self.assertTrue(engineering["start_authorized"])
+                self.assertIsNone(state["task_refs"]["active_task_id"])
+                self.assertEqual(state["task_refs"]["next_task_id"], "M4-001")
+                self.assertEqual(engineering["start_authorization_record"]["task_id"], "M4-001")
+            elif m4["status"] == "in_progress":
+                self.assertEqual(engineering["active_milestone"], "M4")
+                self.assertEqual(state["task_refs"]["active_task_id"], "M4-001")
+                self.assertEqual(state["task_refs"]["next_task_id"], "M4-001")
+                self.assertEqual(engineering["start_authorization_record"]["task_id"], "M4-001")
+            else:
+                self.assertNotEqual(engineering["active_milestone"], "M4")
+                self.assertNotEqual(state["task_refs"]["active_task_id"], "M4-001")
         else:
             self.fail(f"Unexpected M3 status: {m3['status']}")
         self.assertNotIn("G3", state["governance"]["approved_gates"])

@@ -1,6 +1,6 @@
 # Reproducibility and Artifact Lifecycle
 
-**Status:** M3 was accepted and merged on 2026-10-21. Its exact source-backed release is outside Git and was independently reverified read-only during the 2026-10-27 Pre-M4 closure; raw files remain outside this checkout. Reverify all nine files before future use. No model was trained; M4-001 is authorized and ready to start but has not started. O-01 is closed for internal execution; no instructor approval is claimed.
+**Status (2026-10-27):** M3 was accepted and merged on 2026-10-21. Its exact source-backed release is outside Git and was independently reverified read-only during the 2026-10-27 Pre-M4 closure; raw files remain outside this checkout. M4-001 is now in progress. The M4 implementation and focused tests exist on the feature branch; the run CLI re-verifies the exact release before tensorization and retains external checkpoint/run artifacts. Real training and M4 acceptance remain pending the evidence run. O-01 is closed for internal execution; no instructor approval is claimed.
 **Canonical ownership:** [PROJECT_STATE.yaml](../../.agents/state/PROJECT_STATE.yaml) owns current phase and checkpoint; [BACKLOG.yaml](../../.agents/tasks/BACKLOG.yaml) owns task evidence; per-run manifests own experiment config and metrics.
 
 ## 1. Local development environment

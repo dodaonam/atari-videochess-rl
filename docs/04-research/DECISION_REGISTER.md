@@ -4,7 +4,7 @@ This register distinguishes project-owner technical decisions from external cour
 
 M3-001 was accepted and merged in PR #3 on 2026-10-21. The exact accepted release is outside Git, available at the owner's specified sibling M3 worktree path, and was independently reverified read-only during Pre-M4 on 2026-10-27; see [the current local verification](../../.agents/evidence/M3-release-local-verification-20261027.md). Its exact identity and local-only/no-redistribution boundary remain unchanged; reverify all nine files before future use.
 
-For M4, [ADR-0003](../02-management/decisions/ADR-0003-pretraining-model-interface.md) is Accepted as the action-conditioned legal-candidate scorer and M5 shared-representation/Q-head interface. The owner separately authorized M4-001 on 2026-10-27; it is ready to start but remains pending until implementation begins. No model, training result, parameter count, or G3 approval is claimed.
+For M4, [ADR-0003](../02-management/decisions/ADR-0003-pretraining-model-interface.md) is Accepted as the action-conditioned legal-candidate scorer and M5 shared-representation/Q-head interface. The owner directly authorized M4-001 on 2026-10-27, and the task is in progress. The implementation and focused unit tests are present on the M4 branch, with 121,897 parameters measured by the current contract test. Real-release loading, sanity/training/evaluation, and formal M4 acceptance remain subject to recorded run evidence. G3 is not approved.
 
 ## O-01 — Project-owner decision closed; external-policy status informational
 

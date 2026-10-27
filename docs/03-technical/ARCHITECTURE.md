@@ -1,6 +1,6 @@
 # System Architecture
 
-**Status:** M1/ALE, M2 simulator, and M3 data pipeline are implemented and accepted. The accepted M3 artifacts are outside Git; the exact local release was independently verified read-only in Pre-M4 and must be reverified before use. ADR-0003's M4/M5 architecture is Accepted. M4-001 is authorized and ready to start, but no M4 model or training code exists and no M4 criterion is passed. M5 remains future work; G3 is unapproved. Current live status belongs to `.agents/state/PROJECT_STATE.yaml`.
+**Status (2026-10-27):** M1/ALE, M2 simulator, and M3 data pipeline are implemented and accepted. The accepted M3 artifacts are outside Git; the exact local release was independently verified read-only in Pre-M4, and the new M4 loader is configured to verify it again before tensorization. ADR-0003's M4/M5 architecture is Accepted. M4-001 is in progress: model/features, dataset loader, trainer, inference adapter, checkpoint support, CLI, and focused tests exist on the M4 branch. Real-release loading, sanity/training/evaluation, and M4 acceptance remain pending evidence. M5 remains future work; G3 is unapproved. Current live status belongs to `.agents/state/PROJECT_STATE.yaml`.
 
 **Purpose:** Explain how the verified Atari interface and accepted chess-learning contracts fit together while preserving separate sources of truth.
 
@@ -27,7 +27,7 @@ M1-01 through M1-06 are accepted and G2 is approved in the [final verification r
 |---|---|---|
 | M2 | Standard-chess simulator, explicit MDP, stable UCI identities for legal moves, random-legal and heuristic baselines, seeded simulator records. | Implemented and verified under M2-001; G3 remains unapproved. |
 | M3 | Provenance-aware PGN parsing, bounded Stockfish teacher subset, and leakage-safe train/validation/test release. | Implemented and accepted in M3-001; source package license remains unstated. Artifacts are outside Git; the exact local release was reverified read-only in Pre-M4 and must be reverified before future use. |
-| M4 | Supervised behavior-cloning baseline from M3 played-move labels; saved pretraining-only checkpoint and evaluation. | Accepted design/protocol; M4-001 is authorized and ready to start. No model, neural loader, or training code exists; M4-01–M4-04 remain unpassed. |
+| M4 | Supervised behavior-cloning baseline from M3 played-move labels; saved pretraining-only checkpoint and evaluation. | Implementation and focused contract tests are present on the M4 branch. The real release run, fixed overfit gate, training, checkpoint acceptance, and evaluation are not yet evidenced; M4-01–M4-04 remain unpassed. |
 | M5 | Direct PyTorch Double DQN in the chess simulator with legal-move selection, replay/target networks and separately configured curriculum. | Proposed; no RL training code exists. |
 | M6 | Inference adapter that observes real ALE RGB, obtains validated chess state, selects a legal move, calls the existing Atari controller and verifies the resulting real transition. | Proposed; M1 controls exist, learned-agent integration does not. |
 | M7 | Controlled evaluation, comparison, report and handover under approved conditions. | Proposed; no delivery artifacts exist. |
@@ -42,8 +42,8 @@ Engineering order and fixed-file inventory remain owned by [EXECUTION_PLAN.md](.
 | Simulated episode | Implemented M2 simulator and configured opponent policy. | Has no dependency on ALE frames, cursor positions, FIRE timing or RAM. |
 | ALE observation/control | Existing M1 environment, vision, controller and episode modules. | Accepts move intent only after an ALE-derived state is validated. |
 | Offline PGN/teacher data | Implemented M3 data tooling and accepted release manifests. | Preserve source game, position, played move, teacher output, score perspective and license/provenance as separate fields; the exact accepted local release was independently verified, but ignored artifacts are not included in a clean checkout and must be reverified before use. |
-| Model inference | Accepted ADR-0003 architecture; neural implementation remains future M4/M5 work. | Selects from semantic legal moves under the accepted action-conditioned scorer; this is an M4/M5 interface, not an M2 component. No Stockfish process in deployed inference. |
-| Supervised learning | Accepted M4 behavior-cloning design; implementation remains pending. | Use only the played PGN move in the initial run; keep behavior logits separate from limited Stockfish evaluations and from RL rewards/Q-values. |
+| Model inference | Accepted ADR-0003 architecture; M4 implementation is in progress. | Selects from semantic legal moves under the action-conditioned scorer; this is an M4/M5 interface, not an M2 component. The M4 adapter contains no Stockfish import or inference call. |
+| Supervised learning | Accepted M4 behavior-cloning design; implementation is in progress. | Use only the played PGN move in the initial run; keep behavior logits separate from limited Stockfish evaluations and from RL rewards/Q-values. |
 | Simulator RL | Proposed M5. | Use simulator rewards/transitions; report as simulator RL. |
 | Atari evaluation | Proposed M6/M7. | Use actual ALE RGB, actions, reward and flags; report separately from simulator results. |
 | Artifacts and provenance | Existing trace conventions plus future run manifests. | Each run must identify revision, config, seed, versions, dataset/checkpoint hashes, opponent and metric source. |

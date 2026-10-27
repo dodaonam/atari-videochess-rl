@@ -117,6 +117,20 @@ uv run --locked --no-sync --project . python -m unittest discover -s tests -p 't
 
 These tests establish synthetic semantic-contract behavior only. The accepted real M3 release was independently reverified read-only in Pre-M4 (see [.agents/evidence/M3-release-local-verification-20261027.md](../../.agents/evidence/M3-release-local-verification-20261027.md)); synthetic tests do not replace that data verification, and no M4 neural loader has consumed the release. The accepted M4 model and bounded experiment protocol are in [MODEL_DESIGN.md](../03-technical/MODEL_DESIGN.md) and [TRAINING_PROTOCOL.md](../04-research/TRAINING_PROTOCOL.md).
 
+## M4 model, data, training, and checkpoint tests
+
+The active M4 branch adds `tests/test_m4_model.py`, `tests/test_m4_data.py`, `tests/test_m4_training.py`, and `tests/test_m4_checkpoint.py`. They cover schema/tensor shapes, mover orientation and full history, special-move features, deterministic legal UCI identity, mask/padding validation, finite outputs/loss/gradients, parameter count, synthetic record replay/target legality, train-only sample selection, split isolation, optimizer/early-stop/budget behavior, checkpoint hashes/round trips, M5 shared-layer transfer with a new Q head, and inference with Stockfish absent. These unit tests use synthetic examples and temporary checkpoints; they do not establish full-release loader success, a passed 128-example gate, or actual training/evaluation.
+
+Run the focused M4 and affected contract tests:
+
+```bash
+uv run --locked --no-sync --project . python -m unittest \
+  tests.test_m4_model tests.test_m4_data tests.test_m4_training tests.test_m4_checkpoint \
+  tests.test_pre_m4_contracts tests.test_m2_simulator tests.test_m3_data -v
+```
+
+The real M4 release verification, sanity gate, training, checkpoint selection, frozen test pass, engine-free reload, profiling, and bounded simulator games run through `python -m videochess_rl.model.cli run`. That experiment has separate machine-readable evidence under the approved local M4 artifact directory; unit tests cannot substitute for it. The whole-suite command remains `uv run --locked --no-sync --project . python -m unittest discover -s tests -v`.
+
 ## Future project test layers
 
 | Layer | Examples | Run when |

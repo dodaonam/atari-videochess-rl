@@ -1,6 +1,6 @@
 # M4 Supervised Training Protocol
 
-**Status:** Ready-to-execute protocol for the architecture accepted in [ADR-0003](../02-management/decisions/ADR-0003-pretraining-model-interface.md). `M4-001` is authorized and ready to start but remains pending until implementation begins. No M4 model, training, checkpoint, or neural-throughput measurement has been produced. O-01 is closed for internal execution by the 2026-10-27 owner decision; external instructor-policy approval is not evidenced and is not claimed.
+**Status (2026-10-27):** Active execution protocol for the architecture accepted in [ADR-0003](../02-management/decisions/ADR-0003-pretraining-model-interface.md). `M4-001` is in progress under direct owner authorization. Model, data, training, inference, checkpoint, and CLI code plus focused tests now exist on the M4 branch. The exact M3 loader verification, fixed 128-example gate, bounded training, frozen evaluation, and final checkpoint remain unverified until the recorded experiment run completes. O-01 is closed for internal execution; external instructor-policy approval is not evidenced and is not claimed.
 
 **Objective:** Produce a small, reproducible behavior-cloning baseline that supports later Double DQN experiments. Supervised prediction is not reinforcement learning and is not a chess-strength or Atari-performance claim.
 
@@ -15,7 +15,7 @@ Use only the accepted M3 closure release:
 - Split assignment SHA-256: `84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e`.
 - The split is game-grouped and then purged to zero cross-split board-position signatures. Reuse its recorded assignment and do not re-split.
 
-All identities are supported by accepted M3 evidence. The exact owner-specified local release was independently reverified read-only during Pre-M4; see `.agents/evidence/M3-release-local-verification-20261027.md`. The raw release, source archive, and teacher sidecar remain outside this checkout and Git. No M4 neural data loading or training is claimed. Before any future load, re-run the project verifier against the configured local release path. Do not download, copy, upload or regenerate the license-uncertain package.
+All identities are supported by accepted M3 evidence. The exact owner-specified local release was independently reverified read-only during Pre-M4; see `.agents/evidence/M3-release-local-verification-20261027.md`. The raw release, source archive, and teacher sidecar remain outside this checkout and Git. The M4 loader invokes the project's independent release verifier before reading examples, checks the exact nine-file inventory before and after feature construction, and records the actual run result separately. Do not download, copy, upload or regenerate the license-uncertain package.
 
 Owner-confirmed technical direction is custom PyTorch, Double DQN as the principal RL method, and a bounded supporting behavior-cloning stage; Stockfish is not used by this initial behavior-only run or by inference. The 2026-10-27 owner decision closes O-01 for internal planning and execution and supersedes the former O-01-only M4 activation condition. No external instructor-policy approval has been evidenced or is claimed. If an actual authoritative rule explicitly prohibits a selected activity, stop that activity and record the conflict; absence of external evidence alone does not block M4-001.
 
@@ -52,7 +52,7 @@ These are fixed starting values for the first authorized run, not optimized or p
 
 | Setting | Initial value / control |
 |---|---|
-| Model | Accepted action-conditioned architecture in `MODEL_DESIGN.md`; parameter cap 250,000 (estimated 121,897, not measured). |
+| Model | Accepted action-conditioned architecture in `MODEL_DESIGN.md`; measured implementation has 121,897 trainable parameters, below the strict 250,000 cap. |
 | Objective | Legal-candidate behavior cross-entropy. |
 | Optimizer | AdamW; learning rate `3e-4`; weight decay `1e-4`. |
 | Physical batch | Up to 64 positions, bounded further by history-token and candidate-slot limits above. |
@@ -91,7 +91,7 @@ These metrics measure imitation of this PGN sample and a small M2 simulator beha
 
 Initial total budget: three CPU seeds maximum, 45 minutes per seed, 3 hours aggregate including one-time data verification and the bounded 40-game simulator check, 2 GiB process RSS maximum, 250,000 parameters maximum, and 512 MiB target feature-cache size. The first run must record load time, epoch time, examples/candidates per second, peak memory, test/validation time, and inference latency to calibrate these estimates.
 
-No neural model or training throughput exists to benchmark during Pre-M4. M3's historical CPU dataset run is a different workload and is not used as a neural throughput estimate. If the first authorized CPU profile cannot meet the cap, stop and seek owner direction before proposing GPU/Colab, changing the model budget, or extending the schedule. Paid compute, cloud storage, and runtime allocation remain separately authorized decisions.
+The M4 implementation is present, but no real training throughput, checkpoint performance, or simulator result is established until the run evidence is recorded. M3's historical CPU dataset run is a different workload and is not used as a neural throughput estimate. If the authorized local CPU run cannot meet the cap, preserve the stopped run and do not substitute GPU/Colab, change the model budget, or extend the schedule. Paid compute, cloud storage, and runtime allocation remain separately authorized decisions.
 
 ## 8. Required M5 paired comparison
 

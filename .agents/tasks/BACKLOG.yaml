@@ -2300,7 +2300,7 @@
       "id": "M4-001",
       "title": "Implement and verify the bounded supervised behavior baseline",
       "milestone": "M4",
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "M3-001"
       ],
@@ -2435,9 +2435,36 @@
             "git_revision": "a41d6f14014727570f55dfa2d015d4ad80250445",
             "log_path": ".agents/evidence/logs/M3-release-local-verification-20261027.log"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M4-001-execution-authorization-20261027.md",
+          "detail": "Direct project-owner mission authorization for complete bounded M4-001 execution and protected-workflow-permitted integration.",
+          "result": "The project owner directly authorized full M4-001 execution, verification, local CPU training/evaluation within the existing caps, and a reviewable PR merge into initial-idea when all checks pass and repository protections permit; M5/M6, G3 approval, external compute, new data, Stockfish-assisted initial training, and resource-limit expansion remain excluded.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-27T12:22:34Z",
+            "recorded_at_utc": "2026-10-27T12:22:34Z",
+            "exit_code": null,
+            "git_revision": "94220870c3abc9e8aa725db85fb0c6cebebdbb48",
+            "log_path": ".agents/evidence/M4-001-execution-authorization-20261027.md"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.data.cli verify --release /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+          "result": "PASS: release f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890; manifest SHA-256 be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12; 1,000 games; 19,268 positions; 182 rejections; nine files unchanged before/after.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T12:18:38.847134Z",
+            "recorded_at_utc": "2026-10-27T12:20:30.237367Z",
+            "exit_code": 0,
+            "git_revision": "94220870c3abc9e8aa725db85fb0c6cebebdbb48",
+            "log_path": ".agents/evidence/logs/M4-release-verification-20261027.log"
+          }
         }
       ],
-      "next_action": "Begin M4-001 when implementation actually starts: transition M4 from ready_to_start to in_progress and activate this pending task in canonical state. No additional owner confirmation is required for the finalized technical scope; reverify the local M3 release before loading, use only played_move_uci targets for the initial behavior-only run, keep Stockfish absent, stay within local CPU/time/memory caps, and do not mark M4 acceptance or G3 complete without evidence.",
+      "next_action": "Implement the accepted versioned model/data/training/inference interfaces, pass the fixed 128-example gate before bounded full training, complete one frozen evaluation, and retain evidence; do not start M5/M6 or approve G3.",
       "plan_ref": ".agents/plans/M04-supervised-pretraining.md"
     }
   ],

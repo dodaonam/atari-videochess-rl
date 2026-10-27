@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-89d085d1-20261027T113638157697Z -->
+<!-- checkpoint-id: cp-94220870-20261027T131303722171Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -12,9 +12,21 @@ This file is a pointer, not a status snapshot. Do not infer current phase, task 
    - The current governance decision is [`ADR-0001`](../../docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md); discover later decisions in `docs/02-management/decisions/`.
 5. Compare the portable tracked-file manifest with live HEAD/index. Treat the `git` snapshot as workspace-local; an exact portable manifest match after commit/checkout is expected even when branch, HEAD, status, ignored files, or caches differ. The local Git config UUID distinguishes the original workspace from a clean clone. For older checkpoints without a portable manifest, use the safe tracked-file migration path described in `AGENTS.md`. If version-controlled content or canonical references drift, inspect them and never discard work automatically.
 
-## M3 closeout and Pre-M4 pointers
+## Current M4 execution handoff
 
-### Current Pre-M4 / M4-001 handoff pointer — 2026-10-27
+### M4-001 active — 2026-10-27
+
+M4-001 is in progress under the direct mission authorization in [M4-001 execution evidence](../evidence/M4-001-execution-authorization-20261027.md). O-01 remains closed internally; its absence of external instructor-policy evidence is informational and is not formal academic approval. ADR-0003 remains Accepted. G3 is unapproved, and M5/M6 have not started.
+
+The action-conditioned M4 model, feature/data loader, bounded trainer, engine-free inference adapter, checkpoint verifier, CLI, and focused tests are implemented on the active branch. Current source-level parameter count is 121,897. The fixed 128-example gate and all real-data training/evaluation evidence are still pending. Run the active M4 plan and protocol; do not infer acceptance from implementation or synthetic tests.
+
+Use the owner-approved M3 release at `/home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6`. The earlier read-only verification log is [.agents/evidence/logs/M4-release-verification-20261027.json](../evidence/logs/M4-release-verification-20261027.json). It does not replace the M4 loader's required immediate verifier before loading examples; the release has not yet been tensorized by the M4 runner. Keep source and generated M4 artifacts outside Git. See [the active M4 plan](../plans/M04-supervised-pretraining.md), [model design](../../docs/03-technical/MODEL_DESIGN.md), and [training protocol](../../docs/04-research/TRAINING_PROTOCOL.md).
+
+PR #6 merged into `initial-idea` at `89d085d1865d07b10660e82119488960f766d819` with clean-clone verification recorded in [final Pre-M4 closure](../evidence/PRE-M4-final-closure-20261027.md). PR #5 / RSK-010 is integrated; verify the archive with `python3 scripts/migrate_checkpoint_history.py verify` and preserve its append-only, lossless records.
+
+## M3 closeout and Pre-M4 pointers (historical)
+
+### Pre-M4 closeout pointer before M4 began — 2026-10-27 (historical)
 
 PR #6 merged into `initial-idea` at `89d085d1865d07b10660e82119488960f766d819` and passed fresh clean-clone archive, preflight, focused-test, and full-suite verification. Use [final Pre-M4 closure](../evidence/PRE-M4-final-closure-20261027.md) for the R01–R08 and PM4 acceptance matrices, verified commands, clean-clone evidence, and exact PR integration identity. The owner's final O-01 decision is [recorded here](../evidence/O-01-owner-decision-20261027.md); the earlier conditional authorization is preserved with a dated supersession addendum in [M4-001 authorization history](../evidence/M4-001-authorization-conditional-20261023.md). O-01 is closed for internal planning and execution authorization. The lack of separate instructor-policy evidence is informational, is not an M4-001 prerequisite, and is not formal instructor approval.
 
@@ -22,7 +34,7 @@ The exact accepted M3 release is outside Git, available at the owner-specified l
 
 PR #5 / RSK-010 is integrated. Use [checkpoint-history operations](../../docs/05-operations/CHECKPOINT_HISTORY.md) and [migration evidence](../evidence/RSK-010-checkpoint-history-migration-20261023.md); the archive is lossless and append-only, grows linearly, verifies its manifest/segments/logical digest/source backup, and is not crash-atomic across multiple file replacements. Preserve all records and follow the roll-forward/recovery boundary.
 
-Canonical state and backlog identify `M4-001` as the next task: it is authorized and `ready_to_start`, while the task remains `pending`, `active_milestone` and active task remain null, and G3 remains unapproved. The next executor may begin M4-001 without another Pre-M4 approval cycle; when implementation actually starts, transition the task and milestone to `in_progress`. Do not mark M4-01–M4-04 passed or G3 approved without their own evidence. The dated sections below preserve their original review-stage facts and are historical pointers, not current status.
+The paragraph above records the final Pre-M4 closeout state before M4 implementation. Its historical PR, O-01, and M3 release facts are retained for provenance; current M4 execution status is in the section at the top of this file.
 ## Pre-integration checkpoint migration and M4 entry audit — 2026-10-23 (historical)
 
 The following was accurate before the separately owner-approved PR #5 merge; current integration and M4 entry status are in the dated closure update above.
