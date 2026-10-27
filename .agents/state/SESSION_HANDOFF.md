@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-e5e42f70-20261027T141556728520Z -->
+<!-- checkpoint-id: cp-16567ce8-20261027T142400420668Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -23,6 +23,8 @@ The action-conditioned M4 model, feature/data loader, bounded trainer, engine-fr
 The owner-approved M3 release is at `/home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6`. The M4 loader and subsequent diagnostic verified all nine files, replayed positions, and confirmed the files unchanged. Reverify all nine files before any future load; keep source and generated M4 artifacts outside Git. See [the active M4 plan](../plans/M04-supervised-pretraining.md), [model design](../../docs/03-technical/MODEL_DESIGN.md), and [training protocol](../../docs/04-research/TRAINING_PROTOCOL.md).
 
 PR #6 merged into `initial-idea` at `89d085d1865d07b10660e82119488960f766d819` with clean-clone verification recorded in [final Pre-M4 closure](../evidence/PRE-M4-final-closure-20261027.md). PR #5 / RSK-010 is integrated; verify the archive with `python3 scripts/migrate_checkpoint_history.py verify` and preserve its append-only, lossless records.
+
+Current M4 implementation and blocker evidence are on `feature/m4-supervised-pretraining` in draft [PR #8](https://github.com/dodaonam/atari-videochess-rl/pull/8), targeting `initial-idea`. Do not merge while M4-02 is blocked. The CI workflow is context-only and does not waive M4 acceptance.
 
 Next action: the project owner must record an explicit M4-02 protocol decision resolving the fixed-sample conflicting labels without modifying the accepted M3 release or ADR-0003 input contract. After that, update canonical state, transition M4-001 back to `in_progress`, and rerun the authorized gate. Do not start full training until the applicable gate passes. PR #6 is unrelated historical Pre-M4 integration; the M4 feature branch is not merged.
 

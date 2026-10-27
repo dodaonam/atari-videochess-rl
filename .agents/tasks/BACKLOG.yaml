@@ -2521,6 +2521,48 @@
         },
         {
           "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "Agent context preflight: PASS",
+          "detail": "Fresh clone of the pushed M4 branch at 16567ce8a8fa99472609481d0f2a7bdf4366c204; portable tracked baseline matched. Expected artifacts-directory manifest warning only.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T14:19:45.877411Z",
+            "recorded_at_utc": "2026-10-27T14:22:43Z",
+            "exit_code": 0,
+            "git_revision": "16567ce8a8fa99472609481d0f2a7bdf4366c204",
+            "log_path": ".agents/evidence/logs/M4-clean-clone-verification-20261027.txt"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/migrate_checkpoint_history.py verify",
+          "result": "\"status\": \"verified\"",
+          "detail": "Fresh clone archive verification: 168 records; logical SHA-256 ec453522cb68f6f5786dc37434b2490b3d32e70d663de5c5f953d5cf21101ef2.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T14:19:46.363161Z",
+            "recorded_at_utc": "2026-10-27T14:22:43Z",
+            "exit_code": 0,
+            "git_revision": "16567ce8a8fa99472609481d0f2a7bdf4366c204",
+            "log_path": ".agents/evidence/logs/M4-clean-clone-verification-20261027.txt"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 304 tests in 98.922s",
+          "detail": "Full regression suite executed from the fresh clone of pushed commit 16567ce8a8fa99472609481d0f2a7bdf4366c204; final suite output was OK. The clone had no local dataset or ignored artifacts.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T14:19:46.632613Z",
+            "recorded_at_utc": "2026-10-27T14:22:43Z",
+            "exit_code": 0,
+            "git_revision": "16567ce8a8fa99472609481d0f2a7bdf4366c204",
+            "log_path": ".agents/evidence/logs/M4-clean-clone-verification-20261027.txt"
+          }
+        },
+        {
+          "kind": "command",
           "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
           "result": "PASS: exit 0; Ran 304 tests in 97.278s",
           "detail": "Full repository regression: 304 tests. Python 3.12.3, PyTorch 2.14.1+cpu, python-chess 1.11.2, NumPy 2.5.4; configured Stockfish was available for the repository UCI readiness smoke test. Regression passage does not satisfy M4-02 or claim M4-03/M4-04.",
@@ -2538,5 +2580,5 @@
       "plan_ref": ".agents/plans/M04-supervised-pretraining.md"
     }
   ],
-  "updated_at_utc": "2026-10-27T14:15:30Z"
+  "updated_at_utc": "2026-10-27T14:23:35Z"
 }
