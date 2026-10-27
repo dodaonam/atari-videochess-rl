@@ -1,0 +1,45 @@
+Started UTC: 2026-10-27T11:12:10.090209Z
+Command: python3 scripts/agent_preflight.py
+
+Agent context preflight: PASS
+Governance: G2 (approved); approved: G0, G1, G2
+Next engineering milestone: M4 — ready to start (authorized; not started)
+Next task: M4-001 (pending) — Implement and verify the bounded supervised behavior baseline
+Next task action: Begin M4-001 when implementation actually starts: transition M4 from ready_to_start to in_progress and activate this pending task in canonical state. No additional owner confirmation is required for the finalized technical scope; reverify the local M3 release before loading, use only played_move_uci targets for the initial behavior-only run, keep Stockfish absent, stay within local CPU/time/memory caps, and do not mark M4 acceptance or G3 complete without evidence.
+Next task dependencies: M3-001
+Next task acceptance criteria: M4-01, M4-02, M4-03, M4-04
+Tasks: done=12, in_progress=0, pending=1, blocked=0, cancelled=0
+Completed task IDs: G1-001, G1-002, G1-003, G1-004, G1-005, G1-006, G1-007, G1-008, M0-001, M1-001, M2-001, M3-001
+In progress task IDs: none
+Pending task IDs: M4-001
+Blocked task IDs: none
+Active blockers: none recorded
+Open confirmations:
+  O-02: Whether full-game performance on actual ALE is a hard submission requirement or a research target with an accepted fallback.
+  O-03: Future course checkpoints and any date changes. The owner confirmed the presentation date is Tuesday, 2026-11-03.
+  O-04: Actual Colab entitlement/quota, GPU availability, cloud storage, and whether paid compute is allowed. The owner selected local CPU for M3; no external compute/storage is used in this mission.
+  O-05: ALE/ROM runtime behavior, RAM mapping, game modes, difficulty behavior, and official evaluation settings.
+  O-06: Public redistribution rights and any new source/use beyond the scoped May 2022 archive. For M3, the owner authorized bounded internal academic use of the exact Lichess Elite May 2022 package with local retention and no redistribution; its third-party package license remains unstated/unverified.
+  O-07: Broader Stockfish roles: benchmark opponent, offline engine evaluation, and instructor-specific limits outside the M3 teacher-label scope.
+  O-08: Opponent pool and rating method for any Elo claim.
+Relevant decisions: docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md, docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md, docs/02-management/decisions/ADR-0003-pretraining-model-interface.md
+Acceptance criteria recognized: 51
+Last verified Git: feature/pre-m4-final-closure @ 51cf998d3831698386a89a9f0a6375269ad942d4
+Live Git: feature/pre-m4-final-closure @ 7ba2a21d2436941c5a57bad41628738149a8ea1d
+Roadmap source: exact match; 19 sections; SHA-256 fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf
+Git recovery: expected commit/checkout transition; portable tracked-file manifest matches.
+Workspace Git status: differs from checkpoint
+Portable tracked baseline: matches
+Portable Git index: matches checkpoint
+Hashed ordinary-file snapshot: matches
+Content hashes: 291 ordinary files verified by SHA-256.
+Not content-verified by this hash map: PROJECT_STATE self-reference, chat history/credential-like paths, temp files, symlinks, and the excluded directories listed below.
+Excluded directories: .agents/state/checkpoint-history, .git, artifacts, scripts/__pycache__
+Artifact directories requiring independent manifests: artifacts
+Last verified dirty paths (0): none
+Dirty paths no longer present since checkpoint: A  .agents/evidence/logs/M3-release-local-verification-20261027.log; A  .agents/evidence/logs/RSK-010-pre-m4-verify-20261027.log
+Next user action: No additional owner confirmation is required for the finalized M4-001 scope. The next engineering task is M4-001; begin implementation only when its executor transitions the pending task and M4 milestone from ready_to_start to in_progress. Reverify the exact local M3 release before loading it. G3 remains unapproved and is not a start prerequisite.
+WARNING ARTIFACT_MANIFEST_REQUIRED [.]: Artifact/data directories are excluded from content hashing and require independent manifest verification: artifacts.
+
+Exit code: 0
+Completed UTC: 2026-10-27T11:12:10.563442Z
