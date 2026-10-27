@@ -1,0 +1,14 @@
+Started UTC: 2026-10-27T11:12:10.087113Z
+Command: python3 scripts/migrate_checkpoint_history.py verify
+
+{
+  "first_id": "cp-c410173e-20261014T154924847559Z",
+  "last_id": "cp-a41d6f14-20261027T110953523105Z",
+  "logical_sha256": "17a29916db981da71f0b55ac41d13ff319e56f4a263ea73d677e84d3638440f4",
+  "record_count": 157,
+  "status": "verified",
+  "storage": "archive"
+}
+
+Exit code: 0
+Completed UTC: 2026-10-27T11:12:10.360866Z

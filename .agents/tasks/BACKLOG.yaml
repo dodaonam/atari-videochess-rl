@@ -2316,21 +2316,130 @@
         {
           "kind": "file",
           "path": ".agents/evidence/M4-001-authorization-conditional-20261023.md",
-          "detail": "Direct owner authorization is conditional on the explicitly listed migration, data, O-01, ADR-0003, and resource-boundary entry conditions.",
-          "result": "Conditional authorization recorded but not operational; M4-001 remains pending and no implementation or training may start until all conditions are verified and the authorization is activated in canonical state.",
+          "detail": "Historical conditional M4-001 authorization with a dated 2026-10-27 owner supersession addendum; the original O-01 external-confirmation condition is superseded for internal execution authorization.",
+          "result": "Direct project-owner authorization for bounded M4-001 is recorded here.",
           "provenance": {
             "status": "manual_verified",
-            "executed_at_utc": "2026-10-22T17:44:36Z",
-            "recorded_at_utc": "2026-10-22T17:44:36Z",
+            "executed_at_utc": "2026-10-27T10:26:30Z",
+            "recorded_at_utc": "2026-10-27T10:26:30Z",
             "exit_code": null,
-            "git_revision": "16fc01a3fe731c0a0be127026cc64d049c0cf550",
+            "git_revision": "a41d6f14014727570f55dfa2d015d4ad80250445",
             "log_path": ".agents/evidence/M4-001-authorization-conditional-20261023.md"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/RSK-010-checkpoint-history-migration-20261023.md",
+          "detail": "Integration closure update verifies the owner-approved PR #5 merge, archive identity, compact state, and preflight; clean-clone verification is recorded with final PR delivery.",
+          "result": "Migration is integrated; do not infer universal transaction atomicity.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-23T14:17:26Z",
+            "exit_code": null,
+            "git_revision": "d9f0872c120fb2408343859c938257e3962f2e09",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-release-local-verification-20261023.md",
+          "detail": "Read-only verification report for the exact accepted local release and nine file hashes.",
+          "result": "Release ID, manifest/split identities, output hashes, schemas, counts, splits, and chess-record contracts verified; data remains outside Git.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-23T14:17:26Z",
+            "exit_code": null,
+            "git_revision": "d9f0872c120fb2408343859c938257e3962f2e09",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONPATH=<repository-root> <pinned Python 3.12 environment>/python -m videochess_rl.data.cli verify --release \"$M3_RELEASE_PATH\"",
+          "result": "PASS: verifier exit 0; 1,000 games; 19,268 positions; 182 rejections; accepted release ID and manifest SHA match.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-23T14:13:05Z",
+            "recorded_at_utc": "2026-10-23T14:17:26Z",
+            "exit_code": 0,
+            "git_revision": "d9f0872c120fb2408343859c938257e3962f2e09",
+            "log_path": ".agents/evidence/logs/M3-release-local-verification-20261023.log"
+          }
+        },
+        {
+          "kind": "finding",
+          "result": "Accepted as proposed; this is an owner decision only, not instructor approval, implementation evidence, or M4 authorization.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-23T14:17:26Z",
+            "recorded_at_utc": "2026-10-23T14:17:26Z",
+            "exit_code": null,
+            "git_revision": "d9f0872c120fb2408343859c938257e3962f2e09",
+            "log_path": ".agents/evidence/ADR-0003-acceptance-20261023.md"
+          },
+          "finding_id": "ADR-0003-ACCEPTANCE"
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/PRE-M4-final-closure-20261023.md",
+          "detail": "Historical R01-R08 and readiness record as of 2026-10-23; retained without rewriting its original decision context.",
+          "result": "Historical 2026-10-23 readiness decision; its O-01 external-confirmation condition was superseded by the 2026-10-27 owner decision. Current readiness is recorded in the 2026-10-27 final closure report.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-23T14:17:26Z",
+            "exit_code": null,
+            "git_revision": "d9f0872c120fb2408343859c938257e3962f2e09",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/O-01-owner-decision-20261027.md",
+          "detail": "Dated project-owner decision formally closes O-01 for internal project planning and execution authorization and states the narrow external-policy limitation.",
+          "result": "O-01 is closed for internal project planning and execution authorization.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-27T10:26:30Z",
+            "recorded_at_utc": "2026-10-27T10:26:30Z",
+            "exit_code": null,
+            "git_revision": "a41d6f14014727570f55dfa2d015d4ad80250445",
+            "log_path": ".agents/evidence/O-01-owner-decision-20261027.md"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M3-release-local-verification-20261027.md",
+          "detail": "Read-only verification of the owner-specified local nine-file accepted M3 release, including verifier replay, split identity, leakage and target-candidate checks, and before/after file hashes.",
+          "result": "The nine required files were hashed before and after verification, match the 2026-10-23 accepted file inventory, and were unchanged.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-27T10:38:23Z",
+            "exit_code": null,
+            "git_revision": "a41d6f14014727570f55dfa2d015d4ad80250445",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONPATH=/tmp/atari-pre-m4-work /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.data.cli verify --release /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+          "result": "PASS: release f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890; manifest SHA-256 be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12; 1,000 games; 19,268 positions; 182 rejections.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T10:36:31Z",
+            "recorded_at_utc": "2026-10-27T10:38:23Z",
+            "exit_code": 0,
+            "git_revision": "a41d6f14014727570f55dfa2d015d4ad80250445",
+            "log_path": ".agents/evidence/logs/M3-release-local-verification-20261027.log"
           }
         }
       ],
-  "next_action": "Owner has recorded conditional direct authorization in .agents/evidence/M4-001-authorization-conditional-20261023.md. Await the ADR-0003 and O-01 decisions, exact accepted M3 release at an authorized local path, and migration PR merge plus clean-clone verification. Then verify every entry condition and activate the recorded authorization in canonical state/backlog before implementation or training.",
+      "next_action": "Begin M4-001 when implementation actually starts: transition M4 from ready_to_start to in_progress and activate this pending task in canonical state. No additional owner confirmation is required for the finalized technical scope; reverify the local M3 release before loading, use only played_move_uci targets for the initial behavior-only run, keep Stockfish absent, stay within local CPU/time/memory caps, and do not mark M4 acceptance or G3 complete without evidence.",
       "plan_ref": ".agents/plans/M04-supervised-pretraining.md"
     }
   ],
-  "updated_at_utc": "2026-10-22T15:07:39Z"
+  "updated_at_utc": "2026-10-23T14:17:26Z"
 }

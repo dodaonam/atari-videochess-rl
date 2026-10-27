@@ -1,6 +1,6 @@
 # M1 ALE Feasibility and Reproduction
 
-**Scope:** M1 under G2. This guide covers real ALE reset/observation/control checks only. It does not authorize M2+, RL training, datasets, Stockfish search, Colab access, or GPU use. O-01 through O-08 remain open.
+**Historical scope:** M1 under G2. This guide covers real ALE reset/observation/control checks only; its scope statement records what that M1 work authorized and does not grant new M2+ work. At the time it was written, O-01 through O-08 were open. O-01 is now closed for internal planning/execution by the 2026-10-27 owner decision, without claiming instructor approval; see `REQUIREMENTS.md`.
 
 ## Runtime and profiles
 
@@ -51,7 +51,7 @@ The phase-confirmed 16-frame target FIRE completed 20 consecutive deterministic 
 
 Mode configuration was checked by resetting each supported mode 0–4 and reading the configured mode byte only as a separately labeled diagnostic. Complete gameplay and terminal behavior were observed in modes 0 and 4; modes 1–3 were reset-tested but not played through a complete reply. Difficulty is limited to 0 in the installed ALE-Py release. The terminal RGB screen is a uniform transition/game-over screen without a parseable final board. The trace records the last independently verified FEN before the unconfirmed terminal player move; the inferred `d8h4#` is disclosed as chess-rule analysis, not direct visual evidence.
 
-The M1-04 terminal result, complete campaign accounting, evidence bundle, SHA-256 values, and final acceptance matrix are in `.agents/evidence/M1-04-terminal-verification.md` and `.agents/evidence/M1-04-experiment-campaign-20261016.md`. M1-01 through M1-06 pass and G2 is approved. M2 authorization was subsequently recorded in `.agents/evidence/M2-authorization-20261016.md`; G3 is not approved and O-01 through O-08 remain open.
+The M1-04 terminal result, complete campaign accounting, evidence bundle, SHA-256 values, and final acceptance matrix are in `.agents/evidence/M1-04-terminal-verification.md` and `.agents/evidence/M1-04-experiment-campaign-20261016.md`. M1-01 through M1-06 pass and G2 is approved. M2 authorization was subsequently recorded in `.agents/evidence/M2-authorization-20261016.md`; G3 is not approved. At the time of this M1 acceptance record, O-01 through O-08 were open; current O-01 disposition is in `REQUIREMENTS.md`.
 
 ## Multi-turn reproduction and safety tests
 
@@ -63,4 +63,4 @@ uv run --locked --no-sync python scripts/run_m1_terminal_experiment.py --profile
 
 The cooperative-loss selector uses only legal `python-chess` moves and no Stockfish, model, or search engine. Each move is checked against the current legal board; the shadow advances only after RGB evidence covers the full resulting board. A failed or ambiguous control stops the episode and retains the last verified board. `tests/test_m1_episode.py` covers bounded failures, cursor displacement, terminal/truncation bookkeeping, no stepping after termination, and reward perspective with synthetic environment doubles; the independent live terminal traces establish ALE termination and reward behavior.
 
-The M1-04 result is **PASS**: two real ALE episodes returned reward `−1.0`, `terminated=true`, `truncated=false` in mode 4. The positive reward sign was not observed live. Full RGB parsing of the final board is unavailable because the terminal transition clears the board; the runner preserves the last verified FEN and does not infer a shadow transition. G2 is **approved** after all M1 acceptance evidence and verification passed. M2 was subsequently authorized; G3 is not approved and O-01 through O-08 remain unresolved.
+The M1-04 result is **PASS**: two real ALE episodes returned reward `−1.0`, `terminated=true`, `truncated=false` in mode 4. The positive reward sign was not observed live. Full RGB parsing of the final board is unavailable because the terminal transition clears the board; the runner preserves the last verified FEN and does not infer a shadow transition. G2 is **approved** after all M1 acceptance evidence and verification passed. M2 was subsequently authorized; G3 is not approved. At the time this M1 acceptance record was written, O-01 through O-08 were unresolved; see `REQUIREMENTS.md` for current approvals and the 2026-10-27 internal O-01 closure.

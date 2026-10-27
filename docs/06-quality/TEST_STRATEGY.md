@@ -112,10 +112,10 @@ M2 tests remain focused on the acceptance contract; M4/M5 scoring, replay, targe
 Run with the project environment:
 
 ```bash
-python -m unittest discover -s tests -p 'test_pre_m4_contracts.py' -v
+uv run --locked --no-sync --project . python -m unittest discover -s tests -p 'test_pre_m4_contracts.py' -v
 ```
 
-These tests establish synthetic contract behavior; they do not revalidate the unavailable real M3 release or establish M4/M5 learning performance. The proposed M4 model and full experiment gates remain in [MODEL_DESIGN.md](../03-technical/MODEL_DESIGN.md) and [TRAINING_PROTOCOL.md](../04-research/TRAINING_PROTOCOL.md).
+These tests establish synthetic semantic-contract behavior only. The accepted real M3 release was independently reverified read-only in Pre-M4 (see [.agents/evidence/M3-release-local-verification-20261027.md](../../.agents/evidence/M3-release-local-verification-20261027.md)); synthetic tests do not replace that data verification, and no M4 neural loader has consumed the release. The accepted M4 model and bounded experiment protocol are in [MODEL_DESIGN.md](../03-technical/MODEL_DESIGN.md) and [TRAINING_PROTOCOL.md](../04-research/TRAINING_PROTOCOL.md).
 
 ## Future project test layers
 
@@ -138,8 +138,8 @@ The workflow does not configure branch protection or a mandatory status check. G
 
 The Pre-M3 synthetic contract vectors in `tests/fixtures/pre_m3_identity_vectors.json` are exercised by `tests/test_pre_m3_contracts.py`. They verify deterministic identity hashes, board signature versus replay-state identity (clocks, repetition, castling, en passant, and transposition), source-game versus normalized-game identity when headers differ, promotion UCI identity, game-group split assignment, candidate inheritance/purge, and detection of a collapsed holdout. This tiny oracle is not a production parser or dataset implementation.
 
-When M3 is separately authorized, add focused synthetic PGN fixtures and implementation tests in line with [DATASET_SPEC.md](../04-research/DATASET_SPEC.md). Cover source/hash approval gates, archive/member byte and path caps, PGN streaming/quarantine, standard-chess replay, game-reference/history reconstruction, stable legal UCI candidates, played-move legality, perspective conversion, deterministic sampling/splits, exact board overlap audits, teacher score/MultiPV/mate semantics, output manifests, and interrupted-run recovery. Candidate/teacher rows must inherit their parent sample's split and be purged with it. Fixtures must be authored, synthetic, and contain no downloaded public games or player identities.
+M3 implementation tests are in `tests/test_m3_data.py` and `tests/test_pre_m3_contracts.py`, with synthetic PGN fixtures and no downloaded player records in the fixtures. They cover source/hash gates, archive/member caps, streaming/quarantine, standard-chess replay and history reconstruction, stable legal UCI candidates, played-move legality, perspective conversion, deterministic sampling/splits, board-overlap audits, teacher score/MultiPV/mate semantics, manifests, and interrupted-run recovery. Candidate/teacher rows inherit their parent sample split and are purged with it. The real accepted release is outside Git and was independently verified read-only during Pre-M4; see [the exact release report](../../.agents/evidence/M3-release-local-verification-20261027.md). Synthetic model-boundary tests do not verify that release, and no M4 neural loader has consumed it.
 
-Current canonical M3-02 requires an authorized real bounded Stockfish 19 run. Fake-UCI and configuration tests are necessary contract checks but do not pass M3-02; a PGN-only output is an intermediate artifact. The real engine run and any data acquisition remain gated by the source, assignment, and teacher approvals in `REQUIREMENTS.md`.
+M3-02 required a bounded real Stockfish 19 run; the accepted 128-position M3 teacher run and M3-001 acceptance are recorded in `.agents/evidence/M3-corrective-hardening-20261021.md` and `.agents/evidence/M3-acceptance-20261021.md`. Fake-UCI and configuration tests alone do not satisfy that criterion. Future data acquisition or expanded teacher use remains separately scoped under `REQUIREMENTS.md` and the owner decision register.
 
 Never use a G1 context-tool test to imply M0/M1 readiness. M0 smoke checks are separate from M1 ALE resets, observation capture, control calibration, training, or Colab runtime work.

@@ -1,8 +1,8 @@
 # Chess Simulator MDP Specification
 
-**Status:** Accepted M2 contract under ADR-0002. Simulator implementation and M2-01 through M2-04 are verified in [the M2 acceptance record](../../.agents/evidence/M2-acceptance-20261016.md). M4/M5 model choices remain open.
+**Status:** Accepted M2 contract under ADR-0002. Simulator implementation and M2-01 through M2-04 are verified in [the M2 acceptance record](../../.agents/evidence/M2-acceptance-20261016.md). The M4/M5 model interface is accepted in [ADR-0003](../02-management/decisions/ADR-0003-pretraining-model-interface.md); neural implementation, measured parameter count, and performance remain unverified.
 
-**Purpose:** Specify the smallest standard-chess decision process needed for M2 while preserving clear interfaces to future M3 PGN/teacher data, M4 supervised learning, M5 Double DQN, and M6 ALE integration. The accepted foundational choices are recorded in [ADR-0002](../02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md); implementation and acceptance evidence are recorded in the linked M2 acceptance record.
+**Purpose:** Specify the smallest standard-chess decision process needed for M2 while preserving clear interfaces to M3 PGN/teacher data, the accepted ADR-0003 M4 behavior scorer and M5 Double DQN Q head, and M6 ALE integration. The accepted foundational choices are recorded in [ADR-0002](../02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md); implementation and acceptance evidence are recorded in the linked M2 acceptance record.
 
 ## 1. Decision process
 
@@ -37,7 +37,7 @@ The M2 action is a standard `python-chess.Move`; serialize it with its UCI move 
 
 When a serialized move is received, parse it and verify that the resulting move is in the current Board's legal move set before mutation. Reject an invalid or stale move with a clear error and leave the Board unchanged. Do not persist a legal-list offset as an action identity.
 
-M2 needs only this semantic move contract; it does not need a neural action encoder, fixed output head, action mask, candidate batching, or Q-network. A fixed global from/to/promotion vocabulary remains a possible later model design, but it adds a large set of position-invalid outputs. The preferred later proposal is an action-conditioned scorer `Q(s,a)` over the current legal moves: online selection chooses a legal semantic move and the target network evaluates that same move, independent of candidate order. This is a proposal for M4/M5, not an implemented or empirically optimal design.
+M2 needs only this semantic move contract; it does not need the neural action encoder, candidate batching, or Q-network. A fixed global from/to/promotion vocabulary remains a deferred alternative because it adds many position-invalid outputs. ADR-0003 accepts a shared action-conditioned legal-candidate architecture: M4 scores supplied legal UCI moves with behavior logits, while M5 uses a separately initialized Q head. Online Double DQN selection chooses one legal semantic move and the target network evaluates that same UCI action, independent of candidate-list order. This is an accepted interface, not implemented code or evidence of empirical optimality.
 
 ## 4. Player perspective and transition boundary
 

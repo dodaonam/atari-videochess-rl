@@ -1,0 +1,26 @@
+Pre-M4 PR #6 clean-clone verification (sanitized)
+Expected and observed HEAD: 037cf3c0ae5726b9ef5652abc1589e928cdc97d4
+Branch: feature/pre-m4-final-closure
+Clone source: https://github.com/dodaonam/atari-videochess-rl.git (only the feature branch was cloned; no local worktree files copied)
+
+2026-10-23T14:37:17Z–14:37:21Z
+Command: git clone --single-branch --branch feature/pre-m4-final-closure https://github.com/dodaonam/atari-videochess-rl.git <temporary-clean-clone>
+Exit code: 0
+Command: git rev-parse HEAD
+Exit code: 0; SHA matched the expected PR head.
+
+2026-10-23T14:37:21Z
+Command: python3 scripts/migrate_checkpoint_history.py verify
+Exit code: 0
+Result: status=verified; 151 ordered archived records; logical_sha256=a0fe2643223f2ada835de4ad85da44b034fed6e392ee3d3f881addb8b1996c2e.
+
+2026-10-23T14:37:21Z–14:37:22Z
+Command: python3 scripts/agent_preflight.py --json
+Exit code: 0
+Result: ok=true; errors=[]; git snapshot matches; start_authorized=false; only warning ARTIFACT_MANIFEST_REQUIRED. Checkpoint ID cp-b446f517-20261023T143519929115Z.
+
+2026-10-23T14:37:22Z–14:38:03Z
+Command: python3 -m unittest discover -s tests -p test_agent_context.py
+Exit code: 0; 47 tests passed in 40.525 seconds.
+
+GitHub Actions: Repository preflight, run 39971111953, head 037cf3c0ae5726b9ef5652abc1589e928cdc97d4, completed success at 2026-10-23T14:37:24Z. This workflow checks repository context/preflight; it is not the full Python suite.

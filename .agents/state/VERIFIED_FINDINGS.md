@@ -330,3 +330,63 @@ Findings are append-only historical observations. FND-021 and FND-022 record the
 - **Impact:** The merged `initial-idea` branch still uses legacy inline history until this migration is reviewed, merged, and clean-clone verified. M4 remains pending because migration integration, ADR-0003 decision, O-01 clarification, and exact M3 artifact access are not yet satisfied. No G3 or M4 authorization is implied.
 
   **Final implementation-code verification update (2026-10-22 UTC; tested revision `71c623cb31cee9b476d679a870aa5765d05e12ef`):** archive verification reports 143 unique archived records plus the separate current checkpoint (144 represented identities); canonical state is 67,156 bytes and archive storage is 1,808,362 bytes across 14 files. Focused checkpoint/context suite: 75/75 passed. Full suite: 268/269 passed, with only the existing Stockfish UCI-readiness smoke test failing because no executable is installed in the environment. A clean clone verified the archive and passed preflight with no errors; evidence logs are linked from the migration record. RSK-010 remains open until the PR is merged and the integration branch is independently verified.
+
+## FND-047 — Checkpoint-history migration integrated and verified
+
+- **Status:** verified on integration commit `d9f0872c120fb2408343859c938257e3962f2e09` (2026-10-23).
+- **Finding:** PR #5 is merged into `initial-idea`. The integrated archive verifier reports 148 ordered archived records with logical SHA-256 `da88335f4091c2b8a95c15d70e7cd7951c3705d47a7dd921aa2cfc0ff803302a`; the canonical state separately represents the current checkpoint, for 149 checkpoint identities. `PROJECT_STATE.yaml` is 70,382 bytes and the 19 archive files total 1,924,692 bytes at this baseline. Archive verification and canonical preflight pass. The 2026-10-22 branch-only status in FND-046 is historical and is superseded here.
+- **Evidence:** `.agents/evidence/RSK-010-checkpoint-history-migration-20261023.md`; `.agents/evidence/PRE-M4-final-closure-20261023.md`; `docs/05-operations/CHECKPOINT_HISTORY.md`; PR #5 merge `d9f0872c120fb2408343859c938257e3962f2e09`.
+- **Impact:** The former canonical-state capacity failure mode is resolved by lossless archive storage. Total archive growth and non-transactional crash boundaries remain monitored operational limitations; do not truncate history.
+
+## FND-048 — Accepted M3 release locally available and verified
+
+- **Status:** verified read-only on integration code revision `d9f0872c120fb2408343859c938257e3962f2e09` (2026-10-23).
+- **Finding:** The exact accepted release ID, manifest SHA-256 and split-assignment digest match. The project verifier checked all seven manifest outputs and replayed 1,000 games / 19,268 retained positions; supplementary checks confirmed all nine file sizes/hashes unchanged before and after, 182 rejections, split counts, unique IDs, each played move exactly once in its legal candidate list, and zero post-purge cross-split board signatures.
+- **Evidence:** `.agents/evidence/M3-release-local-verification-20261023.md`; `.agents/evidence/M3-release-local-verification-20261023.json`; `.agents/evidence/logs/M3-release-local-verification-20261023.log`.
+- **Impact:** M3 data availability is no longer a readiness blocker. Reverify immediately before future use; keep artifacts local and non-redistributed under the owner authorization and third-party license uncertainty.
+
+## FND-049 — ADR-0003 accepted; O-01 remains an external-policy question
+
+- **Status:** owner decision recorded 2026-10-23; external course-policy evidence not found in the repository review.
+- **Finding:** The owner accepted ADR-0003 according to its proposed action-conditioned legal-candidate architecture. Owner-confirmed choices of custom PyTorch, Double DQN, ALE target/wrappers, supporting behavior cloning, and bounded Stockfish teacher assistance are distinguished from instructor rules. No course brief/instructor response establishing those permissions was found in the reviewed repository. The conditional M4-001 record still requires applicable authoritative O-01 evidence before activation.
+- **Evidence:** `.agents/evidence/ADR-0003-acceptance-20261023.md`; `docs/02-management/decisions/ADR-0003-pretraining-model-interface.md`; `docs/04-research/DECISION_REGISTER.md`; `.agents/evidence/M4-001-authorization-conditional-20261023.md`.
+- **Impact:** ADR-0003 is not pending, but M4-001 remains pending and unauthorized until O-01 is evidenced and the conditional authorization is activated in canonical state/backlog. G3 remains unapproved.
+
+**Current-status update (2026-10-27):** The M4-001/O-01 impact above records the state on 2026-10-23. The project owner's dated decision now closes O-01 for internal planning and execution authorization and supersedes that O-01-only activation condition. It does not claim instructor approval. See FND-051 and the 2026-10-27 final closure report.
+
+## FND-050 — Final Pre-M4 verification and handoff completed
+
+- **Status:** full suite passed on PR-head revision `16cea814e623021cccce8ff05ac698c3c0d6afc9`; clean-clone recovery, preflight, and CI also passed on that exact head (2026-10-23).
+- **Finding:** `uv run --locked --no-sync --project /home/dodaonam/Projects/atari-videochess-rl python -m unittest discover -s tests` passed 269/269. A prior direct Python invocation failed only the M0 Stockfish UCI smoke test because that invocation did not add the configured venv `bin` directory to PATH. The existing Stockfish 19 executable and GPL text SHA-256 values match pinned M0 evidence; the correct `uv` invocation exposed the existing executable. No engine was installed, no test was changed, and the smoke test only performed UCI readiness/ping. A clean clone at the same PR head verified 152 archive records, passed preflight with no errors and the expected artifact warning, and passed 47/47 context/recovery tests. GitHub `Repository preflight` run 39971527886 passed on that head; it is not the full Python suite.
+- **Evidence:** `.agents/evidence/PRE-M4-final-verification-20261023.json`; `.agents/evidence/logs/PRE-M4-final-verification-20261023.log`; `.agents/evidence/logs/PRE-M4-full-suite-uv-20261023.log`; `.agents/evidence/logs/PRE-M4-stockfish-env-20261023.log`; `.agents/evidence/logs/PRE-M4-pr6-final-clean-clone-20261023.log`; [PR #6](https://github.com/dodaonam/atari-videochess-rl/pull/6).
+- **Impact:** R08 is PASS. The full-suite failure report from the direct invocation remains as historical diagnostic evidence, superseded by the successful configured-environment run. PR #6 is open for owner review. M4-001 remains pending because authoritative external O-01 course-policy evidence is still required; G3 remains unapproved.
+
+**Current-status update (2026-10-27):** The PR, O-01, and M4-001 statements above describe the 2026-10-23 state. PR #6 is being completed under the current mission; O-01 is closed internally, and its external-evidence limitation is informational. Current integration and post-merge results are linked from the 2026-10-27 final closure report.
+
+## FND-051 — O-01 closed internally; M4-001 can be handed off without another owner confirmation
+
+- **Status:** verified from the direct project-owner decision and canonical records (2026-10-27).
+- **Finding:** The owner closed O-01 for internal project planning and execution authorization and confirmed the selected technical scope: ALE/VideoChess-v5 with existing wrappers; independently implemented PyTorch Double DQN as the principal RL algorithm; bounded supporting behavior cloning; and only the previously approved bounded Stockfish teacher/pretraining scope. The initial M4 behavior-only run excludes Stockfish scores and teacher targets. The decision supersedes the O-01-only external-confirmation prerequisite in the earlier conditional M4-001 authorization. No separate instructor-policy approval is evidenced or claimed; any actual authoritative prohibition remains binding for the affected activity.
+- **Evidence:** `.agents/evidence/O-01-owner-decision-20261027.md`; dated addendum in `.agents/evidence/M4-001-authorization-conditional-20261023.md`; `.agents/state/PROJECT_STATE.yaml`; `.agents/tasks/BACKLOG.yaml`; `tests/test_agent_context.py::AgentContextRecoveryTests.test_m4_authorization_can_be_ready_without_claiming_implementation_started`.
+- **Impact:** After all Pre-M4 checks and PR integration pass, M4-001 is `pending` and ready to start, with `start_authorized: true`, `active_milestone: null`, and no active task. G3 remains unapproved and is not an entry prerequisite. O-02–O-08 remain scoped separately; the absence of instructor-policy evidence alone does not block M4-001.
+
+## FND-052 — Accepted M3 release reverified read-only in the owner-specified worktree
+
+- **Status:** verifier and supplementary artifact checks passed (2026-10-27).
+- **Finding:** The exact nine-file release at the owner-specified sibling-worktree path matches release ID `f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890`, manifest SHA-256 `be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12`, and semantic split-assignment SHA-256 `84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e`. It contains 1,000 games, 19,268 retained positions (15,196/2,015/2,057 split), 732 purged positions, and 182 rejections; cross-split board-signature overlap is zero. All nine sizes and hashes were unchanged before/after inspection and match the accepted 2026-10-23 inventory.
+- **Evidence:** `.agents/evidence/M3-release-local-verification-20261027.md`; its machine-readable JSON and sanitized verifier log.
+- **Impact:** The exact accepted release is locally available and verified but remains outside Git. Reverify it before future loading. This does not prove neural feature parity, create a neural loader, or provide M4 training evidence. The third-party package license remains unstated; preserve the local-only/no-redistribution boundary.
+
+## FND-053 — RSK-010 archive integrity reverified on the Pre-M4 candidate
+
+- **Status:** archive verifier passed on the `feature/pre-m4-final-closure` candidate worktree at base revision `a41d6f14014727570f55dfa2d015d4ad80250445` (2026-10-27 11:02 UTC).
+- **Finding:** `python3 scripts/migrate_checkpoint_history.py verify` verified 155 ordered archived records with logical SHA-256 `d543d1debe05bd6f55eeb23bd0df28751f41b1191a99f4efcafb2ad0100706c3`; manifest SHA-256 is `cd9ee9d6c7cc37cd3bd6e58a08eb8d30181819fce7864398cafb293dc98d314f`. The source-state backup hash matched the state pointer. The current checkpoint `cp-a41d6f14-20261027T104833810611Z` is separate from and not duplicated in the archive. The verifier checks record identity/order, segment and backup hashes, and logical digest; its output is retained.
+- **Evidence:** `.agents/evidence/logs/RSK-010-pre-m4-verify-20261027.log`; `.agents/state/PROJECT_STATE.yaml`; `.agents/state/checkpoint-history/manifest.json`.
+- **Impact:** The existing PR #5 migration remains lossless and verifies on the current Pre-M4 candidate. A clean-clone verification at the final PR/merged revision is still required before closeout. Archive storage and verification I/O grow with retained records; multi-file updates remain non-crash-atomic as documented.
+
+## FND-054 — Pre-M4 PR candidate recovers in a clean clone
+
+- **Status:** verified on clean clone of PR #6 candidate `7ba2a21d2436941c5a57bad41628738149a8ea1d` (2026-10-27).
+- **Finding:** The clone passed `agent_preflight.py` with zero errors and only the expected artifact-manifest warning; it verified 157 ordered archive records with logical SHA-256 `17a29916db981da71f0b55ac41d13ff319e56f4a263ea73d677e84d3638440f4`; focused context/archive tests passed 76/76; the full Python suite passed 270/270 in 96.687 seconds. The installed Python 3.12.3 direct dependencies matched `uv.lock`, and the Stockfish 19 UCI readiness smoke test passed with the configured executable on `PATH`. The clone remained clean. GitHub Actions run 40494322054 passed on the same SHA; that workflow covers preflight/context/bundle tests, not the full suite.
+- **Evidence:** `.agents/evidence/PRE-M4-final-closure-20261027.md`; `.agents/evidence/PRE-M4-final-closure-20261027.json`; clean-clone logs under `.agents/evidence/logs/PRE-M4-pr6-7ba2a21-clean-*`.
+- **Impact:** Pre-merge recovery and regression checks are evidenced on this PR candidate. PR #6 merge and a fresh clean-clone check of the resulting integration commit remain required. This finding does not claim M4 implementation, training, M4 acceptance, or G3 approval.

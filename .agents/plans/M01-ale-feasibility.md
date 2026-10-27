@@ -5,7 +5,7 @@
 - **Plan status:** complete (task status is canonical in `BACKLOG.yaml`)
 - **Task:** `M1-001` in `.agents/tasks/BACKLOG.yaml`
 - **Authorization:** `.agents/evidence/M1-authorization.md`
-- **Requirements:** O-01 remains open; no repository course/instructor rules were found. Keep RGB observations as the controller's source of truth, and RAM diagnostic-only.
+- **Requirements at M1 authorization (2026-10-15):** O-01 was an external-policy question and no repository course/instructor rules were found. The project owner later closed O-01 for internal planning/execution on 2026-10-27, without claiming instructor approval; any actual authoritative prohibition remains binding. Keep RGB observations as the controller's source of truth, and RAM diagnostic-only.
 - **Acceptance:** M1-01 through M1-06 in [`ACCEPTANCE_CRITERIA.md`](../../docs/06-quality/ACCEPTANCE_CRITERIA.md)
 - **Official runtime references:** [VideoChess environment](https://ale.farama.org/environments/video_chess/), [ALE environments](https://ale.farama.org/environments/), [Python interface](https://ale.farama.org/python-interface/)
 

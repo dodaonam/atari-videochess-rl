@@ -1,0 +1,134 @@
+{
+  "verification_id": "PRE-M4-final-closure-20261027",
+  "status": "premerge_verification_pass_postmerge_pending",
+  "recorded_at_utc": "2026-10-27T11:14:46Z",
+  "project_owner_decision": {
+    "decision_id": "O-01-owner-close-20261027",
+    "date": "2026-10-27",
+    "result": "closed_for_internal_project_planning_and_execution_authorization",
+    "external_instructor_policy_approval_evidenced": false,
+    "external_evidence_is_informational_not_m4_entry_blocker": true,
+    "evidence_path": ".agents/evidence/O-01-owner-decision-20261027.md"
+  },
+  "repository": {
+    "pr_url": "https://github.com/dodaonam/atari-videochess-rl/pull/6",
+    "pr_state_at_verification": "open",
+    "base_branch": "initial-idea",
+    "base_sha": "d9f0872c120fb2408343859c938257e3962f2e09",
+    "head_branch": "feature/pre-m4-final-closure",
+    "head_sha": "7ba2a21d2436941c5a57bad41628738149a8ea1d",
+    "mergeable_at_verification": true,
+    "merge_sha": null,
+    "gates_approved": ["G0", "G1", "G2"],
+    "g3_approved": false
+  },
+  "canonical_state": {
+    "current_gate": "G2",
+    "next_milestone": "M4",
+    "next_milestone_status": "ready_to_start",
+    "start_authorized": true,
+    "active_milestone": null,
+    "active_task_id": null,
+    "next_task_id": "M4-001",
+    "next_task_status": "pending",
+    "m4_acceptance_passed": [],
+    "g3_approved": false
+  },
+  "m3_release": {
+    "artifact_location": "/home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+    "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+    "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+    "split_assignment_sha256": "84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e",
+    "selected_games": 1000,
+    "positions_before_purge": 20000,
+    "positions_retained": 19268,
+    "positions_purged": 732,
+    "rejections": 182,
+    "split_counts": {"train": 15196, "validation": 2015, "test": 2057},
+    "cross_split_board_signature_overlap": 0,
+    "file_count": 9,
+    "verification_exit_code": 0,
+    "verification_duration_seconds": 112.014,
+    "verification_evidence": ".agents/evidence/M3-release-local-verification-20261027.json"
+  },
+  "checkpoint_archive": {
+    "verification_exit_code": 0,
+    "storage": "archive",
+    "record_count": 157,
+    "manifest_sha256": "8a8f18d00fbc455f30463729cf0eadbdd5beb8b8dea5fef50f01b613d495761d",
+    "logical_sha256": "17a29916db981da71f0b55ac41d13ff319e56f4a263ea73d677e84d3638440f4",
+    "source_backup_sha256": "f799458940b6beb5f6ce220f0c47c7fd44e020c1f80a85bbe74451433d8ecca5",
+    "current_checkpoint_id": "cp-51cf998d-20261027T111143174905Z",
+    "current_checkpoint_is_archived": false,
+    "represented_checkpoint_identities": 158,
+    "clean_clone": true,
+    "verification_log": ".agents/evidence/logs/PRE-M4-pr6-7ba2a21-clean-archive-20261027.log"
+  },
+  "tests": {
+    "python": "3.12.3",
+    "environment": "pre-existing project .venv; direct dependency versions match uv.lock",
+    "uv_executable_available": false,
+    "locked_direct_dependencies": {
+      "ale-py": "0.11.2",
+      "chess": "1.11.2",
+      "gymnasium": "1.4.0",
+      "numpy": "2.5.4",
+      "torch": "2.14.1+cpu"
+    },
+    "stockfish_path_prefix": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin",
+    "focused": {
+      "command": "python -m unittest tests.test_agent_context tests.test_checkpoint_history -v",
+      "started_at_utc": "2026-10-27T11:12:22.757514Z",
+      "completed_at_utc": "2026-10-27T11:12:58.682046Z",
+      "exit_code": 0,
+      "test_count": 76,
+      "result": "passed",
+      "log_path": ".agents/evidence/logs/PRE-M4-pr6-7ba2a21-clean-focused-tests-20261027.log"
+    },
+    "full_suite": {
+      "command": "python -m unittest discover -s tests -v",
+      "started_at_utc": "2026-10-27T11:13:09.008996Z",
+      "completed_at_utc": "2026-10-27T11:14:46.441487Z",
+      "exit_code": 0,
+      "test_runtime_seconds": 96.687,
+      "test_count": 270,
+      "result": "passed",
+      "stockfish_uci_readiness_test": "passed; existing Stockfish 19 on PATH; no engine search",
+      "log_path": ".agents/evidence/logs/PRE-M4-pr6-7ba2a21-clean-full-suite-20261027.log"
+    },
+    "clean_clone_preflight": {
+      "command": "python3 scripts/agent_preflight.py",
+      "exit_code": 0,
+      "errors": 0,
+      "warnings": ["ARTIFACT_MANIFEST_REQUIRED"],
+      "result": "passed",
+      "log_path": ".agents/evidence/logs/PRE-M4-pr6-7ba2a21-clean-preflight-20261027.log"
+    },
+    "git_diff_check_exit_code": 0
+  },
+  "github_ci": {
+    "run_id": 40494322054,
+    "url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/40494322054",
+    "name": "Repository preflight",
+    "commit_sha": "7ba2a21d2436941c5a57bad41628738149a8ea1d",
+    "conclusion": "success",
+    "coverage": ["agent_preflight", "tests.test_agent_context", "tests.test_export_review_bundle"],
+    "full_python_regression_suite": false
+  },
+  "scope_limits": {
+    "m4_neural_implementation_started": false,
+    "m4_training_run_started": false,
+    "m4_acceptance_passed": false,
+    "m5_implementation_started": false,
+    "g3_approved": false,
+    "m3_release_modified_or_copied": false,
+    "new_dataset_or_runtime_allocated": false,
+    "stockfish_search_run": false,
+    "postmerge_clean_clone_verification": "pending"
+  },
+  "postmerge": {
+    "integration_sha": null,
+    "clean_clone_verification": "pending",
+    "final_worktree_clean": null
+  }
+}

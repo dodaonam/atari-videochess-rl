@@ -1,14 +1,14 @@
-# Proposed M4 Model Design and M5 Interface
+# Accepted M4 Model Design and M5 Interface
 
-**Status:** Recommended implementation contract for M4, pending owner review and separate M4 authorization. No neural model or training run exists yet. ADR-0002 accepts the M2 state/action foundation while leaving its M4/M5 scorer as a proposal; this document and ADR-0003 refine that proposal without accepting it.
+**Status:** Accepted M4/M5 architecture under [ADR-0003](../02-management/decisions/ADR-0003-pretraining-model-interface.md). M4-001 is directly authorized and ready to start under the dated owner decision; the task remains pending and no M4 implementation or training has started. Acceptance fixes the interface but does not prove tensor parity, a measured parameter count, or performance. Instructor-policy approval has not been evidenced and is not claimed.
 
 **Purpose:** Define a deterministic input/action boundary from M3 PGN positions and M2 simulator decisions, while keeping M4 behavior logits separate from M5 Double DQN values.
 
 ## 1. Decision summary
 
-Recommend a small action-conditioned network. It encodes the current chess board, the complete move history from the standard initial position, a few exact rule-state scalars, and each currently legal move. A shared state representation is scored once per legal candidate. The candidate's UCI string remains its semantic identity; candidate array offsets are temporary batch layout only.
+Use a small action-conditioned network. It encodes the current chess board, the complete move history from the standard initial position, a few exact rule-state scalars, and each currently legal move. A shared state representation is scored once per legal candidate. The candidate's UCI string remains its semantic identity; candidate array offsets are temporary batch layout only.
 
-This fits 19,268 retained M3 examples and CPU execution better than a large fixed output vocabulary or a large board-only network. It also exposes an input path that M5 can use for state-action values. It is not evidence that this architecture is optimal.
+This design fits the 19,268 retained M3 examples and CPU execution better than a large fixed output vocabulary or a large board-only network. It also exposes an input path that M5 can use for state-action values. The approximately 121,897 parameters stated in ADR-0003 remain a design estimate until measured on an implementation. Acceptance is not evidence that this architecture is optimal.
 
 ## 2. Model boundary and canonicalization
 
@@ -59,7 +59,7 @@ The target is an exact UCI move copied from M3 `played_move_uci`. At collation t
 
 Batching pads the variable candidate count `N` and history length `T`. Loss and selection apply `candidate_mask`; checkmate, stalemate, fivefold repetition, and the seventy-five-move automatic draw have `N=0` and are handled by the caller, never reduced with `max()` over an empty tensor. `legal_action_candidates()` checks `Board.outcome(claim_draw=False)` before enumerating moves, because an automatic draw can be terminal while legal moves remain on the board. The raw candidate scorer should return finite scores; padding is excluded by the mask rather than by assigning an infinite model output.
 
-## 5. Proposed network and output
+## 5. Accepted network specification and output
 
 Recommended small implementation:
 
@@ -104,4 +104,4 @@ The paired M5 experiment compares this transferred initialization with the same 
 - **Teacher-score head or mixed supervision:** excluded from the first M4 run. The sidecar covers only 128 positions, is not the PGN move label, and broader Stockfish use requires separate authorization.
 - **Custom Atari image encoder:** excluded. M4 receives symbolic chess state; M6 must derive state from verified ALE RGB using the existing observation pipeline.
 
-Known limits: one 1,000-game source package; possible PGN selection bias; limited history examples; full-history sequence length and recurrent numerical behavior require tests; M3 raw artifacts are currently absent from this checkout; simulator legal state does not establish that every move is representable in Atari. No model performance or inference latency has been measured.
+Known limits: one 1,000-game source package; possible PGN selection bias; limited history examples; full-history sequence length and recurrent numerical behavior require implementation tests. The accepted M3 artifacts remain outside Git; the exact owner-specified local release was independently reverified read-only during Pre-M4 and must be reverified before future use. No M4 neural loader has consumed it. Simulator legal state does not establish that every move is representable in Atari. The parameter count remains a design estimate; no model performance or inference latency has been measured.

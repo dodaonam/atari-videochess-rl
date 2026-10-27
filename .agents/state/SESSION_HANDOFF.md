@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-f847690c-20261022T182204998362Z -->
+<!-- checkpoint-id: cp-7ba2a21d-20261027T112212896594Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -14,11 +14,18 @@ This file is a pointer, not a status snapshot. Do not infer current phase, task 
 
 ## M3 closeout and Pre-M4 pointers
 
-M3 acceptance and integration are recorded in [M3 acceptance](../evidence/M3-acceptance-20261021.md) and [post-merge verification](../evidence/M3-postmerge-integration-verification-20261021.md); PR #3 is merged. Earlier dated M3 sections below preserve their review-stage context and are superseded for live status by those closeout records and canonical state/backlog. For the current readiness review, follow the [Pre-M4 readiness evidence](../evidence/PRE-M4-readiness-20261022.md), [M4 plan](../plans/M04-supervised-pretraining.md), [model design](../../docs/03-technical/MODEL_DESIGN.md), [training protocol](../../docs/04-research/TRAINING_PROTOCOL.md), and proposed [ADR-0003](../../docs/02-management/decisions/ADR-0003-pretraining-model-interface.md). These are review materials, not authorization; use canonical state/backlog for M4 status.
+### Current Pre-M4 / M4-001 handoff pointer — 2026-10-27
 
-For the independent final Pre-M4 hardening review, use the hardening supplement and exact-revision verification matrix in [PRE-M4-readiness-20261022.md](../evidence/PRE-M4-readiness-20261022.md), the checkpoint failure/rollback contract in [PLANS.md](../PLANS.md), and the updated RSK-010 boundary in [RISK_REGISTER.md](../../docs/02-management/RISK_REGISTER.md). R07 is conditional pending lossless history migration before checkpoint-heavy work; M4 remains pending separate authorization.
+Use [final Pre-M4 closure](../evidence/PRE-M4-final-closure-20261027.md) for the R01–R08 and PM4 acceptance matrices, verified commands, clean-clone evidence, and exact integration identity. The owner's final O-01 decision is [recorded here](../evidence/O-01-owner-decision-20261027.md); the earlier conditional authorization is preserved with a dated supersession addendum in [M4-001 authorization history](../evidence/M4-001-authorization-conditional-20261023.md). O-01 is closed for internal planning and execution authorization. The lack of separate instructor-policy evidence is informational, is not an M4-001 prerequisite, and is not formal instructor approval.
 
-## Post-merge checkpoint migration and M4 entry audit — 2026-10-23
+The exact accepted M3 release is outside Git, available at the owner-specified local sibling-worktree path, and was reverified read-only; use [the 2026-10-27 release evidence](../evidence/M3-release-local-verification-20261027.md). Reverify all nine files before any future load. No M4 neural loader consumed it here. ADR-0003 is Accepted; consult [the M4 plan](../plans/M04-supervised-pretraining.md), [MODEL_DESIGN.md](../../docs/03-technical/MODEL_DESIGN.md), and [TRAINING_PROTOCOL.md](../../docs/04-research/TRAINING_PROTOCOL.md) for fixed constraints and the bounded behavior-only protocol. No neural implementation, training run, or M4 acceptance is claimed.
+
+PR #5 / RSK-010 is integrated. Use [checkpoint-history operations](../../docs/05-operations/CHECKPOINT_HISTORY.md) and [migration evidence](../evidence/RSK-010-checkpoint-history-migration-20261023.md); the archive is lossless and append-only, grows linearly, verifies its manifest/segments/logical digest/source backup, and is not crash-atomic across multiple file replacements. Preserve all records and follow the roll-forward/recovery boundary.
+
+Canonical state and backlog identify `M4-001` as the next task: it is authorized and `ready_to_start`, while the task remains `pending`, `active_milestone` and active task remain null, and G3 remains unapproved. The next executor may begin M4-001 without another Pre-M4 approval cycle; when implementation actually starts, transition the task and milestone to `in_progress`. Do not mark M4-01–M4-04 passed or G3 approved without their own evidence. The dated sections below preserve their original review-stage facts and are historical pointers, not current status.
+## Pre-integration checkpoint migration and M4 entry audit — 2026-10-23 (historical)
+
+The following was accurate before the separately owner-approved PR #5 merge; current integration and M4 entry status are in the dated closure update above.
 
 PR #4 is merged at `16fc01a3fe731c0a0be127026cc64d049c0cf550`. The lossless RSK-010 migration is implemented on the separate `feature/rsk010-lossless-checkpoint-history` branch and is not yet integrated; see [checkpoint-history operations](../../docs/05-operations/CHECKPOINT_HISTORY.md), [migration evidence](../evidence/RSK-010-checkpoint-history-migration-20261023.md), and the updated risk register. The owner issued direct conditional M4-001 authorization, preserved in [conditional authorization evidence](../evidence/M4-001-authorization-conditional-20261023.md); it is not operational until all listed entry conditions are verified. The exact accepted M3 release is absent from documented local paths, O-01 remains unresolved, and ADR-0003 remains Proposed. Therefore M4-001 remains pending; no active milestone/task or start authorization is recorded, and G3 remains unapproved. Review the migration PR and resolve the owner decisions before any M4 start transition.
 

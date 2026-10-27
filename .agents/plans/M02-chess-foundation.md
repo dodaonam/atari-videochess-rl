@@ -5,7 +5,7 @@
 - **Plan status:** complete; direct authorization and completion evidence are recorded under `.agents/evidence/`
 - **Task:** M2-001 in [BACKLOG.yaml](../tasks/BACKLOG.yaml), done
 - **Dependencies:** M1-001 complete; G2 approved
-- **Requirements:** B-03, B-05, B-06, B-07, B-08; unresolved approvals O-01, O-06, O-07, O-08 in [REQUIREMENTS.md](../../docs/01-foundation/REQUIREMENTS.md)
+- **Requirements at M2 execution (2026-10-16):** B-03, B-05, B-06, B-07, B-08; O-01, O-06, O-07, and O-08 were then open in [REQUIREMENTS.md](../../docs/01-foundation/REQUIREMENTS.md). O-01 was later closed internally by the owner on 2026-10-27; O-06–O-08 retain their scoped status.
 - **Acceptance:** M2-01 through M2-04 in [ACCEPTANCE_CRITERIA.md](../../docs/06-quality/ACCEPTANCE_CRITERIA.md)
 - **Specifications:** [ARCHITECTURE.md](../../docs/03-technical/ARCHITECTURE.md), [MDP_SPEC.md](../../docs/03-technical/MDP_SPEC.md), accepted M2 contract in [ADR-0002](../../docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md)
 
@@ -98,7 +98,7 @@ Use the existing locked environment documented in [SETUP.md](../../docs/05-opera
 - RSK-003 remains open: Stockfish scores and RL returns differ in perspective, scale, and meaning.
 - RSK-006 remains open: the proposed third-party Lichess archive has unresolved licensing/provenance; resolve O-06 before M3 ingestion.
 - RSK-009 remains open: a compact model observation may omit Board history needed for an exact Markov representation; validate or explicitly bound that approximation before M5.
-- O-01 governs assignment permissions for custom PyTorch RL, Stockfish use, and ALE extraction. M2 simulator/baselines do not need Stockfish or training.
+- At the 2026-10-16 M2 planning point, O-01 tracked assignment permissions for custom PyTorch RL, Stockfish use, and ALE extraction. The project owner closed O-01 for internal planning/execution on 2026-10-27; this does not claim instructor approval or change the completed M2 scope. M2 simulator/baselines did not need Stockfish or training.
 - O-07 governs Stockfish versions/roles; no Stockfish operation is part of M2. O-08 governs opponent pools and rating claims; M2 does not claim calibrated Elo.
 - O-02, O-03, O-04, and O-05 remain open for future work that depends on submission fallback, deadline, cloud resources, or unverified ALE settings.
 
