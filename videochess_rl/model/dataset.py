@@ -67,6 +67,28 @@ class M4Dataset:
     total_load_seconds: float
 
 
+@dataclass(frozen=True, slots=True)
+class DistinctInputSelection:
+    """A reproducible, label-independent M4-02 sample selection."""
+
+    examples: tuple[PositionFeatures, ...]
+    input_sha256: tuple[str, ...]
+    rule: str = "m4-02-distinct-effective-input-ascending-sample-id/1.0"
+    identity_schema: str = "videochess-effective-model-input/1.0"
+
+    @property
+    def sample_ids(self) -> tuple[str, ...]:
+        return tuple(row.sample_id for row in self.examples)
+
+    @property
+    def sample_ids_sha256(self) -> str:
+        return hashlib.sha256("\n".join(self.sample_ids).encode("utf-8")).hexdigest()
+
+    @property
+    def input_identities_sha256(self) -> str:
+        return hashlib.sha256("\n".join(self.input_sha256).encode("ascii")).hexdigest()
+
+
 def _sha256_file(path: Path) -> tuple[str, int]:
     digestor = hashlib.sha256()
     size = 0
@@ -332,6 +354,208 @@ def smallest_training_sample_ids(
     if len(train) < count:
         raise ValueError(f"need {count} training examples, found {len(train)}")
     return tuple(sorted(example.sample_id for example in train)[:count])
+
+
+_EFFECTIVE_INPUT_FIELDS = (
+    "board_planes",
+    "state_scalars",
+    "history_moves",
+    "history_mask",
+    "candidate_squares",
+    "candidate_promotion",
+    "candidate_flags",
+    "candidate_mask",
+    "candidate_uci",
+)
+
+
+def _array_identity(value: np.ndarray, *, dtype: str) -> dict[str, Any]:
+    array = np.ascontiguousarray(np.asarray(value, dtype=np.dtype(dtype)))
+    return {
+        "dtype": array.dtype.str,
+        "shape": list(array.shape),
+        "bytes_hex": array.tobytes(order="C").hex(),
+    }
+
+
+def _effective_input_document(
+    *,
+    board_planes: np.ndarray,
+    state_scalars: np.ndarray,
+    history_moves: np.ndarray,
+    history_mask: np.ndarray,
+    candidate_squares: np.ndarray,
+    candidate_promotion: np.ndarray,
+    candidate_flags: np.ndarray,
+    candidate_mask: np.ndarray,
+    candidate_uci: Iterable[str],
+) -> dict[str, Any]:
+    """Canonicalize exactly the unpadded fields consumed by BehaviorScorer."""
+    history_moves = np.asarray(history_moves)
+    history_mask = np.asarray(history_mask, dtype=np.bool_)
+    candidate_squares = np.asarray(candidate_squares)
+    candidate_promotion = np.asarray(candidate_promotion)
+    candidate_flags = np.asarray(candidate_flags)
+    candidate_mask = np.asarray(candidate_mask, dtype=np.bool_)
+    uci = tuple(candidate_uci)
+    history_length = int(history_mask.sum())
+    candidate_count = int(candidate_mask.sum())
+    if history_mask.shape != (history_length,) or not np.array_equal(
+        history_mask, np.ones(history_length, dtype=np.bool_)
+    ):
+        raise ValueError("effective history mask must be an unpadded all-valid prefix")
+    if candidate_mask.shape != (candidate_count,) or not np.array_equal(
+        candidate_mask, np.ones(candidate_count, dtype=np.bool_)
+    ):
+        raise ValueError("effective candidate mask must be an unpadded all-valid prefix")
+    if history_moves.shape != (history_length, 4):
+        raise ValueError("history length/mask does not match effective history tokens")
+    if candidate_squares.shape != (candidate_count, 2):
+        raise ValueError("candidate count/mask does not match candidate square coordinates")
+    if candidate_promotion.shape != (candidate_count,):
+        raise ValueError("candidate count/mask does not match candidate promotions")
+    if candidate_flags.shape != (candidate_count, 4):
+        raise ValueError("candidate count/mask does not match candidate flags")
+    if len(uci) != candidate_count or any(not isinstance(move, str) for move in uci):
+        raise ValueError("candidate UCI identity count does not match candidate mask")
+    if len(uci) != len(set(uci)) or tuple(sorted(uci)) != uci:
+        raise ValueError("candidate UCI identities must be unique and lexically ordered")
+
+    return {
+        "schema": "videochess-effective-model-input/1.0",
+        "model_input_schema": INPUT_SCHEMA,
+        "history_length": history_length,
+        "history_mask_semantics": "valid_prefix_exactly_equal_to_history_length",
+        "candidate_count": candidate_count,
+        "candidate_mask_semantics": "valid_prefix_exactly_equal_to_candidate_count",
+        "fields": {
+            "board_planes": _array_identity(board_planes, dtype="<f4"),
+            "state_scalars": _array_identity(state_scalars, dtype="<f4"),
+            "history_moves": _array_identity(history_moves, dtype="<i8"),
+            "history_mask": _array_identity(history_mask, dtype="|b1"),
+            "candidate_squares": _array_identity(candidate_squares, dtype="<i8"),
+            "candidate_promotion": _array_identity(candidate_promotion, dtype="<i8"),
+            "candidate_flags": _array_identity(candidate_flags, dtype="<f4"),
+            "candidate_mask": _array_identity(candidate_mask, dtype="|b1"),
+            "candidate_uci": list(uci),
+        },
+    }
+
+
+def effective_model_input_document(example: PositionFeatures) -> dict[str, Any]:
+    """Return label/provenance-free identity of one model input example."""
+    return _effective_input_document(
+        board_planes=example.board_planes,
+        state_scalars=example.state_scalars,
+        history_moves=example.history_moves,
+        history_mask=np.ones(example.history_length, dtype=np.bool_),
+        candidate_squares=example.candidate_squares,
+        candidate_promotion=example.candidate_promotion,
+        candidate_flags=example.candidate_flags,
+        candidate_mask=np.ones(example.candidate_count, dtype=np.bool_),
+        candidate_uci=example.candidate_uci,
+    )
+
+
+def effective_model_input_bytes(example: PositionFeatures) -> bytes:
+    return json.dumps(
+        effective_model_input_document(example),
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=True,
+        allow_nan=False,
+    ).encode("ascii")
+
+
+def _effective_model_input_digest(encoded: bytes) -> str:
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def effective_model_input_sha256(example: PositionFeatures) -> str:
+    return _effective_model_input_digest(effective_model_input_bytes(example))
+
+
+def collated_effective_model_input_sha256(batch: dict[str, Any], index: int) -> str:
+    """Hash one padded batch row after stripping only mask-declared padding."""
+    if not 0 <= index < int(batch["board_planes"].shape[0]):
+        raise IndexError("batch row index is out of bounds")
+    history_mask = batch["history_mask"][index].detach().cpu().numpy().astype(np.bool_)
+    candidate_mask = batch["candidate_mask"][index].detach().cpu().numpy().astype(np.bool_)
+    history_length = int(history_mask.sum())
+    candidate_count = int(candidate_mask.sum())
+    if not np.array_equal(history_mask, np.arange(len(history_mask)) < history_length):
+        raise ValueError("collated history mask is not a contiguous valid prefix")
+    if not np.array_equal(candidate_mask, np.arange(len(candidate_mask)) < candidate_count):
+        raise ValueError("collated candidate mask is not a contiguous valid prefix")
+    document = _effective_input_document(
+        board_planes=batch["board_planes"][index].detach().cpu().numpy(),
+        state_scalars=batch["state_scalars"][index].detach().cpu().numpy(),
+        history_moves=batch["history_moves"][index, :history_length].detach().cpu().numpy(),
+        history_mask=np.ones(history_length, dtype=np.bool_),
+        candidate_squares=batch["candidate_squares"][index, :candidate_count].detach().cpu().numpy(),
+        candidate_promotion=batch["candidate_promotion"][index, :candidate_count].detach().cpu().numpy(),
+        candidate_flags=batch["candidate_flags"][index, :candidate_count].detach().cpu().numpy(),
+        candidate_mask=np.ones(candidate_count, dtype=np.bool_),
+        candidate_uci=batch["candidate_uci"][index],
+    )
+    encoded = json.dumps(
+        document, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False,
+    ).encode("ascii")
+    return _effective_model_input_digest(encoded)
+
+
+def select_distinct_training_examples(
+    examples: Iterable[PositionFeatures], count: int = 128,
+) -> DistinctInputSelection:
+    """Take the first ascending train IDs with distinct complete model inputs.
+
+    Target labels and provenance are excluded from identity. Hash matches are
+    additionally checked against canonical bytes so an identity collision
+    cannot silently merge unequal inputs.
+    """
+    if isinstance(count, bool) or not isinstance(count, int) or count < 1:
+        raise ValueError("count must be a positive integer")
+    train = [example for example in examples if example.split == "train"]
+    if len({example.sample_id for example in train}) != len(train):
+        raise ValueError("training examples contain duplicate sample IDs")
+    selected: list[PositionFeatures] = []
+    identities: list[str] = []
+    canonical_by_hash: dict[str, bytes] = {}
+    for example in sorted(train, key=lambda row: row.sample_id):
+        canonical = effective_model_input_bytes(example)
+        digest = _effective_model_input_digest(canonical)
+        prior = canonical_by_hash.get(digest)
+        if prior is not None:
+            if prior != canonical:
+                raise RuntimeError("effective model input SHA-256 identity collision detected")
+            continue
+        canonical_by_hash[digest] = canonical
+        selected.append(example)
+        identities.append(digest)
+        if len(selected) == count:
+            break
+    if len(selected) != count:
+        raise ValueError(
+            f"need {count} distinct train model inputs, found {len(selected)}"
+        )
+    selection = DistinctInputSelection(tuple(selected), tuple(identities))
+    if len(set(selection.sample_ids)) != count or tuple(sorted(selection.sample_ids)) != selection.sample_ids:
+        raise RuntimeError("distinct-input sample selection violated sample ID ordering or uniqueness")
+    if len(set(selection.input_sha256)) != count:
+        raise RuntimeError("distinct-input sample selection contains duplicate effective inputs")
+    # Check that batched model tensors represent exactly the unpadded identity
+    # that selected the rows. The shared batch includes realistic padding.
+    for offset in range(0, len(selection.examples), MAX_PHYSICAL_BATCH_POSITIONS):
+        rows = selection.examples[offset:offset + MAX_PHYSICAL_BATCH_POSITIONS]
+        verification_batch = collate_examples(rows, require_targets=False)
+        for index, example in enumerate(rows):
+            expected_hash = selection.input_sha256[offset + index]
+            actual_hash = collated_effective_model_input_sha256(verification_batch, index)
+            if actual_hash != expected_hash:
+                raise RuntimeError(
+                    f"collated BehaviorScorer input differs from selector identity for {example.sample_id}"
+                )
+    return selection
 
 
 def collate_examples(

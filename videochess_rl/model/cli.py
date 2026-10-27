@@ -38,7 +38,7 @@ from videochess_rl.model.dataset import (
     EXPECTED_SPLIT_SHA256,
     M4Dataset,
     load_m3_release,
-    smallest_training_sample_ids,
+    select_distinct_training_examples,
 )
 from videochess_rl.model.features import INPUT_SCHEMA
 from videochess_rl.model.inference import BehaviorPolicy
@@ -218,6 +218,40 @@ def _prior_m4_runs(artifact_base: Path) -> list[dict[str, Any]]:
             raise ValueError(f"prior M4 run has invalid elapsed time: {manifest_path}")
         runs.append(manifest | {"_execution_elapsed_seconds": elapsed, "_manifest_path": str(manifest_path)})
     return runs
+
+
+def _prior_diagnostic_seconds(repo: Path) -> dict[str, Any]:
+    """Charge the preserved pre-run data diagnostic to the aggregate cap."""
+    relative = Path(".agents/evidence/logs/M4-02-sanity-gate-diagnostic-20261027.json")
+    path = repo / relative
+    if not path.is_file() or path.is_symlink():
+        return {"evidence_path": relative.as_posix(), "duration_seconds": 0.0, "status": "not_present"}
+    value = json.loads(path.read_text(encoding="utf-8"))
+    expected = {
+        "schema": "videochess-m4-sanity-input-conflict-diagnostic/1.0",
+        "status": "structural_conflict_blocks_threshold",
+    }
+    if any(value.get(key) != item for key, item in expected.items()):
+        raise ValueError("prior M4 diagnostic evidence has an unexpected schema or result")
+    dataset = value.get("dataset", {})
+    if (
+        dataset.get("release_id") != EXPECTED_RELEASE_ID
+        or dataset.get("manifest_sha256") != EXPECTED_MANIFEST_SHA256
+        or dataset.get("split_assignment_sha256") != EXPECTED_SPLIT_SHA256
+        or dataset.get("post_load_release_files_unchanged") is not True
+    ):
+        raise ValueError("prior M4 diagnostic does not verify the accepted immutable M3 release")
+    elapsed = float(value.get("duration_seconds", 0.0))
+    if not math.isfinite(elapsed) or elapsed < 0:
+        raise ValueError("prior M4 diagnostic has invalid elapsed time")
+    return {
+        "evidence_path": relative.as_posix(),
+        "duration_seconds": elapsed,
+        "status": value["status"],
+        "source_revision": value.get("diagnostic_git_revision"),
+        "started_at_utc": value.get("started_at_utc"),
+        "ended_at_utc": value.get("ended_at_utc"),
+    }
 
 
 def _prior_seed_time_usage(runs: list[dict[str, Any]]) -> dict[int, float]:
@@ -611,7 +645,10 @@ def run_experiment(args: argparse.Namespace) -> int:
     prior_runs = _prior_m4_runs(artifact_base)
     prior_execution_seconds = sum(run["_execution_elapsed_seconds"] for run in prior_runs)
     prior_seed_usage = _prior_seed_time_usage(prior_runs)
-    used_before_this_run = previous["duration_seconds"] + prior_execution_seconds
+    prior_diagnostic = _prior_diagnostic_seconds(repo)
+    used_before_this_run = (
+        previous["duration_seconds"] + prior_execution_seconds + prior_diagnostic["duration_seconds"]
+    )
     started_mono = time.monotonic()
     global_remaining = AGGREGATE_LIMIT_SECONDS - used_before_this_run
     global_deadline = started_mono + global_remaining
@@ -632,6 +669,7 @@ def run_experiment(args: argparse.Namespace) -> int:
         "execution_elapsed_seconds": 0.0,
         "aggregate_seconds_used_before_this_run": used_before_this_run,
         "prior_m4_run_execution_seconds": prior_execution_seconds,
+        "prior_diagnostic_execution": prior_diagnostic,
         "prior_seed_time_usage_seconds": {str(seed): seconds for seed, seconds in sorted(prior_seed_usage.items())},
         "source_revision": revision,
         "source_worktree_dirty": dirty,
@@ -661,6 +699,16 @@ def run_experiment(args: argparse.Namespace) -> int:
             "stockfish_scores_or_targets_used": False,
         },
         "sanity_gate": None,
+        "sanity_gate_protocol": {
+            "revision": "M4-02-distinct-effective-inputs/1.0",
+            "selection_rule": "m4-02-distinct-effective-input-ascending-sample-id/1.0",
+            "identity_schema": "videochess-effective-model-input/1.0",
+            "selection_source": "M3 train partition only, ascending sample_id, first sample for each unseen complete effective input identity",
+            "label_independent": True,
+            "uses_validation_or_test": False,
+            "training_seed": config.seeds[0],
+            "thresholds": {"cross_entropy_max": 0.05, "legal_top1_accuracy_min": 0.99, "max_updates": 500},
+        },
         "seed_runs": [],
         "selected_checkpoint": None,
         "test_evaluation": None,
@@ -721,12 +769,44 @@ def run_experiment(args: argparse.Namespace) -> int:
         _assert_remaining(global_deadline, "sanity gate")
         stage("fixed_128_example_sanity_gate", examples=128)
 
-        selected_ids = smallest_training_sample_ids(dataset.train, 128)
-        training_by_id = {row.sample_id: row for row in dataset.train}
-        sanity_rows = tuple(training_by_id[sample_id] for sample_id in selected_ids)
-        configure_determinism(config.seeds[0])
         gate_started_at_utc = _utc_now()
         gate_started = time.monotonic()
+        selection = select_distinct_training_examples(dataset.train, 128)
+        selected_ids = selection.sample_ids
+        sanity_rows = selection.examples
+        selection_record = {
+            "schema": "videochess-m4-sanity-selection/1.0",
+            "protocol_revision": "M4-02-distinct-effective-inputs/1.0",
+            "selection_rule": selection.rule,
+            "identity_schema": selection.identity_schema,
+            "source_split": "train",
+            "label_independent": True,
+            "sort_key": "sample_id ascending",
+            "duplicate_rule": "retain first ascending sample_id for each exact complete effective input; ignore target label",
+            "dataset_release_id": dataset.release_id,
+            "manifest_sha256": dataset.manifest_sha256,
+            "split_assignment_sha256": dataset.split_assignment_sha256,
+            "count": len(selection.examples),
+            "selected_ids_and_order": list(selection.sample_ids),
+            "sample_ids_sha256": selection.sample_ids_sha256,
+            "effective_input_sha256": list(selection.input_sha256),
+            "effective_input_identities_sha256": selection.input_identities_sha256,
+            "identities_pairwise_distinct": len(set(selection.input_sha256)) == 128,
+            "collated_input_equivalence_verified": True,
+            "selected_at_utc": gate_started_at_utc,
+        }
+        _json_write(root / "sanity_selection.json", selection_record)
+        manifest["sanity_sample_selection"] = {
+            "file": "sanity_selection.json",
+            "schema": selection_record["schema"],
+            "count": selection_record["count"],
+            "sample_ids_sha256": selection.sample_ids_sha256,
+            "effective_input_identities_sha256": selection.input_identities_sha256,
+            "identities_pairwise_distinct": selection_record["identities_pairwise_distinct"],
+        }
+        _event(root, "sanity_sample_selection_verified", **manifest["sanity_sample_selection"])
+        _json_write(root / "run_manifest.json", manifest)
+        configure_determinism(config.seeds[0])
         gate_model = BehaviorScorer(model_config)
         first_seed_prior = prior_seed_usage.get(config.seeds[0], 0.0)
         gate_deadline = min(
@@ -758,6 +838,21 @@ def run_experiment(args: argparse.Namespace) -> int:
         gate["seed_model_initialization"] = "deterministic seed 20261022 before model construction"
         gate["started_at_utc"] = gate_started_at_utc
         gate["sample_ids_sha256"] = hashlib.sha256("\n".join(selected_ids).encode()).hexdigest()
+        gate["selection_protocol"] = {
+            "revision": "M4-02-distinct-effective-inputs/1.0",
+            "selection_rule": selection.rule,
+            "identity_schema": selection.identity_schema,
+            "label_independent": True,
+            "source_split": "train",
+            "sort_key": "sample_id ascending",
+            "duplicate_input_rule": "retain first ascending sample_id; skip subsequent identical complete effective model inputs regardless of target label",
+            "sample_ids_sha256": selection.sample_ids_sha256,
+            "effective_input_sha256": list(selection.input_sha256),
+            "effective_input_identities_sha256": selection.input_identities_sha256,
+            "distinct_effective_input_count": len(set(selection.input_sha256)),
+            "selected_ids_and_order": list(selection.sample_ids),
+            "selection_artifact": "sanity_selection.json",
+        }
         _json_write(root / "sanity_gate.json", gate)
         manifest["sanity_gate"] = {
             "status": gate["status"],
@@ -769,6 +864,9 @@ def run_experiment(args: argparse.Namespace) -> int:
             "sample_id_count": gate["sample_id_count"],
             "sample_ids_file": "sanity_gate.json",
             "sample_ids_sha256": gate["sample_ids_sha256"],
+            "selection_rule": selection.rule,
+            "identity_schema": selection.identity_schema,
+            "effective_input_identities_sha256": selection.input_identities_sha256,
             "thresholds": gate["thresholds"],
         }
         manifest["execution_elapsed_seconds"] = time.monotonic() - started_mono
@@ -1071,10 +1169,57 @@ def verify_artifacts(args: argparse.Namespace) -> int:
     run_manifest = json.loads(run_path.read_text(encoding="utf-8"))
     if run_manifest.get("schema") != RUN_SCHEMA:
         raise ValueError("unsupported M4 run manifest schema")
+    selection_ref = run_manifest.get("sanity_sample_selection")
+    if selection_ref is not None:
+        selection_file = selection_ref.get("file") if isinstance(selection_ref, dict) else None
+        if (
+            not isinstance(selection_file, str)
+            or Path(selection_file).is_absolute()
+            or len(Path(selection_file).parts) != 1
+            or Path(selection_file).name != selection_file
+        ):
+            raise ValueError("persisted M4-02 selection path is unsafe")
+        selection_path = root / selection_file
+        if selection_path.is_symlink() or not selection_path.is_file():
+            raise ValueError("persisted M4-02 selection file is missing or unsafe")
+        selection = json.loads(selection_path.read_text(encoding="utf-8"))
+        ids = selection.get("selected_ids_and_order")
+        identities = selection.get("effective_input_sha256")
+        if (
+            selection.get("schema") != "videochess-m4-sanity-selection/1.0"
+            or selection.get("protocol_revision") != "M4-02-distinct-effective-inputs/1.0"
+            or selection.get("count") != 128
+            or not isinstance(ids, list) or len(ids) != 128
+            or ids != sorted(ids) or len(set(ids)) != 128
+            or not isinstance(identities, list) or len(identities) != 128
+            or len(set(identities)) != 128
+            or selection.get("identities_pairwise_distinct") is not True
+            or selection.get("source_split") != "train"
+            or selection.get("label_independent") is not True
+            or selection.get("collated_input_equivalence_verified") is not True
+        ):
+            raise ValueError("persisted M4-02 selection violates its versioned train-only contract")
+        ids_sha256 = hashlib.sha256("\n".join(ids).encode()).hexdigest()
+        identities_sha256 = hashlib.sha256("\n".join(identities).encode("ascii")).hexdigest()
+        if (
+            ids_sha256 != selection.get("sample_ids_sha256")
+            or identities_sha256 != selection.get("effective_input_identities_sha256")
+            or ids_sha256 != selection_ref.get("sample_ids_sha256")
+            or identities_sha256 != selection_ref.get("effective_input_identities_sha256")
+        ):
+            raise ValueError("persisted M4-02 selection digest does not match its selected IDs/inputs")
     selected = run_manifest.get("selected_checkpoint")
     checkpoint_result = None
     if selected:
-        checkpoint = root / selected["path"]
+        checkpoint_file = selected.get("path") if isinstance(selected, dict) else None
+        if (
+            not isinstance(checkpoint_file, str)
+            or Path(checkpoint_file).is_absolute()
+            or len(Path(checkpoint_file).parts) != 1
+            or Path(checkpoint_file).name != checkpoint_file
+        ):
+            raise ValueError("selected checkpoint path is unsafe")
+        checkpoint = root / checkpoint_file
         checkpoint_result = verify_checkpoint(checkpoint)
         if checkpoint_result.get("checkpoint_sha256") != selected.get("sha256"):
             raise ValueError("selected checkpoint checksum differs from the run manifest")

@@ -4,9 +4,13 @@ import unittest
 from dataclasses import replace
 from unittest.mock import patch
 from datetime import datetime, timezone
+import hashlib
 import json
 from pathlib import Path
 import tempfile
+from contextlib import redirect_stdout
+from io import StringIO
+from types import SimpleNamespace
 
 import chess
 import torch
@@ -21,7 +25,15 @@ from videochess_rl.model.training import (
     fit_seed,
     run_overfit_gate,
 )
-from videochess_rl.model.cli import RUN_SCHEMA, _event, _prior_m4_runs, _prior_seed_time_usage
+from videochess_rl.model.cli import (
+    RUN_SCHEMA,
+    _event,
+    _prior_diagnostic_seconds,
+    _prior_m4_runs,
+    _prior_seed_time_usage,
+    verify_artifacts,
+)
+from videochess_rl.model.checkpoint import write_artifact_manifest
 
 
 class M4TrainingTests(unittest.TestCase):
@@ -154,6 +166,86 @@ class M4TrainingTests(unittest.TestCase):
             self.assertEqual(sum(run["_execution_elapsed_seconds"] for run in prior), 42.0)
             self.assertEqual(seed_usage[20261022], 28.0)
             self.assertEqual(seed_usage[20261023], 10.0)
+
+    def test_prior_read_only_diagnostic_is_charged_to_aggregate_budget(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            path = root / ".agents/evidence/logs/M4-02-sanity-gate-diagnostic-20261027.json"
+            path.parent.mkdir(parents=True)
+            evidence = {
+                "schema": "videochess-m4-sanity-input-conflict-diagnostic/1.0",
+                "status": "structural_conflict_blocks_threshold",
+                "duration_seconds": 134.85,
+                "diagnostic_git_revision": "e5e42f703bfd3386c94de17b607aa5102b60201f",
+                "dataset": {
+                    "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+                    "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+                    "split_assignment_sha256": "84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e",
+                    "post_load_release_files_unchanged": True,
+                },
+            }
+            path.write_text(json.dumps(evidence), encoding="utf-8")
+            self.assertEqual(_prior_diagnostic_seconds(root)["duration_seconds"], 134.85)
+            evidence["dataset"]["release_id"] = "wrong-release"
+            path.write_text(json.dumps(evidence), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "accepted immutable M3 release"):
+                _prior_diagnostic_seconds(root)
+
+    def test_artifact_verifier_checks_persisted_m4_sanity_selection(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            ids = [f"{value:064x}" for value in range(128)]
+            identities = [f"{value + 1000:064x}" for value in range(128)]
+            ids_hash = hashlib.sha256("\n".join(ids).encode()).hexdigest()
+            identities_hash = hashlib.sha256("\n".join(identities).encode("ascii")).hexdigest()
+            selection = {
+                "schema": "videochess-m4-sanity-selection/1.0",
+                "protocol_revision": "M4-02-distinct-effective-inputs/1.0",
+                "count": 128,
+                "selected_ids_and_order": ids,
+                "sample_ids_sha256": ids_hash,
+                "effective_input_sha256": identities,
+                "effective_input_identities_sha256": identities_hash,
+                "identities_pairwise_distinct": True,
+                "source_split": "train",
+                "label_independent": True,
+                "collated_input_equivalence_verified": True,
+            }
+            (root / "sanity_selection.json").write_text(json.dumps(selection), encoding="utf-8")
+            (root / "run_manifest.json").write_text(json.dumps({
+                "schema": RUN_SCHEMA,
+                "sanity_sample_selection": {
+                    "file": "sanity_selection.json",
+                    "sample_ids_sha256": ids_hash,
+                    "effective_input_identities_sha256": identities_hash,
+                },
+                "selected_checkpoint": None,
+            }), encoding="utf-8")
+            write_artifact_manifest(root)
+            with redirect_stdout(StringIO()):
+                self.assertEqual(verify_artifacts(SimpleNamespace(directory=root)), 0)
+
+            selection["effective_input_sha256"][1] = selection["effective_input_sha256"][0]
+            (root / "sanity_selection.json").write_text(json.dumps(selection), encoding="utf-8")
+            write_artifact_manifest(root)
+            with self.assertRaisesRegex(ValueError, "violates its versioned train-only contract"):
+                verify_artifacts(SimpleNamespace(directory=root))
+
+            selection["effective_input_sha256"] = identities
+            (root / "sanity_selection.json").write_text(json.dumps(selection), encoding="utf-8")
+            malicious_manifest = {
+                "schema": RUN_SCHEMA,
+                "sanity_sample_selection": {
+                    "file": "../../outside.json",
+                    "sample_ids_sha256": ids_hash,
+                    "effective_input_identities_sha256": identities_hash,
+                },
+                "selected_checkpoint": {"path": "../../outside.pt"},
+            }
+            (root / "run_manifest.json").write_text(json.dumps(malicious_manifest), encoding="utf-8")
+            write_artifact_manifest(root)
+            with self.assertRaisesRegex(ValueError, "selection path is unsafe"):
+                verify_artifacts(SimpleNamespace(directory=root))
 
     def test_stage_event_records_stage_name_and_details(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
