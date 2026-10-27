@@ -478,10 +478,12 @@ def _validate_state(state: dict[str, object], errors: list[dict[str, str]]) -> N
     if authorized:
         if milestone_status == "in_progress" and active != engineering.get("next_milestone"):
             errors.append({"code": "MILESTONE_AUTHORIZATION_MISMATCH", "path": STATE_REL, "message": "An in-progress authorized milestone must be the active next milestone."})
+        elif milestone_status == "blocked" and active != engineering.get("next_milestone"):
+            errors.append({"code": "MILESTONE_AUTHORIZATION_MISMATCH", "path": STATE_REL, "message": "A blocked authorized milestone must remain the active next milestone."})
         elif milestone_status == "ready_to_start" and active is not None:
             errors.append({"code": "MILESTONE_AUTHORIZATION_MISMATCH", "path": STATE_REL, "message": "A ready_to_start milestone must not be active before implementation begins."})
-        elif milestone_status not in {"ready_to_start", "in_progress"}:
-            errors.append({"code": "MILESTONE_AUTHORIZATION_MISMATCH", "path": STATE_REL, "message": "An authorized milestone must be ready_to_start or in_progress."})
+        elif milestone_status not in {"ready_to_start", "in_progress", "blocked"}:
+            errors.append({"code": "MILESTONE_AUTHORIZATION_MISMATCH", "path": STATE_REL, "message": "An authorized milestone must be ready_to_start, in_progress, or blocked."})
     elif milestone_status in {"ready_to_start", "in_progress"}:
         errors.append({"code": "MILESTONE_AUTHORIZATION_MISMATCH", "path": STATE_REL, "message": "A ready_to_start or in-progress milestone requires separate explicit start authorization."})
 
@@ -867,6 +869,14 @@ def _check_task_graph(backlog: dict[str, object], root: Path, state: dict[str, o
                 and task.get("status") == "in_progress"
                 and task.get("milestone") == milestone
             )
+            blocked_match = (
+                engineering.get("next_milestone_status") == "blocked"
+                and active_task_id == task_id
+                and isinstance(task, dict)
+                and task.get("status") == "blocked"
+                and task.get("milestone") == milestone
+                and bool(task.get("blocker_ids"))
+            )
             ready_match = (
                 engineering.get("next_milestone_status") == "ready_to_start"
                 and active_task_id is None
@@ -875,8 +885,8 @@ def _check_task_graph(backlog: dict[str, object], root: Path, state: dict[str, o
                 and task.get("status") == "pending"
                 and task.get("milestone") == milestone
             )
-            if not (running_match or ready_match):
-                errors.append({"code": "MILESTONE_AUTHORIZATION_EVIDENCE", "path": rel, "message": "Authorization must identify either the pending next task in ready_to_start state or the active in-progress task."})
+            if not (running_match or blocked_match or ready_match):
+                errors.append({"code": "MILESTONE_AUTHORIZATION_EVIDENCE", "path": rel, "message": "Authorization must identify either the pending next task in ready_to_start state, the active in-progress task, or an active blocked task with a blocker."})
             else:
                 path = authorization.get("evidence_path")
                 matches = [

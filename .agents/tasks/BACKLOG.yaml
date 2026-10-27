@@ -2300,7 +2300,7 @@
       "id": "M4-001",
       "title": "Implement and verify the bounded supervised behavior baseline",
       "milestone": "M4",
-      "status": "pending",
+      "status": "done",
       "depends_on": [
         "M3-001"
       ],
@@ -2435,11 +2435,316 @@
             "git_revision": "a41d6f14014727570f55dfa2d015d4ad80250445",
             "log_path": ".agents/evidence/logs/M3-release-local-verification-20261027.log"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M4-001-execution-authorization-20261027.md",
+          "detail": "Direct project-owner mission authorization for complete bounded M4-001 execution and protected-workflow-permitted integration.",
+          "result": "The project owner directly authorized full M4-001 execution, verification, local CPU training/evaluation within the existing caps, and a reviewable PR merge into initial-idea when all checks pass and repository protections permit; M5/M6, G3 approval, external compute, new data, Stockfish-assisted initial training, and resource-limit expansion remain excluded.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-27T12:22:34Z",
+            "recorded_at_utc": "2026-10-27T12:22:34Z",
+            "exit_code": null,
+            "git_revision": "94220870c3abc9e8aa725db85fb0c6cebebdbb48",
+            "log_path": ".agents/evidence/M4-001-execution-authorization-20261027.md"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.data.cli verify --release /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+          "result": "PASS: release f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890; manifest SHA-256 be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12; 1,000 games; 19,268 positions; 182 rejections; nine files unchanged before/after.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T12:18:38.847134Z",
+            "recorded_at_utc": "2026-10-27T12:20:30.237367Z",
+            "exit_code": 0,
+            "git_revision": "94220870c3abc9e8aa725db85fb0c6cebebdbb48",
+            "log_path": ".agents/evidence/logs/M4-release-verification-20261027.txt"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M4-02-sanity-gate-blocker-20261027.md",
+          "detail": "Formal evidence for the fixed sanity-gate failure and exact-input structural upper bound; includes the two conflicting sample pairs and the minimum required owner-level protocol decision.",
+          "result": "M4-02 is blocked: exact duplicate model inputs with different played_move_uci targets cap deterministic top-1 at 126/128, while the unchanged criterion requires 127/128.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-27T13:50:46Z",
+            "exit_code": null,
+            "git_revision": "e5e42f703bfd3386c94de17b607aa5102b60201f",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.model.cli run --release-dir /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6 --artifact-root /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4 --run-id m4-behavior-20261027-r2",
+          "result": "FAIL: fixed 128-example gate exhausted 500 updates; cross-entropy 0.02195480 passed but legal top-1 was 126/128 (98.4375%), below the required 127/128. The run stopped before full training. CLI exit code 2.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T13:33:05.861961Z",
+            "recorded_at_utc": "2026-10-27T13:50:46Z",
+            "exit_code": 2,
+            "git_revision": "4562dddd80d302bdbb49e1191c97bd71ac7e9938",
+            "log_path": ".agents/evidence/logs/M4-sanity-gate-r2-20261027.txt"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python /tmp/atari-m4-work/scripts/diagnose_m4_gate_conflicts.py --gate-run /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r2 --release-dir /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6 --output .agents/evidence/logs/M4-02-sanity-gate-diagnostic-20261027.json",
+          "result": "PASS: the exact accepted M3 release was reverified and unchanged; two pairs of identical model inputs with conflicting labels impose a deterministic top-1 ceiling of 126/128, below the 127 required.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T13:44:09.463494Z",
+            "recorded_at_utc": "2026-10-27T13:50:46Z",
+            "exit_code": 0,
+            "git_revision": "e5e42f703bfd3386c94de17b607aa5102b60201f",
+            "log_path": ".agents/evidence/logs/M4-02-sanity-gate-diagnostic-20261027.txt"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m4_model tests.test_m4_data tests.test_m4_training tests.test_m4_checkpoint tests.test_agent_context tests.test_checkpoint_history tests.test_pre_m4_contracts tests.test_m2_simulator tests.test_m3_data -v",
+          "result": "PASS: exit 0; OK",
+          "detail": "Focused M4 model/data/training/checkpoint, context/recovery, M2 simulator, M3 data, and Pre-M4 contract suite: 191 tests in 93.922 seconds.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T14:02:47.465538Z",
+            "recorded_at_utc": "2026-10-27T14:15:30Z",
+            "exit_code": 0,
+            "git_revision": "e5e42f703bfd3386c94de17b607aa5102b60201f",
+            "log_path": ".agents/evidence/logs/M4-focused-tests-20261027.txt"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "Agent context preflight: PASS",
+          "detail": "Fresh clone of the pushed M4 branch at 16567ce8a8fa99472609481d0f2a7bdf4366c204; portable tracked baseline matched. Expected artifacts-directory manifest warning only.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T14:19:45.877411Z",
+            "recorded_at_utc": "2026-10-27T14:22:43Z",
+            "exit_code": 0,
+            "git_revision": "16567ce8a8fa99472609481d0f2a7bdf4366c204",
+            "log_path": ".agents/evidence/logs/M4-clean-clone-verification-20261027.txt"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/migrate_checkpoint_history.py verify",
+          "result": "\"status\": \"verified\"",
+          "detail": "Fresh clone archive verification: 168 records; logical SHA-256 ec453522cb68f6f5786dc37434b2490b3d32e70d663de5c5f953d5cf21101ef2.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T14:19:46.363161Z",
+            "recorded_at_utc": "2026-10-27T14:22:43Z",
+            "exit_code": 0,
+            "git_revision": "16567ce8a8fa99472609481d0f2a7bdf4366c204",
+            "log_path": ".agents/evidence/logs/M4-clean-clone-verification-20261027.txt"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 304 tests in 98.922s",
+          "detail": "Full regression suite executed from the fresh clone of pushed commit 16567ce8a8fa99472609481d0f2a7bdf4366c204; final suite output was OK. The clone had no local dataset or ignored artifacts.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T14:19:46.632613Z",
+            "recorded_at_utc": "2026-10-27T14:22:43Z",
+            "exit_code": 0,
+            "git_revision": "16567ce8a8fa99472609481d0f2a7bdf4366c204",
+            "log_path": ".agents/evidence/logs/M4-clean-clone-verification-20261027.txt"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "PASS: exit 0; Ran 304 tests in 97.278s",
+          "detail": "Full repository regression: 304 tests. Python 3.12.3, PyTorch 2.14.1+cpu, python-chess 1.11.2, NumPy 2.5.4; configured Stockfish was available for the repository UCI readiness smoke test. Regression passage does not satisfy M4-02 or claim M4-03/M4-04.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T14:07:36.923942Z",
+            "recorded_at_utc": "2026-10-27T14:15:30Z",
+            "exit_code": 0,
+            "git_revision": "e5e42f703bfd3386c94de17b607aa5102b60201f",
+            "log_path": ".agents/evidence/logs/M4-full-suite-pass-20261027.txt"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M4-02-protocol-amendment-20261027.md",
+          "detail": "Dated PM-approved M4-02 revision changes only the deterministic 128-example sample rule to pairwise-distinct complete effective model inputs.",
+          "result": "M4-02 remains pending until the new run passes.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-27T15:06:58Z",
+            "recorded_at_utc": "2026-10-27T15:06:58Z",
+            "exit_code": null,
+            "git_revision": "edd9dc90bb53447ea2216a359697a2575fb1dc1e",
+            "log_path": ".agents/evidence/M4-02-protocol-amendment-20261027.md"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M4-02-revised-sanity-pass-20261027.md",
+          "detail": "Revised train-only, label-independent, pairwise-distinct effective-input selection and 128-example overfit gate evidence; original failed run remains historical FAIL.",
+          "result": "M4-02 sanity gate PASS: fresh seed 20261022 weights, 140/500 updates, CE 0.0385448446, legal top-1 127/128 (99.21875%), top-3 127/128, MRR 0.994140625. Full M4 training and other acceptance criteria remain in_progress.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-27T15:32:37.348772Z",
+            "recorded_at_utc": "2026-10-27T15:47:42Z",
+            "exit_code": null,
+            "git_revision": "7988af28f768c203c9cc7e2794785c99df588645",
+            "log_path": ".agents/evidence/M4-02-revised-sanity-pass-20261027.md"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M4-run-r3-checkpoint-load-failure-20261027.md",
+          "detail": "Immutable report of r3 completing all three training seeds and validation selection before the safe checkpoint reload rejected a serialized TorchVersion metadata object.",
+          "result": "M4 run m4-behavior-20261027-r3 completed the three bounded training seeds and validation selection, then failed safe checkpoint reload because runtime metadata contained torch.torch_version.TorchVersion; exit 1. M4-02 remains PASS. M4-03 and M4-04 remain incomplete.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-27T15:51:10.084361Z",
+            "recorded_at_utc": "2026-10-27T15:54:52Z",
+            "exit_code": null,
+            "git_revision": "7988af28f768c203c9cc7e2794785c99df588645",
+            "log_path": ".agents/evidence/M4-run-r3-checkpoint-load-failure-20261027.md"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M4-final-acceptance-20261027.md",
+          "detail": "Final technical acceptance record for the PM-amended M4-02 gate, bounded three-seed behavior cloning, frozen test, engine-free inference, simulator benchmark, artifact identities, and stated limitations.",
+          "result": "M4-01, M4-02, M4-03, and M4-04 **PASS**",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-27T16:39:38Z",
+            "recorded_at_utc": "2026-10-27T16:40:07.470916Z",
+            "exit_code": null,
+            "git_revision": "7b3c9074a2d932fec6d7732ee08e99b9de10a135",
+            "log_path": ".agents/evidence/M4-final-acceptance-20261027.md"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M4-final-acceptance-20261027.json",
+          "detail": "Machine-readable M4 acceptance and artifact identity record; explicitly distinguishes pre-merge technical acceptance from integration.",
+          "result": "\"technical_acceptance\": \"PASS\"",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-27T16:39:38Z",
+            "recorded_at_utc": "2026-10-27T16:40:07.470916Z",
+            "exit_code": null,
+            "git_revision": "7b3c9074a2d932fec6d7732ee08e99b9de10a135",
+            "log_path": ".agents/evidence/M4-final-acceptance-20261027.json"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.model.cli run --release-dir /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6 --artifact-root /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4 --run-id m4-behavior-20261027-r4",
+          "result": "PASS: run completed with 19 verified artifacts; aggregate usage 3234.281 seconds including prior attempts; peak RSS 628350976 bytes.",
+          "detail": "The exact accepted M3 release was reverified and tensorized; revised M4-02 passed, all three seeds completed, validation-only selection froze seed 20261024/epoch 11, and the CLI finished test/inference/profile/simulator stages.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T16:22:19.931137Z",
+            "recorded_at_utc": "2026-10-27T16:40:07.470916Z",
+            "exit_code": 0,
+            "git_revision": "7b3c9074a2d932fec6d7732ee08e99b9de10a135",
+            "log_path": ".agents/evidence/logs/M4-run-r4-completion-20261027.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m4_model tests.test_m4_data tests.test_m4_training tests.test_m4_checkpoint tests.test_pre_m4_contracts tests.test_m2_simulator tests.test_m3_data -v",
+          "result": "Ran 124 tests in 45.983s; OK.",
+          "detail": "Focused M4, M2/M3, and Pre-M4 contract suite on corrected source revision; pinned project .venv used because uv was unavailable.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T16:27:04.935488Z",
+            "recorded_at_utc": "2026-10-27T16:40:07.470916Z",
+            "exit_code": 0,
+            "git_revision": "7b3c9074a2d932fec6d7732ee08e99b9de10a135",
+            "log_path": ".agents/evidence/logs/M4-final-focused-7b3c907-20261027-evidence.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 313 tests in 98.058s; OK.",
+          "detail": "Full Python unittest regression suite on corrected source revision; configured Stockfish was available only for the existing UCI readiness smoke test.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T16:28:48.063083Z",
+            "recorded_at_utc": "2026-10-27T16:40:07.470916Z",
+            "exit_code": 0,
+            "git_revision": "7b3c9074a2d932fec6d7732ee08e99b9de10a135",
+            "log_path": ".agents/evidence/logs/M4-final-full-suite-7b3c907-20261027-evidence.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PATH=/usr/bin:/bin PYTHONPATH=/tmp/atari-m4-work /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -",
+          "result": "PASS: 40 games completed; Stockfish unavailable; chess.engine not loaded.",
+          "detail": "Independent same-checkpoint confirmation of the full opponent/seed/color schedule with Stockfish absent from PATH and engine module absent; 40/40 games, zero truncations/failures.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T16:30:31.414645Z",
+            "recorded_at_utc": "2026-10-27T16:40:07.470916Z",
+            "exit_code": 0,
+            "git_revision": "7b3c9074a2d932fec6d7732ee08e99b9de10a135",
+            "log_path": ".agents/evidence/logs/M4-engine-free-simulator-20261027.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.model.cli verify-artifacts /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4",
+          "result": "PASS: 19 run artifact files verified; checkpoint SHA-256 724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4; parameter count 121897.",
+          "detail": "Independent post-run artifact/checkpoint manifest verification.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T16:39:18.804519Z",
+            "recorded_at_utc": "2026-10-27T16:40:44.341229Z",
+            "exit_code": 0,
+            "git_revision": "7b3c9074a2d932fec6d7732ee08e99b9de10a135",
+            "log_path": ".agents/evidence/logs/M4-final-artifact-verification-20261027.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.data.cli verify --release /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+          "result": "PASS: accepted release f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890; manifest SHA-256 be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12; 1,000 games and 19,268 positions verified.",
+          "detail": "Fresh read-only release verification after M4 training; no data files were modified.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T16:49:12Z",
+            "recorded_at_utc": "2026-10-27T16:49:43Z",
+            "exit_code": 0,
+            "git_revision": "7b3c9074a2d932fec6d7732ee08e99b9de10a135",
+            "log_path": ".agents/evidence/logs/M4-final-m3-verification-20261027.txt"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M4-premerge-delivery-verification-20261027.md",
+          "detail": "Exact PR-head clean-clone premerge verification, including archive/artifact integrity, focused/full regression, clean worktree, and GitHub context check result.",
+          "result": "Overall result: PASS — exact proposed PR head df942b5ff88687e7a6f5cd242d5e82939833f7e6 passed clean-clone preflight, archive verification, artifact verification, 124 focused tests, and 313 full regression tests; the GitHub context check succeeded. PR merge remains pending.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-27T17:02:57Z",
+            "recorded_at_utc": "2026-10-27T17:03:47Z",
+            "exit_code": null,
+            "git_revision": "df942b5ff88687e7a6f5cd242d5e82939833f7e6",
+            "log_path": ".agents/evidence/M4-premerge-delivery-verification-20261027.md"
+          }
         }
       ],
-      "next_action": "Begin M4-001 when implementation actually starts: transition M4 from ready_to_start to in_progress and activate this pending task in canonical state. No additional owner confirmation is required for the finalized technical scope; reverify the local M3 release before loading, use only played_move_uci targets for the initial behavior-only run, keep Stockfish absent, stay within local CPU/time/memory caps, and do not mark M4 acceptance or G3 complete without evidence.",
+      "next_action": "Remove PR #8 draft status, recheck its live head/checks/protection state, and complete the authorized merge if permitted. Then record and independently verify the actual initial-idea integration commit. M4 technical acceptance is complete; do not start or authorize M5.",
       "plan_ref": ".agents/plans/M04-supervised-pretraining.md"
     }
   ],
-  "updated_at_utc": "2026-10-23T14:17:26Z"
+  "updated_at_utc": "2026-10-27T17:03:47Z"
 }

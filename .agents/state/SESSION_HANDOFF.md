@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-89d085d1-20261027T113638157697Z -->
+<!-- checkpoint-id: cp-f3971464-20261027T170449398137Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -12,9 +12,21 @@ This file is a pointer, not a status snapshot. Do not infer current phase, task 
    - The current governance decision is [`ADR-0001`](../../docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md); discover later decisions in `docs/02-management/decisions/`.
 5. Compare the portable tracked-file manifest with live HEAD/index. Treat the `git` snapshot as workspace-local; an exact portable manifest match after commit/checkout is expected even when branch, HEAD, status, ignored files, or caches differ. The local Git config UUID distinguishes the original workspace from a clean clone. For older checkpoints without a portable manifest, use the safe tracked-file migration path described in `AGENTS.md`. If version-controlled content or canonical references drift, inspect them and never discard work automatically.
 
-## M3 closeout and Pre-M4 pointers
+## Current project handoff
 
-### Current Pre-M4 / M4-001 handoff pointer — 2026-10-27
+### M4-001 complete; M4 acceptance passed — 2026-10-27
+
+M4-01 through M4-04 passed on source revision `7b3c9074a2d932fec6d7732ee08e99b9de10a135`. Read the [final M4 acceptance report](../evidence/M4-final-acceptance-20261027.md) and [machine-readable acceptance record](../evidence/M4-final-acceptance-20261027.json) for the precise dataset, model, gate, training, test, simulator, resource, artifact, and test evidence. The PM-approved [M4-02 protocol amendment](../evidence/M4-02-protocol-amendment-20261027.md) changes only the fixed sanity sample selector; the original 126/128 failure remains preserved and is not counted as a pass. The corrected r4 run selected seed 20261024 / epoch 11 by validation NLL and produced checkpoint SHA-256 `724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4`.
+
+The exact M3 release and all M4 model/run artifacts remain outside Git at their owner-approved local artifact paths. The M4 report records their paths and integrity identities. Do not regenerate, upload, or redistribute the M3 release. The M4 checkpoint contains behavior logits, not Q-values. ADR-0003 remains Accepted. O-01 is closed internally; no instructor approval is claimed. G3 remains unapproved. M5/M6 have not started, and this M4 authorization does not authorize M5.
+
+PR #8 (<https://github.com/dodaonam/atari-videochess-rl/pull/8>) carries the completed M4 implementation and evidence to `initial-idea`. Final clean-clone verification passed at code/evidence head `df942b5ff88687e7a6f5cd242d5e82939833f7e6`: 124 focused tests, 313 full tests, preflight, archive verification, artifact verification, and the GitHub context check; exact logs are in `.agents/evidence/M4-premerge-delivery-verification-20261027.md`. Later PR commits only retain this verification and refresh its state checkpoint; they do not change M4 source or test code. Recheck the live head, checks, and protection rules, remove draft status when eligible, and complete the authorized merge if permitted. Then verify the actual integration commit and record the delivery closeout. Do not enable auto-merge or bypass branch protections.
+
+After delivery closeout, canonical state should have no active M4 task, `M4-001` done, `engineering.active_milestone: null`, `next_milestone: M5`, `next_milestone_status: pending_user_approval`, and `start_authorized: false`. No M5 task is active; a separate authorization is required before any M5 implementation. Preserve the append-only checkpoint archive and run `python3 scripts/migrate_checkpoint_history.py verify` plus `python3 scripts/agent_preflight.py` when state changes.
+
+## M3 closeout and Pre-M4 pointers (historical)
+
+### Pre-M4 closeout pointer before M4 began — 2026-10-27 (historical)
 
 PR #6 merged into `initial-idea` at `89d085d1865d07b10660e82119488960f766d819` and passed fresh clean-clone archive, preflight, focused-test, and full-suite verification. Use [final Pre-M4 closure](../evidence/PRE-M4-final-closure-20261027.md) for the R01–R08 and PM4 acceptance matrices, verified commands, clean-clone evidence, and exact PR integration identity. The owner's final O-01 decision is [recorded here](../evidence/O-01-owner-decision-20261027.md); the earlier conditional authorization is preserved with a dated supersession addendum in [M4-001 authorization history](../evidence/M4-001-authorization-conditional-20261023.md). O-01 is closed for internal planning and execution authorization. The lack of separate instructor-policy evidence is informational, is not an M4-001 prerequisite, and is not formal instructor approval.
 
@@ -22,7 +34,7 @@ The exact accepted M3 release is outside Git, available at the owner-specified l
 
 PR #5 / RSK-010 is integrated. Use [checkpoint-history operations](../../docs/05-operations/CHECKPOINT_HISTORY.md) and [migration evidence](../evidence/RSK-010-checkpoint-history-migration-20261023.md); the archive is lossless and append-only, grows linearly, verifies its manifest/segments/logical digest/source backup, and is not crash-atomic across multiple file replacements. Preserve all records and follow the roll-forward/recovery boundary.
 
-Canonical state and backlog identify `M4-001` as the next task: it is authorized and `ready_to_start`, while the task remains `pending`, `active_milestone` and active task remain null, and G3 remains unapproved. The next executor may begin M4-001 without another Pre-M4 approval cycle; when implementation actually starts, transition the task and milestone to `in_progress`. Do not mark M4-01–M4-04 passed or G3 approved without their own evidence. The dated sections below preserve their original review-stage facts and are historical pointers, not current status.
+The paragraph above records the final Pre-M4 closeout state before M4 implementation. Its historical PR, O-01, and M3 release facts are retained for provenance; current M4 execution status is in the section at the top of this file.
 ## Pre-integration checkpoint migration and M4 entry audit — 2026-10-23 (historical)
 
 The following was accurate before the separately owner-approved PR #5 merge; current integration and M4 entry status are in the dated closure update above.
