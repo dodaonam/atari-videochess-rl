@@ -2460,7 +2460,7 @@
             "recorded_at_utc": "2026-10-27T12:20:30.237367Z",
             "exit_code": 0,
             "git_revision": "94220870c3abc9e8aa725db85fb0c6cebebdbb48",
-            "log_path": ".agents/evidence/logs/M4-release-verification-20261027.log"
+            "log_path": ".agents/evidence/logs/M4-release-verification-20261027.json"
           }
         }
       ],
