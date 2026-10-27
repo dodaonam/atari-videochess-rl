@@ -1,0 +1,105 @@
+{
+  "schema": "videochess-m4-postmerge-delivery/1.0",
+  "recorded_at_utc": "2026-10-27T17:12:48Z",
+  "repository": "dodaonam/atari-videochess-rl",
+  "pull_request": {
+    "number": 8,
+    "url": "https://github.com/dodaonam/atari-videochess-rl/pull/8",
+    "state": "MERGED",
+    "is_draft": false,
+    "base_branch": "initial-idea",
+    "head_sha": "1f8f7db986f613818c7f70770d08c2c3a460a1cb",
+    "merge_sha": "c0a284304d602817922772d08f0ff7904af7ae20",
+    "merged_at_utc": "2026-10-27T17:06:43Z",
+    "required_check": {
+      "workflow": "Repository preflight",
+      "name": "context",
+      "result": "SUCCESS",
+      "url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/40547210455/job/122340909781",
+      "scope_note": "Context/preflight check only; it is not the Python regression suite."
+    }
+  },
+  "clean_clone": {
+    "path_at_verification": "/tmp/atari-m4-postmerge-clean-c0a2843",
+    "branch": "initial-idea",
+    "head_sha": "c0a284304d602817922772d08f0ff7904af7ae20",
+    "initial_worktree_clean": true,
+    "final_worktree_clean": true
+  },
+  "checks": {
+    "agent_preflight": {
+      "command": "python3 scripts/agent_preflight.py --json",
+      "exit_code": 0,
+      "ok": true,
+      "errors": [],
+      "warnings": [
+        "ARTIFACT_MANIFEST_REQUIRED"
+      ],
+      "portable_manifest_matches": true
+    },
+    "checkpoint_archive": {
+      "command": "python3 scripts/migrate_checkpoint_history.py verify",
+      "exit_code": 0,
+      "status": "verified",
+      "record_count": 186,
+      "logical_sha256": "59ab0ad59f99aefc7ae5d336e03a9543bc7ee387fbd637b09dd476f7af3c8b71"
+    },
+    "m4_artifact_manifest": {
+      "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.model.cli verify-artifacts /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4",
+      "exit_code": 0,
+      "verified_files": 19,
+      "checkpoint": "pretrained-behavior-only.pt",
+      "checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+      "checkpoint_size_bytes": 1520046,
+      "input_schema": "videochess-model-input/1.0",
+      "model_schema": "videochess-behavior-scorer/1.0",
+      "parameter_count": 121897,
+      "manifest_sha256": "f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921"
+    },
+    "focused_tests": {
+      "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m4_model tests.test_m4_data tests.test_m4_training tests.test_m4_checkpoint tests.test_pre_m4_contracts tests.test_m2_simulator tests.test_m3_data -v",
+      "exit_code": 0,
+      "tests_passed": 124,
+      "duration_seconds": 45.583,
+      "log_path": ".agents/evidence/logs/M4-postmerge-clean-clone-focused-c0a2843-20261027.txt",
+      "log_sha256": "adda6f7b274e066894716e8f301ae839907d46f425ca5d1511df4ab65aadfd31"
+    },
+    "full_tests": {
+      "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "tests_passed": 313,
+      "duration_seconds": 99.379,
+      "log_path": ".agents/evidence/logs/M4-postmerge-clean-clone-full-c0a2843-20261027.txt",
+      "log_sha256": "08f9e57cd537c59c94067e662d9c46a70dd164eadc5e0f96563d1423d3d0d3f9"
+    }
+  },
+  "m4_acceptance": {
+    "technical_acceptance_report": ".agents/evidence/M4-final-acceptance-20261027.md",
+    "criteria": {
+      "M4-01": "PASS",
+      "M4-02": "PASS",
+      "M4-03": "PASS",
+      "M4-04": "PASS"
+    },
+    "implementation_acceptance_source_sha": "7b3c9074a2d932fec6d7732ee08e99b9de10a135",
+    "final_premerge_verification_sha": "df942b5ff88687e7a6f5cd242d5e82939833f7e6",
+    "postmerge_integration_sha": "c0a284304d602817922772d08f0ff7904af7ae20"
+  },
+  "canonical_end_state": {
+    "M4-001": "done",
+    "M4": "complete",
+    "G3": "unapproved",
+    "M5": "not_started_not_authorized"
+  },
+  "limitations": [
+    "Dataset and model artifacts remain outside Git at approved local artifact paths.",
+    "Preflight's ARTIFACT_MANIFEST_REQUIRED warning is expected for absent local artifact directories; the selected M4 artifact bundle passed independent manifest verification.",
+    "M4 behavior cloning does not establish Double DQN learning, Elo, or Atari performance."
+  ],
+  "evidence_logs": {
+    "integrity": {
+      "path": ".agents/evidence/logs/M4-postmerge-clean-clone-integrity-c0a2843-20261027.txt",
+      "sha256": "a59c089c8a4680d3045c6126f4a80ab47008c91eec1d50c98c652b239f560f97"
+    }
+  }
+}
