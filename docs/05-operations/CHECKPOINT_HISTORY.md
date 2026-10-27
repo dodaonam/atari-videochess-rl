@@ -1,6 +1,6 @@
 # Checkpoint History Archive and Recovery
 
-**Status:** Version 1 was integrated by PR #5 at `d9f0872c120fb2408343859c938257e3962f2e09`. On the PR #6 Pre-M4 candidate `7ba2a21d2436941c5a57bad41628738149a8ea1d`, a clean clone verified the archive and passed canonical preflight; post-merge verification remains pending. The archive is committed project state; it is not an ignored cache.
+**Status:** Version 1 was integrated by PR #5 at `d9f0872c120fb2408343859c938257e3962f2e09`. PR #6 completed Pre-M4 and merged into `initial-idea` at `89d085d1865d07b10660e82119488960f766d819`. A fresh clean clone of that exact commit verified the archive and passed canonical preflight; see the 2026-10-27 [final Pre-M4 closure evidence](../../.agents/evidence/PRE-M4-final-closure-20261027.md). The archive is committed project state; it is not an ignored cache.
 
 ## Storage contract
 
