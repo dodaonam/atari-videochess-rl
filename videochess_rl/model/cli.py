@@ -71,7 +71,7 @@ class ExperimentStop(RuntimeError):
 
 
 def _utc_now() -> str:
-    return datetime.now(timezone.utc).isoformat(timespec="microseconds")
+    return datetime.now(timezone.utc).isoformat(timespec="microseconds").replace("+00:00", "Z")
 
 
 def _json_write(path: Path, value: Any) -> None:
@@ -85,8 +85,8 @@ def _json_write(path: Path, value: Any) -> None:
     os.replace(temporary, path)
 
 
-def _event(root: Path, name: str, **fields: Any) -> None:
-    line = json.dumps({"at_utc": _utc_now(), "event": name, **fields}, sort_keys=True, allow_nan=False)
+def _event(root: Path, event_name: str, **fields: Any) -> None:
+    line = json.dumps({"at_utc": _utc_now(), "event": event_name, **fields}, sort_keys=True, allow_nan=False)
     with (root / "events.jsonl").open("a", encoding="utf-8") as stream:
         stream.write(line + "\n")
         stream.flush()

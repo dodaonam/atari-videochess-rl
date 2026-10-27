@@ -21,7 +21,7 @@ from videochess_rl.model.training import (
     fit_seed,
     run_overfit_gate,
 )
-from videochess_rl.model.cli import RUN_SCHEMA, _prior_m4_runs, _prior_seed_time_usage
+from videochess_rl.model.cli import RUN_SCHEMA, _event, _prior_m4_runs, _prior_seed_time_usage
 
 
 class M4TrainingTests(unittest.TestCase):
@@ -154,6 +154,16 @@ class M4TrainingTests(unittest.TestCase):
             self.assertEqual(sum(run["_execution_elapsed_seconds"] for run in prior), 42.0)
             self.assertEqual(seed_usage[20261022], 28.0)
             self.assertEqual(seed_usage[20261023], 10.0)
+
+    def test_stage_event_records_stage_name_and_details(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            _event(root, "stage", name="reverify_release_and_load_features", seed=20261022)
+            event = json.loads((root / "events.jsonl").read_text(encoding="utf-8"))
+            self.assertEqual(event["event"], "stage")
+            self.assertEqual(event["name"], "reverify_release_and_load_features")
+            self.assertEqual(event["seed"], 20261022)
+            self.assertTrue(event["at_utc"].endswith("Z"))
 
     def test_early_stop_keeps_earlier_epoch_when_validation_ties(self) -> None:
         train, validation = self.examples()
