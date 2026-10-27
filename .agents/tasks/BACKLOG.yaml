@@ -2726,11 +2726,25 @@
             "git_revision": "7b3c9074a2d932fec6d7732ee08e99b9de10a135",
             "log_path": ".agents/evidence/logs/M4-final-m3-verification-20261027.txt"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M4-premerge-delivery-verification-20261027.md",
+          "detail": "Exact PR-head clean-clone premerge verification, including archive/artifact integrity, focused/full regression, clean worktree, and GitHub context check result.",
+          "result": "Overall result: PASS — exact PR head f17933b12ce5cbc0b1b8bb9b0be71961caab6d37 passed clean-clone preflight, archive verification, artifact verification, 124 focused tests, and 313 full regression tests; the GitHub context check succeeded. PR merge remains pending.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-27T16:57:48Z",
+            "recorded_at_utc": "2026-10-27T16:58:51Z",
+            "exit_code": null,
+            "git_revision": "f17933b12ce5cbc0b1b8bb9b0be71961caab6d37",
+            "log_path": ".agents/evidence/M4-premerge-delivery-verification-20261027.md"
+          }
         }
       ],
-      "next_action": "Complete the already-authorized PR #8 integration workflow: verify the exact pushed PR head from a clean clone, merge only if repository protections permit, then record and independently verify the actual initial-idea integration commit. M4 technical acceptance is complete; do not start or authorize M5.",
+      "next_action": "Re-check CI and repository protections on the final pushed evidence head, remove draft status when eligible, and complete the authorized PR #8 merge if permitted. Then record and independently verify the actual initial-idea integration commit. M4 technical acceptance is complete; do not start or authorize M5.",
       "plan_ref": ".agents/plans/M04-supervised-pretraining.md"
     }
   ],
-  "updated_at_utc": "2026-10-27T16:49:43Z"
+  "updated_at_utc": "2026-10-27T16:58:51Z"
 }

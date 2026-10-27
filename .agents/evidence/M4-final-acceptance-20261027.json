@@ -112,11 +112,25 @@
     "additional_engine_free_simulator_seconds": 12.219823896997696,
     "aggregate_cap_seconds": 10800,
     "checkpoint_bytes": 1520046,
+    "conservative_remaining_seconds_range": [
+      7321.499152119999,
+      7339.499152119999
+    ],
+    "conservative_total_seconds_including_uncaptured_retry_range": [
+      3460.500847880001,
+      3478.500847880001
+    ],
     "feature_payload_bytes": 26648765,
+    "final_post_run_m3_verification_seconds": 110.0,
     "peak_rss_bytes": 628350976,
     "r4_elapsed_including_prior_verification_seconds": 3234.2810239830033,
-    "remaining_seconds": 7553.499152119999,
-    "total_recorded_seconds": 3246.500847880001
+    "remaining_seconds": 7443.499152119999,
+    "total_recorded_seconds": 3356.500847880001,
+    "uncaptured_m3_verification_retry_seconds_range": [
+      104.0,
+      122.0
+    ],
+    "uncaptured_retry_is_acceptance_evidence": false
   },
   "schema": "videochess-m4-final-acceptance/1.0",
   "simulator_engine_free_confirmation": {
@@ -265,5 +279,5 @@
     "started_at_utc": "2026-10-27T16:00:40.648769Z",
     "weight_decay": 0.0001
   },
-  "updated_at_utc": "2026-10-27T16:49:43Z"
+  "updated_at_utc": "2026-10-27T16:58:22Z"
 }
