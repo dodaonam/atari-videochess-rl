@@ -2,9 +2,9 @@
 
 - **Plan ID:** M04
 - **Milestone:** M4 — supervised pretraining, within the sequence owned by `docs/02-management/EXECUTION_PLAN.md`
-- **Plan status:** `in_progress`; BLK-002 was resolved by the dated PM-approved M4-02 sampling amendment. The revised sanity gate and remaining M4 execution are not yet accepted.
+- **Plan status:** `in_progress`; BLK-002 was resolved by the dated PM-approved M4-02 sampling amendment. The revised M4-02 sanity gate passed and is recorded in `.agents/evidence/M4-02-revised-sanity-pass-20261027.md`; three-seed training and M4-03/M4-04 remain in progress.
 - **Authorization:** The direct M4-001 execution authorization recorded in `.agents/evidence/M4-001-execution-authorization-20261027.md` remains active. The PM protocol amendment is `.agents/evidence/M4-02-protocol-amendment-20261027.md`; the O-01 supersession remains in `.agents/evidence/M4-001-authorization-conditional-20261023.md`.
-- **Canonical task:** `M4-001` in `.agents/tasks/BACKLOG.yaml` is `in_progress`. The original lexical-128 sanity run reached 126/128 and failed; it remains immutable historical evidence. The PM amendment changes only selection to the first 128 distinct complete effective inputs in ascending train `sample_id` order. The revised gate must pass before full training. No final test evaluation, simulator benchmark, or accepted pretrained checkpoint is yet claimed.
+- **Canonical task:** `M4-001` in `.agents/tasks/BACKLOG.yaml` is `in_progress`. The original lexical-128 sanity run reached 126/128 and failed; it remains immutable historical evidence. The PM amendment changes only selection to the first 128 distinct complete effective inputs in ascending train `sample_id` order. The revised gate passed at 140 updates; the authorized three-seed training is now running. No final test evaluation, simulator benchmark, or accepted pretrained checkpoint is yet claimed.
 - **Dependency:** `M3-001` complete; accepted M3 release identity and split contracts are recorded in `.agents/evidence/M3-acceptance-20261021.md` and `.agents/evidence/M3-final-closure-record-20261021.json`.
 - **Plan and protocol:** [MODEL_DESIGN.md](../../docs/03-technical/MODEL_DESIGN.md), [TRAINING_PROTOCOL.md](../../docs/04-research/TRAINING_PROTOCOL.md), and accepted [ADR-0003](../../docs/02-management/decisions/ADR-0003-pretraining-model-interface.md).
 - **Acceptance:** `M4-01` through `M4-04` in `docs/06-quality/ACCEPTANCE_CRITERIA.md`.
@@ -20,7 +20,7 @@ In scope under the direct authorization; the canonical task/milestone is now `in
 
 1. Implement the versioned model input/action contract and the accepted shared board/history/candidate scorer.
 2. Verify model shape, finite logits, gradients, deterministic legal-action masking, and checkpoint round-trip (`M4-01`).
-3. Demonstrate the revised 128-example overfit sanity check before full training (`M4-02`). The original lexical-ID attempt failed at 500 updates and remains preserved. The dated PM amendment selects the first 128 train examples with pairwise-distinct complete effective model inputs, independent of labels, while preserving the seed, model, optimizer, update cap, and numeric thresholds. Do not start full training until this revised gate passes.
+3. Demonstrate the revised 128-example overfit sanity check before full training (`M4-02`). The original lexical-ID attempt failed at 500 updates and remains preserved. The dated PM amendment selects the first 128 train examples with pairwise-distinct complete effective model inputs, independent of labels, while preserving the seed, model, optimizer, update cap, and numeric thresholds. This revised gate passed and the run proceeds to full training.
 4. Train the behavior baseline on the M3 train partition, select using validation only, preserve the test set for one final report, and keep Stockfish absent from inference (`M4-03`, `M4-04`).
 5. Store model/run artifacts outside Git with a manifest that identifies source revision, configuration, seeds, data release and split IDs, dependency versions, metrics, and checkpoint hashes.
 

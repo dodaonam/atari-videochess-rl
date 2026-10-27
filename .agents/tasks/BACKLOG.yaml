@@ -2586,11 +2586,25 @@
             "git_revision": "edd9dc90bb53447ea2216a359697a2575fb1dc1e",
             "log_path": ".agents/evidence/M4-02-protocol-amendment-20261027.md"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M4-02-revised-sanity-pass-20261027.md",
+          "detail": "Revised train-only, label-independent, pairwise-distinct effective-input selection and 128-example overfit gate evidence; original failed run remains historical FAIL.",
+          "result": "M4-02 sanity gate PASS: fresh seed 20261022 weights, 140/500 updates, CE 0.0385448446, legal top-1 127/128 (99.21875%), top-3 127/128, MRR 0.994140625. Full M4 training and other acceptance criteria remain in_progress.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-27T15:32:37.348772Z",
+            "recorded_at_utc": "2026-10-27T15:47:42Z",
+            "exit_code": null,
+            "git_revision": "7988af28f768c203c9cc7e2794785c99df588645",
+            "log_path": ".agents/evidence/M4-02-revised-sanity-pass-20261027.md"
+          }
         }
       ],
-      "next_action": "Execute M4-02 protocol revision M4-02-distinct-effective-inputs/1.0 with 128 pairwise-distinct complete train inputs. Preserve the failed original run; start full training only after the new gate passes.",
+      "next_action": "Complete authorized training on seeds 20261022, 20261023, and 20261024 with validation-only checkpoint selection; then freeze and perform the single test evaluation and prescribed simulator benchmark.",
       "plan_ref": ".agents/plans/M04-supervised-pretraining.md"
     }
   ],
-  "updated_at_utc": "2026-10-27T15:06:58Z"
+  "updated_at_utc": "2026-10-27T15:47:42Z"
 }
