@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-f3971464-20261027T170449398137Z -->
+<!-- checkpoint-id: cp-c0a28430-20261027T171548566887Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -20,9 +20,9 @@ M4-01 through M4-04 passed on source revision `7b3c9074a2d932fec6d7732ee08e99b9d
 
 The exact M3 release and all M4 model/run artifacts remain outside Git at their owner-approved local artifact paths. The M4 report records their paths and integrity identities. Do not regenerate, upload, or redistribute the M3 release. The M4 checkpoint contains behavior logits, not Q-values. ADR-0003 remains Accepted. O-01 is closed internally; no instructor approval is claimed. G3 remains unapproved. M5/M6 have not started, and this M4 authorization does not authorize M5.
 
-PR #8 (<https://github.com/dodaonam/atari-videochess-rl/pull/8>) carries the completed M4 implementation and evidence to `initial-idea`. Final clean-clone verification passed at code/evidence head `df942b5ff88687e7a6f5cd242d5e82939833f7e6`: 124 focused tests, 313 full tests, preflight, archive verification, artifact verification, and the GitHub context check; exact logs are in `.agents/evidence/M4-premerge-delivery-verification-20261027.md`. Later PR commits only retain this verification and refresh its state checkpoint; they do not change M4 source or test code. Recheck the live head, checks, and protection rules, remove draft status when eligible, and complete the authorized merge if permitted. Then verify the actual integration commit and record the delivery closeout. Do not enable auto-merge or bypass branch protections.
+PR #8 (<https://github.com/dodaonam/atari-videochess-rl/pull/8>) is merged into `initial-idea` at `c0a284304d602817922772d08f0ff7904af7ae20`. A fresh clean clone of that exact commit passed preflight (zero errors; expected external-artifact warning), archive verification (186 records; logical SHA-256 `59ab0ad59f99aefc7ae5d336e03a9543bc7ee387fbd637b09dd476f7af3c8b71`), verification of all 19 M4 artifact files, 124 focused tests, and 313 full regression tests. The GitHub `context` check succeeded on final PR head `1f8f7db986f613818c7f70770d08c2c3a460a1cb`; exact post-merge logs are listed in `.agents/evidence/M4-postmerge-delivery-verification-20261027.md`. M4 implementation and technical acceptance are complete; do not start or authorize M5. G3 remains unapproved.
 
-After delivery closeout, canonical state should have no active M4 task, `M4-001` done, `engineering.active_milestone: null`, `next_milestone: M5`, `next_milestone_status: pending_user_approval`, and `start_authorized: false`. No M5 task is active; a separate authorization is required before any M5 implementation. Preserve the append-only checkpoint archive and run `python3 scripts/migrate_checkpoint_history.py verify` plus `python3 scripts/agent_preflight.py` when state changes.
+Canonical state records no active milestone or task, `M4-001` done, `next_milestone: M5`, `next_milestone_status: pending_user_approval`, and `start_authorized: false`. No M5 task is active; separate direct authorization and prerequisite review are required before any M5 implementation. G3 remains unapproved. Preserve the append-only checkpoint archive and run `python3 scripts/migrate_checkpoint_history.py verify` plus `python3 scripts/agent_preflight.py` when state changes.
 
 ## M3 closeout and Pre-M4 pointers (historical)
 

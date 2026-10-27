@@ -97,7 +97,7 @@
         {
           "kind": "file",
           "path": "docs/01-foundation/REQUIREMENTS.md",
-          "detail": "G0 approval, open O-01–O-08 approvals, and resolved G1 governance decisions.",
+          "detail": "G0 approval, open O-01\u2013O-08 approvals, and resolved G1 governance decisions.",
           "provenance": {
             "status": "historical_unverified",
             "executed_at_utc": null,
@@ -167,7 +167,7 @@
         {
           "kind": "file",
           "path": "docs/06-quality/ACCEPTANCE_CRITERIA.md",
-          "detail": "G0/G1 and M0–M7 acceptance criteria.",
+          "detail": "G0/G1 and M0\u2013M7 acceptance criteria.",
           "provenance": {
             "status": "historical_unverified",
             "executed_at_utc": null,
@@ -1405,7 +1405,7 @@
         {
           "kind": "file",
           "path": ".agents/evidence/M1-G2-final-verification-20261016.md",
-          "detail": "Final M1-01–M1-06 verdicts, genuine ALE terminal/reward replay, exact stop reasons, resource accounting, and conditional G2 decision.",
+          "detail": "Final M1-01\u2013M1-06 verdicts, genuine ALE terminal/reward replay, exact stop reasons, resource accounting, and conditional G2 decision.",
           "result": "M1-01 through M1-06 PASS; M1-001 complete; BLK-001 resolved; G2 approved; M2 remains pending explicit authorization.",
           "provenance": {
             "status": "verified",
@@ -1750,7 +1750,7 @@
         {
           "kind": "file",
           "path": ".agents/evidence/M2-post-review-hardening-20261016.md",
-          "detail": "Consolidated F-01–F-08 and HC-01–HC-14 report with final 58-test focused, 180-test full-suite, benchmark, and context evidence.",
+          "detail": "Consolidated F-01\u2013F-08 and HC-01\u2013HC-14 report with final 58-test focused, 180-test full-suite, benchmark, and context evidence.",
           "provenance": {
             "status": "verified",
             "executed_at_utc": null,
@@ -2731,7 +2731,7 @@
           "kind": "file",
           "path": ".agents/evidence/M4-premerge-delivery-verification-20261027.md",
           "detail": "Exact PR-head clean-clone premerge verification, including archive/artifact integrity, focused/full regression, clean worktree, and GitHub context check result.",
-          "result": "Overall result: PASS — exact proposed PR head df942b5ff88687e7a6f5cd242d5e82939833f7e6 passed clean-clone preflight, archive verification, artifact verification, 124 focused tests, and 313 full regression tests; the GitHub context check succeeded. PR merge remains pending.",
+          "result": "Overall result: PASS \u2014 exact proposed PR head df942b5ff88687e7a6f5cd242d5e82939833f7e6 passed clean-clone preflight, archive verification, artifact verification, 124 focused tests, and 313 full regression tests; the GitHub context check succeeded. PR merge remains pending.",
           "provenance": {
             "status": "manual_verified",
             "executed_at_utc": "2026-10-27T17:02:57Z",
@@ -2740,11 +2740,25 @@
             "git_revision": "df942b5ff88687e7a6f5cd242d5e82939833f7e6",
             "log_path": ".agents/evidence/M4-premerge-delivery-verification-20261027.md"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M4-postmerge-delivery-verification-20261027.md",
+          "detail": "Post-merge verification of the actual PR #8 merge commit in a fresh clean clone, including CI identity, preflight, RSK-010 archive, M4 artifact integrity, focused/full regression, and clean worktree.",
+          "result": "PASS \u2014 M4 implementation PR #8 is merged into `initial-idea`, and the actual merge commit passed clean-clone verification.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-27T17:15:47Z",
+            "recorded_at_utc": "2026-10-27T17:15:47Z",
+            "exit_code": null,
+            "git_revision": "c0a284304d602817922772d08f0ff7904af7ae20",
+            "log_path": ".agents/evidence/M4-postmerge-delivery-verification-20261027.md"
+          }
         }
       ],
-      "next_action": "Remove PR #8 draft status, recheck its live head/checks/protection state, and complete the authorized merge if permitted. Then record and independently verify the actual initial-idea integration commit. M4 technical acceptance is complete; do not start or authorize M5.",
+      "next_action": "M4-001 and M4 are complete and integrated by PR #8; post-merge clean-clone verification is recorded. No M4 work remains. M5 is not active or authorized; G3 remains unapproved.",
       "plan_ref": ".agents/plans/M04-supervised-pretraining.md"
     }
   ],
-  "updated_at_utc": "2026-10-27T17:03:47Z"
+  "updated_at_utc": "2026-10-27T17:15:47Z"
 }
