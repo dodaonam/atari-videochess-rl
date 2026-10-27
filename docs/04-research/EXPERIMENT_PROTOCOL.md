@@ -1,6 +1,6 @@
 # Experiment and Evaluation Protocol
 
-**Status (2026-10-27):** Cross-milestone experiment-identity guidance. This document does not choose a final architecture or grant broad milestone approval. M4-001 is separately directly authorized and in progress under `.agents/evidence/M4-001-execution-authorization-20261027.md`; this authorization covers only the bounded behavior-cloning task. G3 remains unapproved, and ADR-0003 owns the accepted M4/M5 architecture.
+**Status (2026-10-27):** Cross-milestone experiment-identity guidance. This document does not choose a final architecture or grant broad milestone approval. The directly authorized bounded M4-001 task has passed M4-01 through M4-04 technical acceptance; PR #8 integration and post-merge verification remain pending. G3 remains unapproved, and ADR-0003 owns the accepted M4/M5 architecture.
 **Owners:** This file defines experiment identity, comparisons, and metric separation. RL-first feasibility and M5 update requirements are defined in [RL_FIRST_ALIGNMENT.md](RL_FIRST_ALIGNMENT.md); dataset and teacher meanings are defined in [DATASET_SPEC.md](DATASET_SPEC.md) and [STOCKFISH_TEACHER.md](STOCKFISH_TEACHER.md).
 
 ## 1. Experiment identity

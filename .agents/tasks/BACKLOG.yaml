@@ -2300,7 +2300,7 @@
       "id": "M4-001",
       "title": "Implement and verify the bounded supervised behavior baseline",
       "milestone": "M4",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "M3-001"
       ],
@@ -2614,11 +2614,123 @@
             "git_revision": "7988af28f768c203c9cc7e2794785c99df588645",
             "log_path": ".agents/evidence/M4-run-r3-checkpoint-load-failure-20261027.md"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M4-final-acceptance-20261027.md",
+          "detail": "Final technical acceptance record for the PM-amended M4-02 gate, bounded three-seed behavior cloning, frozen test, engine-free inference, simulator benchmark, artifact identities, and stated limitations.",
+          "result": "M4-01, M4-02, M4-03, and M4-04 **PASS**",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-27T16:39:38Z",
+            "recorded_at_utc": "2026-10-27T16:40:07.470916Z",
+            "exit_code": null,
+            "git_revision": "7b3c9074a2d932fec6d7732ee08e99b9de10a135",
+            "log_path": ".agents/evidence/M4-final-acceptance-20261027.md"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M4-final-acceptance-20261027.json",
+          "detail": "Machine-readable M4 acceptance and artifact identity record; explicitly distinguishes pre-merge technical acceptance from integration.",
+          "result": "\"technical_acceptance\": \"PASS\"",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-27T16:39:38Z",
+            "recorded_at_utc": "2026-10-27T16:40:07.470916Z",
+            "exit_code": null,
+            "git_revision": "7b3c9074a2d932fec6d7732ee08e99b9de10a135",
+            "log_path": ".agents/evidence/M4-final-acceptance-20261027.json"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.model.cli run --release-dir /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6 --artifact-root /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4 --run-id m4-behavior-20261027-r4",
+          "result": "PASS: run completed with 19 verified artifacts; aggregate usage 3234.281 seconds including prior attempts; peak RSS 628350976 bytes.",
+          "detail": "The exact accepted M3 release was reverified and tensorized; revised M4-02 passed, all three seeds completed, validation-only selection froze seed 20261024/epoch 11, and the CLI finished test/inference/profile/simulator stages.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T16:22:19.931137Z",
+            "recorded_at_utc": "2026-10-27T16:40:07.470916Z",
+            "exit_code": 0,
+            "git_revision": "7b3c9074a2d932fec6d7732ee08e99b9de10a135",
+            "log_path": ".agents/evidence/logs/M4-run-r4-completion-20261027.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m4_model tests.test_m4_data tests.test_m4_training tests.test_m4_checkpoint tests.test_pre_m4_contracts tests.test_m2_simulator tests.test_m3_data -v",
+          "result": "Ran 124 tests in 45.983s; OK.",
+          "detail": "Focused M4, M2/M3, and Pre-M4 contract suite on corrected source revision; pinned project .venv used because uv was unavailable.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T16:27:04.935488Z",
+            "recorded_at_utc": "2026-10-27T16:40:07.470916Z",
+            "exit_code": 0,
+            "git_revision": "7b3c9074a2d932fec6d7732ee08e99b9de10a135",
+            "log_path": ".agents/evidence/logs/M4-final-focused-7b3c907-20261027-evidence.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 313 tests in 98.058s; OK.",
+          "detail": "Full Python unittest regression suite on corrected source revision; configured Stockfish was available only for the existing UCI readiness smoke test.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T16:28:48.063083Z",
+            "recorded_at_utc": "2026-10-27T16:40:07.470916Z",
+            "exit_code": 0,
+            "git_revision": "7b3c9074a2d932fec6d7732ee08e99b9de10a135",
+            "log_path": ".agents/evidence/logs/M4-final-full-suite-7b3c907-20261027-evidence.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PATH=/usr/bin:/bin PYTHONPATH=/tmp/atari-m4-work /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -",
+          "result": "PASS: 40 games completed; Stockfish unavailable; chess.engine not loaded.",
+          "detail": "Independent same-checkpoint confirmation of the full opponent/seed/color schedule with Stockfish absent from PATH and engine module absent; 40/40 games, zero truncations/failures.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T16:30:31.414645Z",
+            "recorded_at_utc": "2026-10-27T16:40:07.470916Z",
+            "exit_code": 0,
+            "git_revision": "7b3c9074a2d932fec6d7732ee08e99b9de10a135",
+            "log_path": ".agents/evidence/logs/M4-engine-free-simulator-20261027.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.model.cli verify-artifacts /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4",
+          "result": "PASS: 19 run artifact files verified; checkpoint SHA-256 724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4; parameter count 121897.",
+          "detail": "Independent post-run artifact/checkpoint manifest verification.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T16:39:18.804519Z",
+            "recorded_at_utc": "2026-10-27T16:40:44.341229Z",
+            "exit_code": 0,
+            "git_revision": "7b3c9074a2d932fec6d7732ee08e99b9de10a135",
+            "log_path": ".agents/evidence/logs/M4-final-artifact-verification-20261027.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.data.cli verify --release /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+          "result": "PASS: accepted release f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890; manifest SHA-256 be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12; 1,000 games and 19,268 positions verified.",
+          "detail": "Fresh read-only release verification after M4 training; no data files were modified.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-27T16:49:12Z",
+            "recorded_at_utc": "2026-10-27T16:49:43Z",
+            "exit_code": 0,
+            "git_revision": "7b3c9074a2d932fec6d7732ee08e99b9de10a135",
+            "log_path": ".agents/evidence/logs/M4-final-m3-verification-20261027.txt"
+          }
         }
       ],
-      "next_action": "Verify and commit the safe checkpoint-version metadata fix, then rerun the full authorized M4 pipeline with prior r3 runtime and per-seed use charged. Do not inspect test results before freezing the validation-selected checkpoint.",
+      "next_action": "Complete the already-authorized PR #8 integration workflow: verify the exact pushed PR head from a clean clone, merge only if repository protections permit, then record and independently verify the actual initial-idea integration commit. M4 technical acceptance is complete; do not start or authorize M5.",
       "plan_ref": ".agents/plans/M04-supervised-pretraining.md"
     }
   ],
-  "updated_at_utc": "2026-10-27T15:54:52Z"
+  "updated_at_utc": "2026-10-27T16:49:43Z"
 }

@@ -1,7 +1,17 @@
 # Reproducibility and Artifact Lifecycle
 
-**Status (2026-10-27):** M3 was accepted and merged on 2026-10-21. Its exact source-backed release is outside Git and was independently reverified read-only during the 2026-10-27 Pre-M4 closure; raw files remain outside this checkout. M4-001 is in progress under direct owner authorization. The original M4 run CLI reverified and tensorized the exact release without changing its files; the original lexical-128 gate failed at 126/128 due to conflicting labels on identical model inputs, and that failure remains preserved. The dated PM amendment changes only deterministic sample selection to 128 distinct complete effective train inputs; the revised gate must pass before full training. Full training, checkpoint creation, and M4 acceptance are not yet claimed. See the [PM amendment](../../.agents/evidence/M4-02-protocol-amendment-20261027.md) and [original blocker evidence](../../.agents/evidence/M4-02-sanity-gate-blocker-20261027.md). O-01 is closed for internal execution; no instructor approval is claimed.
+**Status (2026-10-27):** M3 was accepted and merged on 2026-10-21. Its exact source-backed release is outside Git and remains available only in the owner-specified local sibling worktree. M4-001 completed with M4-01 through M4-04 acceptance; the original lexical-128 gate failure is preserved and the dated PM amendment and revised PASS are recorded in the [M4 acceptance report](../../.agents/evidence/M4-final-acceptance-20261027.md). The validation-selected behavior-only checkpoint and immutable run artifacts remain outside Git and are independently hash-verifiable at the documented local artifact path. O-01 is closed for internal execution; no instructor approval is claimed. M5 has not started or been authorized by this M4 mission.
 **Canonical ownership:** [PROJECT_STATE.yaml](../../.agents/state/PROJECT_STATE.yaml) owns current phase and checkpoint; [BACKLOG.yaml](../../.agents/tasks/BACKLOG.yaml) owns task evidence; per-run manifests own experiment config and metrics.
+
+## M4 accepted behavior-only artifact
+
+The accepted run is `m4-behavior-20261027-r4`, produced from source revision `7b3c9074a2d932fec6d7732ee08e99b9de10a135`. The selected artifact is outside Git at `/home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4/`. Its selected checkpoint `pretrained-behavior-only.pt` has SHA-256 `724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4`; `artifact_manifest.json` has SHA-256 `f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921`. Verify it from a checkout with the locked environment using:
+
+```bash
+PYTHONPATH=. python -m videochess_rl.model.cli verify-artifacts /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4
+```
+
+Validation NLL selected seed `20261024`, epoch 11. The checkpoint is behavior-cloning initialization with logits, not a Q-network. The exact M3 release used the accepted release ID, manifest digest, and split digest documented in the [M4 report](../../.agents/evidence/M4-final-acceptance-20261027.md); it remains unmodified and outside Git. A separate 40-game simulator confirmation ran with `PATH=/usr/bin:/bin`, no Stockfish executable available, and no `chess.engine` module loaded. Its JSON and digest remain in the sibling artifact store; the M4 report records their location and hashes. A clean Git clone cannot recreate the local dataset/model artifacts, so those exact files must be available before artifact verification or transfer work.
 
 ## 1. Local development environment
 

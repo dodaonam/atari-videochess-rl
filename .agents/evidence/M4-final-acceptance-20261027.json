@@ -1,0 +1,269 @@
+{
+  "acceptance": {
+    "M4-01": "PASS",
+    "M4-02": "PASS",
+    "M4-03": "PASS",
+    "M4-04": "PASS"
+  },
+  "checkpoint": {
+    "artifact_files_verified": 19,
+    "artifact_manifest_sha256": "f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921",
+    "input_schema": "videochess-model-input/1.0",
+    "manifest_metadata_sha256": "63615d8d0ed27900fdf86d3f3084ca95cd562f9ec2f9a7e94bca4b0f6301e0c8",
+    "model_schema": "videochess-behavior-scorer/1.0",
+    "parameter_count": 121897,
+    "path": "/home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4/pretrained-behavior-only.pt",
+    "role": "behavior-only pretrained scorer; not a Q-network",
+    "run_manifest_sha256": "531f591e28ebdc257ab43945118793accd9e131ba636341ee90e3fc6ff545abe",
+    "sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+    "size_bytes": 1520046
+  },
+  "dataset": {
+    "cross_split_board_signature_overlap_after_purge": 0,
+    "game_counts": {
+      "test": 103,
+      "train": 795,
+      "validation": 102
+    },
+    "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+    "position_counts": {
+      "test": 2057,
+      "train": 15196,
+      "validation": 2015
+    },
+    "post_load_release_files_unchanged": true,
+    "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+    "release_path": "/home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+    "split_assignment_sha256": "84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e",
+    "target": "played_move_uci only",
+    "teacher_scores_or_targets_used": false
+  },
+  "engine_free_inference": {
+    "chess_engine_module_loaded": false,
+    "exit_code": 0,
+    "path": "/usr/bin:/bin",
+    "selected_legal_uci": "g1f3",
+    "stockfish_path": null
+  },
+  "final_readonly_m3_verification": {
+    "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.data.cli verify --release /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+    "ended_at_utc": "2026-10-27T16:49:12Z",
+    "executed_at_utc": "2026-10-27T16:47:22Z",
+    "exit_code": 0,
+    "games": 1000,
+    "log_path": ".agents/evidence/logs/M4-final-m3-verification-20261027.txt",
+    "log_sha256": "bdfa1044ae47195b075e30491474ef66bed70359ff30065a8f5b8dae5b067127",
+    "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+    "positions": 19268,
+    "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+    "status": "PASS"
+  },
+  "governance": {
+    "g0_g1_g2": "approved",
+    "g3": "unapproved",
+    "instructor_approval_claimed": false,
+    "m5_authorized_by_this_mission": false,
+    "m5_started": false,
+    "o01": "closed for internal project planning and execution authorization"
+  },
+  "integration_status_at_recording": "PR #8 pre-merge; post-merge verification not yet claimed",
+  "limitations": [
+    "the curated third-party dataset license remains unstated; data and model artifacts remain local and outside Git",
+    "behavior cloning predicts historical PGN moves and does not establish best moves, Elo, chess strength, or reinforcement learning",
+    "simulator results are not ALE/Atari performance",
+    "M5 Double DQN and M6 Atari integration were not started or authorized by this M4 task",
+    "O-01 is closed for internal planning; no instructor approval is claimed"
+  ],
+  "m4_02": {
+    "all_selected_inputs_pairwise_distinct": true,
+    "cross_entropy": 0.03854484462305363,
+    "cross_entropy_max": 0.05,
+    "effective_input_identities_sha256": "3064625c698e9eb06f83fe5e8c9e080ad86af821338ee5cc1fda6531dfc6432c",
+    "fresh_initialization": true,
+    "gate_file": "sanity_gate.json",
+    "gate_json_sha256": "ef169dea94d0407783aabcb446802e77c61d19b064a5f37b4e00fbb8b3a4c338",
+    "label_independent_selection": true,
+    "legal_top1_accuracy": 0.9921875,
+    "legal_top1_accuracy_min": 0.99,
+    "legal_top1_correct": 127,
+    "max_updates": 500,
+    "mrr": 0.994140625,
+    "run_id": "m4-behavior-20261027-r4",
+    "sample_count": 128,
+    "sample_id_sha256": "489a9fca5b9358b40c0ffc4ed649458124ba8803278ea710a4ad5fa556430e53",
+    "seed": 20261022,
+    "selection_file": "sanity_selection.json",
+    "selection_json_sha256": "1ab7aa5b893f901ea84da13b3cb6ccfab49a910e088d405593b6a896ad5f21c5",
+    "status": "PASS",
+    "top3_accuracy": 0.9921875,
+    "train_only": true,
+    "updates": 140
+  },
+  "protocol_amendment": {
+    "changed_only": "deterministic train-only sample selection to pairwise-distinct complete effective model inputs in ascending sample_id order",
+    "evidence_path": ".agents/evidence/M4-02-protocol-amendment-20261027.md",
+    "original_failed_run_preserved": true,
+    "original_run_id": "m4-behavior-20261027-r2",
+    "original_sample_id_sha256": "cc7c30b0fb6c676ad4bf8b8e9b535af2c8a14a9b302949ac2c375defe4541634",
+    "protocol_revision": "M4-02-distinct-effective-inputs/1.0"
+  },
+  "recorded_at_utc": "2026-10-27T16:40:07.470916Z",
+  "resource_accounting": {
+    "additional_engine_free_simulator_seconds": 12.219823896997696,
+    "aggregate_cap_seconds": 10800,
+    "checkpoint_bytes": 1520046,
+    "feature_payload_bytes": 26648765,
+    "peak_rss_bytes": 628350976,
+    "r4_elapsed_including_prior_verification_seconds": 3234.2810239830033,
+    "remaining_seconds": 7553.499152119999,
+    "total_recorded_seconds": 3246.500847880001
+  },
+  "schema": "videochess-m4-final-acceptance/1.0",
+  "simulator_engine_free_confirmation": {
+    "artifact_path": "/home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-simulator-engine-free-20261027.json",
+    "artifact_sha256": "861b30ecb4819a238764f9a0374920d14c5ceb98824089d2cf3c5fa29f9f1ab9",
+    "elapsed_seconds": 12.219823896997696,
+    "engine_module_loaded": false,
+    "failures": 0,
+    "games": 40,
+    "latency_seconds_p50": 0.004853975999139948,
+    "latency_seconds_p95": 0.012220265198266132,
+    "status": "complete",
+    "stockfish_available": false,
+    "truncated_games": 0,
+    "wdl": {
+      "random_legal_black": [
+        10,
+        0,
+        0
+      ],
+      "random_legal_white": [
+        6,
+        4,
+        0
+      ],
+      "simple_material_heuristic_black": [
+        1,
+        9,
+        0
+      ],
+      "simple_material_heuristic_white": [
+        5,
+        4,
+        1
+      ]
+    }
+  },
+  "source_revision": "7b3c9074a2d932fec6d7732ee08e99b9de10a135",
+  "task": {
+    "accepted_criteria": [
+      "M4-01",
+      "M4-02",
+      "M4-03",
+      "M4-04"
+    ],
+    "id": "M4-001",
+    "milestone": "M4",
+    "status": "done"
+  },
+  "technical_acceptance": "PASS",
+  "test_evaluation": {
+    "candidate_evaluations": 61419,
+    "candidate_evaluations_per_second": 37317.674301906074,
+    "checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+    "duration_seconds": 1.6465044209980988,
+    "evaluated_once": true,
+    "examples": 2057,
+    "examples_per_second": 1249.816116169602,
+    "mrr": 0.4643745951202453,
+    "nll": 2.4232315562290974,
+    "selection_used_test_metrics": false,
+    "top1": 0.2989790957705396,
+    "top3": 0.5439961108410306,
+    "top5": 0.6558094312105007,
+    "uniform_legal_baseline": {
+      "mrr": 0.17205569298974063,
+      "nll": 3.2400176067284963,
+      "top1": 0.05915704116393095,
+      "top3": 0.163372922227816,
+      "top5": 0.24105339574025125
+    }
+  },
+  "tests": {
+    "environment": "pinned repository .venv, Python 3.12.3, PyTorch 2.14.1+cpu; uv unavailable; Stockfish available for the existing UCI readiness test only",
+    "focused": {
+      "command": "python -m unittest tests.test_m4_model tests.test_m4_data tests.test_m4_training tests.test_m4_checkpoint tests.test_pre_m4_contracts tests.test_m2_simulator tests.test_m3_data -v",
+      "count": 124,
+      "exit_code": 0,
+      "log_path": ".agents/evidence/logs/M4-final-focused-7b3c907-20261027.log",
+      "log_sha256": "1d187521424d9c460ceba58b4acbb127d38785f4cecc50a9f509a9eeac2b4a6c",
+      "source_revision": "7b3c9074a2d932fec6d7732ee08e99b9de10a135"
+    },
+    "full": {
+      "command": "python -m unittest discover -s tests -v",
+      "count": 313,
+      "exit_code": 0,
+      "log_path": ".agents/evidence/logs/M4-final-full-suite-7b3c907-20261027.log",
+      "log_sha256": "7cac9ac00fcff79420df462d0490f1fea8bf4196f32fce2e891457a8c9b08d85",
+      "source_revision": "7b3c9074a2d932fec6d7732ee08e99b9de10a135"
+    }
+  },
+  "training": {
+    "batch_size": 64,
+    "checkpoint_selection": "minimum validation NLL across seeds; ties select lower seed; test metrics not inspected",
+    "device": "local CPU",
+    "early_stop_patience": 4,
+    "ended_at_utc": "2026-10-27T16:22:19.931137Z",
+    "exit_code": 0,
+    "gradient_clip_norm": 1.0,
+    "learning_rate": 0.0003,
+    "maximum_epochs": 20,
+    "optimizer": "AdamW",
+    "run_id": "m4-behavior-20261027-r4",
+    "seeds": [
+      {
+        "best_epoch": 10,
+        "cumulative_seed_seconds": 974.5170033150025,
+        "duration_seconds": 367.2459030530008,
+        "epochs_run": 14,
+        "optimizer_updates": 3332,
+        "seed": 20261022,
+        "stop_reason": "validation_patience",
+        "train_nll_at_best": 2.279766112407279,
+        "validation_nll": 2.425930260628157,
+        "validation_top1": 0.29578163771712157
+      },
+      {
+        "best_epoch": 9,
+        "cumulative_seed_seconds": 687.1757150580015,
+        "duration_seconds": 342.9781296500005,
+        "epochs_run": 13,
+        "optimizer_updates": 3094,
+        "seed": 20261023,
+        "stop_reason": "validation_patience",
+        "train_nll_at_best": 2.3250935631633136,
+        "validation_nll": 2.445335060126488,
+        "validation_top1": 0.2987593052109181
+      },
+      {
+        "best_epoch": 11,
+        "cumulative_seed_seconds": 794.9830903500006,
+        "duration_seconds": 396.496628339999,
+        "epochs_run": 15,
+        "optimizer_updates": 3570,
+        "seed": 20261024,
+        "stop_reason": "validation_patience",
+        "train_nll_at_best": 2.275339074411177,
+        "validation_nll": 2.4127401237590953,
+        "validation_top1": 0.29578163771712157
+      }
+    ],
+    "selected_epoch": 11,
+    "selected_seed": 20261024,
+    "selected_validation_nll": 2.4127401237590953,
+    "source_revision": "7b3c9074a2d932fec6d7732ee08e99b9de10a135",
+    "started_at_utc": "2026-10-27T16:00:40.648769Z",
+    "weight_decay": 0.0001
+  },
+  "updated_at_utc": "2026-10-27T16:49:43Z"
+}
