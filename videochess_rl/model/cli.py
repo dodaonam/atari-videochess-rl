@@ -58,7 +58,8 @@ RUN_SCHEMA = "videochess-m4-run/1.0"
 RELEASE_PATH = Path(
     "/home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6"
 )
-PREVIOUS_RELEASE_EVIDENCE = Path(".agents/evidence/logs/M4-release-verification-20261027.json")
+HISTORICAL_RELEASE_EVIDENCE = Path(".agents/evidence/logs/M4-release-verification-20261027.json")
+CURRENT_RELEASE_EVIDENCE = Path(".agents/evidence/logs/M4-release-reverification-20261027-r1.json")
 AGGREGATE_LIMIT_SECONDS = 3 * 60 * 60
 SEED_LIMIT_SECONDS = 45 * 60
 PROCESS_RSS_LIMIT_BYTES = 2 * 1024**3
@@ -135,36 +136,57 @@ def _environment() -> dict[str, Any]:
 
 
 def _previous_verification(repo: Path) -> dict[str, Any]:
-    path = repo / PREVIOUS_RELEASE_EVIDENCE
-    value = json.loads(path.read_text(encoding="utf-8"))
-    if (
-        value.get("exit_code") != 0
-        or value.get("unchanged") is not True
-        or value.get("files_before") != value.get("files_after")
-    ):
-        raise ValueError("prior release verification evidence is missing, failed, or reports mutation")
-    stdout = json.loads(value.get("stdout", "{}"))
-    if (
-        stdout.get("release_id") != EXPECTED_RELEASE_ID
-        or stdout.get("manifest_sha256") != EXPECTED_MANIFEST_SHA256
-        or stdout.get("games") != 1_000
-        or stdout.get("positions") != sum(EXPECTED_COUNTS.values())
-    ):
-        raise ValueError("prior release evidence does not identify the accepted M3 release")
-    if len(value.get("files_before", {})) != 9:
-        raise ValueError("prior release evidence does not inventory all nine accepted files")
+    checks = []
+    for relative in (HISTORICAL_RELEASE_EVIDENCE, CURRENT_RELEASE_EVIDENCE):
+        path = repo / relative
+        value = json.loads(path.read_text(encoding="utf-8"))
+        if (
+            value.get("exit_code") != 0
+            or value.get("unchanged") is not True
+            or value.get("files_before") != value.get("files_after")
+        ):
+            raise ValueError(f"release verification evidence is missing, failed, or reports mutation: {relative}")
+        stdout = json.loads(value.get("stdout", "{}"))
+        if (
+            stdout.get("release_id") != EXPECTED_RELEASE_ID
+            or stdout.get("manifest_sha256") != EXPECTED_MANIFEST_SHA256
+            or stdout.get("games") != 1_000
+            or stdout.get("positions") != sum(EXPECTED_COUNTS.values())
+        ):
+            raise ValueError(f"release evidence does not identify the accepted M3 release: {relative}")
+        if value.get("schema") == "videochess-m4-release-verification/1.0" and (
+            value.get("release_id") != EXPECTED_RELEASE_ID
+            or value.get("manifest_sha256") != EXPECTED_MANIFEST_SHA256
+            or value.get("split_assignment_sha256") != EXPECTED_SPLIT_SHA256
+        ):
+            raise ValueError(f"release evidence has incorrect explicit release identities: {relative}")
+        if len(value.get("files_before", {})) != 9:
+            raise ValueError(f"release evidence does not inventory all nine accepted files: {relative}")
+        duration = float(value["duration_seconds"])
+        if not math.isfinite(duration) or duration < 0:
+            raise ValueError(f"release verification has invalid duration: {relative}")
+        checks.append({
+            "evidence_path": relative.as_posix(),
+            "revision": value.get("revision"),
+            "command": value.get("command"),
+            "started_at_utc": value.get("started_at_utc"),
+            "ended_at_utc": value.get("ended_at_utc"),
+            "duration_seconds": duration,
+            "exit_code": 0,
+            "unchanged": True,
+            "files_before": value.get("files_before"),
+            "files_after": value.get("files_after"),
+            "stdout_summary": stdout,
+        })
     return {
-        "evidence_path": PREVIOUS_RELEASE_EVIDENCE.as_posix(),
-        "revision": value.get("revision"),
-        "command": value.get("command"),
-        "started_at_utc": value.get("started_at_utc"),
-        "ended_at_utc": value.get("ended_at_utc"),
-        "duration_seconds": float(value["duration_seconds"]),
+        "evidence_paths": [item["evidence_path"] for item in checks],
+        "checks": checks,
+        "duration_seconds": sum(item["duration_seconds"] for item in checks),
+        "release_id": EXPECTED_RELEASE_ID,
+        "manifest_sha256": EXPECTED_MANIFEST_SHA256,
+        "split_assignment_sha256": EXPECTED_SPLIT_SHA256,
         "exit_code": 0,
-        "unchanged": True,
-        "files_before": value.get("files_before"),
-        "files_after": value.get("files_after"),
-        "stdout_summary": stdout,
+        "unchanged": all(item["unchanged"] for item in checks),
     }
 
 

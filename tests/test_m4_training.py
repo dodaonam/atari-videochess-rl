@@ -26,11 +26,14 @@ from videochess_rl.model.training import (
     run_overfit_gate,
 )
 from videochess_rl.model.cli import (
+    CURRENT_RELEASE_EVIDENCE,
+    HISTORICAL_RELEASE_EVIDENCE,
     RUN_SCHEMA,
     _event,
     _prior_diagnostic_seconds,
     _prior_m4_runs,
     _prior_seed_time_usage,
+    _previous_verification,
     verify_artifacts,
 )
 from videochess_rl.model.checkpoint import write_artifact_manifest
@@ -190,6 +193,54 @@ class M4TrainingTests(unittest.TestCase):
             path.write_text(json.dumps(evidence), encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "accepted immutable M3 release"):
                 _prior_diagnostic_seconds(root)
+
+    def test_prior_release_verification_budget_charges_historical_and_current_checks(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            files = {
+                f"file-{index}.json": {"sha256": f"{index:064x}", "size_bytes": index}
+                for index in range(9)
+            }
+            stdout = json.dumps({
+                "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+                "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+                "games": 1_000,
+                "positions": 19_268,
+            })
+            for relative, duration in (
+                (HISTORICAL_RELEASE_EVIDENCE, 111.186),
+                (CURRENT_RELEASE_EVIDENCE, 96.5),
+            ):
+                path = root / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                value = {
+                    "schema": "videochess-m4-release-verification/1.0" if relative == CURRENT_RELEASE_EVIDENCE else "historical",
+                    "revision": "a" * 40,
+                    "duration_seconds": duration,
+                    "exit_code": 0,
+                    "unchanged": True,
+                    "files_before": files,
+                    "files_after": files,
+                    "stdout": stdout,
+                }
+                if relative == CURRENT_RELEASE_EVIDENCE:
+                    value.update({
+                        "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+                        "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+                        "split_assignment_sha256": "84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e",
+                    })
+                path.write_text(json.dumps(value), encoding="utf-8")
+            result = _previous_verification(root)
+            self.assertEqual(result["duration_seconds"], 207.686)
+            self.assertEqual(len(result["checks"]), 2)
+            self.assertTrue(result["unchanged"])
+
+            current_path = root / CURRENT_RELEASE_EVIDENCE
+            current = json.loads(current_path.read_text(encoding="utf-8"))
+            current["split_assignment_sha256"] = "0" * 64
+            current_path.write_text(json.dumps(current), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "incorrect explicit release identities"):
+                _previous_verification(root)
 
     def test_artifact_verifier_checks_persisted_m4_sanity_selection(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
