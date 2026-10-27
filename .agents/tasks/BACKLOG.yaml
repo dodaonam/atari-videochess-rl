@@ -2600,11 +2600,25 @@
             "git_revision": "7988af28f768c203c9cc7e2794785c99df588645",
             "log_path": ".agents/evidence/M4-02-revised-sanity-pass-20261027.md"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M4-run-r3-checkpoint-load-failure-20261027.md",
+          "detail": "Immutable report of r3 completing all three training seeds and validation selection before the safe checkpoint reload rejected a serialized TorchVersion metadata object.",
+          "result": "M4 run m4-behavior-20261027-r3 completed the three bounded training seeds and validation selection, then failed safe checkpoint reload because runtime metadata contained torch.torch_version.TorchVersion; exit 1. M4-02 remains PASS. M4-03 and M4-04 remain incomplete.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-27T15:51:10.084361Z",
+            "recorded_at_utc": "2026-10-27T15:54:52Z",
+            "exit_code": null,
+            "git_revision": "7988af28f768c203c9cc7e2794785c99df588645",
+            "log_path": ".agents/evidence/M4-run-r3-checkpoint-load-failure-20261027.md"
+          }
         }
       ],
-      "next_action": "Complete authorized training on seeds 20261022, 20261023, and 20261024 with validation-only checkpoint selection; then freeze and perform the single test evaluation and prescribed simulator benchmark.",
+      "next_action": "Verify and commit the safe checkpoint-version metadata fix, then rerun the full authorized M4 pipeline with prior r3 runtime and per-seed use charged. Do not inspect test results before freezing the validation-selected checkpoint.",
       "plan_ref": ".agents/plans/M04-supervised-pretraining.md"
     }
   ],
-  "updated_at_utc": "2026-10-27T15:47:42Z"
+  "updated_at_utc": "2026-10-27T15:54:52Z"
 }

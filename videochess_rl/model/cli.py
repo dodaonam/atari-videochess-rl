@@ -121,7 +121,9 @@ def _environment() -> dict[str, Any]:
     return {
         "python": sys.version,
         "python_executable": sys.executable,
-        "torch": torch.__version__,
+        # torch.__version__ is a TorchVersion str subclass. JSON accepts it,
+        # but weights_only checkpoint loading rejects the serialized class.
+        "torch": str(torch.__version__),
         "numpy": np.__version__,
         "python_chess": chess.__version__,
         "platform": platform.platform(),

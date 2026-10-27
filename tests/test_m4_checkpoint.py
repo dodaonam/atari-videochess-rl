@@ -22,6 +22,7 @@ from videochess_rl.model.checkpoint import (
 )
 from videochess_rl.model.features import INPUT_SCHEMA
 from videochess_rl.model.network import MODEL_SCHEMA, BehaviorScorer, initialize_q_head
+from videochess_rl.model.cli import _environment
 
 REPO = Path(__file__).resolve().parents[1]
 
@@ -37,6 +38,7 @@ class M4CheckpointTests(unittest.TestCase):
             "dataset_release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
             "split_assignment_sha256": "84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e",
             "label_semantics": "played_move_uci behavior target",
+            "runtime_environment": _environment(),
         }
         path = root / "pretrained.pt"
         optimizer = torch.optim.AdamW(model.parameters(), lr=3e-4)
@@ -60,6 +62,16 @@ class M4CheckpointTests(unittest.TestCase):
                 self.assertTrue(torch.equal(tensor.cpu(), loaded.state_dict()[key].cpu()), key)
             with self.assertRaisesRegex(ValueError, "release identity"):
                 load_checkpoint(path, expected_release_id="wrong")
+
+    def test_runtime_version_metadata_uses_safe_builtin_strings(self) -> None:
+        environment = _environment()
+        self.assertIs(type(environment["torch"]), str)
+        self.assertIs(type(environment["numpy"]), str)
+        with tempfile.TemporaryDirectory() as temporary:
+            path, _, _ = self._save(Path(temporary))
+            loaded, bundle = load_checkpoint(path)
+            self.assertEqual(bundle["metadata"]["runtime_environment"]["torch"], str(torch.__version__))
+            self.assertEqual(loaded.trainable_parameter_count, 121_897)
 
     def test_corrupt_missing_and_unlisted_artifacts_are_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
