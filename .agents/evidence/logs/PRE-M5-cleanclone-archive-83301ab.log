@@ -1,0 +1,19 @@
+check: archive
+revision: 83301abf6b85441d4fa63eab1376127066c4cdb1
+start_utc: 2026-10-28T04:01:22.968341+00:00
+end_utc: 2026-10-28T04:01:23.285987+00:00
+command: python3 scripts/migrate_checkpoint_history.py verify
+exit_code: 0
+worktree_before: clean
+
+--- stdout ---
+{
+  "first_id": "cp-c410173e-20261014T154924847559Z",
+  "last_id": "cp-90617877-20261028T035925953289Z",
+  "logical_sha256": "f7d54e552d953dfcffd9b7fcbf9548cda003f9b1a6b092165237d048bc81a9b5",
+  "record_count": 190,
+  "status": "verified",
+  "storage": "archive"
+}
+
+--- stderr ---

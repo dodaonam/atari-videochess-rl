@@ -1,0 +1,14 @@
+check=stockfish_smoke
+revision=5f73b4e2752a03a9698bfe747d3fdd33de6c1255
+start_utc=2026-10-28T04:17:35.395845944Z
+end_utc=2026-10-28T04:17:35.918668383Z
+command=PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/share/stockfish:$PATH PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m0_smoke.M0EnvironmentSmokeTests.test_stockfish_answers_uci_readiness_without_searching -v
+exit_code=0
+
+--- output ---
+test_stockfish_answers_uci_readiness_without_searching (tests.test_m0_smoke.M0EnvironmentSmokeTests.test_stockfish_answers_uci_readiness_without_searching) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.465s
+
+OK

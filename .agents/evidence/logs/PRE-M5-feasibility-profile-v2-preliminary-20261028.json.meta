@@ -1,0 +1,7 @@
+classification=preliminary_diagnostic_not_final
+execution_revision=ffd924efe69746c192df56905eac34ccc689f106
+exit_code=0
+start_utc=null
+end_utc=null
+result=This initial v2 profile measured the 40-game workload and model path, but its replay probe reused 32 serialized byte objects while reporting 4096 references. The reported tracemalloc increment therefore does not measure a 4096-record allocation. Do not use the replay-memory result for acceptance; the corrected final profile constructs unique records and repeats a bounded 801-ply replay-like probe.
+source_artifacts=Accepted M3 release and M4 checkpoint were opened read-only; final inventory comparison passed.

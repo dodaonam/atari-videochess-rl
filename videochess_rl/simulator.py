@@ -169,6 +169,7 @@ class ChessSimulator:
         self,
         *,
         seed: int,
+        opponent_seed: int | None = None,
         agent_color: chess.Color = chess.WHITE,
         initial_board: chess.Board | None = None,
     ) -> Observation:
@@ -177,12 +178,20 @@ class ChessSimulator:
         Standard games start from the ordinary initial position. If the agent
         is Black, the opponent plays White's opening move during reset. A
         supplied test/analysis Board must already be at the agent's turn and
-        is copied with its complete move stack.
+        is copied with its complete move stack. ``opponent_seed`` optionally
+        separates the opponent RNG from the episode seed for paired
+        experiments; when omitted, the historical single-seed behavior is
+        preserved.
         """
         if not isinstance(agent_color, bool):
             raise ValueError("agent_color must be chess.WHITE or chess.BLACK")
         if isinstance(seed, bool) or not isinstance(seed, int):
             raise TypeError("seed must be an integer")
+        if opponent_seed is not None and (
+            isinstance(opponent_seed, bool) or not isinstance(opponent_seed, int)
+        ):
+            raise TypeError("opponent_seed must be an integer when supplied")
+        effective_opponent_seed = seed if opponent_seed is None else opponent_seed
 
         if initial_board is not None and not isinstance(initial_board, chess.Board):
             raise TypeError("initial_board must be a python-chess Board")
@@ -199,7 +208,7 @@ class ChessSimulator:
             raise ValueError("initial_board must be a live chess position")
 
         try:
-            self._reset_opponent_policy(seed)
+            self._reset_opponent_policy(effective_opponent_seed)
         except BaseException:
             # A failed episode reset may have changed policy-local state, so
             # the previously active simulator episode is no longer reusable.
@@ -208,7 +217,7 @@ class ChessSimulator:
             raise
         self._board = board
         self._agent_color = agent_color
-        self._rng = random.Random(seed)
+        self._rng = random.Random(effective_opponent_seed)
         self._episode_decisions = 0
         self._episode_start_ply = len(board.move_stack)
         self._ready = False

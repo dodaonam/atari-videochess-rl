@@ -1,0 +1,11 @@
+check=m5_contract
+revision=c19b141e3d2bc1440fd1a9afb89c12cfd1704d95
+start_utc=2026-10-28T07:19:04.167730+00:00
+end_utc=2026-10-28T07:19:04.238742+00:00
+duration_seconds=0.071012
+exit_code=0
+test_count=5
+command=python3 -m unittest tests.test_m5_contract_fixtures -v
+environment=Existing local pinned Python 3.12.3 CPU virtual environment where applicable; no package installation.
+result=PASS
+log_path=.agents/evidence/logs/PRE-M5-remediation-m5_contract-c19b141e.log

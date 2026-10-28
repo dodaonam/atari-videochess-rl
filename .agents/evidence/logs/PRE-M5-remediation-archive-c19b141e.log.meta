@@ -1,0 +1,11 @@
+check=archive
+revision=c19b141e3d2bc1440fd1a9afb89c12cfd1704d95
+start_utc=2026-10-28T07:19:04.161081+00:00
+end_utc=2026-10-28T07:19:04.633060+00:00
+duration_seconds=0.471979
+exit_code=0
+test_count=not_detected
+command=python3 scripts/migrate_checkpoint_history.py verify
+environment=Existing local pinned Python 3.12.3 CPU virtual environment where applicable; no package installation.
+result=PASS
+log_path=.agents/evidence/logs/PRE-M5-remediation-archive-c19b141e.log

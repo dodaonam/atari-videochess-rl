@@ -1,0 +1,15 @@
+{
+  "check": "final_clean_clone_full_suite",
+  "revision": "16bc420d90e2a0eec910208ebce5686c9717600d",
+  "start_utc": "2026-10-28T07:40:31.922334+00:00",
+  "end_utc": "2026-10-28T07:42:31.651324+00:00",
+  "duration_seconds": 119.729,
+  "exit_code": 0,
+  "test_count": 324,
+  "test_runner_duration_seconds": 117.879,
+  "command": "PYTHONPATH=. PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/share/stockfish:/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+  "environment": "Python 3.12.3 existing pinned project CPU venv; installed Stockfish path provided only for existing M0 UCI readiness test; no dependency installation",
+  "log_path": ".agents/evidence/logs/PRE-M5-final-cleanclone-16bc-full-suite.log",
+  "log_sha256": "418cbc946180aa34ab955db8c68c186799859314be1781a16142b2cbed38baec",
+  "result": "PASS"
+}

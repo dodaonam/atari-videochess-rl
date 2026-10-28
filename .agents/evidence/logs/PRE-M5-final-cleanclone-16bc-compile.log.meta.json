@@ -1,0 +1,12 @@
+{
+  "check": "compile",
+  "revision": "16bc420d90e2a0eec910208ebce5686c9717600d",
+  "start_utc": "2026-10-28T07:43:43.731731+00:00",
+  "end_utc": "2026-10-28T07:43:43.780033+00:00",
+  "duration_seconds": 0.048,
+  "exit_code": 0,
+  "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m py_compile scripts/profile_m5_feasibility_v2.py scripts/profile_m5_history_budget.py scripts/verify_m5_transfer.py tests/test_m5_contract_fixtures.py tests/test_m5_profile.py",
+  "log_path": ".agents/evidence/logs/PRE-M5-final-cleanclone-16bc-compile.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "result": "PASS"
+}

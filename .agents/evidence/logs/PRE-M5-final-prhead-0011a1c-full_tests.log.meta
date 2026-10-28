@@ -1,0 +1,9 @@
+check=full_tests
+revision=0011a1c07e047cedf9394d70b2413cea74ba1437
+start_utc=2026-10-28T05:22:12.689578Z
+end_utc=2026-10-28T05:25:22.237844Z
+exit_code=0
+test_count=319
+duration_seconds=187.65
+command=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v
+environment=Fresh clean GitHub clone; existing project Python 3.12.3 venv where applicable; no dependencies installed.

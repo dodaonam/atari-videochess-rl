@@ -1,0 +1,17 @@
+command: /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m5_contract_fixtures tests.test_m2_simulator.ChessSimulatorTests.test_seventyfive_move_rule_is_automatic_after_full_transition -v
+source_revision: 83301abf6b85441d4fa63eab1376127066c4cdb1
+start_utc: 2026-10-28T04:07:50.451053+00:00
+end_utc: 2026-10-28T04:07:50.559091+00:00
+exit_code: 0
+
+--- stdout ---
+
+--- stderr ---
+test_online_target_disagreement_uses_online_action_in_target_value (tests.test_m5_contract_fixtures.M5DoubleDqnFixtureTests.test_online_target_disagreement_uses_online_action_in_target_value) ... ok
+test_terminal_and_valid_truncation_masks_are_distinct (tests.test_m5_contract_fixtures.M5DoubleDqnFixtureTests.test_terminal_and_valid_truncation_masks_are_distinct) ... ok
+test_seventyfive_move_rule_is_automatic_after_full_transition (tests.test_m2_simulator.ChessSimulatorTests.test_seventyfive_move_rule_is_automatic_after_full_transition) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+OK

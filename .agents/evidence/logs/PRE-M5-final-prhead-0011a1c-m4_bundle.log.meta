@@ -1,0 +1,8 @@
+check=m4_bundle
+revision=0011a1c07e047cedf9394d70b2413cea74ba1437
+start_utc=2026-10-28T05:25:44.234523Z
+end_utc=2026-10-28T05:25:46.125980Z
+exit_code=0
+command=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.model.cli verify-artifacts /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4
+environment=Existing Python 3.12.3 project venv; PYTHONPATH=.; read-only external M4 artifact path.
+note=Output captured from fresh clean clone /tmp/atari-pre-m5-final-pr-10-0011a1c

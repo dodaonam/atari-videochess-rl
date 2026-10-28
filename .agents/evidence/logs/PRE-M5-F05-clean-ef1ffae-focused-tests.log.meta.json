@@ -1,0 +1,14 @@
+{
+  "check": "focused_m2_m3_m4_m5_contract_suite",
+  "command": "PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m4_model tests.test_m4_data tests.test_m4_training tests.test_m4_checkpoint tests.test_pre_m4_contracts tests.test_m2_simulator tests.test_m3_data tests.test_m5_contract_fixtures tests.test_m5_seeding -v",
+  "end_utc": "2026-10-28T09:04:59Z",
+  "environment": "Fresh clean clone; existing pinned Python 3.12.3 CPU venv; no dependency changes.",
+  "exit_code": 0,
+  "log_path": ".agents/evidence/logs/PRE-M5-F05-clean-ef1ffae-focused-tests.log",
+  "log_sha256": "6cdfa1c5c4d42ddff8f192e0d43e315a82cb9ea67097055eca43ffb62d11c104",
+  "result": "PASS",
+  "revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3",
+  "start_utc": "2026-10-28T09:03:48Z",
+  "test_count": 141,
+  "test_runner_duration_seconds": 69.214
+}

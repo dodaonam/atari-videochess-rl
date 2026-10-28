@@ -6,7 +6,7 @@ These instructions govern Codex work in this repository. Follow the user's curre
 
 The user approved G0 and G1 on 2026-10-14. G1 establishes persistent context and governance; its independent recovery acceptance is retained in `.agents/evidence/G1-10-recovery-verification.md`. G1 approval is a prerequisite for M0 or M1. Read the latest direct user instructions and `.agents/state/PROJECT_STATE.yaml` for live task scope and authorization; do not encode temporary task restrictions here.
 
-G1 scope includes context documents, state files, the G1 inventory decision record, and the two standard-library context scripts/tests. It excludes M0 setup, M1 ALE work, RL/ALE implementation, dependency installation, model training, Colab allocation, and unrelated P2 documents. Preserve the README and all existing user files. Do not commit, push, publish, or release without separate authorization.
+G1 scope includes context documents, state files, the G1 inventory decision record, and the two standard-library context scripts/tests. It excludes M0 setup, M1 ALE work, RL/ALE implementation, dependency installation, model training, Colab allocation, and unrelated P2 documents. Preserve the README and all existing user files. Do not commit, push, publish, or release without direct authorization for that action.
 
 The authorized G1 hardening scope covered the audit defects recorded by the user: checkpoint/dry-run safety, acceptance-ID discovery, hash-inventory reporting, evidence provenance, historical-baseline behavior, and cross-document ownership. G1-10 required a genuinely separate Codex session without prior conversation and is recorded as complete in the evidence file above. Consult canonical state/backlog for current status. Do not start M0/M1 unless a current user task authorizes them and canonical state permits it.
 
@@ -81,7 +81,9 @@ Context state uses JSON-compatible YAML 1.2 so Python's standard library can par
 - Do not install dependencies, alter system configuration, allocate Colab resources, incur costs, or upload data without separate authorization.
 - Do not expose credentials in chat, source, logs, or artifacts.
 - Do not edit the README merely to satisfy an inventory count.
-- Do not commit, push, publish, or release without separate authorization.
+- Do not commit, push, publish, or release without direct authorization for that action.
+- Follow [`PR_REVIEW_AND_INTEGRATION.md`](docs/02-management/PR_REVIEW_AND_INTEGRATION.md): Codex may implement, verify, and open an authorized PR but must not merge any PR, self-approve as PM, enable auto-merge, or push directly to `initial-idea`/`main`. PM independently reviews and decides; an authorized human/operator performs any merge after that decision. Passing CI or technical milestone completion is never merge authorization.
+- A new milestone requires its own direct authorization and a canonical state transition. Completion/readiness of one milestone does not automatically start or authorize the next milestone. Keep PM review, repository integration, milestone authorization, and governance-gate approval separate.
 
 ## 9. Blockers and completion reports
 

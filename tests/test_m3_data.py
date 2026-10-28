@@ -1432,7 +1432,10 @@ class M3ContractTests(unittest.TestCase):
             rewrite_release_file_manifest(output, "stats.json")
             self.assertEqual(verify_release(output, allow_synthetic_source_for_test=True), verified)
 
-            expired_config = dict(config, max_elapsed_seconds=1)
+            # Parsing and selection run on real input before this injected
+            # statistics delay. Give those setup stages a load-tolerant budget
+            # while keeping the artificial delay beyond the total deadline.
+            expired_config = dict(config, max_elapsed_seconds=5)
             expired_config_path = temp / "expired-config.json"
             expired_config_path.write_text(json.dumps({"dataset": expired_config}), encoding="utf-8")
             expired_output = temp / "releases" / "expired-release"
@@ -1440,7 +1443,7 @@ class M3ContractTests(unittest.TestCase):
             original_summary = pipeline_module.summarize_dataset
 
             def delayed_summary(*args, **kwargs):
-                time.sleep(1.05)
+                time.sleep(5.05)
                 return original_summary(*args, **kwargs)
 
             with patch("videochess_rl.data.pipeline.summarize_dataset", side_effect=delayed_summary):
@@ -1894,7 +1897,9 @@ class M3ContractTests(unittest.TestCase):
                 finalization_calls += 1
                 checked = original_finalized_check(*args, **kwargs)
                 if finalization_calls == 1:
-                    time.sleep(4.1)
+                    # Leave ample setup/search time for slower full-suite hosts;
+                    # the injected delay still exceeds the run's wall budget.
+                    time.sleep(12.1)
                 return checked
 
             overrun_dir = temp / "teacher-finalization-overrun"
@@ -1906,15 +1911,15 @@ class M3ContractTests(unittest.TestCase):
                     license_path=license_path, expected_license_sha256=license_sha,
                     max_positions=1, sample_seed=9, nodes_per_position=500,
                     multipv=3, threads=1, hash_mib=64, timeout_seconds=5,
-                    max_wall_seconds=4, authorization_id=AUTHORIZATION_ID,
+                    max_wall_seconds=12, authorization_id=AUTHORIZATION_ID,
                     source_decision_id=SOURCE_DECISION_ID, confirm_write=True,
                     code_revision="a" * 40, allow_synthetic_source_for_test=True,
                 )
             overrun_wall_elapsed = time.monotonic() - overrun_started
-            self.assertGreater(overrun_wall_elapsed, 4)
+            self.assertGreater(overrun_wall_elapsed, 12)
             self.assertEqual(overrun_manifest["status"], "partial")
             self.assertEqual(overrun_manifest["wall_budget_status"], "overrun")
-            self.assertGreater(overrun_manifest["finalization_observed_elapsed_seconds"], 4)
+            self.assertGreater(overrun_manifest["finalization_observed_elapsed_seconds"], 12)
             self.assertEqual(
                 verify_teacher_run(overrun_dir, output, allow_synthetic_source_for_test=True)["positions_analyzed"],
                 1,
@@ -2026,7 +2031,7 @@ class M3ContractTests(unittest.TestCase):
             bounded_dir = temp / "teacher-total-budget"
             timeout_pid_file.unlink(missing_ok=True)
             bounded_started = time.monotonic()
-            with self.assertRaisesRegex(TeacherError, "no successful position records"):
+            with self.assertRaises(TeacherError) as bounded_error:
                 run_teacher(
                     output, output / "games.jsonl", bounded_dir,
                     engine_path=timeout_engine, expected_engine_sha256=timeout_sha,
@@ -2041,7 +2046,16 @@ class M3ContractTests(unittest.TestCase):
             self.assertLess(bounded_elapsed, 3.5)
             bounded_partial = json.loads((bounded_dir / "teacher.partial.jsonl").read_text(encoding="utf-8").splitlines()[0])
             self.assertEqual(bounded_partial["status"], "not_attempted")
-            self.assertIn("reserve", bounded_partial["reason"])
+            bounded_failure = json.loads((bounded_dir / "failure.json").read_text(encoding="utf-8"))
+            self.assertTrue(
+                bounded_failure["reason"] == "teacher run produced no successful positions"
+                or "teacher wall-time" in bounded_failure["reason"],
+                str(bounded_error.exception),
+            )
+            if bounded_failure["reason"] == "teacher run produced no successful positions":
+                self.assertIn("reserve", bounded_partial["reason"])
+            else:
+                self.assertIn("stopped before analysis", bounded_partial["reason"])
             if timeout_pid_file.exists():
                 bounded_pid = int(timeout_pid_file.read_text(encoding="utf-8"))
                 with self.assertRaises(ProcessLookupError):

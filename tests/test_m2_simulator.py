@@ -89,6 +89,21 @@ class ResettablePolicy:
         return move
 
 
+class RngRecordingPolicy(FirstLegalPolicy):
+    policy_id = "test_rng_recording"
+
+    def __init__(self) -> None:
+        self.reset_seeds: list[int] = []
+        self.first_rng_states: list[object] = []
+
+    def reset_episode(self, *, seed: int) -> None:
+        self.reset_seeds.append(seed)
+
+    def choose_move(self, observation, legal_moves, rng):
+        self.first_rng_states.append(rng.getstate())
+        return super().choose_move(observation, legal_moves, rng)
+
+
 class MutableConfigPolicy(FirstLegalPolicy):
     policy_id = "test_mutable_config"
 
@@ -193,6 +208,31 @@ class ChessSimulatorTests(unittest.TestCase):
         self.assertEqual(observation.history_uci, ("e2e4",))
         self.assertEqual(simulator.episode_decisions, 0)
         self.assertEqual(simulator.episode_plies, 1)
+
+    def test_opponent_seed_can_be_separated_from_episode_seed(self) -> None:
+        policy = RngRecordingPolicy()
+        simulator = ChessSimulator(policy)
+
+        observation = simulator.reset(seed=101, opponent_seed=202, agent_color=chess.BLACK)
+
+        self.assertEqual(observation.agent_color, chess.BLACK)
+        self.assertEqual(policy.reset_seeds, [202])
+        self.assertEqual(policy.first_rng_states, [random.Random(202).getstate()])
+
+    def test_opponent_seed_defaults_to_historical_episode_seed(self) -> None:
+        policy = ResettablePolicy("e2e4")
+        simulator = ChessSimulator(policy)
+
+        simulator.reset(seed=303, agent_color=chess.BLACK)
+
+        self.assertEqual(policy.reset_seeds, [303])
+
+    def test_opponent_seed_requires_an_integer_without_mutating_episode(self) -> None:
+        before = self.simulator.observation
+        for invalid_seed in (True, "20261104", 3.5):
+            with self.subTest(seed=invalid_seed), self.assertRaises(TypeError):
+                self.simulator.reset(seed=404, opponent_seed=invalid_seed)  # type: ignore[arg-type]
+            self.assertEqual(self.simulator.observation, before)
 
     def test_opponent_failure_during_black_opening_leaves_no_partial_episode(self) -> None:
         simulator = ChessSimulator(RaisingPolicy())

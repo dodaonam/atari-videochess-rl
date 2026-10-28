@@ -1,0 +1,355 @@
+{
+  "schema": "videochess-m5-ddqn-config/1.2",
+  "protocol": "m5-ddqn-comparison/1.2",
+  "status": "proposed_not_authorized",
+  "algorithm": "independent-pytorch-double-dqn",
+  "model": {
+    "input_schema": "videochess-model-input/1.0",
+    "architecture_source": "ADR-0003 shared action-conditioned scorer",
+    "output_semantics": "q_estimate_trained_from_simulator_rewards",
+    "parameter_cap_exclusive": 250000,
+    "candidate_identity": "semantic_uci"
+  },
+  "environment": {
+    "id": "python_chess_m2_simulator",
+    "root": "standard_start_only",
+    "transition": "one_agent_action_plus_at_most_one_opponent_reply",
+    "max_agent_decisions_per_episode": 400,
+    "agent_colors": [
+      "white",
+      "black"
+    ],
+    "opponents": [
+      "random_legal",
+      "simple_material_heuristic"
+    ],
+    "opponent_mixture_probability": {
+      "random_legal": 0.5,
+      "simple_material_heuristic": 0.5
+    }
+  },
+  "reward": {
+    "agent_win": 1.0,
+    "agent_loss": -1.0,
+    "automatic_draw": 0.0,
+    "nonterminal": 0.0,
+    "shaping": "none",
+    "stockfish_targets_or_rewards": false
+  },
+  "double_dqn": {
+    "gamma": 0.99,
+    "replay_capacity": 4096,
+    "replay_warmup_transitions": 512,
+    "batch_size": 32,
+    "gradient_updates_per_agent_decisions": 0.25,
+    "optimizer": "AdamW",
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0001,
+    "loss": "Huber",
+    "gradient_clip_norm": 1.0,
+    "target_sync_interval_gradient_updates": 500,
+    "target_sync": "hard_copy",
+    "terminal_bootstrap": false,
+    "valid_time_limit_truncation_bootstrap": true,
+    "invalid_transition": "discard_and_record"
+  },
+  "exploration": {
+    "policy": "epsilon_greedy_over_sorted_legal_uci",
+    "epsilon_start": 1.0,
+    "epsilon_end": 0.05,
+    "linear_decay_agent_decisions": 7500,
+    "evaluation_epsilon": 0.0
+  },
+  "training": {
+    "paired_seeds": [
+      20261104,
+      20261105,
+      20261106
+    ],
+    "paired_streams": {
+      "derivation_schema": "videochess-m5-seed-derivation/1.0",
+      "shared_domains_within_pair": [
+        "episode_seed",
+        "opponent_rng",
+        "exploration_rng",
+        "replay_sampling_rng",
+        "q_head_initialization"
+      ],
+      "arm_specific_domains": {
+        "scratch_representation_initialization": "scratch arm only; warm representation is copied from verified M4"
+      },
+      "m4_representation_identity": "verified_m4_checkpoint_sha256",
+      "same_realized_transition_trajectories_claimed": false,
+      "run_id_used_in_seed_derivation": false,
+      "same_initial_domain_seeds_not_same_rng_draw_consumption": true
+    },
+    "pre_campaign_update_feasibility_probe": {
+      "required_before_paired_runs": true,
+      "replay_warmup_valid_transitions": 512,
+      "updates_on_disposable_model_copy": 5,
+      "batch_size": 32,
+      "history_source": "seeded_replay_sampled_from_verified_simulator_transitions",
+      "counts_toward_aggregate_wall_budget": true,
+      "compare_p95_run_projection_with_per_run_cap": true,
+      "if_projection_exceeds_cap": "perform_bounded_correctness_preserving_optimizations_within_existing_caps_then_repeat_probe; if_still_over_cap_stop_before_paired_campaign_and_request_pm_decision",
+      "does_not_claim_policy_training_or_evaluation": true,
+      "bounded_correctness_preserving_optimizations_authorized": true,
+      "optimization_authority_scope": "separately_authorized_m5_mission_only",
+      "allowed_optimization_classes": [
+        "batching",
+        "reduced_padding",
+        "candidate_tensor_construction",
+        "avoid_redundant_feature_reconstruction",
+        "replay_sampling_and_collation",
+        "safe_caching",
+        "tensor_layout_and_operations",
+        "cpu_thread_configuration_benchmarking"
+      ],
+      "required_regression_areas": [
+        "double_dqn_update_semantics",
+        "transition_and_reward_semantics",
+        "legal_action_masking",
+        "reproducibility",
+        "model_initialization",
+        "checkpoint_recovery"
+      ],
+      "hard_caps_may_change": false
+    },
+    "agent_decisions_per_arm_seed": 10000,
+    "per_run_wall_minutes_hard_cap": 45,
+    "aggregate_campaign_wall_hours_hard_cap": 6,
+    "peak_rss_bytes_hard_cap": 2147483648,
+    "artifact_directory_bytes_hard_cap": 1073741824,
+    "device": "cpu",
+    "torch_threads": {
+      "intra_op": 1,
+      "inter_op": 1
+    },
+    "evaluation_snapshot_decision_interval": 2500,
+    "final_evaluation_snapshot_valid_decisions": 10000,
+    "evaluation_snapshot_schema": "videochess-ddqn-evaluation-snapshot/1.0",
+    "artifact_names": {
+      "evaluation_snapshot": "{run_id}__{arm}__seed-{training_seed}__attempt-{attempt_index:04d}__stage-{stage}__decisions-{valid_decisions:06d}__eval-snapshot-v1.pt",
+      "resumable_checkpoint": "{run_id}__{arm}__seed-{training_seed}__attempt-{attempt_index:04d}__episodes-{completed_episodes:05d}__decisions-{valid_decisions:06d}__resume-v1.pt",
+      "attempt_segment": "{run_id}__{arm}__seed-{training_seed}__attempt-{attempt_index:04d}__incomplete.json"
+    },
+    "initialization_snapshot": {
+      "schema": "videochess-ddqn-evaluation-snapshot/1.0",
+      "stage": "pre_rl",
+      "capture_decision": 0,
+      "capture_after_target_copy": true,
+      "capture_before_first_gradient_update": true,
+      "required_per_ddqn_arm_seed": true,
+      "identity_fields": [
+        "experiment_id",
+        "pair_id",
+        "run_id",
+        "arm",
+        "training_seed",
+        "attempt_index"
+      ],
+      "seed_derivation_schema": "videochess-m5-seed-derivation/1.0"
+    },
+    "evaluation_snapshot_capture_order": [
+      "complete_and_validate_simulator_step",
+      "insert_valid_transition_into_replay",
+      "perform_due_gradient_update_if_warmed_up",
+      "perform_due_target_sync",
+      "capture_frozen_online_policy_snapshot"
+    ],
+    "periodic_snapshot_continues_live_episode": true,
+    "only_final_decision_snapshot_stops_training": true,
+    "evaluation_snapshot_is_resumable": false,
+    "resumable_checkpoint_schema": "videochess-ddqn-checkpoint/1.0",
+    "resumable_checkpoint_boundary": "completed_episode_only",
+    "resumable_checkpoint_trigger": "every_completed_episode_after_updates_and_sync",
+    "decision_cap_boundary": "commit_the_valid_10000th_transition_then_snapshot_and_stop_without_synthetic_episode_flags",
+    "mid_episode_interruption": "record_attempt_segment_and_incomplete_episode_then_resume_from_last_verified_episode_checkpoint; restore committed counters and RNG, replay discarded work, count wall-time cumulatively",
+    "seed_schedule_schema": "videochess-m5-seed-derivation/1.0"
+  },
+  "evaluation": {
+    "seeds": [
+      20261130,
+      20261131,
+      20261132,
+      20261133,
+      20261134,
+      20261135,
+      20261136,
+      20261137,
+      20261138,
+      20261139
+    ],
+    "both_agent_colors": true,
+    "games_per_opponent_per_color_per_seed": 1,
+    "games_per_policy_checkpoint": 40,
+    "policy_checkpoint_groups": {
+      "m4_behavior_only": {
+        "count": 1,
+        "training_seed": null,
+        "stage": "frozen_m4_behavior_only"
+      },
+      "warm_double_dqn": {
+        "training_seeds": [
+          20261104,
+          20261105,
+          20261106
+        ],
+        "stages": [
+          "pre_rl",
+          "post_rl"
+        ]
+      },
+      "scratch_double_dqn": {
+        "training_seeds": [
+          20261104,
+          20261105,
+          20261106
+        ],
+        "stages": [
+          "pre_rl",
+          "post_rl"
+        ]
+      },
+      "random_legal_baseline": {
+        "count": 1,
+        "training_seed": null,
+        "stage": "fixed_baseline"
+      },
+      "simple_heuristic_baseline": {
+        "count": 1,
+        "training_seed": null,
+        "stage": "fixed_baseline"
+      }
+    },
+    "policy_checkpoint_count": 15,
+    "planned_total_games": 600,
+    "policy_checkpoint_identity_fields": [
+      "arm",
+      "training_seed",
+      "stage"
+    ],
+    "max_agent_decisions_per_game": 400,
+    "max_wall_minutes_per_checkpoint": 20,
+    "aggregate_wall_hours_hard_cap": 3,
+    "evaluation_pairing": {
+      "scenario_key": [
+        "evaluation_seed",
+        "opponent_id",
+        "agent_color"
+      ],
+      "warm_scratch_comparison_key": [
+        "training_seed",
+        "stage",
+        "evaluation_seed",
+        "opponent_id",
+        "agent_color"
+      ],
+      "before_after_comparison_key": [
+        "arm",
+        "training_seed",
+        "evaluation_seed",
+        "opponent_id",
+        "agent_color"
+      ],
+      "same_realized_trajectory_claimed": false,
+      "independent_observations_assumed": false,
+      "report_paired_outcome_differences": true,
+      "paired_uncertainty_method": "crossed_cluster_bootstrap_over_training_seed_and_evaluation_seed",
+      "training_seed_clusters": 3,
+      "evaluation_seed_clusters": 10,
+      "scenario_rows_per_evaluation_seed": 4,
+      "few_training_cluster_caveat_required": true,
+      "game_identity_fields": [
+        "protocol_config_sha256",
+        "policy_checkpoint_id",
+        "evaluation_seed",
+        "opponent_id",
+        "opponent_config_sha256",
+        "agent_color"
+      ]
+    },
+    "evaluation_budget_accounting": {
+      "per_checkpoint_cap_minutes": 20,
+      "sum_of_individual_caps_minutes": 300,
+      "aggregate_cap_minutes": 180,
+      "minimum_average_budget_seconds_per_game_at_aggregate_cap": 18,
+      "maximum_average_seconds_per_game_under_per_checkpoint_cap": 30,
+      "partial_schedule_policy": "preserve_completed_rows_and_mark_comparisons_incomplete; no replacement or selective exclusion"
+    },
+    "model_selection_uses_test_outcomes": false,
+    "interim_results_can_replace_frozen_schedule": false,
+    "statistics": [
+      "raw_wdl_counts",
+      "per_opponent_and_color_counts",
+      "paired_policy_difference",
+      "paired_bootstrap_or_permutation_interval",
+      "wilson_95_percent_interval_with_dependence_caveat"
+    ]
+  },
+  "resource_scope": {
+    "external_gpu_or_cloud": false,
+    "paid_compute": false,
+    "external_upload": false,
+    "m5_authorization": "separate_direct_authorization_required",
+    "g3_approval": "separate_governance_state_not_inferred"
+  },
+  "seed_derivation": {
+    "schema": "videochess-m5-seed-derivation/1.0",
+    "implementation": "videochess_rl.m5_seeding",
+    "run_identity_implementation": "videochess_rl.m5_seeding.run_identity",
+    "experiment_id": "m5-double-dqn-paired-v1",
+    "pair_identity": {
+      "algorithm": "SHA-256",
+      "encoding": "U32BE(experiment_id_ascii_length) || experiment_id_ascii || U64BE(training_seed)",
+      "output": "lowercase_64_character_hex",
+      "prefix_hex": "766964656f63686573732d6d352d706169722d69642f763100"
+    },
+    "stream_seed": {
+      "algorithm": "SHA-256",
+      "encoding": "U64BE(master_seed) || pair_id_raw_32_bytes || U32BE(domain_ascii_length) || domain_ascii || U64BE(index)",
+      "output": "(domain_code << 60) | (first_8_digest_bytes_big_endian AND 0x0fffffffffffffff)",
+      "accepted_integer_range": "0..2^63-1",
+      "prefix_hex": "766964656f63686573732d6d352d736565642f763100",
+      "domain_code_source": "zero-based index in rng_domains; reserves disjoint high-bit ranges for every configured domain"
+    },
+    "rng_domains": [
+      "episode_seed",
+      "opponent_rng",
+      "exploration_rng",
+      "replay_sampling_rng",
+      "q_head_initialization",
+      "scratch_representation_initialization"
+    ],
+    "indexed_episode_domains": [
+      "episode_seed",
+      "opponent_rng"
+    ],
+    "episode_index": "zero_based; at episode start equals completed_episodes",
+    "paired_domains": [
+      "episode_seed",
+      "opponent_rng",
+      "exploration_rng",
+      "replay_sampling_rng",
+      "q_head_initialization"
+    ],
+    "arm_specific_domains": {
+      "scratch_representation_initialization": "scratch arm only; warm representation is copied from verified M4"
+    },
+    "run_identity_format": "m5-{pair_id}__{arm}__attempt-{attempt_index:04d}",
+    "run_id_used_in_seed_derivation": false,
+    "rng_state_resume": "restore saved exploration and replay RNG states at a verified episode boundary; derive next episode and opponent seeds from unchanged zero-based completed_episodes; do not reseed from run_id",
+    "trajectory_claim": "matching stream seeds do not imply identical actions, random draw consumption, states, replay contents, or realized trajectories",
+    "pair_id_independent_of_run_arm_and_attempt": true,
+    "rng_domain_codes": {
+      "episode_seed": 0,
+      "opponent_rng": 1,
+      "exploration_rng": 2,
+      "replay_sampling_rng": 3,
+      "q_head_initialization": 4,
+      "scratch_representation_initialization": 5
+    },
+    "master_seed_source": "training_seed",
+    "attempt_index_contract": "zero_based_monotonic_per_pair_and_arm; never reused; increment on every retried execution"
+  }
+}

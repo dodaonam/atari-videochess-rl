@@ -1,0 +1,11 @@
+check=context_recovery
+revision=c19b141e3d2bc1440fd1a9afb89c12cfd1704d95
+start_utc=2026-10-28T07:24:55.830784+00:00
+end_utc=2026-10-28T07:25:38.504542+00:00
+duration_seconds=42.673758
+exit_code=0
+test_count=79
+command=python3 -m unittest tests.test_agent_context tests.test_checkpoint_history -v
+environment=Existing local pinned Python 3.12.3 CPU virtual environment where applicable; no package installation.
+result=PASS
+log_path=.agents/evidence/logs/PRE-M5-remediation-context_recovery-c19b141e.log

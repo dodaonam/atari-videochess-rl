@@ -1,0 +1,28 @@
+test_synthetic_end_to_end_release_is_reconstructible_and_hashed (tests.test_m3_data.M3ContractTests.test_synthetic_end_to_end_release_is_reconstructible_and_hashed) ... Exception parsing pv from info: 'depth 1 seldepth 1 multipv 1 score cp 32 nodes 95 wdl 500 400 100 pv a1a1', position at root: rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR b KQkq - 0 1
+Exception parsing pv from info: 'depth 1 seldepth 1 multipv 2 score cp 32 nodes 95 wdl 500 400 100 pv a1a1', position at root: rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR b KQkq - 0 1
+Exception parsing pv from info: 'depth 1 seldepth 1 multipv 3 score cp 32 nodes 95 wdl 500 400 100 pv a1a1', position at root: rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR b KQkq - 0 1
+FAIL
+
+======================================================================
+FAIL: test_synthetic_end_to_end_release_is_reconstructible_and_hashed (tests.test_m3_data.M3ContractTests.test_synthetic_end_to_end_release_is_reconstructible_and_hashed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/atari-pre-m5-work/videochess_rl/data/teacher.py", line 339, in run_teacher
+    raise TimeoutError("total teacher wall-time budget expired before UCI startup")
+TimeoutError: total teacher wall-time budget expired before UCI startup
+
+The above exception was the direct cause of the following exception:
+
+videochess_rl.data.teacher.TeacherError: Stockfish teacher run failed: TimeoutError: total teacher wall-time budget expired before UCI startup
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/tmp/atari-pre-m5-work/tests/test_m3_data.py", line 2034, in test_synthetic_end_to_end_release_is_reconstructible_and_hashed
+    with self.assertRaisesRegex(TeacherError, "no successful position records"):
+AssertionError: "no successful position records" does not match "Stockfish teacher run failed: TimeoutError: total teacher wall-time budget expired before UCI startup"
+
+----------------------------------------------------------------------
+Ran 1 test in 62.874s
+
+FAILED (failures=1)

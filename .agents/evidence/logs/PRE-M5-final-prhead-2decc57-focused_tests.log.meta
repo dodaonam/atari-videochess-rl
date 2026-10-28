@@ -1,0 +1,9 @@
+check=focused_tests
+revision=2decc57591d13d0dd5f918c0fb770034730bf5af
+start_utc=2026-10-28T05:35:40.297962Z
+end_utc=2026-10-28T05:36:53.220563Z
+duration_seconds=72.923
+exit_code=0
+test_count=127
+command=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m4_model tests.test_m4_data tests.test_m4_training tests.test_m4_checkpoint tests.test_pre_m4_contracts tests.test_m2_simulator tests.test_m3_data tests.test_m5_contract_fixtures -v
+environment=Existing pinned Python 3.12.3 CPU virtual environment; no dependencies installed; PYTHONPATH=.; external M3/M4 artifacts read-only.

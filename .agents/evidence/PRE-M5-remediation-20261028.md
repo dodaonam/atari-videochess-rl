@@ -1,0 +1,165 @@
+# Pre-M5 PM Finding Remediation — 2026-10-28
+
+**Purpose:** Superseding engineering addendum for PM5-F01 through PM5-F04. The earlier [Pre-M5 readiness report](PRE-M5-readiness-20261028.md) remains preserved as the prior review snapshot; it described the then-current nine-checkpoint/360-game schedule and preliminary profile. This addendum records the corrected schedule, checkpoint semantics, additional profiling, and exact verification for PR #10. It is engineering evidence, not independent PM acceptance, M5 authorization, or merge approval.
+
+**Version note:** The original sections below record the F01–F04 remediation snapshot as it stood before the later F05 finding. The dated final addendum at the end supersedes its seed-derivation and final-head claims where indicated; prior logs and failed attempts remain historical evidence.
+
+## Repository and authority
+
+- Repository: `dodaonam/atari-videochess-rl`.
+- Verified base: `initial-idea` at `906178775d48e98e64c709673bfe73177dd15c02`.
+- Feature: `feature/pre-m5-readiness`; PR [#10](https://github.com/dodaonam/atari-videochess-rl/pull/10), targeted at `initial-idea`.
+- Live status checked 2026-10-28: OPEN, non-draft, mergeable, no review decision, no auto-merge request. The checked PR head was `ffd924efe69746c192df56905eac34ccc689f106` before the current remediation commits were pushed. No merge or base-branch write was attempted.
+- The current canonical state continues to record M4 complete, no active milestone/task, M5 pending separate authorization, `start_authorized: false`, and G3 unapproved. The required next action is independent PM review; engineering self-review is not PM acceptance.
+- Work is isolated in `/tmp/atari-pre-m5-work`. The original user worktree still retains its existing deleted roadmap HTML plus untracked `main.py` and M1 zip; none was modified.
+
+## PM finding disposition
+
+| Finding | Status | Root cause and remediation | Evidence and remaining limits |
+|---|---|---|---|
+| PM5-F01 — Incomplete before/after RL evaluation | **RESOLVED** | The former nine-policy design omitted six DDQN initialization snapshots. The frozen schedule now includes one M4 behavior policy, three warm-start pre-RL and three warm-start post-RL, three scratch pre-RL and three scratch post-RL, RandomLegal, and SimpleHeuristic: 15 checkpoints × 40 scenario games = 600 planned games. Stable checkpoint IDs and seed/stage/opponent/color pairing keys are defined. | `configs/rl/m5-double-dqn-v1.json`; `docs/04-research/M5_EXPERIMENT_PROTOCOL.md`; `docs/06-quality/M5_TEST_MATRIX.md`; the 5-test contract fixture log. No M5 game evaluation has run. The 600 games remain planned, not guaranteed completed. |
+| PM5-F02 — Snapshot/resume inconsistency | **RESOLVED** | Exact 2,500/5,000/7,500/10,000 decision model snapshots are explicitly non-resumable. Resumable bundles are separate, versioned, integrity-checked, and written only after completed episodes. The 10,000th valid mid-episode decision is committed and snapshotted, then the runner stops without fake reward/terminal/truncation, episode reset, or extra decision; the latest episode checkpoint remains the only resume point. | `docs/03-technical/RL_ALGORITHM.md` §§8.1–8.3; config artifact name and `decision_cap_boundary`; `tests/fixtures/m5_checkpoint_boundaries.json`; contract test log. Serialization is future M5 implementation work and is not claimed implemented. |
+| PM5-F03 — Profile representativeness | **RESOLVED WITH QUANTIFIED FEASIBILITY LIMITATION** | Replaced the short-only basis with a bounded batch-32 profile using verified real M3 features, candidate/history variation, an 801-ply shape bracket, DDQN-style online/target masking and synthetic Huber updates, replay-like storage, checkpoint serialization, and 40 frozen-M4 timing games; then ran a separate observed-range update-cost probe through the 419-ply maximum observed in the M4 workload. | Final v2.1 and history-budget profile records below. The 600-game p95 projection is 4,811.4 s versus 10,800 s. A 10,000-decision run is marginal: 2,570.9 s at the measured median update and 3,085.4 s at p95, before overhead, against 2,700 s. The proposed pre-campaign actual replay sample probe must stop and seek PM direction if p95 exceeds the cap. Synthetic history tensors are not semantic chess histories; actual M5 replay-history distribution and runtime remain unknown. |
+| PM5-F04 — “Same transitions” overclaim | **RESOLVED** | Warm/scratch runs now match simulator/reward protocol, seed derivation, opponents, colors, exploration/replay/update schedules, and budgets. The protocol explicitly says independent policies can produce different states and realized transition streams; only matched conditions and completed budgets are claimed. | `docs/03-technical/RL_ALGORITHM.md` §6; `docs/04-research/M5_EXPERIMENT_PROTOCOL.md` §3; `configs/rl/m5-double-dqn-v1.json`; contract fixture. No identical trajectories are claimed. |
+
+## Feasibility profile evidence
+
+The accepted local M3 release and accepted local M4 bundle were read-only inputs. The profile scripts verify M3 release ID `f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890`, manifest SHA-256 `be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12`, split assignment SHA-256 `84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e`, and the unchanged M4 checkpoint SHA-256 `724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4`. All nine M3 files and all 19 M4 bundle files were verified; both artifacts were unchanged after profiling. Environment: existing Python 3.12.3 CPU venv, PyTorch 2.14.1+cpu, NumPy 2.5.4, python-chess 1.11.2, Linux x86_64, one PyTorch intra/inter-op thread. No dependency was installed; no M5 learner, policy training, or persistent replay store was created.
+
+| Profile | Source revision | Duration / peak RSS | Result |
+|---|---|---:|---|
+| Corrected workload profile v2.0 (intermediate; no variable-history bracket) | `2d968c51a4eb88ea4133d4f9ec1a8c1970480504` | 264.438 s / 636,755,968 B | Valid intermediate run, superseded for readiness conclusions by v2.1. [JSON](logs/PRE-M5-feasibility-profile-v2-20261028.json), [metadata](logs/PRE-M5-feasibility-profile-v2-20261028.json.meta); output SHA-256 `7e7bf15d221cc72a9e0d883d0ca7a4e0718bd0341afc1d182dd80d2d1f7ec681`. |
+| Variable-history and maximum-shape profile v2.1 | `d4fe2ad3fa3936faecddcdba0e976e16cdeabd42` | 252.625 s / 637,243,392 B | 32 actual M3 rows (history p50/p95/max 38/105/278; candidate p50/p95/max 32/46/64); 32-row synthetic 0–801-ply batch update 1.977 s; all-801 upper stress update 3.873 s; M3 batch update 0.134 s. 40 M4 timing games had 1,944 decisions, history p50/p95/max 52/270/419, combined step p95 20.05 ms. [JSON](logs/PRE-M5-feasibility-profile-v2.1-20261028.json), [metadata](logs/PRE-M5-feasibility-profile-v2.1-20261028.json.meta); output SHA-256 `fa863eacaf4afaeed69bcde554e5935bc3690c4a544f8634e92ce02591a96b4f`. |
+| Observed-range update-cost probe | `1c217fc4c038fd6b7dfff7127d44c120beb10db8` | 7.473 s / 388,784,128 B | Batch 32, 46 candidate slots, 0–419 synthetic history lengths, five measured optimizer updates after two warmups; median 0.999 s, p95 1.216 s. [JSON](logs/PRE-M5-history-budget-20261028.json), [metadata](logs/PRE-M5-history-budget-20261028.json.meta); output SHA-256 `957ba409c53368fdd6a15b3c397d4adc5132e08533fe26415ee259e5a854edc4`. |
+
+The 600-game schedule has 18 s/game under the aggregate cap. A conservative 400-decision-per-game p95 cost projection is 4,811.4 s (about 80.2 minutes), below the 10,800 s aggregate cap and the 1,200 s per-snapshot cap. The finite M4 timing workload is a cost proxy; actual DDQN policy trajectories may take different time.
+
+For a 10,000-decision arm, 2,373 updates are projected by the configured warm-up/frequency. The 419-ply batch update profile yields 2,570.9 s at the median and 3,085.4 s at p95, before replay sampling, checkpointing, validation, or other overhead, against the 2,700 s cap. The all-801-ply synthetic shape stress projects 9,390.5 s; it is a shape upper bound, not a semantic replay distribution. The measured p95 update exceeds the average update time (1.053 s) available under the per-run cap after the measured decision-time projection. Therefore current training feasibility is **not established**. The config and protocol now require a five-update, batch-32 probe using actual 512-transition seeded replay on a disposable copy after separate M5 authorization and implementation. The probe counts toward the six-hour campaign cap; if its p95 projection exceeds 45 minutes, stop before paired runs and seek PM direction. No cap was increased and no training campaign was started.
+
+Across the earlier bounded profile (166.198 s), earlier baseline profile (2.284 s), v2.0, v2.1, and observed-range probe, recorded active profile work is approximately 694.8 s, within the 900 s Pre-M5 aggregate CPU profiling allowance. Highest observed RSS was 637,243,392 B, below 2 GiB. Profile timing and memory do not establish convergence or policy quality.
+
+## Readiness reassessment
+
+| ID | Status | Verification scope and evidence | Limitation |
+|---|---|---|---|
+| PM5-R01 | PASS | PR #8/#9/source and historical M4 failure/correction audit in [prior report](PRE-M5-readiness-20261028.md); actual M3/M4 artifacts reverified in v2.1 and transfer run. | Engineering retrospective is not PM acceptance of the M4 PRs. |
+| PM5-R02 | PASS | PR-only rule, PM acceptance vs engineering checks, and human/operator merge separation in governance docs and regression tests. | No repository settings changed; documentation is not GitHub permission enforcement. |
+| PM5-R03 | PASS | Canonical M4 complete / M5 pending unauthorized / G3 unapproved state and task-action invariant covered by preflight and context tests. | The PM must make any future M5 authorization directly. |
+| PM5-R04 | PASS | Double DQN equation, semantic UCI selection/evaluation, terminal/truncation rules, replay/update contract, transfer and exact snapshot/resume boundaries in `RL_ALGORITHM.md`; deterministic disagreement fixture retained. | No learner implementation is part of Pre-M5. |
+| PM5-R05 | PASS | M2 simulator and transition regression coverage; source audit and historical terminal/draw tests. | Actual learner insertion/bootstrap code awaits M5. |
+| PM5-R06 | PASS | Accepted M4 artifact SHA, 19-file manifest, unchanged bundle, representation-only transfer and engine-free inference in the prior transfer evidence and new profile. | Artifacts remain local-only and are not copied to Git. |
+| PM5-R07 | PASS | Versioned config and protocol now agree on 15 snapshots, 600 games, both comparisons, pairing keys, crossed clustered uncertainty, and no identical trajectory claim; fixture regression covers counts and pairs. | Future game results are unmeasured. |
+| PM5-R08 | PASS | Bounded CPU v2.1 and observed-range probes quantify evaluation and training costs, replay wire/memory, update costs, resource use, and hard-stop plan. | 45-minute CPU training cap is marginal and p95 projection exceeds it; actual replay probe and PM decision are required before paired campaign. |
+| PM5-R09 | PASS | `RL_ALGORITHM.md` and config distinguish immutable evaluation snapshots from episode-boundary resumable checkpoints, including exact 10,000-decision behavior and recovery accounting. | Implementation/tests are deferred to M5. |
+| PM5-R10 | PASS | M5 verification matrix, target/disagreement and boundary fixtures, and contract regressions. | CI is context/preflight plus standard-library contracts; not PyTorch learner correctness. |
+| PM5-R11 | PASS | M05 plan covers dependencies, modules, experiment sequence, caps, failure/recovery and acceptance. | Plan is not authorization. |
+| PM5-R12 | PASS | The exact pushed candidate `16bc420d90e2a0eec910208ebce5686c9717600d` was checked in a fresh clean clone. The full 324-test suite passed with the project's configured Stockfish path; preflight, archive verification (202 records; logical SHA-256 `dea2c52cf0cb7a106fc759b5d80688bdb9d133025d27a38e9edffddcc8f16437`), compile, diff check, accepted M3 release verification, and engine-free M4 transfer also passed. GitHub's `Repository preflight` context job passed on the exact pushed SHA. | CI covers canonical context and standard-library context/bundle/M5-target-oracle tests, not the full Python suite; the latter ran locally in the clean clone. The initial full-suite attempt without the configured Stockfish directory is preserved as `FAIL_ENVIRONMENT`; it is not counted as a pass. M5 remains unauthorized. |
+
+## Verification and recovery evidence
+
+The first two full-suite attempts are preserved as diagnostics, not passes. The first ran before the new report was committed and four clean-clone context tests correctly rejected missing report links. The second still ran against the previous committed HEAD and found the stale checkpoint snapshot. After the report, handoff/finding updates, and checkpoint archive append were committed at `c19b141e`, the same suite and clean-clone checks passed; no tests were weakened.
+
+| Check | Exact result | Evidence |
+|---|---|---|
+| Main-worktree preflight | Exit 0; zero errors; one expected `ARTIFACT_MANIFEST_REQUIRED` warning; M5 pending/unauthorized and G3 unapproved. | `logs/PRE-M5-remediation-preflight-c19b141e.log` and `.meta` |
+| Checkpoint archive | Exit 0; 201 archived records; logical SHA-256 `9c4eb7e2e4525db09ef5bd01eda9ea12a7b0a44895335368c327c571b58ceaf2`. | `logs/PRE-M5-remediation-archive-c19b141e.log` and `.meta` |
+| Focused contract and model/data suite | Exit 0; 132 tests, including M4/M2 contracts, revised M5 schedule/checkpoint fixtures, and both bounded-profile tests. | `logs/PRE-M5-remediation-focused-c19b141e.log` and `.meta` |
+| Context/recovery tests | Exit 0; 79 tests. | `logs/PRE-M5-remediation-context_recovery-c19b141e.log` and `.meta` |
+| Full regression suite | Exit 0; 324 tests, in the existing pinned Python 3.12.3 environment. Configured Stockfish was on PATH only for the existing UCI readiness smoke test. | `logs/PRE-M5-remediation-full_suite-c19b141e.log` and `.meta` |
+| M3 release verification | Exit 0; accepted release ID, manifest, 1,000 games, 19,268 positions, 182 rejected records, and expected split identity/counts. The nine-file unchanged inventory SHA is recorded by v2.1. | `logs/PRE-M5-remediation-m3_release-c19b141e.log` and `.meta`; v2.1 profile JSON |
+| M4 transfer, engine-free | Exit 0; all 19 bundle files, shared representation equality, fresh Q head and target copy, legal semantic UCI choices, `stockfish_path: null`, and source artifact unchanged. | `logs/PRE-M5-remediation-transfer_engine_free-c19b141e.log` and `.meta` |
+| Clean-clone exact candidate | Fresh clone at `c19b141e3d2bc1440fd1a9afb89c12cfd1704d95`, clean before and after: preflight/archive/static checks, 324-test full suite, and engine-free transfer all passed. Archive remained 201 records with the same logical SHA. | `logs/PRE-M5-remediation-cleanclone-*-c19b141e.log` and `.meta` |
+| Post-push exact-head clean clone | Fresh clone at `16bc420d90e2a0eec910208ebce5686c9717600d`, clean after verification: 324 tests passed in 119.729 s; preflight, compile, diff check, archive (202 records; logical SHA `dea2c52cf0cb7a106fc759b5d80688bdb9d133025d27a38e9edffddcc8f16437`), M3 release identity/counts, and M4 engine-free transfer passed. Exact-head GitHub workflow run 40650803183 completed successfully. The first full-suite attempt omitted the installed Stockfish directory from PATH and failed only the existing M0 UCI-readiness smoke test; this was corrected by supplying the configured local path and rerunning the full suite. | Full-suite log and exact wrapper metadata are in `logs/PRE-M5-final-cleanclone-16bc-full-suite.log` and `.meta.json`; failed environment attempt is retained separately. Preflight/archive/compile/diff logs are in the same directory prefix. M3 and M4 clean-clone raw outputs are preserved; the prior timed M3/M4 verification records remain linked above. |
+| Whitespace/compile/config checks | `git diff --check`, Python compilation, and JSON parsing passed locally and in the clean clone. | Clean-clone `clean_diff`, `clean_python_compile`, `clean_config_json`, and `clean_evidence_json` logs |
+
+The initial diagnostic runs are retained at `logs/PRE-M5-remediation-full-suite-before-evidence-links-1cc04396.log` and `logs/PRE-M5-remediation-full-suite-uncommitted-evidence-1cc04396.log`, with metadata. Both are marked exit 1 and superseded by the successful committed-candidate and clean-clone runs. The exact test outputs are recorded; the diagnostic causes were missing commit-time evidence links and stale checkpoint provenance, not a code or M5-contract failure. The additional exact-head no-Stockfish-PATH attempt is also retained separately and was resolved by using the already installed project binary path solely for the existing readiness smoke test.
+
+## M5 scope and governance
+
+No M5 implementation or training, no ALE evaluation, no Stockfish inference, and no external compute were started. M5 remains pending and unauthorized; G3 remains unapproved. The proposed M5 protocol is a future execution contract. PR #10 remains open and unmerged for independent PM review. The pushed candidate `16bc420d90e2a0eec910208ebce5686c9717600d` is clean-clone verified; exact-head CI passed at [run 40650803183](https://github.com/dodaonam/atari-videochess-rl/actions/runs/40650803183). The feature worktree is clean. This report is engineering evidence, not independent PM acceptance, and does not authorize the author to approve or merge.
+
+## Final 2026-10-28 addendum — PM5-F05 paired RNG and seed derivation
+
+This addendum records the direct mission decision resolving PM5-F05. It is effective 2026-10-28 and supersedes only the previously ambiguous seed/run identity rules; it does not change the comparison, learner, scientific hyperparameters, or resource caps. It is engineering evidence and does not represent independent PM acceptance.
+
+### Finding and resolution
+
+The reviewed specification used one pair-level digest over master seed/domain/pair identity for shared streams, but separately described episode seeds as depending on `run_id`. Because warm and scratch use different run IDs, those rules did not guarantee matched episode schedules. The single implementation and versioned contract are now `videochess-m5-seed-derivation/1.0` in `videochess_rl/m5_seeding.py`, mirrored in `configs/rl/m5-double-dqn-v1.json` and specified in `docs/03-technical/RL_ALGORITHM.md` §6.1.
+
+The canonical identities are:
+
+1. `experiment_id` is the versioned comparison identity; `training_seed` is the paired seed and, in config v1.2, also `master_seed`.
+2. `pair_id = lowercase_hex(SHA256(ASCII("videochess-m5-pair-id/v1") || 0x00 || U32BE(experiment_id ASCII byte length) || experiment_id ASCII || U64BE(training_seed)))`. IDs must match `[A-Za-z0-9][A-Za-z0-9._:-]*`; integer fields are unsigned big-endian, and lengths are unsigned 32-bit big-endian.
+3. `digest = SHA256(ASCII("videochess-m5-seed/v1") || 0x00 || U64BE(master_seed) || pair_id raw 32 bytes || U32BE(domain ASCII byte length) || domain ASCII || U64BE(index))`.
+4. `seed = (domain_code << 60) | (int.from_bytes(digest[0:8], "big") & 0x0fffffffffffffff)`, where domain codes follow the configured order: episode 0, opponent 1, exploration 2, replay sampling 3, Q-head initialization 4, scratch-representation initialization 5. This yields disjoint per-domain ranges within `[0, 2^63-1]`.
+5. `episode_seed` and `opponent_rng` use zero-based `completed_episodes` as their index. The four root streams use index zero. Exploration and replay RNG state is then saved independently per arm and restored from the verified episode checkpoint.
+6. `run_identity(pair_id, arm, attempt_index)` formats `m5-{pair_id}__{arm}__attempt-{attempt_index:04d}`. Run ID, arm, and attempt are provenance only and are not accepted by the pair-level seed APIs. Attempt indexes increase monotonically and are never reused.
+
+Thus both arms derive equal per-episode and opponent seeds, equal exploration/replay root seeds, and equal Q-head initialization seeds for a pair. The scratch representation uses its separate domain; the warm representation comes from the verified M4 checkpoint. Equality of seed schedules does **not** mean equal random-number consumption, trajectories, transitions, or replay contents. Episode-boundary recovery derives the next per-episode seeds from the unchanged pair identity and restored committed episode count, while restoring each arm's evolving root RNG states. Run IDs and retries do not reset cumulative budgets.
+
+### M2 simulator integration
+
+`ChessSimulator.reset(seed=..., opponent_seed=...)` now accepts an optional opponent seed. When supplied, that seed initializes both the simulator's opponent-action RNG and any stateful opponent `reset_episode(seed=...)` hook; the episode seed remains separately recorded/passed by the future runner. Omitting `opponent_seed` preserves the historical behavior where `seed` initializes both. This additive boundary is covered by M2 simulator tests; it does not implement an M5 runner.
+
+### Executable evidence and remaining scope
+
+Known-answer vectors and serialization prefixes are preserved in `tests/fixtures/m5_seed_derivation_v1.json`. `tests/test_m5_seeding.py` checks those outputs, domain separation, distinct configured training pairs, episode-index changes, process-restart determinism, provenance run IDs, warm/scratch pair parity by stable pair identity, initialization-domain separation, config consistency, and rejection of invalid inputs. `tests/test_m5_contract_fixtures.py` checks retry recovery uses the same pair identity and next seed while retaining a distinct retry run ID. The focused working-tree run on 2026-10-28 executed 54 tests across seed derivation, M5 contract fixtures, and M2 simulator; exit 0. Final committed-head and clean-clone counts, exact SHA, logs, and current CI are recorded in the machine-readable evidence and a final verification update below after those checks finish.
+
+The F01–F04 resolutions were re-audited against the unchanged 15-snapshot/600-game design, distinct snapshot/resume contracts, future real-replay feasibility gate, and matched-condition/no-identical-trajectory language. Their prior underlying evidence remains linked above. The CPU risk remains unchanged: the p95 training projection exceeds the 45-minute cap before overhead. Only the future, separately authorized M5 mission may perform the configured real-replay probe and correctness-preserving implementation optimization sequence inside the existing caps; this Pre-M5 work changed no budget and ran no M5 learner or training.
+
+### Committed-candidate verification
+
+The implementation, tests, protocol, config, and F05 addendum were committed on `feature/pre-m5-readiness` as `ef1ffae65a7e08579e7ae00502a11de59c3efea3`, based on `initial-idea` `906178775d48e98e64c709673bfe73177dd15c02`. A fresh local clone at that exact revision passed:
+
+| Check | Result | Evidence |
+|---|---|---|
+| Repository preflight | Exit 0; no errors; only expected `ARTIFACT_MANIFEST_REQUIRED`; M5 pending, unauthorized, no active task, G3 unapproved; portable/workspace snapshot matched. | `logs/PRE-M5-F05-clean-ef1ffae-preflight.log` and metadata |
+| Checkpoint archive | Exit 0; 207 archived records; logical SHA-256 `b378edd6800c1cfffd558051f5ae686262314fbe560faf34effe62140a01b75e`. | `logs/PRE-M5-F05-clean-ef1ffae-archive.log` and metadata |
+| Static checks | Python compilation, JSON parsing for config/fixtures/evidence, and `git diff-tree --check HEAD^ HEAD` exit 0. | `logs/PRE-M5-F05-clean-ef1ffae-{compile,static,diff-check}.log` and metadata |
+| Focused suite | Exit 0; 141 tests across M4 model/data/training/checkpoint, Pre-M4 contracts, M2 simulator, M3 data, M5 contract fixtures, and the new seed contract. | `logs/PRE-M5-F05-clean-ef1ffae-focused-tests.log` and metadata |
+| Full regression | Exit 0; 336 tests in 209.211 seconds; existing Stockfish path supplied only for the pre-existing UCI readiness smoke test. | `logs/PRE-M5-F05-clean-ef1ffae-full-suite.log` and metadata |
+| Accepted M3 release | Exit 0; exact release and manifest identity verified. All nine expected file names and SHA-256 values matched before/after verification; inventory SHA-256 `bad5997db1836fa8dbedc80f815908230d65b108e74a1476c86437493c494652`. | `PRE-M5-F05-m3-release-integrity-20261028.json`; `logs/PRE-M5-F05-clean-ef1ffae-m3-release.log` and metadata |
+| Accepted M4 transfer | Exit 0; 19-file bundle verified; checkpoint SHA-256 `724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4`; representation transfer equal, behavior head excluded, target copied, legal actions, Stockfish absent, source unchanged. | `logs/PRE-M5-F05-clean-ef1ffae-m4-transfer-engine-free.log` and metadata |
+| Clean clone | Empty `git status --porcelain=v1` after checks. | `logs/PRE-M5-F05-clean-ef1ffae-clean-status.log` and metadata |
+
+The earlier full-suite diagnostic on the dirty feature worktree ran 336 tests but exited 1 only because the context-recovery test correctly required the portable Git snapshot to match. It is retained as `FAIL_DIAGNOSTIC_DIRTY_WORKTREE`; it is not counted as acceptance evidence. The fresh committed clone above passed all 336 tests. The detailed focused working-tree runs (54 tests, exit 0) are supplementary, not substitutes for the clean-clone suite.
+
+### Revalidated Pre-M5 readiness (PM5-R01–PM5-R12)
+
+| ID | Status | Final evidence and scope | Limitation |
+|---|---|---|---|
+| PM5-R01 | PASS | Historical M4 source/evidence audit; current clean-clone full suite and unchanged M3/M4 artifact identities at `ef1ffae`. | Retrospective engineering review is not independent PM acceptance of M4. |
+| PM5-R02 | PASS | PR-only/PM/operator separation remains explicit in `PR_REVIEW_AND_INTEGRATION.md`, `AGENTS.md`, canonical state, and context checks. | No repository settings were changed; docs do not enforce GitHub permissions. |
+| PM5-R03 | PASS | Preflight confirms M4 done, M5-001 pending, no active task, `start_authorized: false`, G3 unapproved, archive verified. | M5 remains unauthorized. |
+| PM5-R04 | PASS | `RL_ALGORITHM.md` defines DDQN target, legal UCI semantics, rewards, terminal/truncation, RNG, transfer, and checkpoint behavior; the online/target disagreement fixture remains covered. | No learner is implemented in Pre-M5. |
+| PM5-R05 | PASS | Focused suite includes M2 simulator opponent-seed compatibility tests; full 336-test suite passes. | M5 learner use of the boundary remains future work. |
+| PM5-R06 | PASS | Exact real M4 artifact bundle reverified and transfer dry-run is engine-free; M3 release identity also reverified. | Artifacts remain local-only. |
+| PM5-R07 | PASS | Config/protocol/matrix retain 15 checkpoints and 600 planned games, both comparisons, pairing keys, uncertainty treatment, and no identical-trajectory claim; fixtures pass in the focused suite. | No M5 outcomes have been measured. |
+| PM5-R08 | PASS | The v2.1 and observed-range profiles support a bounded CPU proposal and explicit real-replay probe/optimization workflow. | 45-minute training cap remains marginal; p95 projection exceeds it before overhead. M5 must stop before paired runs if authorized optimizations cannot establish feasibility. |
+| PM5-R09 | PASS | Episode-boundary resume uses stable pair identity and completed-episode indexing; snapshots and resumable checkpoints stay distinct; retry fixture verifies seed continuity. | Actual M5 save/resume code is deferred. |
+| PM5-R10 | PASS | M5 matrix, target oracles, checkpoint fixtures, new seed vectors/tests, and CI workflow cover future learner obligations without claiming learner tests passed. | Current CI is contract/preflight coverage, not DDQN training correctness. |
+| PM5-R11 | PASS | M05 plan includes the versioned seed contract, future optimization loop, experiment order, recovery, caps, and PM handoff. | A plan does not authorize M5. |
+| PM5-R12 | PASS | `ef1ffae` fresh clone: preflight/archive/static, focused 141, full 336, M3/M4 artifact checks, and clean status all passed. | Final PR push/CI and exact remote-head verification remain pending and will be recorded before handoff. |
+
+At this point the technical F05 finding is resolved and the committed candidate passes the full clean-clone suite. Final remote branch/PR/CI state must be checked on the pushed head; the PR author still stops before PM acceptance and merge.
+
+## Final delivery addendum — exact pushed-head verification (2026-10-28)
+
+This addendum supersedes the earlier “push pending” statements above. The final candidate checked during this delivery is `45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83` on `feature/pre-m5-readiness`, based on `initial-idea` `906178775d48e98e64c709673bfe73177dd15c02`.
+
+| Check | Result | Evidence |
+|---|---|---|
+| Live PR metadata | PR #10 is OPEN, non-draft, mergeable, targets `initial-idea`, and remains unmerged; auto-merge is null. Base and head SHAs match the values above. | GitHub PR API queried 2026-10-28; [PR #10](https://github.com/dodaonam/atari-videochess-rl/pull/10). No merge or review submission was made. |
+| GitHub CI on exact head | PASS; `Repository preflight`, run `40662819083`, job `context`, exit 0, completed 2026-10-28T09:16:08Z on `45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83`. It runs canonical preflight plus standard-library context/bundle/M5 contract-oracle coverage, not the full project suite. | [Workflow run](https://github.com/dodaonam/atari-videochess-rl/actions/runs/40662819083); [context job](https://github.com/dodaonam/atari-videochess-rl/actions/runs/40662819083/job/122729795571). |
+| Fresh GitHub clone full suite | PASS; 336 tests in 208.847 s, exit 0, from 2026-10-28T09:16:35Z to 09:20:06Z UTC, at exact head `45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83`. Existing local Stockfish path was exposed only for the pre-existing M0 UCI readiness smoke test. | `logs/PRE-M5-F05-finalhead-45b9-full-suite.log` and `.meta.json`. |
+| Fresh-clone repository preflight | PASS, exit 0; M4 done, M5-001 pending, no active task, `start_authorized=false`, G3 unapproved, portable manifest matches. The one warning is the expected `ARTIFACT_MANIFEST_REQUIRED` reminder for local artifact directories. | `logs/PRE-M5-F05-finalhead-45b9-preflight.log` and `.meta.json`. |
+| Checkpoint-history archive | PASS, exit 0; 208 records, logical SHA-256 `bb234c1c171280f258a69ed9cffc1a2ca1b3f1a4192eff1e796427fa53374f11`. | `logs/PRE-M5-F05-finalhead-45b9-archive.log` and `.meta.json`. |
+| Static/diff and clean checkout | Python compilation, M5 JSON parsing, `git diff --check` against `initial-idea`, and clean status on the fresh clone all passed. | `logs/PRE-M5-F05-finalhead-45b9-static.log` and `.meta.json`. |
+
+The 2026-10-28 final evidence/checkpoint commit after this tested candidate contains evidence and canonical checkpoint updates only; it does not change `videochess_rl/`, `tests/`, `configs/`, `docs/`, `scripts/`, or `.github/`. The source/config/test equivalence is recorded in the final delivery metadata. Exact-head CI must be rechecked after that evidence-only commit is pushed. The earlier PR snapshots and all original failed diagnostic evidence remain unchanged.
+
+PM5-F01 through PM5-F05 are assessed as resolved at the engineering level. The 600-game schedule and all resource caps remain as specified. The p95 CPU projection still exceeds the 45-minute run limit; future separately authorized M5 work must run the real-replay feasibility probe and, if needed, correctness-preserving optimizations inside the existing limits before paired training. No M5 implementation/training or ALE evaluation was started; M5 remains unauthorized, G3 remains unapproved, and this document does not constitute independent PM acceptance.
+
+### Final evidence-only descendant verification
+
+After the 45b9 evidence was recorded, the report and append-only checkpoint archive were committed as `14427e21bde9a9c24c74255e61928e0a5e5cd5da`. Its diff from 45b9 is limited to `.agents/evidence/` and `.agents/state/`; no source, test, configuration, technical-document, script, or workflow file changed. A fresh clone at exact 14427 passed preflight, archive verification, compilation, JSON parsing, base diff checks, and the complete 336-test suite (212.596 seconds, exit 0). Archive verification at that revision reported 212 records and logical SHA-256 `506b745b77fafa560352582b7006bdb1f5ce57fdc7c468b7f272236328574015`. The exact-head CI run `40664458983` passed. Its logs are now retained as `logs/PRE-M5-F05-finalhead-14427-*.log` and `.meta.json`. This establishes source/config/test equivalence for the report/checkpoint-only descendant; CI was then re-run on each pushed PR head.
