@@ -64,6 +64,17 @@
       "m4_representation_identity": "verified_m4_checkpoint_sha256",
       "same_realized_transition_trajectories_claimed": false
     },
+    "pre_campaign_update_feasibility_probe": {
+      "required_before_paired_runs": true,
+      "replay_warmup_valid_transitions": 512,
+      "updates_on_disposable_model_copy": 5,
+      "batch_size": 32,
+      "history_source": "seeded_replay_sampled_from_verified_simulator_transitions",
+      "counts_toward_aggregate_wall_budget": true,
+      "compare_p95_run_projection_with_per_run_cap": true,
+      "if_projection_exceeds_cap": "stop_before_paired_campaign_and_request_pm_budget_or_optimization_decision",
+      "does_not_claim_policy_training_or_evaluation": true
+    },
     "agent_decisions_per_arm_seed": 10000,
     "per_run_wall_minutes_hard_cap": 45,
     "aggregate_campaign_wall_hours_hard_cap": 6,

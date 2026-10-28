@@ -81,6 +81,13 @@ class M5DoubleDqnFixtureTests(unittest.TestCase):
         config = json.loads((REPOSITORY_ROOT / "configs/rl/m5-double-dqn-v1.json").read_text(encoding="utf-8"))
         seeds = config["training"]["paired_seeds"]
         groups = config["evaluation"]["policy_checkpoint_groups"]
+        resource_probe = config["training"]["pre_campaign_update_feasibility_probe"]
+        self.assertTrue(resource_probe["required_before_paired_runs"])
+        self.assertEqual(resource_probe["replay_warmup_valid_transitions"], 512)
+        self.assertEqual(resource_probe["updates_on_disposable_model_copy"], 5)
+        self.assertTrue(resource_probe["counts_toward_aggregate_wall_budget"])
+        self.assertEqual(resource_probe["if_projection_exceeds_cap"], "stop_before_paired_campaign_and_request_pm_budget_or_optimization_decision")
+        self.assertTrue(resource_probe["does_not_claim_policy_training_or_evaluation"])
         self.assertEqual(config["training"]["initialization_snapshot"]["capture_decision"], 0)
         self.assertTrue(config["training"]["initialization_snapshot"]["capture_after_target_copy"])
         self.assertTrue(config["training"]["initialization_snapshot"]["capture_before_first_gradient_update"])
