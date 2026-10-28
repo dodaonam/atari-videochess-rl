@@ -1,0 +1,10 @@
+check=m3_release_immutable
+revision=2decc57591d13d0dd5f918c0fb770034730bf5af
+start_utc=2026-10-28T05:40:28.761250Z
+end_utc=2026-10-28T05:42:23.976840Z
+duration_seconds=115.216
+exit_code=0
+command=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.data.cli verify --release /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6
+environment=Existing pinned Python 3.12.3 CPU virtual environment; no dependencies installed; PYTHONPATH=.; external M3/M4 artifacts read-only.
+unchanged=true
+file_count=9

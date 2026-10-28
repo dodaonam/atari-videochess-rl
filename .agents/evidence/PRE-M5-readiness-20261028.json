@@ -1,6 +1,6 @@
 {
   "schema": "videochess-pre-m5-readiness/1.0",
-  "report_generated_at_utc": "2026-10-28T05:32:27.993140Z",
+  "report_generated_at_utc": "2026-10-28T05:44:21.776929Z",
   "status": "ready_for_independent_pm_review",
   "repository": "dodaonam/atari-videochess-rl",
   "baseline": {
@@ -13,7 +13,8 @@
     "verified_source_revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
     "worktree_clean_at_verification": true,
     "working_tree_clean_at_verification": true,
-    "candidate_change_base_revision": "906178775d48e98e64c709673bfe73177dd15c02"
+    "candidate_change_base_revision": "906178775d48e98e64c709673bfe73177dd15c02",
+    "last_exact_pr_tree_verification_revision": "2decc57591d13d0dd5f918c0fb770034730bf5af"
   },
   "pull_request": {
     "number": 10,
@@ -22,10 +23,12 @@
     "draft": false,
     "target_branch": "initial-idea",
     "target_sha_at_verification": "906178775d48e98e64c709673bfe73177dd15c02",
-    "head_sha_at_verification": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+    "head_sha_at_verification": "2decc57591d13d0dd5f918c0fb770034730bf5af",
     "merged": false,
     "merge_attempted": false,
-    "review_decision": "awaiting_independent_pm_review"
+    "review_decision": "awaiting_independent_pm_review",
+    "last_live_status_check_at_utc": "2026-10-28T05:44:21.776929Z",
+    "auto_merge_enabled": false
   },
   "governance": {
     "current_gate": "G2",
@@ -61,7 +64,7 @@
       "purged_positions": 732,
       "rejected_records": 182,
       "verification_exit_code": 0,
-      "verification_log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-m3-release-immutable.log"
+      "verification_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-m3_release_immutable.log"
     },
     "m4": {
       "path": "/home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4/pretrained-behavior-only.pt",
@@ -75,8 +78,8 @@
       "engine_free_transfer_exit_code": 0,
       "stockfish_available_in_transfer_path": false,
       "source_artifacts_unchanged": true,
-      "verification_log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-m4_bundle.log",
-      "transfer_log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-transfer_engine_free.log"
+      "verification_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-m4_bundle.log",
+      "transfer_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-transfer_engine_free.log"
     }
   },
   "criteria": [
@@ -250,8 +253,8 @@
       "id": "PM5-R12",
       "status": "PASS",
       "evidence_path": ".agents/evidence/PRE-M5-readiness-20261028.md",
-      "verification_method": "Fresh clean GitHub clone of exact pushed PR head; preflight, archive, compile, context, focused/full regression, M3/M4 artifact checks, engine-free transfer, diff and clean status.",
-      "verification_revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+      "verification_method": "Fresh clean GitHub clone of the exact pushed PR tree; preflight, lossless archive, compile, context/recovery, focused and full regression, M3/M4 artifact verification, engine-free transfer, commit diff check, clean status, and GitHub CI.",
+      "verification_revision": "2decc57591d13d0dd5f918c0fb770034730bf5af",
       "runs": [
         {
           "name": "preflight",
@@ -396,15 +399,16 @@
       "github_ci": {
         "name": "context",
         "conclusion": "SUCCESS",
-        "run_url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/40637273930/job/122647025278",
-        "completed_at_utc": "2026-10-28T05:19:34Z",
-        "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
-        "scope": "Preflight, standard-library context and contract fixtures; not the full Python regression suite."
+        "run_url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/40638666646",
+        "job_url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/40638666646/job/122651440700",
+        "completed_at_utc": "2026-10-28T05:34:00Z",
+        "revision": "2decc57591d13d0dd5f918c0fb770034730bf5af",
+        "scope": "Preflight and standard-library context/contract fixtures; not the full Python regression suite."
       },
       "exit_code": 0,
-      "result": "Fresh clean clone at 0011a1c passed preflight (0 errors; expected artifact-manifest warning only), checkpoint archive (197 records; logical SHA-256 9b2cdb9d…), compile, 79 context/history tests, 127 focused tests, 319 full tests in 187.650s, exact M3 release verification with all nine files unchanged, M4 bundle verification (19 files), real engine-free M4-to-M5 transfer, diff check, and clean status. PR context CI passed on the same SHA. Failed intermediate timing-fixture attempts were retained separately; the final corrected test and exact-head suites pass.",
-      "limitation": "The existing pinned Python 3.12.3 CPU venv matching the lock was used because uv is unavailable; no dependencies were installed. CI is context/preflight plus standard-library fixtures, not full PyTorch coverage. No M5 learner/training was performed.",
-      "verification_command": "See exact commands, UTC start/end, exit codes and log references in .agents/evidence/PRE-M5-final-clean-clone-0011a1c.json.",
+      "result": "Fresh exact-head clean clone at 2decc575 passed preflight (0 errors; one expected artifact-manifest warning), 198-record checkpoint archive verification, compile, 79 context/history tests, 127 focused tests, 319 full tests, M3 release verification with all nine files unchanged, 19-file M4 bundle verification, real engine-free representation transfer, diff check, and clean status. GitHub context CI passed at the same SHA.",
+      "limitation": "The final recorded replay commit adds only evidence and canonical checkpoint/handoff files relative to implementation/test source 0011a1c. Full Python tests used the existing Python 3.12.3 venv because uv is unavailable; no dependency install. CI is not the full regression suite.",
+      "verification_command": "See exact commands, UTC start/end, exit codes, test counts, environment notes and log paths in .agents/evidence/PRE-M5-final-clean-clone-2decc57.json.",
       "diagnostic_attempts": [
         {
           "revision": "e102bd0476b46cc339dee221f769919637d9e8a2",
@@ -479,6 +483,157 @@
         ".agents/evidence/logs/PRE-M5-final-prhead-dc678a1-focused-tests-failed.log",
         ".agents/evidence/logs/PRE-M5-m3-timing-diagnostic-dc678a1-isolated-failed.log",
         ".agents/evidence/logs/PRE-M5-m3-timing-diagnostic-dc678a1-isolated-passed.log"
+      ],
+      "latest_clean_clone_record": ".agents/evidence/PRE-M5-final-clean-clone-2decc57.json",
+      "latest_clean_clone_runs": [
+        {
+          "name": "preflight",
+          "revision": "2decc57591d13d0dd5f918c0fb770034730bf5af",
+          "command": "python3 scripts/agent_preflight.py --json",
+          "start_utc": "2026-10-28T05:33:53.950933Z",
+          "end_utc": "2026-10-28T05:33:54.950537Z",
+          "exit_code": 0,
+          "duration_seconds": 1.0,
+          "log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-preflight.log",
+          "environment": "Fresh clean GitHub clone; no dependency installation.",
+          "log_note": "Sanitized to preflight status, errors, warnings and canonical summary.",
+          "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-preflight.log.meta"
+        },
+        {
+          "name": "archive",
+          "revision": "2decc57591d13d0dd5f918c0fb770034730bf5af",
+          "command": "python3 scripts/migrate_checkpoint_history.py verify",
+          "start_utc": "2026-10-28T05:33:54.951025Z",
+          "end_utc": "2026-10-28T05:33:55.383664Z",
+          "exit_code": 0,
+          "duration_seconds": 0.433,
+          "log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-archive.log",
+          "environment": "Fresh clean GitHub clone; no dependency installation.",
+          "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-archive.log.meta"
+        },
+        {
+          "name": "compile",
+          "revision": "2decc57591d13d0dd5f918c0fb770034730bf5af",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m compileall -q videochess_rl scripts tests",
+          "start_utc": "2026-10-28T05:33:55.383866Z",
+          "end_utc": "2026-10-28T05:33:55.787463Z",
+          "exit_code": 0,
+          "duration_seconds": 0.404,
+          "log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-compile.log",
+          "environment": "Existing pinned Python 3.12.3 CPU virtual environment; no dependencies installed; PYTHONPATH=.; external M3/M4 artifacts read-only.",
+          "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-compile.log.meta"
+        },
+        {
+          "name": "context_tests",
+          "revision": "2decc57591d13d0dd5f918c0fb770034730bf5af",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_agent_context tests.test_checkpoint_history -v",
+          "start_utc": "2026-10-28T05:33:55.787607Z",
+          "end_utc": "2026-10-28T05:35:40.297370Z",
+          "exit_code": 0,
+          "duration_seconds": 104.51,
+          "log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-context_tests.log",
+          "environment": "Existing pinned Python 3.12.3 CPU virtual environment; no dependencies installed; PYTHONPATH=.; external M3/M4 artifacts read-only.",
+          "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-context_tests.log.meta"
+        },
+        {
+          "name": "focused_tests",
+          "revision": "2decc57591d13d0dd5f918c0fb770034730bf5af",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m4_model tests.test_m4_data tests.test_m4_training tests.test_m4_checkpoint tests.test_pre_m4_contracts tests.test_m2_simulator tests.test_m3_data tests.test_m5_contract_fixtures -v",
+          "start_utc": "2026-10-28T05:35:40.297962Z",
+          "end_utc": "2026-10-28T05:36:53.220563Z",
+          "exit_code": 0,
+          "duration_seconds": 72.923,
+          "log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-focused_tests.log",
+          "environment": "Existing pinned Python 3.12.3 CPU virtual environment; no dependencies installed; PYTHONPATH=.; external M3/M4 artifacts read-only.",
+          "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-focused_tests.log.meta"
+        },
+        {
+          "name": "full_tests",
+          "revision": "2decc57591d13d0dd5f918c0fb770034730bf5af",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "start_utc": "2026-10-28T05:36:53.220777Z",
+          "end_utc": "2026-10-28T05:40:24.850501Z",
+          "exit_code": 0,
+          "duration_seconds": 211.63,
+          "log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-full_tests.log",
+          "environment": "Existing pinned Python 3.12.3 CPU virtual environment; no dependencies installed; PYTHONPATH=.; external M3/M4 artifacts read-only.; Stockfish executable on PATH only for the configured UCI readiness smoke test.",
+          "effective_command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/share/stockfish:$PATH PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-full_tests.log.meta"
+        },
+        {
+          "name": "diff_check",
+          "revision": "2decc57591d13d0dd5f918c0fb770034730bf5af",
+          "command": "git diff-tree --check HEAD^ HEAD",
+          "start_utc": "2026-10-28T05:40:24.850726Z",
+          "end_utc": "2026-10-28T05:40:24.857869Z",
+          "exit_code": 0,
+          "duration_seconds": 0.007,
+          "log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-diff_check.log",
+          "environment": "Fresh clean GitHub clone; no dependency installation.",
+          "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-diff_check.log.meta"
+        },
+        {
+          "name": "clean_status",
+          "revision": "2decc57591d13d0dd5f918c0fb770034730bf5af",
+          "command": "git status --short --branch",
+          "start_utc": "2026-10-28T05:40:24.858003Z",
+          "end_utc": "2026-10-28T05:40:24.862293Z",
+          "exit_code": 0,
+          "duration_seconds": 0.004,
+          "log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-clean_status.log",
+          "environment": "Fresh clean GitHub clone; no dependency installation.",
+          "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-clean_status.log.meta"
+        },
+        {
+          "name": "m4_bundle",
+          "revision": "2decc57591d13d0dd5f918c0fb770034730bf5af",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.model.cli verify-artifacts /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4",
+          "start_utc": "2026-10-28T05:40:24.862445Z",
+          "end_utc": "2026-10-28T05:40:26.726127Z",
+          "exit_code": 0,
+          "duration_seconds": 1.864,
+          "log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-m4_bundle.log",
+          "environment": "Existing pinned Python 3.12.3 CPU virtual environment; no dependencies installed; PYTHONPATH=.; external M3/M4 artifacts read-only.",
+          "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-m4_bundle.log.meta"
+        },
+        {
+          "name": "transfer_engine_free",
+          "revision": "2decc57591d13d0dd5f918c0fb770034730bf5af",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/verify_m5_transfer.py /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4/pretrained-behavior-only.pt",
+          "start_utc": "2026-10-28T05:40:26.726290Z",
+          "end_utc": "2026-10-28T05:40:28.461382Z",
+          "exit_code": 0,
+          "duration_seconds": 1.735,
+          "log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-transfer_engine_free.log",
+          "environment": "Stockfish unavailable on PATH; separate process; existing pinned Python 3.12.3 CPU environment.",
+          "effective_command": "PATH=/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/verify_m5_transfer.py /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4/pretrained-behavior-only.pt",
+          "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-transfer_engine_free.log.meta"
+        },
+        {
+          "name": "m3_release_immutable",
+          "revision": "2decc57591d13d0dd5f918c0fb770034730bf5af",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.data.cli verify --release /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+          "start_utc": "2026-10-28T05:40:28.761250Z",
+          "end_utc": "2026-10-28T05:42:23.976840Z",
+          "exit_code": 0,
+          "duration_seconds": 115.216,
+          "log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-m3_release_immutable.log",
+          "unchanged": true,
+          "file_count": 9,
+          "file_sha256": {
+            "config.json": "75034de9d1dee2c48f56ecb1e7b54e11ae4c261fe9a95579ef69b0e93c00b304",
+            "games.jsonl": "526fc9966d4521dee92fc4bb7e011d9a59fce1dc703810a0ed3d6edbb2e154c7",
+            "manifest.json": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+            "manifest.sha256": "5f4c968a8885548565496b7652a6b060adc8778cfeaffb58dd4b7b8b18b9a2ae",
+            "positions.jsonl": "9db9676ecb64cc111e4310c83374348132ad4413cb0de7c1fe1878b89c89500d",
+            "rejections.jsonl": "fce94dc0c721fb84b45ccb812667b712030f4f327901d1a7ee19b4392524a42e",
+            "source_manifest.json": "f2ff571ce81a47b1191f7b57c2f2d16c48ebde6b334aeb6e82d7b173dc2b2935",
+            "split.json": "dbbcc00bdb5989fd8827c8e7beec3b4eea41f0bae3649ad9ffa2373b0d128193",
+            "stats.json": "3d0a217e94a826f38d54b402c921f145592c92760d39901c8b2cc2339dad68bd"
+          },
+          "environment": "Existing pinned Python 3.12.3 CPU virtual environment; no dependencies installed; PYTHONPATH=.; external M3/M4 artifacts read-only.",
+          "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-m3_release_immutable.log.meta"
+        }
       ]
     }
   ],
@@ -518,17 +673,18 @@
     "settings_modified": false
   },
   "checkpoint_archive_verification_at_tested_revision": {
-    "verified_revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
-    "records": 197,
-    "logical_sha256": "9b2cdb9d897399fafa47ef6a86ca265924e23e44cab268715136dc771c72ac6a",
+    "verified_revision": "2decc57591d13d0dd5f918c0fb770034730bf5af",
+    "records": 198,
+    "logical_sha256": "e48d753ec89f9a4a2cfb7ac5c56424a02992c63cb8715165b58bf58d4f40f351",
     "verification_status": "verified",
-    "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-archive.log",
-    "current_checkpoint_id": "cp-dc678a11-20261028T051845952059Z",
-    "last_archived_checkpoint_id": "cp-ab244916-20261028T050610409435Z"
+    "log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-archive.log",
+    "current_checkpoint_id": "cp-0011a1c0-20261028T053237571695Z",
+    "last_archived_checkpoint_id": "cp-dc678a11-20261028T051845952059Z"
   },
-  "verification_note": "The final code/test revision independently passed on a fresh clean clone at 0011a1c07e047cedf9394d70b2413cea74ba1437. The following evidence/checkpoint commit contains report, machine-readable records, captured sanitized logs and canonical context only; it does not alter implementation or test code. GitHub context CI is green on 0011a1c. PR #10 remains open and unmerged for independent PM review; the author does not merge.",
+  "verification_note": "Implementation and test sources are unchanged from 0011a1c07e047cedf9394d70b2413cea74ba1437. The exact pushed PR tree at 2decc57591d13d0dd5f918c0fb770034730bf5af was independently cloned and rerun through full regression, focused tests, artifact, preflight, archive, and CI checks; all passed. This report/evidence/checkpoint update contains no implementation or test-code changes. PR #10 remains open and unmerged for independent PM review; author merge and auto-merge are prohibited.",
   "captured_log_sha256": {
     ".agents/evidence/PRE-M5-final-clean-clone-0011a1c.json": "600f00d9d6f9a057a2ccbd013338d82f97d0ad77418cb2507adbed00b1b68f0b",
+    ".agents/evidence/PRE-M5-final-clean-clone-2decc57.sha256.json": "a1e0a85684a776ac97520d660b1b9e6c2f103059ce451de9230883aa8f8163d5",
     ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-archive.log": "30f937772ccbfa931c573622a5a7c7b4c59b3d19c886c9324f084eaaff93c287",
     ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-archive.log.meta": "06ff62989b81a1015415582dc1ddd37eef83986d5224a8f7d718ba9870cc10d6",
     ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-clean_status.log.meta": "573bdea62ba9c3fe53c9bf53d2fcfdb26c9449df8354c59aac5714458d607a82",
@@ -548,8 +704,31 @@
     ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-preflight.log.meta": "97591f127c1884dec7cbc5833eb442e13be43f96061696371ed5166ced9147a5",
     ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-transfer_engine_free.log": "2dbb330dc6d93d25dc69da2f987f0bea1dfaae3ca6cc0f789d8f107d98e492e5",
     ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-transfer_engine_free.log.meta": "9eff3e2e11d7e51c57343465b4180be86fa032cb1a0e7ee319ae5ec39e8b4644",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-archive.log": "a5ec68988ca2abde166e669fbba362249991a2b50b33b1982e07fe1a528b816b",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-archive.log.meta": "57af2a27718fe8204362b925aac075578b90d2855f364b49a5480c58937abca5",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-clean_status.log": "256005ace07cc7a3c6f5ea050f194d64b5d9ebb21682081feb0fed5b703bead3",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-clean_status.log.meta": "96d9219c4825c33d9cd7703c62ccf06020242200e8f80712967f183b4a4f9561",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-compile.log.meta": "02f92d5a971f95304aa98457f84c623dbe8147bc18d81050bc04a23c9ca50d51",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-context_tests.log": "13379bafbd3845b38b04cea6b683fcb2c66f969f574fe4010c5fc290ed1fd5e9",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-context_tests.log.meta": "6615be60454837f32dd59ae9722a612e9dcaf05bd18837566512c8cf87b0d8f6",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-diff_check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-diff_check.log.meta": "f43e2bfa2b7ecdd57577a033fc3fd878f8a8fd85ac555f4b6f0812b4cd7eb094",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-focused_tests.log": "57333efdbcf3cbbf2fa53ae94b8fe81115097c1eed2ba11445663a35e43f3bfd",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-focused_tests.log.meta": "b8e6395e4b2215668fdd41a9289a2999cd363bef928f9f5abed48e758bfda003",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-full_tests.log": "3e3a396b70c1a05d4a28692d66a60b74ff9e5d5d2eb6a01c511c2184dde10b2a",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-full_tests.log.meta": "ea4bdff200026f103ae53b5257c61242a482f8f79384c2d62b09c0ca98d6c119",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-m3_release_immutable.log": "ed976eb7387e7106ff5c7ef01712be17a4be5737e5a99a6df92e4e2ff9dd0fc5",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-m3_release_immutable.log.meta": "a37e1da5db5762fa2993e7ecee66323b2a693c8f615e150edb1d15be98800bfb",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-m4_bundle.log": "334e16f50e5678b85dd5dbf8803540414622870cc4c76e53a1acaa513f1429f8",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-m4_bundle.log.meta": "c214941d301eeada37be35ce797c52ce6573058eb7da7db909efcc905f74f3cf",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-preflight.log": "efb4ea02fa264b5adad758e51b1d9ef4c8b51b293f8aebeddb28a2e304435908",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-preflight.log.meta": "5179819f6b92647078210bfe60ba963e4eb118780ccadf893a2c38ce7cd84cc5",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-transfer_engine_free.log": "2dbb330dc6d93d25dc69da2f987f0bea1dfaae3ca6cc0f789d8f107d98e492e5",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-transfer_engine_free.log.meta": "1bf6c05738ccfd0f975c8007b31b31387a350011179ec0e9c0d37ef7b11e05ae",
     ".agents/evidence/logs/PRE-M5-final-prhead-dc678a1-focused-tests-failed.log": "1f052c968267ee1257bebfa8047ac038af3a9b85d8e58594bf7b45da8cf641d7",
     ".agents/evidence/logs/PRE-M5-m3-timing-diagnostic-dc678a1-isolated-failed.log": "a483954a07915cecba86f0d6d4bcc4055b9e71611499929d7d638625f0f0eca1",
-    ".agents/evidence/logs/PRE-M5-m3-timing-diagnostic-dc678a1-isolated-passed.log": "2b37adffc5e2278d6e1bcf0f51f60f5a6d027329a6caebe3e35a467508bc2f8d"
+    ".agents/evidence/logs/PRE-M5-m3-timing-diagnostic-dc678a1-isolated-passed.log": "2b37adffc5e2278d6e1bcf0f51f60f5a6d027329a6caebe3e35a467508bc2f8d",
+    ".agents/evidence/PRE-M5-final-clean-clone-2decc57.json": "f5959acbce6cf17333ff39b187c30f1cbaa563ffa581aa3239f24cb515fcecd7"
   }
 }
