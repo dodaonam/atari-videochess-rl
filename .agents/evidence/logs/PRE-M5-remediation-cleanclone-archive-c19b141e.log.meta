@@ -1,0 +1,11 @@
+check=archive
+revision=c19b141e3d2bc1440fd1a9afb89c12cfd1704d95
+start_utc=2026-10-28T07:26:28.925101+00:00
+end_utc=2026-10-28T07:26:29.310556+00:00
+duration_seconds=0.385455
+exit_code=0
+test_count=not_detected
+command=python3 scripts/migrate_checkpoint_history.py verify
+environment=Existing pinned Python 3.12.3 CPU venv where applicable; no dependency installation.
+result=PASS
+log_path=/tmp/PRE-M5-cleanclone-archive-c19b141e.log

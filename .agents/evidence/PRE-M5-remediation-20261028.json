@@ -206,24 +206,143 @@
     {
       "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
       "id": "PM5-R12",
-      "limitation": "",
+      "limitation": "All available local and clean-clone suites passed, but exact pushed PR-head GitHub CI has not yet been observed.",
       "status": "NOT_RUN"
     }
   ],
-  "report_generated_at_utc": "2026-10-28T07:13:56Z",
+  "report_generated_at_utc": "2026-10-28T07:30:41.923239+00:00",
   "repository": {
     "base_branch": "initial-idea",
     "base_sha": "906178775d48e98e64c709673bfe73177dd15c02",
     "baseline_pr_head_at_inspection": "ffd924efe69746c192df56905eac34ccc689f106",
+    "clean_clone_revision": "c19b141e3d2bc1440fd1a9afb89c12cfd1704d95",
     "existing_pr": 10,
     "feature_branch": "feature/pre-m5-readiness",
-    "local_engineering_revision": "1cc043965de57e3ef93477832b47e3baa6d01ffa",
+    "local_engineering_revision": "c19b141e3d2bc1440fd1a9afb89c12cfd1704d95",
+    "pr_head_before_push": "ffd924efe69746c192df56905eac34ccc689f106",
     "pr_url": "https://github.com/dodaonam/atari-videochess-rl/pull/10",
     "url": "https://github.com/dodaonam/atari-videochess-rl"
   },
   "schema": "videochess-pre-m5-remediation/1.0",
-  "status": "engineering_verification_in_progress",
+  "status": "candidate_verified_waiting_exact_head_ci",
   "verification": {
+    "final_candidate_checks": {
+      "candidate_revision": "c19b141e3d2bc1440fd1a9afb89c12cfd1704d95",
+      "clean_clone": {
+        "archive": {
+          "exit_code": 0,
+          "log": ".agents/evidence/logs/PRE-M5-remediation-cleanclone-archive-c19b141e.log",
+          "logical_sha256": "9c4eb7e2e4525db09ef5bd01eda9ea12a7b0a44895335368c327c571b58ceaf2",
+          "record_count": 201,
+          "status": "PASS"
+        },
+        "full_suite": {
+          "exit_code": 0,
+          "log": ".agents/evidence/logs/PRE-M5-remediation-cleanclone-full_suite-c19b141e.log",
+          "status": "PASS",
+          "test_count": 324
+        },
+        "path": "/tmp/atari-pre-m5-remediation-clean-c19",
+        "preflight": {
+          "exit_code": 0,
+          "log": ".agents/evidence/logs/PRE-M5-remediation-cleanclone-preflight-c19b141e.log",
+          "status": "PASS",
+          "warning": "ARTIFACT_MANIFEST_REQUIRED only"
+        },
+        "revision": "c19b141e3d2bc1440fd1a9afb89c12cfd1704d95",
+        "static_checks": {
+          "exit_code": 0,
+          "log_prefix": ".agents/evidence/logs/PRE-M5-remediation-cleanclone-",
+          "status": "PASS"
+        },
+        "transfer_engine_free": {
+          "exit_code": 0,
+          "log": ".agents/evidence/logs/PRE-M5-remediation-cleanclone-transfer_engine_free-c19b141e.log",
+          "status": "PASS"
+        },
+        "worktree_clean_after_verification": true
+      },
+      "failed_precheckpoint_attempts": [
+        {
+          "cause": "Evidence report links were not present in committed HEAD during clean-clone tests.",
+          "exit_code": 1,
+          "failures": 4,
+          "log": ".agents/evidence/logs/PRE-M5-remediation-full-suite-before-evidence-links-1cc04396.log",
+          "tests": 324
+        },
+        {
+          "cause": "The report/checkpoint were still not committed/refreshed when tests created their clean clone.",
+          "exit_code": 1,
+          "failures": 2,
+          "log": ".agents/evidence/logs/PRE-M5-remediation-full-suite-uncommitted-evidence-1cc04396.log",
+          "tests": 324
+        }
+      ],
+      "github_ci": {
+        "note": "The branch has not yet been pushed. The exact pushed PR head and CI run will be inspected before the PR handoff; CI is not represented as a full Python regression suite.",
+        "status": "NOT_RUN_ON_UPDATED_HEAD"
+      },
+      "main_worktree": {
+        "archive": {
+          "exit_code": 0,
+          "log": ".agents/evidence/logs/PRE-M5-remediation-archive-c19b141e.log",
+          "logical_sha256": "9c4eb7e2e4525db09ef5bd01eda9ea12a7b0a44895335368c327c571b58ceaf2",
+          "record_count": 201,
+          "status": "PASS"
+        },
+        "context_recovery_tests": {
+          "exit_code": 0,
+          "log": ".agents/evidence/logs/PRE-M5-remediation-context_recovery-c19b141e.log",
+          "status": "PASS",
+          "test_count": 79
+        },
+        "focused_tests": {
+          "exit_code": 0,
+          "log": ".agents/evidence/logs/PRE-M5-remediation-focused-c19b141e.log",
+          "status": "PASS",
+          "test_count": 132
+        },
+        "full_suite": {
+          "exit_code": 0,
+          "log": ".agents/evidence/logs/PRE-M5-remediation-full_suite-c19b141e.log",
+          "status": "PASS",
+          "test_count": 324
+        },
+        "m3_release": {
+          "exit_code": 0,
+          "log": ".agents/evidence/logs/PRE-M5-remediation-m3_release-c19b141e.log",
+          "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+          "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+          "split_sha256": "84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e",
+          "status": "PASS"
+        },
+        "m4_transfer_engine_free": {
+          "checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+          "exit_code": 0,
+          "log": ".agents/evidence/logs/PRE-M5-remediation-transfer_engine_free-c19b141e.log",
+          "status": "PASS",
+          "stockfish_available": false
+        },
+        "m5_contract_tests": {
+          "exit_code": 0,
+          "log": ".agents/evidence/logs/PRE-M5-remediation-m5_contract-c19b141e.log",
+          "status": "PASS",
+          "test_count": 5
+        },
+        "preflight": {
+          "exit_code": 0,
+          "log": ".agents/evidence/logs/PRE-M5-remediation-preflight-c19b141e.log",
+          "status": "PASS",
+          "warning": "ARTIFACT_MANIFEST_REQUIRED only"
+        },
+        "profile_tests": {
+          "exit_code": 0,
+          "log": ".agents/evidence/logs/PRE-M5-remediation-profile_tests-c19b141e.log",
+          "status": "PASS",
+          "test_count": 3
+        }
+      }
+    },
     "focused_contract_tests": {
       "environment": "system Python 3.12 stdlib",
       "exit_code": 0,
