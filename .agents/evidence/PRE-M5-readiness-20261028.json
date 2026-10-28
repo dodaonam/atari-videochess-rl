@@ -1,7 +1,7 @@
 {
   "schema": "videochess-pre-m5-readiness/1.0",
-  "report_generated_at_utc": "2026-10-28T04:24:09.723363Z",
-  "status": "ready_for_independent_pm_review",
+  "report_generated_at_utc": "2026-10-28T04:35:47.732942Z",
+  "status": "verification_in_progress",
   "repository": "dodaonam/atari-videochess-rl",
   "baseline": {
     "branch": "initial-idea",
@@ -11,7 +11,9 @@
   "feature": {
     "branch": "feature/pre-m5-readiness",
     "verified_source_revision": "5f73b4e2752a03a9698bfe747d3fdd33de6c1255",
-    "worktree_clean_at_verification": true
+    "worktree_clean_at_verification": true,
+    "working_tree_clean_at_verification": false,
+    "candidate_change_base_revision": "b8bb37910e06fd6d68e5adf384592bf525761e8e"
   },
   "pull_request": {
     "number": 10,
@@ -20,7 +22,7 @@
     "draft": false,
     "target_branch": "initial-idea",
     "target_sha_at_verification": "906178775d48e98e64c709673bfe73177dd15c02",
-    "head_sha_at_verification": "5f73b4e2752a03a9698bfe747d3fdd33de6c1255",
+    "head_sha_at_verification": "b8bb37910e06fd6d68e5adf384592bf525761e8e",
     "merged": false,
     "merge_attempted": false,
     "review_decision": "awaiting_independent_pm_review"
@@ -165,16 +167,17 @@
     {
       "id": "PM5-R07",
       "status": "PASS",
-      "evidence_path": "docs/04-research/M5_EXPERIMENT_PROTOCOL.md",
-      "verification_method": "Protocol/configuration review.",
-      "verification_revision": "5f73b4e2752a03a9698bfe747d3fdd33de6c1255",
-      "verification_command": "Manual review of versioned protocol and configs/rl/m5-double-dqn-v1.json",
-      "start_utc": null,
-      "end_utc": null,
-      "exit_code": null,
-      "result": "Comparison arms, pairing, compute accounting, evaluation, stop rules, statistics, and limitations are specified.",
-      "limitation": "All proposed M5 values await separate authorization; no M5 learning run.",
-      "reviewed_at_utc": "2026-10-28T04:24:09.723363Z"
+      "evidence_path": ".agents/evidence/logs/PRE-M5-evaluation-schedule-regression-20261028.log",
+      "verification_method": "Protocol/config cross-check and a new deterministic count consistency regression.",
+      "verification_revision": "b8bb37910e06fd6d68e5adf384592bf525761e8e",
+      "verification_command": "PYTHONPATH=. <pinned-venv-python> -m unittest tests.test_m5_contract_fixtures -v",
+      "start_utc": "2026-10-28T04:35:38.670773875Z",
+      "end_utc": "2026-10-28T04:35:38.726749551Z",
+      "exit_code": 0,
+      "result": "One game per evaluation seed/opponent/color gives 40 games per checkpoint and 360 across nine checkpoints; 20-minute checkpoint and three-hour aggregate caps agree between config and protocol.",
+      "limitation": "This focused result ran against the candidate changes in a dirty worktree; exact pushed-head verification and CI remain pending.",
+      "reviewed_at_utc": "2026-10-28T04:24:09.723363Z",
+      "working_tree_dirty": true
     },
     {
       "id": "PM5-R08",
@@ -205,16 +208,16 @@
     },
     {
       "id": "PM5-R10",
-      "status": "PASS",
+      "status": "NOT_RUN",
       "evidence_path": "docs/06-quality/M5_TEST_MATRIX.md",
       "verification_method": "Future verification matrix reviewed; CI ran standard-library context and DDQN oracle tests.",
-      "verification_revision": "5f73b4e2752a03a9698bfe747d3fdd33de6c1255",
+      "verification_revision": null,
       "verification_command": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/40631700820/job/122629330765",
       "start_utc": "2026-10-28T04:19:49Z",
       "end_utc": "2026-10-28T04:20:27Z",
       "exit_code": 0,
       "result": "Matrix maps future M5 requirements to tests/commands/evidence; exact PR workflow passed.",
-      "limitation": "CI does not run PyTorch or implement/test a DDQN learner; full local suite is separately recorded."
+      "limitation": "Updated fixture test passed locally, but exact-head clean-clone rerun and PR CI for the correction are pending."
     },
     {
       "id": "PM5-R11",
@@ -232,10 +235,10 @@
     },
     {
       "id": "PM5-R12",
-      "status": "PASS",
+      "status": "NOT_RUN",
       "evidence_path": ".agents/evidence/PRE-M5-readiness-20261028.md",
       "verification_method": "Clean GitHub clone of exact pushed PR source revision; preflight, archive, compile, diff, focused/context/full regression, M3/M4 verification, transfer, and clean status.",
-      "verification_revision": "5f73b4e2752a03a9698bfe747d3fdd33de6c1255",
+      "verification_revision": null,
       "runs": [
         {
           "name": "preflight",
@@ -339,7 +342,7 @@
       },
       "exit_code": 0,
       "result": "All mandatory checks passed on source revision 5f73b4e; the one initial full-suite attempt failed only because its PATH omitted the existing configured Stockfish binary, and the unmodified full suite passed when the executable was exposed for its readiness-only smoke test.",
-      "limitation": "The GitHub workflow covers context/preflight and standard-library M5 target oracles, not the full PyTorch regression suite."
+      "limitation": "The schedule/config/test correction has not yet been pushed and verified on an exact clean PR head."
     }
   ],
   "profile": {
@@ -356,7 +359,8 @@
     "The accepted M3/M4 artifacts are external local-only files; they are not included in Git.",
     "M4 PR #8 and #9 have no recorded GitHub review submissions in inspected review metadata; engineering retrospective does not substitute for PM review.",
     "initial-idea is unprotected and no ruleset was configured; settings were not changed.",
-    "The M3 third-party package redistribution license remains unverified; no data was redistributed."
+    "The M3 third-party package redistribution license remains unverified; no data was redistributed.",
+    "The final schedule/config consistency correction is local and awaiting exact-head clean-clone verification and updated GitHub CI."
   ],
   "github_governance_readonly": {
     "checked_at_utc": "2026-10-28T04:23:07Z",

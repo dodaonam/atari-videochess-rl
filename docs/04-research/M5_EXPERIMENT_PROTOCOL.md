@@ -52,11 +52,11 @@ Use only fixed-schedule checkpoints. The primary result is the model at exactly 
 Frozen evaluation conditions:
 
 - `RandomLegalAgent` and `SimpleHeuristicAgent`, exact code versions/configs.
-- Seeds `20261130`–`20261139`, both agent colors for each opponent and seed: 40 games per checkpoint.
+- Seeds `20261130`–`20261139`. For each policy checkpoint, play one game for every `(evaluation seed, opponent, agent color)` combination: 10 seeds × 2 opponents × 2 colors × 1 game = **40 games per policy checkpoint**. The comparison has nine checkpoints: one frozen M4 behavior policy, three warm Double DQN seed checkpoints, three scratch Double DQN seed checkpoints, and one checkpoint for each of the two fixed baseline policies. The complete schedule is **360 games** when all checkpoints finish. A policy checkpoint is frozen before its schedule; baseline policies are evaluated under the same game conditions, including their baseline-versus-baseline opponent condition.
 - Standard initial board only; no opening book or custom positions.
 - Maximum 400 agent decisions/game. Record a cap as truncation separately from terminal W/D/L.
-- Same paired game IDs and conditions for A–E and each trained B/C seed where the policy permits; preserve opponent RNG seeds. No training/evaluation RNG sharing.
-- 40-game frozen test schedule occurs once after each final checkpoint is frozen. Interim development checks, if necessary, use different explicitly named seeds and cannot replace the frozen results.
+- Same paired game IDs and conditions for all nine checkpoints; preserve opponent RNG seeds. No training/evaluation RNG sharing.
+- The frozen 40-game schedule occurs once per checkpoint after that checkpoint is frozen. Interim development checks, if necessary, use different explicitly named seeds and cannot replace the frozen results.
 
 Report per-game outcomes, terminations/truncations, decision counts, colors, seed, opponent, policy errors, latency, and wall time. Summarize W/D/L by opponent and color. Provide paired differences for B versus C and each post-RL policy versus its own initialization. Include raw counts and Wilson 95% intervals for proportions; note that games sharing seed/opponent are paired and not independent. Do not report Elo without a separate calibrated pool and approved rating protocol.
 
@@ -69,7 +69,7 @@ Proposed caps are deliberately independent of M4's budget:
 - Three seeds × two DDQN arms; 10,000 valid agent decisions/run, 45 minutes/run.
 - Six-hour aggregate CPU wall cap for the M5 paired training campaign, including failed/restarted runs; counters do not reset across new run IDs.
 - 2 GiB maximum process RSS, 4,096 replay transitions, batch size 32, and 1 GiB per-run artifact directory cap.
-- One 40-game frozen evaluation per checkpoint/seed, 20-minute aggregate cap per evaluation schedule; report any unfinished games honestly.
+- One 40-game frozen evaluation per policy checkpoint, maximum 20 minutes per checkpoint and a three-hour aggregate hard cap for all nine schedules; report unfinished games honestly. The planned maximum is 360 games; if the aggregate cap is reached, retain partial results and do not fill missing schedules with invented outcomes.
 - No paid/GPU/Colab allocation, external upload, or new persistent storage. A future mission must authorize those separately.
 
 Hard-stop on nonfinite outputs/targets/gradients, corrupt or incompatible state, repeated illegal transition, state/history mismatch, opponent failure, checkpoint integrity failure, resource cap, or accumulated campaign budget exhaustion. Preserve the last verified completed-episode checkpoint and failure diagnostics. Do not silently alter the paired budgets, hyperparameters, opponent mix, or acceptance criteria. If feasibility profiling predicts the comparison cannot fit, reduce neither arm selectively; report the constrained design before M5 authorization.

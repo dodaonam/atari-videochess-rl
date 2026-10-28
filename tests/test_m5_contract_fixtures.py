@@ -9,9 +9,34 @@ from pathlib import Path
 
 
 FIXTURE = Path(__file__).parent / "fixtures" / "m5_double_dqn_targets.json"
+REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 
 
 class M5DoubleDqnFixtureTests(unittest.TestCase):
+    def test_proposed_evaluation_schedule_matches_config_and_protocol(self) -> None:
+        config = json.loads((REPOSITORY_ROOT / "configs/rl/m5-double-dqn-v1.json").read_text(encoding="utf-8"))
+        protocol = (REPOSITORY_ROOT / "docs/04-research/M5_EXPERIMENT_PROTOCOL.md").read_text(encoding="utf-8")
+        evaluation = config["evaluation"]
+        checkpoints = evaluation["policy_checkpoints"]
+        checkpoint_count = sum(value for key, value in checkpoints.items() if key != "total")
+        games_per_checkpoint = (
+            len(evaluation["seeds"])
+            * len(config["environment"]["opponents"])
+            * len(config["environment"]["agent_colors"])
+            * evaluation["games_per_opponent_per_color_per_seed"]
+        )
+
+        self.assertTrue(evaluation["both_agent_colors"])
+        self.assertEqual(checkpoint_count, checkpoints["total"])
+        self.assertEqual(games_per_checkpoint, evaluation["games_per_policy_checkpoint"])
+        self.assertEqual(games_per_checkpoint * checkpoint_count, evaluation["planned_total_games"])
+        self.assertEqual(evaluation["games_per_policy_checkpoint"], 40)
+        self.assertEqual(evaluation["planned_total_games"], 360)
+        self.assertEqual(evaluation["max_wall_minutes_per_checkpoint"], 20)
+        self.assertEqual(evaluation["aggregate_wall_hours_hard_cap"], 3)
+        self.assertIn("40 games per policy checkpoint", protocol)
+        self.assertIn("complete schedule is **360 games**", protocol)
+
     def test_online_target_disagreement_uses_online_action_in_target_value(self) -> None:
         document = json.loads(FIXTURE.read_text(encoding="utf-8"))
         self.assertEqual(document["schema"], "videochess-m5-double-dqn-target-fixture/1.0")

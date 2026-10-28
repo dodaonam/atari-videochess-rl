@@ -19,7 +19,7 @@
 | Scratch comparison | Same architecture/config, deterministic independent initialization, equal budgets and matched environment stream. | Architecture/state keys match; initialization provenance differs only as declared; pairing is retained. |
 | Checkpoint/resume | Online/target/optimizer/replay/RNG/counter round trip at episode boundary; hashes; schema mismatch; missing/truncated/tampered checkpoint; interrupted temp write; previous-good retention. | Restored counters/RNG/replay behavior match the documented boundary contract; corrupt candidate is rejected without destroying previous-good checkpoint. |
 | Deterministic smoke | Small fixed transitions and a few CPU updates. | Finite, reproducible targets/loss/action mapping. This is a correctness smoke test, not evidence of useful learning. |
-| Evaluation | Frozen checkpoint, epsilon zero, no replay writes/gradients, paired seed/color/opponent identity, truncation vs terminal accounting, confidence interval. | Same checkpoint/config reproduces records; all failures/exclusions remain visible. |
+| Evaluation | Frozen checkpoint, epsilon zero, no replay writes/gradients, paired seed/color/opponent identity, truncation vs terminal accounting, confidence interval; 10 evaluation seeds × 2 opponents × 2 colors × 1 game = 40 games per checkpoint, nine checkpoints total. | Same checkpoint/config reproduces records; all failures/exclusions remain visible; config/protocol game-count consistency test passes. |
 | Provenance and policy | Artifact/config hashes, run IDs, compute counters, Stockfish absence, no Stable-Baselines/RLlib, simulator/ALE labeling. | Manifest verifies; forbidden dependencies/claims are absent. |
 
 ## Exact target oracle

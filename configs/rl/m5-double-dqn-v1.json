@@ -73,8 +73,20 @@
   "evaluation": {
     "seeds": [20261130, 20261131, 20261132, 20261133, 20261134, 20261135, 20261136, 20261137, 20261138, 20261139],
     "both_agent_colors": true,
-    "games_per_opponent_per_color": 10,
+    "games_per_opponent_per_color_per_seed": 1,
+    "games_per_policy_checkpoint": 40,
+    "policy_checkpoints": {
+      "m4_behavior_only": 1,
+      "warm_double_dqn_seed": 3,
+      "scratch_double_dqn_seed": 3,
+      "random_legal_baseline": 1,
+      "simple_heuristic_baseline": 1,
+      "total": 9
+    },
+    "planned_total_games": 360,
     "max_agent_decisions_per_game": 400,
+    "max_wall_minutes_per_checkpoint": 20,
+    "aggregate_wall_hours_hard_cap": 3,
     "model_selection_uses_test_outcomes": false,
     "interim_results_can_replace_frozen_schedule": false,
     "statistics": ["raw_wdl_counts", "wilson_95_percent_interval", "paired_policy_difference"]
