@@ -33,6 +33,15 @@ class M5DoubleDqnFixtureTests(unittest.TestCase):
         self.assertIsNone(terminal["expected_online_action_uci"])
         self.assertEqual(terminal["expected_bellman_target"], terminal["reward_agent"])
 
+        automatic_draw = cases["automatic_draw_terminal_has_raw_board_moves_but_no_bootstrap_candidates"]
+        self.assertEqual(automatic_draw["termination"], "seventyfive_moves")
+        self.assertIn("test_seventyfive_move_rule_is_automatic_after_full_transition", automatic_draw["source_test"])
+        self.assertTrue(automatic_draw["terminal_fen"])
+        self.assertGreater(automatic_draw["raw_board_legal_uci_count"], 0)
+        self.assertEqual(automatic_draw["legal_uci"], [])
+        self.assertEqual(automatic_draw["bootstrap_mask"], 0)
+        self.assertEqual(automatic_draw["expected_bellman_target"], 0.0)
+
         truncated = cases["valid_time_limit_truncation_bootstraps"]
         self.assertTrue(truncated["legal_uci"])
         self.assertEqual(truncated["bootstrap_mask"], 1)

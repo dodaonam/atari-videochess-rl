@@ -28,7 +28,7 @@ Versioned replay record `videochess-ddqn-transition/1.0`:
 | `action_uci` | Exactly one member of `legal_uci`, parsed and revalidated at `step()`. |
 | `reward_agent` | `+1` win, `-1` loss, `0` automatic draw or nonterminal transition. |
 | `terminated`, `truncated` | Mutually exclusive simulator stop flags. |
-| `next_history_uci`, `next_legal_uci` | Complete final history and authoritative legal set after the action/reply; retain for valid truncations. |
+| `next_history_uci`, `next_legal_uci` | Complete final history and the model-boundary candidate set after the action/reply. For a live nonterminal state, including a valid time-limit truncation, `next_legal_uci` is the exact sorted authoritative Board legal set. For a true terminal, it is explicitly empty because no bootstrap action exists, even if an automatic draw leaves syntactically legal chess moves on the final Board. |
 | `outcome_reason`, `truncation_reason` | Preserve the simulator's explicit termination/truncation reason. |
 | `bootstrap_valid` | True only when a verified final nonterminal state and legal candidate set exist. |
 
@@ -51,7 +51,7 @@ Do not negate rewards by side-to-move; the agent color stays fixed for an episod
 
 The discount is per agent decision, including the opponent reply in that simulator step. Proposed starting `gamma = 0.99`; it is a versioned experiment configuration value, not a claim of optimality.
 
-For a true chess terminal (`terminated=true`), the bootstrap mask is zero even if the terminal Board has syntactically legal moves (for example, an automatic draw). The terminal next candidate set is empty at the rules/model boundary and no max/argmax is evaluated.
+For a true chess terminal (`terminated=true`), the bootstrap mask is zero even if the terminal Board has syntactically legal moves (for example, an automatic draw). Replay validation still reconstructs the complete final Board/history and verifies `Board.outcome(claim_draw=False)` and the simulator's outcome reason. It must not require the raw Board legal set to be empty for such a draw. The MDP/model-boundary `next_legal_uci` candidate set is empty because the state is terminal, and no model call, max, or argmax is evaluated. For a nonterminal transition or a valid time-limit truncation, `next_legal_uci` must exactly match the sorted Board legal UCI set and must be nonempty.
 
 For the existing M2 `max_agent_decisions` time-limit truncation, if `StepResult.observation` and its complete history/legal set are valid and the Board has no automatic terminal outcome, set `bootstrap_mask=1` and bootstrap from that final observation. This is a continuing-task time limit; do not convert it into a terminal draw. `terminated` and `truncated` must not both be true. A runner interruption, process crash, failed opponent action, missing/invalid final observation, or unverifiable state is an invalid incomplete transition and is discarded, not bootstrapped and not converted into a synthetic terminal.
 

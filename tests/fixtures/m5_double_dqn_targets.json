@@ -26,6 +26,21 @@
       "expected_bellman_target": -1.0
     },
     {
+      "id": "automatic_draw_terminal_has_raw_board_moves_but_no_bootstrap_candidates",
+      "termination": "seventyfive_moves",
+      "source_test": "tests.test_m2_simulator.ChessSimulatorTests.test_seventyfive_move_rule_is_automatic_after_full_transition",
+      "terminal_fen": "6k1/8/6K1/8/8/8/R7/8 w - - 150 76",
+      "raw_board_legal_uci_count": 19,
+      "legal_uci": [],
+      "q_online_by_uci": {},
+      "q_target_by_uci": {},
+      "reward_agent": 0.0,
+      "bootstrap_mask": 0,
+      "expected_online_action_uci": null,
+      "expected_target_value": null,
+      "expected_bellman_target": 0.0
+    },
+    {
       "id": "valid_time_limit_truncation_bootstraps",
       "legal_uci": ["b1c3", "g1f3"],
       "q_online_by_uci": {"b1c3": 0.4, "g1f3": 0.8},

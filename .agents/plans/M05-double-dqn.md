@@ -1,6 +1,6 @@
 # M05 — Double DQN and Simulator Learning Plan
 
-**Plan revision:** `m05-execution/1.0`, prepared 2026-10-28. **Status:** ready for independent PM review as a plan; M5 is not authorized, not active, and no M5 learner/training is implemented here. This plan does not approve G3 or permit PR merge by its author.
+**plan_id:** `M05-double-dqn`. **Milestone:** M5. **Plan status:** ready for independent PM review as a plan. **Plan revision:** `m05-execution/1.0`, prepared 2026-10-28. **Source requirements:** `docs/01-foundation/REQUIREMENTS.md` §§1, 3–7 and M5-01 through M5-05 in `docs/06-quality/ACCEPTANCE_CRITERIA.md`. **Relevant decisions:** ADR-0001, ADR-0002, ADR-0003. **Task:** M5-001. M5 is not authorized, not active, and no M5 learner/training is implemented here. This plan does not approve G3 or permit PR merge by its author.
 
 ## 1. Objective and boundary
 
@@ -96,4 +96,4 @@ Do not reset usage counters by creating a new run ID. Do not use test outcomes f
 
 M5 depends on accepted M2 simulator contracts, M3 dataset identity only when that dataset is explicitly needed for warm-start provenance, and M4 behavior representation/checkpoint. The M5 learner is a fresh RL objective with separate optimizer/replay/targets. The M4 logits are never reused as Q targets. Current state is governed by `PROJECT_STATE.yaml`; M5-001 remains pending, active milestone/task null, `start_authorized: false`, and G3 unapproved until a future direct authorization and canonical transition.
 
-The eventual M5 PR must include exact code/config revisions, commands/exits/timestamps, test logs, both-arm manifests, initialization/final checkpoint identities, transfer evidence, all per-seed outcomes, simulator-only limitations, resource accounting, clean-clone verification, CI scope, and explicit next gate/task state. Await independent PM review and an external authorized operator decision for merge.
+The eventual M5 closeout may update `M5-001` and canonical milestone state to complete only after all five M5 acceptance criteria have current verified evidence and final state/backlog checks pass. Engineering completion, PM acceptance, repository integration, G3 approval, and M6 authorization remain separate statuses. The M5 PR must include exact code/config revisions, commands/exits/timestamps, test logs, both-arm manifests, initialization/final checkpoint identities, transfer evidence, all per-seed outcomes, simulator-only limitations, resource accounting, clean-clone verification, CI scope, and explicit next gate/task state. Await independent PM review and an external authorized operator decision for merge.

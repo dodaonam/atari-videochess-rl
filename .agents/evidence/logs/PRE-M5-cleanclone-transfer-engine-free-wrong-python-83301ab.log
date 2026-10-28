@@ -1,0 +1,15 @@
+check: transfer_engine_free
+revision: 83301abf6b85441d4fa63eab1376127066c4cdb1
+start_utc: 2026-10-28T04:06:26.012151+00:00
+end_utc: 2026-10-28T04:06:26.122361+00:00
+command: python3 scripts/verify_m5_transfer.py /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4/pretrained-behavior-only.pt
+exit_code: 1
+worktree_before: clean
+
+--- stdout ---
+
+--- stderr ---
+Traceback (most recent call last):
+  File "/tmp/atari-pre-m5-clean-83301ab/scripts/verify_m5_transfer.py", line 18, in <module>
+    import chess
+ModuleNotFoundError: No module named 'chess'

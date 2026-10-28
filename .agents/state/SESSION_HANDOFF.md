@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-90617877-20261028T040001445662Z -->
+<!-- checkpoint-id: cp-83301abf-20261028T041125807118Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -18,7 +18,9 @@ Use `.agents/state/PROJECT_STATE.yaml` and `.agents/tasks/BACKLOG.yaml` for cano
 
 The required next action is independent PM review of the open Pre-M5 PR. The PR author must not merge or self-approve as PM; see [PR_REVIEW_AND_INTEGRATION.md](../../docs/02-management/PR_REVIEW_AND_INTEGRATION.md). M5 remains pending separate direct authorization; no learner/training has started, `start_authorized` is false, and G3 is unapproved. Preserve the local-only accepted M3/M4 artifacts and append-only RSK-010 archive.
 
-## M4 acceptance and integration pointers (historical evidence)
+## M4 acceptance and integration pointers
+
+M4-001 and M4 are complete and integrated through PR #8 at `c0a284304d602817922772d08f0ff7904af7ae20`; PR #9 integrated its post-merge evidence at `906178775d48e98e64c709673bfe73177dd15c02`. Use [M4 final acceptance](../evidence/M4-final-acceptance-20261027.md) and [post-merge verification](../evidence/M4-postmerge-delivery-verification-20261027.md) for the criteria, exact local artifact identities, logs, and limitations. This historical acceptance does not approve the current Pre-M5 PR, authorize M5, or approve G3.
 
 ## M3 closeout and Pre-M4 pointers (historical)
 
