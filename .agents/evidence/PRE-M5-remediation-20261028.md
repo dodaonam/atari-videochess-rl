@@ -142,3 +142,20 @@ The earlier full-suite diagnostic on the dirty feature worktree ran 336 tests bu
 | PM5-R12 | PASS | `ef1ffae` fresh clone: preflight/archive/static, focused 141, full 336, M3/M4 artifact checks, and clean status all passed. | Final PR push/CI and exact remote-head verification remain pending and will be recorded before handoff. |
 
 At this point the technical F05 finding is resolved and the committed candidate passes the full clean-clone suite. Final remote branch/PR/CI state must be checked on the pushed head; the PR author still stops before PM acceptance and merge.
+
+## Final delivery addendum — exact pushed-head verification (2026-10-28)
+
+This addendum supersedes the earlier “push pending” statements above. The final candidate checked during this delivery is `45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83` on `feature/pre-m5-readiness`, based on `initial-idea` `906178775d48e98e64c709673bfe73177dd15c02`.
+
+| Check | Result | Evidence |
+|---|---|---|
+| Live PR metadata | PR #10 is OPEN, non-draft, mergeable, targets `initial-idea`, and remains unmerged; auto-merge is null. Base and head SHAs match the values above. | GitHub PR API queried 2026-10-28; [PR #10](https://github.com/dodaonam/atari-videochess-rl/pull/10). No merge or review submission was made. |
+| GitHub CI on exact head | PASS; `Repository preflight`, run `40662819083`, job `context`, exit 0, completed 2026-10-28T09:16:08Z on `45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83`. It runs canonical preflight plus standard-library context/bundle/M5 contract-oracle coverage, not the full project suite. | [Workflow run](https://github.com/dodaonam/atari-videochess-rl/actions/runs/40662819083); [context job](https://github.com/dodaonam/atari-videochess-rl/actions/runs/40662819083/job/122729795571). |
+| Fresh GitHub clone full suite | PASS; 336 tests in 208.847 s, exit 0, from 2026-10-28T09:16:35Z to 09:20:06Z UTC, at exact head `45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83`. Existing local Stockfish path was exposed only for the pre-existing M0 UCI readiness smoke test. | `logs/PRE-M5-F05-finalhead-45b9-full-suite.log` and `.meta.json`. |
+| Fresh-clone repository preflight | PASS, exit 0; M4 done, M5-001 pending, no active task, `start_authorized=false`, G3 unapproved, portable manifest matches. The one warning is the expected `ARTIFACT_MANIFEST_REQUIRED` reminder for local artifact directories. | `logs/PRE-M5-F05-finalhead-45b9-preflight.log` and `.meta.json`. |
+| Checkpoint-history archive | PASS, exit 0; 208 records, logical SHA-256 `bb234c1c171280f258a69ed9cffc1a2ca1b3f1a4192eff1e796427fa53374f11`. | `logs/PRE-M5-F05-finalhead-45b9-archive.log` and `.meta.json`. |
+| Static/diff and clean checkout | Python compilation, M5 JSON parsing, `git diff --check` against `initial-idea`, and clean status on the fresh clone all passed. | `logs/PRE-M5-F05-finalhead-45b9-static.log` and `.meta.json`. |
+
+The 2026-10-28 final evidence/checkpoint commit after this tested candidate contains evidence and canonical checkpoint updates only; it does not change `videochess_rl/`, `tests/`, `configs/`, `docs/`, `scripts/`, or `.github/`. The source/config/test equivalence is recorded in the final delivery metadata. Exact-head CI must be rechecked after that evidence-only commit is pushed. The earlier PR snapshots and all original failed diagnostic evidence remain unchanged.
+
+PM5-F01 through PM5-F05 are assessed as resolved at the engineering level. The 600-game schedule and all resource caps remain as specified. The p95 CPU projection still exceeds the 45-minute run limit; future separately authorized M5 work must run the real-replay feasibility probe and, if needed, correctness-preserving optimizations inside the existing limits before paired training. No M5 implementation/training or ALE evaluation was started; M5 remains unauthorized, G3 remains unapproved, and this document does not constitute independent PM acceptance.

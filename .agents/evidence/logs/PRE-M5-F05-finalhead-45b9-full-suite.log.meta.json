@@ -1,0 +1,15 @@
+{
+  "check": "full_suite",
+  "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/share/stockfish:/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+  "duration_seconds": 208.847,
+  "end_utc": "2026-10-28T09:20:06Z",
+  "environment": "Fresh GitHub clone at exact pushed HEAD; pinned project Python 3.12.3 CPU environment. Existing configured Stockfish path was present only for the pre-existing M0 UCI readiness smoke test.",
+  "exit_code": 0,
+  "log_path": ".agents/evidence/logs/PRE-M5-F05-finalhead-45b9-full-suite.log",
+  "log_sha256": "e5c25de4b2f098ec8768f8ad2edb227a8094e5bb54ccea1f2afd732a74175e39",
+  "result": "PASS",
+  "revision": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83",
+  "start_utc": "2026-10-28T09:16:35Z",
+  "test_count": 336,
+  "verified_at_utc": "2026-10-28T09:24:03Z"
+}
