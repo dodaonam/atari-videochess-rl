@@ -94,6 +94,12 @@
       "abandoned_wall_time_counts_toward_caps": true,
       "rng_restored_from_episode_checkpoint": true,
       "next_episode_seed_uses_completed_episode_index": true,
+      "seed_derivation_schema": "videochess-m5-seed-derivation/1.0",
+      "completed_episodes_at_checkpoint": 7,
+      "next_episode_index_after_restore": 7,
+      "retry_run_id_may_differ": true,
+      "pair_id_remains_unchanged": true,
+      "run_id_changes_next_episode_seed": false,
       "superseded_attempt_snapshots_eligible_for_final_selection": false
     }
   ]

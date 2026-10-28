@@ -20,6 +20,53 @@
       "sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4"
     }
   },
+  "f05_addendum": {
+    "M2_opponent_seed_extension": "optional ChessSimulator.reset opponent_seed; omitted argument preserves historical one-seed behavior",
+    "domains": [
+      "episode_seed",
+      "opponent_rng",
+      "exploration_rng",
+      "replay_sampling_rng",
+      "q_head_initialization",
+      "scratch_representation_initialization"
+    ],
+    "effective_date": "2026-10-28",
+    "experiment_id": "m5-double-dqn-paired-v1",
+    "indexed_domains": [
+      "episode_seed",
+      "opponent_rng"
+    ],
+    "master_seed_source": "training_seed",
+    "pair_identity": "SHA256(\"videochess-m5-pair-id/v1\\0\" || U32BE(experiment_id ASCII byte length) || experiment_id ASCII || U64BE(training_seed))",
+    "run_id_in_seed_derivation": false,
+    "schema": "videochess-pre-m5-f05-evidence/1.0",
+    "seed_derivation_schema": "videochess-m5-seed-derivation/1.0",
+    "seed_output": "(domain_code << 60) | (first_8_digest_bytes_big_endian AND 0x0fffffffffffffff)",
+    "status": "implemented_focused_tests_pass_full_suite_clean_clone_pending",
+    "stream_identity": "SHA256(\"videochess-m5-seed/v1\\0\" || U64BE(master_seed) || pair_id raw 32 bytes || U32BE(domain ASCII byte length) || domain ASCII || U64BE(index))",
+    "verification": {
+      "focused_working_tree": {
+        "end_utc": "2026-10-28T09:01:03Z",
+        "exit_code": 0,
+        "log": ".agents/evidence/logs/PRE-M5-F05-focused-working-tree-final.log",
+        "log_sha256": "99788a2ee1be2e3475206aa6473f2d81a2b470c147bb3462391096a6bca3b144",
+        "revision": "638825b9fa14dd3fe20fba102a994a71e9c794dd",
+        "start_utc": "2026-10-28T09:01:02Z",
+        "test_count": 54,
+        "working_tree_dirty": true
+      },
+      "full_suite_dirty_worktree_diagnostic": {
+        "end_utc": "2026-10-28T08:58:23Z",
+        "exit_code": 1,
+        "failure": "Context recovery expected a clean portable snapshot; current working tree was dirty. This diagnostic is not a pass.",
+        "log": ".agents/evidence/logs/PRE-M5-F05-full-suite-working-tree.log",
+        "log_sha256": "c29e129efac3eec7c3fce4164640bfa247bed4226582365256721aaaa64fef4f",
+        "revision": "638825b9fa14dd3fe20fba102a994a71e9c794dd",
+        "start_utc": "2026-10-28T08:54:47Z",
+        "test_count": 336
+      }
+    }
+  },
   "governance": {
     "auto_merge_request": null,
     "base_modified": false,
@@ -84,6 +131,30 @@
       "id": "PM5-F04",
       "status": "RESOLVED",
       "summary": "Matched protocol/seeds/budgets are guaranteed; independent policies are explicitly allowed to generate different transitions and trajectories."
+    },
+    {
+      "decision_date": "2026-10-28",
+      "evidence": [
+        "videochess_rl/m5_seeding.py",
+        "tests/fixtures/m5_seed_derivation_v1.json",
+        "tests/test_m5_seeding.py",
+        "tests/fixtures/m5_checkpoint_boundaries.json",
+        "tests/test_m5_contract_fixtures.py",
+        "configs/rl/m5-double-dqn-v1.json",
+        "docs/03-technical/RL_ALGORITHM.md",
+        "docs/04-research/M5_EXPERIMENT_PROTOCOL.md",
+        ".agents/plans/M05-double-dqn.md",
+        "docs/06-quality/M5_TEST_MATRIX.md",
+        "docs/05-operations/REPRODUCIBILITY.md",
+        "docs/03-technical/MDP_SPEC.md"
+      ],
+      "id": "PM5-F05",
+      "remaining_limitation": "Seed-schedule equality does not imply equal RNG draw consumption or realized warm/scratch trajectories. M5 remains unauthorized; no learner or training was run.",
+      "resolution": "videochess-m5-seed-derivation/1.0 uses SHA-256 with explicit ASCII prefixes, U32BE length prefixes, U64BE integer fields, pair_id raw bytes, and disjoint configured domain-code ranges. Episode and opponent seeds are indexed by zero-based completed_episodes. Unique run_identity is used for provenance only. Retry restores the same pair identity and per-arm evolving RNG states.",
+      "root_cause": "The paired-stream formula used pair identity, but the episode-seed formula included run_id, which differs between warm and scratch arms.",
+      "severity": "P1",
+      "status": "RESOLVED",
+      "summary": "A single versioned pair-level seed derivation now excludes run-specific identities; all domain/index rules and the known-answer reference are executable."
     }
   ],
   "profiles": [
@@ -210,7 +281,7 @@
       "status": "PASS"
     }
   ],
-  "report_generated_at_utc": "2026-10-28T07:44:29.683039+00:00",
+  "report_generated_at_utc": "2026-10-28T09:03:00Z",
   "repository": {
     "auto_merge": "disabled",
     "base_branch": "initial-idea",

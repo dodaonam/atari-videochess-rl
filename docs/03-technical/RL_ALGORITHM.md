@@ -21,7 +21,7 @@ Versioned replay record `videochess-ddqn-transition/1.0`:
 | Field | Meaning / validation |
 |---|---|
 | `episode_id`, `decision_index` | Stable run-local transition identity; unique within a run. |
-| `seed`, `agent_color` | Episode seed and fixed White/Black perspective. |
+| `episode_seed`, `opponent_rng_seed`, `agent_color` | Pair-derived episode identity seed, independently derived opponent RNG seed, and fixed White/Black perspective. |
 | `opponent_id`, `opponent_config` | Exact opponent identity/configuration; invariant within the episode. |
 | `state_root`, `history_uci` | Standard root and complete history before agent action; replayed and cross-checked against the observation. |
 | `legal_uci` | Unique, sorted, authoritative legal candidates at `state`; nonempty for a live decision. |
@@ -32,7 +32,7 @@ Versioned replay record `videochess-ddqn-transition/1.0`:
 | `outcome_reason`, `truncation_reason` | Preserve the simulator's explicit termination/truncation reason. |
 | `bootstrap_valid` | True only when a verified final nonterminal state and legal candidate set exist. |
 
-`state_root` is the standard initial chess position for version 1. Reconstruct both states by legal replay and check FEN, side-to-move, legal UCI set, agent color, and complete move history. Store opponent identity/config and seed with each episode, not only in a mutable global setting.
+`state_root` is the standard initial chess position for version 1. Reconstruct both states by legal replay and check FEN, side-to-move, legal UCI set, agent color, and complete move history. Store opponent identity/config, `episode_seed`, and `opponent_rng_seed` with each episode, not only in a mutable global setting. The current M2 simulator supports `ChessSimulator.reset(seed=..., opponent_seed=...)`; when the optional opponent seed is omitted, its historical single-seed behavior is preserved.
 
 Reject the transition if the agent action is illegal/stale, the next state cannot be reconstructed, legal candidates disagree with the Board, history crosses a terminal state, flags conflict, reward perspective is invalid, episode/opponent identity changes, or the opponent policy raises/returns an illegal action. The simulator rolls back failed agent+opponent steps; such failures are logged as invalid episodes and never synthesized into draws, terminals, or replay rows. A pre-step record is committed to replay only after a complete `StepResult` and all checks pass.
 
@@ -88,13 +88,47 @@ Sample transitions deterministically from an explicitly seeded replay RNG. The r
 
 The target network starts as an exact copy of the post-initialization online network. It is held in evaluation mode and receives no gradients. Hard synchronization copies the complete online Q network after the configured number of completed gradient updates. Record the sync counter. If a future soft update is tested, it is a separate configuration and experiment.
 
-Exploration is epsilon-greedy over sorted legal UCI actions: with probability epsilon choose uniformly from that current legal set using the run RNG; otherwise select the online argmax with the deterministic UCI tie rule. The starting schedule is linear from `1.0` to `0.05` over the first 7,500 agent decisions and then fixed. The decision counter, epsilon value, and RNG state are checkpointed. Evaluation always uses epsilon `0` and separate deterministic seeds.
+Exploration is epsilon-greedy over sorted legal UCI actions: with probability epsilon choose uniformly from that current legal set using the arm's `exploration_rng`; otherwise select the online argmax with the deterministic UCI tie rule. The starting schedule is linear from `1.0` to `0.05` over the first 7,500 agent decisions and then fixed. The decision counter, epsilon value, and evolving RNG state are checkpointed. Evaluation always uses epsilon `0` and separate deterministic seeds.
 
 ## 6. M4 initialization and independent baseline
 
-Warm-start initialization uses the accepted M4 behavior-only checkpoint only after its SHA-256, sidecar, schema, and dataset provenance pass verification. Copy the board encoder, history embeddings/GRU, metadata projection, candidate encoder, and shared hidden scorer. Do not copy the `behavior_head`, M4 optimizer state, or behavior probabilities as Q values. Initialize a new scalar Q head using the configured seed. Initialize the target network from the fully transferred online Q network after the Q head has been initialized.
+Warm-start initialization uses the accepted M4 behavior-only checkpoint only after its SHA-256, sidecar, schema, and dataset provenance pass verification. Copy the board encoder, history embeddings/GRU, metadata projection, candidate encoder, and shared hidden scorer. Do not copy the `behavior_head`, M4 optimizer state, or behavior probabilities as Q values. Initialize a new scalar Q head using the configured paired Q-head seed and a dedicated CPU `torch.Generator` so unrelated global RNG consumption cannot change its initialized weights. Initialize the target network from the fully transferred online Q network after the Q head has been initialized.
 
-The random-initialized DDQN control uses the same M5 scorer architecture, initializes its representation independently, and uses the same paired-seed-derived Q-head initialization seed as the warm arm. Preserve both arms' exact pre-RL initialization snapshots before any RL optimizer update. Within a warm/scratch pair, match the simulator/reward contract, episode-seed, opponent-RNG, exploration-RNG and replay-sampling seed streams, colors, opponent mixture, replay/update protocol, and decision/update budgets. The policies will generally visit different states and generate different transitions because their actions can differ; **do not claim identical realized trajectories or transition contents**. A shared random stream means the same stream derivation and initial seed, not the same sequence of observed states or replay rows. Record actual transitions independently for each arm. M4 behavior-only stays a frozen policy arm, not a Q network. Do not derive Q initialization from Stockfish centipawn scores or M4 logits.
+The random-initialized DDQN control uses the same M5 scorer architecture, initializes its representation independently from the `scratch_representation_initialization` domain, and uses the same paired-seed-derived Q-head initialization seed as the warm arm. Use a dedicated generator for each initialization domain; the target network is copied from the completed online network. Preserve both arms' exact pre-RL initialization snapshots before any RL optimizer update. Within a warm/scratch pair, match the simulator/reward contract, pair-derived episode and opponent seeds, pair-derived exploration and replay stream initial seeds, colors, opponent mixture, replay/update protocol, and decision/update budgets. The policies will generally visit different states and generate different transitions because their actions can differ; **do not claim identical realized trajectories or transition contents**. Matching RNG seeds define reproducible paired streams, not identical RNG consumption, actions, states, or replay rows. Record actual transitions and evolving RNG states independently for each arm. M4 behavior-only stays a frozen policy arm, not a Q network. Do not derive Q initialization from Stockfish centipawn scores or M4 logits.
+
+## 6.1 Versioned paired seed derivation
+
+The sole M5 seed derivation implementation and known-answer vectors are `videochess_rl.m5_seeding` and `tests/fixtures/m5_seed_derivation_v1.json`, version `videochess-m5-seed-derivation/1.0`. The JSON encoding contract is mirrored in the `seed_derivation` object of `configs/rl/m5-double-dqn-v1.json`. Any future incompatible change requires a new schema/version and must retain these vectors as historical evidence.
+
+Use the stable `experiment_id` `m5-double-dqn-paired-v1` and a `training_seed` in unsigned 64-bit range. IDs are ASCII strings matching `[A-Za-z0-9][A-Za-z0-9._:-]*`. All integers use unsigned 64-bit big-endian bytes (`U64BE`); string lengths use unsigned 32-bit big-endian (`U32BE`). The pair identity is:
+
+```text
+pair_id = lowercase_hex(SHA256(
+    ASCII("videochess-m5-pair-id/v1") || 0x00
+    || U32BE(len(experiment_id_ascii)) || experiment_id_ascii
+    || U64BE(training_seed)
+))
+```
+
+For a named ASCII RNG `domain` and unsigned 64-bit `index`, derive its seed as:
+
+```text
+digest = SHA256(
+    ASCII("videochess-m5-seed/v1") || 0x00
+    || U64BE(master_seed)
+    || bytes.fromhex(pair_id)  # exactly 32 bytes
+    || U32BE(len(domain_ascii)) || domain_ascii
+    || U64BE(index)
+)
+domain_code = zero_based_index(domain, configured_rng_domains)
+seed = (domain_code << 60) | (int.from_bytes(digest[0:8], "big") & 0x0fffffffffffffff)
+```
+
+The configured domain order assigns codes 0 through 5 to, respectively, `episode_seed`, `opponent_rng`, `exploration_rng`, `replay_sampling_rng`, `q_head_initialization`, and `scratch_representation_initialization`. Reserving the high three bits for that code makes different configured RNG domains have disjoint integer seed ranges; the remaining 60 bits come from SHA-256. Every result is in `[0, 2^63-1]`, accepted by Python `random.Random`, NumPy `SeedSequence`, and PyTorch `manual_seed`. The first two domains use zero-based `episode_index`; at episode start this equals committed `completed_episodes`. The four root domains use index zero. Create fresh exploration and replay RNG objects from their root seeds at run start and store their evolving states per arm in each resumable checkpoint. Derive the episode and opponent seeds by index rather than by consuming a mutable RNG stream.
+
+The stable pair ID depends only on `experiment_id` and `training_seed`; `master_seed` equals `training_seed` in config v1.2. `videochess_rl.m5_seeding.run_identity(pair_id, arm, attempt_index)` constructs each execution attempt's unique provenance/artifact ID `m5-{pair_id}__{arm}__attempt-{attempt_index:04d}`; `arm` is `warm` or `scratch`, and the zero-based attempt index increases monotonically within that pair/arm and is never reused, including after interruption. `run_id`, `arm`, and attempt index are not inputs to pair-level seed derivation. They distinguish artifacts and execution attempts only. A retry references its resume parent run ID, but restores the pair ID, committed counters, and stream states from the verified checkpoint; it does not start a fresh seed schedule or reset cumulative resource accounting.
+
+Within a pair, both arms therefore derive equal episode-seed schedules, opponent seeds, exploration/replay root seeds, and Q-head initialization seeds. Use the independently derived opponent seed with `ChessSimulator.reset(seed=episode_seed, opponent_seed=opponent_rng_seed, ...)`; this separates the simulator episode identity from the opponent-action stream while preserving M2's legacy default when `opponent_seed` is absent. The scratch representation uses its own domain; warm representation is the verified M4 copy. Initialize the Q head in both arms with dedicated generators seeded from the shared Q-head value, then copy each completed online network to its target network. Episode-boundary recovery restores each arm's saved exploration/replay RNG states and committed episode count; the next seed uses that unchanged pair ID and zero-based completed-episode count, never the run ID. Identical derived seeds do not assert identical RNG draw consumption or realized trajectories: policies can select different actions and produce different states, opponent choices, replay rows, and random-call counts.
 
 ## 7. Training counters, evaluation and reproducibility
 
@@ -125,11 +159,11 @@ Future `videochess-ddqn-checkpoint/1.0` bundles are full training-state artifact
 - completed episode, valid transition, agent decision, gradient update, and target-sync counters;
 - epsilon schedule/configuration and its counter;
 - Python, NumPy, PyTorch CPU/CUDA and replay RNG states;
-- run seed, fixed agent color, opponent ID/config, and episode boundary;
+- experiment/pair/run IDs, master/training seed, seed-derivation schema and domain seeds, fixed agent color, opponent ID/config, and episode boundary;
 - M4 source artifact hash and dataset/model identity for warm-start runs, or explicit random-init identity;
 - code revision, canonical configuration/hash, runtime provenance, and artifact checksums.
 
-Write a resumable checkpoint after every completed episode, after the final transition, due optimizer update, and any target synchronization. Resume only from such a verified episode boundary. Derive each episode seed deterministically from the run master seed, stable run ID, and next completed-episode index using the versioned config rule; restore RNG and committed counters before starting that episode. Do not promise exact mid-episode recovery: simulator state, board, opponent-private state, and all episode-local RNG continuation are not currently serialized.
+Write a resumable checkpoint after every completed episode, after the final transition, due optimizer update, and any target synchronization. Resume only from such a verified episode boundary. Restore the checkpointed pair ID, stream states, and committed counters before starting the next episode; derive its `episode_seed` and `opponent_rng_seed` from `master_seed`, pair ID, their named domains, and the next zero-based `completed_episodes` index as specified in §6.1. Unique `run_id` is provenance and is never part of seed derivation. Do not promise exact mid-episode recovery: simulator state, board, opponent-private state, and all episode-local RNG continuation are not currently serialized.
 
 Name every artifact immutably with the configured run/arm/seed/attempt identity. Write a new data bundle to a unique temporary sibling, flush and `fsync`, then atomically rename it to its final versioned path. Write the manifest through its own temporary sibling and atomic rename, verify all hashes/schema/counters, and only then atomically update the `latest-resume.json` pointer. Never overwrite or remove the prior verified checkpoint; a crash before pointer publication leaves the previous pointer usable and the unreferenced candidate diagnosable. Evaluation snapshots are likewise immutable data-plus-manifest artifacts but never update the resume pointer. Reject missing, truncated, incompatible, nonfinite, or hash-mismatched artifacts before mutating a live run.
 

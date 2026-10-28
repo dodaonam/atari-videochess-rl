@@ -2,6 +2,8 @@
 
 **Purpose:** Superseding engineering addendum for PM5-F01 through PM5-F04. The earlier [Pre-M5 readiness report](PRE-M5-readiness-20261028.md) remains preserved as the prior review snapshot; it described the then-current nine-checkpoint/360-game schedule and preliminary profile. This addendum records the corrected schedule, checkpoint semantics, additional profiling, and exact verification for PR #10. It is engineering evidence, not independent PM acceptance, M5 authorization, or merge approval.
 
+**Version note:** The original sections below record the F01–F04 remediation snapshot as it stood before the later F05 finding. The dated final addendum at the end supersedes its seed-derivation and final-head claims where indicated; prior logs and failed attempts remain historical evidence.
+
 ## Repository and authority
 
 - Repository: `dodaonam/atari-videochess-rl`.
@@ -75,3 +77,32 @@ The initial diagnostic runs are retained at `logs/PRE-M5-remediation-full-suite-
 ## M5 scope and governance
 
 No M5 implementation or training, no ALE evaluation, no Stockfish inference, and no external compute were started. M5 remains pending and unauthorized; G3 remains unapproved. The proposed M5 protocol is a future execution contract. PR #10 remains open and unmerged for independent PM review. The pushed candidate `16bc420d90e2a0eec910208ebce5686c9717600d` is clean-clone verified; exact-head CI passed at [run 40650803183](https://github.com/dodaonam/atari-videochess-rl/actions/runs/40650803183). The feature worktree is clean. This report is engineering evidence, not independent PM acceptance, and does not authorize the author to approve or merge.
+
+## Final 2026-10-28 addendum — PM5-F05 paired RNG and seed derivation
+
+This addendum records the direct mission decision resolving PM5-F05. It is effective 2026-10-28 and supersedes only the previously ambiguous seed/run identity rules; it does not change the comparison, learner, scientific hyperparameters, or resource caps. It is engineering evidence and does not represent independent PM acceptance.
+
+### Finding and resolution
+
+The reviewed specification used one pair-level digest over master seed/domain/pair identity for shared streams, but separately described episode seeds as depending on `run_id`. Because warm and scratch use different run IDs, those rules did not guarantee matched episode schedules. The single implementation and versioned contract are now `videochess-m5-seed-derivation/1.0` in `videochess_rl/m5_seeding.py`, mirrored in `configs/rl/m5-double-dqn-v1.json` and specified in `docs/03-technical/RL_ALGORITHM.md` §6.1.
+
+The canonical identities are:
+
+1. `experiment_id` is the versioned comparison identity; `training_seed` is the paired seed and, in config v1.2, also `master_seed`.
+2. `pair_id = lowercase_hex(SHA256(ASCII("videochess-m5-pair-id/v1") || 0x00 || U32BE(experiment_id ASCII byte length) || experiment_id ASCII || U64BE(training_seed)))`. IDs must match `[A-Za-z0-9][A-Za-z0-9._:-]*`; integer fields are unsigned big-endian, and lengths are unsigned 32-bit big-endian.
+3. `digest = SHA256(ASCII("videochess-m5-seed/v1") || 0x00 || U64BE(master_seed) || pair_id raw 32 bytes || U32BE(domain ASCII byte length) || domain ASCII || U64BE(index))`.
+4. `seed = (domain_code << 60) | (int.from_bytes(digest[0:8], "big") & 0x0fffffffffffffff)`, where domain codes follow the configured order: episode 0, opponent 1, exploration 2, replay sampling 3, Q-head initialization 4, scratch-representation initialization 5. This yields disjoint per-domain ranges within `[0, 2^63-1]`.
+5. `episode_seed` and `opponent_rng` use zero-based `completed_episodes` as their index. The four root streams use index zero. Exploration and replay RNG state is then saved independently per arm and restored from the verified episode checkpoint.
+6. `run_identity(pair_id, arm, attempt_index)` formats `m5-{pair_id}__{arm}__attempt-{attempt_index:04d}`. Run ID, arm, and attempt are provenance only and are not accepted by the pair-level seed APIs. Attempt indexes increase monotonically and are never reused.
+
+Thus both arms derive equal per-episode and opponent seeds, equal exploration/replay root seeds, and equal Q-head initialization seeds for a pair. The scratch representation uses its separate domain; the warm representation comes from the verified M4 checkpoint. Equality of seed schedules does **not** mean equal random-number consumption, trajectories, transitions, or replay contents. Episode-boundary recovery derives the next per-episode seeds from the unchanged pair identity and restored committed episode count, while restoring each arm's evolving root RNG states. Run IDs and retries do not reset cumulative budgets.
+
+### M2 simulator integration
+
+`ChessSimulator.reset(seed=..., opponent_seed=...)` now accepts an optional opponent seed. When supplied, that seed initializes both the simulator's opponent-action RNG and any stateful opponent `reset_episode(seed=...)` hook; the episode seed remains separately recorded/passed by the future runner. Omitting `opponent_seed` preserves the historical behavior where `seed` initializes both. This additive boundary is covered by M2 simulator tests; it does not implement an M5 runner.
+
+### Executable evidence and remaining scope
+
+Known-answer vectors and serialization prefixes are preserved in `tests/fixtures/m5_seed_derivation_v1.json`. `tests/test_m5_seeding.py` checks those outputs, domain separation, distinct configured training pairs, episode-index changes, process-restart determinism, provenance run IDs, warm/scratch pair parity by stable pair identity, initialization-domain separation, config consistency, and rejection of invalid inputs. `tests/test_m5_contract_fixtures.py` checks retry recovery uses the same pair identity and next seed while retaining a distinct retry run ID. The focused working-tree run on 2026-10-28 executed 54 tests across seed derivation, M5 contract fixtures, and M2 simulator; exit 0. Final committed-head and clean-clone counts, exact SHA, logs, and current CI are recorded in the machine-readable evidence and a final verification update below after those checks finish.
+
+The F01–F04 resolutions were re-audited against the unchanged 15-snapshot/600-game design, distinct snapshot/resume contracts, future real-replay feasibility gate, and matched-condition/no-identical-trajectory language. Their prior underlying evidence remains linked above. The CPU risk remains unchanged: the p95 training projection exceeds the 45-minute cap before overhead. Only the future, separately authorized M5 mission may perform the configured real-replay probe and correctness-preserving implementation optimization sequence inside the existing caps; this Pre-M5 work changed no budget and ran no M5 learner or training.

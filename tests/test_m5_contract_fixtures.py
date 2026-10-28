@@ -7,6 +7,8 @@ import math
 import unittest
 from pathlib import Path
 
+from videochess_rl.m5_seeding import EXPERIMENT_ID, paired_seed_schedule
+
 FIXTURE = Path(__file__).parent / "fixtures" / "m5_double_dqn_targets.json"
 CHECKPOINT_FIXTURE = Path(__file__).parent / "fixtures" / "m5_checkpoint_boundaries.json"
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
@@ -18,10 +20,17 @@ class M5DoubleDqnFixtureTests(unittest.TestCase):
         protocol = (REPOSITORY_ROOT / "docs/04-research/M5_EXPERIMENT_PROTOCOL.md").read_text(encoding="utf-8")
         matrix = (REPOSITORY_ROOT / "docs/06-quality/M5_TEST_MATRIX.md").read_text(encoding="utf-8")
         evaluation = config["evaluation"]
-        self.assertEqual(config["schema"], "videochess-m5-ddqn-config/1.1")
-        self.assertEqual(config["protocol"], "m5-ddqn-comparison/1.1")
-        self.assertIn("m5-ddqn-comparison/1.1", protocol)
-        self.assertIn("m5-tests/1.1", matrix)
+        self.assertEqual(config["schema"], "videochess-m5-ddqn-config/1.2")
+        self.assertEqual(config["protocol"], "m5-ddqn-comparison/1.2")
+        self.assertIn("m5-ddqn-comparison/1.2", protocol)
+        self.assertIn("m5-tests/1.2", matrix)
+        self.assertEqual(config["seed_derivation"]["schema"], "videochess-m5-seed-derivation/1.0")
+        self.assertEqual(config["training"]["seed_schedule_schema"], config["seed_derivation"]["schema"])
+        self.assertFalse(config["seed_derivation"]["run_id_used_in_seed_derivation"])
+        self.assertEqual(
+            config["training"]["paired_streams"]["shared_domains_within_pair"],
+            config["seed_derivation"]["paired_domains"],
+        )
         groups = evaluation["policy_checkpoint_groups"]
         checkpoint_count = sum(
             group.get("count", len(group.get("training_seeds", [])) * len(group.get("stages", [])))
@@ -86,11 +95,21 @@ class M5DoubleDqnFixtureTests(unittest.TestCase):
         self.assertEqual(resource_probe["replay_warmup_valid_transitions"], 512)
         self.assertEqual(resource_probe["updates_on_disposable_model_copy"], 5)
         self.assertTrue(resource_probe["counts_toward_aggregate_wall_budget"])
-        self.assertEqual(resource_probe["if_projection_exceeds_cap"], "stop_before_paired_campaign_and_request_pm_budget_or_optimization_decision")
+        self.assertTrue(resource_probe["bounded_correctness_preserving_optimizations_authorized"])
+        self.assertEqual(resource_probe["optimization_authority_scope"], "separately_authorized_m5_mission_only")
+        self.assertIn("safe_caching", resource_probe["allowed_optimization_classes"])
+        self.assertEqual(len(resource_probe["required_regression_areas"]), 6)
+        self.assertFalse(resource_probe["hard_caps_may_change"])
+        self.assertIn("if_still_over_cap_stop_before_paired_campaign", resource_probe["if_projection_exceeds_cap"])
+        self.assertEqual(config["training"]["per_run_wall_minutes_hard_cap"], 45)
+        self.assertEqual(config["training"]["aggregate_campaign_wall_hours_hard_cap"], 6)
+        self.assertEqual(config["training"]["peak_rss_bytes_hard_cap"], 2 * 1024 * 1024 * 1024)
         self.assertTrue(resource_probe["does_not_claim_policy_training_or_evaluation"])
         self.assertEqual(config["training"]["initialization_snapshot"]["capture_decision"], 0)
         self.assertTrue(config["training"]["initialization_snapshot"]["capture_after_target_copy"])
         self.assertTrue(config["training"]["initialization_snapshot"]["capture_before_first_gradient_update"])
+        self.assertEqual(config["training"]["initialization_snapshot"]["seed_derivation_schema"], "videochess-m5-seed-derivation/1.0")
+        self.assertIn("pair_id", config["training"]["initialization_snapshot"]["identity_fields"])
         warm = {(seed, stage) for seed in groups["warm_double_dqn"]["training_seeds"] for stage in groups["warm_double_dqn"]["stages"]}
         scratch = {(seed, stage) for seed in groups["scratch_double_dqn"]["training_seeds"] for stage in groups["scratch_double_dqn"]["stages"]}
         self.assertEqual(warm, {(seed, stage) for seed in seeds for stage in ("pre_rl", "post_rl")})
@@ -171,6 +190,15 @@ class M5DoubleDqnFixtureTests(unittest.TestCase):
         self.assertTrue(interrupted["abandoned_wall_time_counts_toward_caps"])
         self.assertTrue(interrupted["rng_restored_from_episode_checkpoint"])
         self.assertFalse(interrupted["superseded_attempt_snapshots_eligible_for_final_selection"])
+        self.assertEqual(interrupted["seed_derivation_schema"], "videochess-m5-seed-derivation/1.0")
+        self.assertEqual(interrupted["completed_episodes_at_checkpoint"], interrupted["next_episode_index_after_restore"])
+        self.assertTrue(interrupted["retry_run_id_may_differ"] and interrupted["pair_id_remains_unchanged"])
+        self.assertFalse(interrupted["run_id_changes_next_episode_seed"])
+        next_episode = interrupted["next_episode_index_after_restore"]
+        before_retry = paired_seed_schedule(EXPERIMENT_ID, 20261104, next_episode)
+        after_retry = paired_seed_schedule(EXPERIMENT_ID, 20261104, next_episode)
+        self.assertEqual(before_retry["episode_seed"], after_retry["episode_seed"])
+        self.assertEqual(before_retry["opponent_rng_seed"], after_retry["opponent_rng_seed"])
 
     def test_online_target_disagreement_uses_online_action_in_target_value(self) -> None:
         document = json.loads(FIXTURE.read_text(encoding="utf-8"))
