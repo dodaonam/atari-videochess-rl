@@ -1,0 +1,12 @@
+{
+  "check": "archive",
+  "revision": "16bc420d90e2a0eec910208ebce5686c9717600d",
+  "start_utc": "2026-10-28T07:43:43.379952+00:00",
+  "end_utc": "2026-10-28T07:43:43.731381+00:00",
+  "duration_seconds": 0.351,
+  "exit_code": 0,
+  "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/migrate_checkpoint_history.py verify",
+  "log_path": ".agents/evidence/logs/PRE-M5-final-cleanclone-16bc-archive.log",
+  "log_sha256": "6f54073a0c84bc9cebea27f9b312336fd14e7049e2d84799037e8e614ee29df0",
+  "result": "PASS"
+}

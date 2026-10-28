@@ -206,25 +206,30 @@
     {
       "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
       "id": "PM5-R12",
-      "limitation": "All available local and clean-clone suites passed, but exact pushed PR-head GitHub CI has not yet been observed.",
-      "status": "NOT_RUN"
+      "limitation": "GitHub workflow is context/preflight plus standard-library contracts, not the complete Python regression suite; the full 324-test suite passed separately in the exact pushed-head clean clone. M5 remains unauthorized.",
+      "status": "PASS"
     }
   ],
-  "report_generated_at_utc": "2026-10-28T07:30:41.923239+00:00",
+  "report_generated_at_utc": "2026-10-28T07:44:29.683039+00:00",
   "repository": {
+    "auto_merge": "disabled",
     "base_branch": "initial-idea",
     "base_sha": "906178775d48e98e64c709673bfe73177dd15c02",
     "baseline_pr_head_at_inspection": "ffd924efe69746c192df56905eac34ccc689f106",
     "clean_clone_revision": "c19b141e3d2bc1440fd1a9afb89c12cfd1704d95",
     "existing_pr": 10,
     "feature_branch": "feature/pre-m5-readiness",
+    "final_pr_base": "initial-idea",
+    "final_pr_head_after_push": "16bc420d90e2a0eec910208ebce5686c9717600d",
+    "final_pr_state": "OPEN",
+    "final_verified_candidate_head": "16bc420d90e2a0eec910208ebce5686c9717600d",
     "local_engineering_revision": "c19b141e3d2bc1440fd1a9afb89c12cfd1704d95",
     "pr_head_before_push": "ffd924efe69746c192df56905eac34ccc689f106",
     "pr_url": "https://github.com/dodaonam/atari-videochess-rl/pull/10",
     "url": "https://github.com/dodaonam/atari-videochess-rl"
   },
   "schema": "videochess-pre-m5-remediation/1.0",
-  "status": "candidate_verified_waiting_exact_head_ci",
+  "status": "engineering_complete_awaiting_independent_pm_review",
   "verification": {
     "final_candidate_checks": {
       "candidate_revision": "c19b141e3d2bc1440fd1a9afb89c12cfd1704d95",
@@ -341,6 +346,77 @@
           "status": "PASS",
           "test_count": 3
         }
+      },
+      "post_push_clean_clone": {
+        "archive": {
+          "exit_code": 0,
+          "log": ".agents/evidence/logs/PRE-M5-final-cleanclone-16bc-archive.log",
+          "logical_sha256": "dea2c52cf0cb7a106fc759b5d80688bdb9d133025d27a38e9edffddcc8f16437",
+          "record_count": 202,
+          "status": "VERIFIED"
+        },
+        "compile": {
+          "exit_code": 0,
+          "log": ".agents/evidence/logs/PRE-M5-final-cleanclone-16bc-compile.log",
+          "status": "PASS"
+        },
+        "diff_check": {
+          "exit_code": 0,
+          "log": ".agents/evidence/logs/PRE-M5-final-cleanclone-16bc-diff_check.log",
+          "status": "PASS"
+        },
+        "full_suite": {
+          "command": "PYTHONPATH=. PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/share/stockfish:/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "duration_seconds": 119.729,
+          "end_utc": "2026-10-28T07:42:31.651324+00:00",
+          "exit_code": 0,
+          "log": ".agents/evidence/logs/PRE-M5-final-cleanclone-16bc-full-suite.log",
+          "log_sha256": "418cbc946180aa34ab955db8c68c186799859314be1781a16142b2cbed38baec",
+          "start_utc": "2026-10-28T07:40:31.922334+00:00",
+          "status": "PASS",
+          "test_count": 324
+        },
+        "initial_full_suite_environment_attempt": {
+          "cause": "The project venv Stockfish directory was not on PATH; the existing M0 UCI-readiness smoke test failed before invoking Stockfish.",
+          "exit_code": 1,
+          "log": ".agents/evidence/logs/PRE-M5-final-cleanclone-16bc-full-suite-missing-stockfish-path.log",
+          "log_sha256": "c099e3d3797005204c489a97bb9f47c23dc4ffcd5f998a51524512084acd9fce",
+          "not_counted_as_pass": true,
+          "status": "FAIL_ENVIRONMENT",
+          "test_count": 324
+        },
+        "m3_release": {
+          "completion_time_note": "Raw verifier output was captured; invocation start was not instrumented. Historical timed run remains in PRE-M5-remediation-m3_release-c19b141e.log.meta.",
+          "exit_code": 0,
+          "games": 1000,
+          "log": ".agents/evidence/logs/PRE-M5-final-cleanclone-16bc-m3-release.log",
+          "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+          "positions": 19268,
+          "rejections": 182,
+          "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+          "status": "PASS"
+        },
+        "m4_transfer_engine_free": {
+          "artifact_files_verified": 19,
+          "behavior_head_excluded": true,
+          "checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+          "exit_code": 0,
+          "log": ".agents/evidence/logs/PRE-M5-final-cleanclone-16bc-transfer-engine-free.log",
+          "shared_representation_equal": true,
+          "source_artifacts_unchanged": true,
+          "status": "PASS",
+          "stockfish_path": null
+        },
+        "path": "/tmp/atari-pre-m5-final-head-16bc",
+        "preflight": {
+          "exit_code": 0,
+          "log": ".agents/evidence/logs/PRE-M5-final-cleanclone-16bc-preflight.log",
+          "log_sha256": "c158cdca364dcda2cce106cf0a5681f4ad56b9fe05690de1e1404d5e0133b73a",
+          "status": "PASS",
+          "warning": "ARTIFACT_MANIFEST_REQUIRED only"
+        },
+        "revision": "16bc420d90e2a0eec910208ebce5686c9717600d",
+        "worktree_clean_after_verification": true
       }
     },
     "focused_contract_tests": {
@@ -348,6 +424,17 @@
       "exit_code": 0,
       "tests_run": 5,
       "verification_note": "Run before commit on the same source/config content; repeat at the committed candidate."
+    },
+    "github_ci": {
+      "completed_at_utc": "2026-10-28T07:33:33Z",
+      "coverage": "Canonical context, standard-library context/bundle/M5 target-oracle tests; not the full Python regression suite.",
+      "exit_code": 0,
+      "head_sha": "16bc420d90e2a0eec910208ebce5686c9717600d",
+      "job": "context",
+      "job_url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/40650803183/job/122690155533",
+      "run_url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/40650803183",
+      "status": "PASS",
+      "workflow": "Repository preflight"
     },
     "initial_full_suite_diagnostic": {
       "cause": "Clean-clone tests ran before new report files were committed and therefore found broken report links.",

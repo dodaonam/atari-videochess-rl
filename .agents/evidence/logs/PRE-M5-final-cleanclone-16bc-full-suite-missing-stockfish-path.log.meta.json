@@ -1,0 +1,17 @@
+{
+  "check": "full_suite_missing_configured_stockfish_path",
+  "revision": "16bc420d90e2a0eec910208ebce5686c9717600d",
+  "start_utc": null,
+  "end_utc": "2026-10-28T07:43:52.631285+00:00",
+  "duration_seconds": null,
+  "exit_code": 1,
+  "test_count": 324,
+  "test_runner_duration_seconds": 121.853,
+  "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+  "environment": "Python 3.12.3 project CPU venv; PATH omitted configured Stockfish directory.",
+  "timestamp_note": "Completion time is the captured log file mtime; this unwrapped invocation did not separately capture its start time.",
+  "log_path": ".agents/evidence/logs/PRE-M5-final-cleanclone-16bc-full-suite-missing-stockfish-path.log",
+  "log_sha256": "c099e3d3797005204c489a97bb9f47c23dc4ffcd5f998a51524512084acd9fce",
+  "result": "FAIL_ENVIRONMENT",
+  "failure_cause": "The project venv Stockfish directory was not on PATH; the existing M0 UCI-readiness smoke test failed before invoking Stockfish."
+}
