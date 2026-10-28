@@ -15,6 +15,7 @@ from scripts.profile_m5_feasibility_v2 import (
     make_max_history_stress,
     make_variable_history_stress,
 )
+from scripts.profile_m5_history_budget import make_synthetic_batch
 from videochess_rl.model.features import PositionFeatures
 
 
@@ -37,6 +38,14 @@ class M5FeasibilityProfileTests(unittest.TestCase):
         self.assertEqual(lengths[0], 0)
         self.assertEqual(lengths[-1], 801)
         self.assertEqual([int(mask.sum()) for mask in variable["history_mask"]], list(lengths))
+
+    def test_observed_range_budget_batch_has_explicit_prefix_lengths(self) -> None:
+        batch, lengths = make_synthetic_batch(419, candidate_count=46)
+        self.assertEqual(tuple(batch["history_moves"].shape), (32, 419, 4))
+        self.assertEqual(tuple(batch["candidate_mask"].shape), (32, 46))
+        self.assertEqual(lengths[0], 0)
+        self.assertEqual(lengths[-1], 419)
+        self.assertEqual([int(mask.sum()) for mask in batch["history_mask"]], list(lengths))
 
     def test_replay_probe_serializes_distinct_bounded_records(self) -> None:
         rows = tuple(
