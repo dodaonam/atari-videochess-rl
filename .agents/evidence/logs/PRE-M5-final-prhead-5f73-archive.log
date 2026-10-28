@@ -1,0 +1,15 @@
+check=archive
+revision=5f73b4e2752a03a9698bfe747d3fdd33de6c1255
+start_utc=2026-10-28T04:12:27.035471437Z
+end_utc=2026-10-28T04:12:27.364660580Z
+exit_code=0
+
+--- output ---
+{
+  "first_id": "cp-c410173e-20261014T154924847559Z",
+  "last_id": "cp-90617877-20261028T040001445662Z",
+  "logical_sha256": "cdd42433803db0649c99b793083d98ee6a030a0973e3a3fe6497f0b35f148e82",
+  "record_count": 191,
+  "status": "verified",
+  "storage": "archive"
+}
