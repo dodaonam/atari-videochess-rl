@@ -1,0 +1,17 @@
+{
+  "bundle_files_verified": 19,
+  "check": "accepted_m4_transfer_engine_free",
+  "checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+  "chess_engine_imported": false,
+  "command": "PATH=/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/verify_m5_transfer.py /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4/pretrained-behavior-only.pt",
+  "end_utc": "2026-10-28T09:08:51Z",
+  "environment": "Fresh clean candidate clone; Python 3.12.3 pinned venv; PATH excludes Stockfish; read-only accepted M4 artifact bundle.",
+  "exit_code": 0,
+  "log_path": ".agents/evidence/logs/PRE-M5-F05-clean-ef1ffae-m4-transfer-engine-free.log",
+  "log_sha256": "49eb1c1ce533c01c8e04a6efc81ad1c109e69ed7310c5d1a72f0142f8bce8b7d",
+  "result": "PASS",
+  "revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3",
+  "source_artifacts_unchanged": true,
+  "start_utc": "2026-10-28T09:08:50Z",
+  "stockfish_path": null
+}

@@ -1,0 +1,10 @@
+{
+  "check": "clean_clone_worktree_status",
+  "clean": true,
+  "command": "git status --porcelain=v1",
+  "exit_code": 0,
+  "log_path": ".agents/evidence/logs/PRE-M5-F05-clean-ef1ffae-clean-status.log",
+  "log_sha256": "f6a7dc2be9a75d64f1e31c17e04da1c8c3802d3913e461004f728b5d7581217b",
+  "result": "PASS",
+  "revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3"
+}

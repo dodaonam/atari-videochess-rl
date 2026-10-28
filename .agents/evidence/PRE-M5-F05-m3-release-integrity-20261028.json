@@ -1,0 +1,73 @@
+{
+  "accepted_counts": {
+    "games": 1000,
+    "purged_positions": 732,
+    "rejected_records": 182,
+    "test_positions": 2057,
+    "total_positions": 19268,
+    "train_positions": 15196,
+    "validation_positions": 2015
+  },
+  "before_after_file_hashes_equal": true,
+  "data_modified": false,
+  "end_utc": "2026-10-28T09:10:42Z",
+  "exit_code": 0,
+  "file_count": 9,
+  "files": [
+    {
+      "name": "config.json",
+      "sha256": "75034de9d1dee2c48f56ecb1e7b54e11ae4c261fe9a95579ef69b0e93c00b304",
+      "size_bytes": 1465
+    },
+    {
+      "name": "games.jsonl",
+      "sha256": "526fc9966d4521dee92fc4bb7e011d9a59fce1dc703810a0ed3d6edbb2e154c7",
+      "size_bytes": 2764193
+    },
+    {
+      "name": "manifest.json",
+      "sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+      "size_bytes": 1976
+    },
+    {
+      "name": "manifest.sha256",
+      "sha256": "5f4c968a8885548565496b7652a6b060adc8778cfeaffb58dd4b7b8b18b9a2ae",
+      "size_bytes": 80
+    },
+    {
+      "name": "positions.jsonl",
+      "sha256": "9db9676ecb64cc111e4310c83374348132ad4413cb0de7c1fe1878b89c89500d",
+      "size_bytes": 31992257
+    },
+    {
+      "name": "rejections.jsonl",
+      "sha256": "fce94dc0c721fb84b45ccb812667b712030f4f327901d1a7ee19b4392524a42e",
+      "size_bytes": 66744
+    },
+    {
+      "name": "source_manifest.json",
+      "sha256": "f2ff571ce81a47b1191f7b57c2f2d16c48ebde6b334aeb6e82d7b173dc2b2935",
+      "size_bytes": 5060
+    },
+    {
+      "name": "split.json",
+      "sha256": "dbbcc00bdb5989fd8827c8e7beec3b4eea41f0bae3649ad9ffa2373b0d128193",
+      "size_bytes": 2473768
+    },
+    {
+      "name": "stats.json",
+      "sha256": "3d0a217e94a826f38d54b402c921f145592c92760d39901c8b2cc2339dad68bd",
+      "size_bytes": 2691035
+    }
+  ],
+  "inventory_sha256": "bad5997db1836fa8dbedc80f815908230d65b108e74a1476c86437493c494652",
+  "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+  "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+  "release_path": "/home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+  "revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3",
+  "schema": "videochess-pre-m5-m3-artifact-integrity/1.0",
+  "split_assignment_sha256": "84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e",
+  "start_utc": "2026-10-28T09:08:50Z",
+  "uploaded_or_redistributed": false,
+  "verification_command": "python -m videochess_rl.data verify --release /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6"
+}

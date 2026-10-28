@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-638825b9-20261028T090307195232Z -->
+<!-- checkpoint-id: cp-ef1ffae6-20261028T091500463488Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -14,7 +14,7 @@ This file is a pointer, not a status snapshot. Do not infer current phase, task 
 
 ## Pre-M5 handoff — independent PM review pending
 
-Use `.agents/state/PROJECT_STATE.yaml` and `.agents/tasks/BACKLOG.yaml` for canonical gate, milestone, task, and authorization state. The latest correction and reassessment of PM5-F01 through PM5-F04 is [the dated remediation report](../evidence/PRE-M5-remediation-20261028.md), with the earlier [readiness report](../evidence/PRE-M5-readiness-20261028.md) retained as a historical review snapshot. The M5 algorithm is specified in [RL_ALGORITHM.md](../../docs/03-technical/RL_ALGORITHM.md), paired experiment in [M5_EXPERIMENT_PROTOCOL.md](../../docs/04-research/M5_EXPERIMENT_PROTOCOL.md), test matrix in [M5_TEST_MATRIX.md](../../docs/06-quality/M5_TEST_MATRIX.md), and execution sequence in [M05-double-dqn.md](../plans/M05-double-dqn.md).
+Use `.agents/state/PROJECT_STATE.yaml` and `.agents/tasks/BACKLOG.yaml` for canonical gate, milestone, task, and authorization state. The latest correction and reassessment of PM5-F01 through PM5-F05 is [the dated remediation report](../evidence/PRE-M5-remediation-20261028.md), with the earlier [readiness report](../evidence/PRE-M5-readiness-20261028.md) retained as a historical review snapshot. The report's final addendum records the versioned paired RNG/seed contract and clean-clone verification; the M3 integrity inventory is [here](../evidence/PRE-M5-F05-m3-release-integrity-20261028.json). The M5 algorithm is specified in [RL_ALGORITHM.md](../../docs/03-technical/RL_ALGORITHM.md), paired experiment in [M5_EXPERIMENT_PROTOCOL.md](../../docs/04-research/M5_EXPERIMENT_PROTOCOL.md), test matrix in [M5_TEST_MATRIX.md](../../docs/06-quality/M5_TEST_MATRIX.md), and execution sequence in [M05-double-dqn.md](../plans/M05-double-dqn.md).
 
 The required next action is independent PM review of the open Pre-M5 PR. The PR author must not merge or self-approve as PM; see [PR_REVIEW_AND_INTEGRATION.md](../../docs/02-management/PR_REVIEW_AND_INTEGRATION.md). M5 remains pending separate direct authorization; no learner/training has started, `start_authorized` is false, and G3 is unapproved. Preserve the local-only accepted M3/M4 artifacts and append-only RSK-010 archive.
 

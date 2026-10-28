@@ -106,3 +106,39 @@ Thus both arms derive equal per-episode and opponent seeds, equal exploration/re
 Known-answer vectors and serialization prefixes are preserved in `tests/fixtures/m5_seed_derivation_v1.json`. `tests/test_m5_seeding.py` checks those outputs, domain separation, distinct configured training pairs, episode-index changes, process-restart determinism, provenance run IDs, warm/scratch pair parity by stable pair identity, initialization-domain separation, config consistency, and rejection of invalid inputs. `tests/test_m5_contract_fixtures.py` checks retry recovery uses the same pair identity and next seed while retaining a distinct retry run ID. The focused working-tree run on 2026-10-28 executed 54 tests across seed derivation, M5 contract fixtures, and M2 simulator; exit 0. Final committed-head and clean-clone counts, exact SHA, logs, and current CI are recorded in the machine-readable evidence and a final verification update below after those checks finish.
 
 The F01–F04 resolutions were re-audited against the unchanged 15-snapshot/600-game design, distinct snapshot/resume contracts, future real-replay feasibility gate, and matched-condition/no-identical-trajectory language. Their prior underlying evidence remains linked above. The CPU risk remains unchanged: the p95 training projection exceeds the 45-minute cap before overhead. Only the future, separately authorized M5 mission may perform the configured real-replay probe and correctness-preserving implementation optimization sequence inside the existing caps; this Pre-M5 work changed no budget and ran no M5 learner or training.
+
+### Committed-candidate verification
+
+The implementation, tests, protocol, config, and F05 addendum were committed on `feature/pre-m5-readiness` as `ef1ffae65a7e08579e7ae00502a11de59c3efea3`, based on `initial-idea` `906178775d48e98e64c709673bfe73177dd15c02`. A fresh local clone at that exact revision passed:
+
+| Check | Result | Evidence |
+|---|---|---|
+| Repository preflight | Exit 0; no errors; only expected `ARTIFACT_MANIFEST_REQUIRED`; M5 pending, unauthorized, no active task, G3 unapproved; portable/workspace snapshot matched. | `logs/PRE-M5-F05-clean-ef1ffae-preflight.log` and metadata |
+| Checkpoint archive | Exit 0; 207 archived records; logical SHA-256 `b378edd6800c1cfffd558051f5ae686262314fbe560faf34effe62140a01b75e`. | `logs/PRE-M5-F05-clean-ef1ffae-archive.log` and metadata |
+| Static checks | Python compilation, JSON parsing for config/fixtures/evidence, and `git diff-tree --check HEAD^ HEAD` exit 0. | `logs/PRE-M5-F05-clean-ef1ffae-{compile,static,diff-check}.log` and metadata |
+| Focused suite | Exit 0; 141 tests across M4 model/data/training/checkpoint, Pre-M4 contracts, M2 simulator, M3 data, M5 contract fixtures, and the new seed contract. | `logs/PRE-M5-F05-clean-ef1ffae-focused-tests.log` and metadata |
+| Full regression | Exit 0; 336 tests in 209.211 seconds; existing Stockfish path supplied only for the pre-existing UCI readiness smoke test. | `logs/PRE-M5-F05-clean-ef1ffae-full-suite.log` and metadata |
+| Accepted M3 release | Exit 0; exact release and manifest identity verified. All nine expected file names and SHA-256 values matched before/after verification; inventory SHA-256 `bad5997db1836fa8dbedc80f815908230d65b108e74a1476c86437493c494652`. | `PRE-M5-F05-m3-release-integrity-20261028.json`; `logs/PRE-M5-F05-clean-ef1ffae-m3-release.log` and metadata |
+| Accepted M4 transfer | Exit 0; 19-file bundle verified; checkpoint SHA-256 `724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4`; representation transfer equal, behavior head excluded, target copied, legal actions, Stockfish absent, source unchanged. | `logs/PRE-M5-F05-clean-ef1ffae-m4-transfer-engine-free.log` and metadata |
+| Clean clone | Empty `git status --porcelain=v1` after checks. | `logs/PRE-M5-F05-clean-ef1ffae-clean-status.log` and metadata |
+
+The earlier full-suite diagnostic on the dirty feature worktree ran 336 tests but exited 1 only because the context-recovery test correctly required the portable Git snapshot to match. It is retained as `FAIL_DIAGNOSTIC_DIRTY_WORKTREE`; it is not counted as acceptance evidence. The fresh committed clone above passed all 336 tests. The detailed focused working-tree runs (54 tests, exit 0) are supplementary, not substitutes for the clean-clone suite.
+
+### Revalidated Pre-M5 readiness (PM5-R01–PM5-R12)
+
+| ID | Status | Final evidence and scope | Limitation |
+|---|---|---|---|
+| PM5-R01 | PASS | Historical M4 source/evidence audit; current clean-clone full suite and unchanged M3/M4 artifact identities at `ef1ffae`. | Retrospective engineering review is not independent PM acceptance of M4. |
+| PM5-R02 | PASS | PR-only/PM/operator separation remains explicit in `PR_REVIEW_AND_INTEGRATION.md`, `AGENTS.md`, canonical state, and context checks. | No repository settings were changed; docs do not enforce GitHub permissions. |
+| PM5-R03 | PASS | Preflight confirms M4 done, M5-001 pending, no active task, `start_authorized: false`, G3 unapproved, archive verified. | M5 remains unauthorized. |
+| PM5-R04 | PASS | `RL_ALGORITHM.md` defines DDQN target, legal UCI semantics, rewards, terminal/truncation, RNG, transfer, and checkpoint behavior; the online/target disagreement fixture remains covered. | No learner is implemented in Pre-M5. |
+| PM5-R05 | PASS | Focused suite includes M2 simulator opponent-seed compatibility tests; full 336-test suite passes. | M5 learner use of the boundary remains future work. |
+| PM5-R06 | PASS | Exact real M4 artifact bundle reverified and transfer dry-run is engine-free; M3 release identity also reverified. | Artifacts remain local-only. |
+| PM5-R07 | PASS | Config/protocol/matrix retain 15 checkpoints and 600 planned games, both comparisons, pairing keys, uncertainty treatment, and no identical-trajectory claim; fixtures pass in the focused suite. | No M5 outcomes have been measured. |
+| PM5-R08 | PASS | The v2.1 and observed-range profiles support a bounded CPU proposal and explicit real-replay probe/optimization workflow. | 45-minute training cap remains marginal; p95 projection exceeds it before overhead. M5 must stop before paired runs if authorized optimizations cannot establish feasibility. |
+| PM5-R09 | PASS | Episode-boundary resume uses stable pair identity and completed-episode indexing; snapshots and resumable checkpoints stay distinct; retry fixture verifies seed continuity. | Actual M5 save/resume code is deferred. |
+| PM5-R10 | PASS | M5 matrix, target oracles, checkpoint fixtures, new seed vectors/tests, and CI workflow cover future learner obligations without claiming learner tests passed. | Current CI is contract/preflight coverage, not DDQN training correctness. |
+| PM5-R11 | PASS | M05 plan includes the versioned seed contract, future optimization loop, experiment order, recovery, caps, and PM handoff. | A plan does not authorize M5. |
+| PM5-R12 | PASS | `ef1ffae` fresh clone: preflight/archive/static, focused 141, full 336, M3/M4 artifact checks, and clean status all passed. | Final PR push/CI and exact remote-head verification remain pending and will be recorded before handoff. |
+
+At this point the technical F05 finding is resolved and the committed candidate passes the full clean-clone suite. Final remote branch/PR/CI state must be checked on the pushed head; the PR author still stops before PM acceptance and merge.

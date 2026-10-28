@@ -31,39 +31,72 @@
       "scratch_representation_initialization"
     ],
     "effective_date": "2026-10-28",
+    "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
     "experiment_id": "m5-double-dqn-paired-v1",
     "indexed_domains": [
       "episode_seed",
       "opponent_rng"
     ],
+    "m3_integrity_evidence_path": ".agents/evidence/PRE-M5-F05-m3-release-integrity-20261028.json",
     "master_seed_source": "training_seed",
     "pair_identity": "SHA256(\"videochess-m5-pair-id/v1\\0\" || U32BE(experiment_id ASCII byte length) || experiment_id ASCII || U64BE(training_seed))",
     "run_id_in_seed_derivation": false,
     "schema": "videochess-pre-m5-f05-evidence/1.0",
     "seed_derivation_schema": "videochess-m5-seed-derivation/1.0",
     "seed_output": "(domain_code << 60) | (first_8_digest_bytes_big_endian AND 0x0fffffffffffffff)",
-    "status": "implemented_focused_tests_pass_full_suite_clean_clone_pending",
+    "source_revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3",
+    "status": "committed_candidate_passed_clean_clone",
     "stream_identity": "SHA256(\"videochess-m5-seed/v1\\0\" || U64BE(master_seed) || pair_id raw 32 bytes || U32BE(domain ASCII byte length) || domain ASCII || U64BE(index))",
     "verification": {
-      "focused_working_tree": {
-        "end_utc": "2026-10-28T09:01:03Z",
+      "checkpoint_archive": {
         "exit_code": 0,
-        "log": ".agents/evidence/logs/PRE-M5-F05-focused-working-tree-final.log",
-        "log_sha256": "99788a2ee1be2e3475206aa6473f2d81a2b470c147bb3462391096a6bca3b144",
-        "revision": "638825b9fa14dd3fe20fba102a994a71e9c794dd",
-        "start_utc": "2026-10-28T09:01:02Z",
-        "test_count": 54,
-        "working_tree_dirty": true
+        "log": ".agents/evidence/logs/PRE-M5-F05-clean-ef1ffae-archive.log",
+        "logical_sha256": "b378edd6800c1cfffd558051f5ae686262314fbe560faf34effe62140a01b75e",
+        "record_count": 207,
+        "status": "PASS"
       },
-      "full_suite_dirty_worktree_diagnostic": {
-        "end_utc": "2026-10-28T08:58:23Z",
-        "exit_code": 1,
-        "failure": "Context recovery expected a clean portable snapshot; current working tree was dirty. This diagnostic is not a pass.",
-        "log": ".agents/evidence/logs/PRE-M5-F05-full-suite-working-tree.log",
-        "log_sha256": "c29e129efac3eec7c3fce4164640bfa247bed4226582365256721aaaa64fef4f",
-        "revision": "638825b9fa14dd3fe20fba102a994a71e9c794dd",
-        "start_utc": "2026-10-28T08:54:47Z",
+      "focused_clean_clone": {
+        "exit_code": 0,
+        "log": ".agents/evidence/logs/PRE-M5-F05-clean-ef1ffae-focused-tests.log",
+        "status": "PASS",
+        "test_count": 141
+      },
+      "full_clean_clone": {
+        "exit_code": 0,
+        "log": ".agents/evidence/logs/PRE-M5-F05-clean-ef1ffae-full-suite.log",
+        "status": "PASS",
         "test_count": 336
+      },
+      "m3_release": {
+        "exit_code": 0,
+        "file_hashes_unchanged": true,
+        "inventory_sha256": "bad5997db1836fa8dbedc80f815908230d65b108e74a1476c86437493c494652",
+        "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+        "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+        "split_sha256": "84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e",
+        "status": "PASS"
+      },
+      "m4_transfer_engine_free": {
+        "bundle_file_count": 19,
+        "checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+        "exit_code": 0,
+        "status": "PASS",
+        "stockfish_path": null
+      },
+      "preflight": {
+        "errors": 0,
+        "exit_code": 0,
+        "log": ".agents/evidence/logs/PRE-M5-F05-clean-ef1ffae-preflight.log",
+        "status": "PASS",
+        "warning_codes": [
+          "ARTIFACT_MANIFEST_REQUIRED"
+        ]
+      },
+      "static_checks": {
+        "clean_worktree_exit_code": 0,
+        "compile_exit_code": 0,
+        "diff_check_exit_code": 0,
+        "json_exit_code": 0
       }
     }
   },
@@ -154,7 +187,119 @@
       "root_cause": "The paired-stream formula used pair identity, but the episode-seed formula included run_id, which differs between warm and scratch arms.",
       "severity": "P1",
       "status": "RESOLVED",
-      "summary": "A single versioned pair-level seed derivation now excludes run-specific identities; all domain/index rules and the known-answer reference are executable."
+      "summary": "A single versioned pair-level seed derivation now excludes run-specific identities; all domain/index rules and the known-answer reference are executable.",
+      "verification": {
+        "clean_clone": {
+          "archive_exit_code": 0,
+          "archive_logical_sha256": "b378edd6800c1cfffd558051f5ae686262314fbe560faf34effe62140a01b75e",
+          "archive_records": 207,
+          "path": "/tmp/atari-pre-m5-f05-clean-ef1ffae",
+          "preflight_exit_code": 0,
+          "revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3",
+          "worktree_clean": true
+        },
+        "focused_tests": {
+          "command": "PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m4_model tests.test_m4_data tests.test_m4_training tests.test_m4_checkpoint tests.test_pre_m4_contracts tests.test_m2_simulator tests.test_m3_data tests.test_m5_contract_fixtures tests.test_m5_seeding -v",
+          "exit_code": 0,
+          "log": ".agents/evidence/logs/PRE-M5-F05-clean-ef1ffae-focused-tests.log",
+          "test_count": 141
+        },
+        "full_suite": {
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/share/stockfish:/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "duration_seconds": 209.211,
+          "exit_code": 0,
+          "log": ".agents/evidence/logs/PRE-M5-F05-clean-ef1ffae-full-suite.log",
+          "test_count": 336
+        },
+        "known_answer_tests": {
+          "exit_code": 0,
+          "fixture": "tests/fixtures/m5_seed_derivation_v1.json",
+          "included_in_focused_and_full_suite": true
+        },
+        "m3_artifact_identity_and_immutability": {
+          "evidence": ".agents/evidence/PRE-M5-F05-m3-release-integrity-20261028.json",
+          "status": "PASS"
+        },
+        "m4_transfer_engine_free": {
+          "evidence": ".agents/evidence/logs/PRE-M5-F05-clean-ef1ffae-m4-transfer-engine-free.log",
+          "status": "PASS"
+        },
+        "revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3"
+      }
+    }
+  ],
+  "post_f05_reassessment": [
+    {
+      "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+      "id": "PM5-R01",
+      "status": "PASS",
+      "verification_revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3"
+    },
+    {
+      "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+      "id": "PM5-R02",
+      "status": "PASS",
+      "verification_revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3"
+    },
+    {
+      "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+      "id": "PM5-R03",
+      "status": "PASS",
+      "verification_revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3"
+    },
+    {
+      "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+      "id": "PM5-R04",
+      "status": "PASS",
+      "verification_revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3"
+    },
+    {
+      "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+      "id": "PM5-R05",
+      "status": "PASS",
+      "verification_revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3"
+    },
+    {
+      "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+      "id": "PM5-R06",
+      "status": "PASS",
+      "verification_revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3"
+    },
+    {
+      "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+      "id": "PM5-R07",
+      "status": "PASS",
+      "verification_revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3"
+    },
+    {
+      "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+      "id": "PM5-R08",
+      "status": "PASS",
+      "verification_revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3"
+    },
+    {
+      "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+      "id": "PM5-R09",
+      "status": "PASS",
+      "verification_revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3"
+    },
+    {
+      "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+      "id": "PM5-R10",
+      "status": "PASS",
+      "verification_revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3"
+    },
+    {
+      "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+      "id": "PM5-R11",
+      "status": "PASS",
+      "verification_revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3"
+    },
+    {
+      "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+      "id": "PM5-R12",
+      "status": "PASS",
+      "verification_revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3"
     }
   ],
   "profiles": [
@@ -281,7 +426,7 @@
       "status": "PASS"
     }
   ],
-  "report_generated_at_utc": "2026-10-28T09:03:00Z",
+  "report_generated_at_utc": "2026-10-28T09:14:11Z",
   "repository": {
     "auto_merge": "disabled",
     "base_branch": "initial-idea",
@@ -289,18 +434,19 @@
     "baseline_pr_head_at_inspection": "ffd924efe69746c192df56905eac34ccc689f106",
     "clean_clone_revision": "c19b141e3d2bc1440fd1a9afb89c12cfd1704d95",
     "existing_pr": 10,
+    "f05_source_revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3",
     "feature_branch": "feature/pre-m5-readiness",
     "final_pr_base": "initial-idea",
-    "final_pr_head_after_push": "16bc420d90e2a0eec910208ebce5686c9717600d",
+    "final_pr_head_after_push": null,
     "final_pr_state": "OPEN",
-    "final_verified_candidate_head": "16bc420d90e2a0eec910208ebce5686c9717600d",
+    "final_verified_candidate_head": "ef1ffae65a7e08579e7ae00502a11de59c3efea3",
     "local_engineering_revision": "c19b141e3d2bc1440fd1a9afb89c12cfd1704d95",
     "pr_head_before_push": "ffd924efe69746c192df56905eac34ccc689f106",
     "pr_url": "https://github.com/dodaonam/atari-videochess-rl/pull/10",
     "url": "https://github.com/dodaonam/atari-videochess-rl"
   },
   "schema": "videochess-pre-m5-remediation/1.0",
-  "status": "engineering_complete_awaiting_independent_pm_review",
+  "status": "f05_resolved_candidate_verified_pr_push_pending",
   "verification": {
     "final_candidate_checks": {
       "candidate_revision": "c19b141e3d2bc1440fd1a9afb89c12cfd1704d95",
