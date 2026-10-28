@@ -1,81 +1,88 @@
 # M5 Double DQN Experiment Protocol
 
-**Status:** Proposed, version `m5-ddqn-comparison/1.0`, 2026-10-28. This is an execution-ready proposal, not M5 authorization, G3 approval, implementation, or training evidence. All values are in `configs/rl/m5-double-dqn-v1.json`; a changed config hash creates a new protocol/run identity.
+**Status:** Proposed, version `m5-ddqn-comparison/1.1`, 2026-10-28. This is a bounded execution proposal, not M5 authorization, G3 approval, implementation, or training evidence. It supersedes the v1.0 proposed checkpoint roster and checkpoint naming where they conflict; the historical proposal and its results remain preserved in Git/evidence. Values are mirrored in `configs/rl/m5-double-dqn-v1.json`; the config hash is part of each run identity.
 
-**Ownership:** The algorithm semantics belong to [`RL_ALGORITHM.md`](../03-technical/RL_ALGORITHM.md). This document owns controlled comparisons, run/evaluation identity, metrics, and resource accounting. M5 acceptance IDs remain in [`ACCEPTANCE_CRITERIA.md`](../06-quality/ACCEPTANCE_CRITERIA.md).
+**Ownership:** Algorithm and recovery semantics belong to [`RL_ALGORITHM.md`](../03-technical/RL_ALGORITHM.md). This protocol owns comparison arms, pairing, frozen evaluation, metrics, and experiment/resource accounting. M5 acceptance IDs remain in [`ACCEPTANCE_CRITERIA.md`](../06-quality/ACCEPTANCE_CRITERIA.md).
 
 ## 1. Questions and evidence tracks
 
-Primary question: under the same simulator interaction and update budget, does initializing the action-conditioned Double DQN representation from M4 behavior cloning change learning relative to random initialization? Report improvement, no improvement, and regression equally. This experiment does not guarantee a positive result.
+The experiment asks (A) whether M4 representation initialization changes Double DQN learning relative to scratch initialization, and (B) how each trained DDQN policy compares with its own pre-RL initialization. Positive, neutral, and negative results are all valid outcomes; no improvement is guaranteed.
 
-Keep four claims separate:
+Keep the claims separate:
 
-1. M4 behavior-only imitation: frozen policy and historical PGN labels; no RL.
-2. Before/after RL: each DDQN arm's pre-RL snapshot versus its own post-training checkpoint.
-3. Warm-start versus scratch: paired Double DQN runs with matched seeds, transitions, replay, update schedule, opponents, colors, and evaluation.
-4. Simulator versus ALE: all M5 results are `python-chess` simulator results. No M5 metric is an Atari result.
+1. Frozen M4 behavior-only imitation is a policy trained on historical PGN move labels, with no RL.
+2. Pre-RL versus post-RL compares each DDQN run's initialization snapshot with its own frozen trained policy.
+3. Warm-start versus scratch compares paired Double DQN runs under matched protocols and budgets.
+4. Every M5 game and metric uses the `python-chess` simulator. It is not Atari evidence.
 
-Stockfish is not used for inference, gameplay, rewards, opponents, or Q targets. M4 logits and probabilities are behavior preferences, not Q-values; teacher scores are not used to initialize Q values. No additional PGNs or teacher labels are acquired.
+Stockfish is excluded from M5 policy inference, gameplay, opponents, rewards, and Q targets. M4 behavior scores are not Q values. No teacher scores or additional PGNs are used.
 
-## 2. Comparison arms
+## 2. Policy groups and initialization snapshots
 
-| Arm | Initialization | Learning | Purpose |
-|---|---|---|---|
-| A — frozen M4 behavior | Exact verified M4 checkpoint | None; deterministic legal argmax | Pretraining-only reference. |
-| B — warm Double DQN | Verified shared M4 representation plus fresh seeded Q head; target copied from resulting online network | Simulator rewards and transitions | RL after supervised representation initialization. |
-| C — scratch Double DQN | Same model shape, entirely fresh representation and Q head; target copied from online | Same simulator rewards and transitions as B | Controlled initialization comparator. |
-| D — `RandomLegalAgent` | No learned model | None | M2 baseline. |
-| E — `SimpleHeuristicAgent` | No learned model | None | Transparent one-ply M2 baseline. |
+| Group | Policy snapshots | Capture point | Role |
+|---|---:|---|---|
+| Frozen M4 behavior-only | 1 | Existing accepted immutable checkpoint | Supervised-only baseline; no DDQN updates. |
+| Warm-start DDQN before RL | 3 | One per paired training seed, after M4 representation transfer, fresh Q-head initialization and target copy, before any RL gradient update | Initialization snapshot for Comparison B. |
+| Warm-start DDQN after RL | 3 | Exact 10,000-valid-decision evaluation snapshot, or mark that seed incomplete if a hard cap prevents it | Trained warm-start policy. |
+| Scratch DDQN before RL | 3 | One per paired training seed, after fresh representation/Q-head initialization and target copy, before any RL gradient update | Initialization snapshot for Comparison B. |
+| Scratch DDQN after RL | 3 | Exact 10,000-valid-decision evaluation snapshot, or mark that seed incomplete if a hard cap prevents it | Trained scratch policy. |
+| `RandomLegalAgent` | 1 | Fixed implementation/configuration | M2 baseline. |
+| `SimpleHeuristicAgent` | 1 | Fixed implementation/configuration | Transparent one-ply M2 baseline. |
+| **Total** | **15** |  |  |
 
-Preserve B/C pre-RL initialization checkpoints separately from their trained checkpoints. B and C must use the same run config except for initialization source and paired seed. The Q head is freshly initialized in both arms. Neither B nor C receives M4 optimizer state. A, D, and E never enter replay training.
+Initialization artifacts have schema `videochess-ddqn-evaluation-snapshot/1.0`, decision count zero, and a stable identity `(arm, training_seed, stage=pre_rl)`. The target is already copied from the initialized online network. Capture occurs before creating the first RL gradient. Keep them separate from frozen M4, post-RL snapshots, and resumable training checkpoints. The online-policy parameters are used for all policy snapshots; no M4 behavior head becomes a Q head. Policy identity is `(arm, training_seed, stage)`; `training_seed` is explicitly null for frozen M4 and fixed baselines.
 
-## 3. Training configuration and paired design
+## 3. Training arms and controlled conditions
 
-Versioned proposal: `configs/rl/m5-double-dqn-v1.json`.
+| Arm | Initialization | Learning |
+|---|---|---|
+| Warm-start Double DQN | Accepted M4 shared representation + newly initialized scalar Q head | M2 simulator transitions/rewards. |
+| Scratch Double DQN | Same architecture, independently initialized representation + newly initialized scalar Q head | Same M2 simulator protocol. |
 
-- Three paired seeds: `20261104`, `20261105`, `20261106`.
-- Fixed 10,000 valid agent-decision transitions per arm/seed, or the 45-minute per-run hard cap, whichever comes first. Both arms of each seed have equal stopping budgets. Any capped shortfall is recorded and makes that seed's controlled pair incomplete; do not fill one arm's budget with extra work.
-- Episode reset samples both agent colors evenly under paired episode seeds; agent color stays fixed during an episode. Each step remains one agent move plus at most one opponent reply.
-- Training opponent mixture is fixed 50:50 `RandomLegalAgent` / `SimpleHeuristicAgent`; opponent identity/config is stored per transition. Pair assignment and RNG streams are fixed by the config.
-- `SimpleHeuristicAgent` is the existing M2 one-ply baseline and reconstructs its candidate board from FEN without repetition history. Around repetition-sensitive positions its move preference can therefore differ from a history-aware policy, but the simulator's full Board remains authoritative for legal moves, terminal outcomes, and reward. The M5 learner itself receives complete validated history; report this fixed opponent limitation and do not treat its choices as optimal labels.
-- Replay capacity 4,096 validated transitions; warm-up 512; minibatch 32; one optimizer update every four valid agent decisions; target hard copy every 500 gradient updates; AdamW `1e-4`, weight decay `1e-4`, Huber loss, clip norm `1.0`; `gamma=0.99`.
-- Epsilon decreases linearly from `1.0` to `0.05` over 7,500 agent decisions, then remains `0.05`. Evaluation epsilon is always `0`.
-- CPU is the baseline device; one PyTorch intra-op and one inter-op thread. No Colab, paid compute, or external storage is part of this proposal.
-- Profile-gated start: before the full run, measure the authorized short deterministic learning smoke fixture and estimate whether both paired arms can fit the remaining run caps. Do not scale budgets to consume all available resources.
+Use paired training seeds `20261104`, `20261105`, `20261106`. Within a seed pair, match the M2 simulator implementation, reward/termination rules, opponent mixture and versions, fixed agent-color schedule, episode-seed derivation, exploration protocol, replay/update protocol, decision and wall-time caps, and all non-initialization configuration. Derive independent named RNG streams for episode seeds, opponent actions, exploration, replay sampling, and model initialization. Use the same paired Q-head initialization seed and same initial seed for matching random streams; warm representation comes from the fixed M4 artifact, while scratch representation uses its separately named seed stream.
 
-Expected gradient updates per complete run are approximately 2,372 after the 512-transition warm-up; the realized count is authoritative. Episode caps, decision counts, update counts, and elapsed time are all recorded independently.
+**Do not claim that the two independently acting policies receive identical realized transitions or trajectories.** Different initial Q scores can choose different actions, state histories, rewards, opponent responses, and replay contents. The controlled claim is matched protocol/configuration and equal decision/update budget when completed, with initialization source as the intended policy difference. Record and compare each arm's actual transition identities independently. If one arm stops early, preserve its run and mark that seed pair incomplete; do not extend only the other arm.
 
-## 4. Evaluation and checkpoint selection
+Configuration remains the bounded CPU proposal in `configs/rl/m5-double-dqn-v1.json`: up to 10,000 valid agent decisions per arm/seed, 45 minutes/run, six hours aggregate training including retries, 2 GiB process RSS, replay capacity 4,096, batch 32, warm-up 512, one update per four valid decisions after warm-up, AdamW `1e-4`, Huber loss, clip norm 1.0, and `gamma=0.99`. Seeds, schedules, run identity, and caps are fixed there. These are proposals to revalidate at M5 entry; they do not authorize training or external compute.
 
-Use only fixed-schedule checkpoints. The primary result is the model at exactly 10,000 valid decisions. Do not select epochs/steps/seeds by held-out game outcomes. Preserve checkpoints at 2,500-decision boundaries and the final boundary; they are for recovery and learning curves, not selective reporting.
+## 4. Frozen evaluation design
 
-Frozen evaluation conditions:
+The frozen outcome comparison evaluates exactly the **15 policy snapshots in the table above**. Periodic 2,500/5,000/7,500-decision snapshots are retained for learning-curve/recovery provenance but are not part of the 600-game frozen comparison. Each of the 15 evaluated snapshots receives one game for every scenario key `(evaluation_seed, opponent_id, agent_color)`, using evaluation seeds `20261130`–`20261139`, both fixed agent colors, and both versioned M2 opponents (`RandomLegalAgent`, `SimpleHeuristicAgent`). This yields:
 
-- `RandomLegalAgent` and `SimpleHeuristicAgent`, exact code versions/configs.
-- Seeds `20261130`–`20261139`. For each policy checkpoint, play one game for every `(evaluation seed, opponent, agent color)` combination: 10 seeds × 2 opponents × 2 colors × 1 game = **40 games per policy checkpoint**. The comparison has nine checkpoints: one frozen M4 behavior policy, three warm Double DQN seed checkpoints, three scratch Double DQN seed checkpoints, and one checkpoint for each of the two fixed baseline policies. The complete schedule is **360 games** when all checkpoints finish. A policy checkpoint is frozen before its schedule; baseline policies are evaluated under the same game conditions, including their baseline-versus-baseline opponent condition.
-- Standard initial board only; no opening book or custom positions.
-- Maximum 400 agent decisions/game. Record a cap as truncation separately from terminal W/D/L.
-- Same paired game IDs and conditions for all nine checkpoints; preserve opponent RNG seeds. No training/evaluation RNG sharing.
-- The frozen 40-game schedule occurs once per checkpoint after that checkpoint is frozen. Interim development checks, if necessary, use different explicitly named seeds and cannot replace the frozen results.
+- 10 × 2 × 2 = **40 games per policy snapshot**;
+- 15 × 40 = **600 planned games** for a complete schedule;
+- at most 400 agent decisions per game.
 
-Report per-game outcomes, terminations/truncations, decision counts, colors, seed, opponent, policy errors, latency, and wall time. Summarize W/D/L by opponent and color. Provide paired differences for B versus C and each post-RL policy versus its own initialization. Include raw counts and Wilson 95% intervals for proportions; note that games sharing seed/opponent are paired and not independent. Do not report Elo without a separate calibrated pool and approved rating protocol.
+The stable game ID includes protocol/config hash, policy checkpoint ID, evaluation seed, opponent ID/config hash, and agent color. `RandomLegalAgent` baselines are also evaluated against both specified opponents under the same scenario scheme. A policy must be frozen before its evaluation. All pre-RL snapshots, post-RL snapshots, frozen M4, and both fixed baselines are retained and reported; poor results are not grounds for exclusion.
 
-For the RL diagnostics report valid and invalid transitions, replay distribution, reward/outcome counts, episode length, epsilon trajectory, update count, target synchronization, mean/max absolute TD error, loss, finite-value failures, checkpoint selection, run stop reason, and resource use. Report all failed, capped, or excluded runs. Do not delete an unfavorable seed.
+### Pairing and statistical reporting
 
-## 5. Budget and hard stops
+- Warm versus scratch pairing key: `(training_seed, stage, evaluation_seed, opponent_id, agent_color)`; only the same stage is compared (pre-RL to pre-RL or post-RL to post-RL).
+- Before versus after pairing: `(arm, training_seed, evaluation_seed, opponent_id, agent_color)`.
+- All snapshots share the same predeclared scenario seeds, opponent configurations, and color schedule. These are matched evaluation conditions, not identical game-state trajectories.
+- Report per-game W/D/L, termination reason, truncation separately, decision count, and any policy/simulator error. Aggregate W/D/L by opponent and agent color and retain raw rows.
+- Report paired score differences (win=1, draw=0.5, loss=0) for the two comparisons above. Use a crossed paired cluster bootstrap that resamples the three training-seed pairs and the ten evaluation-seed clusters, retaining all four opponent/color scenario rows within each evaluation-seed cluster; an explicitly described paired randomization method with the same dependency structure is also acceptable. Report each training-seed pair's result and raw paired counts. Do not treat the 40 scenario rows as independent when constructing uncertainty. With only three training-seed clusters, emphasize the low precision and present the cross-seed interval as descriptive evidence, not a high-powered population estimate. For fixed M4/baseline policies, cluster by evaluation seed. Wilson intervals may accompany marginal proportions only with a dependence caveat.
+- Report all completed, capped, failed, and excluded rows. Do not replace a missing scenario with another seed or selectively drop a seed.
+- No held-out evaluation outcome selects a model, seed, checkpoint, or hyperparameter. Do not claim Elo without a separate calibrated pool and approved rating method.
 
-Proposed caps are deliberately independent of M4's budget:
+## 5. Evaluation budget and feasibility rule
 
-- Three seeds × two DDQN arms; 10,000 valid agent decisions/run, 45 minutes/run.
-- Six-hour aggregate CPU wall cap for the M5 paired training campaign, including failed/restarted runs; counters do not reset across new run IDs.
-- 2 GiB maximum process RSS, 4,096 replay transitions, batch size 32, and 1 GiB per-run artifact directory cap.
-- One 40-game frozen evaluation per policy checkpoint, maximum 20 minutes per checkpoint and a three-hour aggregate hard cap for all nine schedules; report unfinished games honestly. The planned maximum is 360 games; if the aggregate cap is reached, retain partial results and do not fill missing schedules with invented outcomes.
-- No paid/GPU/Colab allocation, external upload, or new persistent storage. A future mission must authorize those separately.
+The existing limits remain unchanged: **20 minutes maximum per policy snapshot** and **three hours aggregate across all evaluation snapshots**. Fifteen individual caps sum to 300 minutes, but the 180-minute aggregate cap controls. A complete 600-game schedule therefore has an aggregate average budget of 18 seconds/game (and no checkpoint may exceed an average of 30 seconds/game). These are arithmetic limits, not measured runtime guarantees.
 
-Hard-stop on nonfinite outputs/targets/gradients, corrupt or incompatible state, repeated illegal transition, state/history mismatch, opponent failure, checkpoint integrity failure, resource cap, or accumulated campaign budget exhaustion. Preserve the last verified completed-episode checkpoint and failure diagnostics. Do not silently alter the paired budgets, hyperparameters, opponent mix, or acceptance criteria. If feasibility profiling predicts the comparison cannot fit, reduce neither arm selectively; report the constrained design before M5 authorization.
+Before M5, run the bounded workload profile and verify its measurements in the dated [Pre-M5 remediation evidence](../../.agents/evidence/PRE-M5-remediation-20261028.md), using the accepted M4 scorer as a same-architecture inference-cost proxy, representative real M3 feature batches, a maximum-history shape stress, and a 40-game M4 policy workload sample. Report the sample size, game decisions, per-decision and per-snapshot timings, RSS, and uncertainty. Project the schedule from observed timings and the 400-decision cap; a projection is not a guarantee because game lengths and state histories vary. If 600 games cannot plausibly fit both limits, preserve the 600-game comparison design and ask PM to revise resources or approve a defined alternative before M5. Do not silently raise the three-hour cap, reduce the sample, or begin the campaign with an infeasible plan.
 
-## 6. Reproducibility and limitations
+For the future authorized evaluation, maintain one cumulative timer across all 15 snapshots and retries. Stop starting new games before a per-snapshot or aggregate cap is exceeded. Preserve partial rows and mark any incomplete comparison; missing outcomes are not imputed.
 
-Each paired run gets a unique run ID and canonical JSON config hash. Record source SHA/dirty status; M4 checkpoint SHA or scratch initialization seed; input/transition/model schemas; Python/PyTorch/python-chess versions; CPU/OS; all RNG states; exact opponent configs; per-episode seeds/colors; transition and update counts; checkpoint hashes; times/memory; metric code revision; exclusions; and stop reasons. Keep large model/replay artifacts outside Git in approved local storage and commit only sanitized, portable metadata/evidence.
+## 6. Counters, snapshots, and run provenance
 
-M4 weights and the M3 release are local artifacts outside Git. Verify exact hashes before future use; do not regenerate/copy/upload/re-distribute either artifact. This proposal's CPU feasibility is uncertain until the measured Pre-M5 report is considered. A small simulator benchmark and synthetic gradient do not demonstrate that 60,000 transitions or learning will complete in these caps. M5 is not started by this protocol; a separate direct authorization and applicable prerequisite check are required.
+Evaluation snapshots and resumable training checkpoints are different artifact classes. Follow §8 of [`RL_ALGORITHM.md`](../03-technical/RL_ALGORITHM.md): the configured filenames end in `__eval-snapshot-v1.pt`, `__resume-v1.pt`, and `__incomplete.json` respectively, and their schemas/purposes are not interchangeable. Each 2,500-decision snapshot is captured after valid transition insertion, any due optimizer update, and any due target sync; it is evaluation-valid and non-resumable. A periodic snapshot inside a live episode does not stop or reset that episode. Only the exact 10,000-decision endpoint stops the training run; it preserves the final valid transition and, if the simulator episode is still live, records an incomplete run-end episode without inventing terminal/truncation flags or reward. Full training checkpoints are committed only at completed episode boundaries. If a process interruption is retried before cumulative caps are exhausted, resume only from the last verified episode checkpoint, restore committed counters/RNG, and deterministically replay abandoned logical work; all physical attempt time remains charged. Exhausted caps cause an incomplete stop, never an extension.
+
+For each run, record code/config hashes, source revision/dirty state, software/hardware, M4 SHA or scratch initializer, schemas, seed/stream derivation, opponent identity/config, agent color, episode seeds, every transition and update count, replay/sync schedule, snapshot/checkpoint IDs and hashes, W/D/L raw rows, stop/failure reasons, wall time, and memory. Simulator outcomes remain distinct from ALE evidence. Failed historical runs and retries are retained.
+
+## 7. Stops and interpretation
+
+Hard-stop and preserve the last valid resumable checkpoint on nonfinite values/gradients, invalid or unreconstructable states, repeated illegal actions, opponent/simulator error, checkpoint-integrity failure, or any configured resource cap. An arm that stops before its matched budget is an incomplete comparison; do not claim controlled equal-budget evidence for it.
+
+Behavior-cloning performance, Double DQN learning, simulator outcomes, and Atari performance are separate claims. The frozen M4 policy is not an RL policy. A DDQN pre-RL snapshot is an untrained Q policy; its score is not a post-RL result. A simulator win-rate change is not ALE success. A weak or negative result remains an honest result.
+
+This proposal does not authorize M5, G3, resource allocation, Stockfish gameplay, or ALE integration. M5 remains not started until separately authorized in canonical state.

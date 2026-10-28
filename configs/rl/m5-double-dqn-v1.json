@@ -1,6 +1,6 @@
 {
-  "schema": "videochess-m5-ddqn-config/1.0",
-  "protocol": "m5-ddqn-comparison/1.0",
+  "schema": "videochess-m5-ddqn-config/1.1",
+  "protocol": "m5-ddqn-comparison/1.1",
   "status": "proposed_not_authorized",
   "algorithm": "independent-pytorch-double-dqn",
   "model": {
@@ -56,6 +56,14 @@
   },
   "training": {
     "paired_seeds": [20261104, 20261105, 20261106],
+    "paired_streams": {
+      "derivation": "sha256(master_seed || NUL || domain || NUL || arm_pair_id)",
+      "shared_domains_within_pair": ["episode_seed", "opponent_rng", "exploration_rng", "replay_sampling_rng"],
+      "q_head_initialization_seed_shared_within_pair": true,
+      "scratch_representation_initialization_domain": "scratch_representation",
+      "m4_representation_identity": "verified_m4_checkpoint_sha256",
+      "same_realized_transition_trajectories_claimed": false
+    },
     "agent_decisions_per_arm_seed": 10000,
     "per_run_wall_minutes_hard_cap": 45,
     "aggregate_campaign_wall_hours_hard_cap": 6,
@@ -66,30 +74,82 @@
       "intra_op": 1,
       "inter_op": 1
     },
-    "checkpoint_decision_interval": 2500,
-    "primary_checkpoint": "exact_10000_valid_decisions_or_mark_incomplete",
-    "resume_boundary": "completed_episode_only"
+    "evaluation_snapshot_decision_interval": 2500,
+    "final_evaluation_snapshot_valid_decisions": 10000,
+    "evaluation_snapshot_schema": "videochess-ddqn-evaluation-snapshot/1.0",
+    "artifact_names": {
+      "evaluation_snapshot": "{run_id}__{arm}__seed-{training_seed}__attempt-{attempt_index:04d}__stage-{stage}__decisions-{valid_decisions:06d}__eval-snapshot-v1.pt",
+      "resumable_checkpoint": "{run_id}__{arm}__seed-{training_seed}__attempt-{attempt_index:04d}__episodes-{completed_episodes:05d}__decisions-{valid_decisions:06d}__resume-v1.pt",
+      "attempt_segment": "{run_id}__{arm}__seed-{training_seed}__attempt-{attempt_index:04d}__incomplete.json"
+    },
+    "initialization_snapshot": {
+      "schema": "videochess-ddqn-evaluation-snapshot/1.0",
+      "stage": "pre_rl",
+      "capture_decision": 0,
+      "capture_after_target_copy": true,
+      "capture_before_first_gradient_update": true,
+      "required_per_ddqn_arm_seed": true
+    },
+    "evaluation_snapshot_capture_order": [
+      "complete_and_validate_simulator_step",
+      "insert_valid_transition_into_replay",
+      "perform_due_gradient_update_if_warmed_up",
+      "perform_due_target_sync",
+      "capture_frozen_online_policy_snapshot"
+    ],
+    "periodic_snapshot_continues_live_episode": true,
+    "only_final_decision_snapshot_stops_training": true,
+    "evaluation_snapshot_is_resumable": false,
+    "resumable_checkpoint_schema": "videochess-ddqn-checkpoint/1.0",
+    "resumable_checkpoint_boundary": "completed_episode_only",
+    "resumable_checkpoint_trigger": "every_completed_episode_after_updates_and_sync",
+    "episode_seed_derivation": "sha256(master_seed || NUL || run_id || NUL || completed_episode_index)",
+    "decision_cap_boundary": "commit_the_valid_10000th_transition_then_snapshot_and_stop_without_synthetic_episode_flags",
+    "mid_episode_interruption": "record_attempt_segment_and_incomplete_episode_then_resume_from_last_verified_episode_checkpoint; restore committed counters and RNG, replay discarded work, count wall-time cumulatively"
   },
   "evaluation": {
     "seeds": [20261130, 20261131, 20261132, 20261133, 20261134, 20261135, 20261136, 20261137, 20261138, 20261139],
     "both_agent_colors": true,
     "games_per_opponent_per_color_per_seed": 1,
     "games_per_policy_checkpoint": 40,
-    "policy_checkpoints": {
-      "m4_behavior_only": 1,
-      "warm_double_dqn_seed": 3,
-      "scratch_double_dqn_seed": 3,
-      "random_legal_baseline": 1,
-      "simple_heuristic_baseline": 1,
-      "total": 9
+    "policy_checkpoint_groups": {
+      "m4_behavior_only": {"count": 1, "training_seed": null, "stage": "frozen_m4_behavior_only"},
+      "warm_double_dqn": {"training_seeds": [20261104, 20261105, 20261106], "stages": ["pre_rl", "post_rl"]},
+      "scratch_double_dqn": {"training_seeds": [20261104, 20261105, 20261106], "stages": ["pre_rl", "post_rl"]},
+      "random_legal_baseline": {"count": 1, "training_seed": null, "stage": "fixed_baseline"},
+      "simple_heuristic_baseline": {"count": 1, "training_seed": null, "stage": "fixed_baseline"}
     },
-    "planned_total_games": 360,
+    "policy_checkpoint_count": 15,
+    "planned_total_games": 600,
+    "policy_checkpoint_identity_fields": ["arm", "training_seed", "stage"],
     "max_agent_decisions_per_game": 400,
     "max_wall_minutes_per_checkpoint": 20,
     "aggregate_wall_hours_hard_cap": 3,
+    "evaluation_pairing": {
+      "scenario_key": ["evaluation_seed", "opponent_id", "agent_color"],
+      "warm_scratch_comparison_key": ["training_seed", "stage", "evaluation_seed", "opponent_id", "agent_color"],
+      "before_after_comparison_key": ["arm", "training_seed", "evaluation_seed", "opponent_id", "agent_color"],
+      "same_realized_trajectory_claimed": false,
+      "independent_observations_assumed": false,
+      "report_paired_outcome_differences": true,
+      "paired_uncertainty_method": "crossed_cluster_bootstrap_over_training_seed_and_evaluation_seed",
+      "training_seed_clusters": 3,
+      "evaluation_seed_clusters": 10,
+      "scenario_rows_per_evaluation_seed": 4,
+      "few_training_cluster_caveat_required": true,
+      "game_identity_fields": ["protocol_config_sha256", "policy_checkpoint_id", "evaluation_seed", "opponent_id", "opponent_config_sha256", "agent_color"]
+    },
+    "evaluation_budget_accounting": {
+      "per_checkpoint_cap_minutes": 20,
+      "sum_of_individual_caps_minutes": 300,
+      "aggregate_cap_minutes": 180,
+      "minimum_average_budget_seconds_per_game_at_aggregate_cap": 18,
+      "maximum_average_seconds_per_game_under_per_checkpoint_cap": 30,
+      "partial_schedule_policy": "preserve_completed_rows_and_mark_comparisons_incomplete; no replacement or selective exclusion"
+    },
     "model_selection_uses_test_outcomes": false,
     "interim_results_can_replace_frozen_schedule": false,
-    "statistics": ["raw_wdl_counts", "wilson_95_percent_interval", "paired_policy_difference"]
+    "statistics": ["raw_wdl_counts", "per_opponent_and_color_counts", "paired_policy_difference", "paired_bootstrap_or_permutation_interval", "wilson_95_percent_interval_with_dependence_caveat"]
   },
   "resource_scope": {
     "external_gpu_or_cloud": false,
