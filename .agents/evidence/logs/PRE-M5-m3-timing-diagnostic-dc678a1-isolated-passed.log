@@ -1,0 +1,9 @@
+test_synthetic_end_to_end_release_is_reconstructible_and_hashed (tests.test_m3_data.M3ContractTests.test_synthetic_end_to_end_release_is_reconstructible_and_hashed) ... Exception parsing pv from info: 'depth 1 seldepth 1 multipv 1 score cp 32 nodes 95 wdl 500 400 100 pv a1a1', position at root: rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR b KQkq - 0 1
+Exception parsing pv from info: 'depth 1 seldepth 1 multipv 2 score cp 32 nodes 95 wdl 500 400 100 pv a1a1', position at root: rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR b KQkq - 0 1
+Exception parsing pv from info: 'depth 1 seldepth 1 multipv 3 score cp 32 nodes 95 wdl 500 400 100 pv a1a1', position at root: rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR b KQkq - 0 1
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 50.611s
+
+OK

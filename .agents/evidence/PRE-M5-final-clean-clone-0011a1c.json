@@ -1,0 +1,199 @@
+{
+  "schema": "pre-m5-final-clean-clone-verification/1.1",
+  "tested_revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+  "clone_path": "/tmp/atari-pre-m5-final-pr-10-0011a1c",
+  "working_tree_clean": true,
+  "python": "3.12.3",
+  "uv_available": false,
+  "environment": "Existing locked CPU virtual environment; no dependencies installed.",
+  "runs": [
+    {
+      "name": "preflight",
+      "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+      "command": "python3 scripts/agent_preflight.py --json",
+      "start_utc": "2026-10-28T05:19:14.579001Z",
+      "end_utc": "2026-10-28T05:19:15.340188Z",
+      "exit_code": 0,
+      "test_count": null,
+      "duration_seconds": null,
+      "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-preflight.log",
+      "environment": "Repository Python/system shell; no optional services."
+    },
+    {
+      "name": "archive",
+      "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+      "command": "python3 scripts/migrate_checkpoint_history.py verify",
+      "start_utc": "2026-10-28T05:19:15.340539Z",
+      "end_utc": "2026-10-28T05:19:15.832575Z",
+      "exit_code": 0,
+      "test_count": null,
+      "duration_seconds": null,
+      "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-archive.log",
+      "environment": "Repository Python/system shell; no optional services."
+    },
+    {
+      "name": "compile",
+      "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+      "command": "PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m compileall -q videochess_rl scripts tests",
+      "start_utc": "2026-10-28T05:19:15.832846Z",
+      "end_utc": "2026-10-28T05:19:16.081479Z",
+      "exit_code": 0,
+      "test_count": null,
+      "duration_seconds": null,
+      "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-compile.log",
+      "environment": "PYTHONPATH=.; existing project venv Python 3.12.3; PATH includes existing local Stockfish executable only for the full-suite UCI readiness smoke test."
+    },
+    {
+      "name": "context_tests",
+      "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+      "command": "PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_agent_context tests.test_checkpoint_history -v",
+      "start_utc": "2026-10-28T05:19:16.081629Z",
+      "end_utc": "2026-10-28T05:21:01.810018Z",
+      "exit_code": 0,
+      "test_count": 79,
+      "duration_seconds": 105.594,
+      "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-context_tests.log",
+      "environment": "PYTHONPATH=.; existing project venv Python 3.12.3; PATH includes existing local Stockfish executable only for the full-suite UCI readiness smoke test."
+    },
+    {
+      "name": "focused_tests",
+      "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+      "command": "PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m4_model tests.test_m4_data tests.test_m4_training tests.test_m4_checkpoint tests.test_pre_m4_contracts tests.test_m2_simulator tests.test_m3_data tests.test_m5_contract_fixtures -v",
+      "start_utc": "2026-10-28T05:21:01.810711Z",
+      "end_utc": "2026-10-28T05:22:12.689344Z",
+      "exit_code": 0,
+      "test_count": 127,
+      "duration_seconds": 69.143,
+      "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-focused_tests.log",
+      "environment": "PYTHONPATH=.; existing project venv Python 3.12.3; PATH includes existing local Stockfish executable only for the full-suite UCI readiness smoke test."
+    },
+    {
+      "name": "full_tests",
+      "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+      "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/share/stockfish:$PATH PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+      "start_utc": "2026-10-28T05:22:12.689578Z",
+      "end_utc": "2026-10-28T05:25:22.237844Z",
+      "exit_code": 0,
+      "test_count": 319,
+      "duration_seconds": 187.65,
+      "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-full_tests.log",
+      "environment": "PYTHONPATH=.; existing project venv Python 3.12.3; PATH includes existing local Stockfish executable only for the full-suite UCI readiness smoke test."
+    },
+    {
+      "name": "diff_check",
+      "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+      "command": "git diff --check",
+      "start_utc": "2026-10-28T05:25:22.238102Z",
+      "end_utc": "2026-10-28T05:25:22.241192Z",
+      "exit_code": 0,
+      "test_count": null,
+      "duration_seconds": null,
+      "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-diff_check.log",
+      "environment": "Repository Python/system shell; no optional services."
+    },
+    {
+      "name": "clean_status",
+      "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+      "command": "git status --short --branch",
+      "start_utc": "2026-10-28T05:25:22.241399Z",
+      "end_utc": "2026-10-28T05:25:22.245665Z",
+      "exit_code": 0,
+      "test_count": null,
+      "duration_seconds": null,
+      "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-clean_status.log",
+      "environment": "Repository Python/system shell; no optional services."
+    },
+    {
+      "name": "m4_bundle",
+      "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+      "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.model.cli verify-artifacts /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4",
+      "start_utc": "2026-10-28T05:25:44.234523Z",
+      "end_utc": "2026-10-28T05:25:46.125980Z",
+      "exit_code": 0,
+      "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-m4_bundle.log",
+      "environment": "Existing Python 3.12.3 project venv; PYTHONPATH=.; read-only external M4 artifact path."
+    },
+    {
+      "name": "transfer_engine_free",
+      "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+      "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/verify_m5_transfer.py /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4/pretrained-behavior-only.pt",
+      "start_utc": "2026-10-28T05:25:46.126166Z",
+      "end_utc": "2026-10-28T05:25:47.740597Z",
+      "exit_code": 0,
+      "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-transfer_engine_free.log",
+      "environment": "Existing Python 3.12.3 project venv; PATH=/usr/bin:/bin (Stockfish unavailable); PYTHONPATH=."
+    },
+    {
+      "name": "m3_release_immutable",
+      "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+      "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.data.cli verify --release /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+      "start_utc": "2026-10-28T05:25:47.740813Z",
+      "end_utc": "2026-10-28T05:27:43.896968Z",
+      "exit_code": 0,
+      "unchanged": true,
+      "file_count": 9,
+      "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-m3-release-immutable.log",
+      "file_sha256": {
+        "config.json": "75034de9d1dee2c48f56ecb1e7b54e11ae4c261fe9a95579ef69b0e93c00b304",
+        "games.jsonl": "526fc9966d4521dee92fc4bb7e011d9a59fce1dc703810a0ed3d6edbb2e154c7",
+        "manifest.json": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+        "manifest.sha256": "5f4c968a8885548565496b7652a6b060adc8778cfeaffb58dd4b7b8b18b9a2ae",
+        "positions.jsonl": "9db9676ecb64cc111e4310c83374348132ad4413cb0de7c1fe1878b89c89500d",
+        "rejections.jsonl": "fce94dc0c721fb84b45ccb812667b712030f4f327901d1a7ee19b4392524a42e",
+        "source_manifest.json": "f2ff571ce81a47b1191f7b57c2f2d16c48ebde6b334aeb6e82d7b173dc2b2935",
+        "split.json": "dbbcc00bdb5989fd8827c8e7beec3b4eea41f0bae3649ad9ffa2373b0d128193",
+        "stats.json": "3d0a217e94a826f38d54b402c921f145592c92760d39901c8b2cc2339dad68bd"
+      },
+      "environment": "Existing Python 3.12.3 project venv; PYTHONPATH=.; read-only external M3 artifact path."
+    }
+  ],
+  "github_ci": {
+    "name": "context",
+    "conclusion": "SUCCESS",
+    "run_url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/40637273930/job/122647025278",
+    "completed_at_utc": "2026-10-28T05:19:34Z",
+    "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+    "scope": "Preflight, standard-library context and contract fixtures; not the full Python regression suite."
+  },
+  "diagnostic_attempts": [
+    {
+      "revision": "dc678a115424d6718e37845c6d2fc1710a7d6644",
+      "exit_code": 1,
+      "test_count": 127,
+      "duration_seconds": 33.713,
+      "reason": "Stage-specific one-second M3 timing fixture expired during source parsing before the injected statistics delay.",
+      "log": ".agents/evidence/logs/PRE-M5-final-prhead-dc678a1-focused-tests-failed.log",
+      "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-dc678a1-focused-tests-failed.meta"
+    },
+    {
+      "revision": "dc678a115424d6718e37845c6d2fc1710a7d6644",
+      "working_tree_modified": true,
+      "exit_code": 1,
+      "test_count": 1,
+      "duration_seconds": 62.874,
+      "reason": "The synthetic M3 test expected the no-success exception after a one-second teacher budget; the wall deadline correctly expired before UCI startup under load. Assertions were made phase-aware and still require a bounded not_attempted result.",
+      "log": ".agents/evidence/logs/PRE-M5-m3-timing-diagnostic-dc678a1-isolated-failed.log",
+      "metadata_log": ".agents/evidence/logs/PRE-M5-m3-timing-diagnostic-dc678a1-isolated-failed.meta"
+    }
+  ],
+  "artifact_rechecks": {
+    "m3_release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+    "m3_unchanged": true,
+    "m3_file_count": 9,
+    "m4_checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+    "m4_bundle_files": 19,
+    "m4_transfer_engine_free": true
+  },
+  "correction_validation": {
+    "source_commit": "dc678a115424d6718e37845c6d2fc1710a7d6644",
+    "working_tree_modified": true,
+    "test": "tests.test_m3_data.M3ContractTests.test_synthetic_end_to_end_release_is_reconstructible_and_hashed",
+    "command": "PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m3_data.M3ContractTests.test_synthetic_end_to_end_release_is_reconstructible_and_hashed -v",
+    "completed_at_utc": "2026-10-28T05:18:20.158732Z",
+    "duration_seconds": 50.611,
+    "test_count": 1,
+    "exit_code": 0,
+    "log": ".agents/evidence/logs/PRE-M5-m3-timing-diagnostic-dc678a1-isolated-passed.log",
+    "result": "The individual test passed after increasing the stage-test setup allowance and accepting the valid early deadline stop while retaining elapsed/status/process-cleanup assertions."
+  }
+}

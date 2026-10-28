@@ -1,6 +1,6 @@
 {
   "schema": "videochess-pre-m5-readiness/1.0",
-  "report_generated_at_utc": "2026-10-28T05:04:28.096153Z",
+  "report_generated_at_utc": "2026-10-28T05:32:27.993140Z",
   "status": "ready_for_independent_pm_review",
   "repository": "dodaonam/atari-videochess-rl",
   "baseline": {
@@ -10,7 +10,7 @@
   },
   "feature": {
     "branch": "feature/pre-m5-readiness",
-    "verified_source_revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
+    "verified_source_revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
     "worktree_clean_at_verification": true,
     "working_tree_clean_at_verification": true,
     "candidate_change_base_revision": "906178775d48e98e64c709673bfe73177dd15c02"
@@ -22,7 +22,7 @@
     "draft": false,
     "target_branch": "initial-idea",
     "target_sha_at_verification": "906178775d48e98e64c709673bfe73177dd15c02",
-    "head_sha_at_verification": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
+    "head_sha_at_verification": "0011a1c07e047cedf9394d70b2413cea74ba1437",
     "merged": false,
     "merge_attempted": false,
     "review_decision": "awaiting_independent_pm_review"
@@ -61,7 +61,7 @@
       "purged_positions": 732,
       "rejected_records": 182,
       "verification_exit_code": 0,
-      "verification_log": ".agents/evidence/logs/PRE-M5-final-prhead-5f73-m3_release.log"
+      "verification_log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-m3-release-immutable.log"
     },
     "m4": {
       "path": "/home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4/pretrained-behavior-only.pt",
@@ -75,8 +75,8 @@
       "engine_free_transfer_exit_code": 0,
       "stockfish_available_in_transfer_path": false,
       "source_artifacts_unchanged": true,
-      "verification_log": ".agents/evidence/logs/PRE-M5-final-prhead-5f73-m4_bundle.log",
-      "transfer_log": ".agents/evidence/logs/PRE-M5-final-prhead-5f73-transfer_engine_free.log"
+      "verification_log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-m4_bundle.log",
+      "transfer_log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-transfer_engine_free.log"
     }
   },
   "criteria": [
@@ -85,12 +85,12 @@
       "status": "PASS",
       "evidence_path": ".agents/evidence/PRE-M5-readiness-20261028.md",
       "verification_method": "Read-only PR/source/M4 evidence audit plus fresh clean-clone M2-M4 regression.",
-      "verification_revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
+      "verification_revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
       "verification_command": "PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
       "start_utc": "2026-10-28T04:13:05.269679471Z",
       "end_utc": "2026-10-28T04:13:53.125149178Z",
       "exit_code": 0,
-      "result": "Direct M4 source/evidence audit plus fresh clean-clone full regression: 319/319 pass. Historical M4 failures and corrections remain preserved; PR #8/#9 have no GitHub review submissions in the inspected record.",
+      "result": "Direct M4 source/evidence audit plus fresh clean-clone full regression at 0011a1c: 319/319 pass. Historical M4 failures and corrections remain preserved; PR #8/#9 have no GitHub review submissions in the inspected record.",
       "limitation": "Engineering retrospective is not independent PM acceptance; the PM may review M4 evidence separately.",
       "reviewed_at_utc": "2026-10-28T04:24:09.723363Z"
     },
@@ -99,12 +99,12 @@
       "status": "PASS",
       "evidence_path": "docs/02-management/PR_REVIEW_AND_INTEGRATION.md",
       "verification_method": "Governance document review and regression assertion; GitHub settings inspected read-only.",
-      "verification_revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
+      "verification_revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
       "verification_command": "PYTHONPATH=. <pinned-venv-python> -m unittest tests.test_agent_context.AgentContextRecoveryTests.test_pr_review_policy_explicitly_separates_codex_and_pm_authority -v",
       "start_utc": null,
       "end_utc": null,
       "exit_code": 0,
-      "result": "PR-only workflow and separate PM/human merge authority are explicit; branch is unprotected and no ruleset exists.",
+      "result": "PR-only workflow and separate PM/human merge authority are explicit; the final exact-head context workflow passes. Branch protection and settings remain unchanged.",
       "limitation": "Documentation and the fixture test cannot enforce GitHub API permissions; repository settings were not modified.",
       "reviewed_at_utc": "2026-10-28T04:24:09.723363Z",
       "additional_evidence_paths": [
@@ -116,16 +116,16 @@
       "status": "PASS",
       "evidence_path": ".agents/state/PROJECT_STATE.yaml",
       "verification_method": "Canonical state/backlog review, preflight, and completed-task invariant regression.",
-      "verification_revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
-      "verification_command": "python3 scripts/agent_preflight.py --json; python -m unittest tests.test_agent_context.AgentContextRecoveryTests.test_completed_task_must_have_empty_next_action -v",
+      "verification_revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+      "verification_command": "python3 scripts/agent_preflight.py --json; PYTHONPATH=. <pinned Python 3.12> -m unittest tests.test_agent_context tests.test_checkpoint_history -v",
       "start_utc": "2026-10-28T04:12:26.426312454Z",
       "end_utc": "2026-10-28T04:12:27.031688402Z",
       "exit_code": 0,
       "result": "Exact-head clean-clone preflight has zero errors; 79 context/history tests pass. M4-001 next_action empty; M5-001 pending; no active task/milestone; M5 unauthorized; G3 unapproved.",
       "limitation": "",
       "additional_evidence_paths": [
-        ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-preflight.log",
-        ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-context_tests.log"
+        ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-preflight.log",
+        ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-context_tests.log"
       ]
     },
     {
@@ -160,35 +160,34 @@
       "status": "PASS",
       "evidence_path": "scripts/verify_m5_transfer.py",
       "verification_method": "Real accepted M4 checkpoint manifest/load/transfer/inference dry-run; M3 identity verified; artifacts checked unchanged.",
-      "verification_revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
-      "verification_command": "python -m videochess_rl.model.cli verify-artifacts <accepted-r4-dir>; PATH=/usr/bin:/bin python scripts/verify_m5_transfer.py <accepted-checkpoint>",
+      "verification_revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+      "verification_command": "python -m videochess_rl.model.cli verify-artifacts <accepted-r4-dir>; PATH=/usr/bin:/bin PYTHONPATH=. <pinned Python 3.12> scripts/verify_m5_transfer.py <accepted-checkpoint>",
       "start_utc": "2026-10-28T04:17:27.443878942Z",
       "end_utc": "2026-10-28T04:17:28.979486211Z",
       "exit_code": 0,
-      "result": "Representation weights match; behavior head excluded; fresh seeded Q head and online-to-target copy verified; legal inference succeeds; Stockfish absent.",
+      "result": "At exact clean-clone revision 0011a1c, the real 19-file M4 bundle and expected checkpoint hash verify; the safe transfer copies representation only, excludes behavior head, initializes a fresh Q head and target, scores legal UCI actions with Stockfish absent, and leaves source artifacts unchanged.",
       "limitation": "This is a transfer contract dry-run only; no DDQN training or M5 implementation.",
       "additional_evidence_paths": [
-        ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-m4_bundle.log",
-        ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-transfer_engine_free.log",
-        ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-m3-release-immutable.log"
+        ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-m4_bundle.log",
+        ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-transfer_engine_free.log"
       ]
     },
     {
       "id": "PM5-R07",
       "status": "PASS",
       "evidence_path": ".agents/evidence/logs/PRE-M5-evaluation-schedule-regression-20261028.log",
-      "verification_method": "Protocol/config arithmetic review plus exact clean-clone focused regression and GitHub CI.",
-      "verification_revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
-      "verification_command": "PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m5_contract_fixtures -v",
+      "verification_method": "Protocol/config arithmetic review plus exact clean-clone focused regression and final-head GitHub CI.",
+      "verification_revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+      "verification_command": "PYTHONPATH=. <pinned Python 3.12> -m unittest tests.test_m5_contract_fixtures -v",
       "start_utc": "2026-10-28T04:35:38.670773875Z",
       "end_utc": "2026-10-28T04:35:38.726749551Z",
       "exit_code": 0,
-      "result": "One game per evaluation seed/opponent/color yields 40 games per checkpoint; nine checkpoints yield 360 scheduled games. Config, protocol, matrix and M5 plan agree. The evaluation-schedule regression is included in the 127-test exact-head focused run and passed.",
-      "limitation": "This is a proposed M5 evaluation schedule; no M5 benchmark or learning has run.",
+      "result": "One game per evaluation seed/opponent/color yields 40 games per frozen checkpoint; nine checkpoints yield 360 scheduled games. Config, protocol, matrix and plan agree; the exact-head 127-test focused suite includes the passing schedule fixture.",
+      "limitation": "Proposed schedule only; no M5 benchmark or learning has run.",
       "reviewed_at_utc": "2026-10-28T04:24:09.723363Z",
       "working_tree_dirty": true,
       "additional_evidence_paths": [
-        ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-focused_tests.log"
+        ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-focused_tests.log"
       ]
     },
     {
@@ -222,15 +221,15 @@
       "id": "PM5-R10",
       "status": "PASS",
       "evidence_path": "docs/06-quality/M5_TEST_MATRIX.md",
-      "verification_method": "M5 matrix completeness review; exact clean-clone focused fixtures and GitHub context workflow on the same PR head.",
-      "verification_revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
-      "verification_command": "PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m5_contract_fixtures -v; GitHub Actions context workflow",
+      "verification_method": "M5 verification matrix review; exact clean-clone focused fixtures and PR context workflow on the same source head.",
+      "verification_revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+      "verification_command": "PYTHONPATH=. <pinned Python 3.12> -m unittest tests.test_m5_contract_fixtures -v; GitHub Actions context workflow",
       "start_utc": "2026-10-28T04:19:49Z",
       "end_utc": "2026-10-28T04:20:27Z",
       "exit_code": 0,
-      "result": "Every requested future M5 verification area maps to test fixtures/commands/evidence requirements. The 3 contract fixtures pass within the 127-test focused suite and the context workflow passes on the verified PR head.",
-      "limitation": "No DDQN implementation exists in Pre-M5; learner, replay, optimizer, resume and benchmark tests remain future M5 tests.",
-      "github_ci_run_url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/40634683671/job/122638805433",
+      "result": "All requested future M5 verification areas map to test fixtures, commands, outcomes and evidence requirements. The 3 contract fixtures pass within the 127-test focused suite and the context workflow passes on 0011a1c.",
+      "limitation": "No DDQN learner exists; learner, replay, optimizer, resume and training tests remain future M5 work.",
+      "github_ci_run_url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/40637273930/job/122647025278",
       "github_ci_conclusion": "SUCCESS"
     },
     {
@@ -251,137 +250,161 @@
       "id": "PM5-R12",
       "status": "PASS",
       "evidence_path": ".agents/evidence/PRE-M5-readiness-20261028.md",
-      "verification_method": "Fresh clean GitHub clone of exact pushed PR head; preflight, archive, compile, context, focused and full regression, M3/M4 artifact verification, engine-free transfer, diff and clean-status checks.",
-      "verification_revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
+      "verification_method": "Fresh clean GitHub clone of exact pushed PR head; preflight, archive, compile, context, focused/full regression, M3/M4 artifact checks, engine-free transfer, diff and clean status.",
+      "verification_revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
       "runs": [
         {
           "name": "preflight",
-          "revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
+          "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
           "command": "python3 scripts/agent_preflight.py --json",
-          "start_utc": "2026-10-28T04:56:47.821752Z",
-          "end_utc": "2026-10-28T04:56:48.635928Z",
+          "start_utc": "2026-10-28T05:19:14.579001Z",
+          "end_utc": "2026-10-28T05:19:15.340188Z",
           "exit_code": 0,
-          "log": ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-preflight.log",
-          "clean_clone": true
+          "test_count": null,
+          "duration_seconds": null,
+          "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-preflight.log",
+          "environment": "Repository Python/system shell; no optional services."
         },
         {
           "name": "archive",
-          "revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
+          "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
           "command": "python3 scripts/migrate_checkpoint_history.py verify",
-          "start_utc": "2026-10-28T04:56:48.636123Z",
-          "end_utc": "2026-10-28T04:56:49.143337Z",
+          "start_utc": "2026-10-28T05:19:15.340539Z",
+          "end_utc": "2026-10-28T05:19:15.832575Z",
           "exit_code": 0,
-          "log": ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-archive.log",
-          "clean_clone": true
+          "test_count": null,
+          "duration_seconds": null,
+          "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-archive.log",
+          "environment": "Repository Python/system shell; no optional services."
         },
         {
           "name": "compile",
-          "revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
-          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m compileall -q videochess_rl scripts tests",
-          "start_utc": "2026-10-28T04:56:49.143510Z",
-          "end_utc": "2026-10-28T04:56:49.535063Z",
+          "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+          "command": "PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m compileall -q videochess_rl scripts tests",
+          "start_utc": "2026-10-28T05:19:15.832846Z",
+          "end_utc": "2026-10-28T05:19:16.081479Z",
           "exit_code": 0,
-          "log": ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-compile.log",
-          "clean_clone": true
+          "test_count": null,
+          "duration_seconds": null,
+          "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-compile.log",
+          "environment": "PYTHONPATH=.; existing project venv Python 3.12.3; PATH includes existing local Stockfish executable only for the full-suite UCI readiness smoke test."
         },
         {
           "name": "context_tests",
-          "revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
-          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_agent_context tests.test_checkpoint_history -v",
-          "start_utc": "2026-10-28T04:56:49.535202Z",
-          "end_utc": "2026-10-28T04:58:39.700009Z",
+          "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+          "command": "PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_agent_context tests.test_checkpoint_history -v",
+          "start_utc": "2026-10-28T05:19:16.081629Z",
+          "end_utc": "2026-10-28T05:21:01.810018Z",
           "exit_code": 0,
-          "log": ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-context_tests.log",
-          "clean_clone": true
+          "test_count": 79,
+          "duration_seconds": 105.594,
+          "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-context_tests.log",
+          "environment": "PYTHONPATH=.; existing project venv Python 3.12.3; PATH includes existing local Stockfish executable only for the full-suite UCI readiness smoke test."
         },
         {
           "name": "focused_tests",
-          "revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
-          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m4_model tests.test_m4_data tests.test_m4_training tests.test_m4_checkpoint tests.test_pre_m4_contracts tests.test_m2_simulator tests.test_m3_data tests.test_m5_contract_fixtures -v",
-          "start_utc": "2026-10-28T04:58:39.700757Z",
-          "end_utc": "2026-10-28T04:59:50.129436Z",
+          "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+          "command": "PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m4_model tests.test_m4_data tests.test_m4_training tests.test_m4_checkpoint tests.test_pre_m4_contracts tests.test_m2_simulator tests.test_m3_data tests.test_m5_contract_fixtures -v",
+          "start_utc": "2026-10-28T05:21:01.810711Z",
+          "end_utc": "2026-10-28T05:22:12.689344Z",
           "exit_code": 0,
-          "log": ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-focused_tests.log",
-          "clean_clone": true
-        },
-        {
-          "name": "m4_bundle",
-          "revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
-          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.model.cli verify-artifacts /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4",
-          "start_utc": "2026-10-28T04:59:50.129630Z",
-          "end_utc": "2026-10-28T04:59:51.704891Z",
-          "exit_code": 0,
-          "log": ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-m4_bundle.log",
-          "clean_clone": true
-        },
-        {
-          "name": "transfer_engine_free",
-          "revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
-          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/verify_m5_transfer.py /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4/pretrained-behavior-only.pt",
-          "start_utc": "2026-10-28T04:59:51.705057Z",
-          "end_utc": "2026-10-28T04:59:53.280216Z",
-          "exit_code": 0,
-          "log": ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-transfer_engine_free.log",
-          "clean_clone": true
-        },
-        {
-          "name": "diff_check",
-          "revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
-          "command": "git diff --check",
-          "start_utc": "2026-10-28T04:59:53.280382Z",
-          "end_utc": "2026-10-28T04:59:53.282976Z",
-          "exit_code": 0,
-          "log": ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-diff_check.log",
-          "clean_clone": true
-        },
-        {
-          "name": "clean_status",
-          "revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
-          "command": "git status --short --branch",
-          "start_utc": "2026-10-28T04:59:53.283079Z",
-          "end_utc": "2026-10-28T04:59:53.286615Z",
-          "exit_code": 0,
-          "log": ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-clean_status.log",
-          "clean_clone": true
-        },
-        {
-          "name": "m3_release_immutable",
-          "revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
-          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.data.cli verify --release /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
-          "start_utc": "2026-10-28T04:59:53.286747Z",
-          "end_utc": "2026-10-28T05:02:49.380980Z",
-          "exit_code": 0,
-          "file_count_before": 9,
-          "file_count_after": 9,
-          "unchanged": true,
-          "log": ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-m3-release-immutable.log",
-          "clean_clone": true
+          "test_count": 127,
+          "duration_seconds": 69.143,
+          "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-focused_tests.log",
+          "environment": "PYTHONPATH=.; existing project venv Python 3.12.3; PATH includes existing local Stockfish executable only for the full-suite UCI readiness smoke test."
         },
         {
           "name": "full_tests",
-          "revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
+          "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
           "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/share/stockfish:$PATH PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
-          "completed_at_utc": "2026-10-28T04:55:24.634652Z",
-          "duration_seconds": 205.421,
-          "test_count": 319,
-          "passed": 319,
+          "start_utc": "2026-10-28T05:22:12.689578Z",
+          "end_utc": "2026-10-28T05:25:22.237844Z",
           "exit_code": 0,
-          "log": ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-full-tests.log",
-          "clean_clone": true
+          "test_count": 319,
+          "duration_seconds": 187.65,
+          "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-full_tests.log",
+          "environment": "PYTHONPATH=.; existing project venv Python 3.12.3; PATH includes existing local Stockfish executable only for the full-suite UCI readiness smoke test."
+        },
+        {
+          "name": "diff_check",
+          "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+          "command": "git diff --check",
+          "start_utc": "2026-10-28T05:25:22.238102Z",
+          "end_utc": "2026-10-28T05:25:22.241192Z",
+          "exit_code": 0,
+          "test_count": null,
+          "duration_seconds": null,
+          "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-diff_check.log",
+          "environment": "Repository Python/system shell; no optional services."
+        },
+        {
+          "name": "clean_status",
+          "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+          "command": "git status --short --branch",
+          "start_utc": "2026-10-28T05:25:22.241399Z",
+          "end_utc": "2026-10-28T05:25:22.245665Z",
+          "exit_code": 0,
+          "test_count": null,
+          "duration_seconds": null,
+          "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-clean_status.log",
+          "environment": "Repository Python/system shell; no optional services."
+        },
+        {
+          "name": "m4_bundle",
+          "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.model.cli verify-artifacts /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4",
+          "start_utc": "2026-10-28T05:25:44.234523Z",
+          "end_utc": "2026-10-28T05:25:46.125980Z",
+          "exit_code": 0,
+          "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-m4_bundle.log",
+          "environment": "Existing Python 3.12.3 project venv; PYTHONPATH=.; read-only external M4 artifact path."
+        },
+        {
+          "name": "transfer_engine_free",
+          "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/verify_m5_transfer.py /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4/pretrained-behavior-only.pt",
+          "start_utc": "2026-10-28T05:25:46.126166Z",
+          "end_utc": "2026-10-28T05:25:47.740597Z",
+          "exit_code": 0,
+          "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-transfer_engine_free.log",
+          "environment": "Existing Python 3.12.3 project venv; PATH=/usr/bin:/bin (Stockfish unavailable); PYTHONPATH=."
+        },
+        {
+          "name": "m3_release_immutable",
+          "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.data.cli verify --release /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+          "start_utc": "2026-10-28T05:25:47.740813Z",
+          "end_utc": "2026-10-28T05:27:43.896968Z",
+          "exit_code": 0,
+          "unchanged": true,
+          "file_count": 9,
+          "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-m3-release-immutable.log",
+          "file_sha256": {
+            "config.json": "75034de9d1dee2c48f56ecb1e7b54e11ae4c261fe9a95579ef69b0e93c00b304",
+            "games.jsonl": "526fc9966d4521dee92fc4bb7e011d9a59fce1dc703810a0ed3d6edbb2e154c7",
+            "manifest.json": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+            "manifest.sha256": "5f4c968a8885548565496b7652a6b060adc8778cfeaffb58dd4b7b8b18b9a2ae",
+            "positions.jsonl": "9db9676ecb64cc111e4310c83374348132ad4413cb0de7c1fe1878b89c89500d",
+            "rejections.jsonl": "fce94dc0c721fb84b45ccb812667b712030f4f327901d1a7ee19b4392524a42e",
+            "source_manifest.json": "f2ff571ce81a47b1191f7b57c2f2d16c48ebde6b334aeb6e82d7b173dc2b2935",
+            "split.json": "dbbcc00bdb5989fd8827c8e7beec3b4eea41f0bae3649ad9ffa2373b0d128193",
+            "stats.json": "3d0a217e94a826f38d54b402c921f145592c92760d39901c8b2cc2339dad68bd"
+          },
+          "environment": "Existing Python 3.12.3 project venv; PYTHONPATH=.; read-only external M3 artifact path."
         }
       ],
       "github_ci": {
         "name": "context",
         "conclusion": "SUCCESS",
-        "run_url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/40634683671/job/122638805433",
-        "completed_at_utc": "2026-10-28T04:52:13Z",
-        "revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
-        "scope": "Repository preflight, context and standard-library contract fixtures; not the full Python regression suite."
+        "run_url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/40637273930/job/122647025278",
+        "completed_at_utc": "2026-10-28T05:19:34Z",
+        "revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+        "scope": "Preflight, standard-library context and contract fixtures; not the full Python regression suite."
       },
       "exit_code": 0,
-      "result": "Exact clean clone at ab244 passed preflight (0 errors; one expected artifact-manifest warning), archive verification (195 records; logical SHA-256 d8336b50…), compile, 79 context/history tests, 127 focused tests, full regression 319/319 in 205.421s, M3 exact-release verification with all nine files unchanged, M4 bundle verification (19 files), engine-free real-checkpoint transfer, diff check, and clean status. The PR context workflow passed on this same SHA.",
-      "limitation": "uv is unavailable; the already-installed pinned Python 3.12.3 CPU venv matching the lockfile was used without installing dependencies. PR CI is context/preflight plus fixtures, not full PyTorch coverage. The full regression log is bound to ab244; subsequent reporting/checkpoint commits do not change implementation or test code.",
-      "verification_command": "See exact commands and UTC timings in .agents/evidence/PRE-M5-final-clean-clone-ab24491.json and adjacent logs.",
+      "result": "Fresh clean clone at 0011a1c passed preflight (0 errors; expected artifact-manifest warning only), checkpoint archive (197 records; logical SHA-256 9b2cdb9d…), compile, 79 context/history tests, 127 focused tests, 319 full tests in 187.650s, exact M3 release verification with all nine files unchanged, M4 bundle verification (19 files), real engine-free M4-to-M5 transfer, diff check, and clean status. PR context CI passed on the same SHA. Failed intermediate timing-fixture attempts were retained separately; the final corrected test and exact-head suites pass.",
+      "limitation": "The existing pinned Python 3.12.3 CPU venv matching the lock was used because uv is unavailable; no dependencies were installed. CI is context/preflight plus standard-library fixtures, not full PyTorch coverage. No M5 learner/training was performed.",
+      "verification_command": "See exact commands, UTC start/end, exit codes and log references in .agents/evidence/PRE-M5-final-clean-clone-0011a1c.json.",
       "diagnostic_attempts": [
         {
           "revision": "e102bd0476b46cc339dee221f769919637d9e8a2",
@@ -408,7 +431,54 @@
           "reason": "The test correctly detected that the working tree differed from the canonical portable Git snapshot. The same recovery test and all 319 tests passed in the exact clean clone at ab244.",
           "log": ".agents/evidence/logs/PRE-M5-dirty-worktree-full-diagnostic-ab24491.log",
           "metadata_log": ".agents/evidence/logs/PRE-M5-dirty-worktree-full-diagnostic-ab24491.meta"
+        },
+        {
+          "revision": "dc678a115424d6718e37845c6d2fc1710a7d6644",
+          "exit_code": 1,
+          "test_count": 127,
+          "duration_seconds": 33.713,
+          "reason": "Stage-specific one-second M3 timing fixture expired during source parsing before the injected statistics delay.",
+          "log": ".agents/evidence/logs/PRE-M5-final-prhead-dc678a1-focused-tests-failed.log",
+          "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-dc678a1-focused-tests-failed.meta"
+        },
+        {
+          "revision": "dc678a115424d6718e37845c6d2fc1710a7d6644",
+          "working_tree_modified": true,
+          "exit_code": 0,
+          "test_count": 1,
+          "duration_seconds": 50.611,
+          "completed_at_utc": "2026-10-28T05:18:20.158732Z",
+          "classification": "corrective isolated test; not a substitute for exact-head clean-clone focused/full suites",
+          "reason": "The stage allowance and bounded phase-aware deadline assertion were corrected; elapsed/status/process-cleanup checks remained.",
+          "log": ".agents/evidence/logs/PRE-M5-m3-timing-diagnostic-dc678a1-isolated-passed.log",
+          "metadata_log": ".agents/evidence/logs/PRE-M5-m3-timing-diagnostic-dc678a1-isolated-passed.meta"
         }
+      ],
+      "correction_validation": {
+        "source_commit": "dc678a115424d6718e37845c6d2fc1710a7d6644",
+        "working_tree_modified": true,
+        "test": "tests.test_m3_data.M3ContractTests.test_synthetic_end_to_end_release_is_reconstructible_and_hashed",
+        "command": "PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m3_data.M3ContractTests.test_synthetic_end_to_end_release_is_reconstructible_and_hashed -v",
+        "completed_at_utc": "2026-10-28T05:18:20.158732Z",
+        "duration_seconds": 50.611,
+        "test_count": 1,
+        "exit_code": 0,
+        "log": ".agents/evidence/logs/PRE-M5-m3-timing-diagnostic-dc678a1-isolated-passed.log",
+        "result": "The individual test passed after increasing the stage-test setup allowance and accepting the valid early deadline stop while retaining elapsed/status/process-cleanup assertions."
+      },
+      "additional_evidence_paths": [
+        ".agents/evidence/PRE-M5-final-clean-clone-0011a1c.json",
+        ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-preflight.log",
+        ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-archive.log",
+        ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-context_tests.log",
+        ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-focused_tests.log",
+        ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-full_tests.log",
+        ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-m3-release-immutable.log",
+        ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-m4_bundle.log",
+        ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-transfer_engine_free.log",
+        ".agents/evidence/logs/PRE-M5-final-prhead-dc678a1-focused-tests-failed.log",
+        ".agents/evidence/logs/PRE-M5-m3-timing-diagnostic-dc678a1-isolated-failed.log",
+        ".agents/evidence/logs/PRE-M5-m3-timing-diagnostic-dc678a1-isolated-passed.log"
       ]
     }
   ],
@@ -425,9 +495,9 @@
     "G3 remains unapproved.",
     "The accepted M3/M4 artifacts are external local-only files; they are not included in Git.",
     "M4 PR #8 and #9 have no recorded GitHub review submissions in inspected review metadata; engineering retrospective does not substitute for PM review.",
-    "initial-idea is unprotected and no ruleset was configured; settings were not changed.",
+    "initial-idea is unprotected and no ruleset was configured; settings were not modified.",
     "The M3 third-party package redistribution license remains unverified; no data was redistributed.",
-    "M5 resource budgets are proposed CPU-first bounds based on short local profiles and require revalidation after separate M5 authorization."
+    "M5 resource budgets are proposed CPU-first bounds from short local profiles and require revalidation after separate M5 authorization."
   ],
   "github_governance_readonly": {
     "checked_at_utc": "2026-10-28T04:23:07Z",
@@ -448,12 +518,38 @@
     "settings_modified": false
   },
   "checkpoint_archive_verification_at_tested_revision": {
-    "verified_revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
-    "records": 195,
-    "logical_sha256": "d8336b504bb7c2b13065f33b7bec5737f9dc043f6ccb0a943708070237741301",
+    "verified_revision": "0011a1c07e047cedf9394d70b2413cea74ba1437",
+    "records": 197,
+    "logical_sha256": "9b2cdb9d897399fafa47ef6a86ca265924e23e44cab268715136dc771c72ac6a",
     "verification_status": "verified",
-    "log": ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-archive.log",
-    "current_checkpoint_id": "cp-e102bd04-20261028T045121880640Z"
+    "log": ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-archive.log",
+    "current_checkpoint_id": "cp-dc678a11-20261028T051845952059Z",
+    "last_archived_checkpoint_id": "cp-ab244916-20261028T050610409435Z"
   },
-  "verification_note": "The exact clean-clone source/test verification and GitHub context CI are tied to ab244916f4a06a2f8abc79383e4fe63186da98bf. The final PR will also contain report/evidence/checkpoint updates; those changes do not alter M2-M5 source or test implementation. The report’s PR head and CI link are verification snapshots, and the final handoff must inspect live PR status."
+  "verification_note": "The final code/test revision independently passed on a fresh clean clone at 0011a1c07e047cedf9394d70b2413cea74ba1437. The following evidence/checkpoint commit contains report, machine-readable records, captured sanitized logs and canonical context only; it does not alter implementation or test code. GitHub context CI is green on 0011a1c. PR #10 remains open and unmerged for independent PM review; the author does not merge.",
+  "captured_log_sha256": {
+    ".agents/evidence/PRE-M5-final-clean-clone-0011a1c.json": "600f00d9d6f9a057a2ccbd013338d82f97d0ad77418cb2507adbed00b1b68f0b",
+    ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-archive.log": "30f937772ccbfa931c573622a5a7c7b4c59b3d19c886c9324f084eaaff93c287",
+    ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-archive.log.meta": "06ff62989b81a1015415582dc1ddd37eef83986d5224a8f7d718ba9870cc10d6",
+    ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-clean_status.log.meta": "573bdea62ba9c3fe53c9bf53d2fcfdb26c9449df8354c59aac5714458d607a82",
+    ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-compile.log.meta": "799978e8dfa18d4c3ebcf782a7e15e7ab34cd18eb3c8c28e64763a914e60272a",
+    ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-context_tests.log": "4cf895bc344e55b38629ae49c30ae6dcd555111c1d2ed4dc989ff9a09395d336",
+    ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-context_tests.log.meta": "b9e4ab061f826e813038925284da9a99edd0cd5cf8c508162de62fdc4f9620b3",
+    ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-diff_check.log.meta": "4dbb5a24b235e9123b9ec99ee4539b35009d7247eda4d0a62cc0acc00cc9ca3f",
+    ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-focused_tests.log": "d2b595dfb6fa232c41fbda8eb446c7a7e0495027e912879fd8388726c36edd16",
+    ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-focused_tests.log.meta": "af58faffa2f3a2b5830deab68d83f3726795220c2345c33f0e38be05cf1e058e",
+    ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-full_tests.log": "a6daa413b760e4b64bec1cbb7a0809dba4a72c11e4d76fbc0aaebdf99ff218c5",
+    ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-full_tests.log.meta": "1240cd381a1620942ad4b13edacf52f43d0bbfc0837b33fe757edf5b0c728a02",
+    ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-m3-release-immutable.log": "f119fc889afbb693d8f9d38afae093d548a30e0fdb7344bf016034d69085aa09",
+    ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-m3-release-immutable.log.meta": "a8854d6cf56cbade887b7cf8e4c12ea2016ed1f19ac913910780ce790f8f275c",
+    ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-m4_bundle.log": "334e16f50e5678b85dd5dbf8803540414622870cc4c76e53a1acaa513f1429f8",
+    ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-m4_bundle.log.meta": "99f2afd48d357b0ba568fd64655b628b32c7e0637f04f79abe3da6b4bea7e183",
+    ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-preflight.log": "390eb43b23aedc13fa6a4838589354be5c8fb6260828474f0a4870d21907978a",
+    ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-preflight.log.meta": "97591f127c1884dec7cbc5833eb442e13be43f96061696371ed5166ced9147a5",
+    ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-transfer_engine_free.log": "2dbb330dc6d93d25dc69da2f987f0bea1dfaae3ca6cc0f789d8f107d98e492e5",
+    ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-transfer_engine_free.log.meta": "9eff3e2e11d7e51c57343465b4180be86fa032cb1a0e7ee319ae5ec39e8b4644",
+    ".agents/evidence/logs/PRE-M5-final-prhead-dc678a1-focused-tests-failed.log": "1f052c968267ee1257bebfa8047ac038af3a9b85d8e58594bf7b45da8cf641d7",
+    ".agents/evidence/logs/PRE-M5-m3-timing-diagnostic-dc678a1-isolated-failed.log": "a483954a07915cecba86f0d6d4bcc4055b9e71611499929d7d638625f0f0eca1",
+    ".agents/evidence/logs/PRE-M5-m3-timing-diagnostic-dc678a1-isolated-passed.log": "2b37adffc5e2278d6e1bcf0f51f60f5a6d027329a6caebe3e35a467508bc2f8d"
+  }
 }

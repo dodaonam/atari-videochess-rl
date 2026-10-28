@@ -1,0 +1,11 @@
+check=isolated_corrected_synthetic_m3_timing_test
+revision=dc678a115424d6718e37845c6d2fc1710a7d6644
+source_commit=dc678a115424d6718e37845c6d2fc1710a7d6644
+working_tree_modified=true
+completed_at_utc=2026-10-28T05:18:20.158732Z
+exit_code=0
+test_count=1
+duration_seconds=50.611
+command=PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m3_data.M3ContractTests.test_synthetic_end_to_end_release_is_reconstructible_and_hashed -v
+result=Pass after the stage setup allowance increased to five seconds with a deliberate 5.05-second statistics-stage overrun; valid early deadline stop remains accepted and elapsed/status/cleanup assertions remain.
+log=.agents/evidence/logs/PRE-M5-m3-timing-diagnostic-dc678a1-isolated-passed.log
