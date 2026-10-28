@@ -4,5 +4,6 @@ start_utc=2026-10-28T05:33:55.787607Z
 end_utc=2026-10-28T05:35:40.297370Z
 duration_seconds=104.51
 exit_code=0
+test_count=79
 command=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_agent_context tests.test_checkpoint_history -v
 environment=Existing pinned Python 3.12.3 CPU virtual environment; no dependencies installed; PYTHONPATH=.; external M3/M4 artifacts read-only.

@@ -1,6 +1,6 @@
 {
   "schema": "videochess-pre-m5-readiness/1.0",
-  "report_generated_at_utc": "2026-10-28T05:44:21.776929Z",
+  "report_generated_at_utc": "2026-10-28T05:58:28.044659Z",
   "status": "ready_for_independent_pm_review",
   "repository": "dodaonam/atari-videochess-rl",
   "baseline": {
@@ -533,7 +533,8 @@
           "duration_seconds": 104.51,
           "log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-context_tests.log",
           "environment": "Existing pinned Python 3.12.3 CPU virtual environment; no dependencies installed; PYTHONPATH=.; external M3/M4 artifacts read-only.",
-          "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-context_tests.log.meta"
+          "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-context_tests.log.meta",
+          "test_count": 79
         },
         {
           "name": "focused_tests",
@@ -545,7 +546,8 @@
           "duration_seconds": 72.923,
           "log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-focused_tests.log",
           "environment": "Existing pinned Python 3.12.3 CPU virtual environment; no dependencies installed; PYTHONPATH=.; external M3/M4 artifacts read-only.",
-          "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-focused_tests.log.meta"
+          "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-focused_tests.log.meta",
+          "test_count": 127
         },
         {
           "name": "full_tests",
@@ -558,7 +560,8 @@
           "log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-full_tests.log",
           "environment": "Existing pinned Python 3.12.3 CPU virtual environment; no dependencies installed; PYTHONPATH=.; external M3/M4 artifacts read-only.; Stockfish executable on PATH only for the configured UCI readiness smoke test.",
           "effective_command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/share/stockfish:$PATH PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
-          "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-full_tests.log.meta"
+          "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-full_tests.log.meta",
+          "test_count": 319
         },
         {
           "name": "diff_check",
@@ -684,7 +687,7 @@
   "verification_note": "Implementation and test sources are unchanged from 0011a1c07e047cedf9394d70b2413cea74ba1437. The exact pushed PR tree at 2decc57591d13d0dd5f918c0fb770034730bf5af was independently cloned and rerun through full regression, focused tests, artifact, preflight, archive, and CI checks; all passed. This report/evidence/checkpoint update contains no implementation or test-code changes. PR #10 remains open and unmerged for independent PM review; author merge and auto-merge are prohibited.",
   "captured_log_sha256": {
     ".agents/evidence/PRE-M5-final-clean-clone-0011a1c.json": "600f00d9d6f9a057a2ccbd013338d82f97d0ad77418cb2507adbed00b1b68f0b",
-    ".agents/evidence/PRE-M5-final-clean-clone-2decc57.sha256.json": "a1e0a85684a776ac97520d660b1b9e6c2f103059ce451de9230883aa8f8163d5",
+    ".agents/evidence/PRE-M5-final-clean-clone-2decc57.sha256.json": "d4a26e573a8aaddadb0e699a673994f43dd6072a2838031e39353e980f291eba",
     ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-archive.log": "30f937772ccbfa931c573622a5a7c7b4c59b3d19c886c9324f084eaaff93c287",
     ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-archive.log.meta": "06ff62989b81a1015415582dc1ddd37eef83986d5224a8f7d718ba9870cc10d6",
     ".agents/evidence/logs/PRE-M5-final-prhead-0011a1c-clean_status.log.meta": "573bdea62ba9c3fe53c9bf53d2fcfdb26c9449df8354c59aac5714458d607a82",
@@ -711,13 +714,13 @@
     ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-compile.log.meta": "02f92d5a971f95304aa98457f84c623dbe8147bc18d81050bc04a23c9ca50d51",
     ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-context_tests.log": "13379bafbd3845b38b04cea6b683fcb2c66f969f574fe4010c5fc290ed1fd5e9",
-    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-context_tests.log.meta": "6615be60454837f32dd59ae9722a612e9dcaf05bd18837566512c8cf87b0d8f6",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-context_tests.log.meta": "6791a50058e3ddd196119b6a0f62fedf140f3f74456d0ec43da1dcd63e3e77a1",
     ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-diff_check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-diff_check.log.meta": "f43e2bfa2b7ecdd57577a033fc3fd878f8a8fd85ac555f4b6f0812b4cd7eb094",
     ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-focused_tests.log": "57333efdbcf3cbbf2fa53ae94b8fe81115097c1eed2ba11445663a35e43f3bfd",
-    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-focused_tests.log.meta": "b8e6395e4b2215668fdd41a9289a2999cd363bef928f9f5abed48e758bfda003",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-focused_tests.log.meta": "99d35cf4ff0dc4c8ae2e518305759a8c91ac32f613742b73b31beca0999ebf42",
     ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-full_tests.log": "3e3a396b70c1a05d4a28692d66a60b74ff9e5d5d2eb6a01c511c2184dde10b2a",
-    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-full_tests.log.meta": "ea4bdff200026f103ae53b5257c61242a482f8f79384c2d62b09c0ca98d6c119",
+    ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-full_tests.log.meta": "a5f432350323a5001ab2597329c07ee21e80ffb448546cdd09a46d5f02b447c3",
     ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-m3_release_immutable.log": "ed976eb7387e7106ff5c7ef01712be17a4be5737e5a99a6df92e4e2ff9dd0fc5",
     ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-m3_release_immutable.log.meta": "a37e1da5db5762fa2993e7ecee66323b2a693c8f615e150edb1d15be98800bfb",
     ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-m4_bundle.log": "334e16f50e5678b85dd5dbf8803540414622870cc4c76e53a1acaa513f1429f8",
@@ -729,6 +732,6 @@
     ".agents/evidence/logs/PRE-M5-final-prhead-dc678a1-focused-tests-failed.log": "1f052c968267ee1257bebfa8047ac038af3a9b85d8e58594bf7b45da8cf641d7",
     ".agents/evidence/logs/PRE-M5-m3-timing-diagnostic-dc678a1-isolated-failed.log": "a483954a07915cecba86f0d6d4bcc4055b9e71611499929d7d638625f0f0eca1",
     ".agents/evidence/logs/PRE-M5-m3-timing-diagnostic-dc678a1-isolated-passed.log": "2b37adffc5e2278d6e1bcf0f51f60f5a6d027329a6caebe3e35a467508bc2f8d",
-    ".agents/evidence/PRE-M5-final-clean-clone-2decc57.json": "f5959acbce6cf17333ff39b187c30f1cbaa563ffa581aa3239f24cb515fcecd7"
+    ".agents/evidence/PRE-M5-final-clean-clone-2decc57.json": "e4098e915105683417545416ae5219b6b0c75c728d4855944cbe49a2fc49a9ee"
   }
 }

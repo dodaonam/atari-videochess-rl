@@ -55,7 +55,8 @@
       "duration_seconds": 104.51,
       "log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-context_tests.log",
       "environment": "Existing pinned Python 3.12.3 CPU virtual environment; no dependencies installed; PYTHONPATH=.; external M3/M4 artifacts read-only.",
-      "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-context_tests.log.meta"
+      "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-context_tests.log.meta",
+      "test_count": 79
     },
     {
       "name": "focused_tests",
@@ -67,7 +68,8 @@
       "duration_seconds": 72.923,
       "log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-focused_tests.log",
       "environment": "Existing pinned Python 3.12.3 CPU virtual environment; no dependencies installed; PYTHONPATH=.; external M3/M4 artifacts read-only.",
-      "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-focused_tests.log.meta"
+      "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-focused_tests.log.meta",
+      "test_count": 127
     },
     {
       "name": "full_tests",
@@ -80,7 +82,8 @@
       "log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-full_tests.log",
       "environment": "Existing pinned Python 3.12.3 CPU virtual environment; no dependencies installed; PYTHONPATH=.; external M3/M4 artifacts read-only.; Stockfish executable on PATH only for the configured UCI readiness smoke test.",
       "effective_command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/share/stockfish:$PATH PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
-      "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-full_tests.log.meta"
+      "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-2decc57-full_tests.log.meta",
+      "test_count": 319
     },
     {
       "name": "diff_check",
