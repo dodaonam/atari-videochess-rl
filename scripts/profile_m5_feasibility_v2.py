@@ -126,6 +126,31 @@ def make_max_history_stress(batch: dict[str, Any], *, plies: int = HISTORY_STRES
     return output
 
 
+def make_variable_history_stress(
+    batch: dict[str, Any], *, max_plies: int = HISTORY_STRESS_PLIES,
+) -> tuple[dict[str, Any], tuple[int, ...]]:
+    """Build an evenly spread shape stress; it does not represent chess states."""
+    if batch["history_moves"].shape[0] != 32 or not 0 < max_plies <= HISTORY_STRESS_PLIES:
+        raise ValueError("unexpected stress batch size or maximum history length")
+    lengths = tuple(round(index * max_plies / 31) for index in range(32))
+    source = batch["history_moves"]
+    extended = torch.zeros((32, max_plies, 4), dtype=source.dtype)
+    mask = torch.zeros((32, max_plies), dtype=torch.bool)
+    for index, length in enumerate(lengths):
+        source_length = int(batch["history_mask"][index].sum())
+        copied = min(source_length, length)
+        if copied:
+            extended[index, :copied] = source[index, :copied]
+        if length > copied:
+            fill = source[index, source_length - 1] if source_length else torch.tensor([0, 1, 0, 0], dtype=source.dtype)
+            extended[index, copied:length] = fill.expand(length - copied, -1)
+        mask[index, :length] = True
+    output = dict(batch)
+    output["history_moves"] = extended
+    output["history_mask"] = mask
+    return output, lengths
+
+
 def build_replay_wire_probe(
     rows: tuple[PositionFeatures, ...], *, history_plies: int | None = None,
 ) -> dict[str, Any]:
@@ -203,6 +228,7 @@ def run_m4_evaluation_workload(policy: BehaviorPolicy, *, deadline: float) -> di
     games: list[dict[str, Any]] = []
     inference_seconds: list[float] = []
     step_seconds: list[float] = []
+    history_plies: list[int] = []
     total_started = time.perf_counter()
     for seed in seeds:
         for opponent_id, opponent_type in opponents:
@@ -219,6 +245,7 @@ def run_m4_evaluation_workload(policy: BehaviorPolicy, *, deadline: float) -> di
                     tick = time.perf_counter()
                     action = policy.choose_move(observation, simulator.legal_moves, random.Random(seed + decisions))
                     inference_seconds.append(time.perf_counter() - tick)
+                    history_plies.append(len(observation.history_uci))
                     tick = time.perf_counter()
                     result = simulator.step(action)
                     step_seconds.append(time.perf_counter() - tick)
@@ -250,6 +277,7 @@ def run_m4_evaluation_workload(policy: BehaviorPolicy, *, deadline: float) -> di
                             "p50": statistics.median(game["decisions"] for game in games),
                             "p95": sorted(game["decisions"] for game in games)[round(.95 * (len(games) - 1))],
                             "max": max(game["decisions"] for game in games)},
+        "history_plies_per_policy_decision": quantiles(history_plies),
         "per_game_wall_seconds": quantiles([game["elapsed_seconds"] for game in games]),
         "per_decision_inference_seconds": quantiles(inference_seconds),
         "per_decision_simulator_step_seconds": quantiles(step_seconds),
@@ -415,6 +443,43 @@ def main() -> int:
     optimizer.step()
     stress_update_seconds = time.perf_counter() - tick
 
+    variable_batch, variable_history_lengths = make_variable_history_stress(batch)
+    variable_inputs = model_inputs(variable_batch)
+    check_deadline(deadline, "variable-history shape stress")
+    variable_forward_times: list[float] = []
+    with torch.inference_mode():
+        for _ in range(3):
+            tick = time.perf_counter()
+            variable_online = online(**variable_inputs)
+            variable_target = target(**variable_inputs)
+            variable_forward_times.append(time.perf_counter() - tick)
+            variable_legal = variable_batch["candidate_mask"]
+            if not torch.isfinite(variable_online[variable_legal]).all() or not torch.isfinite(variable_target[variable_legal]).all():
+                raise FloatingPointError("variable-history stress output is nonfinite")
+
+    with torch.no_grad():
+        variable_next_online = online.eval()(**variable_inputs)
+        variable_next_target = target(**variable_inputs)
+        variable_indices = variable_next_online.masked_fill(~variable_legal, -torch.inf).argmax(dim=1)
+        variable_target_values = variable_next_target.gather(1, variable_indices[:, None]).squeeze(1)
+        variable_targets = rewards + 0.99 * bootstrap * variable_target_values
+    online.train()
+    tick = time.perf_counter()
+    optimizer.zero_grad(set_to_none=True)
+    variable_predictions = online(**variable_inputs).gather(1, chosen_indices[:, None]).squeeze(1)
+    variable_loss = F.smooth_l1_loss(variable_predictions, variable_targets.detach())
+    if not torch.isfinite(variable_loss):
+        raise FloatingPointError("variable-history synthetic TD Huber loss is nonfinite")
+    variable_loss.backward()
+    variable_grad_norm = torch.nn.utils.clip_grad_norm_(online.parameters(), 1.0, error_if_nonfinite=True)
+    if not torch.isfinite(variable_grad_norm) or any(
+        parameter.grad is not None and not torch.isfinite(parameter.grad).all()
+        for parameter in online.parameters()
+    ):
+        raise FloatingPointError("variable-history synthetic gradients are nonfinite")
+    optimizer.step()
+    variable_update_seconds = time.perf_counter() - tick
+
     with tempfile.TemporaryDirectory(prefix="m5-profile-checkpoint-") as directory:
         temporary_checkpoint = Path(directory) / "state.pt"
         serialization_started = time.perf_counter()
@@ -456,10 +521,13 @@ def main() -> int:
     )
     worst_case_per_checkpoint_seconds = 40 * 400 * combined_p95_step_seconds
     full_schedule_upper_estimate_seconds = 15 * worst_case_per_checkpoint_seconds
+    estimated_updates = ((10000 - 512) // 4) + 1
+    decision_projection_seconds = combined_p95_step_seconds * 10000
+    maximum_update_seconds_for_cap = (45 * 60 - decision_projection_seconds) / estimated_updates
     source_revision = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
     source_status = subprocess.check_output(["git", "status", "--porcelain"], text=True)
     profile_config = {
-        "schema": "videochess-pre-m5-profile-config/2.0",
+        "schema": "videochess-pre-m5-profile-config/2.1",
         "real_batch_size": 32,
         "synthetic_max_history_plies": HISTORY_STRESS_PLIES,
         "forward_repeats": 12,
@@ -473,7 +541,7 @@ def main() -> int:
         "threads": {"intra_op": torch.get_num_threads(), "inter_op": torch.get_num_interop_threads()},
     }
     output = {
-        "schema": "videochess-pre-m5-feasibility-profile/2.0",
+        "schema": "videochess-pre-m5-feasibility-profile/2.1",
         "profile_config": profile_config,
         "profile_config_sha256": hashlib.sha256(json.dumps(profile_config, sort_keys=True, separators=(",", ":")).encode()).hexdigest(),
         "source_revision": source_revision,
@@ -513,6 +581,8 @@ def main() -> int:
                          "selection_seconds": selection_seconds,
                          "collation_seconds": collate_seconds,
                          "history_plies": quantiles([row.history_length for row in rows]),
+                         "history_plies_by_row": [row.history_length for row in rows],
+                         "history_plies_total": sum(row.history_length for row in rows),
                          "legal_candidate_count": quantiles([row.candidate_count for row in rows]),
                          "candidate_mask_padding_slots": int(batch["candidate_mask"].numel() - batch["candidate_mask"].sum()),
                          "forward_pair_repeats": 12,
@@ -523,6 +593,16 @@ def main() -> int:
                                      "padded_history_tokens": 32 * HISTORY_STRESS_PLIES,
                                      "synthetic_not_semantic_chess_history": True,
                                      "online_plus_target_forward_pair_seconds": quantiles(stress_forward_times)},
+        "variable_history_shape_stress": {"plies": HISTORY_STRESS_PLIES,
+                                          "batch_size": 32,
+                                          "history_lengths": list(variable_history_lengths),
+                                          "total_history_tokens": sum(variable_history_lengths),
+                                          "history_length_quantiles": quantiles(list(variable_history_lengths)),
+                                          "synthetic_not_semantic_chess_history": True,
+                                          "online_plus_target_forward_pair_seconds": quantiles(variable_forward_times),
+                                          "synthetic_huber_loss": float(variable_loss.detach()),
+                                          "gradient_norm_before_clip": float(variable_grad_norm.detach()),
+                                          "full_td_backward_update_seconds": variable_update_seconds},
         "synthetic_ddqn_computation": {"online_next_action_masked_selection": True,
                                        "target_evaluates_same_batch_candidate_index": True,
                                        "reward_and_bootstrap_shapes": [32],
@@ -532,6 +612,8 @@ def main() -> int:
                                        "801_ply_synthetic_huber_loss": float(long_loss.detach()),
                                        "801_ply_gradient_norm_before_clip": float(long_grad_norm.detach()),
                                        "801_ply_full_td_backward_update_seconds": stress_update_seconds,
+                                       "m3_real_batch32_full_td_backward_update_seconds": update_seconds,
+                                       "variable_history_full_td_backward_update_seconds": variable_update_seconds,
                                        "finite_targets_loss_gradients_and_parameters": all(torch.isfinite(p).all() for p in online.parameters()),
                                        "trained_policy_claimed": False},
         "replay_like_storage_probe": {
@@ -564,13 +646,19 @@ def main() -> int:
         "training_run_feasibility_projection": {
             "configured_decisions_per_arm_seed": 10000,
             "configured_updates_per_decisions": 0.25,
-            "estimated_updates_after_512_warmup": ((10000 - 512) // 4) + 1,
+            "estimated_updates_after_512_warmup": estimated_updates,
+            "p95_decision_time_seconds_for_10000": decision_projection_seconds,
+            "max_average_update_seconds_allowed_by_45_min_after_decisions": maximum_update_seconds_for_cap,
+            "estimated_run_seconds_using_m3_real_batch32_update_and_p95_decisions": update_seconds * estimated_updates + decision_projection_seconds,
+            "estimated_run_seconds_using_variable_history_stress_update_and_p95_decisions": variable_update_seconds * estimated_updates + decision_projection_seconds,
             "profiled_801_ply_update_seconds": stress_update_seconds,
+            "profiled_variable_history_update_seconds": variable_update_seconds,
+            "profiled_m3_real_batch32_update_seconds": update_seconds,
             "p95_policy_plus_simulator_seconds_per_decision": combined_p95_step_seconds,
-            "estimated_run_seconds_using_801_ply_update_and_p95_decisions": stress_update_seconds * (((10000 - 512) // 4) + 1) + combined_p95_step_seconds * 10000,
+            "estimated_run_seconds_using_801_ply_update_and_p95_decisions": stress_update_seconds * estimated_updates + decision_projection_seconds,
             "run_wall_cap_seconds": 45 * 60,
             "six_run_aggregate_cap_seconds": 6 * 60 * 60,
-            "projection_caveat": "This extrapolates one synthetic max-history TD update and a finite gameplay p95; it excludes replay sampling/validation overhead and does not guarantee training convergence or fit on another CPU.",
+            "projection_caveat": "Projections bracket a real M3 batch, an evenly spread synthetic 0-to-801-ply batch, and an all-801-ply upper stress. The true M5 replay-history distribution is unmeasured; estimates exclude replay sampling/validation overhead and do not guarantee training convergence or fit on another CPU.",
         },
         "resource": {"elapsed_seconds": elapsed, "peak_rss_bytes": peak_rss,
                      "active_profile_cap_seconds": args.max_seconds, "rss_cap_bytes": RSS_CAP_BYTES},
@@ -579,6 +667,8 @@ def main() -> int:
             "The 801-ply tensor stress repeats valid categorical token values but is not a semantically valid chess history.",
             "Replay bytes measure compact synthetic JSON records and Python bytes/list overhead, not a future replay implementation's heap or allocator fragmentation.",
             "The 801-ply replay shape is an upper-bound tensor/history stress with sampled candidate sets; it is not a complete legal-state replay dataset.",
+            "The variable-history shape stress spreads 32 synthetic history lengths uniformly from zero to 801 plies; it is a workload bracket, not an observed M5 replay-length distribution or legal chess history.",
+            "The 45-minute run projection is bracketed using a real M3 batch update, a synthetic variable-history update, and the all-801-ply bound; the true M5 replay workload must be measured before relying on a projection.",
             "The 40-game workload uses the frozen M4 behavior scorer only for timing; outcomes are deliberately not summarized as a new performance result.",
             "The 400-decision p95 schedule estimate is conservative arithmetic from a finite sample, not an execution-time guarantee.",
             "Training convergence, policy quality, paired trajectory equivalence, and ALE performance were not measured.",
@@ -592,5 +682,5 @@ if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except ProfileDeadline as exc:
-        print(json.dumps({"schema": "videochess-pre-m5-feasibility-profile/2.0", "status": "INCOMPLETE", "reason": str(exc)}, sort_keys=True))
+        print(json.dumps({"schema": "videochess-pre-m5-feasibility-profile/2.1", "status": "INCOMPLETE", "reason": str(exc)}, sort_keys=True))
         raise SystemExit(2)

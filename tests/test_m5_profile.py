@@ -13,6 +13,7 @@ from scripts.profile_m5_feasibility_v2 import (
     REPLAY_CAPACITY,
     build_replay_wire_probe,
     make_max_history_stress,
+    make_variable_history_stress,
 )
 from videochess_rl.model.features import PositionFeatures
 
@@ -31,6 +32,11 @@ class M5FeasibilityProfileTests(unittest.TestCase):
         self.assertEqual(tuple(stressed["history_moves"].shape), (32, 801, 4))
         self.assertTrue(torch.all(stressed["history_mask"]))
         self.assertEqual(int(stressed["candidate_mask"].sum()), 32)
+        variable, lengths = make_variable_history_stress(batch)
+        self.assertEqual(tuple(variable["history_moves"].shape), (32, 801, 4))
+        self.assertEqual(lengths[0], 0)
+        self.assertEqual(lengths[-1], 801)
+        self.assertEqual([int(mask.sum()) for mask in variable["history_mask"]], list(lengths))
 
     def test_replay_probe_serializes_distinct_bounded_records(self) -> None:
         rows = tuple(
