@@ -1,0 +1,11 @@
+check=full_suite_before_evidence_links
+revision=1cc043965de57e3ef93477832b47e3baa6d01ffa
+start_utc=2026-10-28T07:11:40.267014+00:00
+end_utc=2026-10-28T07:13:30.680763+00:00
+duration_seconds=110.413749
+exit_code=1
+test_count=324
+command=env PYTHONPATH=. PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/share/stockfish:/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v
+environment=Existing local pinned Python 3.12.3 CPU virtual environment; no package installation.
+result=FAIL
+log_path=.agents/evidence/logs/PRE-M5-remediation-full-suite-before-evidence-links-1cc04396.log
