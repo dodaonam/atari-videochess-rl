@@ -1,0 +1,17 @@
+check=preflight
+revision=ab244916f4a06a2f8abc79383e4fe63186da98bf
+start_utc=2026-10-28T04:56:47.821752Z
+end_utc=2026-10-28T04:56:48.635928Z
+exit_code=0
+command=python3 scripts/agent_preflight.py --json
+ok=True
+errors=0
+warnings=1
+warning=ARTIFACT_MANIFEST_REQUIRED: Artifact/data directories are excluded from content hashing and require independent manifest verification: artifacts.
+gate=G2 (approved)
+next_milestone=M5 (pending_user_approval)
+start_authorized=False
+active_task=None; next_task=M5-001 (pending)
+completed_tasks=13; pending_tasks=1
+blockers=0
+acceptance_criteria=51

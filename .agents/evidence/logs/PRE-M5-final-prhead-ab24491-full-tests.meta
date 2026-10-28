@@ -1,0 +1,9 @@
+check=full_tests
+revision=ab244916f4a06a2f8abc79383e4fe63186da98bf
+completed_at_utc=2026-10-28T04:55:24.634652Z
+duration_seconds=205.421
+exit_code=0
+test_count=319
+command=PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/share/stockfish:$PATH PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v
+environment=Python 3.12.3 existing pinned CPU venv; no dependency installation
+clone=/tmp/atari-pre-m5-final-pr-10-ab24491
