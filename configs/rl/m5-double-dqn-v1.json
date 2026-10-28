@@ -1,0 +1,89 @@
+{
+  "schema": "videochess-m5-ddqn-config/1.0",
+  "protocol": "m5-ddqn-comparison/1.0",
+  "status": "proposed_not_authorized",
+  "algorithm": "independent-pytorch-double-dqn",
+  "model": {
+    "input_schema": "videochess-model-input/1.0",
+    "architecture_source": "ADR-0003 shared action-conditioned scorer",
+    "output_semantics": "q_estimate_trained_from_simulator_rewards",
+    "parameter_cap_exclusive": 250000,
+    "candidate_identity": "semantic_uci"
+  },
+  "environment": {
+    "id": "python_chess_m2_simulator",
+    "root": "standard_start_only",
+    "transition": "one_agent_action_plus_at_most_one_opponent_reply",
+    "max_agent_decisions_per_episode": 400,
+    "agent_colors": ["white", "black"],
+    "opponents": ["random_legal", "simple_material_heuristic"],
+    "opponent_mixture_probability": {
+      "random_legal": 0.5,
+      "simple_material_heuristic": 0.5
+    }
+  },
+  "reward": {
+    "agent_win": 1.0,
+    "agent_loss": -1.0,
+    "automatic_draw": 0.0,
+    "nonterminal": 0.0,
+    "shaping": "none",
+    "stockfish_targets_or_rewards": false
+  },
+  "double_dqn": {
+    "gamma": 0.99,
+    "replay_capacity": 4096,
+    "replay_warmup_transitions": 512,
+    "batch_size": 32,
+    "gradient_updates_per_agent_decisions": 0.25,
+    "optimizer": "AdamW",
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0001,
+    "loss": "Huber",
+    "gradient_clip_norm": 1.0,
+    "target_sync_interval_gradient_updates": 500,
+    "target_sync": "hard_copy",
+    "terminal_bootstrap": false,
+    "valid_time_limit_truncation_bootstrap": true,
+    "invalid_transition": "discard_and_record"
+  },
+  "exploration": {
+    "policy": "epsilon_greedy_over_sorted_legal_uci",
+    "epsilon_start": 1.0,
+    "epsilon_end": 0.05,
+    "linear_decay_agent_decisions": 7500,
+    "evaluation_epsilon": 0.0
+  },
+  "training": {
+    "paired_seeds": [20261104, 20261105, 20261106],
+    "agent_decisions_per_arm_seed": 10000,
+    "per_run_wall_minutes_hard_cap": 45,
+    "aggregate_campaign_wall_hours_hard_cap": 6,
+    "peak_rss_bytes_hard_cap": 2147483648,
+    "artifact_directory_bytes_hard_cap": 1073741824,
+    "device": "cpu",
+    "torch_threads": {
+      "intra_op": 1,
+      "inter_op": 1
+    },
+    "checkpoint_decision_interval": 2500,
+    "primary_checkpoint": "exact_10000_valid_decisions_or_mark_incomplete",
+    "resume_boundary": "completed_episode_only"
+  },
+  "evaluation": {
+    "seeds": [20261130, 20261131, 20261132, 20261133, 20261134, 20261135, 20261136, 20261137, 20261138, 20261139],
+    "both_agent_colors": true,
+    "games_per_opponent_per_color": 10,
+    "max_agent_decisions_per_game": 400,
+    "model_selection_uses_test_outcomes": false,
+    "interim_results_can_replace_frozen_schedule": false,
+    "statistics": ["raw_wdl_counts", "wilson_95_percent_interval", "paired_policy_difference"]
+  },
+  "resource_scope": {
+    "external_gpu_or_cloud": false,
+    "paid_compute": false,
+    "external_upload": false,
+    "m5_authorization": "separate_direct_authorization_required",
+    "g3_approval": "separate_governance_state_not_inferred"
+  }
+}

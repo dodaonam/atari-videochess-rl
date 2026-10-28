@@ -1,6 +1,6 @@
 # Chess Simulator MDP Specification
 
-**Status:** Accepted M2 contract under ADR-0002. Simulator implementation and M2-01 through M2-04 are verified in [the M2 acceptance record](../../.agents/evidence/M2-acceptance-20261016.md). The M4/M5 model interface is accepted in [ADR-0003](../02-management/decisions/ADR-0003-pretraining-model-interface.md); neural implementation, measured parameter count, and performance remain unverified.
+**Status (2026-10-28):** Accepted M2 contract under ADR-0002. Simulator implementation and M2-01 through M2-04 are verified in [the M2 acceptance record](../../.agents/evidence/M2-acceptance-20261016.md). The ADR-0003 action-conditioned model interface is accepted and implemented for M4: M4-01 through M4-04 passed, with 121,897 measured parameters and the frozen behavior-only checkpoint identified in the [M4 acceptance report](../../.agents/evidence/M4-final-acceptance-20261027.md). These M4 results do not establish M5 Q-learning. The M5 Bellman/transition specification is in [RL_ALGORITHM.md](RL_ALGORITHM.md); implementation and training remain future and unauthorized work.
 
 **Purpose:** Specify the smallest standard-chess decision process needed for M2 while preserving clear interfaces to M3 PGN/teacher data, the accepted ADR-0003 M4 behavior scorer and M5 Double DQN Q head, and M6 ALE integration. The accepted foundational choices are recorded in [ADR-0002](../02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md); implementation and acceptance evidence are recorded in the linked M2 acceptance record.
 

@@ -115,7 +115,7 @@ Run with the project environment:
 uv run --locked --no-sync --project . python -m unittest discover -s tests -p 'test_pre_m4_contracts.py' -v
 ```
 
-These tests establish synthetic semantic-contract behavior only. The accepted real M3 release was independently reverified read-only in Pre-M4 (see [.agents/evidence/M3-release-local-verification-20261027.md](../../.agents/evidence/M3-release-local-verification-20261027.md)); synthetic tests do not replace that data verification. The M4 loader subsequently reverified and tensorized the release with unchanged nine-file identities. The original fixed-gate failure and exact-input conflict diagnosis remain documented in the [M4 blocker report](../../.agents/evidence/M4-02-sanity-gate-blocker-20261027.md); the revised gate and complete M4 run are documented in the [final M4 acceptance report](../../.agents/evidence/M4-final-acceptance-20261027.md). The accepted M4 model and completed bounded protocol are in [MODEL_DESIGN.md](../03-technical/MODEL_DESIGN.md) and [TRAINING_PROTOCOL.md](../04-research/TRAINING_PROTOCOL.md).
+These tests establish synthetic semantic-contract behavior only. The accepted real M3 release has been independently reverified read-only on 2026-10-28 and used unchanged by the M4 run; see [.agents/evidence/M3-release-local-verification-20261027.md](../../.agents/evidence/M3-release-local-verification-20261027.md), [the M4 final acceptance report](../../.agents/evidence/M4-final-acceptance-20261027.md), and the Pre-M5 verification record. The original fixed-gate failure and exact-input conflict diagnosis remain documented in the [M4 blocker report](../../.agents/evidence/M4-02-sanity-gate-blocker-20261027.md); the revised gate and complete M4 run are documented in the [final M4 acceptance report](../../.agents/evidence/M4-final-acceptance-20261027.md). The accepted M4 model and completed bounded protocol are in [MODEL_DESIGN.md](../03-technical/MODEL_DESIGN.md) and [TRAINING_PROTOCOL.md](../04-research/TRAINING_PROTOCOL.md).
 
 ## M4 model, data, training, and checkpoint tests
 
@@ -142,11 +142,15 @@ The real M4 release verification, revised sanity gate, training, validation-only
 | Training/evaluation | Reproducible pretraining/RL runs, fixed opponent pools/seeds, checkpoints, raw metrics | Only after the relevant milestone and compute authorization. |
 | Delivery/recovery | Fresh-session handoff, artifact references, end-to-end reproduction | G1 and M7 gates. |
 
+## Pre-M5 Double DQN readiness fixtures
+
+The versioned fixture in `tests/fixtures/m5_double_dqn_targets.json` supplies exact online/target disagreement, terminal, and valid-truncation target vectors. `tests/test_m5_contract_fixtures.py` validates the arithmetic and fixture shape using only the standard library. It does not test a Q model, replay, Bellman implementation, trainer, or M5 acceptance. Future M5 must apply the fixture to the actual target calculator and run the full matrix in [`M5_TEST_MATRIX.md`](M5_TEST_MATRIX.md).
+
 ## Pull request CI boundary
 
-The bounded workflow in .github/workflows/preflight.yml runs on pull requests targeting initial-idea. It uses pinned GitHub-maintained actions, read-only repository permissions, Python 3.12, agent preflight, and the standard-library context/review-bundle test modules. It installs no project dependencies, downloads no dataset, launches no Stockfish search, allocates no GPU, and runs no ALE gameplay. Its coverage protects governance, links, checkpoint/recovery behavior, and review-bundle safety; it is not a replacement for the locked full suite or M1/M2 integration tests. Checkout fetches full Git history because a recovery fixture reconstructs the recorded G1 baseline revision.
+The bounded workflow in `.github/workflows/preflight.yml` runs on pull requests targeting `initial-idea`. It uses pinned GitHub-maintained actions, read-only repository permissions, Python 3.12, agent preflight, standard-library context/review-bundle tests, and the pure-standard-library M5 Bellman fixture oracle. It installs no project dependencies, downloads no dataset, launches no Stockfish search, allocates no GPU, and runs no ALE gameplay. Its coverage protects governance, links, checkpoint/recovery behavior, review-bundle safety, and one hand-calculated target fixture; it is not a replacement for the locked full suite, PyTorch tests, or M1/M2 integration tests. Checkout fetches full Git history because a recovery fixture reconstructs the recorded G1 baseline revision.
 
-The workflow does not configure branch protection or a mandatory status check. GitHub Actions execution is limited to the standard public-repository runner. Review actual PR check results before merge; no local run can claim a remote workflow passed.
+The workflow does not configure branch protection or a mandatory status check. GitHub Actions execution is limited to the standard public-repository runner. Review actual PR check results; no local run can claim a remote workflow passed. The PR-author/PM/operator roles and non-merging executor boundary are defined in [PR_REVIEW_AND_INTEGRATION.md](../02-management/PR_REVIEW_AND_INTEGRATION.md).
 
 ## M3 data integrity tests
 

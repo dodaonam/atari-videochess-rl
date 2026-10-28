@@ -28,5 +28,5 @@ jobs:
       - name: Validate canonical context
         run: python scripts/agent_preflight.py
 
-      - name: Run standard-library context and bundle tests
-        run: python -m unittest tests.test_agent_context tests.test_export_review_bundle -v
+      - name: Run standard-library context, bundle, and M5 target-oracle tests
+        run: python -m unittest tests.test_agent_context tests.test_export_review_bundle tests.test_m5_contract_fixtures -v

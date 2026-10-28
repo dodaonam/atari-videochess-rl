@@ -1,0 +1,20 @@
+command: /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_agent_context.AgentContextRecoveryTests.test_completed_task_must_have_empty_next_action tests.test_agent_context.AgentContextRecoveryTests.test_pr_review_policy_explicitly_separates_codex_and_pm_authority tests.test_agent_context.AgentContextRecoveryTests.test_context_ci_runs_m5_fixture_as_a_contract_oracle tests.test_agent_context.AgentContextRecoveryTests.test_clean_clone_recovers_g2_and_future_milestone_transitions tests.test_m5_contract_fixtures -v
+revision: 906178775d48e98e64c709673bfe73177dd15c02
+start_utc: 2026-10-28T03:58:04.187605+00:00
+end_utc: 2026-10-28T03:58:05.937407+00:00
+exit_code: 0
+
+--- stdout ---
+
+--- stderr ---
+test_completed_task_must_have_empty_next_action (tests.test_agent_context.AgentContextRecoveryTests.test_completed_task_must_have_empty_next_action) ... ok
+test_pr_review_policy_explicitly_separates_codex_and_pm_authority (tests.test_agent_context.AgentContextRecoveryTests.test_pr_review_policy_explicitly_separates_codex_and_pm_authority) ... ok
+test_context_ci_runs_m5_fixture_as_a_contract_oracle (tests.test_agent_context.AgentContextRecoveryTests.test_context_ci_runs_m5_fixture_as_a_contract_oracle) ... ok
+test_clean_clone_recovers_g2_and_future_milestone_transitions (tests.test_agent_context.AgentContextRecoveryTests.test_clean_clone_recovers_g2_and_future_milestone_transitions) ... ok
+test_online_target_disagreement_uses_online_action_in_target_value (tests.test_m5_contract_fixtures.M5DoubleDqnFixtureTests.test_online_target_disagreement_uses_online_action_in_target_value) ... ok
+test_terminal_and_valid_truncation_masks_are_distinct (tests.test_m5_contract_fixtures.M5DoubleDqnFixtureTests.test_terminal_and_valid_truncation_masks_are_distinct) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 1.610s
+
+OK

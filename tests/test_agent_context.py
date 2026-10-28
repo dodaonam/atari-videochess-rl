@@ -992,6 +992,7 @@ class AgentContextRecoveryTests(unittest.TestCase):
             (source / evidence_path).parent.mkdir(parents=True, exist_ok=True)
             (source / evidence_path).write_text("Synthetic state-transition fixture; no M0 result is asserted.\n", encoding="utf-8")
             task["status"] = "done"
+            task["next_action"] = ""
             task["evidence"] = [{
                 "kind": "file",
                 "path": evidence_path,
@@ -1121,6 +1122,38 @@ class AgentContextRecoveryTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("TASK_SCHEMA", result.stdout + result.stderr)
         self.assertNotIn("Traceback", result.stdout + result.stderr)
+
+    def test_completed_task_must_have_empty_next_action(self) -> None:
+        backlog = json.loads((REPO / ".agents/tasks/BACKLOG.yaml").read_text(encoding="utf-8"))
+        state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
+        task = next(item for item in backlog["tasks"] if item["id"] == "M4-001")
+        task["next_action"] = "Historical completed action must be cleared."
+        errors: list[dict[str, str]] = []
+        acceptance_ids = agent_preflight._load_acceptance_ids(REPO, errors)
+        agent_preflight._check_task_graph(backlog, REPO, state, set(), acceptance_ids, errors)
+        matching = [item for item in errors if item["code"] == "TASK_SCHEMA" and "empty next_action" in item["message"]]
+        self.assertEqual(len(matching), 1)
+
+    def test_pr_review_policy_explicitly_separates_codex_and_pm_authority(self) -> None:
+        policy_path = REPO / "docs/02-management/PR_REVIEW_AND_INTEGRATION.md"
+        text = policy_path.read_text(encoding="utf-8")
+        for required in (
+            "Codex implements",
+            "Codex verifies",
+            "Codex opens",
+            "PM independently reviews",
+            "authorized human/operator",
+            "must not merge",
+            "green CI",
+        ):
+            with self.subTest(required=required):
+                self.assertIn(required, text)
+
+
+    def test_context_ci_runs_m5_fixture_as_a_contract_oracle(self) -> None:
+        workflow = (REPO / ".github/workflows/preflight.yml").read_text(encoding="utf-8")
+        self.assertIn("tests.test_m5_contract_fixtures", workflow)
+        self.assertIn("not a DDQN learner test", (REPO / "tests/test_m5_contract_fixtures.py").read_text(encoding="utf-8"))
 
     def test_m0_cannot_be_authorized_before_g1_approval(self) -> None:
         path = self.root / ".agents/state/PROJECT_STATE.yaml"

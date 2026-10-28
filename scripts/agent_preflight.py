@@ -678,6 +678,13 @@ def _check_task_graph(backlog: dict[str, object], root: Path, state: dict[str, o
             isinstance(task["status"], str) and task["status"] in {"pending", "in_progress", "blocked"} and not task["next_action"].strip()
         ):
             errors.append({"code": "TASK_SCHEMA", "path": where, "message": "Incomplete tasks require an explicit next_action string."})
+        if (
+            isinstance(task["status"], str)
+            and task["status"] in {"done", "cancelled"}
+            and isinstance(task["next_action"], str)
+            and task["next_action"].strip()
+        ):
+            errors.append({"code": "TASK_SCHEMA", "path": where, "message": "Completed or cancelled tasks must have an empty next_action string."})
         if not isinstance(task["milestone"], str) or task["milestone"] != task_id.rsplit("-", 1)[0]:
             errors.append({"code": "TASK_SCHEMA", "path": where, "message": "Task milestone must match its ID prefix."})
         required_gate = task.get("requires_user_gate_approval")

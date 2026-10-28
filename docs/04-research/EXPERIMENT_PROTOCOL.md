@@ -1,7 +1,7 @@
 # Experiment and Evaluation Protocol
 
-**Status (2026-10-27):** Cross-milestone experiment-identity guidance. This document does not choose a final architecture or grant broad milestone approval. The directly authorized bounded M4-001 task passed M4-01 through M4-04 and was integrated by PR #8 at `c0a284304d602817922772d08f0ff7904af7ae20`; clean-clone post-merge verification passed. G3 remains unapproved, and ADR-0003 owns the accepted M4/M5 architecture.
-**Owners:** This file defines experiment identity, comparisons, and metric separation. RL-first feasibility and M5 update requirements are defined in [RL_FIRST_ALIGNMENT.md](RL_FIRST_ALIGNMENT.md); dataset and teacher meanings are defined in [DATASET_SPEC.md](DATASET_SPEC.md) and [STOCKFISH_TEACHER.md](STOCKFISH_TEACHER.md).
+**Status (2026-10-28):** Cross-milestone experiment-identity guidance. This document does not grant milestone authorization or PM acceptance. M4-01 through M4-04 passed and M4 is integrated by PR #8/#9; see the [M4 final acceptance](../../.agents/evidence/M4-final-acceptance-20261027.md) and [post-merge verification](../../.agents/evidence/M4-postmerge-delivery-verification-20261027.md). G3 remains unapproved; ADR-0003 owns the accepted M4/M5 architecture. The operative M5 paired baseline, seeds, budgets, and evaluation schedule are in [`M5_EXPERIMENT_PROTOCOL.md`](M5_EXPERIMENT_PROTOCOL.md), which controls over the earlier proposal alternatives below.
+**Owners:** This file defines cross-milestone experiment identity and metric separation. M5 comparisons are specified in [M5_EXPERIMENT_PROTOCOL.md](M5_EXPERIMENT_PROTOCOL.md); RL semantics are in [RL_ALGORITHM.md](../03-technical/RL_ALGORITHM.md); dataset and teacher meanings are defined in [DATASET_SPEC.md](DATASET_SPEC.md) and [STOCKFISH_TEACHER.md](STOCKFISH_TEACHER.md).
 
 ## 1. Experiment identity
 

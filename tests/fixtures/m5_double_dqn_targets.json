@@ -1,0 +1,40 @@
+{
+  "schema": "videochess-m5-double-dqn-target-fixture/1.0",
+  "purpose": "future Double DQN implementation oracle; not learner evidence",
+  "gamma": 0.9,
+  "cases": [
+    {
+      "id": "online_target_disagree_nonterminal",
+      "legal_uci": ["b1c3", "g1f3"],
+      "q_online_by_uci": {"b1c3": 0.4, "g1f3": 0.8},
+      "q_target_by_uci": {"b1c3": 1.7, "g1f3": -0.2},
+      "reward_agent": 0.25,
+      "bootstrap_mask": 1,
+      "expected_online_action_uci": "g1f3",
+      "expected_target_value": -0.2,
+      "expected_bellman_target": 0.07
+    },
+    {
+      "id": "true_terminal_no_bootstrap",
+      "legal_uci": [],
+      "q_online_by_uci": {},
+      "q_target_by_uci": {},
+      "reward_agent": -1.0,
+      "bootstrap_mask": 0,
+      "expected_online_action_uci": null,
+      "expected_target_value": null,
+      "expected_bellman_target": -1.0
+    },
+    {
+      "id": "valid_time_limit_truncation_bootstraps",
+      "legal_uci": ["b1c3", "g1f3"],
+      "q_online_by_uci": {"b1c3": 0.4, "g1f3": 0.8},
+      "q_target_by_uci": {"b1c3": 1.7, "g1f3": -0.2},
+      "reward_agent": 0.0,
+      "bootstrap_mask": 1,
+      "expected_online_action_uci": "g1f3",
+      "expected_target_value": -0.2,
+      "expected_bellman_target": -0.18
+    }
+  ]
+}
