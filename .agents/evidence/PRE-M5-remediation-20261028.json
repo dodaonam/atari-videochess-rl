@@ -103,10 +103,11 @@
   "final_delivery": {
     "auto_merge": null,
     "base_sha": "906178775d48e98e64c709673bfe73177dd15c02",
-    "ci_run_id": 40662819083,
+    "ci_run_id": 40664458983,
     "ci_status": "PASS",
-    "clean_clone_archive_logical_sha256": "bb234c1c171280f258a69ed9cffc1a2ca1b3f1a4192eff1e796427fa53374f11",
-    "clean_clone_archive_records": 208,
+    "clean_clone_archive_logical_sha256": "506b745b77fafa560352582b7006bdb1f5ce57fdc7c468b7f272236328574015",
+    "clean_clone_archive_records": 212,
+    "clean_clone_full_suite_duration_seconds": 212.596,
     "clean_clone_full_suite_exit_code": 0,
     "clean_clone_full_suite_tests": 336,
     "governance": {
@@ -116,7 +117,7 @@
       "merge_attempted": false,
       "next_action": "Independent PM review and acceptance decision for the updated PR #10."
     },
-    "note": "This record was prepared after testing 45b9. If an evidence-only checkpoint commit subsequently advances the branch, its exact pushed HEAD is recorded in the PR metadata and final handoff; source/config/test equivalence must be checked.",
+    "note": "This report records the verified PR head 14427. The final commit containing this report and its logs is an evidence/checkpoint-only descendant; its exact PR metadata and CI must be rechecked after push, and the source/config/test equivalence must be demonstrated.",
     "pm5_findings": {
       "PM5-F01": "RESOLVED",
       "PM5-F02": "RESOLVED",
@@ -126,9 +127,8 @@
     },
     "pr_open_unmerged": true,
     "pr_url": "https://github.com/dodaonam/atari-videochess-rl/pull/10",
-    "source_config_test_equivalence": "Staged follow-up diff contains only .agents/evidence and .agents/state records. This will be checked again against the actual commit tree before push.",
-    "tested_pushed_head": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83",
-    "verified_at_utc": "2026-10-28T09:24:30Z"
+    "tested_pushed_head": "14427e21bde9a9c24c74255e61928e0a5e5cd5da",
+    "verified_at_utc": "2026-10-28T09:33:55Z"
   },
   "governance": {
     "auto_merge_request": null,
@@ -263,73 +263,73 @@
       "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
       "id": "PM5-R01",
       "status": "PASS",
-      "verification_revision": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83"
+      "verification_revision": "14427e21bde9a9c24c74255e61928e0a5e5cd5da"
     },
     {
       "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
       "id": "PM5-R02",
       "status": "PASS",
-      "verification_revision": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83"
+      "verification_revision": "14427e21bde9a9c24c74255e61928e0a5e5cd5da"
     },
     {
       "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
       "id": "PM5-R03",
       "status": "PASS",
-      "verification_revision": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83"
+      "verification_revision": "14427e21bde9a9c24c74255e61928e0a5e5cd5da"
     },
     {
       "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
       "id": "PM5-R04",
       "status": "PASS",
-      "verification_revision": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83"
+      "verification_revision": "14427e21bde9a9c24c74255e61928e0a5e5cd5da"
     },
     {
       "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
       "id": "PM5-R05",
       "status": "PASS",
-      "verification_revision": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83"
+      "verification_revision": "14427e21bde9a9c24c74255e61928e0a5e5cd5da"
     },
     {
       "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
       "id": "PM5-R06",
       "status": "PASS",
-      "verification_revision": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83"
+      "verification_revision": "14427e21bde9a9c24c74255e61928e0a5e5cd5da"
     },
     {
       "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
       "id": "PM5-R07",
       "status": "PASS",
-      "verification_revision": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83"
+      "verification_revision": "14427e21bde9a9c24c74255e61928e0a5e5cd5da"
     },
     {
       "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
       "id": "PM5-R08",
       "status": "PASS",
-      "verification_revision": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83"
+      "verification_revision": "14427e21bde9a9c24c74255e61928e0a5e5cd5da"
     },
     {
       "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
       "id": "PM5-R09",
       "status": "PASS",
-      "verification_revision": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83"
+      "verification_revision": "14427e21bde9a9c24c74255e61928e0a5e5cd5da"
     },
     {
       "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
       "id": "PM5-R10",
       "status": "PASS",
-      "verification_revision": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83"
+      "verification_revision": "14427e21bde9a9c24c74255e61928e0a5e5cd5da"
     },
     {
       "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
       "id": "PM5-R11",
       "status": "PASS",
-      "verification_revision": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83"
+      "verification_revision": "14427e21bde9a9c24c74255e61928e0a5e5cd5da"
     },
     {
       "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
       "id": "PM5-R12",
       "status": "PASS",
-      "verification_revision": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83"
+      "verification_revision": "14427e21bde9a9c24c74255e61928e0a5e5cd5da"
     }
   ],
   "profiles": [
@@ -456,7 +456,7 @@
       "status": "PASS"
     }
   ],
-  "report_generated_at_utc": "2026-10-28T09:24:30Z",
+  "report_generated_at_utc": "2026-10-28T09:33:55Z",
   "repository": {
     "auto_merge": "disabled",
     "base_branch": "initial-idea",
@@ -469,12 +469,12 @@
     "final_pr_auto_merge": null,
     "final_pr_base": "initial-idea",
     "final_pr_draft": false,
-    "final_pr_head_after_push": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83",
+    "final_pr_head_after_push": "14427e21bde9a9c24c74255e61928e0a5e5cd5da",
     "final_pr_mergeable": true,
     "final_pr_merged": false,
     "final_pr_state": "OPEN",
-    "final_verified_candidate_head": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83",
-    "last_verified_pr_head": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83",
+    "final_verified_candidate_head": "14427e21bde9a9c24c74255e61928e0a5e5cd5da",
+    "last_verified_pr_head": "14427e21bde9a9c24c74255e61928e0a5e5cd5da",
     "local_engineering_revision": "c19b141e3d2bc1440fd1a9afb89c12cfd1704d95",
     "pr_head_before_push": "ffd924efe69746c192df56905eac34ccc689f106",
     "pr_url": "https://github.com/dodaonam/atari-videochess-rl/pull/10",
@@ -486,46 +486,42 @@
   "verification": {
     "final_candidate_checks": {
       "base_sha": "906178775d48e98e64c709673bfe73177dd15c02",
-      "candidate_revision": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83",
+      "candidate_revision": "14427e21bde9a9c24c74255e61928e0a5e5cd5da",
       "clean_clone": {
         "archive": {
           "exit_code": 0,
-          "log": ".agents/evidence/logs/PRE-M5-F05-finalhead-45b9-archive.log",
-          "logical_sha256": "bb234c1c171280f258a69ed9cffc1a2ca1b3f1a4192eff1e796427fa53374f11",
-          "record_count": 208,
+          "log": ".agents/evidence/logs/PRE-M5-F05-finalhead-14427-archive.log",
+          "logical_sha256": "506b745b77fafa560352582b7006bdb1f5ce57fdc7c468b7f272236328574015",
+          "record_count": 212,
           "status": "PASS"
         },
         "full_suite": {
-          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/share/stockfish:/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
-          "duration_seconds": 208.847,
-          "end_utc": "2026-10-28T09:20:06Z",
+          "command": "PYTHONPATH=. PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/share/stockfish:/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "duration_seconds": 212.596,
+          "end_utc": "2026-10-28T09:32:45Z",
           "exit_code": 0,
-          "log": ".agents/evidence/logs/PRE-M5-F05-finalhead-45b9-full-suite.log",
-          "start_utc": "2026-10-28T09:16:35Z",
+          "log": ".agents/evidence/logs/PRE-M5-F05-finalhead-14427-full-suite.log",
+          "start_utc": "2026-10-28T09:29:12Z",
           "status": "PASS",
           "test_count": 336
         },
-        "path": "/tmp/atari-pre-m5-f05-remote-45b9",
+        "path": "/tmp/atari-pre-m5-f05-final-14427",
         "preflight": {
+          "errors": 0,
           "exit_code": 0,
-          "g3_approved": false,
-          "log": ".agents/evidence/logs/PRE-M5-F05-finalhead-45b9-preflight.log",
-          "m5_start_authorized": false,
-          "m5_status": "pending_user_approval",
+          "log": ".agents/evidence/logs/PRE-M5-F05-finalhead-14427-preflight.log",
           "status": "PASS",
-          "warning": "ARTIFACT_MANIFEST_REQUIRED only"
+          "warning_codes": [
+            "ARTIFACT_MANIFEST_REQUIRED"
+          ]
         },
-        "revision": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83",
-        "source_config_test_equivalence_after_followup": {
-          "scope": "The final follow-up commit is intended to update evidence/checkpoint metadata only; compare all implementation, test, configuration, document, workflow, and script paths before push.",
-          "status": "TO_BE_VERIFIED_AFTER_EVIDENCE_COMMIT"
-        },
+        "revision": "14427e21bde9a9c24c74255e61928e0a5e5cd5da",
         "static_checks": {
           "compile": true,
-          "diff_check_from_base": true,
+          "diff_check": true,
           "exit_code": 0,
-          "log": ".agents/evidence/logs/PRE-M5-F05-finalhead-45b9-static.log",
-          "m5_config_json": true,
+          "json": true,
+          "log": ".agents/evidence/logs/PRE-M5-F05-finalhead-14427-static.log",
           "status": "PASS"
         },
         "worktree_clean_after_verification": true
@@ -536,7 +532,7 @@
         "base_sha": "906178775d48e98e64c709673bfe73177dd15c02",
         "draft": false,
         "head_branch": "feature/pre-m5-readiness",
-        "head_sha": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83",
+        "head_sha": "14427e21bde9a9c24c74255e61928e0a5e5cd5da",
         "mergeable": true,
         "merged": false,
         "number": 10,
@@ -544,10 +540,8 @@
         "state": "OPEN",
         "url": "https://github.com/dodaonam/atari-videochess-rl/pull/10"
       },
-      "source_config_test_equivalence_after_followup": {
-        "compared_to_pushed_head": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83",
-        "evidence": "The staged path allowlist check emitted 16 files with unexpected_paths=[]; post-commit commit-tree path comparison is required before push.",
-        "method": "Inspected the complete staged delta and verified that changes are limited to .agents/evidence and .agents/state checkpoint/handoff records; no source, test, config, documentation, script, or workflow path changed.",
+      "source_config_test_equivalence_to_45b9": {
+        "method": "Complete commit path comparison of 45b9..14427 shows evidence and canonical state/checkpoint/handoff only; no implementation, tests, configuration, docs, scripts or CI workflows changed.",
         "status": "PASS"
       }
     },
@@ -558,15 +552,15 @@
       "verification_note": "Run before commit on the same source/config content; repeat at the committed candidate."
     },
     "github_ci": {
-      "completed_at_utc": "2026-10-28T09:16:08Z",
+      "completed_at_utc": "2026-10-28T09:28:38Z",
       "coverage": "Canonical context preflight and standard-library context, bundle, and M5 contract-oracle tests; not the full Python regression suite.",
       "exit_code": 0,
-      "head_sha": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83",
+      "head_sha": "14427e21bde9a9c24c74255e61928e0a5e5cd5da",
       "job": "context",
-      "job_id": 122729795571,
-      "job_url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/40662819083/job/122729795571",
-      "run_id": 40662819083,
-      "run_url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/40662819083",
+      "job_id": 122735330368,
+      "job_url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/40664458983/job/122735330368",
+      "run_id": 40664458983,
+      "run_url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/40664458983",
       "status": "PASS",
       "workflow": "Repository preflight"
     },

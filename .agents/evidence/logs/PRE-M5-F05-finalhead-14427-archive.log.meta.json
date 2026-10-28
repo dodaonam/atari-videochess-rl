@@ -1,0 +1,14 @@
+{
+  "check": "archive",
+  "command": "python3 scripts/migrate_checkpoint_history.py verify",
+  "end_utc": "2026-10-28T09:29:01Z",
+  "environment": "Fresh clean clone at exact commit.",
+  "exit_code": 0,
+  "log_path": ".agents/evidence/logs/PRE-M5-F05-finalhead-14427-archive.log",
+  "log_sha256": "2c83b0f273593fab69e15b219cc91d178ff397075795d3b8851556c5e09c6466",
+  "logical_sha256": "506b745b77fafa560352582b7006bdb1f5ce57fdc7c468b7f272236328574015",
+  "record_count": 212,
+  "result": "PASS",
+  "revision": "14427e21bde9a9c24c74255e61928e0a5e5cd5da",
+  "start_utc": "2026-10-28T09:29:01Z"
+}
