@@ -1894,7 +1894,9 @@ class M3ContractTests(unittest.TestCase):
                 finalization_calls += 1
                 checked = original_finalized_check(*args, **kwargs)
                 if finalization_calls == 1:
-                    time.sleep(4.1)
+                    # Leave ample setup/search time for slower full-suite hosts;
+                    # the injected delay still exceeds the run's wall budget.
+                    time.sleep(12.1)
                 return checked
 
             overrun_dir = temp / "teacher-finalization-overrun"
@@ -1906,15 +1908,15 @@ class M3ContractTests(unittest.TestCase):
                     license_path=license_path, expected_license_sha256=license_sha,
                     max_positions=1, sample_seed=9, nodes_per_position=500,
                     multipv=3, threads=1, hash_mib=64, timeout_seconds=5,
-                    max_wall_seconds=4, authorization_id=AUTHORIZATION_ID,
+                    max_wall_seconds=12, authorization_id=AUTHORIZATION_ID,
                     source_decision_id=SOURCE_DECISION_ID, confirm_write=True,
                     code_revision="a" * 40, allow_synthetic_source_for_test=True,
                 )
             overrun_wall_elapsed = time.monotonic() - overrun_started
-            self.assertGreater(overrun_wall_elapsed, 4)
+            self.assertGreater(overrun_wall_elapsed, 12)
             self.assertEqual(overrun_manifest["status"], "partial")
             self.assertEqual(overrun_manifest["wall_budget_status"], "overrun")
-            self.assertGreater(overrun_manifest["finalization_observed_elapsed_seconds"], 4)
+            self.assertGreater(overrun_manifest["finalization_observed_elapsed_seconds"], 12)
             self.assertEqual(
                 verify_teacher_run(overrun_dir, output, allow_synthetic_source_for_test=True)["positions_analyzed"],
                 1,
