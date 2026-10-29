@@ -1,0 +1,12 @@
+{
+  "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+  "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+  "code_source_sha256": "e2cb7a957b21e43f4b6499a5364c89de4dbf3ce0889f4cffa7307808fa2e8419",
+  "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+  "executed_at_utc": "2026-10-28T13:06:08.417120Z",
+  "exit_code": 1,
+  "result": "FAILED: 356 tests ran; 355 passed. One existing context-recovery test failed because the checkpoint snapshot was stale relative to the worktree; checkpoint was refreshed before the successful rerun.",
+  "log_path": ".agents/evidence/logs/M5-full-suite-final-20261028-r2.log",
+  "log_sha256": "9e82650b1178abb5e4b9600e2d5fe4e7354d2d7ae37b8b28a24d23557dccfa33",
+  "recorded_at_utc": "2026-10-28T13:10:39Z"
+}

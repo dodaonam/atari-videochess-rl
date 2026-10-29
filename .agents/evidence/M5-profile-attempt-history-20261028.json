@@ -1,0 +1,80 @@
+{
+  "attempts": [
+    {
+      "attempt": 0,
+      "reason": "M4 metadata semantics guard mismatch; retained.",
+      "record_path": "artifacts/m5/feasibility/profile-attempt-0000/failure.json",
+      "seconds_charged_conservatively": 3.0,
+      "status": "failed"
+    },
+    {
+      "attempt": 1,
+      "reason": "Report construction variable error after replay, update, and checkpoint measurements; retained.",
+      "record_path": "artifacts/m5/feasibility/profile-attempt-0001/profile-failure.json",
+      "seconds_charged_conservatively": 177.0,
+      "status": "failed_after_measurement"
+    },
+    {
+      "attempt": 2,
+      "code_sha256": "7766d2deba01d24fbdd59b7bdc7c1cdb4fa856fe64ac6afc5f10c82f31a3391e",
+      "config_sha256": "b25419e8e2c8239c27a7906d7f5153bfb1d0468ed9ad262b0eebb1b39d118786",
+      "reason": "Inter-op setting differed from the frozen setting; retained and charged.",
+      "report_path": "artifacts/m5/feasibility/profile-attempt-0002/real-replay-feasibility.json",
+      "report_sha256": "8219eca143d6dcc8ede39d2d377eda756dd323565512610a8c37bdb64d9d8136",
+      "seconds_measured": 56.052250603000175,
+      "selected_threads": {
+        "inter_op": 1,
+        "intra_op": 4
+      },
+      "status": "measured_superseded"
+    },
+    {
+      "attempt": 3,
+      "code_sha256": "91b521699319e15ae90fd0bd4bf98b069ac5373ada6ad79a21b9685597e48636",
+      "config_sha256": "a8b86f7af3cd0d31d550a5c4a5940abc67527b115dafa1a83df0dc392ec0fee9",
+      "reason": "Matched profile passed; later CLI setup-accounting change altered the source hash.",
+      "report_path": "artifacts/m5/feasibility/profile-attempt-0003/real-replay-feasibility.json",
+      "report_sha256": "d50d84d5357490829f608e290c109992847bacd3d4572d2c5dc77df6236869d3",
+      "seconds_measured": 60.91799461099981,
+      "selected_threads": {
+        "inter_op": 1,
+        "intra_op": 4
+      },
+      "status": "measured_superseded"
+    },
+    {
+      "attempt": 4,
+      "code_sha256": "e2cb7a957b21e43f4b6499a5364c89de4dbf3ce0889f4cffa7307808fa2e8419",
+      "config_sha256": "b5e82f92666edfc12ea199386b06a5f0826dec19ffb84be9a169f46d583ba237",
+      "reason": "Matched source profile passed; attempt 5 is the final measured backend/configuration selection.",
+      "report_path": "artifacts/m5/feasibility/profile-attempt-0004/real-replay-feasibility.json",
+      "report_sha256": "76a0ef267e61473ae41c5c368b32fca091afe312b73abcb60f1b75b3a03b8930",
+      "seconds_measured": 53.83683932400072,
+      "selected_threads": {
+        "inter_op": 1,
+        "intra_op": 1
+      },
+      "status": "measured_superseded"
+    },
+    {
+      "attempt": 5,
+      "code_sha256": "e2cb7a957b21e43f4b6499a5364c89de4dbf3ce0889f4cffa7307808fa2e8419",
+      "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+      "reason": "Final matched source/config profile; passes the run and aggregate campaign gates.",
+      "report_path": "artifacts/m5/feasibility/profile-attempt-0005/real-replay-feasibility.json",
+      "report_sha256": "33331a9b8694226c0483aa223d027fe1c252300472b93cb7a76d5d853d324f9f",
+      "seconds_measured": 49.31089963700015,
+      "selected_threads": {
+        "inter_op": 1,
+        "intra_op": 4
+      },
+      "status": "pass_final"
+    }
+  ],
+  "budget_note": "All successful profile processes are charged at measured duration. Attempts 0 and 1 lack exact process timers and retain their conservative 180-second reserve.",
+  "failed_profile_seconds_conservatively_charged": 180.0,
+  "final_successful_attempt": 5,
+  "profile_seconds_measured": 220.11797835800007,
+  "schema": "videochess-m5-profile-attempt-history/1.0",
+  "successful_report_sha256": "33331a9b8694226c0483aa223d027fe1c252300472b93cb7a76d5d853d324f9f"
+}

@@ -1,0 +1,14 @@
+{
+  "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.rl.cli train-all > /tmp/M5-train-all-final.log 2>&1",
+  "executed_at_utc": "2026-10-28T13:16:06.071649Z",
+  "recorded_at_utc": "2026-10-28T13:21:26Z",
+  "exit_code": 1,
+  "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+  "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+  "code_source_sha256": "e2cb7a957b21e43f4b6499a5364c89de4dbf3ce0889f4cffa7307808fa2e8419",
+  "log_path": ".agents/evidence/logs/M5-train-initial-attempt-failure-20261028.log",
+  "log_sha256": "328d03fbb062c57fc0f656ef9092ce3869d89576c2c99b07fee7eb8f22fe6135",
+  "result": "FAILED after 215 valid decisions in Warm-start seed 20261104 at the first episode checkpoint: weights_only rejected the serialized TorchVersion environment value. The local checkpoint, sidecar, replay journal, and all 215 transitions were subsequently verified and restored through a narrowly scoped compatibility fix; no run completed. The process wall time was charged.",
+  "process_wall_seconds": 16.5,
+  "training_attempt_elapsed_seconds": 11.609256
+}

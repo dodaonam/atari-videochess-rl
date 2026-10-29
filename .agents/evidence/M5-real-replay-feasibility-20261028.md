@@ -1,0 +1,11 @@
+# M5 Real-Replay Feasibility Gate — 2026-10-28
+
+**Result: PASS for the frozen local CPU backend.** The final matched profile (attempt 5) ran with one inter-op thread and benchmarked one, two, and four intra-op threads. It collected 1029 valid M2 transitions across 7 completed episodes, sampled the seeded replay, and completed five batch-32 updates on disposable model copies at each thread setting. The measured update mean was 0.803s / 0.629s / 0.583s for 1 / 2 / 4 threads; four threads was fastest in this probe.
+
+The end-to-end policy/simulator path averaged 28.09 decisions/s (mean 0.0356s, p95 0.0785s). Mean legal candidates were 18.69 (p95 37.0); mean history was 223.5 plies (p95 497.6, maximum 572). The 2,021,375-byte episode-boundary recovery bundle serialized in 0.190s. Peak process RSS was 455,667,712 bytes.
+
+The 50,000-decision run projection upper 95% is 10,452.6s (2.90 hours), below the 28,800s per-run cap. Six runs plus all measured and conservatively reserved profile time project to 63,115.5s (17.53 hours), below the 216,000s aggregate training cap. The update tail sample has five observations and is noisy; the projection preserves that caveat. The artifact estimate remains 5.61 GB for six runs (replay journal, episode checkpoints, and six snapshots per run), about 2.98 GB below the 8 GiB ceiling. This is a planning estimate, not measured campaign usage.
+
+Config SHA-256: `84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d`. Backend frozen to local CPU with 4 intra-op and 1 inter-op thread(s). The installed PyTorch build is CPU-only and no Colab/T4 runtime was accessible, so no GPU comparison is claimed. Official paired training has not started.
+
+See [machine-readable profile](M5-real-replay-feasibility-20261028.json), [accepted M3/M4 input integrity](M5-accepted-input-integrity-20261028.json), and [profile attempt history](M5-profile-attempt-history-20261028.json). Full replay/checkpoint evidence is retained under ignored local `artifacts/m5/feasibility/profile-attempt-0005/`; its artifact manifest verifies the profile files. The command log is `.agents/evidence/logs/M5-real-replay-profile-attempt-0005.log` (SHA-256 `d56fe5761ba2b02bf7c2d26b718348e8fdc5cdebc6a9e6f7ba2157d74d86f24d`).

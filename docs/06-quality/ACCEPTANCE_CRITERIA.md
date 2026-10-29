@@ -93,7 +93,7 @@ No model training is required for M1. M1 must pass before substantial M3–M5 wo
 - **M4-03:** The pretraining-only checkpoint is preserved and evaluated with Stockfish absent from the inference path.
 - **M4-04:** Validation, ranking/gameplay metrics, configs, seeds, and artifacts are recorded; no illustrative value is reported as measured.
 
-## M5 — Double DQN and curriculum
+## M5 — Double DQN simulator experiment
 
 - **M5-01:** Double DQN action selection and target evaluation are independently tested, including terminal/truncation and legal next actions.
 - **M5-02:** Reward/player perspective and teacher-score-to-Q initialization assumptions are documented and checked.

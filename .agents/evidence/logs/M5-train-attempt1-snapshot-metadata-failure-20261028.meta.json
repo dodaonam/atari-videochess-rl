@@ -1,0 +1,13 @@
+{
+  "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.rl.cli train-all > /tmp/M5-train-campaign-attempt1.log 2>&1",
+  "executed_at_utc": "2026-10-28T13:29:40.685400Z",
+  "recorded_at_utc": "2026-10-28T13:31:56Z",
+  "exit_code": 1,
+  "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+  "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+  "code_source_sha256": "4d5b986c3b0ac517215f5cdd26f33a5e155390b26dc8597da50041edb9db0a8e",
+  "log_path": ".agents/evidence/logs/M5-train-attempt1-snapshot-metadata-failure-20261028.log",
+  "log_sha256": "397622ce79e72b6d38bbb12edc9d239f266064b1b0aaedb70e83c8f7525ea4e1",
+  "result": "FAILED during pre-run initialization before creating attempt 0001: immutable pre-RL snapshot metadata carried the prior source hash and was rejected by strict equality. No additional decision, run attempt, snapshot, or checkpoint was created; the fix permits only the exact recovery-compatible source hash when all other metadata and tensors match.",
+  "process_wall_seconds_charged": 1.5
+}
