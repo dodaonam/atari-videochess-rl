@@ -2763,14 +2763,16 @@
       "id": "M5-001",
       "title": "Implement and verify the paired Double DQN simulator experiment",
       "milestone": "M5",
-      "status": "in_progress",
+      "status": "blocked",
       "depends_on": [
         "M2-001",
         "M3-001",
         "M4-001"
       ],
       "requires_user_gate_approval": null,
-      "blocker_ids": [],
+      "blocker_ids": [
+        "BLK-003"
+      ],
       "acceptance_criteria_ids": [
         "M5-01",
         "M5-02",
@@ -2846,7 +2848,7 @@
             "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
             "config_sha256": "a8b86f7af3cd0d31d550a5c4a5940abc67527b115dafa1a83df0dc392ec0fee9",
             "log_path": ".agents/evidence/logs/M5-focused-suite-final-20261028-command.log",
-            "log_sha256": "fdbee71364c1eea58a599d1b9600303d0886d490faf3d64d7005028cc93ed01d"
+            "log_sha256": "f2e6e905bbca338fd0470b82c33ba7f895d250179212bdfd7ba65981e88c4b12"
           }
         },
         {
@@ -3365,9 +3367,135 @@
             "log_path": ".agents/evidence/logs/M5-PR-11-verification-20261029.log",
             "log_sha256": "a87152496dd14bcde49af6fb52e46337994dd104cb889f32eeb975e48a38c993"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M5-remediation-log-inventory-20261030.json",
+          "detail": "Read-only inventory and checksum/content audit of 28 M5 log paths referenced by verified backlog command/test records.",
+          "result": "All 28 files were present, hash/content matched available provenance, sensitive-pattern scan had no matches, and exact paths were force-added.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T04:55:33Z",
+            "exit_code": null,
+            "git_revision": "575dce5978567417d2915d5dd36a47873293b607",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M5-source-reconciliation-20261030.json",
+          "detail": "Machine-readable verification of the evaluation source identity and training source hash group/checkpoint file hashes.",
+          "result": "Evaluation source reconstruction is exact; the old training checkpoint.py, cli.py, and replay.py blob bytes are missing, and the seed-20261106 CLI snapshot is unavailable. RSK-014 remains open because replay-sampling semantics cannot be compared.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T04:55:33Z",
+            "exit_code": null,
+            "git_revision": "575dce5978567417d2915d5dd36a47873293b607",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "docs/04-research/M5_REMEDIATION_AUDIT.md",
+          "detail": "Post-review audit covering clean-clone provenance failures, private artifacts, source identity, code remediation, and the remaining acceptance blocker.",
+          "result": "28 log references reconciled; private artifact/campaign records pass; source history limitation is disclosed without reconstructing or replacing historical evidence.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T04:55:33Z",
+            "exit_code": null,
+            "git_revision": "575dce5978567417d2915d5dd36a47873293b607",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "cd /tmp/m5-ci-repro-575dce-20261030 && python3 scripts/agent_preflight.py",
+          "result": "Reproduced 28 TASK_EVIDENCE_PROVENANCE errors at tasks[13].",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T04:55:33Z",
+            "recorded_at_utc": "2026-10-30T04:55:33Z",
+            "exit_code": 1,
+            "git_revision": "575dce5978567417d2915d5dd36a47873293b607",
+            "log_path": ".agents/evidence/logs/M5-pre-fix-clean-clone-preflight-575dce-20261030.log",
+            "log_sha256": "03e1651098a28cfb62ed07c5f98e064719ed36c25079ce4b1b83caae82f57c04"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -p 'test_m5_*.py' -v",
+          "result": "Ran 48 tests in 20.701s; OK.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T04:53:05Z",
+            "recorded_at_utc": "2026-10-30T04:55:33Z",
+            "exit_code": 0,
+            "git_revision": "575dce5978567417d2915d5dd36a47873293b607",
+            "log_path": ".agents/evidence/logs/M5-focused-remediation-20261030.log",
+            "log_sha256": "bec908eca457c871d3c5abb7774762950a5be0da093424f5fff8bf244b7eb4f3"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/verify_m5_source_identity.py",
+          "result": "Verified evaluation source reconstruction exactly; 39 direct per-file matches plus 3 byte-reconstructed matches produce ccb7d76be64c55ae4c4519da3a5647a5a2da86924a00d9490a7e807cc7497848. Training old source contents remain unavailable.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T04:54:06Z",
+            "recorded_at_utc": "2026-10-30T04:55:33Z",
+            "exit_code": 0,
+            "git_revision": "575dce5978567417d2915d5dd36a47873293b607",
+            "log_path": ".agents/evidence/logs/M5-source-reconciliation-20261030.log",
+            "log_sha256": "30d1e875fcba3b4381f00f2a62b39da56a1192328c8908ea125df64d0cd5d73c"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/verify_m5_campaign_evidence.py",
+          "result": "PASS: 6 exact 50,000-decision runs, 73,470 updates, 144 target syncs, 300,000 replay records; 15 policies and 1,500 unique scenarios, 1,494 terminal games and six truncations; resource ledger within caps.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T04:54:06Z",
+            "recorded_at_utc": "2026-10-30T04:55:33Z",
+            "exit_code": 0,
+            "git_revision": "575dce5978567417d2915d5dd36a47873293b607",
+            "log_path": ".agents/evidence/logs/M5-private-campaign-verification-20261030.log",
+            "log_sha256": "465e0f94fe4ad2c80b3d9045a040c807608047fad32070c25ec586de5992e32b"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/m5_artifact_manifests.py --verify",
+          "result": "PASS: verified artifacts/m5/artifact-manifest.json and 7 run manifests; total private M5 artifacts 6,544,747,450 bytes.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T04:54:06Z",
+            "recorded_at_utc": "2026-10-30T04:55:33Z",
+            "exit_code": 0,
+            "git_revision": "575dce5978567417d2915d5dd36a47873293b607",
+            "log_path": ".agents/evidence/logs/M5-artifact-manifest-verify-remediation-20261030.log",
+            "log_sha256": "dedff30a4ec40a88f02d32c75fa155531f5f75ac0254806d8dfb01db4939f06f"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "find /home/dodaonam/Projects/atari-videochess-rl-m5 /tmp -type f (historical M5 cli.py/replay.py/checkpoint.py backup names) -print; find /home/dodaonam/Projects -type f (videochess_rl/rl/cli.py|replay.py|checkpoint.py) -print | sort",
+          "result": "Only the current M5 worktree source paths were found; no backup or alternate source worktree was found.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T04:59:59Z",
+            "recorded_at_utc": "2026-10-30T05:00:05Z",
+            "exit_code": 0,
+            "git_revision": "575dce5978567417d2915d5dd36a47873293b607",
+            "log_path": ".agents/evidence/logs/M5-source-backup-search-20261030.log",
+            "log_sha256": "3783a9c65a14d4b6fbb00e320a516bb932df0c1ac329d10b86caf48ab3b3a9a9"
+          }
         }
       ],
-      "next_action": "Independent PM review of open PR #11; engineering work is delivered. Do not merge, self-approve, approve G3, or start M6.",
+      "next_action": "Independent PM disposition of BLK-003: recover and compare authentic earlier source snapshots, or decide whether the source-version-confounded results may be used. No additional training without separate PM authorization.",
       "plan_ref": ".agents/plans/M05-double-dqn.md"
     }
   ],

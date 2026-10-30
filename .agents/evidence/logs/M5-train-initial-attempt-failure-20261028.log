@@ -1,0 +1,36 @@
+Command: PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.rl.cli train-all > /tmp/M5-train-all-final.log 2>&1
+Executed at UTC: 2026-10-28T13:16:06.071649Z
+Exit code: 1
+Result: FAILED after 215 valid decisions in Warm-start seed 20261104 at the first episode checkpoint: weights_only rejected the serialized TorchVersion environment value. The local checkpoint, sidecar, replay journal, and all 215 transitions were subsequently verified and restored through a narrowly scoped compatibility fix; no run completed. The process wall time was charged.
+
+Captured command output follows:
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/dodaonam/Projects/atari-videochess-rl-m5/videochess_rl/rl/cli.py", line 862, in <module>
+    if __name__=="__main__": raise SystemExit(main())
+                                              ^^^^^^
+  File "/home/dodaonam/Projects/atari-videochess-rl-m5/videochess_rl/rl/cli.py", line 858, in main
+    report=train_campaign(); print(json.dumps(report,indent=2)); return 0 if report["completed_runs"]==6 else 2
+           ^^^^^^^^^^^^^^^^
+  File "/home/dodaonam/Projects/atari-videochess-rl-m5/videochess_rl/rl/cli.py", line 628, in train_campaign
+    result=run_training_episodes(learner,training_seed=seed,arm=arm,run_id=rid,attempt_id=attempt_id,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dodaonam/Projects/atari-videochess-rl-m5/videochess_rl/rl/training.py", line 206, in run_training_episodes
+    should_stop = on_transition(learner, row, update)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dodaonam/Projects/atari-videochess-rl-m5/videochess_rl/rl/cli.py", line 597, in on_transition
+    save_training_checkpoint(checkpoint,current,identity={"experiment_id":EXPERIMENT_ID,"pair_id":pair_id,
+  File "/home/dodaonam/Projects/atari-videochess-rl-m5/videochess_rl/rl/checkpoint.py", line 96, in save_training_checkpoint
+    verify_training_checkpoint(target,verify_journal=False)
+  File "/home/dodaonam/Projects/atari-videochess-rl-m5/videochess_rl/rl/checkpoint.py", line 110, in verify_training_checkpoint
+    bundle = torch.load(target, map_location="cpu", weights_only=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dodaonam/Projects/atari-videochess-rl/.venv/lib/python3.12/site-packages/torch/serialization.py", line 1614, in load
+    raise pickle.UnpicklingError(_get_wo_message(str(e))) from None
+_pickle.UnpicklingError: Weights only load failed. This file can still be loaded, to do so you have two options, [1mdo those steps only if you trust the source of the checkpoint[0m. 
+	(1) In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+	(2) Alternatively, to load with `weights_only=True` please check the recommended steps in the following error message.
+	WeightsUnpickler error: Unsupported global: GLOBAL torch.torch_version.TorchVersion was not an allowed global by default. Please use `torch.serialization.add_safe_globals([torch.torch_version.TorchVersion])` or the `torch.serialization.safe_globals([torch.torch_version.TorchVersion])` context manager to allowlist this global if you trust this class/function.
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.

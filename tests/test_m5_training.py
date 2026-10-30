@@ -5,6 +5,7 @@ import torch
 from videochess_rl.baselines import RandomLegalAgent
 from videochess_rl.m5_seeding import paired_seed_schedule
 from videochess_rl.rl.network import make_scratch_scorer, clone_target
+from videochess_rl.rl.cli import _campaign_usage_with_active_run
 from videochess_rl.rl.training import DoubleDqnLearner, epsilon_at, select_action, _features, run_training_episodes
 from videochess_rl.rl.transition import Transition
 from videochess_rl.simulator import ChessSimulator
@@ -19,6 +20,15 @@ def make_transition(index):
 
 
 class TrainingTests(unittest.TestCase):
+    def test_campaign_budget_counts_only_the_uncommitted_active_run(self):
+        committed_after_first_run = 1010.0
+        second_run_started = 70.0
+        now = 80.0
+        self.assertEqual(
+            _campaign_usage_with_active_run(committed_after_first_run, second_run_started, now),
+            1020.0,
+        )
+
     def test_epsilon_schedule_and_legal_exploration(self):
         self.assertEqual(epsilon_at(0),1.0); self.assertAlmostEqual(epsilon_at(37500),.05); self.assertEqual(epsilon_at(50000),.05)
         model=make_scratch_scorer(representation_seed=2,q_head_seed=3); features=_features(tuple())

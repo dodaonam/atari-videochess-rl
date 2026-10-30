@@ -202,8 +202,6 @@ class Transition:
                 "decision_index":decision_index,"training_seed":training_seed,"agent_color":agent_color,
                 "opponent_id":opponent_id,"opponent_config_json":opponent_config_json,
                 "history_before":list(history_before),"selected_uci":selected_uci,"history_after":list(history_after)}
-        if not isinstance(self.seed_schedule, dict):
-            raise ValueError("missing RNG provenance")
 
     def current_features(self) -> PositionFeatures:
         return encode_board(replay_observation_history(self.history_before), split="replay")

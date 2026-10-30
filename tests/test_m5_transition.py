@@ -1,4 +1,5 @@
 import unittest
+from dataclasses import replace
 import chess
 from videochess_rl.baselines import RandomLegalAgent
 from videochess_rl.m5_seeding import paired_seed_schedule
@@ -32,3 +33,8 @@ class TransitionTests(unittest.TestCase):
         with self.assertRaises(ValueError): Transition.from_json(value)
         value=make_transition().to_json(); value['seed_schedule']['episode_seed']+=1
         with self.assertRaises(ValueError): Transition.from_json(value)
+
+    def test_non_object_seed_schedule_is_rejected(self):
+        row=replace(make_transition(),seed_schedule=None)
+        with self.assertRaisesRegex(ValueError,'seed schedule'):
+            row.validate()

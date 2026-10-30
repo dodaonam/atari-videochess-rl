@@ -1,0 +1,73 @@
+Executed at UTC: 2026-10-30T04:54:06Z
+$ python3 scripts/verify_m5_source_identity.py
+{
+  "schema": "videochess-m5-source-reconciliation/1.0",
+  "evaluation_identity": {
+    "source_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+    "recorded_source_sha256": "ccb7d76be64c55ae4c4519da3a5647a5a2da86924a00d9490a7e807cc7497848",
+    "verified_direct_file_matches": 39,
+    "verified_reconstructed_file_matches": [
+      {
+        "path": "videochess_rl/rl/evaluate.py",
+        "recorded_sha256": "694415d51bdc316648c30124d3d4df36b970484c2ce3bb04cdc0ae7a615652c8",
+        "head_sha256": "00eaa86c9da75606bab3f108ec00906f86db89b7407224e859913c7467f4e4d9",
+        "recorded_size_bytes": 14853,
+        "head_size_bytes": 17009,
+        "reconstruction": "post-evaluation helper appended after official evaluation"
+      },
+      {
+        "path": "videochess_rl/rl/training.py",
+        "recorded_sha256": "eca25d8b692ce77e07a3be4736eabbb71ed629d69717259de258905fa72fe90a",
+        "head_sha256": "053e95db5357a8b68215e9ff00feda53000783ca327efe7596f694cb0a010af6",
+        "recorded_size_bytes": 12356,
+        "head_size_bytes": 12355,
+        "reconstruction": "one terminal LF removed during later whitespace cleanup"
+      },
+      {
+        "path": "videochess_rl/rl/transition.py",
+        "recorded_sha256": "df60fee8bf908e8d96901937dfc120d7e5a8f8e06a0119040e61356014aa645d",
+        "head_sha256": "c10821bc0b74d30acf66d582e9e9ed7148149469bb56213b25373c730ab3e09d",
+        "recorded_size_bytes": 13950,
+        "head_size_bytes": 13949,
+        "reconstruction": "one terminal LF removed during later whitespace cleanup"
+      }
+    ],
+    "reconstructed_aggregate_sha256": "ccb7d76be64c55ae4c4519da3a5647a5a2da86924a00d9490a7e807cc7497848",
+    "result": "exact match"
+  },
+  "training_identity": {
+    "run_hash_group_sizes": {
+      "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00": 4,
+      "cdcc1fdc0ca0b324e49cfb8b0ff571496a554e9892dfb3620d6454a65ee16da0": 2
+    },
+    "distinct_source_hashes": [
+      "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+      "cdcc1fdc0ca0b324e49cfb8b0ff571496a554e9892dfb3620d6454a65ee16da0"
+    ],
+    "checkpoint_interval": [
+      "cp-08f98f9d-20261029T043013180672Z",
+      "cp-08f98f9d-20261029T143803674896Z"
+    ],
+    "changed_python_paths_in_interval": [
+      {
+        "path": "videochess_rl/rl/checkpoint.py",
+        "before_sha256": "19ab713b5a1450c2e4506d9d761768317e0b48fb96a3cb0083965d6a037bc410",
+        "after_sha256": "924a95e6accb04c727e2858dbcd6cbda84b970750decc27fd09621bdc61821aa"
+      },
+      {
+        "path": "videochess_rl/rl/cli.py",
+        "before_sha256": "795ca9865da80bf982480b25d97367c846255e167d9c64320a73030106c2efe3",
+        "after_sha256": "3f966fffa3a31ed9330004448ca84bc86a4fd6446764d3184e248cff978b60b7"
+      },
+      {
+        "path": "videochess_rl/rl/replay.py",
+        "before_sha256": "5ae4d3d928c524539bcf6b29f4102f09b246d5703b66539f2fad4aa7e2aaa278",
+        "after_sha256": "21845b0755809d07d480da821c2e809540a0ca4b8e1eddc5785ebdec5cf59b7f"
+      }
+    ],
+    "old_file_contents_recovered": false,
+    "interpretation": "File hash changes are observed; old source bytes are not present in the available Git object database or local source backups, so line-level diffs for this interval cannot be asserted by this verifier."
+  }
+}
+Result: Verified evaluation source reconstruction exactly; 39 direct per-file matches plus 3 byte-reconstructed matches produce ccb7d76be64c55ae4c4519da3a5647a5a2da86924a00d9490a7e807cc7497848. Training old source contents remain unavailable.
+Exit code: 0

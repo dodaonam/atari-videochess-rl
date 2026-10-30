@@ -42,9 +42,23 @@ from videochess_rl.simulator import ChessSimulator
 
 ROOT = Path(__file__).resolve().parents[2]
 CONFIG_PATH = ROOT / "configs/rl/m5-double-dqn-v1.json"
-M4_DIR = Path("/home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4")
+
+
+def _configured_directory(environment_name: str, default_path: str) -> Path:
+    """Resolve a private artifact directory from an override or documented default."""
+    value = os.environ.get(environment_name)
+    return Path(value).expanduser() if value else Path(default_path)
+
+
+M4_DIR = _configured_directory(
+    "VIDEOCHESS_M5_M4_DIR",
+    "/home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4",
+)
 M4_CHECKPOINT_SHA = "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4"
-M3_DIR = Path("/home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6")
+M3_DIR = _configured_directory(
+    "VIDEOCHESS_M5_M3_RELEASE_DIR",
+    "/home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+)
 ARTIFACT_ROOT = ROOT / "artifacts/m5"
 # Exact immutable source identities accepted for the narrowly scoped recovery
 # fixes below. 2026-10-28's safe TorchVersion loader is the original contract;
@@ -79,6 +93,12 @@ def load_config() -> dict[str,Any]:
 
 
 def config_hash() -> str: return sha_file(CONFIG_PATH)
+
+
+def _campaign_usage_with_active_run(committed_seconds: float, active_run_started: float,
+                                   now_monotonic: float) -> float:
+    """Add only the current uncommitted run interval to committed ledger time."""
+    return float(committed_seconds) + max(0.0, float(now_monotonic) - float(active_run_started))
 
 
 def source_hash() -> str:
@@ -594,8 +614,9 @@ def train_campaign() -> dict[str,Any]:
             last_transition_id=None
             def stop_check():
                 nonlocal last_size_check,cached_artifact_size
-                used=total_used+(time.monotonic()-campaign_start)
-                run_used=run_base_seconds+(time.monotonic()-run_start)
+                now=time.monotonic()
+                used=_campaign_usage_with_active_run(total_used,run_start,now)
+                run_used=run_base_seconds+(now-run_start)
                 if time.monotonic()-last_size_check>=5:
                     cached_artifact_size=artifact_size_bytes(); last_size_check=time.monotonic()
                 return (run_used>=run_cap-60 or used>=campaign_cap-120
@@ -642,7 +663,8 @@ def train_campaign() -> dict[str,Any]:
                         "input_schema":current.online.config.input_schema,"model_schema":current.online.config.model_schema,
                         "environment":environment_identity()},journal=journal,journal_head=journal_head,
                         episode_complete=True,resource_accounting={"logical_run_physical_seconds":run_base_seconds+(time.monotonic()-run_start),
-                        "attempt_elapsed_seconds":time.monotonic()-run_start,"campaign_seconds":total_used+time.monotonic()-campaign_start})
+                        "attempt_elapsed_seconds":time.monotonic()-run_start,
+                        "campaign_seconds":_campaign_usage_with_active_run(total_used,run_start,time.monotonic())})
                 now=time.monotonic()
                 if now-last_ledger>=5:
                     delta=now-last_ledger
