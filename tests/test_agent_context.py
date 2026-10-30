@@ -1547,6 +1547,35 @@ class AgentContextRecoveryTests(unittest.TestCase):
         result = self.run_script(PREFLIGHT, "--json")
         self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
 
+    def test_m5_verified_command_log_must_be_tracked_for_clean_clone(self) -> None:
+        backlog_path = self.root / ".agents/tasks/BACKLOG.yaml"
+        backlog = json.loads(backlog_path.read_text(encoding="utf-8"))
+        task = backlog["tasks"][0]
+        task.update({"id": "M5-001", "milestone": "M5", "status": "in_progress",
+                     "next_action": "Fixture only.", "acceptance_criteria_ids": ["M5-01"]})
+        log_rel = ".agents/evidence/logs/M5-fixture.log"
+        log = self.root / log_rel
+        log.parent.mkdir(parents=True, exist_ok=True)
+        command = "python3 -m unittest"
+        result_text = "PASS: fixture command."
+        log.write_text(f"{command}\n{result_text}\nExit code: 0\n", encoding="utf-8")
+        task["evidence"] = [{
+            "kind": "command", "command": command, "result": result_text,
+            "provenance": {
+                "status": "verified", "executed_at_utc": "2026-10-30T00:00:00Z",
+                "recorded_at_utc": "2026-10-30T00:00:01Z", "exit_code": 0,
+                "git_revision": git(self.root, "rev-parse", "HEAD"), "log_path": log_rel,
+            },
+        }]
+        write_json(backlog_path, backlog)
+
+        untracked = self.run_script(PREFLIGHT, "--json")
+        self.assertIn("TASK_EVIDENCE_LOG_UNTRACKED", untracked.stdout + untracked.stderr)
+
+        git(self.root, "add", "--", log_rel)
+        tracked = self.run_script(PREFLIGHT, "--json")
+        self.assertNotIn("TASK_EVIDENCE_LOG_UNTRACKED", tracked.stdout + tracked.stderr)
+
     def test_verified_command_evidence_must_match_retained_log(self) -> None:
         path = self.root / ".agents/tasks/BACKLOG.yaml"
         backlog = json.loads(path.read_text(encoding="utf-8"))

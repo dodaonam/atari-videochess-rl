@@ -1,0 +1,167 @@
+{
+  "artifact_projection": {
+    "authorized_artifact_ceiling_bytes": 8589934592,
+    "basis": "Measured attempt-5 checkpoint and replay journal sizes plus the retained architecture-specific six-snapshot estimate; a planning estimate, not completed-campaign usage.",
+    "estimated_checkpoint_bytes_per_run": 687542517.0068028,
+    "estimated_completed_episode_checkpoints_per_50000_decision_run": 340.13605442176873,
+    "estimated_headroom_bytes": 2975717250.2274055,
+    "estimated_replay_journal_bytes_per_run": 236054275.9961127,
+    "estimated_six_run_artifact_bytes": 5614217341.772594,
+    "estimated_six_snapshot_bytes_per_run": 12127866
+  },
+  "backend": {
+    "colab_cpu_t4_accessible": false,
+    "local_cpu_available": true,
+    "selected_backend": "local_cpu",
+    "t4_sessions_active": 0,
+    "torch_threads_frozen": {
+      "inter_op": 1,
+      "intra_op": 4
+    }
+  },
+  "campaign_budget_projection_including_all_profile_attempts": {
+    "campaign_cap_seconds": 216000,
+    "failed_profile_seconds_reserved": 180.0,
+    "profile_seconds_measured": 220.11797835800007,
+    "six_run_upper95_seconds": 62715.33247543072,
+    "total_reserved_seconds": 63115.45045378872,
+    "training_setup_seconds": 0
+  },
+  "code_source_sha256": "e2cb7a957b21e43f4b6499a5364c89de4dbf3ce0889f4cffa7307808fa2e8419",
+  "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.rl.cli profile --threads 1,2,4",
+  "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+  "execution_time_semantics": "recorded_at_utc is the command report timestamp; shell start timestamp was not separately persisted.",
+  "exit_code": 0,
+  "failed_prior_profiles_preserved": [
+    "artifacts/m5/feasibility/profile-attempt-0000/failure.json",
+    "artifacts/m5/feasibility/profile-attempt-0001/profile-failure.json"
+  ],
+  "failed_profile_seconds_conservatively_charged": 180.0,
+  "log_path": ".agents/evidence/logs/M5-real-replay-profile-attempt-0005.log",
+  "log_sha256": "d56fe5761ba2b02bf7c2d26b718348e8fdc5cdebc6a9e6f7ba2157d74d86f24d",
+  "measured_profile": {
+    "candidate_count": {
+      "max": 47,
+      "mean": 18.685131195335277,
+      "p95": 37.0
+    },
+    "checkpoint_bytes": 2021375,
+    "checkpoint_seconds": 0.1904173319999245,
+    "checkpoint_sha256": "a0ce47c27b3bb49b32bf436f8245211a9f54110c9610296245da129bd585f174",
+    "completed_episodes": 7,
+    "decision_latency_seconds": {
+      "max": 0.2017920469997989,
+      "mean": 0.03560465630223464,
+      "p95": 0.07846005879982838
+    },
+    "history_length": {
+      "max": 572,
+      "mean": 223.53158406219632,
+      "p95": 497.5999999999999
+    },
+    "peak_process_rss_bytes": 455667712,
+    "replay_journal_bytes": 4857997,
+    "replay_size": 1029,
+    "simulator_reset_seconds": {
+      "mean": 0.00057411771428763,
+      "p95": 0.00162489859976631,
+      "samples": 7
+    },
+    "simulator_with_policy_decisions_per_second": 28.086214103890605,
+    "updates_on_disposable_model_copy": [
+      {
+        "max": 0.9382413180001095,
+        "mean": 0.8025952290001441,
+        "p95_empirical": 0.9238559560000794,
+        "torch_threads": 1,
+        "update_seconds": [
+          0.9382413180001095,
+          0.8663145079999595,
+          0.6987138530002994,
+          0.702001876000395,
+          0.8077045899999575
+        ]
+      },
+      {
+        "max": 0.7550272360003873,
+        "mean": 0.6285131776001436,
+        "p95_empirical": 0.7455791740003406,
+        "torch_threads": 2,
+        "update_seconds": [
+          0.7550272360003873,
+          0.7077869260001535,
+          0.5479103550005675,
+          0.5465912680001566,
+          0.5852501029994528
+        ]
+      },
+      {
+        "max": 0.6980368629992881,
+        "mean": 0.582895539600031,
+        "p95_empirical": 0.6829574887995477,
+        "torch_threads": 4,
+        "update_seconds": [
+          0.6980368629992881,
+          0.6226399920005861,
+          0.5189872410001044,
+          0.5450828820003153,
+          0.5297307199998613
+        ]
+      }
+    ],
+    "valid_agent_decisions": 1029,
+    "valid_transitions": 1029
+  },
+  "official_training_started": false,
+  "profile_artifact_manifest_path": "artifacts/m5/feasibility/profile-attempt-0005/artifact_manifest.json",
+  "profile_artifact_manifest_sha256": "07aefb09703c5119782e5e0b5b10b9742d5ba89c8478212de47a8520e28ee821",
+  "profile_report_path": "artifacts/m5/feasibility/profile-attempt-0005/real-replay-feasibility.json",
+  "profile_report_sha256": "33331a9b8694226c0483aa223d027fe1c252300472b93cb7a76d5d853d324f9f",
+  "record_schema": "videochess-m5-real-replay-evidence/1.0",
+  "recorded_at_utc": "2026-10-28T13:00:50.777435+00:00",
+  "resource_ledger_path": "artifacts/m5/resource-ledger.json",
+  "resource_ledger_sha256": "e3d7ff5ca1de59d9cfb8e181ab5da62456aea1860af1480ab1e81b48eead0048",
+  "resource_projection": {
+    "campaign_cap_seconds": 216000,
+    "decision_mean_bootstrap_replicates": 1000,
+    "decision_mean_upper95_seconds": 0.03700532631957811,
+    "fits_campaign_cap": true,
+    "fits_run_cap": true,
+    "per_run_cap_seconds": 28800,
+    "projected_campaign_seconds_including_measured_probe": 62764.63600560672,
+    "projected_seconds_per_50000_run_mean": 9131.390138246206,
+    "projected_seconds_per_50000_run_upper95": 10452.555412571786,
+    "selected_cpu_threads": 4,
+    "small_sample_caveat": "Decision latency upper bound resamples the measured real-M2 decision mean; five actual-replay updates give a noisy update-tail estimate. Projection includes reset and amortized checkpoint costs."
+  },
+  "source_dirty": true,
+  "source_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+  "status": "PASS_real_replay_feasibility_gate",
+  "superseded_profiles": [
+    {
+      "attempt": 2,
+      "reason": "Inter-op thread count was 4 and did not match the frozen inter-op 1 settings.",
+      "report_path": "artifacts/m5/feasibility/profile-attempt-0002/real-replay-feasibility.json"
+    },
+    {
+      "attempt": 3,
+      "reason": "Passed under the then-current code; superseded after the setup-time accounting correction changed the source hash.",
+      "report_path": "artifacts/m5/feasibility/profile-attempt-0003/real-replay-feasibility.json"
+    },
+    {
+      "attempt": 4,
+      "reason": "Passed under the current source but was superseded by the final matched profile/backend selection in attempt 5.",
+      "report_path": "artifacts/m5/feasibility/profile-attempt-0004/real-replay-feasibility.json"
+    }
+  ],
+  "verified_input_identity": {
+    "artifact_manifest_files": 19,
+    "checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+    "input_schema": "videochess-model-input/1.0",
+    "m3_manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+    "m3_release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+    "m4_metadata_sha256": "cc0af4694e45fc23acb740c652dd9a62e1bcaf7851815d179693d09539f0f606",
+    "model_schema": "videochess-behavior-scorer/1.0",
+    "parameter_count": 121897
+  }
+}

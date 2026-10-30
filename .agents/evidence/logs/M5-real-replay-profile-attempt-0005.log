@@ -1,0 +1,139 @@
+Command: /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.rl.cli profile --threads 1,2,4
+Executed at UTC (result-log mtime): 2026-10-28T13:00:50.851293Z
+Exit code: 0
+Result: PASS: final actual-replay gate, 10,452.6s/run upper-95 estimate; six-run training campaign including all profile attempts projects to 63,115.4s, below the 216,000s cap.
+
+Captured command output follows:
+{
+  "schema": "videochess-m5-real-replay-feasibility/1.0",
+  "profile_attempt": 5,
+  "recorded_at_utc": "2026-10-28T13:00:50.777435+00:00",
+  "code": {
+    "source_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+    "source_dirty": true,
+    "source_sha256": "e2cb7a957b21e43f4b6499a5364c89de4dbf3ce0889f4cffa7307808fa2e8419"
+  },
+  "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+  "environment": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+    "processor": "x86_64",
+    "logical_cpu_count": 8,
+    "torch": "2.14.1+cpu",
+    "numpy": "2.5.4",
+    "python_chess": "1.11.2",
+    "device": "cpu",
+    "cuda_available": false,
+    "torch_threads": 4,
+    "torch_interop_threads": 1
+  },
+  "transfer": {
+    "checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+    "artifact_manifest_files": 19,
+    "model_schema": "videochess-behavior-scorer/1.0",
+    "input_schema": "videochess-model-input/1.0",
+    "parameter_count": 121897,
+    "m3_release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+    "m3_manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+    "m4_metadata_sha256": "cc0af4694e45fc23acb740c652dd9a62e1bcaf7851815d179693d09539f0f606"
+  },
+  "probe": {
+    "valid_transitions": 1029,
+    "valid_agent_decisions": 1029,
+    "completed_episodes": 7,
+    "simulator_with_policy_decisions_per_second": 28.086214103890605,
+    "decision_latency_seconds": {
+      "mean": 0.03560465630223464,
+      "p95": 0.07846005879982838,
+      "max": 0.2017920469997989
+    },
+    "simulator_reset_seconds": {
+      "mean": 0.00057411771428763,
+      "p95": 0.00162489859976631,
+      "samples": 7
+    },
+    "candidate_count": {
+      "mean": 18.685131195335277,
+      "p95": 37.0,
+      "max": 47
+    },
+    "history_length": {
+      "mean": 223.53158406219632,
+      "p95": 497.5999999999999,
+      "max": 572
+    },
+    "replay_size": 1029,
+    "replay_journal_bytes": 4857997,
+    "updates_on_disposable_model_copy": [
+      {
+        "torch_threads": 1,
+        "update_seconds": [
+          0.9382413180001095,
+          0.8663145079999595,
+          0.6987138530002994,
+          0.702001876000395,
+          0.8077045899999575
+        ],
+        "mean": 0.8025952290001441,
+        "p95_empirical": 0.9238559560000794,
+        "max": 0.9382413180001095
+      },
+      {
+        "torch_threads": 2,
+        "update_seconds": [
+          0.7550272360003873,
+          0.7077869260001535,
+          0.5479103550005675,
+          0.5465912680001566,
+          0.5852501029994528
+        ],
+        "mean": 0.6285131776001436,
+        "p95_empirical": 0.7455791740003406,
+        "max": 0.7550272360003873
+      },
+      {
+        "torch_threads": 4,
+        "update_seconds": [
+          0.6980368629992881,
+          0.6226399920005861,
+          0.5189872410001044,
+          0.5450828820003153,
+          0.5297307199998613
+        ],
+        "mean": 0.582895539600031,
+        "p95_empirical": 0.6829574887995477,
+        "max": 0.6980368629992881
+      }
+    ],
+    "checkpoint_seconds": 0.1904173319999245,
+    "checkpoint_bytes": 2021375,
+    "checkpoint_sha256": "a0ce47c27b3bb49b32bf436f8245211a9f54110c9610296245da129bd585f174",
+    "peak_process_rss_bytes": 455667712
+  },
+  "projection": {
+    "selected_cpu_threads": 4,
+    "projected_seconds_per_50000_run_mean": 9131.390138246206,
+    "projected_seconds_per_50000_run_upper95": 10452.555412571786,
+    "per_run_cap_seconds": 28800,
+    "projected_campaign_seconds_including_measured_probe": 62764.63600560672,
+    "campaign_cap_seconds": 216000,
+    "fits_run_cap": true,
+    "fits_campaign_cap": true,
+    "decision_mean_bootstrap_replicates": 1000,
+    "decision_mean_upper95_seconds": 0.03700532631957811,
+    "small_sample_caveat": "Decision latency upper bound resamples the measured real-M2 decision mean; five actual-replay updates give a noisy update-tail estimate. Projection includes reset and amortized checkpoint costs."
+  },
+  "backend": {
+    "local_cpu_available": true,
+    "colab_cpu_t4_accessible": false,
+    "t4_sessions_active": 0,
+    "selected_backend": "local_cpu",
+    "torch_threads_frozen": {
+      "intra_op": 4,
+      "inter_op": 1
+    }
+  },
+  "not_official_training": true,
+  "official_paired_campaign_started": false,
+  "profile_config_sha256": "b5e82f92666edfc12ea199386b06a5f0826dec19ffb84be9a169f46d583ba237"
+}

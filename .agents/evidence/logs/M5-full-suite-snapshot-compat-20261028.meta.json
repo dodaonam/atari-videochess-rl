@@ -1,0 +1,13 @@
+{
+  "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v > /tmp/M5-full-suite-initialization-compat-r6.log 2>&1",
+  "executed_at_utc": "2026-10-28T13:39:24.280727Z",
+  "recorded_at_utc": "2026-10-28T13:39:47Z",
+  "exit_code": 0,
+  "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+  "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+  "code_source_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+  "log_path": ".agents/evidence/logs/M5-full-suite-snapshot-compat-20261028.log",
+  "log_sha256": "e70852899f1fe6280493875609f9a678066bb1ad595b5ca486a0b154e3c46813",
+  "result": "Ran 357 tests in 133.894s; OK. Final repository regression after exact initialization-snapshot code-hash compatibility, checkpoint recovery fixes, and all M5 documentation/evidence updates.",
+  "execution_start_timestamp_persisted": false
+}

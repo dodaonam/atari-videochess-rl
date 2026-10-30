@@ -1,0 +1,224 @@
+{
+  "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+  "current_post_analysis_source_sha256": "362eafa08ee799b747501347981174b0b9e7d7f8372a1a2119fb8dbabf6f9dda",
+  "evaluation_completed_at_utc": "2026-10-29T22:00:55Z",
+  "evaluation_source_sha256": "ccb7d76be64c55ae4c4519da3a5647a5a2da86924a00d9490a7e807cc7497848",
+  "evaluation_started_at_utc": "2026-10-29T21:28:01Z",
+  "files": [
+    {
+      "path": "videochess_rl/__init__.py",
+      "sha256": "6288a2698f98216834cce812d32cd8ecc95da5a2bdce96ebf891c22b1d30e009",
+      "size_bytes": 51
+    },
+    {
+      "path": "videochess_rl/action_contract.py",
+      "sha256": "2a460cdffdf88d6277a7a57568279e35c4fddad8e60150eba0b60c82dacc7f6f",
+      "size_bytes": 2781
+    },
+    {
+      "path": "videochess_rl/baselines.py",
+      "sha256": "95eccb0780bb82ce823e198a95066d4f60d669b0b60257f13b5d734b047fbf19",
+      "size_bytes": 4569
+    },
+    {
+      "path": "videochess_rl/benchmark.py",
+      "sha256": "bb13c555ce1f81254faffd07822248ef022ff706a7fd7ecc1e97b3f9243af3aa",
+      "size_bytes": 11277
+    },
+    {
+      "path": "videochess_rl/controller.py",
+      "sha256": "ee82e40f5e68c319f7e22e14e15e721f13ffc331b02f76e39b0684c19e075103",
+      "size_bytes": 6818
+    },
+    {
+      "path": "videochess_rl/data/__init__.py",
+      "sha256": "93f8984f2b57f4ac8de946757e90c7422fb3138c77c775232a27ddf4b6d7e62f",
+      "size_bytes": 78
+    },
+    {
+      "path": "videochess_rl/data/__main__.py",
+      "sha256": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "size_bytes": 48
+    },
+    {
+      "path": "videochess_rl/data/cli.py",
+      "sha256": "b445a5aa2a4264fa735f97331a1159425bb318798d5713121ca02ff74b0968be",
+      "size_bytes": 22189
+    },
+    {
+      "path": "videochess_rl/data/contracts.py",
+      "sha256": "3e0489a8203fbdb0184eeaf5ce70fa55776d23fece23c2fd951a1b4bdeadbecf",
+      "size_bytes": 16365
+    },
+    {
+      "path": "videochess_rl/data/export.py",
+      "sha256": "515062fdb78d628d6b382725684895830e71bbcab3a5b922f9f3951749042616",
+      "size_bytes": 51402
+    },
+    {
+      "path": "videochess_rl/data/pgn.py",
+      "sha256": "6feffd697cdbf27bdc7e96960482d32c4b3735772b2ba1f0115584ce9bd7fe8d",
+      "size_bytes": 16222
+    },
+    {
+      "path": "videochess_rl/data/pipeline.py",
+      "sha256": "658ec032b3111730f32119fcca1c22cc96c9b3c849526662c740e384378912b2",
+      "size_bytes": 31138
+    },
+    {
+      "path": "videochess_rl/data/sampling.py",
+      "sha256": "ab82f5bed260981e8d59a2af773ddc60bd8ea8f12f5b5be7515c959f8cd0c0e8",
+      "size_bytes": 12676
+    },
+    {
+      "path": "videochess_rl/data/source.py",
+      "sha256": "73eedda3f7345f61e33e36d1902f0fd20fb0e775d0608ad8bd0646a69c82713a",
+      "size_bytes": 21291
+    },
+    {
+      "path": "videochess_rl/data/split.py",
+      "sha256": "84d235d3779969f5beebc157fb50844e36de02033d96f2c5bea7ae1c6c8c9a22",
+      "size_bytes": 6891
+    },
+    {
+      "path": "videochess_rl/data/stats.py",
+      "sha256": "0f20df8234e45f01e0dbcec3d3e5c8cb62e50e5fb31d430a8afbe888914dd366",
+      "size_bytes": 10722
+    },
+    {
+      "path": "videochess_rl/data/teacher.py",
+      "sha256": "b680f5b82406ea1d9398ca5bd09f880704498f0e38c6d37e69430db3f4d8e398",
+      "size_bytes": 64615
+    },
+    {
+      "path": "videochess_rl/demo.py",
+      "sha256": "221d4327433d2a877c215e9bd474009e938c07d6df19cc0dcd34f24765df3c37",
+      "size_bytes": 3114
+    },
+    {
+      "path": "videochess_rl/environment.py",
+      "sha256": "e00047d0f046d994f230712797d5b3b85264b73815301ef498b3b12aeb86dcff",
+      "size_bytes": 5665
+    },
+    {
+      "path": "videochess_rl/episode.py",
+      "sha256": "de5df684201cbba9a72310691b4fbab09e4fb6f5d2e75b4cc024e92ac632c069",
+      "size_bytes": 67629
+    },
+    {
+      "path": "videochess_rl/m5_seeding.py",
+      "sha256": "28f8ec3e5f95485781984cd13987a71c02c30d0f8a7c6ac629c11e65139e29d8",
+      "size_bytes": 5412
+    },
+    {
+      "path": "videochess_rl/model/__init__.py",
+      "sha256": "7460f6099604d77aaabf5e5b11aa494198ae89b8d2754bf1c467218b3e1d21dc",
+      "size_bytes": 507
+    },
+    {
+      "path": "videochess_rl/model/checkpoint.py",
+      "sha256": "c8ebca81454dc5012d98f5aa13c6e1bf880b2bc1e9d32731fe88d53111a0e1c2",
+      "size_bytes": 12387
+    },
+    {
+      "path": "videochess_rl/model/cli.py",
+      "sha256": "208d257a5e5091d1d8bf8d27f635480476b15c5e5a6e347e3f53ba4367cb87d6",
+      "size_bytes": 62545
+    },
+    {
+      "path": "videochess_rl/model/dataset.py",
+      "sha256": "3e365957f2e412b3ca02848a67a7cf3b9cb07329ccbcae506b1fd0523cf45f7b",
+      "size_bytes": 29992
+    },
+    {
+      "path": "videochess_rl/model/features.py",
+      "sha256": "0ce9ac2e06e26980abf45beebd7e7ba7da478597d8c67d1e93a23694a471f819",
+      "size_bytes": 6104
+    },
+    {
+      "path": "videochess_rl/model/inference.py",
+      "sha256": "bc9026f0ed6c877392612e63818dde9f26aaf6229522d2c8594cca6e53b6be49",
+      "size_bytes": 5347
+    },
+    {
+      "path": "videochess_rl/model/network.py",
+      "sha256": "e8632867ae7ec76dc679acf2c322510d6c5c1b21ec76e57a6afbb03555d5469c",
+      "size_bytes": 13308
+    },
+    {
+      "path": "videochess_rl/model/training.py",
+      "sha256": "7c0ab12444a41847dccf8ba771e50254200a871dcacf4733e0f8eca78ea5b527",
+      "size_bytes": 32003
+    },
+    {
+      "path": "videochess_rl/rl/__init__.py",
+      "sha256": "4b72d3407a60693b6ca8c2d5ce4f34fc65d3193456b6727a836b843bf09bb03d",
+      "size_bytes": 333
+    },
+    {
+      "path": "videochess_rl/rl/checkpoint.py",
+      "sha256": "924a95e6accb04c727e2858dbcd6cbda84b970750decc27fd09621bdc61821aa",
+      "size_bytes": 15258
+    },
+    {
+      "path": "videochess_rl/rl/cli.py",
+      "sha256": "d808c4939244775efdb467493e68aa05c626834b80a768db21faa390f48b876a",
+      "size_bytes": 66583
+    },
+    {
+      "path": "videochess_rl/rl/evaluate.py",
+      "sha256": "694415d51bdc316648c30124d3d4df36b970484c2ce3bb04cdc0ae7a615652c8",
+      "size_bytes": 14853
+    },
+    {
+      "path": "videochess_rl/rl/evaluation_journal.py",
+      "sha256": "aa019d2a83b9f6319ed8e2581f3251bbc339364f1a1b9b0645f725c5c1e2e3ed",
+      "size_bytes": 9625
+    },
+    {
+      "path": "videochess_rl/rl/network.py",
+      "sha256": "1b00c1a8aafc944a92ae3796da2ebf8611e192a1e52eba2bcb569ad22df6faf5",
+      "size_bytes": 1562
+    },
+    {
+      "path": "videochess_rl/rl/replay.py",
+      "sha256": "21845b0755809d07d480da821c2e809540a0ca4b8e1eddc5785ebdec5cf59b7f",
+      "size_bytes": 8217
+    },
+    {
+      "path": "videochess_rl/rl/targets.py",
+      "sha256": "c63fe750efd17e554307dc6be62c5141831a94aff58dfcc8de413e70cd2b9de1",
+      "size_bytes": 1957
+    },
+    {
+      "path": "videochess_rl/rl/training.py",
+      "sha256": "eca25d8b692ce77e07a3be4736eabbb71ed629d69717259de258905fa72fe90a",
+      "size_bytes": 12356
+    },
+    {
+      "path": "videochess_rl/rl/transition.py",
+      "sha256": "df60fee8bf908e8d96901937dfc120d7e5a8f8e06a0119040e61356014aa645d",
+      "size_bytes": 13950
+    },
+    {
+      "path": "videochess_rl/shadow.py",
+      "sha256": "b342062ce2a6e176ed872d90ecbab584c5f0fb4bc0bb057b6d007694ac7d5149",
+      "size_bytes": 3690
+    },
+    {
+      "path": "videochess_rl/simulator.py",
+      "sha256": "8879ad9654e921fd07b30171b11ba69f1957263e9582ad4dce704feedf18c98b",
+      "size_bytes": 15625
+    },
+    {
+      "path": "videochess_rl/vision.py",
+      "sha256": "8f3a3b0a142bb91e3f7cd58dd29a596a01982f03cd7324929638a1fa5811b770",
+      "size_bytes": 8971
+    }
+  ],
+  "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+  "git_worktree_dirty_at_execution": true,
+  "post_evaluation_source_change": "paired_capped_reward_differences was appended to videochess_rl/rl/evaluate.py for a clearly labeled supplementary sensitivity analysis after the official evaluation process ended; all other source file contents used by the runner are represented below.",
+  "schema": "videochess-m5-evaluation-source-identity/1.0",
+  "source_hash_contract": "sha256 over each sorted videochess_rl/**/*.py relative POSIX path, NUL byte, and file bytes"
+}

@@ -1,0 +1,120 @@
+{
+  "arm": "warm",
+  "attempt_id": "attempt-0000",
+  "checkpoint_manifest_sha256": "5ada5d4e459accc0c3d9e94907bac0e067fd3ae44dcd9fc42971f52988670efe",
+  "code_compatibility_scope": "weights-only TorchVersion string subclass allowlist and str normalization for version metadata, plus campaign accounting of recovery validation time; no scientific configuration, model, transition, reward, optimizer, or RNG behavior changed",
+  "committed_counters": {
+    "completed_episodes": 1,
+    "invalid_transitions": 0,
+    "optimizer_updates": 0,
+    "target_syncs": 0,
+    "transitions": 215,
+    "valid_decisions": 215
+  },
+  "configuration_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+  "current_compatible_code_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+  "failed_checkpoint_path": "artifacts/m5/runs/m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__warm__attempt-0000/m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__warm__attempt-0000__warm__seed-20261104__attempt-0000__episodes-00001__decisions-000215__resume-v2.pt",
+  "failed_checkpoint_sha256": "6e60c26952cc04f11e2d4732a66d920976630b009a2a112ae4d1d99f246a6419",
+  "failure_log_path": ".agents/evidence/logs/M5-train-initial-attempt-failure-20261028.log",
+  "failure_log_sha256": "328d03fbb062c57fc0f656ef9092ce3869d89576c2c99b07fee7eb8f22fe6135",
+  "full_regression_after_fix": {
+    "code_source_sha256": "4d5b986c3b0ac517215f5cdd26f33a5e155390b26dc8597da50041edb9db0a8e",
+    "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v > /tmp/M5-full-suite-recovery-fix-r5.log 2>&1",
+    "executed_at_utc": "2026-10-28T13:27:51.236828Z",
+    "exit_code": 0,
+    "log_path": ".agents/evidence/logs/M5-full-suite-after-recovery-fix-20261028.log",
+    "log_sha256": "90a1208252c22b2cd896272e6b76d33f2ea96a37c970ff20b9858140ebb8a82c",
+    "result": "Ran 356 tests in 140.902s; OK. Full repository regression after the checkpoint compatibility fix, recovery accounting, incident documentation, and episode-checkpoint verifier."
+  },
+  "full_regression_after_initialization_compatibility_fix": {
+    "code_source_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+    "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v > /tmp/M5-full-suite-initialization-compat-r6.log 2>&1",
+    "executed_at_utc": "2026-10-28T13:39:24.280727Z",
+    "exit_code": 0,
+    "log_path": ".agents/evidence/logs/M5-full-suite-snapshot-compat-20261028.log",
+    "log_sha256": "e70852899f1fe6280493875609f9a678066bb1ad595b5ca486a0b154e3c46813",
+    "result": "Ran 357 tests in 133.894s; OK. Final repository regression after exact initialization-snapshot code-hash compatibility, checkpoint recovery fixes, and all M5 documentation/evidence updates."
+  },
+  "initialization_snapshot_compatibility_validation": {
+    "all_six_snapshots": {
+      "scratch:20261104": {
+        "path": "artifacts/m5/runs/m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__scratch__attempt-0000/m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__scratch__attempt-0000__scratch__seed-20261104__attempt-0000__stage-pre_rl__decisions-000000__eval-snapshot-v2.pt",
+        "sha256": "ca6d85193f31e2d9ec90a8402361fd099825f3e78eda82c726863d71fcd86b4c",
+        "sidecar_sha256": "58776e670d14720430c7cf93987b383765cba6f0a23ef9f4dc23576ebc62c942"
+      },
+      "scratch:20261105": {
+        "path": "artifacts/m5/runs/m5-75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c__scratch__attempt-0000/m5-75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c__scratch__attempt-0000__scratch__seed-20261105__attempt-0000__stage-pre_rl__decisions-000000__eval-snapshot-v2.pt",
+        "sha256": "f3cec828492640ba82983065e2cec6043714f7b9d374d04ce5422ab7ca2fb7a7",
+        "sidecar_sha256": "562dd2ac525b533eee944c2fb175aeefaa064b628abdbde995e64c02d39307fd"
+      },
+      "scratch:20261106": {
+        "path": "artifacts/m5/runs/m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__scratch__attempt-0000/m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__scratch__attempt-0000__scratch__seed-20261106__attempt-0000__stage-pre_rl__decisions-000000__eval-snapshot-v2.pt",
+        "sha256": "aeac1571bea9ce89af11dc1d668687d985984b49b3724fca310a9ed89e262120",
+        "sidecar_sha256": "80bbaa2d93b857fbbda50ad55611ceb1a23c449244e1401e248553bd4a4e93ad"
+      },
+      "warm:20261104": {
+        "path": "artifacts/m5/runs/m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__warm__attempt-0000/m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__warm__attempt-0000__warm__seed-20261104__attempt-0000__stage-pre_rl__decisions-000000__eval-snapshot-v2.pt",
+        "sha256": "248f81b55145ff2afcbb83c206913c6636c45e007e897b5872722bb9c09e0366",
+        "sidecar_sha256": "b75a0a0b54afceac3287c8c699d094c4bb6385acc95e904cd1b8245c9110411b"
+      },
+      "warm:20261105": {
+        "path": "artifacts/m5/runs/m5-75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c__warm__attempt-0000/m5-75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c__warm__attempt-0000__warm__seed-20261105__attempt-0000__stage-pre_rl__decisions-000000__eval-snapshot-v2.pt",
+        "sha256": "4a7117dd4b28ca0468955d9e82ab636182fb386505f688e4b095e5bf4ec0b3d2",
+        "sidecar_sha256": "c2963fcd870902268de9609661684803e0b50206299fdee2817f55601eaefb56"
+      },
+      "warm:20261106": {
+        "path": "artifacts/m5/runs/m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__warm__attempt-0000/m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__warm__attempt-0000__warm__seed-20261106__attempt-0000__stage-pre_rl__decisions-000000__eval-snapshot-v2.pt",
+        "sha256": "4791f07e8295ea083629c72f9ae4685d2309c3fe738fe7c499b9e499a967ca75",
+        "sidecar_sha256": "c7360994e50f3d88c8e940d11dd153e4d95b83a263668eb02242d6bf5b716f9f"
+      }
+    },
+    "allowed_old_code_sha256": "e2cb7a957b21e43f4b6499a5364c89de4dbf3ce0889f4cffa7307808fa2e8419",
+    "comparison_rule": "Only the recorded old code_sha256 may differ; schema, resumable flag, config/seed/run/pair/model identities, every other metadata field, and every model tensor must match.",
+    "configuration_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+    "focused_test_log_path": ".agents/evidence/logs/M5-focused-suite-snapshot-compat-20261028.log",
+    "focused_test_log_sha256": "fd1769f52ab6424ace832235134a031de5db9b0240048a4752175204de08e352",
+    "focused_test_result": "Ran 38 M5-focused tests in 25.126s; OK. Includes an exact allowlist test for compatible initialization snapshot metadata.",
+    "result": "PASS",
+    "source_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+    "validation_command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -c \"import json; from videochess_rl.rl.cli import verify_transfer_inputs,_save_initialization_pair,load_config; model,transfer,meta=verify_transfer_inputs(); print(json.dumps([_save_initialization_pair(seed,model,meta,transfer) for seed in load_config()['training']['paired_seeds']],sort_keys=True))\" > /tmp/M5-initialization-compat-validation.log 2>&1",
+    "validation_log_path": ".agents/evidence/logs/M5-initialization-snapshot-compat-validation-20261028.log",
+    "validation_log_sha256": "edc36781ae49bd81d415534414bc1af7be2a5d96d79caadc4e1cce993af177cc"
+  },
+  "m5_focused_suite_log_path": ".agents/evidence/logs/M5-focused-suite-after-recovery-fix-20261028.log",
+  "m5_focused_suite_log_sha256": "14a9b64858554e05bc225e2d2ad0b931a9e69167e41de1cdd65d9d25bc70f3a0",
+  "m5_focused_suite_result": "Ran 37 M5-focused tests in 20.545s; OK under the checkpoint compatibility and campaign recovery-time accounting source.",
+  "next_attempt": "attempt-0001 will resume from this verified episode-boundary checkpoint; original failed attempt remains preserved",
+  "original_checkpoint_code_sha256": "e2cb7a957b21e43f4b6499a5364c89de4dbf3ce0889f4cffa7307808fa2e8419",
+  "pair_id": "e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7",
+  "replay_journal_path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/runs/m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__warm__attempt-0000/replay.journal.jsonl",
+  "replay_prefix_rows": 215,
+  "replay_prefix_sha256": "fdb37a4b5fcb28cf137774422a5eb92e20e2f77d729a1759c28c50bd2ac62947",
+  "resource_accounting": {
+    "campaign_cli_wall_seconds_conservative": 16.5,
+    "cumulative_training_campaign_seconds": 792.4705566060004,
+    "failed_attempt_elapsed_seconds": 11.609256,
+    "recovery_validation_seconds_charged": 374.346,
+    "startup_overhead_seconds_charged_to_setup": 4.4
+  },
+  "restore_validation": "PASS; all 215 replay rows, counters, optimizer/target/online states and RNG state restored",
+  "restore_validation_command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/verify_m5_episode_checkpoint.py --training-seed 20261104 --arm warm > /tmp/M5-checkpoint-restore-validation.log 2>&1",
+  "restore_validation_log_path": ".agents/evidence/logs/M5-checkpoint-restore-validation-20261028.log",
+  "restore_validation_log_sha256": "4c264ca3c59ec81a84d2b77cd48771ccb728536e3a9489fe91addee80438fb9c",
+  "restore_validation_result": "PASS: the 215-decision Warm-start episode checkpoint, replay journal, optimizer/target/online state, counters, and RNG state verified and restored under the current recovery-compatible source.",
+  "restore_validation_source_sha256": "4d5b986c3b0ac517215f5cdd26f33a5e155390b26dc8597da50041edb9db0a8e",
+  "run_id": "m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__warm__attempt-0000",
+  "schema": "videochess-m5-checkpoint-recovery/1.0",
+  "snapshot_initialization_compatibility_failure": {
+    "campaign_seconds_charged": 1.5,
+    "corrective_rule": "accept only the one recorded checkpoint-compatible source hash for an immutable initialization snapshot; exact config/schema/seed/weights and every other metadata field must still match",
+    "decisions_added": 0,
+    "executed_at_utc": "2026-10-28T13:29:40.685400Z",
+    "exit_code": 1,
+    "failure_log_path": ".agents/evidence/logs/M5-train-attempt1-snapshot-metadata-failure-20261028.log",
+    "failure_log_sha256": "397622ce79e72b6d38bbb12edc9d239f266064b1b0aaedb70e83c8f7525ea4e1",
+    "result": "FAILED during pre-run initialization before creating attempt 0001: immutable pre-RL snapshot metadata carried the prior source hash and was rejected by strict equality. No additional decision, run attempt, snapshot, or checkpoint was created; the fix permits only the exact recovery-compatible source hash when all other metadata and tensors match.",
+    "run_attempt_started": false,
+    "source_sha256_at_failure": "4d5b986c3b0ac517215f5cdd26f33a5e155390b26dc8597da50041edb9db0a8e"
+  },
+  "training_seed": 20261104
+}

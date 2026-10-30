@@ -1,0 +1,166 @@
+{
+  "schema": "videochess-m5-source-recovery-execution/1.0",
+  "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/verify_m5_source_recovery.py --require-private-artifacts",
+  "executed_at_utc": "2026-10-30T07:42:50Z",
+  "recorded_at_utc": "2026-10-30T07:42:50Z",
+  "git_revision": "d16e1cef7d72e8109415d12d19d6f6f0f71b7871",
+  "exit_code": 0,
+  "log_path": ".agents/evidence/logs/M5-source-recovery-verify-20261030-r4.log",
+  "log_sha256": "0daa62bd0589146d0f4943c4c307f5097304b29fdda647681847aeec368892ea",
+  "result": {
+    "schema": "videochess-m5-source-recovery-verification/1.0",
+    "transcript": {
+      "available": true,
+      "path": "/home/dodaonam/Downloads/Pasted text(20261030-060523).txt",
+      "bytes": 3655066,
+      "sha256": "c5d8706cff0f7634620b835d1a8063ac43f8bd8eec277995ed09f3b00a693e8f",
+      "line_count": 22750,
+      "result": "exact transcript identity and source-line extraction verified"
+    },
+    "recovered_sources": {
+      "checkpoint.py": {
+        "sha256": "19ab713b5a1450c2e4506d9d761768317e0b48fb96a3cb0083965d6a037bc410",
+        "bytes": 12167,
+        "authenticity": "exact byte match to original recorded SHA-256"
+      },
+      "replay.py": {
+        "sha256": "5ae4d3d928c524539bcf6b29f4102f09b246d5703b66539f2fad4aa7e2aaa278",
+        "bytes": 6732,
+        "authenticity": "exact byte match to original recorded SHA-256"
+      }
+    },
+    "checkpoint_snapshot_changes": [
+      {
+        "path": ".agents/evidence/M5-001-resumption-authorization-20261029.md",
+        "before_sha256": null,
+        "after_sha256": "2fb0689a6675ff26451c935d7f0ee56d9b7150a83e73ab0c6da3d372102f80cc"
+      },
+      {
+        "path": ".agents/evidence/logs/M5-checkpoint-restore-verification-20261105-optimized-20261029.log",
+        "before_sha256": null,
+        "after_sha256": "da00d8cc8ea4a266eabcc2db644de5ef6d3fb438d1aac59d5bca54a31d753796"
+      },
+      {
+        "path": ".agents/evidence/logs/M5-checkpoint-restore-verification-20261105-optimized-r2-20261029.log",
+        "before_sha256": null,
+        "after_sha256": "3927bdcb518886713ab30ccc4b5d15d6f07d799844980e6221d717ce6537dc9b"
+      },
+      {
+        "path": ".agents/evidence/logs/M5-checkpoint-restore-verification-20261105-optimized-r3-20261029.log",
+        "before_sha256": null,
+        "after_sha256": "5443565159565ca2afac7130ccab646fb974093dc4b074b6bd937a2398b62a79"
+      },
+      {
+        "path": ".agents/evidence/logs/M5-full-suite-after-streaming-recovery-20261029.log",
+        "before_sha256": null,
+        "after_sha256": "5d00d6c7ac197db200b096bf2289b8199946d377ea7cbbd803c50818d8a5e081"
+      },
+      {
+        "path": ".agents/plans/M05-double-dqn.md",
+        "before_sha256": "fe77ba8fd25a3553cbe0489a77dcf20455955c7986ab483ec374e75de1b882fc",
+        "after_sha256": "dcbbcef1a5452d6e4cd08bfab70c64bda74b9dc1c1c5cf482c9970e4c5c5f326"
+      },
+      {
+        "path": ".agents/state/SESSION_HANDOFF.md",
+        "before_sha256": "8f0532175959a5f6841987451f4bd4460c490e316f4754ee447fc52bf4bdef99",
+        "after_sha256": "03f910c734af34dbfd416f9f6873a315c9513e5ffa335ab8b0ee5727298346d8"
+      },
+      {
+        "path": ".agents/tasks/BACKLOG.yaml",
+        "before_sha256": "6702af8037d758bbffa63ac0fdae580b0b9678cf0cfeb3068fb870602ba4dee6",
+        "after_sha256": "5ea865304239de8eb0762dab155b75074a1e22d6cf8a85a533de7d9e0d0587d3"
+      },
+      {
+        "path": "scripts/verify_m5_episode_checkpoint.py",
+        "before_sha256": "327e995c3b8be8adf10bf3899a25fff2ac89151afcdf6db3f3bbf21217327109",
+        "after_sha256": "c7ec5b57086fdfd54e3ccd5b00b4dbfad05e65283de3af416e0b486116c53a52"
+      },
+      {
+        "path": "tests/test_m5_checkpoint.py",
+        "before_sha256": "b249d3ad86f72e2269424e52643780b2789ed516a11b5fb9d1117ecddeb5e7a2",
+        "after_sha256": "94c564bcc5b084747f4db4b31ae63fb09ec7c944f5b88e522626058df14c4de2"
+      },
+      {
+        "path": "tests/test_m5_initialization.py",
+        "before_sha256": "168c528d9e0c5a33560a097417e6f12ed780fa9f29ef985e9e8d44b30401ceb8",
+        "after_sha256": "9510da83a9ea516a592147db164536848ad5564c2588c31c66907fdc5f568d96"
+      },
+      {
+        "path": "tests/test_m5_replay.py",
+        "before_sha256": "e8fd85159f52c1f4577218e703277410aa90cf7d14b5ed4c4f5aab80ba88f125",
+        "after_sha256": "14f25fc1050aa5dbd0a44080661b199cadc9e9c5c5673bdac4ea5be6c76b1619"
+      },
+      {
+        "path": "videochess_rl/rl/checkpoint.py",
+        "before_sha256": "19ab713b5a1450c2e4506d9d761768317e0b48fb96a3cb0083965d6a037bc410",
+        "after_sha256": "924a95e6accb04c727e2858dbcd6cbda84b970750decc27fd09621bdc61821aa"
+      },
+      {
+        "path": "videochess_rl/rl/cli.py",
+        "before_sha256": "795ca9865da80bf982480b25d97367c846255e167d9c64320a73030106c2efe3",
+        "after_sha256": "3f966fffa3a31ed9330004448ca84bc86a4fd6446764d3184e248cff978b60b7"
+      },
+      {
+        "path": "videochess_rl/rl/replay.py",
+        "before_sha256": "5ae4d3d928c524539bcf6b29f4102f09b246d5703b66539f2fad4aa7e2aaa278",
+        "after_sha256": "21845b0755809d07d480da821c2e809540a0ca4b8e1eddc5785ebdec5cf59b7f"
+      }
+    ],
+    "changed_runtime_python_files": [
+      {
+        "path": "videochess_rl/rl/checkpoint.py",
+        "before_sha256": "19ab713b5a1450c2e4506d9d761768317e0b48fb96a3cb0083965d6a037bc410",
+        "after_sha256": "924a95e6accb04c727e2858dbcd6cbda84b970750decc27fd09621bdc61821aa"
+      },
+      {
+        "path": "videochess_rl/rl/cli.py",
+        "before_sha256": "795ca9865da80bf982480b25d97367c846255e167d9c64320a73030106c2efe3",
+        "after_sha256": "3f966fffa3a31ed9330004448ca84bc86a4fd6446764d3184e248cff978b60b7"
+      },
+      {
+        "path": "videochess_rl/rl/replay.py",
+        "before_sha256": "5ae4d3d928c524539bcf6b29f4102f09b246d5703b66539f2fad4aa7e2aaa278",
+        "after_sha256": "21845b0755809d07d480da821c2e809540a0ca4b8e1eddc5785ebdec5cf59b7f"
+      }
+    ],
+    "replay_sampling_and_state_operations_identical": true,
+    "replay_journal_append_identical": true,
+    "replay_journal_changed_methods": [
+      "__init__",
+      "verify"
+    ],
+    "checkpoint_changed_functions": [
+      "restore_training_checkpoint",
+      "verify_training_checkpoint"
+    ],
+    "cli_full_file_recovered": false,
+    "cli_resume_function_matches_preserved_later_fragment": true,
+    "cli_full_file_sha256_matches_in_git_object_store": {
+      "795ca9865da80bf982480b25d97367c846255e167d9c64320a73030106c2efe3": null,
+      "3f966fffa3a31ed9330004448ca84bc86a4fd6446764d3184e248cff978b60b7": null
+    },
+    "training_source_groups": {
+      "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00": 4,
+      "cdcc1fdc0ca0b324e49cfb8b0ff571496a554e9892dfb3620d6454a65ee16da0": 2
+    },
+    "seed_20261106_runs": [
+      {
+        "run_id": "m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__warm__attempt-0000",
+        "arm": "warm",
+        "source_sha256": "cdcc1fdc0ca0b324e49cfb8b0ff571496a554e9892dfb3620d6454a65ee16da0",
+        "attempt_id": "attempt-0000",
+        "resume_parent_checkpoint_sha256": null,
+        "valid_decisions": 50000
+      },
+      {
+        "run_id": "m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__scratch__attempt-0000",
+        "arm": "scratch",
+        "source_sha256": "cdcc1fdc0ca0b324e49cfb8b0ff571496a554e9892dfb3620d6454a65ee16da0",
+        "attempt_id": "attempt-0000",
+        "resume_parent_checkpoint_sha256": null,
+        "valid_decisions": 50000
+      }
+    ],
+    "residual_note": "Full CLI file bytes were not reconstructed; its transcript-authenticated training-resume excerpt and recorded patch hunks are preserved separately. The two final-seed runs were attempt-0000 and did not restore a checkpoint."
+  }
+}

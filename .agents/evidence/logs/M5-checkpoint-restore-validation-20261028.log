@@ -1,0 +1,38 @@
+Command: PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/verify_m5_episode_checkpoint.py --training-seed 20261104 --arm warm > /tmp/M5-checkpoint-restore-validation.log 2>&1
+Executed at UTC (result-log mtime): 2026-10-28T13:24:07.172617Z
+Exit code: 0
+Result: PASS: the 215-decision Warm-start episode checkpoint, replay journal, optimizer/target/online state, counters, and RNG state verified and restored under the current recovery-compatible source.
+
+Captured command output follows:
+{
+  "arm": "warm",
+  "checkpoint_code_sha256": "e2cb7a957b21e43f4b6499a5364c89de4dbf3ce0889f4cffa7307808fa2e8419",
+  "checkpoint_path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/runs/m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__warm__attempt-0000/m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__warm__attempt-0000__warm__seed-20261104__attempt-0000__episodes-00001__decisions-000215__resume-v2.pt",
+  "checkpoint_sha256": "6e60c26952cc04f11e2d4732a66d920976630b009a2a112ae4d1d99f246a6419",
+  "completed_episodes": 1,
+  "configuration_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+  "counters": {
+    "completed_episodes": 1,
+    "invalid_transitions": 0,
+    "optimizer_updates": 0,
+    "target_syncs": 0,
+    "transitions": 215,
+    "valid_decisions": 215
+  },
+  "current_source_sha256": "4d5b986c3b0ac517215f5cdd26f33a5e155390b26dc8597da50041edb9db0a8e",
+  "initialization_snapshot_sha256": "248f81b55145ff2afcbb83c206913c6636c45e007e897b5872722bb9c09e0366",
+  "journal_prefix": {
+    "chain_sha256": "fdb37a4b5fcb28cf137774422a5eb92e20e2f77d729a1759c28c50bd2ac62947",
+    "file_bytes": 997325,
+    "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/runs/m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__warm__attempt-0000/replay.journal.jsonl",
+    "record_count": 215
+  },
+  "optimizer_updates": 0,
+  "pair_id": "e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7",
+  "replay_rows": 215,
+  "result": "PASS",
+  "target_syncs": 0,
+  "training_seed": 20261104,
+  "transitions": 215,
+  "valid_decisions": 215
+}

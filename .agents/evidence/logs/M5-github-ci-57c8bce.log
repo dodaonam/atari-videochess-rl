@@ -1,0 +1,349 @@
+Executed at UTC: 2026-10-30T05:21:42Z
+$ gh run view 41007586702 --repo dodaonam/atari-videochess-rl --log
+Result: Repository preflight workflow conclusion: success for exact head 57c8bce28b151b3f30b03b3b972561e142d18b16; standard-library context/bundle/M5 contract-oracle checks completed.
+Exit code: 0
+
+Captured output follows:
+context	Set up job	﻿2026-10-30T05:17:20.7339428Z Current runner version: '2.338.0'
+context	Set up job	2026-10-30T05:17:20.7364053Z ##[group]Runner Image Provisioner
+context	Set up job	2026-10-30T05:17:20.7365019Z Hosted Compute Agent
+context	Set up job	2026-10-30T05:17:20.7365638Z Version: 20261021.618
+context	Set up job	2026-10-30T05:17:20.7366236Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+context	Set up job	2026-10-30T05:17:20.7366977Z Build Date: 2026-10-21T00:45:21Z
+context	Set up job	2026-10-30T05:17:20.7367675Z Worker ID: {21bed67d-f818-4808-89fe-729ca6281345}
+context	Set up job	2026-10-30T05:17:20.7368414Z Region: westcentralus
+context	Set up job	2026-10-30T05:17:20.7369418Z Cloud: Azure
+context	Set up job	2026-10-30T05:17:20.7369989Z ##[endgroup]
+context	Set up job	2026-10-30T05:17:20.7371916Z ##[group]Operating System
+context	Set up job	2026-10-30T05:17:20.7372546Z Ubuntu
+context	Set up job	2026-10-30T05:17:20.7373101Z 24.04.5
+context	Set up job	2026-10-30T05:17:20.7373652Z LTS
+context	Set up job	2026-10-30T05:17:20.7374196Z ##[endgroup]
+context	Set up job	2026-10-30T05:17:20.7374877Z ##[group]Runner Image
+context	Set up job	2026-10-30T05:17:20.7375546Z Image: ubuntu-24.04
+context	Set up job	2026-10-30T05:17:20.7376079Z Version: 20261025.353.1
+context	Set up job	2026-10-30T05:17:20.7377233Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261025.353/images/ubuntu/Ubuntu2404-Readme.md
+context	Set up job	2026-10-30T05:17:20.7378984Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261025.353
+context	Set up job	2026-10-30T05:17:20.7380088Z ##[endgroup]
+context	Set up job	2026-10-30T05:17:20.7381211Z ##[group]GITHUB_TOKEN Permissions
+context	Set up job	2026-10-30T05:17:20.7383161Z Contents: read
+context	Set up job	2026-10-30T05:17:20.7383710Z Metadata: read
+context	Set up job	2026-10-30T05:17:20.7384364Z ##[endgroup]
+context	Set up job	2026-10-30T05:17:20.7386264Z Secret source: Actions
+context	Set up job	2026-10-30T05:17:20.7387165Z Cache mode: write
+context	Set up job	2026-10-30T05:17:20.7387824Z Prepare workflow directory
+context	Set up job	2026-10-30T05:17:20.7743404Z Prepare all required actions
+context	Set up job	2026-10-30T05:17:20.7790025Z Getting action download info
+context	Set up job	2026-10-30T05:17:21.0566782Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+context	Set up job	2026-10-30T05:17:21.1843260Z Download action repository 'actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97' (SHA:5fda3b95a4ea91299a34e894583c3862153e4b97)
+context	Set up job	2026-10-30T05:17:21.3852410Z Complete job name: context
+context	Check out repository	﻿2026-10-30T05:17:21.4623518Z ##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+context	Check out repository	2026-10-30T05:17:21.4624532Z with:
+context	Check out repository	2026-10-30T05:17:21.4625006Z   fetch-depth: 0
+context	Check out repository	2026-10-30T05:17:21.4625605Z   repository: dodaonam/atari-videochess-rl
+context	Check out repository	2026-10-30T05:17:21.4629531Z   token: ***
+context	Check out repository	2026-10-30T05:17:21.4630135Z   ssh-strict: true
+context	Check out repository	2026-10-30T05:17:21.4630640Z   ssh-user: git
+context	Check out repository	2026-10-30T05:17:21.4631138Z   persist-credentials: true
+context	Check out repository	2026-10-30T05:17:21.4631711Z   clean: true
+context	Check out repository	2026-10-30T05:17:21.4632224Z   sparse-checkout-cone-mode: true
+context	Check out repository	2026-10-30T05:17:21.4632831Z   fetch-tags: false
+context	Check out repository	2026-10-30T05:17:21.4633347Z   show-progress: true
+context	Check out repository	2026-10-30T05:17:21.4633852Z   lfs: false
+context	Check out repository	2026-10-30T05:17:21.4634335Z   submodules: false
+context	Check out repository	2026-10-30T05:17:21.4634843Z   set-safe-directory: true
+context	Check out repository	2026-10-30T05:17:21.4635462Z   allow-unsafe-pr-checkout: false
+context	Check out repository	2026-10-30T05:17:21.4636239Z ##[endgroup]
+context	Check out repository	2026-10-30T05:17:21.7665553Z Syncing repository: dodaonam/atari-videochess-rl
+context	Check out repository	2026-10-30T05:17:21.7668828Z ##[group]Getting Git version info
+context	Check out repository	2026-10-30T05:17:21.7670546Z Working directory is '/home/runner/work/atari-videochess-rl/atari-videochess-rl'
+context	Check out repository	2026-10-30T05:17:21.7672324Z [command]/usr/bin/git version
+context	Check out repository	2026-10-30T05:17:21.7764909Z git version 2.56.0
+context	Check out repository	2026-10-30T05:17:21.7790402Z ##[endgroup]
+context	Check out repository	2026-10-30T05:17:21.7826356Z Temporarily overriding HOME='/home/runner/work/_temp/557bdff1-c0cb-4a5a-9084-9693bcea1b27' before making global git config changes
+context	Check out repository	2026-10-30T05:17:21.7830311Z Adding repository directory to the temporary git global config as a safe directory
+context	Check out repository	2026-10-30T05:17:21.7851811Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/atari-videochess-rl/atari-videochess-rl
+context	Check out repository	2026-10-30T05:17:21.7899837Z Deleting the contents of '/home/runner/work/atari-videochess-rl/atari-videochess-rl'
+context	Check out repository	2026-10-30T05:17:21.7902250Z ##[group]Determining repository object format
+context	Check out repository	2026-10-30T05:17:21.7903857Z ##[endgroup]
+context	Check out repository	2026-10-30T05:17:21.7905191Z ##[group]Initializing the repository
+context	Check out repository	2026-10-30T05:17:21.7923962Z [command]/usr/bin/git init /home/runner/work/atari-videochess-rl/atari-videochess-rl
+context	Check out repository	2026-10-30T05:17:21.8068924Z hint: Using 'master' as the name for the initial branch. This default branch name
+context	Check out repository	2026-10-30T05:17:21.8071062Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+context	Check out repository	2026-10-30T05:17:21.8072730Z hint: to use in all of your new repositories, which will suppress this warning,
+context	Check out repository	2026-10-30T05:17:21.8074065Z hint: call:
+context	Check out repository	2026-10-30T05:17:21.8074906Z hint:
+context	Check out repository	2026-10-30T05:17:21.8075915Z hint: 	git config --global init.defaultBranch <name>
+context	Check out repository	2026-10-30T05:17:21.8077070Z hint:
+context	Check out repository	2026-10-30T05:17:21.8078118Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+context	Check out repository	2026-10-30T05:17:21.8079823Z hint: 'development'. The just-created branch can be renamed via this command:
+context	Check out repository	2026-10-30T05:17:21.8081074Z hint:
+context	Check out repository	2026-10-30T05:17:21.8081851Z hint: 	git branch -m <name>
+context	Check out repository	2026-10-30T05:17:21.8082876Z hint:
+context	Check out repository	2026-10-30T05:17:21.8084040Z hint: Disable this message with "git config set advice.defaultBranchName false"
+context	Check out repository	2026-10-30T05:17:21.8086211Z Initialized empty Git repository in /home/runner/work/atari-videochess-rl/atari-videochess-rl/.git/
+context	Check out repository	2026-10-30T05:17:21.8095442Z [command]/usr/bin/git remote add origin https://github.com/dodaonam/atari-videochess-rl
+context	Check out repository	2026-10-30T05:17:21.8155760Z ##[endgroup]
+context	Check out repository	2026-10-30T05:17:21.8157303Z ##[group]Disabling automatic garbage collection
+context	Check out repository	2026-10-30T05:17:21.8159840Z [command]/usr/bin/git config --local gc.auto 0
+context	Check out repository	2026-10-30T05:17:21.8202558Z ##[endgroup]
+context	Check out repository	2026-10-30T05:17:21.8203852Z ##[group]Setting up auth
+context	Check out repository	2026-10-30T05:17:21.8205016Z Removing SSH command configuration
+context	Check out repository	2026-10-30T05:17:21.8209556Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+context	Check out repository	2026-10-30T05:17:21.8258365Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+context	Check out repository	2026-10-30T05:17:21.8644619Z Removing HTTP extra header
+context	Check out repository	2026-10-30T05:17:21.8651344Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+context	Check out repository	2026-10-30T05:17:21.8686070Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+context	Check out repository	2026-10-30T05:17:21.8875192Z Removing includeIf entries pointing to credentials config files
+context	Check out repository	2026-10-30T05:17:21.8880482Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+context	Check out repository	2026-10-30T05:17:21.8911610Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+context	Check out repository	2026-10-30T05:17:21.9099928Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-9f4e0459-4b6e-4563-9b2c-8c1d7405c9d6.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+context	Check out repository	2026-10-30T05:17:21.9134062Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/atari-videochess-rl/atari-videochess-rl/.git.path /home/runner/work/_temp/git-credentials-9f4e0459-4b6e-4563-9b2c-8c1d7405c9d6.config
+context	Check out repository	2026-10-30T05:17:21.9164377Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/atari-videochess-rl/atari-videochess-rl/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-9f4e0459-4b6e-4563-9b2c-8c1d7405c9d6.config
+context	Check out repository	2026-10-30T05:17:21.9195340Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-9f4e0459-4b6e-4563-9b2c-8c1d7405c9d6.config
+context	Check out repository	2026-10-30T05:17:21.9225857Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-9f4e0459-4b6e-4563-9b2c-8c1d7405c9d6.config
+context	Check out repository	2026-10-30T05:17:21.9254551Z ##[endgroup]
+context	Check out repository	2026-10-30T05:17:21.9255414Z ##[group]Fetching the repository
+context	Check out repository	2026-10-30T05:17:21.9261074Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +e1e04b548f54810e04ad85aa66a6993682f8f4e9:refs/remotes/pull/11/merge
+context	Check out repository	2026-10-30T05:17:23.6883511Z From https://github.com/dodaonam/atari-videochess-rl
+context	Check out repository	2026-10-30T05:17:23.6885535Z  * [new branch]      feature/m2-chess-foundation              -> origin/feature/m2-chess-foundation
+context	Check out repository	2026-10-30T05:17:23.6887524Z  * [new branch]      feature/m3-expert-dataset                -> origin/feature/m3-expert-dataset
+context	Check out repository	2026-10-30T05:17:23.6889454Z  * [new branch]      feature/m4-postmerge-closeout            -> origin/feature/m4-postmerge-closeout
+context	Check out repository	2026-10-30T05:17:23.6891467Z  * [new branch]      feature/m4-supervised-pretraining        -> origin/feature/m4-supervised-pretraining
+context	Check out repository	2026-10-30T05:17:23.6893523Z  * [new branch]      feature/m5-double-dqn                    -> origin/feature/m5-double-dqn
+context	Check out repository	2026-10-30T05:17:23.6895324Z  * [new branch]      feature/pre-m3-readiness                 -> origin/feature/pre-m3-readiness
+context	Check out repository	2026-10-30T05:17:23.6897307Z  * [new branch]      feature/pre-m4-final-closure             -> origin/feature/pre-m4-final-closure
+context	Check out repository	2026-10-30T05:17:23.6900140Z  * [new branch]      feature/pre-m4-postmerge-evidence        -> origin/feature/pre-m4-postmerge-evidence
+context	Check out repository	2026-10-30T05:17:23.6902221Z  * [new branch]      feature/pre-m4-readiness                 -> origin/feature/pre-m4-readiness
+context	Check out repository	2026-10-30T05:17:23.6904164Z  * [new branch]      feature/pre-m5-readiness                 -> origin/feature/pre-m5-readiness
+context	Check out repository	2026-10-30T05:17:23.6907511Z  * [new branch]      feature/rsk010-lossless-checkpoint-history -> origin/feature/rsk010-lossless-checkpoint-history
+context	Check out repository	2026-10-30T05:17:23.6909609Z  * [new branch]      initial-idea                             -> origin/initial-idea
+context	Check out repository	2026-10-30T05:17:23.6910996Z  * [new branch]      main                                     -> origin/main
+context	Check out repository	2026-10-30T05:17:23.6912347Z  * [new ref]         e1e04b548f54810e04ad85aa66a6993682f8f4e9 -> pull/11/merge
+context	Check out repository	2026-10-30T05:17:23.6915687Z ##[endgroup]
+context	Check out repository	2026-10-30T05:17:23.6917071Z ##[group]Determining the checkout info
+context	Check out repository	2026-10-30T05:17:23.6919305Z ##[endgroup]
+context	Check out repository	2026-10-30T05:17:23.6920477Z [command]/usr/bin/git sparse-checkout disable
+context	Check out repository	2026-10-30T05:17:23.7056548Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+context	Check out repository	2026-10-30T05:17:23.7089517Z ##[group]Checking out the ref
+context	Check out repository	2026-10-30T05:17:23.7092658Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/11/merge
+context	Check out repository	2026-10-30T05:17:23.7850802Z Note: switching to 'refs/remotes/pull/11/merge'.
+context	Check out repository	2026-10-30T05:17:23.7852124Z 
+context	Check out repository	2026-10-30T05:17:23.7852759Z You are in 'detached HEAD' state. You can look around, make experimental
+context	Check out repository	2026-10-30T05:17:23.7854039Z changes and commit them, and you can discard any commits you make in this
+context	Check out repository	2026-10-30T05:17:23.7855154Z state without impacting any branches by switching back to a branch.
+context	Check out repository	2026-10-30T05:17:23.7855889Z 
+context	Check out repository	2026-10-30T05:17:23.7856469Z If you want to create a new branch to retain commits you create, you may
+context	Check out repository	2026-10-30T05:17:23.7857813Z do so (now or later) by using -c with the switch command. Example:
+context	Check out repository	2026-10-30T05:17:23.7858665Z 
+context	Check out repository	2026-10-30T05:17:23.7858941Z   git switch -c <new-branch-name>
+context	Check out repository	2026-10-30T05:17:23.7859674Z 
+context	Check out repository	2026-10-30T05:17:23.7860010Z Or undo this operation with:
+context	Check out repository	2026-10-30T05:17:23.7860592Z 
+context	Check out repository	2026-10-30T05:17:23.7860840Z   git switch -
+context	Check out repository	2026-10-30T05:17:23.7861291Z 
+context	Check out repository	2026-10-30T05:17:23.7861968Z Turn off this advice by setting config variable advice.detachedHead to false
+context	Check out repository	2026-10-30T05:17:23.7863032Z 
+context	Check out repository	2026-10-30T05:17:23.7864267Z HEAD is now at e1e04b5 Merge 57c8bce28b151b3f30b03b3b972561e142d18b16 into 08f98f9dfc58fbf54e29afabb009020b787f2718
+context	Check out repository	2026-10-30T05:17:23.7867902Z ##[endgroup]
+context	Check out repository	2026-10-30T05:17:23.7910776Z [command]/usr/bin/git log -1 --format=%H
+context	Check out repository	2026-10-30T05:17:23.7935947Z e1e04b548f54810e04ad85aa66a6993682f8f4e9
+context	Set up Python 3.12	﻿2026-10-30T05:17:23.8241303Z ##[group]Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+context	Set up Python 3.12	2026-10-30T05:17:23.8242423Z with:
+context	Set up Python 3.12	2026-10-30T05:17:23.8243010Z   python-version: 3.12
+context	Set up Python 3.12	2026-10-30T05:17:23.8243805Z   check-latest: false
+context	Set up Python 3.12	2026-10-30T05:17:23.8249021Z   token: ***
+context	Set up Python 3.12	2026-10-30T05:17:23.8249823Z   update-environment: true
+context	Set up Python 3.12	2026-10-30T05:17:23.8250519Z   allow-prereleases: false
+context	Set up Python 3.12	2026-10-30T05:17:23.8251578Z   freethreaded: false
+context	Set up Python 3.12	2026-10-30T05:17:23.8252210Z ##[endgroup]
+context	Set up Python 3.12	2026-10-30T05:17:23.9406824Z ##[group]Installed versions
+context	Set up Python 3.12	2026-10-30T05:17:23.9494884Z Successfully set up CPython (3.12.15)
+context	Set up Python 3.12	2026-10-30T05:17:23.9496415Z ##[endgroup]
+context	Validate canonical context	﻿2026-10-30T05:17:23.9674594Z ##[group]Run python scripts/agent_preflight.py
+context	Validate canonical context	2026-10-30T05:17:23.9676091Z [36;1mpython scripts/agent_preflight.py[0m
+context	Validate canonical context	2026-10-30T05:17:23.9711006Z shell: /usr/bin/bash -e {0}
+context	Validate canonical context	2026-10-30T05:17:23.9711859Z env:
+context	Validate canonical context	2026-10-30T05:17:23.9712599Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+context	Validate canonical context	2026-10-30T05:17:23.9713719Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+context	Validate canonical context	2026-10-30T05:17:23.9714891Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+context	Validate canonical context	2026-10-30T05:17:23.9715901Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+context	Validate canonical context	2026-10-30T05:17:23.9717004Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+context	Validate canonical context	2026-10-30T05:17:23.9718146Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+context	Validate canonical context	2026-10-30T05:17:23.9719021Z ##[endgroup]
+context	Validate canonical context	2026-10-30T05:17:24.7679676Z Agent context preflight: PASS
+context	Validate canonical context	2026-10-30T05:17:24.7682263Z Governance: G2 (approved); approved: G0, G1, G2
+context	Validate canonical context	2026-10-30T05:17:24.7684882Z Next engineering milestone: M5 — blocked
+context	Validate canonical context	2026-10-30T05:17:24.7688113Z Active task: M5-001 — Implement and verify the paired Double DQN simulator experiment
+context	Validate canonical context	2026-10-30T05:17:24.7696619Z Active task next action: Independent PM disposition of BLK-003: recover and compare authentic earlier source snapshots, or decide whether the source-version-confounded results may be used. No additional training without separate PM authorization.
+context	Validate canonical context	2026-10-30T05:17:24.7705852Z Next task: M5-001 (blocked) — Implement and verify the paired Double DQN simulator experiment
+context	Validate canonical context	2026-10-30T05:17:24.7709575Z Next task dependencies: M2-001, M3-001, M4-001
+context	Validate canonical context	2026-10-30T05:17:24.7712631Z Next task acceptance criteria: M5-01, M5-02, M5-03, M5-04, M5-05
+context	Validate canonical context	2026-10-30T05:17:24.7715624Z Tasks: done=13, in_progress=0, pending=0, blocked=1, cancelled=0
+context	Validate canonical context	2026-10-30T05:17:24.7719646Z Completed task IDs: G1-001, G1-002, G1-003, G1-004, G1-005, G1-006, G1-007, G1-008, M0-001, M1-001, M2-001, M3-001, M4-001
+context	Validate canonical context	2026-10-30T05:17:24.7723581Z In progress task IDs: none
+context	Validate canonical context	2026-10-30T05:17:24.7725357Z Pending task IDs: none
+context	Validate canonical context	2026-10-30T05:17:24.7726966Z Blocked task IDs: M5-001
+context	Validate canonical context	2026-10-30T05:17:24.7728547Z Active blockers: BLK-003
+context	Validate canonical context	2026-10-30T05:17:24.7730321Z Open confirmations:
+context	Validate canonical context	2026-10-30T05:17:24.7733734Z   O-02: Whether full-game performance on actual ALE is a hard submission requirement or a research target with an accepted fallback.
+context	Validate canonical context	2026-10-30T05:17:24.7739586Z   O-03: Future course checkpoints and any date changes. The owner confirmed the presentation date is Tuesday, 2026-11-03.
+context	Validate canonical context	2026-10-30T05:17:24.7746652Z   O-04: Actual Colab entitlement/quota, GPU availability, cloud storage, and whether paid compute is allowed. The owner selected local CPU for M3; no external compute/storage is used in this mission.
+context	Validate canonical context	2026-10-30T05:17:24.7753810Z   O-05: ALE/ROM runtime behavior, RAM mapping, game modes, difficulty behavior, and official evaluation settings.
+context	Validate canonical context	2026-10-30T05:17:24.7763611Z   O-06: Public redistribution rights and any new source/use beyond the scoped May 2022 archive. For M3, the owner authorized bounded internal academic use of the exact Lichess Elite May 2022 package with local retention and no redistribution; its third-party package license remains unstated/unverified.
+context	Validate canonical context	2026-10-30T05:17:24.7774060Z   O-07: Broader Stockfish roles: benchmark opponent, offline engine evaluation, and instructor-specific limits outside the M3 teacher-label scope.
+context	Validate canonical context	2026-10-30T05:17:24.7778609Z   O-08: Opponent pool and rating method for any Elo claim.
+context	Validate canonical context	2026-10-30T05:17:24.7786165Z Relevant decisions: docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md, docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md, docs/02-management/decisions/ADR-0003-pretraining-model-interface.md
+context	Validate canonical context	2026-10-30T05:17:24.7793884Z Acceptance criteria recognized: 51
+context	Validate canonical context	2026-10-30T05:17:24.7796561Z Last verified Git: feature/m5-double-dqn @ 026d41b7cb275affef5cffc27747449da7e045a3
+context	Validate canonical context	2026-10-30T05:17:24.7799816Z Live Git: DETACHED @ e1e04b548f54810e04ad85aa66a6993682f8f4e9
+context	Validate canonical context	2026-10-30T05:17:24.7803388Z Roadmap source: exact match; 19 sections; SHA-256 fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf
+context	Validate canonical context	2026-10-30T05:17:24.7808272Z Git recovery: expected commit/checkout transition; portable tracked-file manifest matches.
+context	Validate canonical context	2026-10-30T05:17:24.7811711Z Workspace Git status: differs from checkpoint
+context	Validate canonical context	2026-10-30T05:17:24.7813958Z Portable tracked baseline: matches
+context	Validate canonical context	2026-10-30T05:17:24.7815689Z Portable Git index: matches checkpoint
+context	Validate canonical context	2026-10-30T05:17:24.7818428Z Hashed ordinary-file snapshot: matches
+context	Validate canonical context	2026-10-30T05:17:24.7820734Z Content hashes: 702 ordinary files verified by SHA-256.
+context	Validate canonical context	2026-10-30T05:17:24.7824287Z Not content-verified by this hash map: PROJECT_STATE self-reference, chat history/credential-like paths, temp files, symlinks, and the excluded directories listed below.
+context	Validate canonical context	2026-10-30T05:17:24.7828323Z Excluded directories: .agents/state/checkpoint-history, .git, artifacts, scripts/__pycache__
+context	Validate canonical context	2026-10-30T05:17:24.7831114Z Artifact directories requiring independent manifests: artifacts
+context	Validate canonical context	2026-10-30T05:17:24.7832954Z Last verified dirty paths (0): none
+context	Validate canonical context	2026-10-30T05:17:24.7840178Z Dirty paths no longer present since checkpoint: A  .agents/evidence/logs/M5-clean-clone-full-suite-026d41b.log; A  .agents/evidence/logs/M5-clean-clone-preflight-026d41b.log; A  .agents/evidence/logs/M5-full-suite-final-026d41b.log; A  .agents/evidence/logs/M5-github-ci-026d41b.log; M  .agents/plans/M05-double-dqn.md; M  .agents/tasks/BACKLOG.yaml; M  README.md; M  docs/04-research/M5_FINAL_REPORT.md; M  docs/04-research/M5_REMEDIATION_AUDIT.md
+context	Validate canonical context	2026-10-30T05:17:24.7849043Z Next user action: Independent PM disposition of BLK-003 and RSK-014 after exact-head preflight, clean-clone, regression, and CI verification; do not merge, approve G3, or start M6.
+context	Validate canonical context	2026-10-30T05:17:24.7853875Z WARNING ARTIFACT_MANIFEST_REQUIRED [.]: Artifact/data directories are excluded from content hashing and require independent manifest verification: artifacts.
+context	Run standard-library context, bundle, and M5 contract-oracle tests	﻿2026-10-30T05:17:24.7965516Z ##[group]Run python -m unittest tests.test_agent_context tests.test_export_review_bundle tests.test_m5_contract_fixtures tests.test_m5_seeding -v
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:24.7969886Z [36;1mpython -m unittest tests.test_agent_context tests.test_export_review_bundle tests.test_m5_contract_fixtures tests.test_m5_seeding -v[0m
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:24.7987902Z shell: /usr/bin/bash -e {0}
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:24.7989366Z env:
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:24.7990693Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:24.7992584Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:24.7994518Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:24.7996303Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:24.7998090Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:24.7999996Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:24.8001464Z ##[endgroup]
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:25.2633863Z test_blocked_task_must_reference_an_active_blocker (tests.test_agent_context.AgentContextRecoveryTests.test_blocked_task_must_reference_an_active_blocker) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:25.5372065Z test_checkpoint_compacts_serialization_without_changing_history (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_compacts_serialization_without_changing_history) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:25.8331532Z test_checkpoint_is_consistent_after_one_run_from_clean_worktree (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_is_consistent_after_one_run_from_clean_worktree) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:26.1889847Z test_checkpoint_repairs_stale_handoff_pointer (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_repairs_stale_handoff_pointer) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:26.5543274Z test_checkpoint_rolls_back_provisional_files_after_final_size_guard_failure (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_rolls_back_provisional_files_after_final_size_guard_failure) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:26.8893224Z test_checkpoint_rolls_back_provisional_files_after_final_snapshot_failure (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_rolls_back_provisional_files_after_final_snapshot_failure) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:27.3233799Z test_checkpoint_size_limit_fails_before_state_or_workspace_mutation (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_size_limit_fails_before_state_or_workspace_mutation) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:41.8773191Z test_clean_clone_recovers_current_committed_state_without_local_artifacts (tests.test_agent_context.AgentContextRecoveryTests.test_clean_clone_recovers_current_committed_state_without_local_artifacts) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:43.0360144Z test_clean_clone_recovers_g2_and_future_milestone_transitions (tests.test_agent_context.AgentContextRecoveryTests.test_clean_clone_recovers_g2_and_future_milestone_transitions) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:43.1286563Z test_completed_task_must_have_empty_next_action (tests.test_agent_context.AgentContextRecoveryTests.test_completed_task_must_have_empty_next_action) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:43.2459957Z test_completed_task_requires_existing_evidence (tests.test_agent_context.AgentContextRecoveryTests.test_completed_task_requires_existing_evidence) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:43.2631367Z test_context_ci_runs_m5_fixture_as_a_contract_oracle (tests.test_agent_context.AgentContextRecoveryTests.test_context_ci_runs_m5_fixture_as_a_contract_oracle) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:43.9129982Z test_direct_m3_authorization_is_preserved_across_milestone_completion (tests.test_agent_context.AgentContextRecoveryTests.test_direct_m3_authorization_is_preserved_across_milestone_completion) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:44.0263823Z test_done_task_cannot_rely_only_on_historical_unverified_evidence (tests.test_agent_context.AgentContextRecoveryTests.test_done_task_cannot_rely_only_on_historical_unverified_evidence) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:44.1663972Z test_dry_run_with_partial_recovery_does_not_mutate_files (tests.test_agent_context.AgentContextRecoveryTests.test_dry_run_with_partial_recovery_does_not_mutate_files) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:44.2792736Z test_future_milestone_bullet_criteria_are_valid_task_references (tests.test_agent_context.AgentContextRecoveryTests.test_future_milestone_bullet_criteria_are_valid_task_references) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:44.3986143Z test_g1_cannot_be_ready_with_incomplete_g1_tasks (tests.test_agent_context.AgentContextRecoveryTests.test_g1_cannot_be_ready_with_incomplete_g1_tasks) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:44.5158142Z test_git_ignored_zip_is_still_content_hashed (tests.test_agent_context.AgentContextRecoveryTests.test_git_ignored_zip_is_still_content_hashed) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:44.6310814Z test_historical_baseline_checksum_detects_record_mutation (tests.test_agent_context.AgentContextRecoveryTests.test_historical_baseline_checksum_detects_record_mutation) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:44.7493337Z test_historical_baseline_is_not_recompared_to_current_files (tests.test_agent_context.AgentContextRecoveryTests.test_historical_baseline_is_not_recompared_to_current_files) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:44.9924394Z test_historical_g1_recovery_matches_recorded_baseline (tests.test_agent_context.AgentContextRecoveryTests.test_historical_g1_recovery_matches_recorded_baseline) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:45.2661285Z test_ignored_cache_generation_does_not_create_source_content_drift (tests.test_agent_context.AgentContextRecoveryTests.test_ignored_cache_generation_does_not_create_source_content_drift) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:45.3788665Z test_json_output_is_machine_readable_and_paths_are_portable (tests.test_agent_context.AgentContextRecoveryTests.test_json_output_is_machine_readable_and_paths_are_portable) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:45.5027703Z test_large_files_and_artifact_directories_are_reported_once_and_separately (tests.test_agent_context.AgentContextRecoveryTests.test_large_files_and_artifact_directories_are_reported_once_and_separately) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:45.6166964Z test_m0_cannot_be_authorized_before_g1_approval (tests.test_agent_context.AgentContextRecoveryTests.test_m0_cannot_be_authorized_before_g1_approval) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:45.6515236Z test_m3_can_be_explicitly_authorized_while_g3_remains_unapproved (tests.test_agent_context.AgentContextRecoveryTests.test_m3_can_be_explicitly_authorized_while_g3_remains_unapproved) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:45.6859802Z test_m4_authorization_can_be_ready_without_claiming_implementation_started (tests.test_agent_context.AgentContextRecoveryTests.test_m4_authorization_can_be_ready_without_claiming_implementation_started) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:45.9011181Z test_m5_verified_command_log_must_be_tracked_for_clean_clone (tests.test_agent_context.AgentContextRecoveryTests.test_m5_verified_command_log_must_be_tracked_for_clean_clone) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:46.0161843Z test_manual_session_evidence_requires_sanitized_record_and_revision (tests.test_agent_context.AgentContextRecoveryTests.test_manual_session_evidence_requires_sanitized_record_and_revision) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:46.3628093Z test_partial_state_file_is_detected_and_recovered (tests.test_agent_context.AgentContextRecoveryTests.test_partial_state_file_is_detected_and_recovered) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:46.3795611Z test_pr_review_policy_explicitly_separates_codex_and_pm_authority (tests.test_agent_context.AgentContextRecoveryTests.test_pr_review_policy_explicitly_separates_codex_and_pm_authority) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:46.8614381Z test_preflight_detects_content_change_inside_existing_dirty_path (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_detects_content_change_inside_existing_dirty_path) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:46.8804761Z test_preflight_detects_gate_coverage_used_as_its_own_start_prerequisite (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_detects_gate_coverage_used_as_its_own_start_prerequisite) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:46.9989844Z test_preflight_detects_roadmap_source_mismatch (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_detects_roadmap_source_mismatch) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:47.7274219Z test_preflight_discovers_every_documented_acceptance_criterion (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_discovers_every_documented_acceptance_criterion) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:47.8454557Z test_preflight_finds_broken_markdown_link (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_finds_broken_markdown_link) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:48.0532135Z test_preflight_recovers_project_state_without_conversation (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_recovers_project_state_without_conversation) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:48.1661408Z test_preflight_rejects_dependency_cycle (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_rejects_dependency_cycle) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:48.2784680Z test_preflight_rejects_invalid_state_schema (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_rejects_invalid_state_schema) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:48.6370633Z test_preflight_reports_dirty_worktree_and_checkpoint_refreshes_it (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_reports_dirty_worktree_and_checkpoint_refreshes_it) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:48.6703099Z test_preflight_reports_files_it_could_not_hash (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_reports_files_it_could_not_hash) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:48.7813879Z test_preflight_reports_malformed_git_snapshot_without_crashing (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_reports_malformed_git_snapshot_without_crashing) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:48.8955166Z test_preflight_reports_malformed_task_status_without_crashing (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_reports_malformed_task_status_without_crashing) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:49.6286601Z test_project_context_can_be_recovered_without_chat_history (tests.test_agent_context.AgentContextRecoveryTests.test_project_context_can_be_recovered_without_chat_history) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:49.9184806Z test_repeated_checkpoint_does_not_append_unchanged_snapshot (tests.test_agent_context.AgentContextRecoveryTests.test_repeated_checkpoint_does_not_append_unchanged_snapshot) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:50.1995839Z test_staging_checkpoint_control_files_does_not_create_snapshot_drift (tests.test_agent_context.AgentContextRecoveryTests.test_staging_checkpoint_control_files_does_not_create_snapshot_drift) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:50.2325659Z test_start_authorized_boolean_without_direct_record_is_rejected (tests.test_agent_context.AgentContextRecoveryTests.test_start_authorized_boolean_without_direct_record_is_rejected) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:50.3509056Z test_state_blocker_index_must_match_active_blocker_records (tests.test_agent_context.AgentContextRecoveryTests.test_state_blocker_index_must_match_active_blocker_records) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:50.7791163Z test_tracked_content_drift_is_detected_without_a_status_path_change (tests.test_agent_context.AgentContextRecoveryTests.test_tracked_content_drift_is_detected_without_a_status_path_change) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:50.9319707Z test_verified_command_evidence_must_match_retained_log (tests.test_agent_context.AgentContextRecoveryTests.test_verified_command_evidence_must_match_retained_log) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:51.0470411Z test_verified_command_evidence_requires_timestamp_revision_exit_and_log (tests.test_agent_context.AgentContextRecoveryTests.test_verified_command_evidence_requires_timestamp_revision_exit_and_log) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:51.1626687Z test_verified_command_evidence_with_provenance_passes (tests.test_agent_context.AgentContextRecoveryTests.test_verified_command_evidence_with_provenance_passes) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:51.3191353Z test_arbitrary_task_scope_resolves_dependencies_and_records_current_gate (tests.test_export_review_bundle.ExportReviewBundleTests.test_arbitrary_task_scope_resolves_dependencies_and_records_current_gate) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:51.4053576Z test_archive_name_collision_does_not_overwrite_existing_file (tests.test_export_review_bundle.ExportReviewBundleTests.test_archive_name_collision_does_not_overwrite_existing_file) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:51.6791148Z test_artifact_reference_is_omitted_by_default_and_included_only_with_opt_in (tests.test_export_review_bundle.ExportReviewBundleTests.test_artifact_reference_is_omitted_by_default_and_included_only_with_opt_in) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:51.8267034Z test_clean_working_tree_is_exported_from_worktree (tests.test_export_review_bundle.ExportReviewBundleTests.test_clean_working_tree_is_exported_from_worktree) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:52.0403255Z test_committed_mode_reads_only_requested_commit (tests.test_export_review_bundle.ExportReviewBundleTests.test_committed_mode_reads_only_requested_commit) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:52.1916949Z test_export_does_not_change_state_index_or_tracked_working_files (tests.test_export_review_bundle.ExportReviewBundleTests.test_export_does_not_change_state_index_or_tracked_working_files) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:52.3210404Z test_external_symlink_is_rejected_without_reading_target (tests.test_export_review_bundle.ExportReviewBundleTests.test_external_symlink_is_rejected_without_reading_target) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:52.4640199Z test_ignored_files_are_excluded (tests.test_export_review_bundle.ExportReviewBundleTests.test_ignored_files_are_excluded) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:52.5945643Z test_ignored_private_file_is_excluded_and_candidate_secret_stops_export (tests.test_export_review_bundle.ExportReviewBundleTests.test_ignored_private_file_is_excluded_and_candidate_secret_stops_export) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:52.7409960Z test_manifest_hashes_crc_and_required_coverage_are_consistent (tests.test_export_review_bundle.ExportReviewBundleTests.test_manifest_hashes_crc_and_required_coverage_are_consistent) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:52.8608748Z test_missing_required_context_fails_without_archive (tests.test_export_review_bundle.ExportReviewBundleTests.test_missing_required_context_fails_without_archive) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:53.0063643Z test_missing_task_evidence_is_reported_as_a_limitation (tests.test_export_review_bundle.ExportReviewBundleTests.test_missing_task_evidence_is_reported_as_a_limitation) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:53.2743628Z test_repeated_export_does_not_include_prior_archives (tests.test_export_review_bundle.ExportReviewBundleTests.test_repeated_export_does_not_include_prior_archives) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:53.4069657Z test_short_credential_assignment_is_reported_without_value (tests.test_export_review_bundle.ExportReviewBundleTests.test_short_credential_assignment_is_reported_without_value) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:53.6096845Z test_staged_uses_index_for_staged_content_and_head_for_unchanged (tests.test_export_review_bundle.ExportReviewBundleTests.test_staged_uses_index_for_staged_content_and_head_for_unchanged) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:53.7554598Z test_unrelated_untracked_user_file_is_not_included (tests.test_export_review_bundle.ExportReviewBundleTests.test_unrelated_untracked_user_file_is_not_included) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:53.8650326Z test_unsafe_git_path_is_rejected (tests.test_export_review_bundle.ExportReviewBundleTests.test_unsafe_git_path_is_rejected) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:53.9778217Z test_windows_drive_path_is_rejected (tests.test_export_review_bundle.ExportReviewBundleTests.test_windows_drive_path_is_rejected) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:54.1222976Z test_working_tree_uses_dirty_and_relevant_untracked_files (tests.test_export_review_bundle.ExportReviewBundleTests.test_working_tree_uses_dirty_and_relevant_untracked_files) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:54.1225871Z test_authorized_scientific_and_resource_contract_values (tests.test_m5_contract_fixtures.M5DoubleDqnFixtureTests.test_authorized_scientific_and_resource_contract_values) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:54.1229646Z test_complete_evaluation_schedule_and_pairing_match_config_and_protocol (tests.test_m5_contract_fixtures.M5DoubleDqnFixtureTests.test_complete_evaluation_schedule_and_pairing_match_config_and_protocol) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:54.1232426Z test_online_target_disagreement_uses_online_action_in_target_value (tests.test_m5_contract_fixtures.M5DoubleDqnFixtureTests.test_online_target_disagreement_uses_online_action_in_target_value) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:54.1239287Z test_snapshot_and_resumable_checkpoint_contracts_are_separate (tests.test_m5_contract_fixtures.M5DoubleDqnFixtureTests.test_snapshot_and_resumable_checkpoint_contracts_are_separate) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:54.1241784Z test_terminal_and_valid_truncation_masks_are_distinct (tests.test_m5_contract_fixtures.M5DoubleDqnFixtureTests.test_terminal_and_valid_truncation_masks_are_distinct) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:54.1243686Z test_warm_scratch_and_before_after_pairs_have_stable_unique_ids (tests.test_m5_contract_fixtures.M5DoubleDqnFixtureTests.test_warm_scratch_and_before_after_pairs_have_stable_unique_ids) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:54.1250529Z test_config_and_active_docs_use_only_versioned_pair_seed_contract (tests.test_m5_seeding.M5SeedDerivationTests.test_config_and_active_docs_use_only_versioned_pair_seed_contract) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:54.1252638Z test_episode_and_opponent_seeds_are_indexed_but_root_streams_are_stable (tests.test_m5_seeding.M5SeedDerivationTests.test_episode_and_opponent_seeds_are_indexed_but_root_streams_are_stable) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:54.1254725Z test_initialization_domains_keep_warm_and_scratch_contract_distinct (tests.test_m5_seeding.M5SeedDerivationTests.test_initialization_domains_keep_warm_and_scratch_contract_distinct) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:54.1256543Z test_invalid_seed_inputs_are_rejected (tests.test_m5_seeding.M5SeedDerivationTests.test_invalid_seed_inputs_are_rejected) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:54.1260427Z test_known_answer_vectors_match_canonical_fixture (tests.test_m5_seeding.M5SeedDerivationTests.test_known_answer_vectors_match_canonical_fixture) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:54.1262049Z test_pair_schedule_is_shared_across_distinct_run_and_arm_identities (tests.test_m5_seeding.M5SeedDerivationTests.test_pair_schedule_is_shared_across_distinct_run_and_arm_identities) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:54.1508757Z test_restart_derives_the_same_next_episode_seed_from_completed_count (tests.test_m5_seeding.M5SeedDerivationTests.test_restart_derives_the_same_next_episode_seed_from_completed_count) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:54.1511182Z test_run_identity_is_provenance_only_and_validates_arm_attempt (tests.test_m5_seeding.M5SeedDerivationTests.test_run_identity_is_provenance_only_and_validates_arm_attempt) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:54.1514180Z test_training_seed_pairs_and_rng_domains_are_separated (tests.test_m5_seeding.M5SeedDerivationTests.test_training_seed_pairs_and_rng_domains_are_separated) ... ok
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:54.1535400Z 
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:54.1536362Z ----------------------------------------------------------------------
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:54.1537153Z Ran 86 tests in 29.006s
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:54.1537632Z 
+context	Run standard-library context, bundle, and M5 contract-oracle tests	2026-10-30T05:17:54.1537881Z OK
+context	Post Set up Python 3.12	﻿2026-10-30T05:17:54.1818958Z Post job cleanup.
+context	Post Check out repository	﻿2026-10-30T05:17:54.3212227Z Post job cleanup.
+context	Post Check out repository	2026-10-30T05:17:54.4080445Z [command]/usr/bin/git version
+context	Post Check out repository	2026-10-30T05:17:54.4130239Z git version 2.56.0
+context	Post Check out repository	2026-10-30T05:17:54.4156459Z Temporarily overriding HOME='/home/runner/work/_temp/cf0b25a6-c208-48a1-9f42-6e0fdc5b3fc3' before making global git config changes
+context	Post Check out repository	2026-10-30T05:17:54.4157911Z Adding repository directory to the temporary git global config as a safe directory
+context	Post Check out repository	2026-10-30T05:17:54.4171946Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/atari-videochess-rl/atari-videochess-rl
+context	Post Check out repository	2026-10-30T05:17:54.4397307Z Removing SSH command configuration
+context	Post Check out repository	2026-10-30T05:17:54.4404428Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+context	Post Check out repository	2026-10-30T05:17:54.4439568Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+context	Post Check out repository	2026-10-30T05:17:54.4663253Z Removing HTTP extra header
+context	Post Check out repository	2026-10-30T05:17:54.4670589Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+context	Post Check out repository	2026-10-30T05:17:54.4704827Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+context	Post Check out repository	2026-10-30T05:17:54.4909259Z Removing includeIf entries pointing to credentials config files
+context	Post Check out repository	2026-10-30T05:17:54.4917355Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+context	Post Check out repository	2026-10-30T05:17:54.4939622Z includeif.gitdir:/home/runner/work/atari-videochess-rl/atari-videochess-rl/.git.path
+context	Post Check out repository	2026-10-30T05:17:54.4941105Z includeif.gitdir:/home/runner/work/atari-videochess-rl/atari-videochess-rl/.git/worktrees/*.path
+context	Post Check out repository	2026-10-30T05:17:54.4942782Z includeif.gitdir:/github/workspace/.git.path
+context	Post Check out repository	2026-10-30T05:17:54.4944162Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+context	Post Check out repository	2026-10-30T05:17:54.4948214Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/atari-videochess-rl/atari-videochess-rl/.git.path
+context	Post Check out repository	2026-10-30T05:17:54.4973186Z /home/runner/work/_temp/git-credentials-9f4e0459-4b6e-4563-9b2c-8c1d7405c9d6.config
+context	Post Check out repository	2026-10-30T05:17:54.4982601Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/atari-videochess-rl/atari-videochess-rl/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-9f4e0459\-4b6e\-4563\-9b2c\-8c1d7405c9d6\.config
+context	Post Check out repository	2026-10-30T05:17:54.5097619Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/atari-videochess-rl/atari-videochess-rl/.git/worktrees/*.path
+context	Post Check out repository	2026-10-30T05:17:54.5119524Z /home/runner/work/_temp/git-credentials-9f4e0459-4b6e-4563-9b2c-8c1d7405c9d6.config
+context	Post Check out repository	2026-10-30T05:17:54.5127446Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/atari-videochess-rl/atari-videochess-rl/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-9f4e0459\-4b6e\-4563\-9b2c\-8c1d7405c9d6\.config
+context	Post Check out repository	2026-10-30T05:17:54.5164286Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+context	Post Check out repository	2026-10-30T05:17:54.5186692Z /github/runner_temp/git-credentials-9f4e0459-4b6e-4563-9b2c-8c1d7405c9d6.config
+context	Post Check out repository	2026-10-30T05:17:54.5192772Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-9f4e0459\-4b6e\-4563\-9b2c\-8c1d7405c9d6\.config
+context	Post Check out repository	2026-10-30T05:17:54.5226309Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+context	Post Check out repository	2026-10-30T05:17:54.5248266Z /github/runner_temp/git-credentials-9f4e0459-4b6e-4563-9b2c-8c1d7405c9d6.config
+context	Post Check out repository	2026-10-30T05:17:54.5262619Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-9f4e0459\-4b6e\-4563\-9b2c\-8c1d7405c9d6\.config
+context	Post Check out repository	2026-10-30T05:17:54.5299337Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+context	Post Check out repository	2026-10-30T05:17:54.5498542Z Removing credentials config '/home/runner/work/_temp/git-credentials-9f4e0459-4b6e-4563-9b2c-8c1d7405c9d6.config'
+context	Complete job	﻿2026-10-30T05:17:54.5646171Z Cleaning up orphan processes

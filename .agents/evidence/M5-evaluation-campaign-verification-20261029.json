@@ -1,0 +1,3113 @@
+{
+  "completed_game_rows": 1500,
+  "configuration_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+  "device": "cpu",
+  "evaluation_budget_seconds": 43200,
+  "evaluation_campaign_seconds_after_accounting": 1983.450523835003,
+  "evaluation_report_path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/evaluation-report.json",
+  "evaluation_report_sha256": "5786aaf4889c748468455ee31ecb2dd3f7185ee084d7b8ce8ced99df58ae6748",
+  "evaluation_result_summary": {
+    "fixed_policy_comparisons": [
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "warm:20261104:pre_rl_vs_m4_behavior_only",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.355,
+            -0.21
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": -0.285
+        },
+        "interval_status": "computed",
+        "matched_terminal_pairs": 100,
+        "mean_paired_score_difference_a_minus_b": -0.285
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "warm:20261104:pre_rl_vs_baseline:random_legal",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            0.07,
+            0.175
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": 0.125
+        },
+        "interval_status": "computed",
+        "matched_terminal_pairs": 100,
+        "mean_paired_score_difference_a_minus_b": 0.125
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "warm:20261104:pre_rl_vs_baseline:simple_heuristic",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.245,
+            -0.16
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": -0.2
+        },
+        "interval_status": "computed",
+        "matched_terminal_pairs": 100,
+        "mean_paired_score_difference_a_minus_b": -0.2
+      },
+      {
+        "censored_or_unfinished_pairs": 1,
+        "comparison": "warm:20261104:post_rl_vs_m4_behavior_only",
+        "evaluation_seed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_set",
+        "matched_terminal_pairs": 99,
+        "mean_paired_score_difference_a_minus_b": -0.1717171717171717
+      },
+      {
+        "censored_or_unfinished_pairs": 1,
+        "comparison": "warm:20261104:post_rl_vs_baseline:random_legal",
+        "evaluation_seed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_set",
+        "matched_terminal_pairs": 99,
+        "mean_paired_score_difference_a_minus_b": 0.23737373737373738
+      },
+      {
+        "censored_or_unfinished_pairs": 1,
+        "comparison": "warm:20261104:post_rl_vs_baseline:simple_heuristic",
+        "evaluation_seed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_set",
+        "matched_terminal_pairs": 99,
+        "mean_paired_score_difference_a_minus_b": -0.09090909090909091
+      },
+      {
+        "censored_or_unfinished_pairs": 2,
+        "comparison": "warm:20261105:pre_rl_vs_m4_behavior_only",
+        "evaluation_seed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_set",
+        "matched_terminal_pairs": 98,
+        "mean_paired_score_difference_a_minus_b": -0.49489795918367346
+      },
+      {
+        "censored_or_unfinished_pairs": 2,
+        "comparison": "warm:20261105:pre_rl_vs_baseline:random_legal",
+        "evaluation_seed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_set",
+        "matched_terminal_pairs": 98,
+        "mean_paired_score_difference_a_minus_b": -0.08163265306122448
+      },
+      {
+        "censored_or_unfinished_pairs": 2,
+        "comparison": "warm:20261105:pre_rl_vs_baseline:simple_heuristic",
+        "evaluation_seed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_set",
+        "matched_terminal_pairs": 98,
+        "mean_paired_score_difference_a_minus_b": -0.41836734693877553
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "warm:20261105:post_rl_vs_m4_behavior_only",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.22,
+            -0.07
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": -0.145
+        },
+        "interval_status": "computed",
+        "matched_terminal_pairs": 100,
+        "mean_paired_score_difference_a_minus_b": -0.145
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "warm:20261105:post_rl_vs_baseline:random_legal",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            0.205,
+            0.32
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": 0.265
+        },
+        "interval_status": "computed",
+        "matched_terminal_pairs": 100,
+        "mean_paired_score_difference_a_minus_b": 0.265
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "warm:20261105:post_rl_vs_baseline:simple_heuristic",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.11,
+            -0.015
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": -0.06
+        },
+        "interval_status": "computed",
+        "matched_terminal_pairs": 100,
+        "mean_paired_score_difference_a_minus_b": -0.06
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "warm:20261106:pre_rl_vs_m4_behavior_only",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.625,
+            -0.46
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": -0.545
+        },
+        "interval_status": "computed",
+        "matched_terminal_pairs": 100,
+        "mean_paired_score_difference_a_minus_b": -0.545
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "warm:20261106:pre_rl_vs_baseline:random_legal",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.195,
+            -0.075
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": -0.135
+        },
+        "interval_status": "computed",
+        "matched_terminal_pairs": 100,
+        "mean_paired_score_difference_a_minus_b": -0.135
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "warm:20261106:pre_rl_vs_baseline:simple_heuristic",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.515,
+            -0.4
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": -0.46
+        },
+        "interval_status": "computed",
+        "matched_terminal_pairs": 100,
+        "mean_paired_score_difference_a_minus_b": -0.46
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "warm:20261106:post_rl_vs_m4_behavior_only",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.195,
+            -0.045
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": -0.12
+        },
+        "interval_status": "computed",
+        "matched_terminal_pairs": 100,
+        "mean_paired_score_difference_a_minus_b": -0.12
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "warm:20261106:post_rl_vs_baseline:random_legal",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            0.235,
+            0.345
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": 0.29
+        },
+        "interval_status": "computed",
+        "matched_terminal_pairs": 100,
+        "mean_paired_score_difference_a_minus_b": 0.29
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "warm:20261106:post_rl_vs_baseline:simple_heuristic",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.09,
+            0.02
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": -0.035
+        },
+        "interval_status": "computed",
+        "matched_terminal_pairs": 100,
+        "mean_paired_score_difference_a_minus_b": -0.035
+      },
+      {
+        "censored_or_unfinished_pairs": 1,
+        "comparison": "scratch:20261104:pre_rl_vs_m4_behavior_only",
+        "evaluation_seed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_set",
+        "matched_terminal_pairs": 99,
+        "mean_paired_score_difference_a_minus_b": -0.4090909090909091
+      },
+      {
+        "censored_or_unfinished_pairs": 1,
+        "comparison": "scratch:20261104:pre_rl_vs_baseline:random_legal",
+        "evaluation_seed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_set",
+        "matched_terminal_pairs": 99,
+        "mean_paired_score_difference_a_minus_b": 0.0
+      },
+      {
+        "censored_or_unfinished_pairs": 1,
+        "comparison": "scratch:20261104:pre_rl_vs_baseline:simple_heuristic",
+        "evaluation_seed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_set",
+        "matched_terminal_pairs": 99,
+        "mean_paired_score_difference_a_minus_b": -0.32323232323232326
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "scratch:20261104:post_rl_vs_m4_behavior_only",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.26,
+            -0.095
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": -0.18
+        },
+        "interval_status": "computed",
+        "matched_terminal_pairs": 100,
+        "mean_paired_score_difference_a_minus_b": -0.18
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "scratch:20261104:post_rl_vs_baseline:random_legal",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            0.19,
+            0.27
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": 0.23
+        },
+        "interval_status": "computed",
+        "matched_terminal_pairs": 100,
+        "mean_paired_score_difference_a_minus_b": 0.23
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "scratch:20261104:post_rl_vs_baseline:simple_heuristic",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.145,
+            -0.045
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": -0.095
+        },
+        "interval_status": "computed",
+        "matched_terminal_pairs": 100,
+        "mean_paired_score_difference_a_minus_b": -0.095
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "scratch:20261105:pre_rl_vs_m4_behavior_only",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.45,
+            -0.29
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": -0.37
+        },
+        "interval_status": "computed",
+        "matched_terminal_pairs": 100,
+        "mean_paired_score_difference_a_minus_b": -0.37
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "scratch:20261105:pre_rl_vs_baseline:random_legal",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.02,
+            0.1
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": 0.04
+        },
+        "interval_status": "computed",
+        "matched_terminal_pairs": 100,
+        "mean_paired_score_difference_a_minus_b": 0.04
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "scratch:20261105:pre_rl_vs_baseline:simple_heuristic",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.335,
+            -0.235
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": -0.285
+        },
+        "interval_status": "computed",
+        "matched_terminal_pairs": 100,
+        "mean_paired_score_difference_a_minus_b": -0.285
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "scratch:20261105:post_rl_vs_m4_behavior_only",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.325,
+            -0.17
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": -0.245
+        },
+        "interval_status": "computed",
+        "matched_terminal_pairs": 100,
+        "mean_paired_score_difference_a_minus_b": -0.245
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "scratch:20261105:post_rl_vs_baseline:random_legal",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            0.115,
+            0.21
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": 0.165
+        },
+        "interval_status": "computed",
+        "matched_terminal_pairs": 100,
+        "mean_paired_score_difference_a_minus_b": 0.165
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "scratch:20261105:post_rl_vs_baseline:simple_heuristic",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.215,
+            -0.11
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": -0.16
+        },
+        "interval_status": "computed",
+        "matched_terminal_pairs": 100,
+        "mean_paired_score_difference_a_minus_b": -0.16
+      },
+      {
+        "censored_or_unfinished_pairs": 1,
+        "comparison": "scratch:20261106:pre_rl_vs_m4_behavior_only",
+        "evaluation_seed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_set",
+        "matched_terminal_pairs": 99,
+        "mean_paired_score_difference_a_minus_b": -0.398989898989899
+      },
+      {
+        "censored_or_unfinished_pairs": 1,
+        "comparison": "scratch:20261106:pre_rl_vs_baseline:random_legal",
+        "evaluation_seed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_set",
+        "matched_terminal_pairs": 99,
+        "mean_paired_score_difference_a_minus_b": 0.015151515151515152
+      },
+      {
+        "censored_or_unfinished_pairs": 1,
+        "comparison": "scratch:20261106:pre_rl_vs_baseline:simple_heuristic",
+        "evaluation_seed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_set",
+        "matched_terminal_pairs": 99,
+        "mean_paired_score_difference_a_minus_b": -0.30808080808080807
+      },
+      {
+        "censored_or_unfinished_pairs": 1,
+        "comparison": "scratch:20261106:post_rl_vs_m4_behavior_only",
+        "evaluation_seed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_set",
+        "matched_terminal_pairs": 99,
+        "mean_paired_score_difference_a_minus_b": -0.1919191919191919
+      },
+      {
+        "censored_or_unfinished_pairs": 1,
+        "comparison": "scratch:20261106:post_rl_vs_baseline:random_legal",
+        "evaluation_seed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_set",
+        "matched_terminal_pairs": 99,
+        "mean_paired_score_difference_a_minus_b": 0.21717171717171718
+      },
+      {
+        "censored_or_unfinished_pairs": 1,
+        "comparison": "scratch:20261106:post_rl_vs_baseline:simple_heuristic",
+        "evaluation_seed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_set",
+        "matched_terminal_pairs": 99,
+        "mean_paired_score_difference_a_minus_b": -0.1111111111111111
+      }
+    ],
+    "opponent_color_breakdown": [
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 11,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 0,
+        "mean_reward_all_rows": 0.56,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "m4_behavior_only",
+        "schedule_complete": true,
+        "score_rate_completed": 0.78,
+        "truncated_games": 0,
+        "wins": 14
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 13,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 0,
+        "mean_reward_all_rows": 0.48,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "m4_behavior_only",
+        "schedule_complete": true,
+        "score_rate_completed": 0.74,
+        "truncated_games": 0,
+        "wins": 12
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 11,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 1,
+        "mean_reward_all_rows": 0.48,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "m4_behavior_only",
+        "schedule_complete": true,
+        "score_rate_completed": 0.74,
+        "truncated_games": 0,
+        "wins": 13
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 15,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 1,
+        "mean_reward_all_rows": 0.32,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "m4_behavior_only",
+        "schedule_complete": true,
+        "score_rate_completed": 0.66,
+        "truncated_games": 0,
+        "wins": 9
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 23,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 1,
+        "mean_reward_all_rows": 0.0,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "warm:20261104:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.5,
+        "truncated_games": 0,
+        "wins": 1
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 24,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 0,
+        "mean_reward_all_rows": 0.04,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "warm:20261104:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.52,
+        "truncated_games": 0,
+        "wins": 1
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 19,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 6,
+        "mean_reward_all_rows": -0.24,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "warm:20261104:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.38,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 19,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 6,
+        "mean_reward_all_rows": -0.24,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "warm:20261104:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.38,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 24,
+        "draws": 12,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 0,
+        "mean_reward_all_rows": 0.48,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "warm:20261104:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.75,
+        "truncated_games": 1,
+        "wins": 12
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 22,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 0,
+        "mean_reward_all_rows": 0.12,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "warm:20261104:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.56,
+        "truncated_games": 0,
+        "wins": 3
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 21,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 4,
+        "mean_reward_all_rows": -0.16,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "warm:20261104:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.42,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 23,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 1,
+        "mean_reward_all_rows": 0.0,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "warm:20261104:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.5,
+        "truncated_games": 0,
+        "wins": 1
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 22,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 3,
+        "mean_reward_all_rows": -0.12,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "scratch:20261104:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.44,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 24,
+        "draws": 21,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 3,
+        "mean_reward_all_rows": -0.12,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "scratch:20261104:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.4375,
+        "truncated_games": 1,
+        "wins": 0
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 12,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 13,
+        "mean_reward_all_rows": -0.52,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "scratch:20261104:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.24,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 9,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 16,
+        "mean_reward_all_rows": -0.64,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "scratch:20261104:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.18,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 19,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 0,
+        "mean_reward_all_rows": 0.24,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "scratch:20261104:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.62,
+        "truncated_games": 0,
+        "wins": 6
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 20,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 0,
+        "mean_reward_all_rows": 0.2,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "scratch:20261104:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.6,
+        "truncated_games": 0,
+        "wins": 5
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 24,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 1,
+        "mean_reward_all_rows": -0.04,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "scratch:20261104:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.48,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 23,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 1,
+        "mean_reward_all_rows": 0.0,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "scratch:20261104:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.5,
+        "truncated_games": 0,
+        "wins": 1
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 23,
+        "draws": 15,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 6,
+        "mean_reward_all_rows": -0.16,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "warm:20261105:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.41304347826086957,
+        "truncated_games": 2,
+        "wins": 2
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 14,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 10,
+        "mean_reward_all_rows": -0.36,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "warm:20261105:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.32,
+        "truncated_games": 0,
+        "wins": 1
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 3,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 22,
+        "mean_reward_all_rows": -0.88,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "warm:20261105:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.06,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 7,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 18,
+        "mean_reward_all_rows": -0.72,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "warm:20261105:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.14,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 22,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 0,
+        "mean_reward_all_rows": 0.12,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "warm:20261105:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.56,
+        "truncated_games": 0,
+        "wins": 3
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 14,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 0,
+        "mean_reward_all_rows": 0.44,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "warm:20261105:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.72,
+        "truncated_games": 0,
+        "wins": 11
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 25,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 0,
+        "mean_reward_all_rows": 0.0,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "warm:20261105:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.5,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 18,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 2,
+        "mean_reward_all_rows": 0.12,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "warm:20261105:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.56,
+        "truncated_games": 0,
+        "wins": 5
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 21,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 4,
+        "mean_reward_all_rows": -0.16,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "scratch:20261105:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.42,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 25,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 0,
+        "mean_reward_all_rows": 0.0,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "scratch:20261105:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.5,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 13,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 12,
+        "mean_reward_all_rows": -0.48,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "scratch:20261105:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.26,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 13,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 12,
+        "mean_reward_all_rows": -0.48,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "scratch:20261105:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.26,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 24,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 0,
+        "mean_reward_all_rows": 0.04,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "scratch:20261105:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.52,
+        "truncated_games": 0,
+        "wins": 1
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 23,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 0,
+        "mean_reward_all_rows": 0.08,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "scratch:20261105:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.54,
+        "truncated_games": 0,
+        "wins": 2
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 22,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 3,
+        "mean_reward_all_rows": -0.12,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "scratch:20261105:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.44,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 22,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 3,
+        "mean_reward_all_rows": -0.12,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "scratch:20261105:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.44,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 14,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 11,
+        "mean_reward_all_rows": -0.44,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "warm:20261106:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.28,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 18,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 7,
+        "mean_reward_all_rows": -0.28,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "warm:20261106:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.36,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 2,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 23,
+        "mean_reward_all_rows": -0.92,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "warm:20261106:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.04,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 3,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 22,
+        "mean_reward_all_rows": -0.88,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "warm:20261106:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.06,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 16,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 0,
+        "mean_reward_all_rows": 0.36,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "warm:20261106:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.68,
+        "truncated_games": 0,
+        "wins": 9
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 12,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 0,
+        "mean_reward_all_rows": 0.52,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "warm:20261106:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.76,
+        "truncated_games": 0,
+        "wins": 13
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 24,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 0,
+        "mean_reward_all_rows": 0.04,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "warm:20261106:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.52,
+        "truncated_games": 0,
+        "wins": 1
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 22,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 2,
+        "mean_reward_all_rows": -0.04,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "warm:20261106:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.48,
+        "truncated_games": 0,
+        "wins": 1
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 24,
+        "draws": 21,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 3,
+        "mean_reward_all_rows": -0.12,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "scratch:20261106:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.4375,
+        "truncated_games": 1,
+        "wins": 0
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 20,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 5,
+        "mean_reward_all_rows": -0.2,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "scratch:20261106:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.4,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 14,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 11,
+        "mean_reward_all_rows": -0.44,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "scratch:20261106:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.28,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 11,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 14,
+        "mean_reward_all_rows": -0.56,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "scratch:20261106:pre_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.22,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 24,
+        "draws": 19,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 0,
+        "mean_reward_all_rows": 0.2,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "scratch:20261106:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.6041666666666666,
+        "truncated_games": 1,
+        "wins": 5
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 22,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 0,
+        "mean_reward_all_rows": 0.12,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "scratch:20261106:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.56,
+        "truncated_games": 0,
+        "wins": 3
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 24,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 1,
+        "mean_reward_all_rows": -0.04,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "scratch:20261106:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.48,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 25,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 0,
+        "mean_reward_all_rows": 0.0,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "scratch:20261106:post_rl",
+        "schedule_complete": true,
+        "score_rate_completed": 0.5,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 22,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 1,
+        "mean_reward_all_rows": 0.04,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "baseline:random_legal",
+        "schedule_complete": true,
+        "score_rate_completed": 0.52,
+        "truncated_games": 0,
+        "wins": 2
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 23,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 1,
+        "mean_reward_all_rows": 0.0,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "baseline:random_legal",
+        "schedule_complete": true,
+        "score_rate_completed": 0.5,
+        "truncated_games": 0,
+        "wins": 1
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 9,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 16,
+        "mean_reward_all_rows": -0.64,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "baseline:random_legal",
+        "schedule_complete": true,
+        "score_rate_completed": 0.18,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 4,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 21,
+        "mean_reward_all_rows": -0.84,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "baseline:random_legal",
+        "schedule_complete": true,
+        "score_rate_completed": 0.08,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 10,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 0,
+        "mean_reward_all_rows": 0.6,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "baseline:simple_heuristic",
+        "schedule_complete": true,
+        "score_rate_completed": 0.8,
+        "truncated_games": 0,
+        "wins": 15
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 8,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 0,
+        "mean_reward_all_rows": 0.68,
+        "opponent_id": "random_legal",
+        "planned_games": 25,
+        "policy_id": "baseline:simple_heuristic",
+        "schedule_complete": true,
+        "score_rate_completed": 0.84,
+        "truncated_games": 0,
+        "wins": 17
+      },
+      {
+        "agent_color": "white",
+        "completed_games": 25,
+        "draws": 24,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 1,
+        "mean_reward_all_rows": -0.04,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "baseline:simple_heuristic",
+        "schedule_complete": true,
+        "score_rate_completed": 0.48,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      {
+        "agent_color": "black",
+        "completed_games": 25,
+        "draws": 21,
+        "game_rows": 25,
+        "incomplete_scenarios": 0,
+        "losses": 3,
+        "mean_reward_all_rows": -0.08,
+        "opponent_id": "simple_material_heuristic",
+        "planned_games": 25,
+        "policy_id": "baseline:simple_heuristic",
+        "schedule_complete": true,
+        "score_rate_completed": 0.46,
+        "truncated_games": 0,
+        "wins": 1
+      }
+    ],
+    "per_policy": [
+      {
+        "games": 100,
+        "planned_games": 100,
+        "policy_id": "m4_behavior_only",
+        "schedule_complete": true,
+        "summary": {
+          "completed_games": 100,
+          "draws": 50,
+          "game_rows": 100,
+          "incomplete_scenarios": 0,
+          "losses": 2,
+          "mean_reward_all_rows": 0.46,
+          "score_rate_completed": 0.73,
+          "truncated_games": 0,
+          "wins": 48
+        }
+      },
+      {
+        "games": 100,
+        "planned_games": 100,
+        "policy_id": "warm:20261104:pre_rl",
+        "schedule_complete": true,
+        "summary": {
+          "completed_games": 100,
+          "draws": 85,
+          "game_rows": 100,
+          "incomplete_scenarios": 0,
+          "losses": 13,
+          "mean_reward_all_rows": -0.11,
+          "score_rate_completed": 0.445,
+          "truncated_games": 0,
+          "wins": 2
+        }
+      },
+      {
+        "games": 100,
+        "planned_games": 100,
+        "policy_id": "warm:20261104:post_rl",
+        "schedule_complete": true,
+        "summary": {
+          "completed_games": 99,
+          "draws": 78,
+          "game_rows": 100,
+          "incomplete_scenarios": 0,
+          "losses": 5,
+          "mean_reward_all_rows": 0.11,
+          "score_rate_completed": 0.5555555555555556,
+          "truncated_games": 1,
+          "wins": 16
+        }
+      },
+      {
+        "games": 100,
+        "planned_games": 100,
+        "policy_id": "scratch:20261104:pre_rl",
+        "schedule_complete": true,
+        "summary": {
+          "completed_games": 99,
+          "draws": 64,
+          "game_rows": 100,
+          "incomplete_scenarios": 0,
+          "losses": 35,
+          "mean_reward_all_rows": -0.35,
+          "score_rate_completed": 0.32323232323232326,
+          "truncated_games": 1,
+          "wins": 0
+        }
+      },
+      {
+        "games": 100,
+        "planned_games": 100,
+        "policy_id": "scratch:20261104:post_rl",
+        "schedule_complete": true,
+        "summary": {
+          "completed_games": 100,
+          "draws": 86,
+          "game_rows": 100,
+          "incomplete_scenarios": 0,
+          "losses": 2,
+          "mean_reward_all_rows": 0.1,
+          "score_rate_completed": 0.55,
+          "truncated_games": 0,
+          "wins": 12
+        }
+      },
+      {
+        "games": 100,
+        "planned_games": 100,
+        "policy_id": "warm:20261105:pre_rl",
+        "schedule_complete": true,
+        "summary": {
+          "completed_games": 98,
+          "draws": 39,
+          "game_rows": 100,
+          "incomplete_scenarios": 0,
+          "losses": 56,
+          "mean_reward_all_rows": -0.53,
+          "score_rate_completed": 0.22959183673469388,
+          "truncated_games": 2,
+          "wins": 3
+        }
+      },
+      {
+        "games": 100,
+        "planned_games": 100,
+        "policy_id": "warm:20261105:post_rl",
+        "schedule_complete": true,
+        "summary": {
+          "completed_games": 100,
+          "draws": 79,
+          "game_rows": 100,
+          "incomplete_scenarios": 0,
+          "losses": 2,
+          "mean_reward_all_rows": 0.17,
+          "score_rate_completed": 0.585,
+          "truncated_games": 0,
+          "wins": 19
+        }
+      },
+      {
+        "games": 100,
+        "planned_games": 100,
+        "policy_id": "scratch:20261105:pre_rl",
+        "schedule_complete": true,
+        "summary": {
+          "completed_games": 100,
+          "draws": 72,
+          "game_rows": 100,
+          "incomplete_scenarios": 0,
+          "losses": 28,
+          "mean_reward_all_rows": -0.28,
+          "score_rate_completed": 0.36,
+          "truncated_games": 0,
+          "wins": 0
+        }
+      },
+      {
+        "games": 100,
+        "planned_games": 100,
+        "policy_id": "scratch:20261105:post_rl",
+        "schedule_complete": true,
+        "summary": {
+          "completed_games": 100,
+          "draws": 91,
+          "game_rows": 100,
+          "incomplete_scenarios": 0,
+          "losses": 6,
+          "mean_reward_all_rows": -0.03,
+          "score_rate_completed": 0.485,
+          "truncated_games": 0,
+          "wins": 3
+        }
+      },
+      {
+        "games": 100,
+        "planned_games": 100,
+        "policy_id": "warm:20261106:pre_rl",
+        "schedule_complete": true,
+        "summary": {
+          "completed_games": 100,
+          "draws": 37,
+          "game_rows": 100,
+          "incomplete_scenarios": 0,
+          "losses": 63,
+          "mean_reward_all_rows": -0.63,
+          "score_rate_completed": 0.185,
+          "truncated_games": 0,
+          "wins": 0
+        }
+      },
+      {
+        "games": 100,
+        "planned_games": 100,
+        "policy_id": "warm:20261106:post_rl",
+        "schedule_complete": true,
+        "summary": {
+          "completed_games": 100,
+          "draws": 74,
+          "game_rows": 100,
+          "incomplete_scenarios": 0,
+          "losses": 2,
+          "mean_reward_all_rows": 0.22,
+          "score_rate_completed": 0.61,
+          "truncated_games": 0,
+          "wins": 24
+        }
+      },
+      {
+        "games": 100,
+        "planned_games": 100,
+        "policy_id": "scratch:20261106:pre_rl",
+        "schedule_complete": true,
+        "summary": {
+          "completed_games": 99,
+          "draws": 66,
+          "game_rows": 100,
+          "incomplete_scenarios": 0,
+          "losses": 33,
+          "mean_reward_all_rows": -0.33,
+          "score_rate_completed": 0.3333333333333333,
+          "truncated_games": 1,
+          "wins": 0
+        }
+      },
+      {
+        "games": 100,
+        "planned_games": 100,
+        "policy_id": "scratch:20261106:post_rl",
+        "schedule_complete": true,
+        "summary": {
+          "completed_games": 99,
+          "draws": 90,
+          "game_rows": 100,
+          "incomplete_scenarios": 0,
+          "losses": 1,
+          "mean_reward_all_rows": 0.07,
+          "score_rate_completed": 0.5353535353535354,
+          "truncated_games": 1,
+          "wins": 8
+        }
+      },
+      {
+        "games": 100,
+        "planned_games": 100,
+        "policy_id": "baseline:random_legal",
+        "schedule_complete": true,
+        "summary": {
+          "completed_games": 100,
+          "draws": 58,
+          "game_rows": 100,
+          "incomplete_scenarios": 0,
+          "losses": 39,
+          "mean_reward_all_rows": -0.36,
+          "score_rate_completed": 0.32,
+          "truncated_games": 0,
+          "wins": 3
+        }
+      },
+      {
+        "games": 100,
+        "planned_games": 100,
+        "policy_id": "baseline:simple_heuristic",
+        "schedule_complete": true,
+        "summary": {
+          "completed_games": 100,
+          "draws": 63,
+          "game_rows": 100,
+          "incomplete_scenarios": 0,
+          "losses": 4,
+          "mean_reward_all_rows": 0.29,
+          "score_rate_completed": 0.645,
+          "truncated_games": 0,
+          "wins": 33
+        }
+      }
+    ],
+    "supplementary_capped_reward_sensitivity_path": "artifacts/m5/evaluation/capped-reward-sensitivity.json",
+    "terminal_only_matched_comparisons": [
+      {
+        "censored_or_unfinished_pairs": 4,
+        "comparison": "warm_vs_scratch_pre_rl",
+        "crossed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_grid",
+        "matched_terminal_pairs": 296,
+        "mean_paired_score_difference_a_minus_b": -0.05574324324324324,
+        "pairing_keys": [
+          "training_seed",
+          "stage",
+          "evaluation_seed",
+          "opponent_id",
+          "agent_color"
+        ],
+        "per_training_seed": [
+          {
+            "matched_terminal_pairs": 99,
+            "mean_score_difference": 0.11616161616161616,
+            "training_seed": 20261104
+          },
+          {
+            "matched_terminal_pairs": 98,
+            "mean_score_difference": -0.1326530612244898,
+            "training_seed": 20261105
+          },
+          {
+            "matched_terminal_pairs": 99,
+            "mean_score_difference": -0.15151515151515152,
+            "training_seed": 20261106
+          }
+        ]
+      },
+      {
+        "censored_or_unfinished_pairs": 2,
+        "comparison": "warm_vs_scratch_post_rl",
+        "crossed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_grid",
+        "matched_terminal_pairs": 298,
+        "mean_paired_score_difference_a_minus_b": 0.06208053691275168,
+        "pairing_keys": [
+          "training_seed",
+          "stage",
+          "evaluation_seed",
+          "opponent_id",
+          "agent_color"
+        ],
+        "per_training_seed": [
+          {
+            "matched_terminal_pairs": 99,
+            "mean_score_difference": 0.010101010101010102,
+            "training_seed": 20261104
+          },
+          {
+            "matched_terminal_pairs": 100,
+            "mean_score_difference": 0.1,
+            "training_seed": 20261105
+          },
+          {
+            "matched_terminal_pairs": 99,
+            "mean_score_difference": 0.07575757575757576,
+            "training_seed": 20261106
+          }
+        ]
+      },
+      {
+        "censored_or_unfinished_pairs": 3,
+        "comparison": "warm_pre_vs_post",
+        "crossed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_grid",
+        "matched_terminal_pairs": 297,
+        "mean_paired_score_difference_a_minus_b": 0.2962962962962963,
+        "pairing_keys": [
+          "training_seed",
+          "stage",
+          "evaluation_seed",
+          "opponent_id",
+          "agent_color"
+        ],
+        "per_training_seed": [
+          {
+            "matched_terminal_pairs": 99,
+            "mean_score_difference": 0.1111111111111111,
+            "training_seed": 20261104
+          },
+          {
+            "matched_terminal_pairs": 98,
+            "mean_score_difference": 0.3520408163265306,
+            "training_seed": 20261105
+          },
+          {
+            "matched_terminal_pairs": 100,
+            "mean_score_difference": 0.425,
+            "training_seed": 20261106
+          }
+        ]
+      },
+      {
+        "censored_or_unfinished_pairs": 3,
+        "comparison": "scratch_pre_vs_post",
+        "crossed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_grid",
+        "matched_terminal_pairs": 297,
+        "mean_paired_score_difference_a_minus_b": 0.18518518518518517,
+        "pairing_keys": [
+          "training_seed",
+          "stage",
+          "evaluation_seed",
+          "opponent_id",
+          "agent_color"
+        ],
+        "per_training_seed": [
+          {
+            "matched_terminal_pairs": 99,
+            "mean_score_difference": 0.22727272727272727,
+            "training_seed": 20261104
+          },
+          {
+            "matched_terminal_pairs": 100,
+            "mean_score_difference": 0.125,
+            "training_seed": 20261105
+          },
+          {
+            "matched_terminal_pairs": 98,
+            "mean_score_difference": 0.20408163265306123,
+            "training_seed": 20261106
+          }
+        ]
+      }
+    ],
+    "terminal_only_white_black_comparisons": [
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "white_agent_minus_black_agent_score",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.02,
+            0.13
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": 0.06
+        },
+        "interval_status": "computed",
+        "matched_color_pairs": 50,
+        "mean_white_minus_black_score": 0.06,
+        "opponent_results": {
+          "random_legal": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.08,
+                0.16
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": 0.04
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": 0.04,
+            "planned_color_pairs": 25
+          },
+          "simple_material_heuristic": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.04,
+                0.2
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": 0.08
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": 0.08,
+            "planned_color_pairs": 25
+          }
+        },
+        "pairing_keys": [
+          "evaluation_seed",
+          "opponent_id",
+          "agent_color"
+        ],
+        "planned_color_pairs": 50,
+        "policy_id": "m4_behavior_only"
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "white_agent_minus_black_agent_score",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.07,
+            0.06
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": -0.01
+        },
+        "interval_status": "computed",
+        "matched_color_pairs": 50,
+        "mean_white_minus_black_score": -0.01,
+        "opponent_results": {
+          "random_legal": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.08,
+                0.04
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": -0.02
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": -0.02,
+            "planned_color_pairs": 25
+          },
+          "simple_material_heuristic": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.14,
+                0.14
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": 0.0
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": 0.0,
+            "planned_color_pairs": 25
+          }
+        },
+        "pairing_keys": [
+          "evaluation_seed",
+          "opponent_id",
+          "agent_color"
+        ],
+        "planned_color_pairs": 50,
+        "policy_id": "warm:20261104:pre_rl"
+      },
+      {
+        "censored_or_unfinished_pairs": 1,
+        "comparison": "white_agent_minus_black_agent_score",
+        "evaluation_seed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_set",
+        "matched_color_pairs": 49,
+        "mean_white_minus_black_score": 0.05102040816326531,
+        "opponent_results": {
+          "random_legal": {
+            "censored_or_unfinished_pairs": 1,
+            "evaluation_seed_cluster_bootstrap": null,
+            "interval_status": "incomplete_or_censored_pair_set",
+            "matched_color_pairs": 24,
+            "mean_white_minus_black_score": 0.1875,
+            "planned_color_pairs": 25
+          },
+          "simple_material_heuristic": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.16,
+                -0.02
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": -0.08
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": -0.08,
+            "planned_color_pairs": 25
+          }
+        },
+        "pairing_keys": [
+          "evaluation_seed",
+          "opponent_id",
+          "agent_color"
+        ],
+        "planned_color_pairs": 50,
+        "policy_id": "warm:20261104:post_rl"
+      },
+      {
+        "censored_or_unfinished_pairs": 1,
+        "comparison": "white_agent_minus_black_agent_score",
+        "evaluation_seed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_set",
+        "matched_color_pairs": 49,
+        "mean_white_minus_black_score": 0.030612244897959183,
+        "opponent_results": {
+          "random_legal": {
+            "censored_or_unfinished_pairs": 1,
+            "evaluation_seed_cluster_bootstrap": null,
+            "interval_status": "incomplete_or_censored_pair_set",
+            "matched_color_pairs": 24,
+            "mean_white_minus_black_score": 0.0,
+            "planned_color_pairs": 25
+          },
+          "simple_material_heuristic": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.08,
+                0.2
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": 0.06
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": 0.06,
+            "planned_color_pairs": 25
+          }
+        },
+        "pairing_keys": [
+          "evaluation_seed",
+          "opponent_id",
+          "agent_color"
+        ],
+        "planned_color_pairs": 50,
+        "policy_id": "scratch:20261104:pre_rl"
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "white_agent_minus_black_agent_score",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.07,
+            0.06
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": 0.0
+        },
+        "interval_status": "computed",
+        "matched_color_pairs": 50,
+        "mean_white_minus_black_score": 0.0,
+        "opponent_results": {
+          "random_legal": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.1,
+                0.14
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": 0.02
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": 0.02,
+            "planned_color_pairs": 25
+          },
+          "simple_material_heuristic": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.1,
+                0.04
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": -0.02
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": -0.02,
+            "planned_color_pairs": 25
+          }
+        },
+        "pairing_keys": [
+          "evaluation_seed",
+          "opponent_id",
+          "agent_color"
+        ],
+        "planned_color_pairs": 50,
+        "policy_id": "scratch:20261104:post_rl"
+      },
+      {
+        "censored_or_unfinished_pairs": 2,
+        "comparison": "white_agent_minus_black_agent_score",
+        "evaluation_seed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_set",
+        "matched_color_pairs": 48,
+        "mean_white_minus_black_score": 0.010416666666666666,
+        "opponent_results": {
+          "random_legal": {
+            "censored_or_unfinished_pairs": 2,
+            "evaluation_seed_cluster_bootstrap": null,
+            "interval_status": "incomplete_or_censored_pair_set",
+            "matched_color_pairs": 23,
+            "mean_white_minus_black_score": 0.10869565217391304,
+            "planned_color_pairs": 25
+          },
+          "simple_material_heuristic": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.18,
+                0.0
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": -0.08
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": -0.08,
+            "planned_color_pairs": 25
+          }
+        },
+        "pairing_keys": [
+          "evaluation_seed",
+          "opponent_id",
+          "agent_color"
+        ],
+        "planned_color_pairs": 50,
+        "policy_id": "warm:20261105:pre_rl"
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "white_agent_minus_black_agent_score",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.18,
+            -0.04
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": -0.11
+        },
+        "interval_status": "computed",
+        "matched_color_pairs": 50,
+        "mean_white_minus_black_score": -0.11,
+        "opponent_results": {
+          "random_legal": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.28,
+                -0.04
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": -0.16
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": -0.16,
+            "planned_color_pairs": 25
+          },
+          "simple_material_heuristic": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.16,
+                0.04
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": -0.06
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": -0.06,
+            "planned_color_pairs": 25
+          }
+        },
+        "pairing_keys": [
+          "evaluation_seed",
+          "opponent_id",
+          "agent_color"
+        ],
+        "planned_color_pairs": 50,
+        "policy_id": "warm:20261105:post_rl"
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "white_agent_minus_black_agent_score",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.11,
+            0.02
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": -0.04
+        },
+        "interval_status": "computed",
+        "matched_color_pairs": 50,
+        "mean_white_minus_black_score": -0.04,
+        "opponent_results": {
+          "random_legal": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.16,
+                -0.02
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": -0.08
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": -0.08,
+            "planned_color_pairs": 25
+          },
+          "simple_material_heuristic": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.14,
+                0.14
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": 0.0
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": 0.0,
+            "planned_color_pairs": 25
+          }
+        },
+        "pairing_keys": [
+          "evaluation_seed",
+          "opponent_id",
+          "agent_color"
+        ],
+        "planned_color_pairs": 50,
+        "policy_id": "scratch:20261105:pre_rl"
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "white_agent_minus_black_agent_score",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.06,
+            0.04
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": -0.01
+        },
+        "interval_status": "computed",
+        "matched_color_pairs": 50,
+        "mean_white_minus_black_score": -0.01,
+        "opponent_results": {
+          "random_legal": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.08,
+                0.04
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": -0.02
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": -0.02,
+            "planned_color_pairs": 25
+          },
+          "simple_material_heuristic": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.08,
+                0.08
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": 0.0
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": 0.0,
+            "planned_color_pairs": 25
+          }
+        },
+        "pairing_keys": [
+          "evaluation_seed",
+          "opponent_id",
+          "agent_color"
+        ],
+        "planned_color_pairs": 50,
+        "policy_id": "scratch:20261105:post_rl"
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "white_agent_minus_black_agent_score",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.12,
+            0.02
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": -0.05
+        },
+        "interval_status": "computed",
+        "matched_color_pairs": 50,
+        "mean_white_minus_black_score": -0.05,
+        "opponent_results": {
+          "random_legal": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.18,
+                0.02
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": -0.08
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": -0.08,
+            "planned_color_pairs": 25
+          },
+          "simple_material_heuristic": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.1,
+                0.06
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": -0.02
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": -0.02,
+            "planned_color_pairs": 25
+          }
+        },
+        "pairing_keys": [
+          "evaluation_seed",
+          "opponent_id",
+          "agent_color"
+        ],
+        "planned_color_pairs": 50,
+        "policy_id": "warm:20261106:pre_rl"
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "white_agent_minus_black_agent_score",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.1,
+            0.06
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": -0.02
+        },
+        "interval_status": "computed",
+        "matched_color_pairs": 50,
+        "mean_white_minus_black_score": -0.02,
+        "opponent_results": {
+          "random_legal": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.24,
+                0.08
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": -0.08
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": -0.08,
+            "planned_color_pairs": 25
+          },
+          "simple_material_heuristic": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.04,
+                0.12
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": 0.04
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": 0.04,
+            "planned_color_pairs": 25
+          }
+        },
+        "pairing_keys": [
+          "evaluation_seed",
+          "opponent_id",
+          "agent_color"
+        ],
+        "planned_color_pairs": 50,
+        "policy_id": "warm:20261106:post_rl"
+      },
+      {
+        "censored_or_unfinished_pairs": 1,
+        "comparison": "white_agent_minus_black_agent_score",
+        "evaluation_seed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_set",
+        "matched_color_pairs": 49,
+        "mean_white_minus_black_score": 0.05102040816326531,
+        "opponent_results": {
+          "random_legal": {
+            "censored_or_unfinished_pairs": 1,
+            "evaluation_seed_cluster_bootstrap": null,
+            "interval_status": "incomplete_or_censored_pair_set",
+            "matched_color_pairs": 24,
+            "mean_white_minus_black_score": 0.041666666666666664,
+            "planned_color_pairs": 25
+          },
+          "simple_material_heuristic": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.1,
+                0.2
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": 0.06
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": 0.06,
+            "planned_color_pairs": 25
+          }
+        },
+        "pairing_keys": [
+          "evaluation_seed",
+          "opponent_id",
+          "agent_color"
+        ],
+        "planned_color_pairs": 50,
+        "policy_id": "scratch:20261106:pre_rl"
+      },
+      {
+        "censored_or_unfinished_pairs": 1,
+        "comparison": "white_agent_minus_black_agent_score",
+        "evaluation_seed_cluster_bootstrap": null,
+        "interval_status": "incomplete_or_censored_pair_set",
+        "matched_color_pairs": 49,
+        "mean_white_minus_black_score": 0.01020408163265306,
+        "opponent_results": {
+          "random_legal": {
+            "censored_or_unfinished_pairs": 1,
+            "evaluation_seed_cluster_bootstrap": null,
+            "interval_status": "incomplete_or_censored_pair_set",
+            "matched_color_pairs": 24,
+            "mean_white_minus_black_score": 0.041666666666666664,
+            "planned_color_pairs": 25
+          },
+          "simple_material_heuristic": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.06,
+                0.0
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": -0.02
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": -0.02,
+            "planned_color_pairs": 25
+          }
+        },
+        "pairing_keys": [
+          "evaluation_seed",
+          "opponent_id",
+          "agent_color"
+        ],
+        "planned_color_pairs": 50,
+        "policy_id": "scratch:20261106:post_rl"
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "white_agent_minus_black_agent_score",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            0.0,
+            0.12
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": 0.06
+        },
+        "interval_status": "computed",
+        "matched_color_pairs": 50,
+        "mean_white_minus_black_score": 0.06,
+        "opponent_results": {
+          "random_legal": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.06,
+                0.1
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": 0.02
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": 0.02,
+            "planned_color_pairs": 25
+          },
+          "simple_material_heuristic": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                0.0,
+                0.22
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": 0.1
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": 0.1,
+            "planned_color_pairs": 25
+          }
+        },
+        "pairing_keys": [
+          "evaluation_seed",
+          "opponent_id",
+          "agent_color"
+        ],
+        "planned_color_pairs": 50,
+        "policy_id": "baseline:random_legal"
+      },
+      {
+        "censored_or_unfinished_pairs": 0,
+        "comparison": "white_agent_minus_black_agent_score",
+        "evaluation_seed_cluster_bootstrap": {
+          "ci_95_evaluation_seed_cluster": [
+            -0.1,
+            0.09
+          ],
+          "evaluation_seed_clusters": 25,
+          "iterations": 10000,
+          "point_difference": -0.01
+        },
+        "interval_status": "computed",
+        "matched_color_pairs": 50,
+        "mean_white_minus_black_score": -0.01,
+        "opponent_results": {
+          "random_legal": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.2,
+                0.12
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": -0.04
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": -0.04,
+            "planned_color_pairs": 25
+          },
+          "simple_material_heuristic": {
+            "censored_or_unfinished_pairs": 0,
+            "evaluation_seed_cluster_bootstrap": {
+              "ci_95_evaluation_seed_cluster": [
+                -0.06,
+                0.1
+              ],
+              "evaluation_seed_clusters": 25,
+              "iterations": 10000,
+              "point_difference": 0.02
+            },
+            "interval_status": "computed",
+            "matched_color_pairs": 25,
+            "mean_white_minus_black_score": 0.02,
+            "planned_color_pairs": 25
+          }
+        },
+        "pairing_keys": [
+          "evaluation_seed",
+          "opponent_id",
+          "agent_color"
+        ],
+        "planned_color_pairs": 50,
+        "policy_id": "baseline:simple_heuristic"
+      }
+    ]
+  },
+  "evaluation_source_identity_path": ".agents/evidence/M5-evaluation-source-identity-20261029.json",
+  "evaluation_source_identity_sha256": "65d4cc416f61584ced699f9cf8fb504e7bfef80a1e418861ad0bced45b11bb36",
+  "evaluation_wall_seconds_report": 1972.799734201999,
+  "gpu_used": false,
+  "incomplete_attempts": 0,
+  "journal_diagnostics": {
+    "baseline:random_legal": [],
+    "baseline:simple_heuristic": [],
+    "m4_behavior_only": [],
+    "scratch:20261104:post_rl": [],
+    "scratch:20261104:pre_rl": [],
+    "scratch:20261105:post_rl": [],
+    "scratch:20261105:pre_rl": [],
+    "scratch:20261106:post_rl": [],
+    "scratch:20261106:pre_rl": [],
+    "warm:20261104:post_rl": [],
+    "warm:20261104:pre_rl": [],
+    "warm:20261105:post_rl": [],
+    "warm:20261105:pre_rl": [],
+    "warm:20261106:post_rl": [],
+    "warm:20261106:pre_rl": []
+  },
+  "metric_source": "python_chess_m2_simulator",
+  "planned_games": 1500,
+  "policies": [
+    {
+      "completed_rows": 100,
+      "consolidated_rows": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/2dc2f1202bcf6c9c/final-rows-attempt-0000.json",
+        "sha256": "a2405119988cf55f97f1ce262d227e18ef86115c620fa0b8f1b1ee564ede3942",
+        "size_bytes": 215578
+      },
+      "draws": 50,
+      "event_journal": {
+        "completed_games": 100,
+        "event_records": 208,
+        "final_chain_sha256": "f0755876f0db6db53ea2172de178ad3c4932a2dfa2e5ed48c83e73836ded2649",
+        "incomplete_events": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/2dc2f1202bcf6c9c/events-attempt-0000.jsonl",
+        "scenario_starts": 100,
+        "sha256": "248c254c1c888e955ad7ecab81a2f62c9f9e04219e0820bf1cbf8f79892b5a27",
+        "size_bytes": 253577
+      },
+      "losses": 2,
+      "planned_games": 100,
+      "policy_artifact_identity": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+      "policy_id": "m4_behavior_only",
+      "score_rate_terminal_games": 0.73,
+      "truncated_games": 0,
+      "unique_scenario_keys": 100,
+      "unresolved_scenarios": {
+        "count": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/2dc2f1202bcf6c9c/unresolved-attempt-0000.json",
+        "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      "wins": 48
+    },
+    {
+      "completed_rows": 100,
+      "consolidated_rows": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/5bf8e7e66330a554/final-rows-attempt-0000.json",
+        "sha256": "b10cb410456c27bffe2bac2be6ff44182b9dcb8d1e8d9f96bd77bb02ba69e666",
+        "size_bytes": 438087
+      },
+      "draws": 85,
+      "event_journal": {
+        "completed_games": 100,
+        "event_records": 232,
+        "final_chain_sha256": "b1594c7ced79c6e9700e1497bc109848dc938bb8fad7c3a838c102de5ed06ed1",
+        "incomplete_events": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/5bf8e7e66330a554/events-attempt-0000.jsonl",
+        "scenario_starts": 100,
+        "sha256": "34ea921264d8b377ab7b2e52705d806fb739502185dabea55462c54c79710477",
+        "size_bytes": 430558
+      },
+      "losses": 13,
+      "planned_games": 100,
+      "policy_artifact_identity": "248f81b55145ff2afcbb83c206913c6636c45e007e897b5872722bb9c09e0366",
+      "policy_id": "warm:20261104:pre_rl",
+      "score_rate_terminal_games": 0.445,
+      "truncated_games": 0,
+      "unique_scenario_keys": 100,
+      "unresolved_scenarios": {
+        "count": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/5bf8e7e66330a554/unresolved-attempt-0000.json",
+        "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      "wins": 2
+    },
+    {
+      "completed_rows": 100,
+      "consolidated_rows": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/b3cd59c18f72a152/final-rows-attempt-0000.json",
+        "sha256": "745db2aa5deadb71eee49b620923836a92baf3456c3480ee42d166daa93680e1",
+        "size_bytes": 415201
+      },
+      "draws": 78,
+      "event_journal": {
+        "completed_games": 100,
+        "event_records": 230,
+        "final_chain_sha256": "c81e6a88c51c50ffa0330f61ff356eb4702bf3c76c51e800bb74437b69e210e0",
+        "incomplete_events": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/b3cd59c18f72a152/events-attempt-0000.jsonl",
+        "scenario_starts": 100,
+        "sha256": "903a89f34b9386312179e2a7a99f27959057106744563e94b57737a201e482c5",
+        "size_bytes": 422589
+      },
+      "losses": 5,
+      "planned_games": 100,
+      "policy_artifact_identity": "0b2405017a8e1d539851f0cd278883d3fd23936fb5c2f7962c813590a6fd1767",
+      "policy_id": "warm:20261104:post_rl",
+      "score_rate_terminal_games": 0.5555555555555556,
+      "truncated_games": 1,
+      "unique_scenario_keys": 100,
+      "unresolved_scenarios": {
+        "count": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/b3cd59c18f72a152/unresolved-attempt-0000.json",
+        "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      "wins": 16
+    },
+    {
+      "completed_rows": 100,
+      "consolidated_rows": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/51f3de30ae9fcdbd/final-rows-attempt-0000.json",
+        "sha256": "6985d8815f053ee4cf4376400be76715a9558160f2e8d1903ede9a0e6282f87f",
+        "size_bytes": 464256
+      },
+      "draws": 64,
+      "event_journal": {
+        "completed_games": 100,
+        "event_records": 241,
+        "final_chain_sha256": "96541a579f9de7d0a7201c941cd83f5062fedac0159d4a9f32c92ba67d409d58",
+        "incomplete_events": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/51f3de30ae9fcdbd/events-attempt-0000.jsonl",
+        "scenario_starts": 100,
+        "sha256": "8d70a39e15808640187eafa6e6cff39a93f8a153d7234b2e42072ee6c8bfba6d",
+        "size_bytes": 482256
+      },
+      "losses": 35,
+      "planned_games": 100,
+      "policy_artifact_identity": "ca6d85193f31e2d9ec90a8402361fd099825f3e78eda82c726863d71fcd86b4c",
+      "policy_id": "scratch:20261104:pre_rl",
+      "score_rate_terminal_games": 0.32323232323232326,
+      "truncated_games": 1,
+      "unique_scenario_keys": 100,
+      "unresolved_scenarios": {
+        "count": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/51f3de30ae9fcdbd/unresolved-attempt-0000.json",
+        "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      "wins": 0
+    },
+    {
+      "completed_rows": 100,
+      "consolidated_rows": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/a05f6aacbd65def3/final-rows-attempt-0000.json",
+        "sha256": "a277ecede3ffe433a51d2b4515209cd4fe42bec449c5e3c1ae30cdf86570610c",
+        "size_bytes": 388755
+      },
+      "draws": 86,
+      "event_journal": {
+        "completed_games": 100,
+        "event_records": 224,
+        "final_chain_sha256": "43e44799d71376dddc86a30261a57bb1e0b3914700f4dd3ac85b40e83cc43bdc",
+        "incomplete_events": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/a05f6aacbd65def3/events-attempt-0000.jsonl",
+        "scenario_starts": 100,
+        "sha256": "3995d688079094b16933b25ed440971248153a414e01e3cb2f30587dd5322b02",
+        "size_bytes": 383604
+      },
+      "losses": 2,
+      "planned_games": 100,
+      "policy_artifact_identity": "3749b0c0b6ae44d3ad5d6bf0863b60937a59fbe881e0bdf4932bdce6033ca400",
+      "policy_id": "scratch:20261104:post_rl",
+      "score_rate_terminal_games": 0.55,
+      "truncated_games": 0,
+      "unique_scenario_keys": 100,
+      "unresolved_scenarios": {
+        "count": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/a05f6aacbd65def3/unresolved-attempt-0000.json",
+        "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      "wins": 12
+    },
+    {
+      "completed_rows": 100,
+      "consolidated_rows": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/a96ab55722ac1639/final-rows-attempt-0000.json",
+        "sha256": "3d92462e76329941201ec6cd110c902c78768123134e52ea1a0728f365d7e99e",
+        "size_bytes": 452337
+      },
+      "draws": 39,
+      "event_journal": {
+        "completed_games": 100,
+        "event_records": 243,
+        "final_chain_sha256": "1d8fa4fe64a58a95e8cf0a2e5ee803fe5dd35335eab12d677be1eeb9a4e8b69f",
+        "incomplete_events": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/a96ab55722ac1639/events-attempt-0000.jsonl",
+        "scenario_starts": 100,
+        "sha256": "8c40254c4bc668b8c04e019816d11599f0ecbeda3abe7a42cf0ddb047bf5ceec",
+        "size_bytes": 494228
+      },
+      "losses": 56,
+      "planned_games": 100,
+      "policy_artifact_identity": "4a7117dd4b28ca0468955d9e82ab636182fb386505f688e4b095e5bf4ec0b3d2",
+      "policy_id": "warm:20261105:pre_rl",
+      "score_rate_terminal_games": 0.22959183673469388,
+      "truncated_games": 2,
+      "unique_scenario_keys": 100,
+      "unresolved_scenarios": {
+        "count": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/a96ab55722ac1639/unresolved-attempt-0000.json",
+        "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      "wins": 3
+    },
+    {
+      "completed_rows": 100,
+      "consolidated_rows": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/243c458377969c1d/final-rows-attempt-0000.json",
+        "sha256": "338175730955de79bb76e704c009f2f386a7fd24bc104bc99b381c2643751992",
+        "size_bytes": 367873
+      },
+      "draws": 79,
+      "event_journal": {
+        "completed_games": 100,
+        "event_records": 225,
+        "final_chain_sha256": "be6f7ebe5b244b6c8780424497550cd606cc0c83c0b9ed0a413496f761a54430",
+        "incomplete_events": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/243c458377969c1d/events-attempt-0000.jsonl",
+        "scenario_starts": 100,
+        "sha256": "a98ea5a98a89391c684aac93d14ae082503845702a63952e8c3e5988af1463fa",
+        "size_bytes": 378403
+      },
+      "losses": 2,
+      "planned_games": 100,
+      "policy_artifact_identity": "e864d8351cb03b7e671e7a061226711b2d33b23bbaca97e899c09f1d2eb59670",
+      "policy_id": "warm:20261105:post_rl",
+      "score_rate_terminal_games": 0.585,
+      "truncated_games": 0,
+      "unique_scenario_keys": 100,
+      "unresolved_scenarios": {
+        "count": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/243c458377969c1d/unresolved-attempt-0000.json",
+        "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      "wins": 19
+    },
+    {
+      "completed_rows": 100,
+      "consolidated_rows": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/8d8195e415b199b9/final-rows-attempt-0000.json",
+        "sha256": "53b610d2d947135a99122b7146ed9a6e37db7f2395e27cdcdc7d04cd24e4626f",
+        "size_bytes": 499579
+      },
+      "draws": 72,
+      "event_journal": {
+        "completed_games": 100,
+        "event_records": 245,
+        "final_chain_sha256": "3603f29e85435acda3f2656d4b0876731ab768d70dea90e4b0fbf4ed4274c35d",
+        "incomplete_events": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/8d8195e415b199b9/events-attempt-0000.jsonl",
+        "scenario_starts": 100,
+        "sha256": "f8351255ddedc67fd8f391e7c64302cbfc705e349bfcd21f1e672b2fbb1858f0",
+        "size_bytes": 515176
+      },
+      "losses": 28,
+      "planned_games": 100,
+      "policy_artifact_identity": "f3cec828492640ba82983065e2cec6043714f7b9d374d04ce5422ab7ca2fb7a7",
+      "policy_id": "scratch:20261105:pre_rl",
+      "score_rate_terminal_games": 0.36,
+      "truncated_games": 0,
+      "unique_scenario_keys": 100,
+      "unresolved_scenarios": {
+        "count": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/8d8195e415b199b9/unresolved-attempt-0000.json",
+        "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      "wins": 0
+    },
+    {
+      "completed_rows": 100,
+      "consolidated_rows": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/f2876284d7f55183/final-rows-attempt-0000.json",
+        "sha256": "7977de0341c510a51b5e438fc5d9b9759e35c5926ac2b393f8036b8ae984c660",
+        "size_bytes": 392389
+      },
+      "draws": 91,
+      "event_journal": {
+        "completed_games": 100,
+        "event_records": 224,
+        "final_chain_sha256": "969219a82b73255bd9f7de136945490775022186eb99ba61bca4d51751f11668",
+        "incomplete_events": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/f2876284d7f55183/events-attempt-0000.jsonl",
+        "scenario_starts": 100,
+        "sha256": "04db1f53c273cfc5dca4df74cab9fa3e26c226385a1322eb4518dc379f57c18d",
+        "size_bytes": 387493
+      },
+      "losses": 6,
+      "planned_games": 100,
+      "policy_artifact_identity": "e63ab18289135e411fb4c00a025d2985446475e5b70881ca7e9190559c20b3f8",
+      "policy_id": "scratch:20261105:post_rl",
+      "score_rate_terminal_games": 0.485,
+      "truncated_games": 0,
+      "unique_scenario_keys": 100,
+      "unresolved_scenarios": {
+        "count": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/f2876284d7f55183/unresolved-attempt-0000.json",
+        "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      "wins": 3
+    },
+    {
+      "completed_rows": 100,
+      "consolidated_rows": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/357100d4ec1af47f/final-rows-attempt-0000.json",
+        "sha256": "2fc1eec7546b6c867ea14375528a539f6fcafeeae7e3ad6ab1421756f9d5ad7a",
+        "size_bytes": 291084
+      },
+      "draws": 37,
+      "event_journal": {
+        "completed_games": 100,
+        "event_records": 215,
+        "final_chain_sha256": "856076fd989cf90eb1548299fbbc9f0abac2662baa706a1fa3ba21f097ef3d5e",
+        "incomplete_events": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/357100d4ec1af47f/events-attempt-0000.jsonl",
+        "scenario_starts": 100,
+        "sha256": "47a490f95930d8f72ec6b2fc40d5e6f1914406056469b087bb8294ff52c356fe",
+        "size_bytes": 310272
+      },
+      "losses": 63,
+      "planned_games": 100,
+      "policy_artifact_identity": "4791f07e8295ea083629c72f9ae4685d2309c3fe738fe7c499b9e499a967ca75",
+      "policy_id": "warm:20261106:pre_rl",
+      "score_rate_terminal_games": 0.185,
+      "truncated_games": 0,
+      "unique_scenario_keys": 100,
+      "unresolved_scenarios": {
+        "count": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/357100d4ec1af47f/unresolved-attempt-0000.json",
+        "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      "wins": 0
+    },
+    {
+      "completed_rows": 100,
+      "consolidated_rows": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/bbcbcd34aad26901/final-rows-attempt-0000.json",
+        "sha256": "95141bfe49b6d29a465264d06ea16be5262b2d1331073086c9a355ffb46c9c41",
+        "size_bytes": 301304
+      },
+      "draws": 74,
+      "event_journal": {
+        "completed_games": 100,
+        "event_records": 215,
+        "final_chain_sha256": "e1da4c7e6b779f8ff3cec7743ef425def431fb987df7fd60278972a66aa5d567",
+        "incomplete_events": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/bbcbcd34aad26901/events-attempt-0000.jsonl",
+        "scenario_starts": 100,
+        "sha256": "f8c1b9c5333fee4c144b163c622b8a926236836e7522db4b3ecd2fd63b25479c",
+        "size_bytes": 310100
+      },
+      "losses": 2,
+      "planned_games": 100,
+      "policy_artifact_identity": "c037adc652a00ea131366c5f15ac78811a223459312f9bac5f676f267cf36bcd",
+      "policy_id": "warm:20261106:post_rl",
+      "score_rate_terminal_games": 0.61,
+      "truncated_games": 0,
+      "unique_scenario_keys": 100,
+      "unresolved_scenarios": {
+        "count": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/bbcbcd34aad26901/unresolved-attempt-0000.json",
+        "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      "wins": 24
+    },
+    {
+      "completed_rows": 100,
+      "consolidated_rows": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/c3c7cec6e9130994/final-rows-attempt-0000.json",
+        "sha256": "a61df174b9cf4257856773ae4581be0096da6b395c23d240eb3d4cd2ca92705b",
+        "size_bytes": 514879
+      },
+      "draws": 66,
+      "event_journal": {
+        "completed_games": 100,
+        "event_records": 250,
+        "final_chain_sha256": "abb12ef80a1b4811c6406c1400202e12bc10b7726bc3a9cdb2d4c9fe804d1a97",
+        "incomplete_events": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/c3c7cec6e9130994/events-attempt-0000.jsonl",
+        "scenario_starts": 100,
+        "sha256": "20e0f12042cb2ec98746a6969f1ec7ee57a87cdefdfdda9e1dfa3bd732b4fd13",
+        "size_bytes": 555819
+      },
+      "losses": 33,
+      "planned_games": 100,
+      "policy_artifact_identity": "aeac1571bea9ce89af11dc1d668687d985984b49b3724fca310a9ed89e262120",
+      "policy_id": "scratch:20261106:pre_rl",
+      "score_rate_terminal_games": 0.3333333333333333,
+      "truncated_games": 1,
+      "unique_scenario_keys": 100,
+      "unresolved_scenarios": {
+        "count": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/c3c7cec6e9130994/unresolved-attempt-0000.json",
+        "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      "wins": 0
+    },
+    {
+      "completed_rows": 100,
+      "consolidated_rows": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/7fadcc425a490603/final-rows-attempt-0000.json",
+        "sha256": "044667d5163a1cceef45d1f6d32417e04c0daca7e32fd3e6a9eca17ad2529cb5",
+        "size_bytes": 386698
+      },
+      "draws": 90,
+      "event_journal": {
+        "completed_games": 100,
+        "event_records": 226,
+        "final_chain_sha256": "9e44f96f1e55328f3059f1a760c0e761e43b4f56d1ef16a022db4dac4673086b",
+        "incomplete_events": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/7fadcc425a490603/events-attempt-0000.jsonl",
+        "scenario_starts": 100,
+        "sha256": "661ccc71b7d5de84606e88a88f5c8433e6711220c9ee138d0dada2fc3e62e371",
+        "size_bytes": 392287
+      },
+      "losses": 1,
+      "planned_games": 100,
+      "policy_artifact_identity": "94838bc8c3547a5b8ce9e1d8c1dde66b86163defb868b18be6185895acf9663c",
+      "policy_id": "scratch:20261106:post_rl",
+      "score_rate_terminal_games": 0.5353535353535354,
+      "truncated_games": 1,
+      "unique_scenario_keys": 100,
+      "unresolved_scenarios": {
+        "count": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/7fadcc425a490603/unresolved-attempt-0000.json",
+        "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      "wins": 8
+    },
+    {
+      "completed_rows": 100,
+      "consolidated_rows": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/33216d6a3aabfb2b/final-rows-attempt-0000.json",
+        "sha256": "da57e4bf422f38d9dbfbdacd579f31af182329e40075296ce8813b97cc2597e5",
+        "size_bytes": 418560
+      },
+      "draws": 58,
+      "event_journal": {
+        "completed_games": 100,
+        "event_records": 204,
+        "final_chain_sha256": "50c564186dae064179e68138479274db1a5e7511cff4d48d4fb71d8b2ea1d090",
+        "incomplete_events": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/33216d6a3aabfb2b/events-attempt-0000.jsonl",
+        "scenario_starts": 100,
+        "sha256": "4f73b0e5d1ae07f2695583fb44157c6bf5f2dcb274c9541da02272f4aa07e016",
+        "size_bytes": 352406
+      },
+      "losses": 39,
+      "planned_games": 100,
+      "policy_artifact_identity": "baseline-agent-configuration-v1",
+      "policy_id": "baseline:random_legal",
+      "score_rate_terminal_games": 0.32,
+      "truncated_games": 0,
+      "unique_scenario_keys": 100,
+      "unresolved_scenarios": {
+        "count": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/33216d6a3aabfb2b/unresolved-attempt-0000.json",
+        "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      "wins": 3
+    },
+    {
+      "completed_rows": 100,
+      "consolidated_rows": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/639c552e649b0dd2/final-rows-attempt-0000.json",
+        "sha256": "023a0eff3626e381bbfc9aa4b60e564d8934b5a43a0715deb80fd2d16479b021",
+        "size_bytes": 266392
+      },
+      "draws": 63,
+      "event_journal": {
+        "completed_games": 100,
+        "event_records": 203,
+        "final_chain_sha256": "0d9bffd5b982ab9e235eaaeafca121700ac54c0a39149136b1b3e1e9c2e75c57",
+        "incomplete_events": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/639c552e649b0dd2/events-attempt-0000.jsonl",
+        "scenario_starts": 100,
+        "sha256": "d378469844ce0b44547ff73f09f064481496865c323fb4d99e6ad014660fc82f",
+        "size_bytes": 273447
+      },
+      "losses": 4,
+      "planned_games": 100,
+      "policy_artifact_identity": "baseline-agent-configuration-v1",
+      "policy_id": "baseline:simple_heuristic",
+      "score_rate_terminal_games": 0.645,
+      "truncated_games": 0,
+      "unique_scenario_keys": 100,
+      "unresolved_scenarios": {
+        "count": 0,
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/evaluation/639c552e649b0dd2/unresolved-attempt-0000.json",
+        "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      "wins": 33
+    }
+  ],
+  "policy_count": 15,
+  "policy_schedules_complete": 15,
+  "process_peak_rss_kib": 275792,
+  "process_wall": "32:54.35",
+  "python": "3.12.3",
+  "schema": "videochess-m5-evaluation-campaign-verification/1.0",
+  "terminal_games": 1494,
+  "torch": "2.14.1+cpu",
+  "truncated_games": 6,
+  "unresolved_scenarios": 0,
+  "verified_at_utc": "2026-10-29T22:08:09Z"
+}

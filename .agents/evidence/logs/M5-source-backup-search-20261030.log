@@ -1,0 +1,7 @@
+Executed at UTC: 2026-10-30T04:59:59Z
+$ find /home/dodaonam/Projects/atari-videochess-rl-m5 /tmp -type f (historical M5 cli.py/replay.py/checkpoint.py backup names) -print; find /home/dodaonam/Projects -type f (videochess_rl/rl/cli.py|replay.py|checkpoint.py) -print | sort
+/home/dodaonam/Projects/atari-videochess-rl-m5/videochess_rl/rl/checkpoint.py
+/home/dodaonam/Projects/atari-videochess-rl-m5/videochess_rl/rl/cli.py
+/home/dodaonam/Projects/atari-videochess-rl-m5/videochess_rl/rl/replay.py
+Result: Only the current M5 worktree source paths were found; no backup or alternate source worktree was found.
+Exit code: 0

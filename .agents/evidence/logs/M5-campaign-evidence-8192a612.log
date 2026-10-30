@@ -1,0 +1,108 @@
+started_utc=2026-10-30T07:56:40+00:00
+git_head=8192a6124dc0d5938bf0ac14ca729f0561573101
+command=PYTHONDONTWRITEBYTECODE=1 python3 scripts/verify_m5_campaign_evidence.py
+{
+  "schema": "videochess-m5-private-campaign-verification/1.0",
+  "training": {
+    "runs": [
+      {
+        "run_id": "m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__warm__attempt-0001",
+        "arm": "warm",
+        "training_seed": 20261104,
+        "decisions": 50000,
+        "updates": 12245,
+        "syncs": 24,
+        "episodes": 389,
+        "source_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+        "replay_records": 50000,
+        "replay_chain_sha256": "fd5fcad7d26b2649863ea1358d42c5e218148fb428789bcb75dbee9905058584",
+        "final_snapshot_sha256": "0b2405017a8e1d539851f0cd278883d3fd23936fb5c2f7962c813590a6fd1767"
+      },
+      {
+        "run_id": "m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__scratch__attempt-0000",
+        "arm": "scratch",
+        "training_seed": 20261104,
+        "decisions": 50000,
+        "updates": 12245,
+        "syncs": 24,
+        "episodes": 379,
+        "source_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+        "replay_records": 50000,
+        "replay_chain_sha256": "e744dc2b7396b8320f8b5200301688bf9aa01a95a37b2236b6cc79c9dcccbbeb",
+        "final_snapshot_sha256": "3749b0c0b6ae44d3ad5d6bf0863b60937a59fbe881e0bdf4932bdce6033ca400"
+      },
+      {
+        "run_id": "m5-75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c__warm__attempt-0000",
+        "arm": "warm",
+        "training_seed": 20261105,
+        "decisions": 50000,
+        "updates": 12245,
+        "syncs": 24,
+        "episodes": 435,
+        "source_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+        "replay_records": 50000,
+        "replay_chain_sha256": "2bd17edb40449ce659ba43c265ed03c5c2b22da6adfb1d6c42d910a9b07c18f6",
+        "final_snapshot_sha256": "e864d8351cb03b7e671e7a061226711b2d33b23bbaca97e899c09f1d2eb59670"
+      },
+      {
+        "run_id": "m5-75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c__scratch__attempt-0000",
+        "arm": "scratch",
+        "training_seed": 20261105,
+        "decisions": 50000,
+        "updates": 12245,
+        "syncs": 24,
+        "episodes": 413,
+        "source_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+        "replay_records": 50000,
+        "replay_chain_sha256": "355e584fd320cecbeb3b392c2b05200fc6d797d9ba60b1a97104420c415c0a63",
+        "final_snapshot_sha256": "e63ab18289135e411fb4c00a025d2985446475e5b70881ca7e9190559c20b3f8"
+      },
+      {
+        "run_id": "m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__warm__attempt-0000",
+        "arm": "warm",
+        "training_seed": 20261106,
+        "decisions": 50000,
+        "updates": 12245,
+        "syncs": 24,
+        "episodes": 551,
+        "source_sha256": "cdcc1fdc0ca0b324e49cfb8b0ff571496a554e9892dfb3620d6454a65ee16da0",
+        "replay_records": 50000,
+        "replay_chain_sha256": "19c452f7bed2761c22ec548bf8087ea453bf987637a490ef46eeb629d06474d5",
+        "final_snapshot_sha256": "c037adc652a00ea131366c5f15ac78811a223459312f9bac5f676f267cf36bcd"
+      },
+      {
+        "run_id": "m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__scratch__attempt-0000",
+        "arm": "scratch",
+        "training_seed": 20261106,
+        "decisions": 50000,
+        "updates": 12245,
+        "syncs": 24,
+        "episodes": 408,
+        "source_sha256": "cdcc1fdc0ca0b324e49cfb8b0ff571496a554e9892dfb3620d6454a65ee16da0",
+        "replay_records": 50000,
+        "replay_chain_sha256": "a7ef5b08009068e8083a48366cafd02266c37741264014a81b3d41d0e5215590",
+        "final_snapshot_sha256": "94838bc8c3547a5b8ce9e1d8c1dde66b86163defb868b18be6185895acf9663c"
+      }
+    ],
+    "valid_decisions": 300000,
+    "replay_records": 300000,
+    "optimizer_updates": 73470,
+    "target_syncs": 144,
+    "run_physical_seconds": 74838.98149248901,
+    "profile_recovery_setup_seconds": 3060.2994649429993,
+    "campaign_seconds": 77899.28095743201
+  },
+  "evaluation": {
+    "policies": 15,
+    "rows": 1500,
+    "unique_scenarios": 1500,
+    "terminal_games": 1494,
+    "truncated_games": 6,
+    "event_journal_records": 3385,
+    "evaluation_seconds": 1983.450523835003
+  },
+  "read_only": true
+}
+exit_code=0
+finished_utc=2026-10-30T07:57:08+00:00
+Exit code: 0

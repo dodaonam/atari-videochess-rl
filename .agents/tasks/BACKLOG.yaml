@@ -2763,7 +2763,7 @@
       "id": "M5-001",
       "title": "Implement and verify the paired Double DQN simulator experiment",
       "milestone": "M5",
-      "status": "pending",
+      "status": "done",
       "depends_on": [
         "M2-001",
         "M3-001",
@@ -2778,10 +2778,1243 @@
         "M5-04",
         "M5-05"
       ],
-      "evidence": [],
-      "next_action": "Await separate direct M5 authorization and the canonical state transition; do not implement or train under the Pre-M5 readiness task.",
+      "evidence": [
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M5-001-authorization-20261028.md",
+          "detail": "Direct project-owner authorization to execute complete M5-001 and deliver one open feature PR; G3, merge, self-approval and M6/M7 remain prohibited.",
+          "result": "The project owner directly authorized the complete M5 engineering mission on 2026-10-28.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-28T12:00:00Z",
+            "recorded_at_utc": "2026-10-28T12:00:00Z",
+            "exit_code": null,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "log_path": ".agents/evidence/M5-001-authorization-20261028.md"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python -m videochess_rl.rl.cli profile --threads 1,2,4",
+          "result": "Historical profile attempt; superseded by the verified attempt-5 profile. Earlier provenance timestamp ordering was inconsistent.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M5-accepted-input-integrity-20261028.json",
+          "detail": "Exact accepted local M3 release output inventory and M4 checkpoint/sidecar/artifact-manifest provenance used by the M5 profile.",
+          "result": "Accepted M4 checkpoint SHA, all 19 M4 artifact-manifest entries, M3 release identity/manifest and every listed M3 output hash match the accepted M4 provenance.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-28T12:36:00.337652Z",
+            "exit_code": null,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M5-profile-attempt-history-20261028.json",
+          "detail": "Immutable history of two failed profile attempts and the successful attempt; reserves 180 seconds conservatively for the failed attempts without exact retained timers.",
+          "result": "Both failed attempts occurred before official training; the final profile passed. Failed work and physical time remain visible in the cumulative resource ledger.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-28T12:36:00.337652Z",
+            "exit_code": null,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -p 'test_m5_*.py' -v",
+          "result": "Ran 34 M5 tests in 20.017s; OK.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-28T12:54:38Z",
+            "recorded_at_utc": "2026-10-28T12:55:00Z",
+            "exit_code": 0,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "config_sha256": "a8b86f7af3cd0d31d550a5c4a5940abc67527b115dafa1a83df0dc392ec0fee9",
+            "log_path": ".agents/evidence/logs/M5-focused-suite-final-20261028-command.log",
+            "log_sha256": "f2e6e905bbca338fd0470b82c33ba7f895d250179212bdfd7ba65981e88c4b12"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 353 tests in 131.805s; OK.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-28T12:51:55Z",
+            "recorded_at_utc": "2026-10-28T12:55:00Z",
+            "exit_code": 0,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "log_path": ".agents/evidence/logs/M5-full-suite-final-20261028.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.rl.cli profile --threads 1,2,4",
+          "result": "PASS: final actual-replay gate, 10,452.6s/run upper-95 estimate; six-run training campaign including all profile attempts projects to 63,115.4s, below the 216,000s cap.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-28T13:00:50.851293Z",
+            "recorded_at_utc": "2026-10-28T13:10:29Z",
+            "exit_code": 0,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "log_path": ".agents/evidence/logs/M5-real-replay-profile-attempt-0005.log",
+            "log_sha256": "c7fed31748ffaab466a51313d33f037c68375c33aeb510063b27634b4e6c21b8",
+            "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+            "code_source_sha256": "e2cb7a957b21e43f4b6499a5364c89de4dbf3ce0889f4cffa7307808fa2e8419"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -p 'test_m5_*.py' -v",
+          "result": "Ran 37 tests in 24.838s; OK. Includes Double DQN, transition, replay/recovery, evaluation, initialization, and artifact-manifest tests.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-28T13:03:39.284084Z",
+            "recorded_at_utc": "2026-10-28T13:09:02.268925Z",
+            "exit_code": 0,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+            "log_path": ".agents/evidence/logs/M5-focused-suite-final-20261028-r2-command.log",
+            "log_sha256": "3f3c1d71ba91a4e739410c2a607cada1e953b52c1ce781c73029d238e420ac6f",
+            "code_source_sha256": "e2cb7a957b21e43f4b6499a5364c89de4dbf3ce0889f4cffa7307808fa2e8419"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "FAILED: 356 tests ran; 355 passed. One existing context-recovery test failed because the checkpoint snapshot was stale relative to the worktree; checkpoint was refreshed before the successful rerun.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-28T13:06:08.417120Z",
+            "recorded_at_utc": "2026-10-28T13:10:29Z",
+            "exit_code": 1,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "log_path": ".agents/evidence/logs/M5-full-suite-final-20261028-r2.log",
+            "log_sha256": "9e82650b1178abb5e4b9600e2d5fe4e7354d2d7ae37b8b28a24d23557dccfa33",
+            "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+            "code_source_sha256": "e2cb7a957b21e43f4b6499a5364c89de4dbf3ce0889f4cffa7307808fa2e8419"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 356 tests in 131.661s; OK. The checkpoint recovery test passed with the refreshed snapshot.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-28T13:09:02.237795Z",
+            "recorded_at_utc": "2026-10-28T13:10:29Z",
+            "exit_code": 0,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "log_path": ".agents/evidence/logs/M5-full-suite-final-20261028-r3.log",
+            "log_sha256": "828a3def4d95fe62729af8ed66823d04bf7cec1fa9fbd47847b26dbed19a5f70",
+            "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+            "code_source_sha256": "e2cb7a957b21e43f4b6499a5364c89de4dbf3ce0889f4cffa7307808fa2e8419"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 356 tests in 145.501s; OK. Final repository regression after protocol/plan, resource evidence, artifact-manifest tooling, and checkpoint updates.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-28T13:14:41.914848Z",
+            "recorded_at_utc": "2026-10-28T13:15:01Z",
+            "exit_code": 0,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "log_path": ".agents/evidence/logs/M5-full-suite-final-20261028-r4.log",
+            "log_sha256": "118c2472a97e274fbf7aa95a942282dc5b551df4162680e81458cb443ddadafb",
+            "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+            "code_source_sha256": "e2cb7a957b21e43f4b6499a5364c89de4dbf3ce0889f4cffa7307808fa2e8419"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M5-training-recovery-20261028.json",
+          "detail": "First official attempt failure, verified 215-decision checkpoint recovery, source compatibility, and resource budget accounting.",
+          "result": "Attempt 0000 failure preserved; attempt 0001 resumes from the integrity-verified episode boundary. No run is marked complete.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-28T13:25:14Z",
+            "exit_code": null,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.rl.cli train-all > /tmp/M5-train-all-final.log 2>&1",
+          "result": "FAILED after 215 valid decisions in Warm-start seed 20261104 at the first episode checkpoint: weights_only rejected the serialized TorchVersion environment value. The local checkpoint, sidecar, replay journal, and all 215 transitions were subsequently verified and restored through a narrowly scoped compatibility fix; no run completed. The process wall time was charged.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-28T13:16:06.071649Z",
+            "recorded_at_utc": "2026-10-28T13:25:14Z",
+            "exit_code": 1,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "log_path": ".agents/evidence/logs/M5-train-initial-attempt-failure-20261028.log",
+            "log_sha256": "328d03fbb062c57fc0f656ef9092ce3869d89576c2c99b07fee7eb8f22fe6135",
+            "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+            "code_source_sha256": "e2cb7a957b21e43f4b6499a5364c89de4dbf3ce0889f4cffa7307808fa2e8419"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -p 'test_m5_*.py' -v > /tmp/M5-focused-suite-recovery-fix-r2.log 2>&1",
+          "result": "Ran 37 M5-focused tests in 20.545s; OK under the checkpoint compatibility and campaign recovery-time accounting source.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-28T13:22:00.477438Z",
+            "recorded_at_utc": "2026-10-28T13:24:38Z",
+            "exit_code": 0,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+            "log_path": ".agents/evidence/logs/M5-focused-suite-after-recovery-fix-20261028-command.log",
+            "log_sha256": "235dfa44faddb18f4581457282379e987cf78e67684f9c765cfd207dc830686e",
+            "code_source_sha256": "4d5b986c3b0ac517215f5cdd26f33a5e155390b26dc8597da50041edb9db0a8e"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/verify_m5_episode_checkpoint.py --training-seed 20261104 --arm warm > /tmp/M5-checkpoint-restore-validation.log 2>&1",
+          "result": "PASS: the 215-decision Warm-start episode checkpoint, replay journal, optimizer/target/online state, counters, and RNG state verified and restored under the current recovery-compatible source.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-28T13:24:07.172617Z",
+            "recorded_at_utc": "2026-10-28T13:24:38Z",
+            "exit_code": 0,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "log_path": ".agents/evidence/logs/M5-checkpoint-restore-validation-20261028.log",
+            "log_sha256": "4c264ca3c59ec81a84d2b77cd48771ccb728536e3a9489fe91addee80438fb9c",
+            "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+            "code_source_sha256": "4d5b986c3b0ac517215f5cdd26f33a5e155390b26dc8597da50041edb9db0a8e"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v > /tmp/M5-full-suite-recovery-fix-r5.log 2>&1",
+          "result": "Ran 356 tests in 140.902s; OK. Full repository regression after the checkpoint compatibility fix, recovery accounting, incident documentation, and episode-checkpoint verifier.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-28T13:27:51.236828Z",
+            "recorded_at_utc": "2026-10-28T13:28:51Z",
+            "exit_code": 0,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "log_path": ".agents/evidence/logs/M5-full-suite-after-recovery-fix-20261028.log",
+            "log_sha256": "90a1208252c22b2cd896272e6b76d33f2ea96a37c970ff20b9858140ebb8a82c",
+            "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+            "code_source_sha256": "4d5b986c3b0ac517215f5cdd26f33a5e155390b26dc8597da50041edb9db0a8e"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.rl.cli train-all > /tmp/M5-train-campaign-attempt1.log 2>&1",
+          "result": "FAILED during pre-run initialization before creating attempt 0001: immutable pre-RL snapshot metadata carried the prior source hash and was rejected by strict equality. No additional decision, run attempt, snapshot, or checkpoint was created; the fix permits only the exact recovery-compatible source hash when all other metadata and tensors match.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-28T13:29:40.685400Z",
+            "recorded_at_utc": "2026-10-28T13:31:56Z",
+            "exit_code": 1,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "log_path": ".agents/evidence/logs/M5-train-attempt1-snapshot-metadata-failure-20261028.log",
+            "log_sha256": "397622ce79e72b6d38bbb12edc9d239f266064b1b0aaedb70e83c8f7525ea4e1",
+            "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+            "code_source_sha256": "4d5b986c3b0ac517215f5cdd26f33a5e155390b26dc8597da50041edb9db0a8e"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -p 'test_m5_*.py' -v > /tmp/M5-focused-suite-initialization-compat-r3.log 2>&1",
+          "result": "Ran 38 M5-focused tests in 25.126s; OK. Includes an exact allowlist test for compatible initialization snapshot metadata.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-28T13:32:36.782451Z",
+            "recorded_at_utc": "2026-10-28T13:36:42Z",
+            "exit_code": 0,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+            "log_path": ".agents/evidence/logs/M5-focused-suite-snapshot-compat-20261028-command.log",
+            "log_sha256": "9c3ac4b2f80f78f0bd4596f629063f8cc70392ec37c42adee638f59a9a0faf5f",
+            "code_source_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -c \"import json; from videochess_rl.rl.cli import verify_transfer_inputs,_save_initialization_pair,load_config; model,transfer,meta=verify_transfer_inputs(); print(json.dumps([_save_initialization_pair(seed,model,meta,transfer) for seed in load_config()['training']['paired_seeds']],sort_keys=True))\" > /tmp/M5-initialization-compat-validation.log 2>&1",
+          "result": "PASS: reverified accepted M3/M4 inputs and all six immutable decision-0 snapshots; Warm shared weights equal M4, behavior heads excluded, paired Q heads equal, and Scratch representations independent.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-28T13:32:53.001616Z",
+            "recorded_at_utc": "2026-10-28T13:36:42Z",
+            "exit_code": 0,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "log_path": ".agents/evidence/logs/M5-initialization-snapshot-compat-validation-20261028.log",
+            "log_sha256": "edc36781ae49bd81d415534414bc1af7be2a5d96d79caadc4e1cce993af177cc",
+            "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+            "code_source_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v > /tmp/M5-full-suite-initialization-compat-r6.log 2>&1",
+          "result": "Ran 357 tests in 133.894s; OK. Final repository regression after exact initialization-snapshot code-hash compatibility, checkpoint recovery fixes, and all M5 documentation/evidence updates.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-28T13:39:24.280727Z",
+            "recorded_at_utc": "2026-10-28T13:39:47Z",
+            "exit_code": 0,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "log_path": ".agents/evidence/logs/M5-full-suite-snapshot-compat-20261028.log",
+            "log_sha256": "e70852899f1fe6280493875609f9a678066bb1ad595b5ca486a0b154e3c46813",
+            "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+            "code_source_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M5-pause-after-scratch-20261105-20261029.md",
+          "detail": "Owner-directed campaign hold after four completed official runs and Scratch 20261105 at 50000 decisions; wait for renewed direct authorization.",
+          "result": "Final snapshot/checkpoint sidecars, journal chain and resource ledger verified; M5-001 remains incomplete.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-29T04:28:47Z",
+            "exit_code": null,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M5-001-resumption-authorization-20261029.md",
+          "detail": "Direct owner authorization resuming M5-001 from the verified October 29 pause; initial four-run/snapshot/config/resource verification and full Scratch checkpoint restoration passed before resuming official training.",
+          "result": "Owner authorized completion of the two remaining official runs, full frozen evaluation, reporting, verification, and one open PR; G3, merge, PM self-acceptance, and M6 remain unauthorized.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-29T14:36:11Z",
+            "recorded_at_utc": "2026-10-29T14:36:11Z",
+            "exit_code": null,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "log_path": ".agents/evidence/M5-001-resumption-authorization-20261029.md"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M5-training-campaign-verification-20261029.json",
+          "detail": "All six official runs verified at exactly 50,000 valid decisions, 12,245 optimizer updates, 24 target syncs; 300,000 total decisions, six pre/final snapshot hashes and run resource counters recorded. Private replay/checkpoint files remain in local artifacts/m5/.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-29T21:16:10Z",
+            "exit_code": null,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M5-training-run-20261106-scratch-final-verification.json",
+          "detail": "Scratch 20261106 final snapshot SHA/sidecar, 50,000-record replay chain, exact mid-episode cap semantics, latest resumable checkpoint, and restored learner/replay/RNG state verified.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-29T21:16:10Z",
+            "exit_code": null,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "env PYTHONDONTWRITEBYTECODE=1 /usr/bin/time -v -o .agents/evidence/logs/M5-checkpoint-restore-verification-20261106.log.time /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/verify_m5_episode_checkpoint.py --training-seed 20261106 --arm scratch > .agents/evidence/logs/M5-checkpoint-restore-verification-20261106.log 2>&1",
+          "result": "PASS: 49,833-transition checkpoint restoration exact for online/target/optimizer/replay/counters/all RNG states; full journal prefix plus suffix verified through 50,000. 202.83s verifier elapsed; peak RSS 779,337,728 bytes.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-29T21:04:31Z",
+            "recorded_at_utc": "2026-10-29T21:16:10Z",
+            "exit_code": 0,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+            "code_source_sha256": "cdcc1fdc0ca0b324e49cfb8b0ff571496a554e9892dfb3620d6454a65ee16da0",
+            "log_path": ".agents/evidence/logs/M5-checkpoint-restore-verification-20261106-command.log",
+            "log_sha256": "5e3e540878bea4feb403eed39a5b636cdf5ea17ada8316fd461bb5661a2dfd95"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "env PYTHONDONTWRITEBYTECODE=1 /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -p 'test_m5_*.py' -v",
+          "result": "PASS: 44 focused M5 tests, including evaluation journal crash recovery, torn-tail preservation, exact snapshot-stage identity, and White/Black cluster bootstrap.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-29T21:12:07Z",
+            "recorded_at_utc": "2026-10-29T21:16:10Z",
+            "exit_code": 0,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+            "code_source_sha256": "42dc4cbcebd16d1d72a9c29829e8c289ef8c713167a1d033301fbe9faf96d65e",
+            "log_path": ".agents/evidence/logs/M5-focused-final-discovery-20261029.command.log",
+            "log_sha256": "8663798649515e35f1c3826085f72a6418019e83cf6377989f4427a6c0455267"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "env PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH PYTHONDONTWRITEBYTECODE=1 /usr/bin/time -v -o /tmp/M5-full-suite-pass-20261029.log.time /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v > /tmp/M5-full-suite-pass-20261029.log 2>&1",
+          "result": "PASS: 363 repository tests in 132.996s; 2:14.76s process wall, maximum RSS 359,744 KiB. The project venv was first on PATH so both the context-snapshot and Stockfish UCI-readiness tests ran in their supported environment.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-29T21:22:42Z",
+            "recorded_at_utc": "2026-10-29T21:22:22Z",
+            "exit_code": 0,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+            "code_source_sha256": "42dc4cbcebd16d1d72a9c29829e8c289ef8c713167a1d033301fbe9faf96d65e",
+            "log_path": ".agents/evidence/logs/M5-full-suite-final-20261029.command.log",
+            "log_sha256": "89c305a3f2c5d8b23e9cdfe8c37762a4c98a8fbb6641e043bf93e3f46e9d4ab7"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "env PYTHONDONTWRITEBYTECODE=1 /usr/bin/time -v -o .agents/evidence/logs/M5-full-suite-final-eval-durability-20261029.log.time /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v > .agents/evidence/logs/M5-full-suite-final-eval-durability-20261029.log 2>&1",
+          "result": "FAIL: 363 tests; 2 failures. The agent-context check saw the deliberately stale workspace checkpoint before it was refreshed, and Stockfish readiness failed because the project venv was not on PATH. Both environment causes were corrected; the exact rerun passed all tests.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-29T21:22:42Z",
+            "recorded_at_utc": "2026-10-29T21:22:22Z",
+            "exit_code": 1,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+            "code_source_sha256": "42dc4cbcebd16d1d72a9c29829e8c289ef8c713167a1d033301fbe9faf96d65e",
+            "log_path": ".agents/evidence/logs/M5-full-suite-environment-failure-20261029.command.log",
+            "log_sha256": "479a2b5e183ce94dfd02c69496fe716c596b8757580b55c68b4dba14e9b00cd5"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "env PYTHONDONTWRITEBYTECODE=1 /usr/bin/time -v -o .agents/evidence/logs/M5-focused-final-eval-durability-20261029.log.time /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m5_artifact_manifests tests.test_m5_checkpoint tests.test_m5_contract_fixtures tests.test_m5_evaluation tests.test_m5_initialization tests.test_m5_profile tests.test_m5_replay tests.test_m5_seeding tests.test_m5_targets tests.test_m5_training tests.test_m5_transition -v > .agents/evidence/logs/M5-focused-final-eval-durability-20261029.log 2>&1",
+          "result": "FAIL: 41 tests passed and 2 loader errors occurred before execution because direct unittest module loading omitted tests/ from sys.path; replay/checkpoint tests could not import test_m5_transition. Re-run with unittest discovery passed all 44 focused M5 tests.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-29T21:22:42Z",
+            "recorded_at_utc": "2026-10-29T21:22:22Z",
+            "exit_code": 1,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+            "code_source_sha256": "42dc4cbcebd16d1d72a9c29829e8c289ef8c713167a1d033301fbe9faf96d65e",
+            "log_path": ".agents/evidence/logs/M5-focused-direct-module-path-failure-20261029.command.log",
+            "log_sha256": "ab5ed637cc89582ea644b7352e0e26a1378d032cce21e5fb880acd144de954f5"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "env PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH PYTHONDONTWRITEBYTECODE=1 /usr/bin/time -v -o /tmp/M5-full-suite-final-identity-20261029.log.time /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v > /tmp/M5-full-suite-final-identity-20261029.log 2>&1",
+          "result": "PASS: 363 repository tests in 133.799s; 2:15.52 process wall, maximum RSS 357,192 KiB. The unchanged project venv was first on PATH; the context snapshot and Stockfish UCI readiness tests passed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-29T21:27:00Z",
+            "recorded_at_utc": "2026-10-29T21:26:47Z",
+            "exit_code": 0,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+            "code_source_sha256": "6a7aaef2fba3a55df78875dede7bbbcd875dab9e859249fcc65f44cfb71862ba",
+            "log_path": ".agents/evidence/logs/M5-full-suite-final-evaluation-journal-20261029.command.log",
+            "log_sha256": "b3c1093993f5f848f140f8cf2626fe5d2cfe9c3ebec8e0fcdca1093e70787ae9"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "env PYTHONDONTWRITEBYTECODE=1 /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -p 'test_m5_*.py' -v > /tmp/M5-focused-final-post-identity-check-20261029.log 2>&1",
+          "result": "PASS: 44 focused M5 tests in 20.518s. Coverage includes journal attempt/policy/scenario identity checks, torn-tail recovery, exact stage identity, and paired color cluster analysis.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-29T21:27:00Z",
+            "recorded_at_utc": "2026-10-29T21:26:47Z",
+            "exit_code": 0,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+            "code_source_sha256": "6a7aaef2fba3a55df78875dede7bbbcd875dab9e859249fcc65f44cfb71862ba",
+            "log_path": ".agents/evidence/logs/M5-focused-post-identity-check-20261029.command.log",
+            "log_sha256": "fa825558a09628cd7c4f1868719c617f0425a275b1d9047efd3b5fdffd37891d"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M5-evaluation-campaign-verification-20261029.json",
+          "detail": "All 15 policy event journals passed hash-chain recovery with 100 unique completed scenario keys each; all 1,500 raw rows, six cap truncations, zero incomplete attempts, model snapshot identities, and measured resource usage are recorded.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-29T22:05:44Z",
+            "exit_code": null,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M5-evaluation-source-identity-20261029.json",
+          "detail": "Evaluation source identity at launch is reconstructed from the exact package snapshot; subsequent post-run capped-reward analysis helper is explicitly excluded and separately hashed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-29T22:05:44Z",
+            "exit_code": null,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "systemd-inhibit --what=sleep --mode=block --why='Owner-authorized M5 frozen evaluation campaign' env PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH PYTHONDONTWRITEBYTECODE=1 /usr/bin/time -v -o .agents/evidence/logs/M5-evaluation-official-20261029.log.time /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.rl.cli evaluate > .agents/evidence/logs/M5-evaluation-official-20261029.log 2>&1",
+          "result": "PASS: all 15 frozen policy schedules completed 100/100 scenarios (1,500/1,500 games); six valid 400-decision truncations were preserved distinctly, zero unresolved/incomplete scenarios, zero journal diagnostics. CPU-only, 32:54.35 process wall, peak RSS 275,792 KiB.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-29T21:28:01Z",
+            "recorded_at_utc": "2026-10-29T22:06:00Z",
+            "exit_code": 0,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+            "code_source_sha256": "ccb7d76be64c55ae4c4519da3a5647a5a2da86924a00d9490a7e807cc7497848",
+            "log_path": ".agents/evidence/logs/M5-evaluation-official-20261029.command.log",
+            "log_sha256": "09df63d5fb9fe1b287008de9a0c92ef2e7f0253e6c5fd85ed59e300d4f8af3c9"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "env PYTHONDONTWRITEBYTECODE=1 /usr/bin/time -v -o .agents/evidence/logs/M5-evaluation-capped-sensitivity-20261029.log.time /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/m5_evaluation_sensitivity.py > .agents/evidence/logs/M5-evaluation-capped-sensitivity-20261029.log 2>&1",
+          "result": "FAIL: script import did not find videochess_rl when launched by path; corrected by adding the repository root to sys.path, then the r2 command completed successfully. No evaluation rows or manifests were modified by the failed analysis attempt.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-29T22:03:00Z",
+            "recorded_at_utc": "2026-10-29T22:06:00Z",
+            "exit_code": 1,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+            "code_source_sha256": "362eafa08ee799b747501347981174b0b9e7d7f8372a1a2119fb8dbabf6f9dda",
+            "log_path": ".agents/evidence/logs/M5-evaluation-capped-sensitivity-import-failure-20261029.command.log",
+            "log_sha256": "f87dd9c4e1e0b0b4b500c70233345b25cced3318c685ca7774486a90e324c997"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "env PYTHONDONTWRITEBYTECODE=1 /usr/bin/time -v -o .agents/evidence/logs/M5-evaluation-capped-sensitivity-20261029-r2.log.time /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/m5_evaluation_sensitivity.py > .agents/evidence/logs/M5-evaluation-capped-sensitivity-20261029-r2.log 2>&1",
+          "result": "PASS: supplementary paired capped-reward analysis produced 4 crossed-cluster comparisons, 36 fixed-policy comparisons, and 15 color comparisons from verified immutable evaluation journals. It retains observed timeout reward 0 without assigning W/D/L; analysis is post hoc and was not used for checkpoint selection.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-29T22:04:46Z",
+            "recorded_at_utc": "2026-10-29T22:06:00Z",
+            "exit_code": 0,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+            "code_source_sha256": "362eafa08ee799b747501347981174b0b9e7d7f8372a1a2119fb8dbabf6f9dda",
+            "log_path": ".agents/evidence/logs/M5-evaluation-capped-sensitivity-20261029.command.log",
+            "log_sha256": "90a1f89e2af3e70c518495353859812be3681f2ccb1bd1787e0a0df55424ccac"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "sha256sum docs/04-research/M5_FINAL_REPORT.md",
+          "result": "Created evidence-backed final M5 report; SHA-256 d11b549b1ac86fe0298f985840ac3dfb32bc74e7751b020582ecc9a829edbbf9.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-29T22:17:57Z",
+            "recorded_at_utc": "2026-10-29T22:17:57Z",
+            "exit_code": 0,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "log_path": ".agents/evidence/logs/M5-final-report-hash-20261029.log",
+            "log_sha256": "8ca488dc06e2224541c3b0ed1b533e7e1d55ecc30e09a4df49a7c9e5ac526754"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 364 tests in 135.606s; OK.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-29T22:20:38Z",
+            "recorded_at_utc": "2026-10-29T22:20:38Z",
+            "exit_code": 0,
+            "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+            "log_path": ".agents/evidence/logs/M5-full-suite-final-closeout-r2.log",
+            "log_sha256": "7c452634e0241695bc7a9570fa72ecbafd317086bc06d14ae52d48557289bd7e"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "gh pr view 11 --json number,url,state,baseRefName,headRefName,headRefOid,statusCheckRollup",
+          "result": "PR #11 is OPEN against initial-idea at head 81fc1fe269ffafb6006c3b32d96e38fbb91eb5a3; repository preflight check is QUEUED.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-29T22:21:40Z",
+            "recorded_at_utc": "2026-10-29T22:21:40Z",
+            "exit_code": 0,
+            "git_revision": "81fc1fe269ffafb6006c3b32d96e38fbb91eb5a3",
+            "log_path": ".agents/evidence/logs/M5-PR-11-verification-20261029.log",
+            "log_sha256": "a87152496dd14bcde49af6fb52e46337994dd104cb889f32eeb975e48a38c993"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M5-remediation-log-inventory-20261030.json",
+          "detail": "Read-only inventory and checksum/content audit of 28 M5 log paths referenced by verified backlog command/test records.",
+          "result": "All 28 files were present, hash/content matched available provenance, sensitive-pattern scan had no matches, and exact paths were force-added.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T04:55:33Z",
+            "exit_code": null,
+            "git_revision": "575dce5978567417d2915d5dd36a47873293b607",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M5-source-reconciliation-20261030.json",
+          "detail": "Machine-readable verification of the evaluation source identity and training source hash group/checkpoint file hashes.",
+          "result": "Evaluation source reconstruction is exact; the old training checkpoint.py, cli.py, and replay.py blob bytes are missing, and the seed-20261106 CLI snapshot is unavailable. RSK-014 remains open because replay-sampling semantics cannot be compared.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T04:55:33Z",
+            "exit_code": null,
+            "git_revision": "575dce5978567417d2915d5dd36a47873293b607",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "docs/04-research/M5_REMEDIATION_AUDIT.md",
+          "detail": "Post-review audit covering clean-clone provenance failures, private artifacts, source identity, code remediation, and the remaining acceptance blocker.",
+          "result": "28 log references reconciled; private artifact/campaign records pass; source history limitation is disclosed without reconstructing or replacing historical evidence.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T04:55:33Z",
+            "exit_code": null,
+            "git_revision": "575dce5978567417d2915d5dd36a47873293b607",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "cd /tmp/m5-ci-repro-575dce-20261030 && python3 scripts/agent_preflight.py",
+          "result": "Reproduced 28 TASK_EVIDENCE_PROVENANCE errors at tasks[13].",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T04:55:33Z",
+            "recorded_at_utc": "2026-10-30T04:55:33Z",
+            "exit_code": 1,
+            "git_revision": "575dce5978567417d2915d5dd36a47873293b607",
+            "log_path": ".agents/evidence/logs/M5-pre-fix-clean-clone-preflight-575dce-20261030.log",
+            "log_sha256": "03e1651098a28cfb62ed07c5f98e064719ed36c25079ce4b1b83caae82f57c04"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -p 'test_m5_*.py' -v",
+          "result": "Ran 48 tests in 20.701s; OK.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T04:53:05Z",
+            "recorded_at_utc": "2026-10-30T04:55:33Z",
+            "exit_code": 0,
+            "git_revision": "575dce5978567417d2915d5dd36a47873293b607",
+            "log_path": ".agents/evidence/logs/M5-focused-remediation-20261030.log",
+            "log_sha256": "bec908eca457c871d3c5abb7774762950a5be0da093424f5fff8bf244b7eb4f3"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/verify_m5_source_identity.py",
+          "result": "Verified evaluation source reconstruction exactly; 39 direct per-file matches plus 3 byte-reconstructed matches produce ccb7d76be64c55ae4c4519da3a5647a5a2da86924a00d9490a7e807cc7497848. Training old source contents remain unavailable.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T04:54:06Z",
+            "recorded_at_utc": "2026-10-30T04:55:33Z",
+            "exit_code": 0,
+            "git_revision": "575dce5978567417d2915d5dd36a47873293b607",
+            "log_path": ".agents/evidence/logs/M5-source-reconciliation-20261030.log",
+            "log_sha256": "30d1e875fcba3b4381f00f2a62b39da56a1192328c8908ea125df64d0cd5d73c"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/verify_m5_campaign_evidence.py",
+          "result": "PASS: 6 exact 50,000-decision runs, 73,470 updates, 144 target syncs, 300,000 replay records; 15 policies and 1,500 unique scenarios, 1,494 terminal games and six truncations; resource ledger within caps.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T04:54:06Z",
+            "recorded_at_utc": "2026-10-30T04:55:33Z",
+            "exit_code": 0,
+            "git_revision": "575dce5978567417d2915d5dd36a47873293b607",
+            "log_path": ".agents/evidence/logs/M5-private-campaign-verification-20261030.log",
+            "log_sha256": "465e0f94fe4ad2c80b3d9045a040c807608047fad32070c25ec586de5992e32b"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/m5_artifact_manifests.py --verify",
+          "result": "PASS: verified artifacts/m5/artifact-manifest.json and 7 run manifests; total private M5 artifacts 6,544,747,450 bytes.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T04:54:06Z",
+            "recorded_at_utc": "2026-10-30T04:55:33Z",
+            "exit_code": 0,
+            "git_revision": "575dce5978567417d2915d5dd36a47873293b607",
+            "log_path": ".agents/evidence/logs/M5-artifact-manifest-verify-remediation-20261030.log",
+            "log_sha256": "dedff30a4ec40a88f02d32c75fa155531f5f75ac0254806d8dfb01db4939f06f"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "find /home/dodaonam/Projects/atari-videochess-rl-m5 /tmp -type f (historical M5 cli.py/replay.py/checkpoint.py backup names) -print; find /home/dodaonam/Projects -type f (videochess_rl/rl/cli.py|replay.py|checkpoint.py) -print | sort",
+          "result": "Only the current M5 worktree source paths were found; no backup or alternate source worktree was found.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T04:59:59Z",
+            "recorded_at_utc": "2026-10-30T05:00:05Z",
+            "exit_code": 0,
+            "git_revision": "575dce5978567417d2915d5dd36a47873293b607",
+            "log_path": ".agents/evidence/logs/M5-source-backup-search-20261030.log",
+            "log_sha256": "3783a9c65a14d4b6fbb00e320a516bb932df0c1ac329d10b86caf48ab3b3a9a9"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 368 tests in 138.487s; OK.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:02:13Z",
+            "recorded_at_utc": "2026-10-30T05:09:10Z",
+            "exit_code": 0,
+            "git_revision": "063c24cc9ab221e264bf06aadc6f57f7b45c7017",
+            "log_path": ".agents/evidence/logs/M5-full-suite-final-remediation-063c24c.log",
+            "log_sha256": "a2d7d6d5fbe1176f8eae9c9259a3de65ff7d049a60ce4629aae1b8e30d55515f"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M4_DIR=/nonexistent/accepted-m4 VIDEOCHESS_M5_M3_RELEASE_DIR=/nonexistent/accepted-m3 PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 368 tests in 136.734s; OK (skipped=1 because accepted private M4 artifact is unavailable in clean clone); local suite at this revision ran the M4 transfer test.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:05:15Z",
+            "recorded_at_utc": "2026-10-30T05:09:10Z",
+            "exit_code": 0,
+            "git_revision": "063c24cc9ab221e264bf06aadc6f57f7b45c7017",
+            "log_path": ".agents/evidence/logs/M5-clean-clone-full-suite-063c24c.log",
+            "log_sha256": "73c455cf8b4ef0638d37285e4044c8a5e2e3209aae9515c1447b1b64c75d79d4"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "cd /tmp/m5-clean-final-063c24c && python3 scripts/agent_preflight.py --json",
+          "result": "Clean-clone canonical preflight PASS on 063c24cc9ab221e264bf06aadc6f57f7b45c7017; artifact directory warning is expected because private artifacts are not in Git.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:08:46Z",
+            "recorded_at_utc": "2026-10-30T05:09:10Z",
+            "exit_code": 0,
+            "git_revision": "063c24cc9ab221e264bf06aadc6f57f7b45c7017",
+            "log_path": ".agents/evidence/logs/M5-clean-clone-preflight-063c24c.log",
+            "log_sha256": "95137854b6f11bc727881d6e2eaf88e7c4f308d7781ed3550d8ba12a18a9a684"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "gh run view 41006247210 --repo dodaonam/atari-videochess-rl --json conclusion,headSha,jobs,url",
+          "result": "PASS on exact PR head 063c24cc9ab221e264bf06aadc6f57f7b45c7017; Repository preflight and standard-library context/bundle/M5 contract-oracle tests passed. This workflow did not run the PyTorch full suite.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:08:47Z",
+            "recorded_at_utc": "2026-10-30T05:09:10Z",
+            "exit_code": 0,
+            "git_revision": "063c24cc9ab221e264bf06aadc6f57f7b45c7017",
+            "log_path": ".agents/evidence/logs/M5-github-ci-063c24c.log",
+            "log_sha256": "fc7c972901bd0d2bcd4fa212c2414eeff842b1dd8578b4637cbbcc89b14f82c9"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "sha256sum docs/04-research/M5_FINAL_REPORT.md",
+          "result": "57a13beb53ec448fd7223cd4d3d25b40d85cd33b4d93ba530463c379f9a505e2  docs/04-research/M5_FINAL_REPORT.md",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:09:58Z",
+            "recorded_at_utc": "2026-10-30T05:10:14Z",
+            "exit_code": 0,
+            "git_revision": "063c24cc9ab221e264bf06aadc6f57f7b45c7017",
+            "log_path": ".agents/evidence/logs/M5-final-report-remediation-20261030.log",
+            "log_sha256": "3d5a1aef710df19170d498a10081c8e4a385757eb3bb6aaf682d19d34d96d756"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "sha256sum docs/04-research/M5_REMEDIATION_AUDIT.md",
+          "result": "88bb6d92c91b247ad9222d81507e71060753aa9e202a6ac2cf92456aa0c00bce  docs/04-research/M5_REMEDIATION_AUDIT.md",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:09:58Z",
+            "recorded_at_utc": "2026-10-30T05:10:14Z",
+            "exit_code": 0,
+            "git_revision": "063c24cc9ab221e264bf06aadc6f57f7b45c7017",
+            "log_path": ".agents/evidence/logs/M5-remediation-audit-hash-20261030.log",
+            "log_sha256": "83b954dcfb8a4e08c7055e306bff72961921115bd927c3b57b380ce6cd1b5f77"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 368 tests in 142.808s; OK.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:11:19Z",
+            "recorded_at_utc": "2026-10-30T05:15:40Z",
+            "exit_code": 0,
+            "git_revision": "026d41b7cb275affef5cffc27747449da7e045a3",
+            "log_path": ".agents/evidence/logs/M5-full-suite-final-026d41b.log",
+            "log_sha256": "4b935278bd79d79b51cec604dd342da4e460b4249e2107ee9b284b44272c65c4"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M4_DIR=/nonexistent/accepted-m4 VIDEOCHESS_M5_M3_RELEASE_DIR=/nonexistent/accepted-m3 PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 368 tests in 142.699s; OK (skipped=1 because private M4 checkpoint is unavailable in the clean clone); local suite at this revision executed that test.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:11:19Z",
+            "recorded_at_utc": "2026-10-30T05:15:40Z",
+            "exit_code": 0,
+            "git_revision": "026d41b7cb275affef5cffc27747449da7e045a3",
+            "log_path": ".agents/evidence/logs/M5-clean-clone-full-suite-026d41b.log",
+            "log_sha256": "cc26e9f9454d74bacaf3642ae52573862e4b3cab79cc7862a4be538acfb8a035"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "cd /tmp/m5-clean-final-026d41b && python3 scripts/agent_preflight.py --json",
+          "result": "Clean-clone canonical preflight PASS on head 026d41b7cb275affef5cffc27747449da7e045a3; only private-artifact manifest warning.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:14:11Z",
+            "recorded_at_utc": "2026-10-30T05:15:40Z",
+            "exit_code": 0,
+            "git_revision": "026d41b7cb275affef5cffc27747449da7e045a3",
+            "log_path": ".agents/evidence/logs/M5-clean-clone-preflight-026d41b.log",
+            "log_sha256": "5a1c396165fbeeef1737b247cbe42b527bccfefa9d682a23a54e4f4a03e55c23"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "gh run view 41006965692 --repo dodaonam/atari-videochess-rl --json conclusion,headSha,jobs,url",
+          "result": "PASS on exact PR head 026d41b7cb275affef5cffc27747449da7e045a3; preflight and standard-library context/bundle/M5 oracle tests passed, not the local PyTorch suite.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:14:12Z",
+            "recorded_at_utc": "2026-10-30T05:15:40Z",
+            "exit_code": 0,
+            "git_revision": "026d41b7cb275affef5cffc27747449da7e045a3",
+            "log_path": ".agents/evidence/logs/M5-github-ci-026d41b.log",
+            "log_sha256": "1a921d5d0a256b94e57a09747034abf923d526a2350814144a33b965f3f43e06"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /usr/bin/time -f 'ELAPSED_SECONDS=%e MAX_RSS_KB=%M EXIT=%x' /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 368 tests in 145.322s\n\nOK\n\nELAPSED_SECONDS=147.25 MAX_RSS_KB=357588 EXIT=0",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:21:39Z",
+            "recorded_at_utc": "2026-10-30T05:21:57Z",
+            "exit_code": 0,
+            "git_revision": "57c8bce28b151b3f30b03b3b972561e142d18b16",
+            "log_path": ".agents/evidence/logs/M5-full-suite-final-57c8bce.log",
+            "log_sha256": "94cc3ce379df1cb2f2398c07357ae01c0f8f7cf00c2fe3b5eec2657cb667d4a9"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M4_DIR=/nonexistent/accepted-m4 VIDEOCHESS_M5_M3_RELEASE_DIR=/nonexistent/accepted-m3 PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /usr/bin/time -f 'ELAPSED_SECONDS=%e MAX_RSS_KB=%M EXIT=%x' /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s /tmp/m5-clean-final-57c8bce/tests -v",
+          "result": "Ran 368 tests in 144.747s\n\nOK (skipped=1)\n\nELAPSED_SECONDS=146.98 MAX_RSS_KB=356604 EXIT=0",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:21:39Z",
+            "recorded_at_utc": "2026-10-30T05:21:57Z",
+            "exit_code": 0,
+            "git_revision": "57c8bce28b151b3f30b03b3b972561e142d18b16",
+            "log_path": ".agents/evidence/logs/M5-clean-clone-full-suite-57c8bce.log",
+            "log_sha256": "c1f2276d7de805d71a55e38b8e898970914612f5a51852c3ffa87085d7e182a1"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py --json > /tmp/M5-local-preflight-57c8bce.json",
+          "result": "\"ok\": true,",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:21:39Z",
+            "recorded_at_utc": "2026-10-30T05:21:57Z",
+            "exit_code": 0,
+            "git_revision": "57c8bce28b151b3f30b03b3b972561e142d18b16",
+            "log_path": ".agents/evidence/logs/M5-local-preflight-57c8bce.log",
+            "log_sha256": "64ebacc882d385c7f2faf39e750cca689c23010eae66a60e600c99f09719fad5"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "cd /tmp/m5-clean-final-57c8bce && python3 scripts/agent_preflight.py --json",
+          "result": "\"ok\": true,",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:21:39Z",
+            "recorded_at_utc": "2026-10-30T05:21:57Z",
+            "exit_code": 0,
+            "git_revision": "57c8bce28b151b3f30b03b3b972561e142d18b16",
+            "log_path": ".agents/evidence/logs/M5-clean-clone-preflight-57c8bce.log",
+            "log_sha256": "c3ffcabeb6c38dff0853281f799202abc9ca2cd9f5eb8dfb2f4ff9df1ea3d5e7"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "gh run view 41007586702 --repo dodaonam/atari-videochess-rl --log",
+          "result": "Repository preflight workflow conclusion: success for exact head 57c8bce28b151b3f30b03b3b972561e142d18b16; standard-library context/bundle/M5 contract-oracle checks completed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:21:42Z",
+            "recorded_at_utc": "2026-10-30T05:21:57Z",
+            "exit_code": 0,
+            "git_revision": "57c8bce28b151b3f30b03b3b972561e142d18b16",
+            "log_path": ".agents/evidence/logs/M5-github-ci-57c8bce.log",
+            "log_sha256": "d75ecbc28e032fcef0347daaa7b85817a959bc0ca39142d7d8ec62fb53813ef0"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M5-source-recovery-20261030.json",
+          "detail": "Owner-supplied complete Codex transcript identity, byte-exact replay/checkpoint source extraction and recorded CLI excerpts/patch events.",
+          "result": "checkpoint.py and replay.py match their historical SHA-256 values exactly; complete historical CLI files remain unavailable and are not represented as recovered.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T07:38:42Z",
+            "exit_code": null,
+            "git_revision": "d16e1cef7d72e8109415d12d19d6f6f0f71b7871",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M5-source-recovery-verification-20261030.json",
+          "detail": "Machine-readable output of read-only transcript/source/checkpoint-history/attempt verification.",
+          "result": "PASS: transcript identity, both exact historical source hashes, exact three-file runtime diff set, identical replay sampling/state/append operations, and no resume for the two 20261106 attempts.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T07:38:42Z",
+            "exit_code": null,
+            "git_revision": "d16e1cef7d72e8109415d12d19d6f6f0f71b7871",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M5-source-semantics-20261030.json",
+          "detail": "File-by-file source differences and training/checkpoint/replay semantics assessment, including the incomplete optional full-history differential.",
+          "result": "No evidenced learning-distribution change. Full CLI bytes remain a disclosed auditability limitation; independent PM disposition remains pending.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T07:38:42Z",
+            "exit_code": null,
+            "git_revision": "d16e1cef7d72e8109415d12d19d6f6f0f71b7871",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/verify_m5_source_recovery.py --require-private-artifacts",
+          "result": "exact transcript identity and source-line extraction verified",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T07:32:47Z",
+            "recorded_at_utc": "2026-10-30T07:32:47Z",
+            "exit_code": 0,
+            "git_revision": "d16e1cef7d72e8109415d12d19d6f6f0f71b7871",
+            "log_path": ".agents/evidence/logs/M5-source-recovery-verify-20261030-r2.log",
+            "log_sha256": "47c7fcb4d3b45d88f29088bd0a20f1cc5f1d0c34438e4f4bf0803d24ffdfedca"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /usr/bin/time -v /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -p test_m5_*source*.py -v",
+          "result": "Ran 15 tests in 1.719s",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T07:37:44Z",
+            "recorded_at_utc": "2026-10-30T07:37:48Z",
+            "exit_code": 0,
+            "git_revision": "d16e1cef7d72e8109415d12d19d6f6f0f71b7871",
+            "log_path": ".agents/evidence/logs/M5-source-focused-tests-20261030-r2.log",
+            "log_sha256": "b685515bcfa67a7e4ba87c03ca164efc584a4c2be9dae9945f5a6415e39368c5"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "/usr/bin/time -v env PYTHONDONTWRITEBYTECODE=1 /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/verify_m5_recovered_checkpoint_equivalence.py",
+          "result": "Command terminated by signal 15",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T07:12:03Z",
+            "recorded_at_utc": "2026-10-30T07:32:20Z",
+            "exit_code": 143,
+            "git_revision": "d16e1cef7d72e8109415d12d19d6f6f0f71b7871",
+            "log_path": ".agents/evidence/logs/M5-authentic-source-restore-equivalence-20261030-r2.log",
+            "log_sha256": "f7f2ab094bd404d4643e799606c6c3dbc5724ddfd4828180d1bb82576ee06bb7"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "/usr/bin/time -v env PYTHONDONTWRITEBYTECODE=1 /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/verify_m5_recovered_checkpoint_equivalence.py",
+          "result": "ImportError: cannot import name 'sha256_file'",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T07:11:08Z",
+            "recorded_at_utc": "2026-10-30T07:11:10Z",
+            "exit_code": 1,
+            "git_revision": "d16e1cef7d72e8109415d12d19d6f6f0f71b7871",
+            "log_path": ".agents/evidence/logs/M5-authentic-source-restore-equivalence-20261030.log",
+            "log_sha256": "68f2f9cb6009e9c0750afda118ba04384dbef3c4384c76b6c3fddf67e764b928"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /usr/bin/time -v /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -p 'test_m5_*source*.py' -v",
+          "result": "Ran 14 tests in 2.096s",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T07:32:47Z",
+            "recorded_at_utc": "2026-10-30T07:32:51Z",
+            "exit_code": 0,
+            "git_revision": "d16e1cef7d72e8109415d12d19d6f6f0f71b7871",
+            "log_path": ".agents/evidence/logs/M5-source-focused-tests-20261030.log",
+            "log_sha256": "864cc7da9b2bea0fd2ef07c808455f7fa6c76a421f69645b3b5bb0fd898cfe74"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /usr/bin/time -v /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -p test_m5_*.py -v",
+          "result": "Ran 63 tests in 26.120s",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T07:41:27Z",
+            "recorded_at_utc": "2026-10-30T07:41:56Z",
+            "exit_code": 0,
+            "git_revision": "d16e1cef7d72e8109415d12d19d6f6f0f71b7871",
+            "log_path": ".agents/evidence/logs/M5-focused-suite-forensic-20261030.log",
+            "log_sha256": "6b3beb78560655a2b7adc16af57cf64cbd3df495b2738afe44d766f271982a6a"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/verify_m5_source_recovery.py --require-private-artifacts",
+          "result": "exact transcript identity and source-line extraction verified",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T07:42:50Z",
+            "recorded_at_utc": "2026-10-30T07:42:50Z",
+            "exit_code": 0,
+            "git_revision": "d16e1cef7d72e8109415d12d19d6f6f0f71b7871",
+            "log_path": ".agents/evidence/logs/M5-source-recovery-verify-20261030-r4.log",
+            "log_sha256": "0daa62bd0589146d0f4943c4c307f5097304b29fdda647681847aeec368892ea"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /usr/bin/time -v /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 383 tests in 164.146s",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T07:46:21Z",
+            "recorded_at_utc": "2026-10-30T07:49:08Z",
+            "exit_code": 0,
+            "git_revision": "d16e1cef7d72e8109415d12d19d6f6f0f71b7871",
+            "staged_diff_sha256": "da696d5515f3dfe2ec53d8137914d444ffc4c73eb61a8679212b1d85455ec2ab  -",
+            "log_path": ".agents/evidence/logs/M5-full-suite-forensic-20261030.log",
+            "log_sha256": "73cb5528fb4784cb4fbf737bd5a2f4bf7181378d7dafe1a6f3b5a1952bb96dbf"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/m5_artifact_manifests.py --verify",
+          "result": "\"status\": \"verified\"",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T07:56:40Z",
+            "recorded_at_utc": "2026-10-30T07:57:11Z",
+            "exit_code": 0,
+            "git_revision": "8192a6124dc0d5938bf0ac14ca729f0561573101",
+            "log_path": ".agents/evidence/logs/M5-artifact-manifest-8192a612.log",
+            "log_sha256": "38556c16ed5dfe8aafa6df3c30827b035896ab89c952afa96fb564c089a32a9b"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/verify_m5_campaign_evidence.py",
+          "result": "\"valid_decisions\": 300000",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T07:56:40Z",
+            "recorded_at_utc": "2026-10-30T07:57:08Z",
+            "exit_code": 0,
+            "git_revision": "8192a6124dc0d5938bf0ac14ca729f0561573101",
+            "log_path": ".agents/evidence/logs/M5-campaign-evidence-8192a612.log",
+            "log_sha256": "c5a23ed9ae5690e27c67ce2f7c61ebd47cefb39326de0cdfd3ca1c622ac7906a"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/verify_m5_source_identity.py",
+          "result": "\"result\": \"exact match\"",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T07:56:40Z",
+            "recorded_at_utc": "2026-10-30T07:56:44Z",
+            "exit_code": 0,
+            "git_revision": "8192a6124dc0d5938bf0ac14ca729f0561573101",
+            "log_path": ".agents/evidence/logs/M5-source-identity-8192a612.log",
+            "log_sha256": "0cb32e243a5f726365edf77e11f2cca7fc4895e07863f8ffda9094129cf44b08"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/verify_m5_source_recovery.py --require-private-artifacts",
+          "result": "exact transcript identity and source-line extraction verified",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T07:57:22Z",
+            "recorded_at_utc": "2026-10-30T07:57:22Z",
+            "exit_code": 0,
+            "git_revision": "8192a6124dc0d5938bf0ac14ca729f0561573101",
+            "log_path": ".agents/evidence/logs/M5-source-recovery-8192a612.log",
+            "log_sha256": "5879344777401f7d82aad2add3c19d73d7598b6d373424f81d23e4e7b26a7e9c"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/agent_preflight.py --json",
+          "result": "\"ok\": true",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T08:00:40Z",
+            "recorded_at_utc": "2026-10-30T08:00:42Z",
+            "exit_code": 0,
+            "git_revision": "8192a6124dc0d5938bf0ac14ca729f0561573101",
+            "log_path": ".agents/evidence/logs/M5-preflight-8192a612.log",
+            "log_sha256": "b18f7d1248ae1819d7bd2b63a75bf73983f748e33f96abada3249b8bf87dd9c5"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/agent_preflight.py --json",
+          "result": "\"ok\": true",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T08:00:40Z",
+            "recorded_at_utc": "2026-10-30T08:00:42Z",
+            "exit_code": 0,
+            "git_revision": "8192a6124dc0d5938bf0ac14ca729f0561573101",
+            "log_path": ".agents/evidence/logs/M5-clean-preflight-8192a612.log",
+            "log_sha256": "7fc77c27c27aaeeb5671747d77e22ebff02f220892fcd2aa4ec83fa5dfe42cbb"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /usr/bin/time -v /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 383 tests in 167.357s",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T07:53:27Z",
+            "recorded_at_utc": "2026-10-30T07:56:17Z",
+            "exit_code": 0,
+            "git_revision": "8192a6124dc0d5938bf0ac14ca729f0561573101",
+            "log_path": ".agents/evidence/logs/M5-full-suite-8192a612.log",
+            "log_sha256": "28f7474744ffb7c3e13bd025cd3119be8c28fbd9c960be11373f6cb792e21191"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M4_DIR=/nonexistent/accepted-m4 VIDEOCHESS_M5_M3_RELEASE_DIR=/nonexistent/accepted-m3 PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /usr/bin/time -v /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 383 tests in 156.621s",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T07:57:30Z",
+            "recorded_at_utc": "2026-10-30T08:00:09Z",
+            "exit_code": 0,
+            "git_revision": "8192a6124dc0d5938bf0ac14ca729f0561573101",
+            "log_path": ".agents/evidence/logs/M5-clean-clone-suite-8192a612.log",
+            "log_sha256": "9225cf523b49d46c1b58be91d5f10e72914c7b0453f465bcb6812860a48998c4"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "gh run view 41022841165 --repo dodaonam/atari-videochess-rl --json conclusion,headSha,url,jobs",
+          "result": "\"conclusion\":\"success\"",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T08:00:40Z",
+            "recorded_at_utc": "2026-10-30T08:00:42Z",
+            "exit_code": 0,
+            "git_revision": "8192a6124dc0d5938bf0ac14ca729f0561573101",
+            "log_path": ".agents/evidence/logs/M5-github-ci-8192a612.log",
+            "log_sha256": "825043fc861a4ab835e351d7495716c9e0930ddea4937d44a4480d41c75f8c08"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M5-PM-acceptance-20261030.md",
+          "detail": "Permanent record of independent PM disposition on PR #11 comment 6518394524; closes M5-001 and BLK-003 by explicit PM risk acceptance while retaining RSK-014.",
+          "result": "Independent PM accepted M5-01 through M5-05 for the completed simulator campaign, with documented limitations on M5-03/M5-04.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-30T08:22:10Z",
+            "recorded_at_utc": "2026-10-30T08:28:16Z",
+            "exit_code": null,
+            "git_revision": "35a99f0eaf14039a94c199e51da370ec2b2e7fec",
+            "log_path": ".agents/evidence/M5-PM-acceptance-20261030.md"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH PYTHONDONTWRITEBYTECODE=1 /usr/bin/time -v /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 383 tests in 161.934s",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T08:33:17Z",
+            "recorded_at_utc": "2026-10-30T08:35:59Z",
+            "exit_code": 0,
+            "git_revision": "35a99f0eaf14039a94c199e51da370ec2b2e7fec",
+            "log_path": ".agents/evidence/logs/M5-PM-closeout-full-suite-20261030.log",
+            "log_sha256": "4439ef879b55489188fe2d7600a240df019f3ba3f00c6d16ec49c250789734e0"
+          }
+        }
+      ],
+      "next_action": "",
       "plan_ref": ".agents/plans/M05-double-dqn.md"
     }
   ],
-  "updated_at_utc": "2026-10-27T17:15:47Z"
+  "updated_at_utc": "2026-10-30T05:21:57Z"
 }

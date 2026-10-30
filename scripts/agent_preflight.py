@@ -159,6 +159,18 @@ def _relative_path(value: object) -> bool:
     return not path.is_absolute() and ".." not in path.parts
 
 
+def _git_path_is_tracked(root: Path, relative_path: str) -> bool:
+    """Return whether a repository-relative evidence path is in the Git index."""
+    result = subprocess.run(
+        ["git", "ls-files", "--error-unmatch", "--", relative_path],
+        cwd=root,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    return result.returncode == 0
+
+
 def _sensitive_relative_path(value: str) -> bool:
     path = Path(value)
     name = path.name.lower()
@@ -766,6 +778,20 @@ def _check_task_graph(backlog: dict[str, object], root: Path, state: dict[str, o
                     if not isinstance(revision, str) or not re.fullmatch(r"[0-9a-f]{40,64}", revision):
                         errors.append({"code": "TASK_EVIDENCE_PROVENANCE", "path": where, "message": "Verified evidence requires a full lowercase Git revision."})
                     kind = evidence.get("kind")
+                    if (
+                        task_id == "M5-001"
+                        and provenance["status"] in {"verified", "manual_verified"}
+                        and isinstance(provenance.get("log_path"), str)
+                        and _relative_path(provenance["log_path"])
+                        and not _sensitive_relative_path(provenance["log_path"])
+                        and (root / provenance["log_path"]).is_file()
+                        and not _git_path_is_tracked(root, provenance["log_path"])
+                    ):
+                        errors.append({
+                            "code": "TASK_EVIDENCE_LOG_UNTRACKED",
+                            "path": where,
+                            "message": "M5 verified evidence logs must be tracked so the provenance survives a clean clone.",
+                        })
                     if kind in {"command", "test"} and provenance["status"] == "verified":
                         executed_at = provenance["executed_at_utc"]
                         if not isinstance(executed_at, str) or not executed_at.endswith("Z"):

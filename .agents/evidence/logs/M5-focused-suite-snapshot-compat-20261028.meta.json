@@ -1,0 +1,13 @@
+{
+  "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -p 'test_m5_*.py' -v > /tmp/M5-focused-suite-initialization-compat-r3.log 2>&1",
+  "executed_at_utc": "2026-10-28T13:32:36.782451Z",
+  "recorded_at_utc": "2026-10-28T13:36:42Z",
+  "exit_code": 0,
+  "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+  "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+  "code_source_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+  "log_path": ".agents/evidence/logs/M5-focused-suite-snapshot-compat-20261028.log",
+  "log_sha256": "fd1769f52ab6424ace832235134a031de5db9b0240048a4752175204de08e352",
+  "result": "Ran 38 M5-focused tests in 25.126s; OK. Includes an exact allowlist test for compatible initialization snapshot metadata.",
+  "execution_start_timestamp_persisted": false
+}
