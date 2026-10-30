@@ -2763,16 +2763,14 @@
       "id": "M5-001",
       "title": "Implement and verify the paired Double DQN simulator experiment",
       "milestone": "M5",
-      "status": "blocked",
+      "status": "done",
       "depends_on": [
         "M2-001",
         "M3-001",
         "M4-001"
       ],
       "requires_user_gate_approval": null,
-      "blocker_ids": [
-        "BLK-003"
-      ],
+      "blocker_ids": [],
       "acceptance_criteria_ids": [
         "M5-01",
         "M5-02",
@@ -3984,9 +3982,37 @@
             "log_path": ".agents/evidence/logs/M5-github-ci-8192a612.log",
             "log_sha256": "825043fc861a4ab835e351d7495716c9e0930ddea4937d44a4480d41c75f8c08"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M5-PM-acceptance-20261030.md",
+          "detail": "Permanent record of independent PM disposition on PR #11 comment 6518394524; closes M5-001 and BLK-003 by explicit PM risk acceptance while retaining RSK-014.",
+          "result": "Independent PM accepted M5-01 through M5-05 for the completed simulator campaign, with documented limitations on M5-03/M5-04.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-30T08:22:10Z",
+            "recorded_at_utc": "2026-10-30T08:28:16Z",
+            "exit_code": null,
+            "git_revision": "35a99f0eaf14039a94c199e51da370ec2b2e7fec",
+            "log_path": ".agents/evidence/M5-PM-acceptance-20261030.md"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH PYTHONDONTWRITEBYTECODE=1 /usr/bin/time -v /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 383 tests in 161.934s",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T08:33:17Z",
+            "recorded_at_utc": "2026-10-30T08:35:59Z",
+            "exit_code": 0,
+            "git_revision": "35a99f0eaf14039a94c199e51da370ec2b2e7fec",
+            "log_path": ".agents/evidence/logs/M5-PM-closeout-full-suite-20261030.log",
+            "log_sha256": "4439ef879b55489188fe2d7600a240df019f3ba3f00c6d16ec49c250789734e0"
+          }
         }
       ],
-      "next_action": "Independent PM review of PR #11 and disposition of BLK-003/RSK-014 using the recovered source and semantics evidence. No merge, G3 approval, M6 start, or supplemental training/evaluation without separate authorization.",
+      "next_action": "",
       "plan_ref": ".agents/plans/M05-double-dqn.md"
     }
   ],

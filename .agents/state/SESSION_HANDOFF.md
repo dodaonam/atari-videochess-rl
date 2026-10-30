@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-8192a612-20261030T080232054708Z -->
+<!-- checkpoint-id: cp-35a99f0e-20261030T083638670320Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -12,9 +12,15 @@ This file is a pointer, not a status snapshot. Do not infer current phase, task 
    - The current governance decision is [`ADR-0001`](../../docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md); discover later decisions in `docs/02-management/decisions/`.
 5. Compare the portable tracked-file manifest with live HEAD/index. Treat the `git` snapshot as workspace-local; an exact portable manifest match after commit/checkout is expected even when branch, HEAD, status, ignored files, or caches differ. The local Git config UUID distinguishes the original workspace from a clean clone. For older checkpoints without a portable manifest, use the safe tracked-file migration path described in `AGENTS.md`. If version-controlled content or canonical references drift, inspect them and never discard work automatically.
 
-## M5 execution handoff — resumed owner-authorized campaign
+## M5 formal acceptance and PM merge handoff — 2026-10-30
 
-Canonical state/backlog mark M5/M5-001 blocked by BLK-003 after owner-authorized training/evaluation completion. The owner resumed the campaign on 2026-10-29; scope/budget authority is recorded in [the resumption evidence](../evidence/M5-001-resumption-authorization-20261029.md). The original stop and four-run evidence remain preserved in [the pause record](../evidence/M5-pause-after-scratch-20261105-20261029.md).
+Independent PM acceptance of M5-01–M5-05 is permanently recorded in [the acceptance evidence](../evidence/M5-PM-acceptance-20261030.md) and the authoritative [PR #11 decision](https://github.com/dodaonam/atari-videochess-rl/pull/11#issuecomment-6518394524). M5-001 is done; BLK-003 is resolved by PM risk acceptance; RSK-014 remains an accepted residual because full historical CLI bytes are unavailable. The six-run/1,500-game M2 simulator campaign is preserved. PR #11 is open and unmerged for PM-controlled integration. G3 remains unapproved and M6 is not authorized or started. No additional official training/evaluation is required or authorized.
+
+## Historical M5 execution handoff — pre-PM disposition
+
+The following campaign and forensic notes preserve their point-in-time status before the independent PM comment at 2026-10-30T08:22:10Z. Any statement below that PM disposition is pending or M5 is blocked is historical and is superseded by the current status at the top of this handoff and in `PROJECT_STATE.yaml`.
+
+At the time of this historical campaign handoff, canonical state/backlog marked M5/M5-001 blocked by BLK-003 after owner-authorized training/evaluation completion; this status was superseded by the independent PM disposition recorded above. The owner resumed the campaign on 2026-10-29; scope/budget authority is recorded in [the resumption evidence](../evidence/M5-001-resumption-authorization-20261029.md). The original stop and four-run evidence remain preserved in [the pause record](../evidence/M5-pause-after-scratch-20261105-20261029.md).
 
 Before resuming, the four completed runs and all 24 initialization/periodic/final snapshots were reverified. Seed 20261106 has only the two pre-RL initialization artifacts; neither arm has an official training attempt, replay journal, or summary. The 20261105 Scratch episode checkpoint/replay were fully restored and exact-compared after a streaming-tail recovery optimization; the 358-test local suite passed. See the resumption evidence and its retained logs for hashes and timings.
 

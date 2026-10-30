@@ -1,6 +1,6 @@
 # M5 Final Research and Engineering Report
 
-**Status:** Training and frozen simulator evaluation complete; independent PM review remains pending. This report summarizes the evidence currently retained in the private M5 artifact tree and committed evidence records. It does not claim G3 acceptance, Atari performance, or a calibrated rating.
+**Status:** Independent PM accepted M5-01 through M5-05 on 2026-10-30, with documented limitations for M5-03 and M5-04. This report summarizes the evidence retained in the private M5 artifact tree and committed evidence records. Technical acceptance does not mean PR integration or G3 approval; it does not claim Atari performance or a calibrated rating.
 
 ## Objective and method
 
@@ -120,11 +120,11 @@ At the same exact SHA, read-only private verification passed: artifact manifest 
 
 | Criterion | Assessment | Evidence |
 |---|---|---|
-| M5-01 Double DQN arithmetic and legal semantic next action | PASS | `tests/test_m5_targets.py`, `tests/test_m5_transition.py`, target-disagreement fixtures; see focused/full test logs. |
-| M5-02 Reward/player perspective and transition semantics | PASS | transition tests and `docs/03-technical/RL_ALGORITHM.md`; terminal/truncation distinction is represented explicitly. |
-| M5-03 Replay, target, exploration, recovery, opponent provenance | ENGINEERING PASS; PM review pending | Recovered source hashes, AST/diff verification, deterministic old/current restore test, and actual checkpoint restoration logs for both source groups. Whole historical CLI bytes remain unavailable; no full-file identity claim. |
-| M5-04 Controlled Warm/Scratch/M4/baseline evaluation | ENGINEERING PASS with disclosed limitations; PM review pending | Six matched-budget runs, 1,500 frozen games, source difference mapped to recovery/metadata code, and final-seed attempts confirmed fresh. Three training-seed clusters and six truncated games limit inference. |
-| M5-05 No silent curriculum, shaping, or auxiliary objective | PASS | fixed config/protocol, training manifests, and source/test review. |
+| M5-01 Double DQN arithmetic and legal semantic next action | ACCEPTED | `tests/test_m5_targets.py`, `tests/test_m5_transition.py`, target-disagreement fixtures; see focused/full test logs and PM acceptance record. |
+| M5-02 Reward/player perspective and transition semantics | ACCEPTED | transition tests and `docs/03-technical/RL_ALGORITHM.md`; terminal/truncation distinction is represented explicitly; see PM acceptance record. |
+| M5-03 Replay, target, exploration, recovery, opponent provenance | ACCEPTED WITH DOCUMENTED LIMITATION | Recovered source hashes, AST/diff verification, deterministic old/current restore test, and actual checkpoint restoration logs for both source groups. Whole historical CLI bytes remain unavailable; no full-file identity claim. |
+| M5-04 Controlled Warm/Scratch/M4/baseline evaluation | ACCEPTED WITH DOCUMENTED LIMITATION | Six matched-budget runs, 1,500 frozen games, source difference mapped to recovery/metadata code, and final-seed attempts confirmed fresh. Three training-seed clusters and six truncated games limit inference. |
+| M5-05 No silent curriculum, shaping, or auxiliary objective | ACCEPTED | fixed config/protocol, training manifests, and source/test review. |
 
 ## Reproduction and evidence identities
 
@@ -148,6 +148,15 @@ Read-only restoration against actual episode-boundary checkpoints passed for Scr
 
 An optional old-source-versus-current restore against two official large checkpoints did not finish: the historical full-history reconstruction was CPU-bound for 20:16.95 and reached 1,804,152 KiB RSS before it was stopped. This run is retained as **INCOMPLETE**, not PASS, and did not write official artifacts. The expensive behavior is explained by the historical path validating the journal and reconstructing every history-bearing transition before retaining the bounded replay tail; the later path hashes the complete chain while rebuilding only the capacity-sized tail. The successful artifact restoration checks and deterministic old/current fixture are the recovery evidence used here.
 
-This forensic assessment removes the initial unverified hypothesis of changed replay sampling, while retaining two limitations for PM judgment: the whole historical CLI bytes remain unavailable, and the 3-seed design has limited statistical precision. The existing campaign results do not require a rerun on the recovered evidence; no new training or evaluation was started. M5-03 and M5-04 are engineering-assessed PASS for PM review, not formally accepted. All outcomes remain M2 simulator results, not Atari ALE performance.
+This forensic assessment removes the initial unverified hypothesis of changed replay sampling, while retaining two limitations for PM judgment: the whole historical CLI bytes remain unavailable, and the 3-seed design has limited statistical precision. The existing campaign results do not require a rerun on the recovered evidence; no new training or evaluation was started. At the time this forensic section was first written, the PM decision had not yet been posted; its pending-disposition wording is superseded by the formal acceptance recorded below. All outcomes remain M2 simulator results, not Atari ALE performance.
 
 To prevent the same source-byte gap in a future authorized run, the training CLI now creates a content-addressed private source bundle before initialization/training and links its archive hash, source aggregate, configuration hash, lock hash, and Git dirty-state identity to the attempt/run/campaign records and artifact manifest. Its verifier checks member hashes and safe paths. The finalized artifact-root guard prevents this future-only code from writing into the completed M5 inventory. The guard is covered by eight focused tests; it was not run against the live campaign and generated no new official artifacts.
+
+
+## Formal independent PM disposition — 2026-10-30
+
+The independent PM accepted M5-01, M5-02, and M5-05, and accepted M5-03/M5-04 with documented limitations, on the evidence reviewed at PR HEAD `35a99f0eaf14039a94c199e51da370ec2b2e7fec`. BLK-003 was authorized for resolution by PM risk acceptance. RSK-014 remains an accepted residual provenance limitation: source aggregates differ across run groups and complete historical `cli.py` bytes remain unavailable. No claim of strict source homogeneity or byte-identical campaign reproduction is made. The PM did not require or authorize additional training or evaluation.
+
+The acceptance is limited to the completed M2 simulator experiment. The three-seed comparison does not establish Warm-start superiority over Scratch; six evaluation games were truncated at the 400-decision limit; Frozen M4 and SimpleHeuristic were stronger overall on the reported benchmark. These results do not establish performance in Atari ALE VideoChess. Private multi-gigabyte artifact bytes were not independently rehashed remotely by the PM; local read-only verifier records and preserved artifact identities remain the available private-artifact evidence.
+
+This acceptance is distinct from PR integration and G3 approval. PR #11 remains open for PM-controlled merge. G3 remains unapproved, and M6 remains unauthorized. See [the permanent PM acceptance record](../../.agents/evidence/M5-PM-acceptance-20261030.md).

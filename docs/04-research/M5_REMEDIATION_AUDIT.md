@@ -2,7 +2,7 @@
 
 **Recorded:** 2026-10-30 UTC
 **PR:** [#11](https://github.com/dodaonam/atari-videochess-rl/pull/11), base `initial-idea`
-**Status:** forensic remediation complete and ready for independent PM review. Formal M5 acceptance, G3 approval, and merge remain pending and are not claimed here.
+**Status at initial audit publication:** forensic remediation complete and ready for independent PM review. The PM subsequently accepted M5-01–M5-05 with documented limitations and authorized resolving BLK-003 by risk acceptance; current disposition is recorded in [the PM acceptance record](../../.agents/evidence/M5-PM-acceptance-20261030.md). G3 approval and PR merge remain pending and are not claimed here.
 
 ## Executive result
 
