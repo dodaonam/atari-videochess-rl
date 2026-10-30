@@ -4219,9 +4219,23 @@
             "log_path": ".agents/evidence/logs/M6-full-suite-facb28f.log",
             "log_sha256": "992e14a95c79054823a445b54023f11933facacd129226c072e2c5678491d8b8"
           }
+        },
+        {
+          "kind": "command",
+          "command": "Local M6 entry verifier: load frozen policy roster, compare every checkpoint/sidecar identity to configs/m6/m6-stage3-v1.json, and call VideoChessEnv.runtime_info() without reset or step",
+          "result": "PASS: 5 frozen policy identities and ALE v5 runtime assertions match; no ALE reset or gameplay action.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T16:43:07Z",
+            "recorded_at_utc": "2026-10-30T16:43:22Z",
+            "exit_code": 0,
+            "git_revision": "9e3c3726873c00c96db2c3141bda9678f8d878d3",
+            "log_path": ".agents/evidence/logs/M6-stage3-entry-verification-9e3c372.log",
+            "log_sha256": "9e6b02a715bb8483bbe21153c61289343f9ad4e4224726ab893ae9305d65a410"
+          }
         }
       ],
-      "next_action": "The corrected Stage 3 config (including the exact accepted M4 digest) passed focused tests and the full 423-test suite at the clean source revision. Commit these verification records, verify the clean resulting feature HEAD and corrected roster/artifact identities, then run the fixed Stage 3 schedule within the campaign-wide resource limits; no code/config changes are allowed after the first Stage 3 result.",
+      "next_action": "The exact frozen M5/M4 roster loaded and matched the corrected config; the initialized ALE v5 runtime reported the authorized mode, difficulty, RGB shape, action set, ROM, frameskip, and sticky probability without resetting or stepping. Commit the pre-entry evidence, verify the clean resulting source/config identity and remaining budgets, then start the single fixed Stage 3 run. No policy/config/source changes after its first result.",
       "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],

@@ -1,0 +1,22 @@
+{
+  "ale_gameplay_performed": false,
+  "attempt_slots": 35,
+  "command": "Local M6 entry verifier: load frozen policy roster, compare every checkpoint/sidecar identity to configs/m6/m6-stage3-v1.json, and call VideoChessEnv.runtime_info() without reset or step",
+  "completed_at_utc": "2026-10-30T16:43:22Z",
+  "configuration_identity": {
+    "m4_root_manifest_sha256": "f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921",
+    "m5_root_manifest_sha256": "a201a254671ad59ae1fecb402abf994d5bf523097f1c3010b5c7fa237ae6dd4c",
+    "m6_config_sha256": "05aedeb30efb8b6b97667c44f9d606b58d4da8ae20800d4ef143e629420cebac",
+    "schedule_sha256": "c5ff389dc4fe5c796cd47281e504afa2f7d37e2b287b0802664d601805290f75"
+  },
+  "executed_at_utc": "2026-10-30T16:43:07Z",
+  "execution_environment": "Local CPU; Python 3.12.3, Gymnasium 1.4.0, ALE-Py 0.11.2, PyTorch 2.14.1+cpu, python-chess 1.11.2. ALE env initialized only for runtime_info; no reset or step.",
+  "exit_code": 0,
+  "git_revision": "9e3c3726873c00c96db2c3141bda9678f8d878d3",
+  "log_path": ".agents/evidence/logs/M6-stage3-entry-verification-9e3c372.log",
+  "log_sha256": "9e6b02a715bb8483bbe21153c61289343f9ad4e4224726ab893ae9305d65a410",
+  "maximum_resident_set_kib": 247800,
+  "policy_identities_verified": 5,
+  "result": "PASS: 5 frozen policy identities and ALE v5 runtime assertions match; no ALE reset or gameplay action.",
+  "wall_elapsed_seconds": 15.763
+}
