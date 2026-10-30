@@ -435,5 +435,56 @@
     "log_path": ".agents/evidence/logs/M5-full-suite-forensic-20261030.log",
     "log_sha256": "73cb5528fb4784cb4fbf737bd5a2f4bf7181378d7dafe1a6f3b5a1952bb96dbf",
     "tested_staged_diff_sha256": "da696d5515f3dfe2ec53d8137914d444ffc4c73eb61a8679212b1d85455ec2ab"
+  },
+  "exact_source_commit_verification": {
+    "commit": "8192a6124dc0d5938bf0ac14ca729f0561573101",
+    "local_suite": {
+      "tests": 383,
+      "result": "PASS",
+      "test_seconds": 167.357,
+      "wall_seconds": 169.52,
+      "peak_rss_kib": 358684,
+      "log_path": ".agents/evidence/logs/M5-full-suite-8192a612.log",
+      "log_sha256": "28f7474744ffb7c3e13bd025cd3119be8c28fbd9c960be11373f6cb792e21191"
+    },
+    "clean_clone": {
+      "tests": 383,
+      "skipped": 1,
+      "skip_reason": "accepted private M4 artifact absent from clone",
+      "result": "PASS",
+      "test_seconds": 156.621,
+      "wall_seconds": 158.89,
+      "peak_rss_kib": 358840,
+      "preflight_errors": 0,
+      "portable_index_matches": true,
+      "preflight_log_path": ".agents/evidence/logs/M5-clean-preflight-8192a612.log",
+      "suite_log_path": ".agents/evidence/logs/M5-clean-clone-suite-8192a612.log",
+      "suite_log_sha256": "9225cf523b49d46c1b58be91d5f10e72914c7b0453f465bcb6812860a48998c4"
+    },
+    "local_preflight": {
+      "errors": 0,
+      "warnings": [
+        "ARTIFACT_MANIFEST_REQUIRED"
+      ],
+      "log_path": ".agents/evidence/logs/M5-preflight-8192a612.log"
+    },
+    "private_artifact_verification": {
+      "artifact_manifest_log_path": ".agents/evidence/logs/M5-artifact-manifest-8192a612.log",
+      "artifact_manifest_sha256": "38556c16ed5dfe8aafa6df3c30827b035896ab89c952afa96fb564c089a32a9b",
+      "campaign_log_path": ".agents/evidence/logs/M5-campaign-evidence-8192a612.log",
+      "campaign_log_sha256": "c5a23ed9ae5690e27c67ce2f7c61ebd47cefb39326de0cdfd3ca1c622ac7906a",
+      "source_identity_log_path": ".agents/evidence/logs/M5-source-identity-8192a612.log",
+      "source_identity_log_sha256": "0cb32e243a5f726365edf77e11f2cca7fc4895e07863f8ffda9094129cf44b08",
+      "source_recovery_log_path": ".agents/evidence/logs/M5-source-recovery-8192a612.log",
+      "source_recovery_log_sha256": "5879344777401f7d82aad2add3c19d73d7598b6d373424f81d23e4e7b26a7e9c"
+    },
+    "github_actions": {
+      "run_id": 41022841165,
+      "head_sha": "8192a6124dc0d5938bf0ac14ca729f0561573101",
+      "conclusion": "success",
+      "scope": "canonical preflight and standard-library context, bundle, and M5 oracle tests; not the full PyTorch suite",
+      "log_path": ".agents/evidence/logs/M5-github-ci-8192a612.log",
+      "log_sha256": "825043fc861a4ab835e351d7495716c9e0930ddea4937d44a4480d41c75f8c08"
+    }
   }
 }

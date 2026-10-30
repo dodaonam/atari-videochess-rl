@@ -110,6 +110,12 @@ At the time of the original audit, M5 engineering remained incomplete pending so
 
 After source recovery and its regression additions, the complete local repository suite passed **383 tests** in 164.146 seconds (166.59 seconds wall time; peak RSS 360,172 KiB) on staged candidate diff `da696d5515f3dfe2ec53d8137914d444ffc4c73eb61a8679212b1d85455ec2ab`. The retained log is `.agents/evidence/logs/M5-full-suite-forensic-20261030.log`. The exact committed PR HEAD still requires a fresh clean-clone suite, canonical preflight, and GitHub Actions check; no earlier CI result is being presented as evidence for that future HEAD.
 
+### Exact source-commit verification — `8192a6124dc0d5938bf0ac14ca729f0561573101`
+
+The feature source commit passed the full local suite: **383/383**, 167.357 seconds test time, 169.52 seconds wall time, 358,684 KiB peak RSS, no skips. A fresh clean clone at the same SHA passed canonical preflight with zero errors and one expected private-artifact warning; its suite passed **383 tests with one expected skip** for the accepted private M4 transfer artifact (156.621 seconds test time, 158.89 seconds wall time, 358,840 KiB peak RSS). Local and clean-clone preflight portable-index checks passed; the clean clone's workspace-specific snapshot mismatch is expected for a distinct workspace identity.
+
+At the same exact SHA, read-only private verification passed: artifact manifest **7 manifests / 6,544,747,450 bytes**; campaign **6 runs, 300,000 decisions/replay records, 73,470 optimizer updates, 144 target synchronizations**; evaluation **1,500 unique scenarios, 1,494 terminal games, six truncations**; evaluation source aggregate `ccb7d76be64c55ae4c4519da3a5647a5a2da86924a00d9490a7e807cc7497848`. The recovered-source verifier passed on the same source commit. GitHub Actions run [`41022841165`](https://github.com/dodaonam/atari-videochess-rl/actions/runs/41022841165) passed on that exact SHA. Its workflow ran canonical context/preflight and standard-library context, bundle, and M5 contract-oracle tests; it did not run the 383-test PyTorch suite. The feature branch's final delivery commit adds only evidence/report/state after this source commit; the final PR SHA and its exact-head checks are recorded in the pull request and final handoff.
+
 ## Acceptance assessment
 
 | Criterion | Assessment | Evidence |

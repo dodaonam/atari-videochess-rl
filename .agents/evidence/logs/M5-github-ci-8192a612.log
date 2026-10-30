@@ -1,0 +1,8 @@
+started_utc=2026-10-30T08:00:40+00:00
+git_head=8192a6124dc0d5938bf0ac14ca729f0561573101
+command=gh run view 41022841165 --repo dodaonam/atari-videochess-rl --json conclusion,headSha,url,jobs
+{"conclusion":"success","headSha":"8192a6124dc0d5938bf0ac14ca729f0561573101","jobs":[{"completedAt":"2026-10-30T07:54:08Z","conclusion":"success","databaseId":123953943319,"name":"context","startedAt":"2026-10-30T07:53:24Z","status":"completed","steps":[{"conclusion":"success","name":"Set up job","number":1,"status":"completed"},{"conclusion":"success","name":"Check out repository","number":2,"status":"completed"},{"conclusion":"success","name":"Set up Python 3.12","number":3,"status":"completed"},{"conclusion":"success","name":"Validate canonical context","number":4,"status":"completed"},{"conclusion":"success","name":"Run standard-library context, bundle, and M5 contract-oracle tests","number":5,"status":"completed"},{"conclusion":"success","name":"Post Set up Python 3.12","number":9,"status":"completed"},{"conclusion":"success","name":"Post Check out repository","number":10,"status":"completed"},{"conclusion":"success","name":"Complete job","number":11,"status":"completed"}],"url":"https://github.com/dodaonam/atari-videochess-rl/actions/runs/41022841165/job/123953943319"}],"url":"https://github.com/dodaonam/atari-videochess-rl/actions/runs/41022841165"}
+exit_code=0
+finished_utc=2026-10-30T08:00:42+00:00
+Exit code: 0
+## feature/m5-double-dqn...origin/feature/m5-double-dqn

@@ -1,0 +1,12 @@
+started_utc=2026-10-30T07:56:40+00:00
+git_head=8192a6124dc0d5938bf0ac14ca729f0561573101
+command=python3 scripts/m5_artifact_manifests.py --verify
+{
+  "status": "verified",
+  "artifact_manifest": "artifacts/m5/artifact-manifest.json",
+  "run_manifests": 7,
+  "total_bytes": 6544747450
+}
+exit_code=0
+finished_utc=2026-10-30T07:57:11+00:00
+Exit code: 0

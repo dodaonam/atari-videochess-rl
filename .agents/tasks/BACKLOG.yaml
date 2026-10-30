@@ -3858,6 +3858,132 @@
             "log_path": ".agents/evidence/logs/M5-full-suite-forensic-20261030.log",
             "log_sha256": "73cb5528fb4784cb4fbf737bd5a2f4bf7181378d7dafe1a6f3b5a1952bb96dbf"
           }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/m5_artifact_manifests.py --verify",
+          "result": "\"status\": \"verified\"",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T07:56:40Z",
+            "recorded_at_utc": "2026-10-30T07:57:11Z",
+            "exit_code": 0,
+            "git_revision": "8192a6124dc0d5938bf0ac14ca729f0561573101",
+            "log_path": ".agents/evidence/logs/M5-artifact-manifest-8192a612.log",
+            "log_sha256": "38556c16ed5dfe8aafa6df3c30827b035896ab89c952afa96fb564c089a32a9b"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/verify_m5_campaign_evidence.py",
+          "result": "\"valid_decisions\": 300000",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T07:56:40Z",
+            "recorded_at_utc": "2026-10-30T07:57:08Z",
+            "exit_code": 0,
+            "git_revision": "8192a6124dc0d5938bf0ac14ca729f0561573101",
+            "log_path": ".agents/evidence/logs/M5-campaign-evidence-8192a612.log",
+            "log_sha256": "c5a23ed9ae5690e27c67ce2f7c61ebd47cefb39326de0cdfd3ca1c622ac7906a"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/verify_m5_source_identity.py",
+          "result": "\"result\": \"exact match\"",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T07:56:40Z",
+            "recorded_at_utc": "2026-10-30T07:56:44Z",
+            "exit_code": 0,
+            "git_revision": "8192a6124dc0d5938bf0ac14ca729f0561573101",
+            "log_path": ".agents/evidence/logs/M5-source-identity-8192a612.log",
+            "log_sha256": "0cb32e243a5f726365edf77e11f2cca7fc4895e07863f8ffda9094129cf44b08"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/verify_m5_source_recovery.py --require-private-artifacts",
+          "result": "exact transcript identity and source-line extraction verified",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T07:57:22Z",
+            "recorded_at_utc": "2026-10-30T07:57:22Z",
+            "exit_code": 0,
+            "git_revision": "8192a6124dc0d5938bf0ac14ca729f0561573101",
+            "log_path": ".agents/evidence/logs/M5-source-recovery-8192a612.log",
+            "log_sha256": "5879344777401f7d82aad2add3c19d73d7598b6d373424f81d23e4e7b26a7e9c"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/agent_preflight.py --json",
+          "result": "\"ok\": true",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T08:00:40Z",
+            "recorded_at_utc": "2026-10-30T08:00:42Z",
+            "exit_code": 0,
+            "git_revision": "8192a6124dc0d5938bf0ac14ca729f0561573101",
+            "log_path": ".agents/evidence/logs/M5-preflight-8192a612.log",
+            "log_sha256": "b18f7d1248ae1819d7bd2b63a75bf73983f748e33f96abada3249b8bf87dd9c5"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/agent_preflight.py --json",
+          "result": "\"ok\": true",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T08:00:40Z",
+            "recorded_at_utc": "2026-10-30T08:00:42Z",
+            "exit_code": 0,
+            "git_revision": "8192a6124dc0d5938bf0ac14ca729f0561573101",
+            "log_path": ".agents/evidence/logs/M5-clean-preflight-8192a612.log",
+            "log_sha256": "7fc77c27c27aaeeb5671747d77e22ebff02f220892fcd2aa4ec83fa5dfe42cbb"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /usr/bin/time -v /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 383 tests in 167.357s",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T07:53:27Z",
+            "recorded_at_utc": "2026-10-30T07:56:17Z",
+            "exit_code": 0,
+            "git_revision": "8192a6124dc0d5938bf0ac14ca729f0561573101",
+            "log_path": ".agents/evidence/logs/M5-full-suite-8192a612.log",
+            "log_sha256": "28f7474744ffb7c3e13bd025cd3119be8c28fbd9c960be11373f6cb792e21191"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M4_DIR=/nonexistent/accepted-m4 VIDEOCHESS_M5_M3_RELEASE_DIR=/nonexistent/accepted-m3 PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /usr/bin/time -v /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 383 tests in 156.621s",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T07:57:30Z",
+            "recorded_at_utc": "2026-10-30T08:00:09Z",
+            "exit_code": 0,
+            "git_revision": "8192a6124dc0d5938bf0ac14ca729f0561573101",
+            "log_path": ".agents/evidence/logs/M5-clean-clone-suite-8192a612.log",
+            "log_sha256": "9225cf523b49d46c1b58be91d5f10e72914c7b0453f465bcb6812860a48998c4"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "gh run view 41022841165 --repo dodaonam/atari-videochess-rl --json conclusion,headSha,url,jobs",
+          "result": "\"conclusion\":\"success\"",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T08:00:40Z",
+            "recorded_at_utc": "2026-10-30T08:00:42Z",
+            "exit_code": 0,
+            "git_revision": "8192a6124dc0d5938bf0ac14ca729f0561573101",
+            "log_path": ".agents/evidence/logs/M5-github-ci-8192a612.log",
+            "log_sha256": "825043fc861a4ab835e351d7495716c9e0930ddea4937d44a4480d41c75f8c08"
+          }
         }
       ],
       "next_action": "Independent PM review of PR #11 and disposition of BLK-003/RSK-014 using the recovered source and semantics evidence. No merge, G3 approval, M6 start, or supplemental training/evaluation without separate authorization.",
