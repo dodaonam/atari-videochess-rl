@@ -4132,9 +4132,39 @@
             "log_path": ".agents/evidence/logs/M6-full-suite-c709231.log",
             "log_sha256": "fa4fae000c040fb649d67e9b78012ff059cf698229b879b924add397fe7fb981"
           }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<verified-private-m5-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<verified-private-m4-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<pinned-warm-snapshot-file> PATH=<project-local-stockfish-dir>:$PATH <project-python> -m unittest discover -s tests -v",
+          "result": "FAIL: 422 tests, 1 failures, 0 skips; unittest elapsed 195.705 seconds.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T16:21:21Z",
+            "recorded_at_utc": "2026-10-30T16:24:40Z",
+            "exit_code": 1,
+            "git_revision": "b42f0f63514853990ad4263540a4c4c0b3db4dd5",
+            "log_path": ".agents/evidence/logs/M6-full-suite-b42f0f6.log",
+            "log_sha256": "26e55df4e28dd49a38a6b49b3938431112b6ad445ef529fc95837a9123c7f057"
+          },
+          "detail": "The pinned-checkpoint smoke test failed because this invocation’s explicit path did not resolve to a file. The accepted checkpoint was subsequently resolved by its exact root-manifest SHA-256 and the full suite passed; no alternative checkpoint was used."
+        },
+        {
+          "kind": "test",
+          "command": "Resolve the M5 checkpoint by its approved SHA-256 from the verified root artifact manifest; set private-artifact environment variables; run <project-python> -m unittest discover -s tests -v",
+          "result": "PASS: 422 tests, 0 failures, 0 skips; unittest elapsed 184.733 seconds.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T16:26:45Z",
+            "recorded_at_utc": "2026-10-30T16:29:52Z",
+            "exit_code": 0,
+            "git_revision": "b42f0f63514853990ad4263540a4c4c0b3db4dd5",
+            "log_path": ".agents/evidence/logs/M6-full-suite-b42f0f6-manifest-resolved-rerun.log",
+            "log_sha256": "260ca8e431da3e16beb9c7d41cfc5c7f1c741eb0fc2c07754a1c07873688f288"
+          },
+          "detail": "The Warm checkpoint path was resolved from the verified M5 root manifest and matched the approved checkpoint SHA-256 before the suite ran."
         }
       ],
-      "next_action": "Checkpoint the verified Stage 2 evidence, then run the final full regression on the clean Stage 3 freeze revision. If it passes and roster/config/artifact assertions still hold, execute the predeclared maximum 35-attempt campaign under the cumulative 10-hour/2-GiB limits; preserve all outcomes, verify raw traces, then prepare and deliver the unmerged PR.",
+      "next_action": "With the Stage 3 roster, exact checkpoint identities, ROM/profile, frozen configuration, and clean source verified, start the predeclared campaign at the feature freeze commit. Keep the run serialized and inside the cumulative 10-hour/2-GiB limits; preserve every outcome and retry only one eligible pre-action process-start failure. Then verify traces, complete the M6 report, and deliver one unmerged PR.",
       "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],
