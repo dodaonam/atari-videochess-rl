@@ -3633,11 +3633,81 @@
             "log_path": ".agents/evidence/logs/M5-github-ci-026d41b.log",
             "log_sha256": "1a921d5d0a256b94e57a09747034abf923d526a2350814144a33b965f3f43e06"
           }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /usr/bin/time -f 'ELAPSED_SECONDS=%e MAX_RSS_KB=%M EXIT=%x' /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 368 tests in 145.322s\n\nOK\n\nELAPSED_SECONDS=147.25 MAX_RSS_KB=357588 EXIT=0",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:21:39Z",
+            "recorded_at_utc": "2026-10-30T05:21:57Z",
+            "exit_code": 0,
+            "git_revision": "57c8bce28b151b3f30b03b3b972561e142d18b16",
+            "log_path": ".agents/evidence/logs/M5-full-suite-final-57c8bce.log",
+            "log_sha256": "94cc3ce379df1cb2f2398c07357ae01c0f8f7cf00c2fe3b5eec2657cb667d4a9"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M4_DIR=/nonexistent/accepted-m4 VIDEOCHESS_M5_M3_RELEASE_DIR=/nonexistent/accepted-m3 PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /usr/bin/time -f 'ELAPSED_SECONDS=%e MAX_RSS_KB=%M EXIT=%x' /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s /tmp/m5-clean-final-57c8bce/tests -v",
+          "result": "Ran 368 tests in 144.747s\n\nOK (skipped=1)\n\nELAPSED_SECONDS=146.98 MAX_RSS_KB=356604 EXIT=0",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:21:39Z",
+            "recorded_at_utc": "2026-10-30T05:21:57Z",
+            "exit_code": 0,
+            "git_revision": "57c8bce28b151b3f30b03b3b972561e142d18b16",
+            "log_path": ".agents/evidence/logs/M5-clean-clone-full-suite-57c8bce.log",
+            "log_sha256": "c1f2276d7de805d71a55e38b8e898970914612f5a51852c3ffa87085d7e182a1"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py --json > /tmp/M5-local-preflight-57c8bce.json",
+          "result": "\"ok\": true,",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:21:39Z",
+            "recorded_at_utc": "2026-10-30T05:21:57Z",
+            "exit_code": 0,
+            "git_revision": "57c8bce28b151b3f30b03b3b972561e142d18b16",
+            "log_path": ".agents/evidence/logs/M5-local-preflight-57c8bce.log",
+            "log_sha256": "64ebacc882d385c7f2faf39e750cca689c23010eae66a60e600c99f09719fad5"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "cd /tmp/m5-clean-final-57c8bce && python3 scripts/agent_preflight.py --json",
+          "result": "\"ok\": true,",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:21:39Z",
+            "recorded_at_utc": "2026-10-30T05:21:57Z",
+            "exit_code": 0,
+            "git_revision": "57c8bce28b151b3f30b03b3b972561e142d18b16",
+            "log_path": ".agents/evidence/logs/M5-clean-clone-preflight-57c8bce.log",
+            "log_sha256": "c3ffcabeb6c38dff0853281f799202abc9ca2cd9f5eb8dfb2f4ff9df1ea3d5e7"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "gh run view 41007586702 --repo dodaonam/atari-videochess-rl --log",
+          "result": "Repository preflight workflow conclusion: success for exact head 57c8bce28b151b3f30b03b3b972561e142d18b16; standard-library context/bundle/M5 contract-oracle checks completed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:21:42Z",
+            "recorded_at_utc": "2026-10-30T05:21:57Z",
+            "exit_code": 0,
+            "git_revision": "57c8bce28b151b3f30b03b3b972561e142d18b16",
+            "log_path": ".agents/evidence/logs/M5-github-ci-57c8bce.log",
+            "log_sha256": "d75ecbc28e032fcef0347daaa7b85817a959bc0ca39142d7d8ec62fb53813ef0"
+          }
         }
       ],
       "next_action": "Independent PM disposition of BLK-003: recover and compare authentic earlier source snapshots, or decide whether the source-version-confounded results may be used. No additional training without separate PM authorization.",
       "plan_ref": ".agents/plans/M05-double-dqn.md"
     }
   ],
-  "updated_at_utc": "2026-10-28T12:55:00Z"
+  "updated_at_utc": "2026-10-30T05:21:57Z"
 }
