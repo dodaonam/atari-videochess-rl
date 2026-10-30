@@ -4090,9 +4090,23 @@
             "git_revision": "5bb88459a1d38ad62dcbce6b4805541f8c2b3acf",
             "log_path": null
           }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<verified-private-m5-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<verified-private-m4-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<pinned-warm-snapshot-file> PATH=<project-local-stockfish-dir>:$PATH <project-python> -m unittest discover -s tests -v",
+          "result": "PASS: 422 tests, 0 failures, 0 skips; unittest elapsed 170.954 seconds.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T15:56:07Z",
+            "recorded_at_utc": "2026-10-30T15:59:09Z",
+            "exit_code": 0,
+            "git_revision": "6833ac5a54dce8070f90b3012f47aa1e6ac0189f",
+            "log_path": ".agents/evidence/logs/M6-full-suite-6833ac5.log",
+            "log_sha256": "3a77fac124e9740603e4040053e12384b8e6c338ed7c6f4af7a5205fedc5bbe7"
+          }
         }
       ],
-      "next_action": "Run up to ten consecutive verified turns for the frozen roster under debug settings; if the closed loop remains safe, perform limited default-v5 checks, then freeze and run Stage 3 within the cumulative M6 resource budget.",
+      "next_action": "Run the fixed Stage 2 debug roster under the passive target-FIRE settling rule; if the closed loop remains safe, perform limited default-v5 checks, then freeze and run Stage 3 within the cumulative M6 budget.",
       "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],
