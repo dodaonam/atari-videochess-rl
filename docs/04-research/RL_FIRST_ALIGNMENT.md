@@ -4,7 +4,9 @@
 **Owner:** This document assesses whether supporting data and pretraining lead to the course's principal Double DQN objective. Canonical milestone acceptance remains in [ACCEPTANCE_CRITERIA.md](../06-quality/ACCEPTANCE_CRITERIA.md).
 **Related contracts:** [M2 MDP](../03-technical/MDP_SPEC.md), [ADR-0002](../02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md), [DATASET_SPEC.md](DATASET_SPEC.md), [STOCKFISH_TEACHER.md](STOCKFISH_TEACHER.md), [EXPERIMENT_PROTOCOL.md](EXPERIMENT_PROTOCOL.md), and [M03 plan](../../.agents/plans/M03-expert-dataset.md).
 
-**Current status update (2026-10-28):** M4 is implemented, accepted, and integrated; its frozen behavior-only checkpoint is a verified input to the M5 warm-start comparison. Older statements below that M5 core work can precede M4 describe the earlier schedule proposal, not the current M5 comparison contract. The operative algorithm, comparison, and budget are in [RL_ALGORITHM.md](../03-technical/RL_ALGORITHM.md), [M5_EXPERIMENT_PROTOCOL.md](M5_EXPERIMENT_PROTOCOL.md), and the [M05 plan](../../.agents/plans/M05-double-dqn.md). M5 remains not started and requires separate direct authorization; G3 remains unapproved. O-01 is closed internally; this does not establish instructor approval.
+**Current status update (2026-10-30):** M5 is implemented, accepted with documented M5-03/M5-04 limitations, and integrated in PR #11. The independent PM approved G3 after verifying the M2–M5 prerequisites. M5 remains a simulator experiment and does not establish Atari ALE performance; full historical CLI bytes remain a disclosed RSK-014 limitation. M6 is not authorized or started.
+
+**Earlier status update (2026-10-28; historical):** M4 was implemented, accepted, and integrated, and its frozen behavior-only checkpoint was a verified input to the planned M5 comparison. Statements below that M5 core work could precede M4 described the earlier schedule proposal. At that time M5 had not started and G3 was unapproved. O-01 is closed internally; this does not establish instructor approval.
 
 ## 1. Research objective and verdict
 

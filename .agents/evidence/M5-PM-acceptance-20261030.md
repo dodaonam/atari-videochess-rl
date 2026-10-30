@@ -33,3 +33,8 @@ The PM reviewed `.agents/evidence/M5-source-recovery-20261030.json`, `.agents/ev
 ## Governance boundary
 
 This record documents **technical/scientific M5 acceptance only**. It does not mean PR #11 has been merged, does not approve G3, and does not authorize M6. PR integration and G3 review remain reserved for the PM. Additional official training and evaluation are not required or authorized by this decision.
+
+
+## Later integration and gate update — 2026-10-30
+
+PR #11 was merged at `e0b434530df51b08595e3896c175f81b4a8f8c64`, with tree `793c3e9268d188a7673feb0b680554f94b902fd9`. The independent PM subsequently approved G3 in [comment 6519216543](https://github.com/dodaonam/atari-videochess-rl/pull/11#issuecomment-6519216543). This later gate decision does not alter the M5-03/M5-04 limitations or authorize M6. See [G3 approval and post-merge verification](G3-final-approval-20261030.md).

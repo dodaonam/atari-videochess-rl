@@ -2,7 +2,7 @@
 
 **Recorded:** 2026-10-30 UTC
 **PR:** [#11](https://github.com/dodaonam/atari-videochess-rl/pull/11), base `initial-idea`
-**Status at initial audit publication:** forensic remediation complete and ready for independent PM review. The PM subsequently accepted M5-01–M5-05 with documented limitations and authorized resolving BLK-003 by risk acceptance; current disposition is recorded in [the PM acceptance record](../../.agents/evidence/M5-PM-acceptance-20261030.md). G3 approval and PR merge remain pending and are not claimed here.
+**Status at initial audit publication:** forensic remediation complete and ready for independent PM review. The PM subsequently accepted M5-01–M5-05 with documented limitations, authorized resolving BLK-003 by risk acceptance, merged PR #11, and approved G3. The dated decisions are recorded in [the M5 acceptance record](../../.agents/evidence/M5-PM-acceptance-20261030.md) and [G3 approval/post-merge verification](../../.agents/evidence/G3-final-approval-20261030.md). M6 remains unauthorized.
 
 ## Executive result
 
@@ -193,4 +193,4 @@ The original hypothesis that the replay sampler might have changed is not suppor
 
 The full historical CLI files remain unavailable, so source bytes are not wholly reconstructed and byte-identical execution is not claimed. This residual auditability limitation is disclosed for PM review. The campaign still has only three independent training-seed clusters, and every conclusion remains about the M2 chess simulator, not Atari ALE VideoChess. Additional training is not currently supported as technically necessary and has not been started; any supplemental experiment would require separate PM authorization.
 
-Engineering evidence supports review of M5-03/M5-04 with the limitations above. Independent PM disposition/acceptance remains pending. G3 remains unapproved; M6 has not started; PR #11 remains open and unmerged.
+**Historical disposition at audit publication:** Engineering evidence supported review of M5-03/M5-04 with the limitations above; independent PM disposition was pending, G3 was unapproved, and PR #11 was open. The PM later accepted M5 with those limitations, merged PR #11, and approved G3. M6 remains unauthorized and has not started; see the dated post-merge update above.

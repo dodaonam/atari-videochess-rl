@@ -1,7 +1,7 @@
 # Project Overview
 
 **Audience:** Project owner, instructors/reviewers, and engineering agents.<br>
-**Status:** Project overview; normative constraints remain in [`REQUIREMENTS.md`](REQUIREMENTS.md). M0–M4 are implemented and accepted on the integration branch. M3 artifacts are outside Git; the exact accepted local release was independently verified read-only during Pre-M4 and must be reverified before future use. Live status is owned by canonical state and backlog.
+**Status:** Project overview; normative constraints remain in [`REQUIREMENTS.md`](REQUIREMENTS.md). M0–M5 are implemented and accepted on the integration branch; the independent PM approved G3 on 2026-10-30 ([decision and verification](../../.agents/evidence/G3-final-approval-20261030.md)). M3 artifacts are outside Git; the exact accepted local release must be reverified before future use. Live status is owned by canonical state and backlog. M6 is not authorized or started.
 
 ## Purpose
 
@@ -26,4 +26,4 @@ This overview does not own live phase or task status. Read `.agents/state/PROJEC
 
 ## Implementation boundary
 
-M4-001 is complete and merged by PR #8 at `c0a284304d602817922772d08f0ff7904af7ae20`; the actual integration commit passed clean-clone post-merge verification. M4-01 through M4-04 are supported by the [final acceptance report](../../.agents/evidence/M4-final-acceptance-20261027.md), and integration checks are in the [post-merge delivery report](../../.agents/evidence/M4-postmerge-delivery-verification-20261027.md). The model follows accepted ADR-0003, the exact local M3 release was reverified and all nine files remained unchanged, the PM-amended distinct-input sanity gate passed, and a validation-selected behavior-only checkpoint was frozen, hashed, reloaded without Stockfish, and evaluated. The original fixed 128-example gate failure remains historical evidence. No Double DQN trainer or learned Atari inference path is implemented, M5 has not started or been authorized by this milestone, and G3 remains unapproved. The third-party package license is still unstated and bulk artifacts remain non-redistributable.
+M4-001 is complete and merged by PR #8 at `c0a284304d602817922772d08f0ff7904af7ae20`; its acceptance and post-merge evidence remain in the linked reports. The model follows accepted ADR-0003, the exact local M3 release was reverified during M4, the PM-amended distinct-input sanity gate passed, and a validation-selected behavior-only checkpoint was frozen and evaluated without Stockfish. The original fixed 128-example gate failure remains historical evidence. M5 subsequently implemented and evaluated Double DQN in the M2 simulator and was integrated by PR #11; the independent PM approved G3 on 2026-10-30. M5 does not implement learned Atari inference and its simulator scores are not Atari performance. M6 remains unauthorized and not started. The third-party package license is still unstated and bulk artifacts remain non-redistributable.
