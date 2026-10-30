@@ -4318,11 +4318,25 @@
             "log_path": ".agents/evidence/logs/M6-full-suite-6f4f1d0.log",
             "log_sha256": "97ef037be1d6068193040067925aacebf89dde47665f3746b7317dd2e891c5af"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-PR-handover-20261031.md",
+          "detail": "PR #14 was opened against initial-idea for independent review; this file records the initial branch/base/CI state without claiming PM acceptance.",
+          "result": "PR #14 is open and non-draft, with no auto-merge or merge. M6-04 is partial; G4 remains unapproved.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T17:41:51Z",
+            "exit_code": null,
+            "git_revision": "0eddd06932de06d4651f7e6dc4c99e54db719ddd",
+            "log_path": null
+          }
         }
       ],
-      "next_action": "All 35 authorized Stage 3 attempts and post-run integrity checks are complete; final 423-test suite and preflight pass. Push the clean feature branch and open one unmerged PR for independent PM review. Keep M6-001 in_progress: M6-04 is partial because no M5 RL game terminated; any further Atari attempts require a separately authorized protocol amendment.",
+      "next_action": "Await independent PM review on PR #14. M6-001 remains in_progress and M6-04 partial; any follow-on Atari attempts require a separately authorized protocol amendment. Do not merge, self-accept, or mark G4 approved.",
       "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],
-  "updated_at_utc": "2026-10-30T17:37:54Z"
+  "updated_at_utc": "2026-10-30T17:41:51Z"
 }
