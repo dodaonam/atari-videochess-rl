@@ -4303,11 +4303,26 @@
             "log_path": ".agents/evidence/logs/M6-stage3-posthoc-verification-ad3998200e31.log",
             "log_sha256": "1705a4776cd0b05001f8eb5a6988c972f03a1aeb1d26f38e8794f6fe13af0708"
           }
+        },
+        {
+          "kind": "test",
+          "command": "Resolve the Warm checkpoint by its pinned SHA-256 from the verified M5 root manifest; set M4/M5 private artifact roots; run <project-python> -m unittest discover -s tests -v",
+          "result": "PASS: 423 tests, 0 failures, 0 skips; unittest elapsed 166.269 seconds.",
+          "detail": "Final full suite at the report revision; only evidence/governance documentation differs from the tested M6 source/config revision.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T17:35:06Z",
+            "recorded_at_utc": "2026-10-30T17:37:54Z",
+            "exit_code": 0,
+            "git_revision": "6f4f1d06c74c188cdb08a7e07140e605ffad05b7",
+            "log_path": ".agents/evidence/logs/M6-full-suite-6f4f1d0.log",
+            "log_sha256": "97ef037be1d6068193040067925aacebf89dde47665f3746b7317dd2e891c5af"
+          }
         }
       ],
-      "next_action": "Stage 3 used all 35 frozen attempts and all traces/manifests verified. No M5 RL policy reached ALE termination, so M6-04 remains partial. Submit the complete unmerged PR for independent PM review; retain M6-001 in_progress until PM disposition. Any further Atari attempts or a changed frame/attempt protocol require separate explicit authorization.",
+      "next_action": "All 35 authorized Stage 3 attempts and post-run integrity checks are complete; final 423-test suite and preflight pass. Push the clean feature branch and open one unmerged PR for independent PM review. Keep M6-001 in_progress: M6-04 is partial because no M5 RL game terminated; any further Atari attempts require a separately authorized protocol amendment.",
       "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],
-  "updated_at_utc": "2026-10-30T17:33:51Z"
+  "updated_at_utc": "2026-10-30T17:37:54Z"
 }
