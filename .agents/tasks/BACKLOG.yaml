@@ -4162,9 +4162,24 @@
             "log_sha256": "260ca8e431da3e16beb9c7d41cfc5c7f1c741eb0fc2c07754a1c07873688f288"
           },
           "detail": "The Warm checkpoint path was resolved from the verified M5 root manifest and matched the approved checkpoint SHA-256 before the suite ran."
+        },
+        {
+          "kind": "test",
+          "command": "Resolve the Warm checkpoint by its pinned SHA-256 from the verified M5 root manifest; set M4/M5 private artifact roots; run <project-python> -m unittest discover -s tests -v",
+          "result": "PASS: 422 tests, 0 failures, 0 skips; unittest elapsed 187.325 seconds.",
+          "detail": "This was the final full regression at the clean pre-campaign source/config freeze revision. The exact frozen M5 Warm checkpoint was resolved and SHA-256 verified from the accepted M5 root manifest.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T16:31:42Z",
+            "recorded_at_utc": "2026-10-30T16:34:51Z",
+            "exit_code": 0,
+            "git_revision": "875da1ec8d343f8736dbe5b2d85d6c180af9cc32",
+            "log_path": ".agents/evidence/logs/M6-full-suite-875da1e.log",
+            "log_sha256": "689ed25a172df4c54cb432b5c8f6303b183549df6407d4550be589d342d48bc7"
+          }
         }
       ],
-      "next_action": "With the Stage 3 roster, exact checkpoint identities, ROM/profile, frozen configuration, and clean source verified, start the predeclared campaign at the feature freeze commit. Keep the run serialized and inside the cumulative 10-hour/2-GiB limits; preserve every outcome and retry only one eligible pre-action process-start failure. Then verify traces, complete the M6 report, and deliver one unmerged PR.",
+      "next_action": "The clean pre-campaign source/config freeze passed all 422 tests and the approved private checkpoint roots resolve by their manifest identities. Commit this verification record, confirm the campaign-wide M6 time/artifact budgets still have headroom, then launch the fixed Stage 3 schedule from the resulting clean feature HEAD; record every attempt and preserve incomplete outcomes.",
       "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],
