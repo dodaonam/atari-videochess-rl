@@ -1,0 +1,29 @@
+{
+  "command": "python3 scripts/m5_artifact_manifests.py --verify --root <private-m5-artifact-root>",
+  "completed_at_utc": "2026-10-30T13:42:01Z",
+  "configuration_sha256": "M5 artifact manifest: a201a254671ad59ae1fecb402abf994d5bf523097f1c3010b5c7fa237ae6dd4c; M5 config: 84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+  "counts": {
+    "run_manifests": 7,
+    "total_bytes": 6544747450
+  },
+  "dependency_lock_sha256": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+  "environment": {
+    "git_head": "83e7bf8562b263ef1cffa561e6134776b30110f3",
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+    "project_runtime": "existing local CPU environment; no dependency installation",
+    "python": "3.12.3"
+  },
+  "exit_code": 0,
+  "log_sha256": "b13a781263e40d09c22b6706fc2a5d3d8338deb6f2e85b9ba75d3d66a971c7e7",
+  "original_unsanitized_stdout_sha256": "428df8b98a05e4b374eb8f243c8923889ee92bf0a6c03fe8d2ea4fcd81d73926",
+  "redaction": "Absolute path of private external artifact root replaced by <private-m5-artifact-root>.",
+  "result": "PASS",
+  "runtime_versions": {
+    "ale_py": "0.11.2",
+    "gymnasium": "1.4.0",
+    "python": "3.12.3",
+    "python_chess": "1.11.2",
+    "torch": "2.14.1+cpu"
+  },
+  "sanitized_log_path": ".agents/evidence/logs/PRE-M6-m5-artifact-verify-83e7bf8.log"
+}

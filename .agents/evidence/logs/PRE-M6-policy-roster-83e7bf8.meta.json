@@ -1,0 +1,29 @@
+{
+  "command": "python -m unittest discover -s tests -p test_pre_m6_policy_compatibility.py -v",
+  "completed_at_utc": "2026-10-30T13:41:30Z",
+  "configuration_sha256": "M5 config: 84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d; artifact manifest: a201a254671ad59ae1fecb402abf994d5bf523097f1c3010b5c7fa237ae6dd4c",
+  "counts": {
+    "failed": 0,
+    "passed": 2,
+    "skipped": 0,
+    "tests": 2
+  },
+  "dependency_lock_sha256": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+  "environment": {
+    "git_head": "83e7bf8562b263ef1cffa561e6134776b30110f3",
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+    "project_runtime": "existing local CPU environment; no dependency installation",
+    "python": "3.12.3"
+  },
+  "exit_code": 0,
+  "log_sha256": "4d7f22b196d740600fcd372b2b010d25785540e63e08d1d00f2212d640e30956",
+  "result": "PASS",
+  "runtime_versions": {
+    "ale_py": "0.11.2",
+    "gymnasium": "1.4.0",
+    "python": "3.12.3",
+    "python_chess": "1.11.2",
+    "torch": "2.14.1+cpu"
+  },
+  "sanitized_log_path": ".agents/evidence/logs/PRE-M6-policy-roster-83e7bf8.log"
+}

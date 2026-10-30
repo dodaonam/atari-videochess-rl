@@ -1,0 +1,29 @@
+{
+  "command": "python3 scripts/agent_preflight.py --json",
+  "completed_at_utc": "2026-10-30T13:42:18Z",
+  "counts": {
+    "errors": 0,
+    "warning_codes": [
+      "ARTIFACT_MANIFEST_REQUIRED"
+    ],
+    "warnings": 1
+  },
+  "dependency_lock_sha256": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+  "environment": {
+    "git_head": "83e7bf8562b263ef1cffa561e6134776b30110f3",
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+    "project_runtime": "existing local CPU environment; no dependency installation",
+    "python": "3.12.3"
+  },
+  "exit_code": 0,
+  "log_sha256": "37d406e15ae4701050a2bd4d1394fe383bb8029dd77a754ea719bab6234f3cec",
+  "result": "PASS",
+  "runtime_versions": {
+    "ale_py": "0.11.2",
+    "gymnasium": "1.4.0",
+    "python": "3.12.3",
+    "python_chess": "1.11.2",
+    "torch": "2.14.1+cpu"
+  },
+  "sanitized_log_path": ".agents/evidence/logs/PRE-M6-final-preflight-83e7bf8.json"
+}

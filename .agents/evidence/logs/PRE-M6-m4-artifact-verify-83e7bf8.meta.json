@@ -1,0 +1,27 @@
+{
+  "command": "PYTHONPATH=. python - [verify_artifact_manifest + load_checkpoint, CPU]",
+  "completed_at_utc": "2026-10-30T13:41:30Z",
+  "configuration_sha256": "M4 artifact manifest: f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921",
+  "counts": {
+    "inventory_entries": 19,
+    "parameters": 121897
+  },
+  "dependency_lock_sha256": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+  "environment": {
+    "git_head": "83e7bf8562b263ef1cffa561e6134776b30110f3",
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+    "project_runtime": "existing local CPU environment; no dependency installation",
+    "python": "3.12.3"
+  },
+  "exit_code": 0,
+  "log_sha256": "5f4aca28ef14216c0cd19334ecdded3272002cfd70901516292135fc4507eab7",
+  "result": "PASS",
+  "runtime_versions": {
+    "ale_py": "0.11.2",
+    "gymnasium": "1.4.0",
+    "python": "3.12.3",
+    "python_chess": "1.11.2",
+    "torch": "2.14.1+cpu"
+  },
+  "sanitized_log_path": ".agents/evidence/logs/PRE-M6-m4-artifact-verify-83e7bf8.log"
+}

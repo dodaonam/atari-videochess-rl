@@ -25,6 +25,15 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def display_artifact_path(path: Path, repository_root: Path = ROOT) -> str:
+    """Display repository artifacts portably and external stores explicitly."""
+    resolved = path.resolve()
+    try:
+        return resolved.relative_to(repository_root.resolve()).as_posix()
+    except ValueError:
+        return resolved.as_posix()
+
+
 def file_inventory(root: Path, *, excluded_names: frozenset[str] = frozenset()) -> list[dict[str, Any]]:
     rows = []
     for path in sorted(root.rglob("*")):
@@ -163,11 +172,11 @@ def main() -> int:
         run_manifests = sorted(root.glob("runs/*/run-manifest.json"))
         for manifest_path in run_manifests:
             verify_manifest(root, manifest_path)
-        print(json.dumps({"status": "verified", "artifact_manifest": str((root / "artifact-manifest.json").relative_to(ROOT)),
+        print(json.dumps({"status": "verified", "artifact_manifest": display_artifact_path(root / "artifact-manifest.json"),
                           "run_manifests": len(run_manifests), "total_bytes": root_manifest.get("total_bytes")}, indent=2))
         return 0
     result = create_manifests(root, allow_incomplete=args.allow_incomplete)
-    print(json.dumps({"status": result["status"], "artifact_manifest": str((root / "artifact-manifest.json").relative_to(ROOT)),
+    print(json.dumps({"status": result["status"], "artifact_manifest": display_artifact_path(root / "artifact-manifest.json"),
                       "run_manifests": len(list(root.glob("runs/*/run-manifest.json"))),
                       "total_bytes": result["total_bytes"]}, indent=2))
     return 0
