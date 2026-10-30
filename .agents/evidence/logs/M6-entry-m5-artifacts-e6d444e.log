@@ -1,0 +1,6 @@
+{
+  "status": "verified",
+  "artifact_manifest": "<external-private-m5-artifact-root>/artifact-manifest.json",
+  "run_manifests": 7,
+  "total_bytes": 6544747450
+}

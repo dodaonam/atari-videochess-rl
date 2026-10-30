@@ -4014,7 +4014,59 @@
       ],
       "next_action": "",
       "plan_ref": ".agents/plans/M05-double-dqn.md"
+    },
+    {
+      "id": "M6-001",
+      "title": "Implement and verify frozen-policy Atari integration and bounded evaluation",
+      "milestone": "M6",
+      "status": "in_progress",
+      "depends_on": [
+        "M1-001",
+        "M4-001",
+        "M5-001"
+      ],
+      "requires_user_gate_approval": null,
+      "acceptance_criteria_ids": [
+        "M6-01",
+        "M6-02",
+        "M6-03",
+        "M6-04",
+        "M6-05"
+      ],
+      "blocker_ids": [],
+      "evidence": [
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-001-authorization-20261030.md",
+          "detail": "Direct project-owner authorization for the bounded M6-001 implementation, local ALE experiments, and one PR; PM conditional GO is stated in owner instruction.",
+          "result": "The project owner directly authorized M6-001 and its bounded implementation, local ALE experiments, and PR delivery. M6 is active; acceptance remains with the independent PM.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-30T14:41:17Z",
+            "recorded_at_utc": "2026-10-30T14:41:17Z",
+            "exit_code": null,
+            "git_revision": "e6d444e475e447e9f37951f16585bf496f804c9d",
+            "log_path": ".agents/evidence/M6-001-authorization-20261030.md"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-entry-verification-20261030.md",
+          "detail": "Verified merged baseline, accepted dependencies, private M4/M5 artifacts, CPU policy load, local ALE/ROM identity, and entry conditions before gameplay.",
+          "result": "M6 hard entry dependencies are present and verified; only the expected external artifact-manifest preflight warning remains.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T14:41:17Z",
+            "exit_code": null,
+            "git_revision": "e6d444e475e447e9f37951f16585bf496f804c9d",
+            "log_path": null
+          }
+        }
+      ],
+      "next_action": "Run genuine Stage 1 and Stage 2 ALE diagnostics; after safe closed-loop validation, freeze and execute the bounded Stage 3 roster. Preserve every attempt and evidence; submit one PR for independent PM review.",
+      "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],
-  "updated_at_utc": "2026-10-30T05:21:57Z"
+  "updated_at_utc": "2026-10-30T14:41:17Z"
 }

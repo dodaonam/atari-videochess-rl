@@ -35,6 +35,12 @@ class ALEEnvironmentTests(unittest.TestCase):
         self.assertEqual(runtime["ram_observation_shape"], [128])
         self.assertEqual(runtime["registered_defaults"]["frameskip"], 4)
         self.assertEqual(runtime["registered_defaults"]["repeat_action_probability"], 0.25)
+        self.assertEqual(runtime["instance_runtime"]["frameskip"], 1)
+        self.assertEqual(runtime["instance_runtime"]["repeat_action_probability"], 0.0)
+        self.assertEqual(runtime["instance_runtime"]["mode"], 0)
+        self.assertEqual(runtime["instance_runtime"]["difficulty"], 0)
+        self.assertEqual(runtime["instance_runtime"]["obs_type"], "rgb")
+        self.assertEqual(runtime["instance_runtime"]["action_set"], list(range(10)))
 
     def test_supported_modes_reset_to_rgb_and_report_the_selected_mode(self) -> None:
         for mode in range(5):

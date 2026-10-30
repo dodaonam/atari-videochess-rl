@@ -1,0 +1,12 @@
+{
+  "command": "python -m unittest tests.test_pre_m6_policy_compatibility -v",
+  "executed_at_utc": "2026-10-30T14:40:51Z",
+  "completed_at_utc": "2026-10-30T14:40:52Z",
+  "execution_environment": "local CPU; existing Python 3.12.3 environment",
+  "git_revision": "e6d444e475e447e9f37951f16585bf496f804c9d",
+  "config_identity": "selected M5 Warm 20261104 post_rl snapshot; all six M5 post_rl snapshots from verified root manifest",
+  "exit_code": 0,
+  "result": "PASS",
+  "log_path": ".agents/evidence/logs/M6-entry-policy-smoke-e6d444e.log",
+  "log_sha256": "0f70a4a08093bc7cd2df5d217a57f8d374c565c470d4c1b4c6860621bdd0efd0"
+}

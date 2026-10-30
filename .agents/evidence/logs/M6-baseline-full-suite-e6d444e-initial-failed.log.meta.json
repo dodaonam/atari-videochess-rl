@@ -1,0 +1,21 @@
+{
+  "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<private-m5-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<selected-warm-checkpoint> PYTHONDONTWRITEBYTECODE=1 /usr/bin/time -v <project-python> -m unittest discover -s tests -v",
+  "elapsed_seconds": 163.462,
+  "executed_at_utc": null,
+  "execution_environment": "local CPU; Python 3.12.3, Gymnasium 1.4.0, ALE-Py 0.11.2, PyTorch 2.14.1+cpu, python-chess 1.11.2",
+  "exit_code": 1,
+  "failed": 2,
+  "failure_summary": [
+    "Stale context test asserted M6 was unauthorized after the direct owner authorization.",
+    "M0 UCI readiness test could not find project-local Stockfish because its directory was not on PATH."
+  ],
+  "git_revision": "e6d444e475e447e9f37951f16585bf496f804c9d",
+  "log_path": ".agents/evidence/logs/M6-baseline-full-suite-e6d444e-initial-failed.log",
+  "log_sanitization": "Local workspace and external private artifact paths replaced with role labels; execution result and measurements unchanged.",
+  "log_sha256": "be98e4ffb336361c52186cd24ab6b27c6e3f082eb626ee0a796b4c1ab44f8b8e",
+  "passed": 386,
+  "recorded_at_utc": "2026-10-30T14:45:59Z",
+  "skipped": 0,
+  "test_count": 388,
+  "working_tree_note": "M6 governance activation; before M6 source changes; initial run omitted the already-installed project-local Stockfish directory from PATH."
+}

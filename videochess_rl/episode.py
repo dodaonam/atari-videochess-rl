@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from enum import Enum
 import hashlib
@@ -23,7 +24,7 @@ from .controller import (
 from .demo import _git_state, _utc_now, _write_png
 from .environment import ALEConfig, ALEFrame, VideoChessEnv
 from .shadow import DesynchronizationError, ShadowBoard
-from .vision import BoardEvidenceSet, BoardWindow, VideoChessVision
+from .vision import BoardEvidenceSet, BoardObservation, BoardWindow, VideoChessVision
 
 
 WINDOW_FRAMES = 33
@@ -81,6 +82,31 @@ class EpisodeStop(RuntimeError):
     """The bounded episode cannot continue without guessing state."""
 
 
+@dataclass(frozen=True)
+class AtariDecisionContext:
+    """One RGB-derived, shadow-checked state offered to a policy selector."""
+
+    board: chess.Board
+    fen: str
+    side_to_move: chess.Color
+    history_uci: tuple[str, ...]
+    legal_moves_uci: tuple[str, ...]
+    frame_number: int
+    rgb_sha256: str
+    rgb_frame: np.ndarray
+    rgb_observation: BoardObservation
+    rgb_evidence: BoardWindow | BoardEvidenceSet
+    standard_reset_verified: bool
+
+
+@dataclass(frozen=True)
+class DecisionResult:
+    """Semantic move plus auditable policy/input metadata."""
+
+    uci: str
+    metadata: dict[str, object]
+
+
 class StopCategory(str, Enum):
     """Machine-readable reason an episode stopped or ended."""
 
@@ -97,6 +123,11 @@ class StopCategory(str, Enum):
     CONTROLLER_BOARD_DESYNCHRONIZED = "CONTROLLER_BOARD_DESYNCHRONIZED"
     OPPONENT_RESPONSE_TIMEOUT = "OPPONENT_RESPONSE_TIMEOUT"
     CHESS_RULE_INCOMPATIBILITY = "CHESS_RULE_INCOMPATIBILITY"
+    ENVIRONMENT_PROFILE_MISMATCH = "ENVIRONMENT_PROFILE_MISMATCH"
+    POLICY_INPUT_INVALID = "POLICY_INPUT_INVALID"
+    POLICY_OUTPUT_ILLEGAL = "POLICY_OUTPUT_ILLEGAL"
+    STALE_OBSERVATION = "STALE_OBSERVATION"
+    AMBIGUOUS_RGB_EVIDENCE = "AMBIGUOUS_RGB_EVIDENCE"
     EXCEPTION_OR_EXTERNAL_INTERRUPTION = "EXCEPTION_OR_EXTERNAL_INTERRUPTION"
     UNKNOWN = "UNKNOWN"
 
@@ -218,6 +249,14 @@ def _classify_stop(reason: str | None, phase: str | None) -> StopCategory:
         return StopCategory.RUNNER_MAX_ALE_FRAMES
     if "artifact-byte budget" in reason:
         return StopCategory.RUNNER_ARTIFACT_LIMIT
+    if "stale ALE observation" in reason or "stale observation" in reason:
+        return StopCategory.STALE_OBSERVATION
+    if "ambiguous" in reason.lower():
+        return StopCategory.AMBIGUOUS_RGB_EVIDENCE
+    if "policy selector returned an illegal" in reason.lower() or "policy output is illegal" in reason.lower():
+        return StopCategory.POLICY_OUTPUT_ILLEGAL
+    if "policy" in reason.lower() or "history" in reason.lower() or "candidate" in reason.lower():
+        return StopCategory.POLICY_INPUT_INVALID
     if phase == "source_selection_uncertain" or "Source FIRE" in reason:
         return StopCategory.CONTROLLER_SOURCE_SELECTION_UNCERTAIN
     if phase == "selected_target_uncertain" or "Selected target" in reason:
@@ -378,7 +417,9 @@ def run_episode(
     config: ALEConfig | None = None,
     seed: int = 20261015,
     expected_reset_cursor: str | None = None,
+    expected_rom_sha256: str | None = None,
     move_selector: Callable[[chess.Board], str] | None = None,
+    decision_selector: Callable[[AtariDecisionContext], str | DecisionResult] | None = None,
     max_player_moves: int = 1,
     max_opponent_wait_frames: int = 10000,
     max_episode_frames: int = 54000,
@@ -402,8 +443,15 @@ def run_episode(
     ):
         raise ValueError("Episode frame and wall-clock budgets must be positive")
 
+    if move_selector is not None and decision_selector is not None:
+        raise ValueError("provide either move_selector or decision_selector, not both")
     config = config or ALEConfig.deterministic_dev()
     selector = move_selector or choose_diagnostic_move
+    selector_name = getattr(
+        decision_selector or selector,
+        "policy_id",
+        getattr(decision_selector or selector, "__name__", "custom diagnostic selector"),
+    )
     input_observation_frames = 66 if config.frameskip > 1 else WINDOW_FRAMES
     timing = ControllerTiming(
         target_fire_press_frames=target_fire_press_frames,
@@ -418,7 +466,8 @@ def run_episode(
         "git": _git_state(),
         "seed": seed,
         "player_color": "white",
-        "move_selector": getattr(selector, "__name__", "custom diagnostic selector"),
+        "move_selector": selector_name,
+        "selector_contract": "verified_atari_context_v1" if decision_selector is not None else "legacy_board_selector",
         "config": config.as_dict(),
         "controller_timing": {
             "direction_frames": timing.direction_frames,
@@ -479,13 +528,16 @@ def run_episode(
         reset = env.reset(seed=seed)
         last_frame = reset
 
-        def mark_blocked(reason: str) -> dict[str, object]:
+        def mark_blocked(
+            reason: str,
+            category: StopCategory = StopCategory.CONTROLLER_BOARD_DESYNCHRONIZED,
+        ) -> dict[str, object]:
             trace["status"] = "blocked"
             trace["failure"] = reason
             trace["terminal"].update(
                 {
                     "runner_stopped": True,
-                    "runner_stop_category": StopCategory.CONTROLLER_BOARD_DESYNCHRONIZED.value,
+                    "runner_stop_category": category.value,
                     "runner_stop_reason": reason,
                     "stop_reason": reason,
                     "ale_frames": last_frame.frame_number,
@@ -513,9 +565,33 @@ def run_episode(
             "verified_from_rgb": initial_observation.matches_start_position(),
             "cursor_squares": sorted(initial_observation.cursor_squares),
         }
-        trace["ram_diagnostics_only"].append(
-            {"stage": "reset", **env.diagnostic_ram((0xE1, 0xE4, 0xEA, 0xEE))}
-        )
+        reset_ram = env.diagnostic_ram((0xE1, 0xE4, 0xEA, 0xEE))
+        trace["ram_diagnostics_only"].append({"stage": "reset", **reset_ram})
+        trace["reset"]["actual_mode_from_diagnostic_ram"] = reset_ram.get("0xEA")
+        runtime = trace["runtime"]
+        if isinstance(runtime, dict):
+            reported_config = runtime.get("config")
+            if reported_config is not None and reported_config != config.as_dict():
+                return mark_blocked("Constructed ALE configuration differs from the requested immutable profile", StopCategory.ENVIRONMENT_PROFILE_MISMATCH)
+            if expected_rom_sha256 is not None and runtime.get("rom_sha256") != expected_rom_sha256:
+                return mark_blocked("Installed VideoChess ROM SHA-256 differs from the verified M6 identity", StopCategory.ENVIRONMENT_PROFILE_MISMATCH)
+            instance_runtime = runtime.get("instance_runtime")
+            if instance_runtime is not None:
+                expected_instance = {
+                    "mode": config.mode,
+                    "difficulty": config.difficulty,
+                    "frameskip": config.frameskip,
+                    "repeat_action_probability": config.repeat_action_probability,
+                    "obs_type": config.obs_type,
+                    "action_count": 10,
+                    "observation_shape": [210, 160, 3],
+                }
+                if any(instance_runtime.get(key) != value for key, value in expected_instance.items()):
+                    return mark_blocked("ALE instance runtime differs from the requested RGB/profile/action configuration", StopCategory.ENVIRONMENT_PROFILE_MISMATCH)
+                if instance_runtime.get("action_set") != list(range(10)):
+                    return mark_blocked("ALE minimal action set differs from the calibrated VideoChess controller contract", StopCategory.ENVIRONMENT_PROFILE_MISMATCH)
+        if "0xEA" in reset_ram and int(reset_ram["0xEA"]) != config.mode:
+            return mark_blocked("ALE reset mode byte differs from the requested numeric mode", StopCategory.ENVIRONMENT_PROFILE_MISMATCH)
         if not initial_observation.matches_start_position() or not initial_window.is_stable:
             return mark_blocked("Reset RGB did not establish a stable standard chess start")
         shadow = ShadowBoard()
@@ -527,6 +603,7 @@ def run_episode(
         if expected_reset_cursor is not None and cursor != expected_reset_cursor:
             return mark_blocked(f"Reset cursor expectation {expected_reset_cursor} disagrees with RGB cursor {cursor}")
         current_window = initial_window
+        current_evidence: BoardWindow | BoardEvidenceSet = initial_window
         actions: list[dict[str, object]] = trace["actions"]
         observations: list[dict[str, object]] = trace["observations"]
         total_reward = 0.0
@@ -539,6 +616,8 @@ def run_episode(
         pre_terminal_frame: ALEFrame | None = None
         max_env_steps = max_episode_frames // config.frameskip
         artifact_bytes = 0
+        active_turn_record: dict[str, object] | None = None
+        control_execution_active = False
 
         def set_stop(reason: str, category: StopCategory | None = None) -> None:
             nonlocal stop_reason, stop_category
@@ -589,6 +668,10 @@ def run_episode(
                     set_stop("per-episode ALE frame budget reached", StopCategory.RUNNER_MAX_ALE_FRAMES)
                     break
                 frame_before_step = last_frame
+                if control_execution_active and active_turn_record is not None:
+                    move_record = active_turn_record.get("player_move")
+                    if isinstance(move_record, dict):
+                        move_record["input_initiated"] = True
                 try:
                     last_frame = env.step(action)
                 except Exception as exc:  # retain an inspectable stop for runtime failures
@@ -768,6 +851,8 @@ def run_episode(
             if terminal_observed or stop_reason:
                 break
             board_before = shadow.board.copy()
+            turn: dict[str, object] | None = None
+            decision_started: float | None = None
             if board_before.turn != chess.WHITE:
                 set_turn_state(turn_index, TurnState.UNCERTAIN, "shadow board did not return to the white player turn")
                 stop_reason = "Expected the white player turn after the observed Atari reply"
@@ -779,29 +864,76 @@ def run_episode(
                 if current_cursor is None or not current_window.matches_board_except_cursor(board_before):
                     raise EpisodeStop("Player turn lacked a stable legal board and unique cursor observation")
 
-                player_move = selector(board_before.copy())
-                planned_move = chess.Move.from_uci(player_move)
-                if planned_move not in board_before.legal_moves:
-                    raise EpisodeStop(f"Diagnostic selector returned an illegal move: {player_move}")
-                plan = plan_move(current_cursor, player_move, board=board_before, timing=timing)
+                history_uci = tuple(move.uci() for move in board_before.move_stack)
+                legal_moves_uci = tuple(sorted(move.uci() for move in board_before.legal_moves))
+                rgb_frame = np.array(last_frame.rgb, copy=True)
+                rgb_frame.setflags(write=False)
+                frame_sha256 = hashlib.sha256(rgb_frame.tobytes()).hexdigest()
                 turn: dict[str, object] = {
                     "turn": turn_index,
                     "board_before_fen": board_before.fen(),
                     "cursor_before": current_cursor,
-                    "player_move": {"uci": player_move, "verified_from_rgb": False},
+                    "decision_input": {
+                        "frame_number": last_frame.frame_number,
+                        "rgb_sha256": frame_sha256,
+                        "fen": board_before.fen(en_passant="fen"),
+                        "side_to_move": "white" if board_before.turn else "black",
+                        "history_uci": list(history_uci),
+                        "legal_candidates_uci": list(legal_moves_uci),
+                        "stable_rgb_window": current_window.is_stable,
+                        "rgb_evidence_matches_shadow": current_window.matches_board_except_cursor(board_before),
+                    },
+                    "policy_decision": None,
+                    "player_move": {"uci": None, "verified_from_rgb": False, "input_initiated": False},
                     "opponent_reply": {"uci": None, "verified_from_rgb": False},
                     "evidence_windows": [],
                     "input_phases": [],
                     "selected_target_observations": [],
                 }
+                decision_started = time.perf_counter()
                 trace["turns"].append(turn)
                 trace["player_move"] = turn["player_move"]
                 trace["opponent_reply"] = turn["opponent_reply"]
+
+                if decision_selector is not None:
+                    context = AtariDecisionContext(
+                        board=board_before.copy(stack=True),
+                        fen=board_before.fen(en_passant="fen"),
+                        side_to_move=board_before.turn,
+                        history_uci=history_uci,
+                        legal_moves_uci=legal_moves_uci,
+                        frame_number=last_frame.frame_number,
+                        rgb_sha256=frame_sha256,
+                        rgb_frame=rgb_frame,
+                        rgb_observation=vision.observe(rgb_frame),
+                        rgb_evidence=current_evidence,
+                        standard_reset_verified=(not history_uci and initial_observation.matches_start_position()),
+                    )
+                    selection = decision_selector(context)
+                else:
+                    selection = selector(board_before.copy(stack=True))
+                if isinstance(selection, DecisionResult):
+                    player_move = selection.uci
+                    turn["policy_decision"] = dict(selection.metadata)
+                elif isinstance(selection, str):
+                    player_move = selection
+                else:
+                    raise EpisodeStop("Policy selector did not return a semantic UCI move")
+                try:
+                    planned_move = chess.Move.from_uci(player_move)
+                except (ValueError, TypeError) as exc:
+                    raise EpisodeStop(f"Policy selector returned malformed UCI action: {player_move!r}") from exc
+                if planned_move not in board_before.legal_moves:
+                    raise EpisodeStop(f"Policy selector returned an illegal move: {player_move}")
+                turn["player_move"]["uci"] = player_move
+                plan = plan_move(current_cursor, player_move, board=board_before, timing=timing)
                 set_turn_state(turn_index, TurnState.PLAYER_MOVE_EXECUTING, f"executing legal move {player_move}")
                 move_source = chess.square_name(planned_move.from_square)
                 move_target = chess.square_name(planned_move.to_square)
                 source_selection_verified = False
                 target_position_verified = False
+                active_turn_record = turn
+                control_execution_active = True
                 set_input_phase(turn, "player_turn_verified", "stable RGB board and unique cursor matched the last verified shadow position")
                 set_input_phase(turn, "cursor_navigating_to_source", f"navigating the cursor to {move_source}")
                 if current_cursor == move_source:
@@ -942,7 +1074,10 @@ def run_episode(
                     else:
                         execute(event.index, event.frames, event.phase)
 
+                control_execution_active = False
+                active_turn_record = None
                 if terminal_observed:
+                    turn["decision_latency_seconds"] = time.perf_counter() - decision_started
                     set_input_phase(
                         turn,
                         "ale_terminal_observed",
@@ -1030,7 +1165,6 @@ def run_episode(
                     {
                         "frames_to_candidate_rgb": confirmation_frames,
                         "partial_cursor_masked_candidate": bool(player_window and not player_window.matches_board(expected_player_board)),
-                        "verified_from_rgb": False,
                         "candidate_fen": expected_player_board.fen(),
                     }
                 )
@@ -1038,6 +1172,22 @@ def run_episode(
                 save_frame(f"turn-{turn_index:02d}-player-candidate")
                 if player_window is None:
                     raise EpisodeStop("RGB did not confirm the player move within the bounded observation windows")
+                if player_window.matches_board(expected_player_board):
+                    shadow.apply_observed_move(player_move, player_window)
+                    turn["player_move"].update(
+                        {
+                            "verified_from_rgb": True,
+                            "verification": "stable RGB window matched the complete candidate player board",
+                            "shadow_fen_after": shadow.board.fen(),
+                        }
+                    )
+                else:
+                    turn["player_move"].update(
+                        {
+                            "verified_from_rgb": False,
+                            "verification": "cursor-masked partial board; advancement waits for complete two-ply evidence",
+                        }
+                    )
 
                 set_input_phase(turn, "atari_thinking", "player candidate was observed; waiting for an RGB-verified Atari reply")
                 set_turn_state(turn_index, TurnState.ATARI_THINKING, "player candidate observed; waiting for a unique legal Atari reply")
@@ -1151,16 +1301,23 @@ def run_episode(
                 if not evidence_set.matches_board(final_candidate):
                     raise EpisodeStop("Two stable cursor positions did not jointly verify every board square")
 
-                applied = shadow.apply_observed_sequence((player_move, candidate_reply), evidence_set)
+                if turn["player_move"].get("verified_from_rgb"):
+                    if shadow.board.fen(en_passant="fen") != expected_player_board.fen(en_passant="fen"):
+                        raise DesynchronizationError("Shadow state changed after the RGB-confirmed player move")
+                    shadow.apply_observed_move(candidate_reply, evidence_set)
+                    applied = (player_move, candidate_reply)
+                else:
+                    applied = shadow.apply_observed_sequence((player_move, candidate_reply), evidence_set)
+                    turn["player_move"].update(
+                        {
+                            "verified_from_rgb": True,
+                            "verification": "cursor-masked player observation plus complete two-cursor-position RGB transition evidence",
+                            "shadow_fen_after": expected_player_board.fen(),
+                        }
+                    )
                 if applied != (player_move, candidate_reply):
                     raise DesynchronizationError("Verified transition sequence changed before shadow update")
-                turn["player_move"].update(
-                    {
-                        "verified_from_rgb": True,
-                        "verification": "intermediate partial window plus complete two-cursor-position RGB coverage",
-                        "shadow_fen_after": expected_player_board.fen(),
-                    }
-                )
+                turn["player_move"].setdefault("shadow_fen_after", expected_player_board.fen())
                 turn["opponent_reply"].update(
                     {
                         "uci": candidate_reply,
@@ -1184,6 +1341,7 @@ def run_episode(
                     opponent_reply=candidate_reply,
                 )
                 turn["board_after_fen"] = shadow.board.fen()
+                turn["decision_latency_seconds"] = time.perf_counter() - decision_started
                 turn["full_board_evidence"] = {
                     "cursor_positions": [sorted(reply_window.cursor_squares), sorted(verification_window.cursor_squares)],
                     "all_squares_covered": True,
@@ -1205,22 +1363,28 @@ def run_episode(
                 if turn_index < max_player_moves:
                     set_turn_state(turn_index, TurnState.PLAYER_TURN, "complete RGB-verified two-ply transition")
                     current_window = verification_window
+                    current_evidence = evidence_set
             except (EpisodeStop, DesynchronizationError, ValueError) as exc:
+                if turn is not None and decision_started is not None:
+                    turn.setdefault("decision_latency_seconds", time.perf_counter() - decision_started)
                 if terminal_observed:
-                    set_input_phase(
-                        turn,
-                        "ale_terminal_observed",
-                        f"ALE ended during {terminal_phase or 'the current action'}; no further input was sent",
-                        terminated=last_frame.terminated,
-                        truncated=last_frame.truncated,
-                        reward=last_frame.reward,
-                    )
+                    if turn is not None:
+                        set_input_phase(
+                            turn,
+                            "ale_terminal_observed",
+                            f"ALE ended during {terminal_phase or 'the current action'}; no further input was sent",
+                            terminated=last_frame.terminated,
+                            truncated=last_frame.truncated,
+                            reward=last_frame.reward,
+                        )
                     break
                 reason = str(exc)
                 set_stop(reason, stop_category or _classify_stop(reason, latest_input_phase))
                 set_turn_state(turn_index, TurnState.UNCERTAIN, reason)
                 break
             except Exception as exc:  # do not lose a reproducible runner failure
+                if turn is not None and decision_started is not None:
+                    turn.setdefault("decision_latency_seconds", time.perf_counter() - decision_started)
                 reason = f"{type(exc).__name__}: {exc}"
                 set_stop(reason, StopCategory.EXCEPTION_OR_EXTERNAL_INTERRUPTION)
                 set_turn_state(turn_index, TurnState.UNCERTAIN, reason)
@@ -1288,7 +1452,7 @@ def run_episode(
                 "artifact_bytes": artifact_bytes,
                 "last_verified_fen": shadow.board.fen() if shadow.board else None,
                 "player_moves_attempted": sum(
-                    1 for turn in trace["turns"] if turn.get("player_move", {}).get("uci") is not None
+                    1 for turn in trace["turns"] if turn.get("player_move", {}).get("input_initiated")
                 ),
                 "verified_player_moves": sum(
                     1 for turn in trace["turns"] if turn.get("player_move", {}).get("verified_from_rgb")

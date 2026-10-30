@@ -121,6 +121,7 @@ class VideoChessEnv:
         rom_path = get_rom_path("video_chess")
         digest = hashlib.sha256(Path(rom_path).read_bytes()).hexdigest()
         ale = self.env.unwrapped.ale
+        instance = self.env.unwrapped
         registered_defaults = dict(self._gymnasium.spec(self.config.env_id).kwargs)
         return {
             "python": sys.version.split()[0],
@@ -148,6 +149,16 @@ class VideoChessEnv:
             "available_modes": [int(mode) for mode in ale.getAvailableModes()],
             "available_difficulties": [int(level) for level in ale.getAvailableDifficulties()],
             "registered_defaults": registered_defaults,
+            "instance_runtime": {
+                "mode": int(instance._game_mode),
+                "difficulty": int(instance._game_difficulty),
+                "frameskip": instance._frameskip,
+                "repeat_action_probability": float(ale.getFloat("repeat_action_probability")),
+                "obs_type": instance._obs_type,
+                "action_set": [int(action) for action in instance._action_set],
+                "observation_shape": list(self.env.observation_space.shape),
+                "action_count": int(self.env.action_space.n),
+            },
             "config": self.config.as_dict(),
         }
 
