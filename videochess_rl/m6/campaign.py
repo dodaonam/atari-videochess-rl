@@ -53,6 +53,10 @@ from videochess_rl.m6.ledger import (
 
 CONFIG_PATH = Path(__file__).resolve().parents[2] / "configs/m6/m6-stage3-v1.json"
 ROM_SHA256 = "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7"
+MAX_GAMEPLAY_WALL_SECONDS = 36_000
+MAX_EPISODE_WALL_SECONDS = 900
+MAX_M6_ARTIFACT_BYTES = 2 * 1024 * 1024 * 1024
+ARTIFACT_METADATA_RESERVE_BYTES = 16 * 1024 * 1024
 M5_RUN_IDS = {
     ("warm", 20261104): "m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__warm__attempt-0001",
     ("scratch", 20261104): "m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__scratch__attempt-0000",
@@ -217,10 +221,11 @@ def _run_manifest(
         "seed_schedule": seed_schedule,
         "attempt_limit": 35 if stage == "stage3" else len(seed_schedule),
         "budget": {
-            "wall_seconds_per_game": 900 if stage == "stage3" else 900,
+            "wall_seconds_per_game": MAX_EPISODE_WALL_SECONDS,
             "ale_frames_per_game": 54000,
-            "gameplay_wall_seconds_total": 36000 if stage == "stage3" else None,
-            "artifact_bytes_total": 2147483648,
+            "gameplay_wall_seconds_total": MAX_GAMEPLAY_WALL_SECONDS,
+            "gameplay_wall_budget_includes_diagnostics": True,
+            "artifact_bytes_total": MAX_M6_ARTIFACT_BYTES,
             "serialized_ale_processes": 1,
             "pre_action_startup_retries": 1 if stage == "stage3" else 0,
         },
@@ -869,6 +874,40 @@ class M6Campaign:
                 total += path.stat().st_size
         return total
 
+    def _cumulative_gameplay_wall_seconds(self, *, exclude_run_id: str | None = None) -> float:
+        """Sum recorded gameplay wall time; use timestamp upper bounds if a process died."""
+        total = 0.0
+        if not self.artifact_root.exists():
+            return total
+        for attempt_path in self.artifact_root.rglob("attempt.json"):
+            if attempt_path.is_symlink():
+                raise ValueError(f"symlink in M6 attempt records: {attempt_path}")
+            if exclude_run_id is not None and attempt_path.parents[2].name == exclude_run_id:
+                continue
+            try:
+                record = json.loads(attempt_path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError) as exc:
+                raise ValueError(f"cannot account for M6 gameplay budget from {attempt_path}") from exc
+            total += self._record_wall_bound_seconds(record)
+        return total
+
+    @staticmethod
+    def _record_wall_bound_seconds(record: dict[str, Any]) -> float:
+        wall = record.get("wall_seconds")
+        if isinstance(wall, (int, float)) and not isinstance(wall, bool) and wall >= 0:
+            return float(wall)
+        started = record.get("start_timestamp_utc")
+        ended = record.get("end_timestamp_utc")
+        if isinstance(started, str) and isinstance(ended, str):
+            try:
+                start_dt = datetime.fromisoformat(started.replace("Z", "+00:00"))
+                end_dt = datetime.fromisoformat(ended.replace("Z", "+00:00"))
+            except ValueError:
+                return 0.0
+            if end_dt >= start_dt:
+                return (end_dt - start_dt).total_seconds()
+        return 0.0
+
     def _finish_pre_reset_failure(
         self, *, ledger: HashChainLedger, run_id: str, game_id: str, attempt_id: str,
         policy_id: str, seed: int, reason: str,
@@ -1143,11 +1182,33 @@ class M6Campaign:
         run_dir = self.artifact_root / run_id
         run_dir.mkdir(parents=True, exist_ok=False)
         manifest, config = self._write_frozen_manifest(run_dir, run_id=run_id, stage=stage, profile=profile, schedule=schedule)
+        campaign_wall_used_before = self._cumulative_gameplay_wall_seconds(exclude_run_id=run_id)
+        manifest["campaign_wall_seconds_used_before"] = campaign_wall_used_before
+        manifest["campaign_wall_budget_includes_diagnostics"] = True
+        manifest["artifact_bytes_used_before"] = self._artifact_bytes()
+        write_json_atomic(run_dir / "run-manifest.json", manifest, refuse_existing=False)
         ledger = HashChainLedger(run_dir / "events.jsonl", run_id=run_id)
         ledger.append("run_started", {"run_manifest_sha256": sha256_file(run_dir / "run-manifest.json"), "schedule": schedule})
+        gameplay_start = time.monotonic()
         for item in schedule:
-            self._run_one(ledger=ledger, run_id=run_id, stage=stage, profile=profile, config=config,
-                          schedule=item, max_player_moves=moves)
+            remaining_seconds = MAX_GAMEPLAY_WALL_SECONDS - campaign_wall_used_before - (time.monotonic() - gameplay_start)
+            remaining_artifacts = MAX_M6_ARTIFACT_BYTES - self._artifact_bytes() - ARTIFACT_METADATA_RESERVE_BYTES
+            if remaining_seconds <= 0 or remaining_artifacts <= 0:
+                ledger.append("resource_stop", {
+                    "reason": "10-hour cumulative gameplay or 2-GiB M6 artifact ceiling reached before diagnostic attempt",
+                    "next_attempt_id": item["game_id"],
+                })
+                break
+            self._run_one(
+                ledger=ledger,
+                run_id=run_id,
+                stage=stage,
+                profile=profile,
+                config=config,
+                schedule=item,
+                max_player_moves=moves,
+                max_episode_seconds=min(MAX_EPISODE_WALL_SECONDS, remaining_seconds),
+            )
         ledger.append("run_finished", {"stage": stage, "profile_id": profile})
         return self._finalize(run_dir, run_id=run_id, ledger=ledger)
 
@@ -1184,7 +1245,8 @@ class M6Campaign:
         limits = config_data.get("campaign_limits", {})
         episode_limits = config_data.get("episode_limits", {})
         if (limits.get("maximum_game_attempts") != 35
-                or limits.get("maximum_gameplay_wall_seconds") != 36_000
+                or limits.get("maximum_gameplay_wall_seconds") != MAX_GAMEPLAY_WALL_SECONDS
+                or limits.get("gameplay_wall_budget_scope") != "all M6 ALE diagnostics plus Stage 3 evaluation attempts"
                 or limits.get("maximum_artifact_bytes") != 2 * 1024 * 1024 * 1024
                 or limits.get("serialized_ale_processes") != 1
                 or limits.get("maximum_pre_action_process_start_retries") != 1
@@ -1207,6 +1269,9 @@ class M6Campaign:
                 run_dir, run_id=run_id, stage="stage3", profile="ale-v5-default", schedule=schedule
             )
             manifest["frozen_schedule_sha256"] = hashlib.sha256(canonical_schedule_bytes(schedule)).hexdigest()
+            manifest["campaign_wall_seconds_used_before"] = self._cumulative_gameplay_wall_seconds(exclude_run_id=run_id)
+            manifest["campaign_wall_budget_includes_diagnostics"] = True
+            manifest["artifact_bytes_used_before"] = self._artifact_bytes()
             # The schedule digest is included before the run manifest's final write;
             # this same manifest is never replaced after the first result.
             manifest_path = run_dir / "run-manifest.json"
@@ -1240,11 +1305,10 @@ class M6Campaign:
             }
             self.startup_retries_used = sum(1 for event in events if event["event_type"] == "process_start_retry")
 
+        campaign_wall_used_before = self._cumulative_gameplay_wall_seconds(exclude_run_id=run_id)
         gameplay_start = time.monotonic()
         finished_before = _records_from_events(verify_hash_chain(run_dir / "events.jsonl", expected_run_id=run_id))
-        consumed_before = sum(
-            float(row["wall_seconds"]) for row in finished_before if row.get("wall_seconds") is not None
-        )
+        consumed_before = sum(self._record_wall_bound_seconds(row) for row in finished_before)
 
         def run_slot(
             item: dict[str, Any],
@@ -1306,8 +1370,8 @@ class M6Campaign:
                     continue
                 if self.startup_retries_used >= 1:
                     continue
-                remaining_seconds = 36_000 - consumed_before - (time.monotonic() - gameplay_start)
-                remaining_artifact_bytes = 2 * 1024 * 1024 * 1024 - self._artifact_bytes() - 16 * 1024 * 1024
+                remaining_seconds = MAX_GAMEPLAY_WALL_SECONDS - campaign_wall_used_before - consumed_before - (time.monotonic() - gameplay_start)
+                remaining_artifact_bytes = MAX_M6_ARTIFACT_BYTES - self._artifact_bytes() - ARTIFACT_METADATA_RESERVE_BYTES
                 if remaining_seconds <= 0 or remaining_artifact_bytes <= 0:
                     ledger.append("resource_stop", {
                         "reason": "10-hour gameplay or 2-GiB artifact ceiling reached before startup retry",
@@ -1322,7 +1386,7 @@ class M6Campaign:
                     "action_attempted": False,
                     "reason": "recovered process ended before an ALE reset",
                 })
-                run_slot(item, retry_id, max_episode_seconds=min(900.0, remaining_seconds))
+                run_slot(item, retry_id, max_episode_seconds=min(MAX_EPISODE_WALL_SECONDS, remaining_seconds))
                 continue
 
             if attempt_id in started_ids and attempt_id not in completed_ids:
@@ -1340,8 +1404,8 @@ class M6Campaign:
                 completed_ids.add(attempt_id)
                 finished_records[attempt_id] = {"attempt_id": attempt_id, "reset_observed": False, "outcome": "incomplete"}
                 if retry_id not in started_ids and self.startup_retries_used < 1:
-                    remaining_seconds = 36_000 - consumed_before - (time.monotonic() - gameplay_start)
-                    remaining_artifact_bytes = 2 * 1024 * 1024 * 1024 - self._artifact_bytes() - 16 * 1024 * 1024
+                    remaining_seconds = MAX_GAMEPLAY_WALL_SECONDS - campaign_wall_used_before - consumed_before - (time.monotonic() - gameplay_start)
+                    remaining_artifact_bytes = MAX_M6_ARTIFACT_BYTES - self._artifact_bytes() - ARTIFACT_METADATA_RESERVE_BYTES
                     if remaining_seconds <= 0 or remaining_artifact_bytes <= 0:
                         ledger.append("resource_stop", {
                             "reason": "10-hour gameplay or 2-GiB artifact ceiling reached before startup retry",
@@ -1356,25 +1420,25 @@ class M6Campaign:
                         "action_attempted": False,
                         "reason": "recovered process ended before an ALE reset was recorded",
                     })
-                    run_slot(item, retry_id, max_episode_seconds=min(900.0, remaining_seconds))
+                    run_slot(item, retry_id, max_episode_seconds=min(MAX_EPISODE_WALL_SECONDS, remaining_seconds))
                 continue
 
-            if consumed_before + (time.monotonic() - gameplay_start) >= 36_000:
+            if campaign_wall_used_before + consumed_before + (time.monotonic() - gameplay_start) >= MAX_GAMEPLAY_WALL_SECONDS:
                 ledger.append("resource_stop", {"reason": "10-hour cumulative gameplay wall-time ceiling reached", "next_attempt_id": attempt_id})
                 break
-            remaining_seconds = 36_000 - consumed_before - (time.monotonic() - gameplay_start)
-            remaining_artifact_bytes = 2 * 1024 * 1024 * 1024 - self._artifact_bytes() - 16 * 1024 * 1024
+            remaining_seconds = MAX_GAMEPLAY_WALL_SECONDS - campaign_wall_used_before - consumed_before - (time.monotonic() - gameplay_start)
+            remaining_artifact_bytes = MAX_M6_ARTIFACT_BYTES - self._artifact_bytes() - ARTIFACT_METADATA_RESERVE_BYTES
             if remaining_artifact_bytes <= 0:
                 ledger.append("resource_stop", {"reason": "2-GiB M6 artifact ceiling reached before attempt reset", "next_attempt_id": attempt_id})
                 break
-            record = run_slot(item, max_episode_seconds=min(900.0, remaining_seconds))
+            record = run_slot(item, max_episode_seconds=min(MAX_EPISODE_WALL_SECONDS, remaining_seconds))
             startup_state = record.get("startup_state", {})
             if (not record.get("reset_observed")
                     and record.get("runner_stop_category") == "PROCESS_START_FAILURE"
                     and not startup_state.get("action_attempted")
                     and self.startup_retries_used < 1):
-                retry_remaining_seconds = 36_000 - consumed_before - (time.monotonic() - gameplay_start)
-                retry_remaining_artifacts = 2 * 1024 * 1024 * 1024 - self._artifact_bytes() - 16 * 1024 * 1024
+                retry_remaining_seconds = MAX_GAMEPLAY_WALL_SECONDS - campaign_wall_used_before - consumed_before - (time.monotonic() - gameplay_start)
+                retry_remaining_artifacts = MAX_M6_ARTIFACT_BYTES - self._artifact_bytes() - ARTIFACT_METADATA_RESERVE_BYTES
                 if retry_remaining_seconds <= 0 or retry_remaining_artifacts <= 0:
                     ledger.append("resource_stop", {
                         "reason": "10-hour gameplay or 2-GiB artifact ceiling reached before startup retry",
@@ -1389,8 +1453,8 @@ class M6Campaign:
                     "action_attempted": False,
                     "reason": record.get("stop_reason"),
                 })
-                run_slot(item, retry_id, max_episode_seconds=min(900.0, retry_remaining_seconds))
-            if self._artifact_bytes() > 2 * 1024 * 1024 * 1024:
+                run_slot(item, retry_id, max_episode_seconds=min(MAX_EPISODE_WALL_SECONDS, retry_remaining_seconds))
+            if self._artifact_bytes() > MAX_M6_ARTIFACT_BYTES:
                 ledger.append("resource_stop", {"reason": "2-GiB M6 artifact ceiling reached", "completed_attempt_id": record["attempt_id"]})
                 break
         ledger.append("run_progress_checkpoint", {

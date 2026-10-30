@@ -47,7 +47,7 @@ M5 selection uses the lowest predeclared paired training seed, not M5 evaluation
 
 ## Resource and stop conditions
 
-Use one local CPU ALE process. Cap each Stage 3 game at 900 seconds and 54,000 ALE frames; cap aggregate Stage 3 wall time at 10 hours and compact M6 outputs at 2 GiB. Monitor wall time, frames, process RSS, inference/decision latency, trace writes, and artifact growth. Only a startup failure before an ALE action may be retried once. Once any action was executed, preserve that attempt and never retry/replace it. Stop the current attempt on mismatched artifacts, stale/ambiguous RGB, history/FEN/candidate mismatch, uncertain controller action, trace failure, ALE terminal, runner limits, or external interruption. Keep the last RGB-verified board/history; classify unknown/incomplete outcomes separately.
+Use one local CPU ALE process. Cap each game at 900 seconds and 54,000 ALE frames; cap cumulative M6 gameplay across Stages 1–3 at 10 hours and compact M6 outputs at 2 GiB. The 10-hour clock includes diagnostic gameplay and is enforced cumulatively across run manifests. Monitor wall time, frames, process RSS, inference/decision latency, trace writes, and artifact growth. Only a startup failure before an ALE action may be retried once. Once any action was executed, preserve that attempt and never retry/replace it. Stop the current attempt on mismatched artifacts, stale/ambiguous RGB, history/FEN/candidate mismatch, uncertain controller action, trace failure, ALE terminal, runner limits, or external interruption. Keep the last RGB-verified board/history; classify unknown/incomplete outcomes separately.
 
 ## Handover state
 

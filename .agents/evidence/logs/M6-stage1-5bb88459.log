@@ -1,0 +1,30 @@
+Command: VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<verified-private-m5-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<verified-private-m4-root> <project-python> scripts/run_m6_campaign.py --stage stage1 --artifact-root artifacts/m6
+Result: PASS: Genuine ALE Stage 1; frozen Warm selected g1f3, RGB verified the move and Atari reply c7c5; 1/1 player moves verified, 0 desynchronizations; runner stopped at the planned one-player-move diagnostic cap.
+Exit code: 0
+Source revision: 5bb88459a1d38ad62dcbce6b4805541f8c2b3acf
+Run manifest SHA-256: aa866c027f7f6ab60c99c013375f5dd0c823ad41d3b6f966c9e10cf7e160b21d
+Trace SHA-256: 8955a4ce292c4fd2525232f373f61e97c6a8e88fc480c954f454a9f5695dc752
+Run artifact manifest SHA-256: d80f7d40191f4a347a607fcfefa451da004057b9e66bdbbda25292b02dceaeda
+
+{
+  "ale_frames": 1110,
+  "attempt_id": "m5-warm-seed-20261104-post-rl-seed-20261129-slot-000-attempt-0000",
+  "attempted_reset_count": 1,
+  "desynchronization_count": 0,
+  "environment_steps": 1106,
+  "frameskip": 1,
+  "move_rate": 1.0,
+  "move_wilson": [
+    0.20654931437723745,
+    1.0
+  ],
+  "player_moves_attempted": 1,
+  "repeat_action_probability": 0.0,
+  "rgb_verified_player_moves": 1,
+  "run_id": "m6-stage1-development-debug-5bb88459a1d3",
+  "selected_uci": "g1f3",
+  "stop_category": "RUNNER_MAX_PLAYER_MOVES",
+  "verified_atari_replies": 1,
+  "verified_atari_reply": "c7c5",
+  "wall_seconds": 5.67
+}

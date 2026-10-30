@@ -1,0 +1,29 @@
+{
+  "attempt_manifest_sha256": "4c37b396dfcbc78bf79e43edf0ba1bcc92add73871a1763123e3642796c06e52",
+  "attempt_trace_sha256": "8955a4ce292c4fd2525232f373f61e97c6a8e88fc480c954f454a9f5695dc752",
+  "attempted_moves": 1,
+  "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<verified-private-m5-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<verified-private-m4-root> <project-python> scripts/run_m6_campaign.py --stage stage1 --artifact-root artifacts/m6",
+  "completed_at_utc": "2026-10-30T15:36:36.361399Z",
+  "configuration_identity": {
+    "checkpoint_sha256": "0b2405017a8e1d539851f0cd278883d3fd23936fb5c2f7962c813590a6fd1767",
+    "config_sha256": "73fe6eea0933a74af9214fe0e46cd4d62848e8e7f81add2d66e51e8b5ed99ba3",
+    "policy_id": "m5-warm-seed-20261104-post-rl",
+    "rom_sha256": "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7",
+    "run_id": "m6-stage1-development-debug-5bb88459a1d3"
+  },
+  "desynchronizations": 0,
+  "executed_at_utc": "2026-10-30T15:36:30.625188Z",
+  "execution_environment": "Local CPU; Python 3.12.3, Gymnasium 1.4.0, ALE-Py 0.11.2, PyTorch 2.14.1+cpu, python-chess 1.11.2.",
+  "exit_code": 0,
+  "git_revision": "5bb88459a1d38ad62dcbce6b4805541f8c2b3acf",
+  "log_path": ".agents/evidence/logs/M6-stage1-5bb88459.log",
+  "log_sha256": "b3b22827ebc805918f0b5d3e9fae430ebc473d828cf8c092696c5480cfddecd2",
+  "log_type": "post-run evidence export from the hash-verified local summary, attempt trace, and manifests; full CLI console JSON was not separately retained.",
+  "recorded_at_utc": "2026-10-30T15:40:42Z",
+  "result": "PASS: Genuine ALE Stage 1; frozen Warm selected g1f3, RGB verified the move and Atari reply c7c5; 1/1 player moves verified, 0 desynchronizations; runner stopped at the planned one-player-move diagnostic cap.",
+  "rgb_verified_moves": 1,
+  "run_artifact_manifest_sha256": "d80f7d40191f4a347a607fcfefa451da004057b9e66bdbbda25292b02dceaeda",
+  "run_event_ledger_sha256": "4f21e79800376dffd711ddd63ac9e898c1f60573a0c9294dced6dcbf51e984d1",
+  "run_manifest_sha256": "aa866c027f7f6ab60c99c013375f5dd0c823ad41d3b6f966c9e10cf7e160b21d",
+  "verified_atari_replies": 1
+}

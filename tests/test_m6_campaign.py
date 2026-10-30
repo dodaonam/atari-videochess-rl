@@ -55,6 +55,7 @@ class M6CampaignPlanTests(unittest.TestCase):
         self.assertEqual((config["frameskip"], config["repeat_action_probability"]), (4, 0.25))
         self.assertEqual(config["campaign_limits"]["maximum_game_attempts"], 35)
         self.assertEqual(config["campaign_limits"]["maximum_gameplay_wall_seconds"], 36000)
+        self.assertEqual(config["campaign_limits"]["gameplay_wall_budget_scope"], "all M6 ALE diagnostics plus Stage 3 evaluation attempts")
         self.assertEqual(config["campaign_limits"]["maximum_artifact_bytes"], 2 * 1024 * 1024 * 1024)
         self.assertEqual(config["episode_limits"]["maximum_wall_seconds"], 900)
         self.assertEqual(config["episode_limits"]["maximum_ale_frames"], 54000)
@@ -75,6 +76,21 @@ class M6CampaignPlanTests(unittest.TestCase):
                 os.chdir(original_cwd)
             self.assertTrue(campaign.artifact_root.is_absolute())
             self.assertEqual(campaign.artifact_root, (Path(temporary) / "relative/m6-artifacts").resolve())
+
+    def test_global_gameplay_budget_counts_all_stage_attempt_records(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            campaign = M6Campaign.__new__(M6Campaign)
+            campaign.artifact_root = root / "artifacts/m6"
+            for run_id, attempt_id, wall in (("stage1-run", "a", 7.5), ("stage2-run", "b", 12.0), ("stage3-run", "c", None)):
+                path = campaign.artifact_root / run_id / "attempts" / attempt_id / "attempt.json"
+                path.parent.mkdir(parents=True)
+                record = {"wall_seconds": wall}
+                if wall is None:
+                    record.update({"start_timestamp_utc": "2026-10-30T00:00:00Z", "end_timestamp_utc": "2026-10-30T00:00:10Z"})
+                path.write_text(json.dumps(record), encoding="utf-8")
+            self.assertEqual(campaign._cumulative_gameplay_wall_seconds(), 29.5)
+            self.assertEqual(campaign._cumulative_gameplay_wall_seconds(exclude_run_id="stage3-run"), 19.5)
 
     def test_interrupted_after_reset_is_sealed_without_guessing_or_replaying(self) -> None:
         import tempfile

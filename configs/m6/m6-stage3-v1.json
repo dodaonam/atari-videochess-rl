@@ -26,6 +26,7 @@
   "campaign_limits": {
     "maximum_game_attempts": 35,
     "maximum_gameplay_wall_seconds": 36000,
+    "gameplay_wall_budget_scope": "all M6 ALE diagnostics plus Stage 3 evaluation attempts",
     "maximum_artifact_bytes": 2147483648,
     "serialized_ale_processes": 1,
     "maximum_pre_action_process_start_retries": 1
