@@ -4177,9 +4177,23 @@
             "log_path": ".agents/evidence/logs/M6-full-suite-875da1e.log",
             "log_sha256": "689ed25a172df4c54cb432b5c8f6303b183549df6407d4550be589d342d48bc7"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-preflight-correction-20261030.md",
+          "detail": "Records a pre-game Stage 3 guard stop, exact mismatch between the M4 checkpoint digest in the initial config and the accepted artifact, and the corrected configuration/test.",
+          "result": "The initial Stage 3 invocation exited before creating a run directory, ALE reset, or action. The selected M4 bytes and sidecar matched accepted manifests; a config transcription error was corrected before any Stage 3 result. The corrected frozen roster is guarded by an exact checkpoint/sidecar test.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
         }
       ],
-      "next_action": "The clean pre-campaign source/config freeze passed all 422 tests and the approved private checkpoint roots resolve by their manifest identities. Commit this verification record, confirm the campaign-wide M6 time/artifact budgets still have headroom, then launch the fixed Stage 3 schedule from the resulting clean feature HEAD; record every attempt and preserve incomplete outcomes.",
+      "next_action": "The Stage 3 guard exposed an M4 checkpoint transcription error before gameplay. The accepted checkpoint bytes, sidecar, and root manifest match canonical M4 evidence; config and exact-roster regression test are corrected. Run focused and full tests at a clean commit, verify the corrected config hash and private artifacts, then launch Stage 3 only if all checks pass.",
       "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],

@@ -1,0 +1,17 @@
+Command: VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<verified-private-m5-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<verified-private-m4-root> <project-python> scripts/run_m6_campaign.py --stage stage3 --artifact-root artifacts/m6
+Observed result: FAIL before ALE reset: Stage 3 rejected the M4 checkpoint identity in the config; frozen M4 bytes and accepted manifest were intact.
+Observed exit code: 1
+Source revision: c0e77e318224e722703275548407e458cb2e7712
+Prior config SHA-256: 0d9495ca044f9abeef02d66af01e5d283e4c22b3271ea34f78e49b26b3c317ad
+
+--- Sanitized observed output ---
+Traceback (most recent call last):
+  File "<feature-worktree>/scripts/run_m6_campaign.py", line 48, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "<feature-worktree>/scripts/run_m6_campaign.py", line 40, in main
+    summary = campaign.run_stage3(resume=args.resume)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<feature-worktree>/videochess_rl/m6/campaign.py", line 1261, in run_stage3
+    raise ExperimentIdentityError(f"frozen checkpoint identity changed for {row.get('policy_id')}")
+videochess_rl.m6.campaign.ExperimentIdentityError: frozen checkpoint identity changed for m4-behavior-only-seed-20261024

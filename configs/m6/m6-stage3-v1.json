@@ -72,7 +72,7 @@
     },
     {
       "policy_id": "m4-behavior-only-seed-20261024",
-      "checkpoint_sha256": "724ac730f3c5f2c01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+      "checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
       "sidecar_sha256": "cc0af4694e45fc23acb740c652dd9a62e1bcaf7851815d179693d09539f0f606",
       "attempts": 5
     },

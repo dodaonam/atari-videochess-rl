@@ -62,6 +62,29 @@ class M6CampaignPlanTests(unittest.TestCase):
         self.assertEqual(config["episode_limits"]["maximum_ale_frames"], 54000)
         self.assertFalse(config["outcome_semantics"]["truncation_is_draw"])
 
+    def test_stage3_roster_pins_exact_accepted_checkpoint_identities(self) -> None:
+        config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+        identities = {
+            row["policy_id"]: (row.get("checkpoint_sha256"), row.get("sidecar_sha256"))
+            for row in config["policy_roster"]
+        }
+        self.assertEqual(identities, {
+            "m5-warm-seed-20261104-post-rl": (
+                "0b2405017a8e1d539851f0cd278883d3fd23936fb5c2f7962c813590a6fd1767",
+                "80d8689e4b349576c5708bb4dce3451e5a8c64d81470cd6f4273a4746844b682",
+            ),
+            "m5-scratch-seed-20261104-post-rl": (
+                "3749b0c0b6ae44d3ad5d6bf0863b60937a59fbe881e0bdf4932bdce6033ca400",
+                "1c15e5bc4ba2437df113671dc316accbdfe6d8b59069ed29ed187daebf4fff1e",
+            ),
+            "m4-behavior-only-seed-20261024": (
+                "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+                "cc0af4694e45fc23acb740c652dd9a62e1bcaf7851815d179693d09539f0f606",
+            ),
+            "simple-material-heuristic": (None, None),
+            "random-legal": (None, None),
+        })
+
     def test_relative_artifact_root_is_normalized_before_trace_paths_are_built(self) -> None:
         original_cwd = Path.cwd()
         with tempfile.TemporaryDirectory() as temporary:
