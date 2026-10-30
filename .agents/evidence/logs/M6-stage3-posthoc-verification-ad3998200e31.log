@@ -1,0 +1,304 @@
+Command: Verify Stage 3 run hash chain, rederive summaries from raw traces, and verify the complete run artifact manifest with videochess_rl.m6.campaign.summarize_run
+Result: PASS: 35 retained Stage 3 attempts, raw trace and artifact hashes verified.
+Exit code: 0
+Git revision: ad3998200e31e77b292ffc1138d02354f188bf5f
+M6 config SHA-256: 05aedeb30efb8b6b97667c44f9d606b58d4da8ae20800d4ef143e629420cebac
+
+--- Verified result summary ---
+{
+  "artifact_bytes": 616539017,
+  "artifact_files": 4540,
+  "artifact_manifest_sha256": "22ac6ec7e0f4a48f52b2452654d4adecaf111f38ea37f5d9517f173c838716d7",
+  "attempts_with_unknown_move_accounting": 0,
+  "by_policy": {
+    "m4-behavior-only-seed-20261024": {
+      "ale_frames": 270020,
+      "ale_terminated_games": 0,
+      "ale_truncated": 0,
+      "attempted_games": 5,
+      "attempted_player_moves": 89,
+      "completed_games": 0,
+      "decision_latency_seconds": {
+        "count": 89,
+        "iqr": 3.1119945899990853,
+        "max": 12.671037111998885,
+        "mean": 4.45277523225794,
+        "median": 4.432548697004677,
+        "p95": 7.0419214266032215
+      },
+      "desynchronization_count": 0,
+      "desynchronization_rate_per_attempted_move": 0.0,
+      "draw": 0,
+      "environment_steps": 67500,
+      "incomplete_fraction": 1.0,
+      "incomplete_games": 5,
+      "inference_latency_seconds": {
+        "count": 89,
+        "iqr": 0.001082850998500362,
+        "max": 0.016814563001389615,
+        "mean": 0.008482287438904208,
+        "median": 0.008366879003006034,
+        "p95": 0.011222382797859604
+      },
+      "loss": 0,
+      "match_score": null,
+      "match_score_denominator": 0,
+      "move_success_rate": 0.9438202247191011,
+      "move_success_wilson_95": [
+        0.8751458326492151,
+        0.9757671215792799
+      ],
+      "peak_rss_bytes_max": 300158976,
+      "resource_limit_stops": 5,
+      "retries": 0,
+      "rgb_verified_player_moves": 84,
+      "runner_truncated": 5,
+      "stop_reasons": {
+        "RUNNER_MAX_ALE_FRAMES": 5
+      },
+      "terminal_unknown": 0,
+      "unexpected_cursor_displacements": 387,
+      "verified_atari_replies": 84,
+      "wall_seconds": 398.624,
+      "win": 0
+    },
+    "m5-scratch-seed-20261104-post-rl": {
+      "ale_frames": 530676,
+      "ale_terminated_games": 0,
+      "ale_truncated": 0,
+      "attempted_games": 10,
+      "attempted_player_moves": 119,
+      "completed_games": 0,
+      "decision_latency_seconds": {
+        "count": 119,
+        "iqr": 4.9501823155078455,
+        "max": 20.17969082298805,
+        "mean": 6.947701845479984,
+        "median": 5.609943293995457,
+        "p95": 13.082881232311776
+      },
+      "desynchronization_count": 0,
+      "desynchronization_rate_per_attempted_move": 0.0,
+      "draw": 0,
+      "environment_steps": 132659,
+      "incomplete_fraction": 1.0,
+      "incomplete_games": 10,
+      "inference_latency_seconds": {
+        "count": 119,
+        "iqr": 0.001128599491494242,
+        "max": 0.013064070997643284,
+        "mean": 0.007409906890849825,
+        "median": 0.007348354993155226,
+        "p95": 0.009174337703734636
+      },
+      "loss": 0,
+      "match_score": null,
+      "match_score_denominator": 0,
+      "move_success_rate": 0.9159663865546218,
+      "move_success_wilson_95": [
+        0.8522016466406133,
+        0.9537151908051682
+      ],
+      "peak_rss_bytes_max": 299749376,
+      "resource_limit_stops": 9,
+      "retries": 0,
+      "rgb_verified_player_moves": 109,
+      "runner_truncated": 9,
+      "stop_reasons": {
+        "CONTROLLER_SOURCE_SELECTION_UNCERTAIN": 1,
+        "RUNNER_MAX_ALE_FRAMES": 9
+      },
+      "terminal_unknown": 0,
+      "unexpected_cursor_displacements": 436,
+      "verified_atari_replies": 109,
+      "wall_seconds": 831.014,
+      "win": 0
+    },
+    "m5-warm-seed-20261104-post-rl": {
+      "ale_frames": 538980,
+      "ale_terminated_games": 0,
+      "ale_truncated": 0,
+      "attempted_games": 10,
+      "attempted_player_moves": 168,
+      "completed_games": 0,
+      "decision_latency_seconds": {
+        "count": 168,
+        "iqr": 3.2791323032543005,
+        "max": 19.511659887008136,
+        "mean": 4.859056736517578,
+        "median": 4.254045141497045,
+        "p95": 9.120640011550131
+      },
+      "desynchronization_count": 0,
+      "desynchronization_rate_per_attempted_move": 0.0,
+      "draw": 0,
+      "environment_steps": 134735,
+      "incomplete_fraction": 1.0,
+      "incomplete_games": 10,
+      "inference_latency_seconds": {
+        "count": 168,
+        "iqr": 0.0015164387514232658,
+        "max": 0.016740335006034,
+        "mean": 0.00793462690446523,
+        "median": 0.007862229998863768,
+        "p95": 0.01030004099884536
+      },
+      "loss": 0,
+      "match_score": null,
+      "match_score_denominator": 0,
+      "move_success_rate": 0.9404761904761905,
+      "move_success_wilson_95": [
+        0.8939090877359056,
+        0.9673498949082583
+      ],
+      "peak_rss_bytes_max": 299880448,
+      "resource_limit_stops": 9,
+      "retries": 0,
+      "rgb_verified_player_moves": 158,
+      "runner_truncated": 9,
+      "stop_reasons": {
+        "CONTROLLER_SOURCE_SELECTION_UNCERTAIN": 1,
+        "RUNNER_MAX_ALE_FRAMES": 9
+      },
+      "terminal_unknown": 0,
+      "unexpected_cursor_displacements": 827,
+      "verified_atari_replies": 158,
+      "wall_seconds": 820.927,
+      "win": 0
+    },
+    "random-legal": {
+      "ale_frames": 168543,
+      "ale_terminated_games": 2,
+      "ale_truncated": 0,
+      "attempted_games": 5,
+      "attempted_player_moves": 55,
+      "completed_games": 2,
+      "decision_latency_seconds": {
+        "count": 53,
+        "iqr": 2.1258300279878313,
+        "max": 27.46421247300168,
+        "mean": 4.6704803204162815,
+        "median": 3.618414409007528,
+        "p95": 10.68079019799479
+      },
+      "desynchronization_count": 0,
+      "desynchronization_rate_per_attempted_move": 0.0,
+      "draw": 0,
+      "environment_steps": 42131,
+      "incomplete_fraction": 0.6,
+      "incomplete_games": 3,
+      "inference_latency_seconds": {
+        "count": 55,
+        "iqr": 0.000743096497899387,
+        "max": 0.008187326006009243,
+        "mean": 0.004817322908837179,
+        "median": 0.004823707000468858,
+        "p95": 0.0060569906956516205
+      },
+      "loss": 2,
+      "match_score": 0.0,
+      "match_score_denominator": 2,
+      "move_success_rate": 0.9090909090909091,
+      "move_success_wilson_95": [
+        0.8042250541602005,
+        0.9605418449258196
+      ],
+      "peak_rss_bytes_max": 300158976,
+      "resource_limit_stops": 1,
+      "retries": 0,
+      "rgb_verified_player_moves": 50,
+      "runner_truncated": 1,
+      "stop_reasons": {
+        "ALE_TERMINATED": 2,
+        "CONTROLLER_TARGET_NAVIGATION_UNCERTAIN": 1,
+        "OPPONENT_RESPONSE_TIMEOUT": 1,
+        "RUNNER_MAX_ALE_FRAMES": 1
+      },
+      "terminal_unknown": 0,
+      "unexpected_cursor_displacements": 242,
+      "verified_atari_replies": 50,
+      "wall_seconds": 256.48,
+      "win": 0
+    },
+    "simple-material-heuristic": {
+      "ale_frames": 171275,
+      "ale_terminated_games": 1,
+      "ale_truncated": 0,
+      "attempted_games": 5,
+      "attempted_player_moves": 59,
+      "completed_games": 1,
+      "decision_latency_seconds": {
+        "count": 58,
+        "iqr": 3.463224254501256,
+        "max": 13.181265851002536,
+        "mean": 4.4001736626727,
+        "median": 4.062097209498461,
+        "p95": 8.315958212392433
+      },
+      "desynchronization_count": 0,
+      "desynchronization_rate_per_attempted_move": 0.0,
+      "draw": 0,
+      "environment_steps": 42814,
+      "incomplete_fraction": 0.8,
+      "incomplete_games": 4,
+      "inference_latency_seconds": {
+        "count": 59,
+        "iqr": 0.0006754089990863577,
+        "max": 0.008065321002504788,
+        "mean": 0.005874431865206935,
+        "median": 0.005894764995900914,
+        "p95": 0.007033482898259534
+      },
+      "loss": 1,
+      "match_score": 0.0,
+      "match_score_denominator": 1,
+      "move_success_rate": 0.9152542372881356,
+      "move_success_wilson_95": [
+        0.8164820473258972,
+        0.9632579669823632
+      ],
+      "peak_rss_bytes_max": 300158976,
+      "resource_limit_stops": 2,
+      "retries": 0,
+      "rgb_verified_player_moves": 54,
+      "runner_truncated": 2,
+      "stop_reasons": {
+        "ALE_TERMINATED": 1,
+        "CONTROLLER_SOURCE_SELECTION_UNCERTAIN": 1,
+        "CONTROLLER_TARGET_NAVIGATION_UNCERTAIN": 1,
+        "RUNNER_MAX_ALE_FRAMES": 2
+      },
+      "terminal_unknown": 0,
+      "unexpected_cursor_displacements": 245,
+      "verified_atari_replies": 54,
+      "wall_seconds": 260.54200000000003,
+      "win": 0
+    }
+  },
+  "config_sha256": "05aedeb30efb8b6b97667c44f9d606b58d4da8ae20800d4ef143e629420cebac",
+  "dependency_lock_sha256": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+  "ledger_events": 839785,
+  "ledger_sha256": "c8ad5b26c28bb8f934a8541c4b69846afedd3ad4a3eb8c302ac835b20fdf27d3",
+  "m4_root_manifest_sha256": "f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921",
+  "m5_root_manifest_sha256": "a201a254671ad59ae1fecb402abf994d5bf523097f1c3010b5c7fa237ae6dd4c",
+  "process_start_failures": 0,
+  "raw_traces_and_attempt_manifests_verified": 35,
+  "rederived_attempt_totals": {
+    "ale_frames": 1679494,
+    "desynchronization_count": 0,
+    "environment_steps": 419839,
+    "player_moves_attempted": 490,
+    "rgb_verified_player_moves": 455,
+    "verified_atari_replies": 455
+  },
+  "resource_limit_stop_events": 0,
+  "rom_sha256": "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7",
+  "run_id": "m6-stage3-ad3998200e31-c5ff389dc4fe",
+  "run_manifest_sha256": "17491f1a82eacffda9189179cc63b2ebff422136d07925de1fb39a2bcff897e8",
+  "schedule_sha256": "c5ff389dc4fe5c796cd47281e504afa2f7d37e2b287b0802664d601805290f75",
+  "scheduled_slots": 35,
+  "source_bundle_sha256": "73af24ab61e60e364297e3fda993503557be393ad0b0e2d14b23c01f66b5ea8a",
+  "source_commit": "ad3998200e31e77b292ffc1138d02354f188bf5f",
+  "source_tree": "bc2f4851ceb84c9eae7d2719f70afd4cde6379da",
+  "startup_retry_events": 0
+}

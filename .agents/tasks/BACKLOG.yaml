@@ -4233,11 +4233,81 @@
             "log_path": ".agents/evidence/logs/M6-stage3-entry-verification-9e3c372.log",
             "log_sha256": "9e6b02a715bb8483bbe21153c61289343f9ad4e4224726ab893ae9305d65a410"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-001-final-report-20261031.md",
+          "detail": "Final engineering and research report for all M6 stages, the 35-attempt Stage 3 campaign, evidence integrity, acceptance mapping, and the unmet M6-04 full-game RL evidence requirement.",
+          "result": "Stage 3 campaign and verification completed within the authorized schedule and limits; no frozen M5 RL attempt reached ALE termination, so M6-04 remains partial and M6 is not accepted.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T17:33:51Z",
+            "exit_code": null,
+            "git_revision": "ad3998200e31e77b292ffc1138d02354f188bf5f",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-review-summary-20261031.json",
+          "detail": "Sanitized machine-readable summary of all 35 attempts with per-attempt provenance, outcomes, trace/manifest hashes, metrics, and aggregate denominators.",
+          "result": "35 unique attempts are represented; attempt outcomes and metrics were rederived from the locally hash-verified raw traces.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T17:33:51Z",
+            "exit_code": null,
+            "git_revision": "ad3998200e31e77b292ffc1138d02354f188bf5f",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-run-manifest-20261031.json",
+          "detail": "Reviewable sanitized copy of the frozen Stage 3 run manifest, retaining the exact raw manifest SHA-256 and replacing private absolute checkpoint paths.",
+          "result": "The run identity, source/config, roster, schedule, runtime configuration, and seeds match the raw run manifest; private paths are omitted from the review copy.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T17:33:51Z",
+            "exit_code": null,
+            "git_revision": "ad3998200e31e77b292ffc1138d02354f188bf5f",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-artifact-manifest-20261031.json",
+          "detail": "Byte-identical copy of the 4,540-file M6 Stage 3 artifact manifest; raw RGB and trace bytes remain local.",
+          "result": "Artifact manifest SHA-256 matches the locally verified run manifest and post-run integrity check.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T17:33:51Z",
+            "exit_code": null,
+            "git_revision": "ad3998200e31e77b292ffc1138d02354f188bf5f",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "Verify Stage 3 run hash chain, rederive summaries from raw traces, and verify the complete run artifact manifest with videochess_rl.m6.campaign.summarize_run",
+          "result": "PASS: 35 retained Stage 3 attempts, raw trace and artifact hashes verified.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T17:28:45Z",
+            "recorded_at_utc": "2026-10-30T17:29:33Z",
+            "exit_code": 0,
+            "git_revision": "ad3998200e31e77b292ffc1138d02354f188bf5f",
+            "log_path": ".agents/evidence/logs/M6-stage3-posthoc-verification-ad3998200e31.log",
+            "log_sha256": "1705a4776cd0b05001f8eb5a6988c972f03a1aeb1d26f38e8794f6fe13af0708"
+          }
         }
       ],
-      "next_action": "The exact frozen M5/M4 roster loaded and matched the corrected config; the initialized ALE v5 runtime reported the authorized mode, difficulty, RGB shape, action set, ROM, frameskip, and sticky probability without resetting or stepping. Commit the pre-entry evidence, verify the clean resulting source/config identity and remaining budgets, then start the single fixed Stage 3 run. No policy/config/source changes after its first result.",
+      "next_action": "Stage 3 used all 35 frozen attempts and all traces/manifests verified. No M5 RL policy reached ALE termination, so M6-04 remains partial. Submit the complete unmerged PR for independent PM review; retain M6-001 in_progress until PM disposition. Any further Atari attempts or a changed frame/attempt protocol require separate explicit authorization.",
       "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],
-  "updated_at_utc": "2026-10-30T14:41:17Z"
+  "updated_at_utc": "2026-10-30T17:33:51Z"
 }
