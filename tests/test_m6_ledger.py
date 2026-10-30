@@ -97,10 +97,11 @@ class M6LedgerTests(unittest.TestCase):
                     "ale_terminated": True,
                     "ale_truncated": False,
                     "ale_reward_total": 0.0,
+                    "runner_stop_category": "ALE_TERMINATED",
                     "player_moves_attempted": 1,
                     "verified_player_moves": 1,
                     "verified_atari_replies": 1,
-                    "unexpected_directional_displacements": 0,
+                    "unexpected_directional_displacements": 4,
                     "ale_frames": 25,
                     "environment_steps": 8,
                     "wall_seconds": 2.0,
@@ -125,7 +126,10 @@ class M6LedgerTests(unittest.TestCase):
                 "player_moves_attempted": 1,
                 "rgb_verified_player_moves": 1,
                 "verified_atari_replies": 1,
-                "desynchronization_count": 0,
+                # Legacy development rows counted recoverable cursor movement
+                # corrections as board desynchronizations; summaries rederive
+                # the board metric from the trace and preserve this source value.
+                "desynchronization_count": 4,
                 "ale_frames": 25,
                 "environment_steps": 8,
                 "wall_seconds": 2.0,
@@ -145,6 +149,9 @@ class M6LedgerTests(unittest.TestCase):
             self.assertEqual(policy["incomplete_games"], 0)
             self.assertIsNone(policy["match_score"])
             self.assertEqual(policy["rgb_verified_player_moves"], 1)
+            self.assertEqual(policy["desynchronization_count"], 0)
+            self.assertEqual(policy["unexpected_cursor_displacements"], 4)
+            self.assertEqual(policy["per_game_records"][0]["recorded_desynchronization_count"], 4)
 
     def test_outcome_classification_never_converts_incomplete_to_draw(self) -> None:
         self.assertEqual(classify_attempt({"terminal": {"ale_terminated": True, "ale_truncated": False, "ale_reward_total": 1.0}}), "win")
@@ -157,7 +164,7 @@ class M6LedgerTests(unittest.TestCase):
     def test_metrics_keep_wdl_incomplete_and_move_denominators_separate(self) -> None:
         rows = [
             {"attempt_id": "win", "outcome": "win", "player_moves_attempted": 3, "rgb_verified_player_moves": 2, "verified_atari_replies": 2, "desynchronization_count": 0, "ale_frames": 40, "environment_steps": 10, "wall_seconds": 1.5},
-            {"attempt_id": "loss", "outcome": "loss", "player_moves_attempted": 2, "rgb_verified_player_moves": 2, "verified_atari_replies": 1, "desynchronization_count": 1, "ale_frames": 30, "environment_steps": 8, "wall_seconds": 2.0},
+            {"attempt_id": "loss", "outcome": "loss", "player_moves_attempted": 2, "rgb_verified_player_moves": 2, "verified_atari_replies": 1, "desynchronization_count": 1, "unexpected_cursor_displacements": 4, "ale_frames": 30, "environment_steps": 8, "wall_seconds": 2.0},
             {"attempt_id": "unknown", "outcome": "terminal_unknown", "player_moves_attempted": 1, "rgb_verified_player_moves": 0, "verified_atari_replies": 0, "desynchronization_count": 0, "ale_frames": 7, "environment_steps": 2, "wall_seconds": 0.4},
             {"attempt_id": "runner-stop", "outcome": "runner_truncated", "player_moves_attempted": 0, "rgb_verified_player_moves": 0, "verified_atari_replies": 0, "desynchronization_count": 0, "ale_frames": 5, "environment_steps": 1, "wall_seconds": 0.1},
         ]
@@ -176,6 +183,7 @@ class M6LedgerTests(unittest.TestCase):
         self.assertEqual(summary["rgb_verified_player_moves"], 4)
         self.assertAlmostEqual(summary["move_success_rate"], 4 / 6)
         self.assertAlmostEqual(summary["desynchronization_rate_per_attempted_move"], 1 / 6)
+        self.assertEqual(summary["unexpected_cursor_displacements"], 4)
         self.assertEqual(summary["verified_atari_replies"], 3)
         self.assertEqual(summary["ale_frames"], 82)
 
@@ -196,6 +204,7 @@ class M6LedgerTests(unittest.TestCase):
             "player_moves_attempted": None,
             "rgb_verified_player_moves": None,
             "desynchronization_count": None,
+            "unexpected_cursor_displacements": None,
             "wall_seconds": None,
             "peak_rss_bytes": None,
         }])
@@ -204,6 +213,7 @@ class M6LedgerTests(unittest.TestCase):
         self.assertEqual(summary["attempted_player_moves"], 0)
         self.assertEqual(summary["attempts_with_unknown_move_accounting"], 1)
         self.assertEqual(summary["attempts_with_unknown_desynchronization_accounting"], 1)
+        self.assertEqual(summary["attempts_with_unknown_cursor_displacement_accounting"], 1)
         self.assertIsNone(summary["move_success_rate"])
         self.assertEqual(summary["attempts_with_unknown_wall_seconds"], 1)
         self.assertEqual(summary["attempts_with_unknown_peak_rss"], 1)

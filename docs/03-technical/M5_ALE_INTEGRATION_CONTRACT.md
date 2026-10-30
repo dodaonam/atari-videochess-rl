@@ -46,7 +46,7 @@ stable ALE RGB -> parse/stability check -> verify against complete history/shado
  -> next decision, actual ALE terminal/truncation, or typed safe stop
 ```
 
-After target FIRE, the runner performs at most three consecutive 33-frame RGB/NOOP settling windows while the selected-piece preview remains visible. This is passive observation only: it never resends FIRE or resumes an uncertain input. If the preview persists through all three windows, the controller stops with `CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN` and keeps the last verified history. Stage 3 records this settling rule in its immutable timing configuration.
+After target FIRE, the runner performs at most three consecutive 33-frame RGB/NOOP settling windows while the selected-piece preview remains visible. This is passive observation only: it never resends FIRE or resumes an uncertain input. If the preview persists through all three windows, the controller stops with `CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN` and keeps the last verified history. Stage 3 records this settling rule in its immutable timing configuration. Corrected cursor-route displacements are recorded separately from board/shadow desynchronization.
 
 Every boundary records the last verified FEN/history length, RGB evidence hash/frame, selected UCI if any, control phase, and reason. A controller interruption, uncertain FIRE, stale evidence, reply timeout, ambiguity, or mismatch stops without guessing or re-sending input. Existing code explicitly avoids retrying uncertain FIRE. If ALE terminates before the board becomes parseable, preserve the last verified FEN; use ALE reward and flags as outcome evidence and label the final board unavailable. Never convert an incomplete runner stop into a draw.
 

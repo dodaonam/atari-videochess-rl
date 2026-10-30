@@ -56,7 +56,7 @@ ROM_SHA256 = "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7"
 MAX_GAMEPLAY_WALL_SECONDS = 36_000
 MAX_EPISODE_WALL_SECONDS = 900
 MAX_M6_ARTIFACT_BYTES = 2 * 1024 * 1024 * 1024
-ARTIFACT_METADATA_RESERVE_BYTES = 16 * 1024 * 1024
+ARTIFACT_METADATA_RESERVE_BYTES = 64 * 1024 * 1024
 M5_RUN_IDS = {
     ("warm", 20261104): "m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__warm__attempt-0001",
     ("scratch", 20261104): "m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__scratch__attempt-0000",
@@ -226,6 +226,7 @@ def _run_manifest(
             "gameplay_wall_seconds_total": MAX_GAMEPLAY_WALL_SECONDS,
             "gameplay_wall_budget_includes_diagnostics": True,
             "artifact_bytes_total": MAX_M6_ARTIFACT_BYTES,
+            "artifact_metadata_reserve_bytes": ARTIFACT_METADATA_RESERVE_BYTES,
             "serialized_ale_processes": 1,
             "pre_action_startup_retries": 1 if stage == "stage3" else 0,
         },
@@ -370,11 +371,10 @@ def _attempt_record(
         "rgb_verified_player_moves": _optional_int(terminal.get("verified_player_moves", 0)),
         "verified_atari_replies": _optional_int(terminal.get("verified_atari_replies", 0)),
         "desynchronization_count": (
-            0 if terminal.get("unexpected_directional_displacements") is None and not startup_state.get("action_attempted")
-            else None if terminal.get("unexpected_directional_displacements") is None
-            else int(terminal.get("unexpected_directional_displacements", 0))
-            + int(terminal.get("runner_stop_category") == "CONTROLLER_BOARD_DESYNCHRONIZED")
+            None if terminal.get("unexpected_directional_displacements") is None and startup_state.get("action_attempted")
+            else int(terminal.get("runner_stop_category") == "CONTROLLER_BOARD_DESYNCHRONIZED")
         ),
+        "unexpected_cursor_displacements": _optional_int(terminal.get("unexpected_directional_displacements", 0)),
         "ale_frames": _optional_int(terminal.get("ale_frames", 0)),
         "environment_steps": _optional_int(terminal.get("environment_steps", 0)),
         "wall_seconds": None if terminal.get("wall_seconds") is None else float(terminal.get("wall_seconds", 0.0)),
@@ -520,6 +520,7 @@ def _records_from_events(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 "rgb_verified_player_moves": 0,
                 "verified_atari_replies": 0,
                 "desynchronization_count": 0,
+                "unexpected_cursor_displacements": 0,
                 "ale_frames": 0,
                 "environment_steps": 0,
                 "wall_seconds": 0.0,
@@ -561,6 +562,17 @@ def summarize_run(ledger_path: str | Path, *, run_id: str, repo_root: str | Path
             raise ValueError(f"attempted-move denominator differs from raw trace: {trace_rel}")
         if terminal.get("verified_player_moves", 0) != row.get("rgb_verified_player_moves", 0):
             raise ValueError(f"verified-move numerator differs from raw trace: {trace_rel}")
+        # Derive board desynchronization from the raw trace outcome. Older M6
+        # development summaries grouped corrected cursor-route displacements
+        # into desynchronizations; preserve that ledger value alongside the
+        # trace-derived board mismatch count during reanalysis.
+        row["recorded_desynchronization_count"] = row.get("desynchronization_count")
+        raw_cursor_displacements = terminal.get("unexpected_directional_displacements")
+        row["desynchronization_count"] = (
+            None if raw_cursor_displacements is None
+            else int(terminal.get("runner_stop_category") == "CONTROLLER_BOARD_DESYNCHRONIZED")
+        )
+        row["unexpected_cursor_displacements"] = _optional_int(raw_cursor_displacements)
         manifest_rel = row.get("artifact_manifest_path")
         manifest_path = root / manifest_rel if isinstance(manifest_rel, str) else None
         if manifest_path is None or manifest_path.is_symlink() or not manifest_path.is_file():
@@ -930,6 +942,7 @@ class M6Campaign:
             "rgb_verified_player_moves": 0,
             "verified_atari_replies": 0,
             "desynchronization_count": 0,
+            "unexpected_cursor_displacements": 0,
             "ale_frames": 0,
             "environment_steps": 0,
             "wall_seconds": 0.0,
@@ -1120,6 +1133,7 @@ class M6Campaign:
             "rgb_verified_player_moves": None if unknown_moves else 0,
             "verified_atari_replies": None if unknown_moves else 0,
             "desynchronization_count": None if unknown_moves else 0,
+            "unexpected_cursor_displacements": None if unknown_moves else 0,
             "ale_frames": None if action_outcome_unknown else int(last_observed.get("frame_number", reset_event.get("frame_number", 0))),
             "environment_steps": None if action_outcome_unknown else observed_count,
             "wall_seconds": None,

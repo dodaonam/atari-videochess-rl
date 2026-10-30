@@ -37,6 +37,8 @@ The primary endpoint is per-policy verified player-move execution rate, with num
 | Development/debug | 1 | 0.0 | Interface diagnosis and low-variance controller debugging only; never pool with reported evaluation. |
 | ALE v5 default evaluation | 4 | 0.25 | M6 evaluation profile; report the actual wrapper/runtime values for every game. |
 
+Both profiles use a three-window, 33-requested-frame passive settling bound after target FIRE if the selected-piece preview remains visible. This adds only NOOP observations; FIRE is never resent. The actual controller timing and settling window count are included in each run manifest.
+
 M1's pinned ALE-Py 0.11.2 records the v5 defaults as RGB, frameskip 4, sticky probability 0.25 and reduced action space. Every run must assert returned registration/runtime values instead of assuming they remain unchanged. Both profiles retain RGB authority. Do not alter RAM or inject positions.
 
 M1 calibrated 33-frame direction holds, one-frame source FIRE, 16-frame target FIRE, and one-frame releases, using 33-frame direction repeats at deterministic settings; at frameskip four, action frame requests quantize to ALE steps. Existing v5 evidence is only a small number of successful cycles. Sticky actions can alter cursor/action sequences. After target FIRE the controller permits up to three consecutive 33-frame RGB/NOOP settling windows while the selected preview remains visible; it never resends FIRE. Persistent uncertainty stops the attempt with the last verified state. Record each phase and RGB confirmation; never retry uncertain FIRE or resume an interrupted action from memory. Recalibrate within M6 before broad execution if default-profile evidence fails.
@@ -57,7 +59,7 @@ M1 measured roughly 38–41 seconds for 12–20 player/reply cycles on specific 
 - **RGB-verified player moves:** initiated moves whose stable RGB observation matches the predicted legal transition.
 - **Verified Atari replies:** unique legal opponent transitions confirmed by stable RGB.
 - **Move execution success rate:** RGB-verified player moves / attempted player moves; also report the denominator and Wilson interval. It is undefined when denominator is zero.
-- **Desynchronization rate:** desynchronization stops / attempted player moves, with absolute count. Also report ambiguous/unstable observation stops, uncertain controller actions, and opponent timeouts separately.
+- **Desynchronization rate:** board/shadow desynchronization stops / attempted player moves, with absolute count. Count safely corrected cursor-route displacements separately; also report ambiguous/unstable observations, uncertain controller actions, and opponent timeouts.
 - **Runtime:** ALE frames, environment steps, wall time; per-decision distribution (median, IQR, p95, max); frozen-policy inference latency distribution; peak RSS; retries and stop reason.
 - **Outcome summary:** raw W/D/L/terminal-unknown/incomplete counts, ALE-terminated count, supported completed-game match score `(wins + 0.5*draws)/completed_games`, and incomplete fraction. Unknown or incomplete outcomes are never silently added to the score denominator.
 

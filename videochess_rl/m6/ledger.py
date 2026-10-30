@@ -298,6 +298,13 @@ def summarize_attempts(attempts: list[dict[str, Any]]) -> dict[str, Any]:
     desyncs = sum(int(value) for value in known_desyncs)
     if desyncs < 0:
         raise ValueError("desynchronization count cannot be negative")
+    known_cursor_displacements = [
+        row.get("unexpected_cursor_displacements", 0)
+        for row in attempts if row.get("unexpected_cursor_displacements", 0) is not None
+    ]
+    cursor_displacements = sum(int(value) for value in known_cursor_displacements)
+    if cursor_displacements < 0:
+        raise ValueError("unexpected cursor displacement count cannot be negative")
     known_replies = [row.get("verified_atari_replies", 0) for row in attempts if row.get("verified_atari_replies", 0) is not None]
     known_frames = [row.get("ale_frames", 0) for row in attempts if row.get("ale_frames", 0) is not None]
     known_steps = [row.get("environment_steps", 0) for row in attempts if row.get("environment_steps", 0) is not None]
@@ -326,6 +333,10 @@ def summarize_attempts(attempts: list[dict[str, Any]]) -> dict[str, Any]:
             1 for row in attempts if row.get("desynchronization_count", 0) is None
         ),
         "desynchronization_rate_per_attempted_move": desyncs / attempted_moves if attempted_moves else None,
+        "unexpected_cursor_displacements": cursor_displacements,
+        "attempts_with_unknown_cursor_displacement_accounting": sum(
+            1 for row in attempts if row.get("unexpected_cursor_displacements", 0) is None
+        ),
         "verified_atari_replies": sum(int(value) for value in known_replies),
         "attempts_with_unknown_reply_accounting": sum(1 for row in attempts if row.get("verified_atari_replies", 0) is None),
         "ale_frames": sum(int(value) for value in known_frames),
