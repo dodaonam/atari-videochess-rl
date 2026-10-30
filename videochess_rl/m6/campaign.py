@@ -607,7 +607,7 @@ def summarize_run(ledger_path: str | Path, *, run_id: str, repo_root: str | Path
 class M6Campaign:
     def __init__(self, *, artifact_root: str | Path, m5_root: str | Path, m4_root: str | Path) -> None:
         self.repo_root = Path(__file__).resolve().parents[2]
-        self.artifact_root = Path(artifact_root)
+        self.artifact_root = Path(artifact_root).expanduser().resolve()
         self.m5_root = Path(m5_root)
         self.m4_root = Path(m4_root)
         self.artifact_root.mkdir(parents=True, exist_ok=True)
@@ -945,6 +945,14 @@ class M6Campaign:
         unknown_moves = action_count > 0
         identity = self.roster[schedule["policy_id"]][1]
         now = utc_now()
+        run_manifest_path = self.artifact_root / run_id / "run-manifest.json"
+        if run_manifest_path.is_symlink() or not run_manifest_path.is_file():
+            raise ValueError("interrupted M6 recovery requires the frozen run manifest")
+        run_manifest = json.loads(run_manifest_path.read_text(encoding="utf-8"))
+        runtime = dict(run_manifest.get("runtime_construction", {}))
+        dependencies = dependency_identity(self.repo_root)
+        runtime["pytorch"] = dependencies.get("packages", {}).get("torch")
+        runtime["python_chess"] = dependencies.get("packages", {}).get("chess")
         reward_total = sum(
             float(event["payload"].get("reward", 0.0))
             for event in action_events if event["event_type"] == "ale_action_observed"
@@ -980,6 +988,15 @@ class M6Campaign:
             "profile_id": "ale-v5-default",
             "seed": int(schedule["ale_seed"]),
             "created_at_utc": now,
+            "git": {"head": run_manifest.get("git_commit"), "tree": run_manifest.get("git_tree")},
+            "source_commit": run_manifest.get("git_commit"),
+            "source_bundle_sha256": run_manifest.get("source_bundle_sha256"),
+            "dependency_lock_sha256": run_manifest.get("dependency_lock_sha256"),
+            "run_manifest_sha256": sha256_file(run_manifest_path),
+            "rom_sha256": run_manifest.get("rom_sha256"),
+            "config": run_manifest.get("ale_config"),
+            "controller_timing": run_manifest.get("controller_timing"),
+            "runtime": runtime,
             "reset": {
                 "frame_number": reset_event.get("frame_number"),
                 "rgb_sha256": reset_hash,
@@ -1035,6 +1052,22 @@ class M6Campaign:
             "checkpoint_sha256": identity.checkpoint_sha256,
             "checkpoint_sidecar_sha256": identity.sidecar_sha256,
             "policy_root_artifact_manifest_sha256": identity.artifact_manifest_sha256,
+            "git_commit": run_manifest.get("git_commit"),
+            "source_bundle_sha256": run_manifest.get("source_bundle_sha256"),
+            "dependency_lock_sha256": run_manifest.get("dependency_lock_sha256"),
+            "python_version": runtime.get("python"),
+            "gymnasium_version": runtime.get("gymnasium"),
+            "ale_py_version": runtime.get("ale_py"),
+            "pytorch_version": runtime.get("pytorch"),
+            "python_chess_version": runtime.get("python_chess"),
+            "rom_sha256": run_manifest.get("rom_sha256"),
+            "ale_environment_id": run_manifest.get("environment_id"),
+            "mode": run_manifest.get("ale_config", {}).get("mode"),
+            "difficulty": run_manifest.get("ale_config", {}).get("difficulty"),
+            "observation_type": run_manifest.get("ale_config", {}).get("obs_type"),
+            "frameskip": run_manifest.get("ale_config", {}).get("frameskip"),
+            "repeat_action_probability": run_manifest.get("ale_config", {}).get("repeat_action_probability"),
+            "controller_timing": run_manifest.get("controller_timing"),
             "ale_seed": int(schedule["ale_seed"]),
             "agent_color": "white",
             "profile_id": "ale-v5-default",

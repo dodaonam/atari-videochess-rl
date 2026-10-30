@@ -3,9 +3,12 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 import hashlib
+import tempfile
 import unittest
+from unittest.mock import patch
 
 from videochess_rl.environment import ALEConfig
 from videochess_rl.m6.campaign import CONFIG_PATH, M6Campaign, profile_config, stage3_schedule, summarize_run
@@ -57,15 +60,45 @@ class M6CampaignPlanTests(unittest.TestCase):
         self.assertEqual(config["episode_limits"]["maximum_ale_frames"], 54000)
         self.assertFalse(config["outcome_semantics"]["truncation_is_draw"])
 
+    def test_relative_artifact_root_is_normalized_before_trace_paths_are_built(self) -> None:
+        original_cwd = Path.cwd()
+        with tempfile.TemporaryDirectory() as temporary:
+            os.chdir(temporary)
+            try:
+                with patch("videochess_rl.m6.campaign.load_policy_roster", return_value={}):
+                    campaign = M6Campaign(
+                        artifact_root="relative/m6-artifacts",
+                        m5_root="/unused/private-m5",
+                        m4_root="/unused/private-m4",
+                    )
+            finally:
+                os.chdir(original_cwd)
+            self.assertTrue(campaign.artifact_root.is_absolute())
+            self.assertEqual(campaign.artifact_root, (Path(temporary) / "relative/m6-artifacts").resolve())
+
     def test_interrupted_after_reset_is_sealed_without_guessing_or_replaying(self) -> None:
         import tempfile
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
+            (root / "uv.lock").write_text("version = 1\n", encoding="utf-8")
             run_id = "m6-interruption-test"
             attempt_id = "test-policy-seed-7-slot-000-attempt-0000"
             attempt_dir = root / "artifacts/m6" / run_id / "attempts" / attempt_id
             attempt_dir.mkdir(parents=True)
+            run_dir = root / "artifacts/m6" / run_id
+            (run_dir / "run-manifest.json").write_text(json.dumps({
+                "git_commit": "test-commit",
+                "git_tree": "test-tree",
+                "source_bundle_sha256": "a" * 64,
+                "dependency_lock_sha256": "b" * 64,
+                "rom_sha256": "c" * 64,
+                "environment_id": "ALE/VideoChess-v5",
+                "ale_config": {"mode": 4, "difficulty": 0, "obs_type": "rgb", "frameskip": 4,
+                                "repeat_action_probability": 0.25},
+                "controller_timing": {"direction_hold_frames": 33},
+                "runtime_construction": {"python": "3.12", "gymnasium": "1.4.0", "ale_py": "0.11.2"},
+            }), encoding="utf-8")
             reset = b"rgb-reset-fixture"
             (attempt_dir / "reset.rgb").write_bytes(reset)
             reset_rel = (attempt_dir / "reset.rgb").relative_to(root).as_posix()
