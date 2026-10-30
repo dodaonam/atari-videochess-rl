@@ -3577,6 +3577,62 @@
             "log_path": ".agents/evidence/logs/M5-remediation-audit-hash-20261030.log",
             "log_sha256": "83b954dcfb8a4e08c7055e306bff72961921115bd927c3b57b380ce6cd1b5f77"
           }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 368 tests in 142.808s; OK.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:11:19Z",
+            "recorded_at_utc": "2026-10-30T05:15:40Z",
+            "exit_code": 0,
+            "git_revision": "026d41b7cb275affef5cffc27747449da7e045a3",
+            "log_path": ".agents/evidence/logs/M5-full-suite-final-026d41b.log",
+            "log_sha256": "4b935278bd79d79b51cec604dd342da4e460b4249e2107ee9b284b44272c65c4"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M4_DIR=/nonexistent/accepted-m4 VIDEOCHESS_M5_M3_RELEASE_DIR=/nonexistent/accepted-m3 PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 368 tests in 142.699s; OK (skipped=1 because private M4 checkpoint is unavailable in the clean clone); local suite at this revision executed that test.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:11:19Z",
+            "recorded_at_utc": "2026-10-30T05:15:40Z",
+            "exit_code": 0,
+            "git_revision": "026d41b7cb275affef5cffc27747449da7e045a3",
+            "log_path": ".agents/evidence/logs/M5-clean-clone-full-suite-026d41b.log",
+            "log_sha256": "cc26e9f9454d74bacaf3642ae52573862e4b3cab79cc7862a4be538acfb8a035"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "cd /tmp/m5-clean-final-026d41b && python3 scripts/agent_preflight.py --json",
+          "result": "Clean-clone canonical preflight PASS on head 026d41b7cb275affef5cffc27747449da7e045a3; only private-artifact manifest warning.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:14:11Z",
+            "recorded_at_utc": "2026-10-30T05:15:40Z",
+            "exit_code": 0,
+            "git_revision": "026d41b7cb275affef5cffc27747449da7e045a3",
+            "log_path": ".agents/evidence/logs/M5-clean-clone-preflight-026d41b.log",
+            "log_sha256": "5a1c396165fbeeef1737b247cbe42b527bccfefa9d682a23a54e4f4a03e55c23"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "gh run view 41006965692 --repo dodaonam/atari-videochess-rl --json conclusion,headSha,jobs,url",
+          "result": "PASS on exact PR head 026d41b7cb275affef5cffc27747449da7e045a3; preflight and standard-library context/bundle/M5 oracle tests passed, not the local PyTorch suite.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:14:12Z",
+            "recorded_at_utc": "2026-10-30T05:15:40Z",
+            "exit_code": 0,
+            "git_revision": "026d41b7cb275affef5cffc27747449da7e045a3",
+            "log_path": ".agents/evidence/logs/M5-github-ci-026d41b.log",
+            "log_sha256": "1a921d5d0a256b94e57a09747034abf923d526a2350814144a33b965f3f43e06"
+          }
         }
       ],
       "next_action": "Independent PM disposition of BLK-003: recover and compare authentic earlier source snapshots, or decide whether the source-version-confounded results may be used. No additional training without separate PM authorization.",
