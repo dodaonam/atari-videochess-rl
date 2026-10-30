@@ -1,6 +1,6 @@
 # M5 Final Research and Engineering Report
 
-**Status:** Independent PM accepted M5-01 through M5-05 on 2026-10-30, with documented limitations for M5-03 and M5-04. This report summarizes the evidence retained in the private M5 artifact tree and committed evidence records. Technical acceptance does not mean PR integration or G3 approval; it does not claim Atari performance or a calibrated rating.
+**Status:** Independent PM accepted M5-01 through M5-05 on 2026-10-30, with documented limitations for M5-03 and M5-04. PR #11 was subsequently merged and G3 separately approved; see the [G3 decision and post-merge verification](../../.agents/evidence/G3-final-approval-20261030.md). This report summarizes the evidence retained in the private M5 artifact tree and committed evidence records. It does not claim Atari performance or a calibrated rating.
 
 ## Objective and method
 
@@ -134,7 +134,7 @@ To reproduce evaluation analysis in the M5 environment, use the supported M5 eva
 
 ## Limitations and next milestone boundary
 
-Evaluation is simulator-only; M6 must separately integrate the actual Atari ALE observation/control loop and test synchronization between emulator state and chess history. The small training-seed count, two-opponent pool, sparse reward, censored terminal pairs, and limited compute constrain generalization and uncertainty. M5 did not run GPU benchmarking, hyperparameter search, or actual Atari evaluation. The M5 PR is for independent PM review; G3 remains unapproved, M6 has not started, and merge/acceptance are outside this engineering report.
+Evaluation is simulator-only; M6 must separately integrate the actual Atari ALE observation/control loop and test synchronization between emulator state and chess history. The small training-seed count, two-opponent pool, sparse reward, censored terminal pairs, and limited compute constrain generalization and uncertainty. M5 did not run GPU benchmarking, hyperparameter search, or actual Atari evaluation. At initial report publication, PR #11 awaited PM review and G3 was unapproved. PR #11 was subsequently merged and G3 approved; M6 remains not authorized or started.
 
 ## Forensic source-provenance follow-up — 2026-10-30
 
@@ -159,4 +159,9 @@ The independent PM accepted M5-01, M5-02, and M5-05, and accepted M5-03/M5-04 wi
 
 The acceptance is limited to the completed M2 simulator experiment. The three-seed comparison does not establish Warm-start superiority over Scratch; six evaluation games were truncated at the 400-decision limit; Frozen M4 and SimpleHeuristic were stronger overall on the reported benchmark. These results do not establish performance in Atari ALE VideoChess. Private multi-gigabyte artifact bytes were not independently rehashed remotely by the PM; local read-only verifier records and preserved artifact identities remain the available private-artifact evidence.
 
-This acceptance is distinct from PR integration and G3 approval. PR #11 remains open for PM-controlled merge. G3 remains unapproved, and M6 remains unauthorized. See [the permanent PM acceptance record](../../.agents/evidence/M5-PM-acceptance-20261030.md).
+At the time of M5 technical acceptance, PR integration and G3 approval were still pending. PR #11 was subsequently merged and G3 approved by the independent PM. M6 remains unauthorized. See [the permanent M5 acceptance record](../../.agents/evidence/M5-PM-acceptance-20261030.md) and [G3 post-merge decision](../../.agents/evidence/G3-final-approval-20261030.md).
+
+
+## Post-merge governance update — 2026-10-30
+
+PR #11 integrated at merge commit `e0b434530df51b08595e3896c175f81b4a8f8c64`, whose tree matches the reviewed M5 feature tree. The independent PM approved G3 after confirming M2–M5 acceptance. The decision and post-merge verification are in [G3-final-approval-20261030.md](../../.agents/evidence/G3-final-approval-20261030.md). M5 remains M2 simulator evidence only; its source-provenance and three-seed limitations are unchanged. M6 is not authorized or started.

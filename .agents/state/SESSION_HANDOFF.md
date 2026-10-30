@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-35a99f0e-20261030T083638670320Z -->
+<!-- checkpoint-id: cp-4e9a8999-20261030T093734539030Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -12,7 +12,11 @@ This file is a pointer, not a status snapshot. Do not infer current phase, task 
    - The current governance decision is [`ADR-0001`](../../docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md); discover later decisions in `docs/02-management/decisions/`.
 5. Compare the portable tracked-file manifest with live HEAD/index. Treat the `git` snapshot as workspace-local; an exact portable manifest match after commit/checkout is expected even when branch, HEAD, status, ignored files, or caches differ. The local Git config UUID distinguishes the original workspace from a clean clone. For older checkpoints without a portable manifest, use the safe tracked-file migration path described in `AGENTS.md`. If version-controlled content or canonical references drift, inspect them and never discard work automatically.
 
-## M5 formal acceptance and PM merge handoff — 2026-10-30
+## Current canonical status — G3 approved, M6 unauthorized (2026-10-30)
+
+The independent PM approved G3 after verifying M2–M5 completion and PR #11 integration. The approval and post-merge verification are recorded in [G3-final-approval-20261030.md](../evidence/G3-final-approval-20261030.md) and [comment 6519216543](https://github.com/dodaonam/atari-videochess-rl/pull/11#issuecomment-6519216543). `PROJECT_STATE.yaml` is authoritative: G3 is approved, G4 is the next governance gate, M6 is the next engineering milestone pending separate direct authorization, and no M6 task is active. M5 scientific results and the accepted RSK-014 limitation remain unchanged. No training or evaluation was launched in this closeout.
+
+## Historical M5 technical acceptance handoff — before PR merge and G3 decision
 
 Independent PM acceptance of M5-01–M5-05 is permanently recorded in [the acceptance evidence](../evidence/M5-PM-acceptance-20261030.md) and the authoritative [PR #11 decision](https://github.com/dodaonam/atari-videochess-rl/pull/11#issuecomment-6518394524). M5-001 is done; BLK-003 is resolved by PM risk acceptance; RSK-014 remains an accepted residual because full historical CLI bytes are unavailable. The six-run/1,500-game M2 simulator campaign is preserved. PR #11 is open and unmerged for PM-controlled integration. G3 remains unapproved and M6 is not authorized or started. No additional official training/evaluation is required or authorized.
 
