@@ -2,7 +2,7 @@
 
 **Recorded:** 2026-10-30 UTC
 **PR:** [#11](https://github.com/dodaonam/atari-videochess-rl/pull/11), base `initial-idea`
-**Status:** remediation in progress; no merge or PM acceptance claimed.
+**Status:** post-review engineering remediation complete; M5 engineering acceptance remains incomplete pending independent PM disposition of BLK-003; no merge or PM acceptance claimed.
 
 ## Executive result
 
