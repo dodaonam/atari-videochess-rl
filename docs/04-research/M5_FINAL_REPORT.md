@@ -98,6 +98,8 @@ This source-version change is confounded with the third training seed in pooled 
 - The M5 CLI's M3/M4 artifact locations now support `VIDEOCHESS_M5_M3_RELEASE_DIR` and `VIDEOCHESS_M5_M4_DIR`; pinned release/checkpoint hashes remain mandatory. Private artifacts remain outside Git. The README documents this clean-checkout limitation.
 - The 28 verified M5 evidence logs existed locally and matched recorded commands/results/exit codes; all passed the credential-pattern scan. They were ignored by `*.log`, explaining the clean-clone preflight failure. Exactly those referenced logs were force-added, and preflight now rejects future untracked M5 evidence logs. The audit inventory is `.agents/evidence/M5-remediation-log-inventory-20261030.json`.
 
+At remediation candidate `063c24cc9ab221e264bf06aadc6f57f7b45c7017`, the full local suite passed 368 tests in 138.487 seconds. A clean clone at the same SHA passed canonical preflight and ran 368 tests in 136.734 seconds, with one documented skip because the accepted M4 checkpoint is private and absent from the clone; the same transfer test ran in the local suite with the authorized M4 artifact. GitHub Actions run `41006247210` passed at that exact SHA; its Repository preflight workflow ran the standard-library context, bundle, and M5 contract-oracle tests, not the full PyTorch suite. The remediation audit documents the source blocker. A following docs/state/evidence commit will require preflight and CI verification on its new head.
+
 The final engineering state remains **incomplete pending source-history disposition** even if local tests, clean-clone checks, and CI pass. G3 and M6 remain outside scope.
 
 ## Acceptance assessment

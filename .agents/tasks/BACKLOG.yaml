@@ -3493,6 +3493,90 @@
             "log_path": ".agents/evidence/logs/M5-source-backup-search-20261030.log",
             "log_sha256": "3783a9c65a14d4b6fbb00e320a516bb932df0c1ac329d10b86caf48ab3b3a9a9"
           }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 368 tests in 138.487s; OK.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:02:13Z",
+            "recorded_at_utc": "2026-10-30T05:09:10Z",
+            "exit_code": 0,
+            "git_revision": "063c24cc9ab221e264bf06aadc6f57f7b45c7017",
+            "log_path": ".agents/evidence/logs/M5-full-suite-final-remediation-063c24c.log",
+            "log_sha256": "a2d7d6d5fbe1176f8eae9c9259a3de65ff7d049a60ce4629aae1b8e30d55515f"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M4_DIR=/nonexistent/accepted-m4 VIDEOCHESS_M5_M3_RELEASE_DIR=/nonexistent/accepted-m3 PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 368 tests in 136.734s; OK (skipped=1 because accepted private M4 artifact is unavailable in clean clone); local suite at this revision ran the M4 transfer test.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:05:15Z",
+            "recorded_at_utc": "2026-10-30T05:09:10Z",
+            "exit_code": 0,
+            "git_revision": "063c24cc9ab221e264bf06aadc6f57f7b45c7017",
+            "log_path": ".agents/evidence/logs/M5-clean-clone-full-suite-063c24c.log",
+            "log_sha256": "73c455cf8b4ef0638d37285e4044c8a5e2e3209aae9515c1447b1b64c75d79d4"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "cd /tmp/m5-clean-final-063c24c && python3 scripts/agent_preflight.py --json",
+          "result": "Clean-clone canonical preflight PASS on 063c24cc9ab221e264bf06aadc6f57f7b45c7017; artifact directory warning is expected because private artifacts are not in Git.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:08:46Z",
+            "recorded_at_utc": "2026-10-30T05:09:10Z",
+            "exit_code": 0,
+            "git_revision": "063c24cc9ab221e264bf06aadc6f57f7b45c7017",
+            "log_path": ".agents/evidence/logs/M5-clean-clone-preflight-063c24c.log",
+            "log_sha256": "95137854b6f11bc727881d6e2eaf88e7c4f308d7781ed3550d8ba12a18a9a684"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "gh run view 41006247210 --repo dodaonam/atari-videochess-rl --json conclusion,headSha,jobs,url",
+          "result": "PASS on exact PR head 063c24cc9ab221e264bf06aadc6f57f7b45c7017; Repository preflight and standard-library context/bundle/M5 contract-oracle tests passed. This workflow did not run the PyTorch full suite.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:08:47Z",
+            "recorded_at_utc": "2026-10-30T05:09:10Z",
+            "exit_code": 0,
+            "git_revision": "063c24cc9ab221e264bf06aadc6f57f7b45c7017",
+            "log_path": ".agents/evidence/logs/M5-github-ci-063c24c.log",
+            "log_sha256": "fc7c972901bd0d2bcd4fa212c2414eeff842b1dd8578b4637cbbcc89b14f82c9"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "sha256sum docs/04-research/M5_FINAL_REPORT.md",
+          "result": "57a13beb53ec448fd7223cd4d3d25b40d85cd33b4d93ba530463c379f9a505e2  docs/04-research/M5_FINAL_REPORT.md",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:09:58Z",
+            "recorded_at_utc": "2026-10-30T05:10:14Z",
+            "exit_code": 0,
+            "git_revision": "063c24cc9ab221e264bf06aadc6f57f7b45c7017",
+            "log_path": ".agents/evidence/logs/M5-final-report-remediation-20261030.log",
+            "log_sha256": "3d5a1aef710df19170d498a10081c8e4a385757eb3bb6aaf682d19d34d96d756"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "sha256sum docs/04-research/M5_REMEDIATION_AUDIT.md",
+          "result": "88bb6d92c91b247ad9222d81507e71060753aa9e202a6ac2cf92456aa0c00bce  docs/04-research/M5_REMEDIATION_AUDIT.md",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T05:09:58Z",
+            "recorded_at_utc": "2026-10-30T05:10:14Z",
+            "exit_code": 0,
+            "git_revision": "063c24cc9ab221e264bf06aadc6f57f7b45c7017",
+            "log_path": ".agents/evidence/logs/M5-remediation-audit-hash-20261030.log",
+            "log_sha256": "83b954dcfb8a4e08c7055e306bff72961921115bd927c3b57b380ce6cd1b5f77"
+          }
         }
       ],
       "next_action": "Independent PM disposition of BLK-003: recover and compare authentic earlier source snapshots, or decide whether the source-version-confounded results may be used. No additional training without separate PM authorization.",
