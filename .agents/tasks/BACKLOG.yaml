@@ -4062,6 +4062,20 @@
             "git_revision": "e6d444e475e447e9f37951f16585bf496f804c9d",
             "log_path": null
           }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<verified-private-m5-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<verified-private-m4-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<pinned-warm-snapshot-file> PATH=<project-local-stockfish-dir>:$PATH <project-python> -m unittest discover -s tests -v",
+          "result": "PASS: 419 tests, 0 failures, 0 skips; unittest elapsed 162.942 seconds.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T15:29:06Z",
+            "recorded_at_utc": "2026-10-30T15:32:28Z",
+            "exit_code": 0,
+            "git_revision": "d286e794b9cfb2bb5dbee0f88c6b74c946daf6ff",
+            "log_path": ".agents/evidence/logs/M6-full-suite-d286e794-rerun.log",
+            "log_sha256": "51ff0ade905eb2237704c3d4c46fe649b154d672bdfeba03e0a5bf9d351aeca8"
+          }
         }
       ],
       "next_action": "Run genuine Stage 1 and Stage 2 ALE diagnostics; after safe closed-loop validation, freeze and execute the bounded Stage 3 roster. Preserve every attempt and evidence; submit one PR for independent PM review.",

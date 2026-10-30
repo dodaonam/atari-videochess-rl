@@ -13,6 +13,7 @@
   "log_path": ".agents/evidence/logs/M6-baseline-full-suite-e6d444e-initial-failed.log",
   "log_sanitization": "Local workspace and external private artifact paths replaced with role labels; execution result and measurements unchanged.",
   "log_sha256": "be98e4ffb336361c52186cd24ab6b27c6e3f082eb626ee0a796b4c1ab44f8b8e",
+  "pass_count_method": "unittest summary total minus the two explicit failures.",
   "passed": 386,
   "recorded_at_utc": "2026-10-30T14:45:59Z",
   "skipped": 0,
