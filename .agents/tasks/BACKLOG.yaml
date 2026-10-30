@@ -4104,9 +4104,37 @@
             "log_path": ".agents/evidence/logs/M6-full-suite-6833ac5.log",
             "log_sha256": "3a77fac124e9740603e4040053e12384b8e6c338ed7c6f4af7a5205fedc5bbe7"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage2-evidence-20261030.md",
+          "detail": "Genuine ALE debug multi-turn and limited default-v5 closed-loop evidence for M5 Warm/Scratch plus the bounded comparison policies; raw traces remain local and hash-verified.",
+          "result": "M5 Warm and Scratch each completed 10 RGB-verified player moves and 10 Atari replies under debug settings; each completed one player/reply cycle under default-v5. Two controls safe-stopped on target confirmation uncertainty. No diagnostic attempt was a completed game.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T16:19:52Z",
+            "exit_code": null,
+            "git_revision": "c709231295441a297fd28d4e1455fe5ef351fe15",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<verified-private-m5-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<verified-private-m4-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<pinned-warm-snapshot-file> PATH=<project-local-stockfish-dir>:$PATH <project-python> -m unittest discover -s tests -v",
+          "result": "PASS: 422 tests, 0 failures, 0 skips; unittest elapsed 175.525 seconds.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T16:14:32Z",
+            "recorded_at_utc": "2026-10-30T16:17:30Z",
+            "exit_code": 0,
+            "git_revision": "c709231295441a297fd28d4e1455fe5ef351fe15",
+            "log_path": ".agents/evidence/logs/M6-full-suite-c709231.log",
+            "log_sha256": "fa4fae000c040fb649d67e9b78012ff059cf698229b879b924add397fe7fb981"
+          }
         }
       ],
-      "next_action": "Freeze the Stage 3 source/config/roster after the verified debug and limited default-profile checks, then execute the approved maximum 35 attempts under the cumulative 10-hour/2-GiB envelope. Preserve every outcome and retry only an eligible pre-action process-start failure; then verify and deliver the PR.",
+      "next_action": "Checkpoint the verified Stage 2 evidence, then run the final full regression on the clean Stage 3 freeze revision. If it passes and roster/config/artifact assertions still hold, execute the predeclared maximum 35-attempt campaign under the cumulative 10-hour/2-GiB limits; preserve all outcomes, verify raw traces, then prepare and deliver the unmerged PR.",
       "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],

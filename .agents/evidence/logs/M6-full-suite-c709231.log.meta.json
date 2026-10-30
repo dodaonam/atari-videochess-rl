@@ -1,0 +1,24 @@
+{
+  "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<verified-private-m5-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<verified-private-m4-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<pinned-warm-snapshot-file> PATH=<project-local-stockfish-dir>:$PATH <project-python> -m unittest discover -s tests -v",
+  "completed_at_utc": "2026-10-30T16:17:30Z",
+  "configuration_identity": {
+    "m4_root_manifest_sha256": "f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921",
+    "m5_root_manifest_sha256": "a201a254671ad59ae1fecb402abf994d5bf523097f1c3010b5c7fa237ae6dd4c",
+    "m6_config_sha256": "0d9495ca044f9abeef02d66af01e5d283e4c22b3271ea34f78e49b26b3c317ad"
+  },
+  "executed_at_utc": "2026-10-30T16:14:32Z",
+  "execution_environment": "Local CPU; Python 3.12.3, Gymnasium 1.4.0, ALE-Py 0.11.2, PyTorch 2.14.1+cpu, python-chess 1.11.2; pinned Stockfish sf_19 used only by the existing UCI-readiness test.",
+  "exit_code": 0,
+  "fail_count": 0,
+  "git_revision": "c709231295441a297fd28d4e1455fe5ef351fe15",
+  "log_path": ".agents/evidence/logs/M6-full-suite-c709231.log",
+  "log_sanitization": "Local project and private artifact paths replaced with role labels; test output and results unchanged.",
+  "log_sha256": "fa4fae000c040fb649d67e9b78012ff059cf698229b879b924add397fe7fb981",
+  "maximum_resident_set_kib": 368868,
+  "pass_count": 422,
+  "result": "PASS: 422 tests, 0 failures, 0 skips; unittest elapsed 175.525 seconds.",
+  "skip_count": 0,
+  "test_count": 422,
+  "unittest_elapsed_seconds": 175.525,
+  "wall_elapsed_seconds": 177.697
+}
