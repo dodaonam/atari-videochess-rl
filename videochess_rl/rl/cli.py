@@ -38,6 +38,7 @@ from videochess_rl.rl.network import make_scratch_scorer, make_warm_scorer, clon
 from videochess_rl.rl.replay import ReplayBuffer, ReplayJournal
 from videochess_rl.rl.training import DoubleDqnLearner, epsilon_at, run_training_episodes, select_action, _features
 from videochess_rl.rl.transition import Transition
+from videochess_rl.source_snapshot import capture_source_snapshot
 from videochess_rl.simulator import ChessSimulator
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -99,6 +100,12 @@ def _campaign_usage_with_active_run(committed_seconds: float, active_run_started
                                    now_monotonic: float) -> float:
     """Add only the current uncommitted run interval to committed ledger time."""
     return float(committed_seconds) + max(0.0, float(now_monotonic) - float(active_run_started))
+
+
+def _require_unfinalized_artifact_root(path: Path) -> None:
+    manifest = path / "artifact-manifest.json"
+    if manifest.exists() or manifest.is_symlink():
+        raise RuntimeError("refusing to modify a finalized or previously inventoried immutable M5 artifact root")
 
 
 def source_hash() -> str:
@@ -483,6 +490,7 @@ def _latest_completed_summary(pair_id: str,arm: str) -> dict[str,Any]|None:
 
 
 def train_campaign() -> dict[str,Any]:
+    _require_unfinalized_artifact_root(ARTIFACT_ROOT)
     config=load_config(); ARTIFACT_ROOT.mkdir(parents=True,exist_ok=True)
     campaign_start_wall=datetime.now(timezone.utc).isoformat()
     setup_started=time.monotonic(); ledger=_load_existing_ledger()
@@ -500,6 +508,13 @@ def train_campaign() -> dict[str,Any]:
         raise RuntimeError("real-replay feasibility gate did not pass")
     torch.set_num_threads(int(train["torch_threads"]["intra_op"]))
     torch.set_num_interop_threads(int(train["torch_threads"]["inter_op"]))
+    runtime_inputs=[".agents/state/PROJECT_STATE.yaml", ".agents/tasks/BACKLOG.yaml",
+                    reports[-1].relative_to(ROOT).as_posix()]
+    ledger_path=ARTIFACT_ROOT/"resource-ledger.json"
+    if ledger_path.is_file(): runtime_inputs.append(ledger_path.relative_to(ROOT).as_posix())
+    source_snapshot=capture_source_snapshot(ROOT,ARTIFACT_ROOT/"source-snapshots",additional_files=runtime_inputs)
+    if source_snapshot["source_sha256"]!=source_hash() or source_snapshot["configuration_sha256"]!=config_hash():
+        raise RuntimeError("captured source/configuration bundle differs from the live M5 training inputs")
     m4_model,transfer,m4_meta=verify_transfer_inputs()
     init=[]
     for seed in train["paired_seeds"]: init.append(_save_initialization_pair(seed,m4_model,m4_meta,transfer))
@@ -606,6 +621,7 @@ def train_campaign() -> dict[str,Any]:
             last_size_check=time.monotonic(); cached_artifact_size=artifact_size_bytes()
             attempt_doc={"schema":"videochess-m5-attempt/1.0","status":"running","run_id":rid,
                 "attempt_id":attempt_id,"pair_id":pair_id,"arm":arm,"training_seed":seed,
+                "source_snapshot":source_snapshot,
                 "resume_parent_checkpoint_sha256":resume_parent_sha,"started_at_utc":datetime.now(timezone.utc).isoformat(),
                 "resume_code_compatibility":resume_code_compatibility,
                 "committed_counters_at_start":{"valid_decisions":learner.valid_decisions,
@@ -694,7 +710,7 @@ def train_campaign() -> dict[str,Any]:
             ledger["last_updated_at_utc"]=datetime.now(timezone.utc).isoformat(); json_write(ARTIFACT_ROOT/"resource-ledger.json",ledger)
             completion="complete" if result["valid_decisions"]==50000 else "incomplete"
             summary={**result,"run_id":rid,"attempt_id":attempt_id,"pair_id":pair_id,"config_sha256":config_hash(),
-                "code":code_identity(),"environment":environment_identity(),
+                "code":code_identity(),"source_snapshot":source_snapshot,"environment":environment_identity(),
                 "initialization":str((ARTIFACT_ROOT/"runs"/run_identity(pair_id,arm,0)/"initialization-manifest.json").relative_to(ROOT)),
                 "m4_source_sha256":M4_CHECKPOINT_SHA if arm=="warm" else None,"peak_process_rss_bytes":peak_rss_bytes(),
                 "replay_journal_bytes":journal.path.stat().st_size,"run_started_at_utc":attempt_doc["started_at_utc"],
@@ -714,6 +730,8 @@ def train_campaign() -> dict[str,Any]:
     report={"schema":"videochess-m5-training-campaign/1.0","config_sha256":config_hash(),
         "started_at_utc":campaign_start_wall,"duration_seconds":time.monotonic()-campaign_start,
         "runs":run_summaries,"planned_runs":6,"completed_runs":sum(r.get("completion")=="complete" for r in run_summaries),
+        "source_snapshots":{row["source_snapshot"]["archive_sha256"]:row["source_snapshot"]
+                            for row in run_summaries if row.get("source_snapshot")},
         "total_valid_decisions":sum(r.get("valid_decisions",0) for r in run_summaries),
         "total_cumulative_run_physical_seconds":sum(float(x) for x in ledger.get("run_seconds",{}).values()),
         "campaign_profile_recovery_and_setup_seconds":float(ledger.get("profile_seconds",0))+float(ledger.get("failed_profile_seconds_unverified_but_conservatively_charged",0))+float(ledger.get("recovery_validation_seconds",0))+float(ledger.get("training_setup_seconds",0)),

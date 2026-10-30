@@ -129,6 +129,7 @@ def create_manifests(artifact_root: Path, *, allow_incomplete: bool = False) -> 
                         "summary_sha256": sha256_file(summary_path) if summary_path.is_file() else None,
                         "configuration_sha256": (summary or {}).get("config_sha256"),
                         "source_identity": (summary or {}).get("code"),
+                        "source_snapshot": (summary or {}).get("source_snapshot"),
                         "initialization_manifest_sha256": sha256_file(run_dir / "initialization-manifest.json")
                         if (run_dir / "initialization-manifest.json").is_file() else None,
                         "created_at_utc": datetime.now(timezone.utc).isoformat(),

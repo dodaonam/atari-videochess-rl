@@ -72,6 +72,27 @@
       "924a95e6accb04c727e2858dbcd6cbda84b970750decc27fd09621bdc61821aa": "bc1494666d3234c82ff82f2fb8ee851d9558c24b"
     },
     "all_changed_snapshot_contents_recovered": false,
-    "interpretation": "File hash changes are observed. Only versions with a found Git blob can be read and diffed; absent blobs and source backups are not reconstructed."
+    "interpretation": "Historical initial audit assessment before recovery of the owner-supplied full Codex transcript; superseded by the verified forensic follow-up in M5-source-semantics-20261030.json. The full historical CLI files remain unavailable, but the relevant transcript edits and actual no-resume run metadata have been audited.",
+    "interpretation_at_initial_audit": "File hash changes are observed. Only versions with a found Git blob can be read and diffed; absent blobs and source backups are not reconstructed.",
+    "forensic_follow_up": {
+      "status": "source semantics audited; independent PM review pending",
+      "recovery_record_path": ".agents/evidence/M5-source-recovery-20261030.json",
+      "semantics_record_path": ".agents/evidence/M5-source-semantics-20261030.json",
+      "recovered_exact_historical_files": [
+        {
+          "path": "videochess_rl/rl/checkpoint.py",
+          "sha256": "19ab713b5a1450c2e4506d9d761768317e0b48fb96a3cb0083965d6a037bc410"
+        },
+        {
+          "path": "videochess_rl/rl/replay.py",
+          "sha256": "5ae4d3d928c524539bcf6b29f4102f09b246d5703b66539f2fad4aa7e2aaa278"
+        }
+      ],
+      "cli_full_file_recovered": false,
+      "replay_sampling_or_learning_update_change_observed": false,
+      "seed_20261106_attempts_resumed": false,
+      "formal_pm_acceptance": false,
+      "additional_training_or_evaluation_authorized_or_started": false
+    }
   }
 }

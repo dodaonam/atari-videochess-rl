@@ -11,9 +11,15 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+import sys
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from videochess_rl.source_snapshot import verify_source_snapshot
+
 ARTIFACTS = ROOT / "artifacts/m5"
 CONFIG_SHA = "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d"
 EVALUATION_SEEDS = set(range(20261130, 20261155))
@@ -86,6 +92,23 @@ def verify_training() -> dict[str, Any]:
         source_hash = summary["code"]["source_sha256"]
         if source_hash != record["code_sha256"] or source_hash != manifest["source_identity"]["source_sha256"]:
             raise ValueError(f"{run_id}: code-source identities disagree")
+        source_snapshot = summary.get("source_snapshot")
+        if source_snapshot is not None:
+            if manifest.get("source_snapshot") != source_snapshot or attempt.get("source_snapshot") != source_snapshot:
+                raise ValueError(f"{run_id}: source snapshot identities disagree across run records")
+            relative = Path(source_snapshot.get("path", ""))
+            if relative.is_absolute() or ".." in relative.parts:
+                raise ValueError(f"{run_id}: source snapshot path is unsafe")
+            bundle_path = (ROOT / relative).resolve()
+            try:
+                bundle_path.relative_to(ARTIFACTS.resolve())
+            except ValueError as exc:
+                raise ValueError(f"{run_id}: source snapshot is outside the private artifact root") from exc
+            bundle = verify_source_snapshot(bundle_path, expected_archive_sha256=source_snapshot.get("archive_sha256"))
+            if (bundle.get("source_sha256") != source_hash
+                    or bundle.get("configuration_sha256") != summary["config_sha256"]
+                    or bundle.get("source_revision") != summary["code"].get("source_revision")):
+                raise ValueError(f"{run_id}: source bundle differs from run code/configuration identity")
         counters = attempt["committed_counters"]
         if attempt["status"] != "complete" or counters["valid_decisions"] != 50000 or counters["optimizer_updates"] != 12245 or counters["target_syncs"] != 24:
             raise ValueError(f"{run_id}: attempt record is incomplete or inconsistent")

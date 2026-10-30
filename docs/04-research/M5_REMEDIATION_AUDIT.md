@@ -2,7 +2,7 @@
 
 **Recorded:** 2026-10-30 UTC
 **PR:** [#11](https://github.com/dodaonam/atari-videochess-rl/pull/11), base `initial-idea`
-**Status:** post-review engineering remediation complete; M5 engineering acceptance remains incomplete pending independent PM disposition of BLK-003; no merge or PM acceptance claimed.
+**Status:** forensic remediation complete and ready for independent PM review. Formal M5 acceptance, G3 approval, and merge remain pending and are not claimed here.
 
 ## Executive result
 
@@ -10,7 +10,7 @@ The reported 28 GitHub preflight failures were reproduced in a clean clone of PR
 
 The private artifact root manifest verifies 7 manifests and 6,544,747,450 bytes. A read-only cross-check verified six run summaries/attempts, all replay chain counts, 15 per-policy raw schedules, 3,385 event records, 1,500 unique scenarios, the exact 6 truncations, and the ledger arithmetic. See `.agents/evidence/M5-remediation-log-inventory-20261030.json` and the retained verifier logs.
 
-A training source-version blocker remains. The first four runs use source SHA `093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00`; the last two use `cdcc1fdc0ca0b324e49cfb8b0ff571496a554e9892dfb3620d6454a65ee16da0`. Checkpoint history identifies three Python files changed between the relevant snapshots, but their old bytes are absent from the available Git objects and local backups. Because `replay.py` changed and its old sampling implementation cannot be compared, the possibility of a training-distribution change cannot be ruled out. Do not silently treat the pooled three-seed result as source-homogeneous or start extra training without PM disposition.
+The initial remediation finding was that a training-source difference could not be excluded: four runs record source SHA `093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00`, and two record `cdcc1fdc0ca0b324e49cfb8b0ff571496a554e9892dfb3620d6454a65ee16da0`. That was the evidence state before the owner supplied the complete continuation-session transcript. The transcript-based recovery and subsequent semantic assessment below supersede the initial interpretation while preserving it as the original audit finding.
 
 ## Initial-state inventory
 
@@ -22,7 +22,7 @@ A training source-version blocker remains. The first four runs use source SHA `0
 | M5 run/evaluation source manifests and campaign evidence | `.agents/evidence/M5-*-20261029.*` | Tracked evidence; large model/replay/game data not Git tracked | Report hashes and run/source identity groups reconciled with local artifacts. |
 | M5 private artifacts | `artifacts/m5/` | Ignored/private local files | Root artifact manifest verified; 6.544 GB of 8 GiB. No artifact was edited. |
 | Accepted M4/M3 inputs | `/home/dodaonam/Projects/atari-videochess-rl-m4/...` and `/home/dodaonam/Projects/atari-videochess-rl-m3/...` | Private paths outside Git | M5 accepted-input evidence pins M4 checkpoint SHA and M3 release manifest; this remediation did not transfer or publish their contents. |
-| Historical seed-20261106 predecessor source blobs | Old `checkpoint.py`, `cli.py`, `replay.py` contents | **Missing/unrecoverable from inspected Git objects and local source backups** | Only checkpoint-history SHA-256 values remain; this is the unresolved scientific-provenance issue. |
+| Historical training-source evidence | Recovered `checkpoint.py` and `replay.py`; CLI excerpts/patches; transcript outside Git | Checkpoint/replay source bytes are exact SHA-256 matches; full historical CLI files remain unavailable | See `.agents/evidence/M5-source-recovery-20261030.json` and `.agents/evidence/M5-source-semantics-20261030.json`; the raw transcript remains at the owner-supplied local path and is not committed. |
 
 ## The 28 provenance logs
 
@@ -122,7 +122,7 @@ The campaign verification and each run manifest agree on source group: four runs
 | `videochess_rl/rl/cli.py` | `795ca9865da80bf982480b25d97367c846255e167d9c64320a73030106c2efe3` (not found) | `3f966fffa3a31ed9330004448ca84bc86a4fd6446764d3184e248cff978b60b7` (not found) | unavailable |
 | `videochess_rl/rl/replay.py` | `5ae4d3d928c524539bcf6b29f4102f09b246d5703b66539f2fad4aa7e2aaa278` (not found) | `21845b0755809d07d480da821c2e809540a0ca4b8e1eddc5785ebdec5cf59b7f` | `355f8f0868152815debce129cc327d8bcecef970` |
 
-The resumption record describes a checkpoint/replay recovery optimization. A full Git-blob scan found the later checkpoint/replay blobs shown above, but not their earlier hashes or either CLI snapshot used in the training source groups. Local source-worktree/backup searches found no extra copies. The named operational intent is corroborated, but no exact patch or line-by-line semantic comparison exists. `replay.py` is on the sampling path; without its old contents we cannot rule out a learning-distribution change. The paired seed-20261106 comparison is matched internally, while pooled cross-seed inference is confounded with this implementation-version change. No campaign rerun has been started.
+At the initial audit, the transcript and source bytes had not yet been supplied, so a line-level comparison could not be made. The original assessment and scanned Git-object findings remain in the preceding record and in `.agents/evidence/M5-source-reconciliation-20261030.json`; the forensic addendum below supersedes the then-current uncertainty about replay behavior. No campaign rerun has been started.
 
 ## Remediations applied
 
@@ -142,4 +142,55 @@ The follow-up audit/state/evidence commit `026d41b7cb275affef5cffc27747449da7e04
 
 At exact candidate `57c8bce28b151b3f30b03b3b972561e142d18b16`, a fresh local run passed all 368 tests in 145.322 seconds (peak RSS 357,588 KiB). A remote clean clone at the same SHA passed canonical preflight and all 368 tests in 144.747 seconds, with one skip for the private M4 transfer test; the local run executed it. Local and clean-clone preflight had zero errors and only the expected independent artifact-manifest warning. GitHub run `41007586702` passed on that exact head; the workflow's scope was canonical preflight and standard-library context/bundle/M5 oracle tests, not full PyTorch regression. Artifact, campaign-chain, and source-identity checks also passed read-only. Full local and clone suite logs were retained at `/tmp/M5-final-suite-57c8bce.log` and `/tmp/M5-clean-suite-57c8bce.log` (SHA-256 `63175d718fdf936119a775519ef90951cd4c5f41cbefb569fb7f0580d85f3f99` and `598b20d4af96353d4f5d034291c156fb8e28db17aca9d988518b1b1480fb19a1` respectively).
 
-The only known acceptance blocker is the irrecoverable line-level source provenance for the `093992…` versus `cdcc1f…` training code groups. PM disposition is required before M5-03/M5-04 can be marked complete. No training/evaluation process is active, no artifact was changed, G3 remains unapproved, and M6 has not started.
+The initial audit's missing-source finding is superseded by the forensic addendum below. Independent PM review remains required; this report does not grant M5 acceptance, approve G3, or authorize M6.
+
+The post-recovery local full repository suite passed **383/383 tests** on the staged candidate diff `da696d5515f3dfe2ec53d8137914d444ffc4c73eb61a8679212b1d85455ec2ab`: unittest time 164.146 seconds, wall time 166.59 seconds, peak RSS 360,172 KiB. Its retained output is `.agents/evidence/logs/M5-full-suite-forensic-20261030.log`. Exact final-commit clean-clone and GitHub CI verification is still required before PR handoff.
+
+## Forensic source recovery and semantic assessment — 2026-10-30
+
+### Transcript provenance and recovered files
+
+The owner supplied `/home/dodaonam/Downloads/Pasted text(20261030-060523).txt`, 3,655,066 bytes, SHA-256 `c5d8706cff0f7634620b835d1a8063ac43f8bd8eec277995ed09f3b00a693e8f`. The UTF-8 text has 22,750 logical lines (22,749 newline delimiters). The transcript itself remains outside Git; only the transcript identity and narrowly extracted source/diff evidence are committed. The sensitive-pattern scan found no credential values in the recovered source excerpts.
+
+| File | Historical expected SHA-256 | Recovered SHA-256 | Result |
+|---|---|---|---|
+| `videochess_rl/rl/checkpoint.py` | `19ab713b5a1450c2e4506d9d761768317e0b48fb96a3cb0083965d6a037bc410` | Same | Exact UTF-8 byte-preserving transcript extraction, lines 1647–1873; 12,167 bytes. |
+| `videochess_rl/rl/replay.py` | `5ae4d3d928c524539bcf6b29f4102f09b246d5703b66539f2fad4aa7e2aaa278` | Same | Exact UTF-8 byte-preserving transcript extraction, lines 1874–2017; 6,732 bytes. |
+| `videochess_rl/rl/cli.py` | Earlier `795ca9865da80bf982480b25d97367c846255e167d9c64320a73030106c2efe3`; later `3f966fffa3a31ed9330004448ca84bc86a4fd6446764d3184e248cff978b60b7` | Not reconstructed | Whole-file hashes remain unavailable in Git objects. The old resume-selector excerpt and its recorded patch sequence were recovered and checked; no full-file byte-match claim is made. |
+
+The extraction procedure, source bytes, retained diffs/fragments, checkpoint-history identities, and execution result are indexed by `.agents/evidence/M5-source-recovery-20261030.json` and `.agents/evidence/M5-source-recovery-verification-20261030.json`. The machine-readable function/change analysis is `.agents/evidence/M5-source-semantics-20261030.json`.
+
+The original object-database availability table in `.agents/evidence/M5-source-reconciliation-20261030.json` records what was present before transcript recovery. The recovered `checkpoint.py` and `replay.py` evidence files now create matching Git blob objects when staged/committed; this new availability is not evidence that those source bytes were preserved in Git during the original training session. The full historical CLI hashes remain unmatched.
+
+For future owner-authorized M5 runs, the CLI now captures a content-addressed ZIP containing runnable `videochess_rl` Python files, canonical M5 configuration, dependency/lock inputs, and the declared runtime provenance inputs before training. Attempt/run records and the artifact manifest reference the archive identity; verification checks each member hash, source/config hash, and private artifact-root boundary. The runner refuses to write into a finalized artifact root. This safeguard was unit-tested and was not invoked on the completed campaign, so it created no official source bundle and changed no training artifacts.
+
+### Exact runtime differences
+
+Checkpoint-history snapshots `cp-08f98f9d-20261029T043013180672Z` and `cp-08f98f9d-20261029T143803674896Z` differ in 15 paths. Exactly three are runtime Python files: `checkpoint.py`, `replay.py`, and `cli.py`. The other 12 are authorization/evidence, plans/state, the episode-checkpoint verifier, and tests. The configuration and training-critical `training.py`, `transition.py`, `network.py`, `targets.py`, and seed-derivation implementation did not change in that interval.
+
+- **Replay:** `ReplayBuffer` construction, length, iteration order, insertion/eviction, sampling, state serialization, and restoration are AST-identical between authentic old source and later source. `ReplayJournal.append` is also identical. Only `ReplayJournal.__init__` and `verify` changed. The later verifier streams and hashes the full requested journal prefix while reconstructing only the bounded replay tail; it still validates retained transitions. It does not change journal rows or sampler RNG consumption.
+- **Checkpoint:** Serialization/save functions are unchanged. Only `verify_training_checkpoint` and `restore_training_checkpoint` changed. The later path verifies the full journal chain once, reconstructs only the buffer-capacity suffix, checks counters/RNG and payload mappings before mutating the learner, then restores the same online/target/optimizer/replay/counters/RNG state.
+- **CLI:** The full earlier/later file bytes are unavailable, but the complete transcript records four pre-final-run edits: adding `093992…` to the compatible initialization/recovery source-hash set; changing resume candidate verification to newest-first with fallback; ordering candidates using episode/decision counters in checkpoint filenames; and importing the verifier used by that path. The selector excerpt and reconstructed final function are retained with a fragment diff. These edits affect checkpoint compatibility/selection, not the policy/update algorithm.
+
+The final seed-20261106 Warm-start and Scratch attempts are each `attempt-0000`, each has `resume_parent_checkpoint_sha256: null`, and each completed 50,000 decisions. Therefore neither run restored a prior checkpoint; the changed resume selector/restore path was not exercised by either final-seed training run. Within all seeds, Warm-start and Scratch run records remain source-matched. The aggregate source digest is still correlated with seed `20261106`, but no observed change to reward, transition, legal UCI, replay insertion/sampling, optimizer, target arithmetic, initialization weights, or episode semantics is associated with that digest change.
+
+### Checkpoint restoration verification and cost
+
+Previously retained, read-only restoration checks against authentic episode-boundary checkpoints passed:
+
+| Seed / arm | Checkpoint decisions | Replay rows | Online / target / optimizer / counters / RNG | Time / peak RSS |
+|---|---:|---:|---|---|
+| 20261105 Scratch | 49,967 | 16,384 | Exact PASS; full prefix chain verified | 194.32 s / 766,320,640 bytes |
+| 20261106 Scratch | 49,833 | 16,384 | Exact PASS; full prefix chain verified | 202.83 s / 779,337,728 bytes |
+
+The independent source unit suite compares historical and later restore behavior on a deterministic checkpoint fixture, including optimizer, replay order/RNG, global RNG states, counters, and the next sampled minibatch. The initial 14 source-recovery/source-snapshot tests passed in 4.36 wall seconds; after adding a deterministic latest-well-formed-CLI-checkpoint selection test, the focused suite passed 15 tests in 3.48 wall seconds. The final focused log is `.agents/evidence/logs/M5-source-focused-tests-20261030-r2.log`.
+
+An optional differential verifier attempted to restore two authentic checkpoints through both historical and later full-object implementations. The historical path repeatedly validates the journal and reconstructs complete history-bearing transitions; after 20:16.95 wall time and 1,804,152 KiB peak RSS, it remained CPU-bound before emitting a result and was stopped. Its log has exit code 143 and is explicitly **INCOMPLETE**, not PASS. This diagnostic did not mutate training artifacts. The successful later-path artifact restorations and deterministic historical/current fixture remain the positive recovery evidence; the expensive historical replay reconstruction is the measured reason not to use that optional procedure as a campaign verifier.
+
+### Disposition and remaining limits
+
+The original hypothesis that the replay sampler might have changed is not supported by recovered code: insertion, eviction, sampling, replay state methods, and journal append are identical; checkpoint changes are limited to verification/restoration; and the two final runs were fresh attempts. No evidence indicates a learning-distribution change. No training or evaluation was repeated, and no official artifact was changed.
+
+The full historical CLI files remain unavailable, so source bytes are not wholly reconstructed and byte-identical execution is not claimed. This residual auditability limitation is disclosed for PM review. The campaign still has only three independent training-seed clusters, and every conclusion remains about the M2 chess simulator, not Atari ALE VideoChess. Additional training is not currently supported as technically necessary and has not been started; any supplemental experiment would require separate PM authorization.
+
+Engineering evidence supports review of M5-03/M5-04 with the limitations above. Independent PM disposition/acceptance remains pending. G3 remains unapproved; M6 has not started; PR #11 remains open and unmerged.

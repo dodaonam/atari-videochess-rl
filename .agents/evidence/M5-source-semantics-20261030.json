@@ -1,0 +1,439 @@
+{
+  "schema": "videochess-m5-source-semantics/1.0",
+  "recorded_at_utc": "2026-10-30T07:33:36Z",
+  "verified_against_git_head": "d16e1cef7d72e8109415d12d19d6f6f0f71b7871",
+  "transcript": {
+    "path": "/home/dodaonam/Downloads/Pasted text(20261030-060523).txt",
+    "bytes": 3655066,
+    "sha256": "c5d8706cff0f7634620b835d1a8063ac43f8bd8eec277995ed09f3b00a693e8f",
+    "logical_line_count": 22750,
+    "newline_delimiter_count": 22749,
+    "raw_transcript_committed": false
+  },
+  "training_source_groups": {
+    "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00": {
+      "runs": 4,
+      "seeds": [
+        20261104,
+        20261105
+      ],
+      "arms": [
+        "warm",
+        "scratch"
+      ]
+    },
+    "cdcc1fdc0ca0b324e49cfb8b0ff571496a554e9892dfb3620d6454a65ee16da0": {
+      "runs": 2,
+      "seeds": [
+        20261106
+      ],
+      "arms": [
+        "warm",
+        "scratch"
+      ]
+    }
+  },
+  "run_source_records_by_seed": {
+    "20261104": [
+      {
+        "arm": "warm",
+        "source_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+        "valid_decisions": 50000
+      },
+      {
+        "arm": "scratch",
+        "source_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+        "valid_decisions": 50000
+      }
+    ],
+    "20261105": [
+      {
+        "arm": "warm",
+        "source_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+        "valid_decisions": 50000
+      },
+      {
+        "arm": "scratch",
+        "source_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+        "valid_decisions": 50000
+      }
+    ],
+    "20261106": [
+      {
+        "arm": "warm",
+        "source_sha256": "cdcc1fdc0ca0b324e49cfb8b0ff571496a554e9892dfb3620d6454a65ee16da0",
+        "valid_decisions": 50000
+      },
+      {
+        "arm": "scratch",
+        "source_sha256": "cdcc1fdc0ca0b324e49cfb8b0ff571496a554e9892dfb3620d6454a65ee16da0",
+        "valid_decisions": 50000
+      }
+    ]
+  },
+  "snapshot_interval": {
+    "before_id": "cp-08f98f9d-20261029T043013180672Z",
+    "after_id": "cp-08f98f9d-20261029T143803674896Z",
+    "changed_paths": [
+      {
+        "path": ".agents/evidence/M5-001-resumption-authorization-20261029.md",
+        "before_sha256": null,
+        "after_sha256": "2fb0689a6675ff26451c935d7f0ee56d9b7150a83e73ab0c6da3d372102f80cc"
+      },
+      {
+        "path": ".agents/evidence/logs/M5-checkpoint-restore-verification-20261105-optimized-20261029.log",
+        "before_sha256": null,
+        "after_sha256": "da00d8cc8ea4a266eabcc2db644de5ef6d3fb438d1aac59d5bca54a31d753796"
+      },
+      {
+        "path": ".agents/evidence/logs/M5-checkpoint-restore-verification-20261105-optimized-r2-20261029.log",
+        "before_sha256": null,
+        "after_sha256": "3927bdcb518886713ab30ccc4b5d15d6f07d799844980e6221d717ce6537dc9b"
+      },
+      {
+        "path": ".agents/evidence/logs/M5-checkpoint-restore-verification-20261105-optimized-r3-20261029.log",
+        "before_sha256": null,
+        "after_sha256": "5443565159565ca2afac7130ccab646fb974093dc4b074b6bd937a2398b62a79"
+      },
+      {
+        "path": ".agents/evidence/logs/M5-full-suite-after-streaming-recovery-20261029.log",
+        "before_sha256": null,
+        "after_sha256": "5d00d6c7ac197db200b096bf2289b8199946d377ea7cbbd803c50818d8a5e081"
+      },
+      {
+        "path": ".agents/plans/M05-double-dqn.md",
+        "before_sha256": "fe77ba8fd25a3553cbe0489a77dcf20455955c7986ab483ec374e75de1b882fc",
+        "after_sha256": "dcbbcef1a5452d6e4cd08bfab70c64bda74b9dc1c1c5cf482c9970e4c5c5f326"
+      },
+      {
+        "path": ".agents/state/SESSION_HANDOFF.md",
+        "before_sha256": "8f0532175959a5f6841987451f4bd4460c490e316f4754ee447fc52bf4bdef99",
+        "after_sha256": "03f910c734af34dbfd416f9f6873a315c9513e5ffa335ab8b0ee5727298346d8"
+      },
+      {
+        "path": ".agents/tasks/BACKLOG.yaml",
+        "before_sha256": "6702af8037d758bbffa63ac0fdae580b0b9678cf0cfeb3068fb870602ba4dee6",
+        "after_sha256": "5ea865304239de8eb0762dab155b75074a1e22d6cf8a85a533de7d9e0d0587d3"
+      },
+      {
+        "path": "scripts/verify_m5_episode_checkpoint.py",
+        "before_sha256": "327e995c3b8be8adf10bf3899a25fff2ac89151afcdf6db3f3bbf21217327109",
+        "after_sha256": "c7ec5b57086fdfd54e3ccd5b00b4dbfad05e65283de3af416e0b486116c53a52"
+      },
+      {
+        "path": "tests/test_m5_checkpoint.py",
+        "before_sha256": "b249d3ad86f72e2269424e52643780b2789ed516a11b5fb9d1117ecddeb5e7a2",
+        "after_sha256": "94c564bcc5b084747f4db4b31ae63fb09ec7c944f5b88e522626058df14c4de2"
+      },
+      {
+        "path": "tests/test_m5_initialization.py",
+        "before_sha256": "168c528d9e0c5a33560a097417e6f12ed780fa9f29ef985e9e8d44b30401ceb8",
+        "after_sha256": "9510da83a9ea516a592147db164536848ad5564c2588c31c66907fdc5f568d96"
+      },
+      {
+        "path": "tests/test_m5_replay.py",
+        "before_sha256": "e8fd85159f52c1f4577218e703277410aa90cf7d14b5ed4c4f5aab80ba88f125",
+        "after_sha256": "14f25fc1050aa5dbd0a44080661b199cadc9e9c5c5673bdac4ea5be6c76b1619"
+      },
+      {
+        "path": "videochess_rl/rl/checkpoint.py",
+        "before_sha256": "19ab713b5a1450c2e4506d9d761768317e0b48fb96a3cb0083965d6a037bc410",
+        "after_sha256": "924a95e6accb04c727e2858dbcd6cbda84b970750decc27fd09621bdc61821aa"
+      },
+      {
+        "path": "videochess_rl/rl/cli.py",
+        "before_sha256": "795ca9865da80bf982480b25d97367c846255e167d9c64320a73030106c2efe3",
+        "after_sha256": "3f966fffa3a31ed9330004448ca84bc86a4fd6446764d3184e248cff978b60b7"
+      },
+      {
+        "path": "videochess_rl/rl/replay.py",
+        "before_sha256": "5ae4d3d928c524539bcf6b29f4102f09b246d5703b66539f2fad4aa7e2aaa278",
+        "after_sha256": "21845b0755809d07d480da821c2e809540a0ca4b8e1eddc5785ebdec5cf59b7f"
+      }
+    ]
+  },
+  "source_difference_matrix": [
+    {
+      "path": "videochess_rl/rl/replay.py",
+      "earlier_sha256": "5ae4d3d928c524539bcf6b29f4102f09b246d5703b66539f2fad4aa7e2aaa278",
+      "later_sha256": "21845b0755809d07d480da821c2e809540a0ca4b8e1eddc5785ebdec5cf59b7f",
+      "earlier_bytes": "exact transcript reconstruction, hash matched",
+      "later_bytes": "exact later source hash matched current recovered checkpoint snapshot",
+      "changes": [
+        "ReplayJournal.__init__",
+        "ReplayJournal.verify"
+      ],
+      "unchanged_learning_operations": [
+        "ReplayBuffer.__init__",
+        "ReplayBuffer.__len__",
+        "ReplayBuffer.transitions",
+        "ReplayBuffer.insert",
+        "ReplayBuffer.sample",
+        "ReplayBuffer.state_dict",
+        "ReplayBuffer.from_state_dict",
+        "ReplayJournal.append"
+      ],
+      "training_relevance": "No changed insertion/sampling/serialization or journal-append operation. Verification streams the full hash chain and reconstructs only the bounded tail; Transition.from_json is applied to retained transitions.",
+      "verification": [
+        "exact SHA-256",
+        "unified diff",
+        "AST comparison",
+        "14 focused source/snapshot tests"
+      ],
+      "residual_uncertainty": "Historical journal verifier behavior on malformed, hash-valid evicted records differs; official journals were generated from validated transitions and full hash chains verify."
+    },
+    {
+      "path": "videochess_rl/rl/checkpoint.py",
+      "earlier_sha256": "19ab713b5a1450c2e4506d9d761768317e0b48fb96a3cb0083965d6a037bc410",
+      "later_sha256": "924a95e6accb04c727e2858dbcd6cbda84b970750decc27fd09621bdc61821aa",
+      "earlier_bytes": "exact transcript reconstruction, hash matched",
+      "later_bytes": "exact later source hash matched current recovered checkpoint snapshot",
+      "changes": [
+        "verify_training_checkpoint",
+        "restore_training_checkpoint"
+      ],
+      "unchanged_operations": [
+        "save_training_checkpoint",
+        "evaluation snapshot load/save",
+        "checkpoint serialization format"
+      ],
+      "training_relevance": "Recovery-only. The later restore validates bundle/identity/counters before mutating the learner, verifies the complete journal once, restores the last replay-capacity transitions, and restores online/target/optimizer/counters/RNG. Exact episode-boundary state is preserved.",
+      "verification": [
+        "exact SHA-256",
+        "unified diff",
+        "AST comparison",
+        "actual checkpoint restoration logs for seed 20261105 and 20261106",
+        "synthetic old/current exact-state and next-RNG test"
+      ],
+      "residual_uncertainty": "Optional direct execution of the historical full-history restoration against official checkpoints was stopped after 20:16.95 because the old path remained CPU-bound and memory-heavy; existing actual restoration using the later path passed."
+    },
+    {
+      "path": "videochess_rl/rl/cli.py",
+      "earlier_sha256": "795ca9865da80bf982480b25d97367c846255e167d9c64320a73030106c2efe3",
+      "later_sha256": "3f966fffa3a31ed9330004448ca84bc86a4fd6446764d3184e248cff978b60b7",
+      "earlier_bytes": "full file not recovered; exact _latest_verified_resume excerpt recovered from transcript lines 2759-2783",
+      "later_bytes": "full file not recovered; final resume function reconstructed from transcript patch sequence and compared to preserved fragment",
+      "observed_training_time_changes": [
+        {
+          "transcript_lines": [
+            3997,
+            4007
+          ],
+          "change": "Add source 093992... to explicit recovery-compatible identity set."
+        },
+        {
+          "transcript_lines": [
+            4152,
+            4181
+          ],
+          "change": "Avoid fully verifying each checkpoint journal while collecting candidates; verify newest valid candidate first and fall back."
+        },
+        {
+          "transcript_lines": [
+            4182,
+            4215
+          ],
+          "change": "Use filename episode/decision counters to order candidates newest-first before loading and full verification."
+        },
+        {
+          "transcript_lines": [
+            5013,
+            5017
+          ],
+          "change": "Import verify_training_checkpoint required by the new recovery selector."
+        }
+      ],
+      "training_relevance": "Checkpoint compatibility/selection only. Both official seed-20261106 runs are attempt-0000, 50,000 decisions, and have no resume parent checkpoint; the selector did not restore prior training state for either final-seed run. Candidate ordering uses saved checkpoint filenames; the unchanged writer constructs those names from the same live episode/decision counters serialized in the payload. The official final-seed attempts were fresh and did not invoke recovery.",
+      "verification": [
+        "recorded full-file source hashes in both checkpoint-history records",
+        "transcript excerpt hash",
+        "preserved reconstructed function fragment and diff",
+        "actual run attempt records",
+        "deterministic old/current empty-resume selector test",
+        "deterministic old/current selector test chooses the same latest well-formed checkpoint"
+      ],
+      "residual_uncertainty": "Complete historical CLI bytes are unavailable, so a whole-file byte reconstruction is not claimed. Transcript source excerpts and all four recorded pre-run CLI edits are available; the final two runs did not execute checkpoint resume."
+    }
+  ],
+  "other_changed_paths": [
+    {
+      "path": ".agents/evidence/M5-001-resumption-authorization-20261029.md",
+      "before_sha256": null,
+      "after_sha256": "2fb0689a6675ff26451c935d7f0ee56d9b7150a83e73ab0c6da3d372102f80cc"
+    },
+    {
+      "path": ".agents/evidence/logs/M5-checkpoint-restore-verification-20261105-optimized-20261029.log",
+      "before_sha256": null,
+      "after_sha256": "da00d8cc8ea4a266eabcc2db644de5ef6d3fb438d1aac59d5bca54a31d753796"
+    },
+    {
+      "path": ".agents/evidence/logs/M5-checkpoint-restore-verification-20261105-optimized-r2-20261029.log",
+      "before_sha256": null,
+      "after_sha256": "3927bdcb518886713ab30ccc4b5d15d6f07d799844980e6221d717ce6537dc9b"
+    },
+    {
+      "path": ".agents/evidence/logs/M5-checkpoint-restore-verification-20261105-optimized-r3-20261029.log",
+      "before_sha256": null,
+      "after_sha256": "5443565159565ca2afac7130ccab646fb974093dc4b074b6bd937a2398b62a79"
+    },
+    {
+      "path": ".agents/evidence/logs/M5-full-suite-after-streaming-recovery-20261029.log",
+      "before_sha256": null,
+      "after_sha256": "5d00d6c7ac197db200b096bf2289b8199946d377ea7cbbd803c50818d8a5e081"
+    },
+    {
+      "path": ".agents/plans/M05-double-dqn.md",
+      "before_sha256": "fe77ba8fd25a3553cbe0489a77dcf20455955c7986ab483ec374e75de1b882fc",
+      "after_sha256": "dcbbcef1a5452d6e4cd08bfab70c64bda74b9dc1c1c5cf482c9970e4c5c5f326"
+    },
+    {
+      "path": ".agents/state/SESSION_HANDOFF.md",
+      "before_sha256": "8f0532175959a5f6841987451f4bd4460c490e316f4754ee447fc52bf4bdef99",
+      "after_sha256": "03f910c734af34dbfd416f9f6873a315c9513e5ffa335ab8b0ee5727298346d8"
+    },
+    {
+      "path": ".agents/tasks/BACKLOG.yaml",
+      "before_sha256": "6702af8037d758bbffa63ac0fdae580b0b9678cf0cfeb3068fb870602ba4dee6",
+      "after_sha256": "5ea865304239de8eb0762dab155b75074a1e22d6cf8a85a533de7d9e0d0587d3"
+    },
+    {
+      "path": "scripts/verify_m5_episode_checkpoint.py",
+      "before_sha256": "327e995c3b8be8adf10bf3899a25fff2ac89151afcdf6db3f3bbf21217327109",
+      "after_sha256": "c7ec5b57086fdfd54e3ccd5b00b4dbfad05e65283de3af416e0b486116c53a52"
+    },
+    {
+      "path": "tests/test_m5_checkpoint.py",
+      "before_sha256": "b249d3ad86f72e2269424e52643780b2789ed516a11b5fb9d1117ecddeb5e7a2",
+      "after_sha256": "94c564bcc5b084747f4db4b31ae63fb09ec7c944f5b88e522626058df14c4de2"
+    },
+    {
+      "path": "tests/test_m5_initialization.py",
+      "before_sha256": "168c528d9e0c5a33560a097417e6f12ed780fa9f29ef985e9e8d44b30401ceb8",
+      "after_sha256": "9510da83a9ea516a592147db164536848ad5564c2588c31c66907fdc5f568d96"
+    },
+    {
+      "path": "tests/test_m5_replay.py",
+      "before_sha256": "e8fd85159f52c1f4577218e703277410aa90cf7d14b5ed4c4f5aab80ba88f125",
+      "after_sha256": "14f25fc1050aa5dbd0a44080661b199cadc9e9c5c5673bdac4ea5be6c76b1619"
+    }
+  ],
+  "training_critical_controls_unchanged": [
+    "M5 configuration and hyperparameters",
+    "videochess_rl/rl/training.py",
+    "videochess_rl/rl/transition.py",
+    "videochess_rl/rl/network.py",
+    "videochess_rl/rl/targets.py",
+    "videochess_rl/m5_seeding.py",
+    "warm/scratch initialization source outside CLI metadata compatibility",
+    "reward, opponent, legal UCI, terminal/truncation and target arithmetic contracts"
+  ],
+  "actual_resumable_checkpoint_restoration": [
+    {
+      "training_seed": 20261105,
+      "arm": "scratch",
+      "valid_decisions": 49967,
+      "optimizer_updates": 12236,
+      "target_syncs": 24,
+      "replay_rows": 16384,
+      "journal_records": 49967,
+      "result": "PASS",
+      "elapsed_seconds": 194.31808559900014,
+      "peak_rss_bytes": 766320640,
+      "log_path": ".agents/evidence/logs/M5-checkpoint-restore-verification-20261105-optimized-r3-20261029.log",
+      "log_sha256": "5443565159565ca2afac7130ccab646fb974093dc4b074b6bd937a2398b62a79"
+    },
+    {
+      "training_seed": 20261106,
+      "arm": "scratch",
+      "valid_decisions": 49833,
+      "optimizer_updates": 12203,
+      "target_syncs": 24,
+      "replay_rows": 16384,
+      "journal_records": 49833,
+      "result": "PASS",
+      "elapsed_seconds": 202.82820630300193,
+      "peak_rss_bytes": 779337728,
+      "log_path": ".agents/evidence/logs/M5-checkpoint-restore-verification-20261106-command.log",
+      "log_sha256": "5e3e540878bea4feb403eed39a5b636cdf5ea17ada8316fd461bb5661a2dfd95"
+    }
+  ],
+  "incomplete_optional_historical_full_restore_differential": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/verify_m5_recovered_checkpoint_equivalence.py",
+    "started_utc": "2026-10-30T07:12:03+00:00",
+    "finished_utc": "2026-10-30T07:32:20+00:00",
+    "elapsed_seconds": 1216.95,
+    "peak_rss_kib": 1804152,
+    "exit_code": 143,
+    "result": "INCOMPLETE; stopped by operator after 20:16.95 of CPU-bound full-history reconstruction; not a PASS and not a failed official checkpoint",
+    "log_path": ".agents/evidence/logs/M5-authentic-source-restore-equivalence-20261030-r2.log",
+    "log_sha256": "f7f2ab094bd404d4643e799606c6c3dbc5724ddfd4828180d1bb82576ee06bb7",
+    "official_artifacts_mutated": false
+  },
+  "semantic_assessment": {
+    "replay_sampling_algorithm_changed": "No",
+    "replay_insertion_or_eviction_changed": "No",
+    "optimizer_or_target_update_changed": "No",
+    "reward_or_transition_semantics_changed": "No",
+    "checkpoint_recovery_implementation_changed": "Yes, performance/validation path only for the reconstructed change set",
+    "did_final_seed_runs_resume": "No; both were fresh attempt-0000",
+    "evidenced_learning_distribution_change": "No",
+    "byte_identical_execution_claim": "Not made",
+    "cross_seed_limitations": "Source aggregate identity changes with seed 20261106, but the reconstructed code changes are recovery/metadata-only. Three independent training-seed clusters still provide limited statistical precision."
+  },
+  "decision": {
+    "engineering_assessment": "Source-version issue is sufficiently reconstructed to support independent PM review without repeating training/evaluation.",
+    "formal_m5_acceptance": "Pending independent PM.",
+    "g3_approval": false,
+    "m6_started": false,
+    "additional_training_or_evaluation_started": false
+  },
+  "verification_logs": {
+    "source_recovery_log_sha256": "0daa62bd0589146d0f4943c4c307f5097304b29fdda647681847aeec368892ea",
+    "focused_tests_log_sha256": "b685515bcfa67a7e4ba87c03ca164efc584a4c2be9dae9945f5a6415e39368c5",
+    "focused_test_count": 15,
+    "focused_tests_log_path": ".agents/evidence/logs/M5-source-focused-tests-20261030-r2.log",
+    "source_recovery_log_path": ".agents/evidence/logs/M5-source-recovery-verify-20261030-r4.log",
+    "source_recovery_script_sha256": "16bf1a7091cb4c636ee7c95481be846835b3849ee986122676d09fea849fca61",
+    "source_recovery_report_path": ".agents/evidence/M5-source-recovery-verification-20261030.json",
+    "source_recovery_report_sha256": "81f08cde6d06247eca65c00f8e3fbeb4629451d844a4832c851faff2c551d58b"
+  },
+  "configuration_identity": {
+    "path": "configs/rl/m5-double-dqn-v1.json",
+    "sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+    "expected_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+    "matches_authoritative_campaign_config": true
+  },
+  "campaign_integrity_reference": {
+    "verification_path": ".agents/evidence/M5-training-campaign-verification-20261029.json",
+    "runs": 6,
+    "valid_decisions": 300000,
+    "optimizer_updates": 73470,
+    "target_synchronizations": 144,
+    "evaluation_games": 1500,
+    "terminal_games": 1494,
+    "truncated_games": 6,
+    "artifacts_unchanged_during_forensic_work": true
+  },
+  "source_recovery_record_sha256": "485b5bbcd7ed05c0382c50194179117c47e4dd84be707cfca4a70991bc0db810",
+  "reconciliation_record_sha256": "2d1acd2505e4a6229cdab8c8e7d1b35c6b6d2b10314c3e42eede09dfc9b65b27",
+  "m5_focused_verification": {
+    "tests": 63,
+    "result": "PASS",
+    "elapsed_seconds": 26.12,
+    "peak_rss_bytes": 352632832,
+    "log_path": ".agents/evidence/logs/M5-focused-suite-forensic-20261030.log",
+    "log_sha256": "6b3beb78560655a2b7adc16af57cf64cbd3df495b2738afe44d766f271982a6a"
+  },
+  "diff_display_policy": "Unified-diff artifact renders trailing ASCII spaces as visible U+2420; exact historical/current source files and SHA-256 identities are preserved separately.",
+  "git_object_availability_interpretation": "The initial source-reconciliation scan recorded no earlier replay/checkpoint source blobs and no CLI full-file blobs before transcript recovery. The recovered checkpoint.py and replay.py copies now staged as forensic evidence create Git blob objects; their present-day object availability must not be misrepresented as a pre-recovery historical copy. Neither CLI full-file SHA-256 is reconstructed.",
+  "full_local_suite": {
+    "test_count": 383,
+    "result": "PASS",
+    "unittest_elapsed_seconds": 164.146,
+    "wall_elapsed_seconds": 166.59,
+    "peak_rss_bytes": 368816128,
+    "log_path": ".agents/evidence/logs/M5-full-suite-forensic-20261030.log",
+    "log_sha256": "73cb5528fb4784cb4fbf737bd5a2f4bf7181378d7dafe1a6f3b5a1952bb96dbf",
+    "tested_staged_diff_sha256": "da696d5515f3dfe2ec53d8137914d444ffc4c73eb61a8679212b1d85455ec2ab"
+  }
+}
