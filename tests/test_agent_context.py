@@ -1230,8 +1230,9 @@ class AgentContextRecoveryTests(unittest.TestCase):
             )
             self.assertIn("GATE_ACCEPTANCE_COVERAGE_UNRESOLVED", {item["code"] for item in errors})
 
-    def test_m3_can_be_explicitly_authorized_while_g3_remains_unapproved(self) -> None:
+    def test_m3_authorization_does_not_change_governance_approvals(self) -> None:
         state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
+        approved_gates_before = list(state["governance"]["approved_gates"])
         state["engineering"].update({
             "active_milestone": "M3", "next_milestone": "M3",
             "next_milestone_status": "in_progress", "start_authorized": True,
@@ -1270,10 +1271,11 @@ class AgentContextRecoveryTests(unittest.TestCase):
             backlog, self.root, state, set(), {"M3-01"}, errors,
         )
         self.assertEqual(errors, [])
-        self.assertNotIn("G3", state["governance"]["approved_gates"])
+        self.assertEqual(state["governance"]["approved_gates"], approved_gates_before)
 
     def test_m4_authorization_can_be_ready_without_claiming_implementation_started(self) -> None:
         state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
+        approved_gates_before = list(state["governance"]["approved_gates"])
         state["engineering"].update({
             "active_milestone": None, "next_milestone": "M4",
             "next_milestone_status": "ready_to_start", "start_authorized": True,
@@ -1314,7 +1316,23 @@ class AgentContextRecoveryTests(unittest.TestCase):
         self.assertEqual(errors, [])
         self.assertEqual(task["status"], "pending")
         self.assertIsNone(state["engineering"]["active_milestone"])
-        self.assertNotIn("G3", state["governance"]["approved_gates"])
+        self.assertEqual(state["governance"]["approved_gates"], approved_gates_before)
+
+    def test_g3_approval_does_not_implicitly_authorize_m6(self) -> None:
+        state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
+        backlog = json.loads((REPO / ".agents/tasks/BACKLOG.yaml").read_text(encoding="utf-8"))
+        self.assertEqual(state["governance"]["current_gate"], "G3")
+        self.assertEqual(state["governance"]["gate_status"], "approved")
+        self.assertIn("G3", state["governance"]["approved_gates"])
+        self.assertEqual(state["governance"]["next_governance_gate"], "G4")
+        self.assertIsNone(state["engineering"]["active_milestone"])
+        self.assertEqual(state["engineering"]["next_milestone"], "M6")
+        self.assertEqual(state["engineering"]["next_milestone_status"], "pending_user_approval")
+        self.assertFalse(state["engineering"]["start_authorized"])
+        self.assertIsNone(state["task_refs"]["active_task_id"])
+        self.assertNotIn("M6-001", {task["id"] for task in backlog["tasks"]})
+        report = agent_preflight.build_report(REPO)
+        self.assertTrue(report["ok"], report["errors"])
 
     def test_start_authorized_boolean_without_direct_record_is_rejected(self) -> None:
         state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
@@ -1330,6 +1348,7 @@ class AgentContextRecoveryTests(unittest.TestCase):
 
     def test_direct_m3_authorization_is_preserved_across_milestone_completion(self) -> None:
         state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
+        approved_gates_before = list(state["governance"]["approved_gates"])
         backlog = json.loads((REPO / ".agents/tasks/BACKLOG.yaml").read_text(encoding="utf-8"))
         m3 = next(task for task in backlog["tasks"] if task["id"] == "M3-001")
         authorization_id = "M3-001-owner-20261020"
@@ -1382,7 +1401,7 @@ class AgentContextRecoveryTests(unittest.TestCase):
                 self.assertNotEqual(state["task_refs"]["active_task_id"], "M4-001")
         else:
             self.fail(f"Unexpected M3 status: {m3['status']}")
-        self.assertNotIn("G3", state["governance"]["approved_gates"])
+        self.assertEqual(state["governance"]["approved_gates"], approved_gates_before)
         report = agent_preflight.build_report(REPO)
         self.assertTrue(report["ok"], report["errors"])
         self.assertEqual(report["summary"]["engineering_start_authorized"], engineering["start_authorized"])
