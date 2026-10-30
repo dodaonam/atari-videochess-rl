@@ -39,7 +39,7 @@ The primary endpoint is per-policy verified player-move execution rate, with num
 
 M1's pinned ALE-Py 0.11.2 records the v5 defaults as RGB, frameskip 4, sticky probability 0.25 and reduced action space. Every run must assert returned registration/runtime values instead of assuming they remain unchanged. Both profiles retain RGB authority. Do not alter RAM or inject positions.
 
-M1 calibrated 33-frame direction holds, one-frame source FIRE, 16-frame target FIRE, and one-frame releases, using 33-frame direction repeats at deterministic settings; at frameskip four, action frame requests quantize to ALE steps. Existing v5 evidence is only a small number of successful cycles. Sticky actions can alter cursor/action sequences. Record each phase and RGB confirmation; never retry uncertain FIRE or resume an interrupted action from memory. Recalibrate within M6 before broad execution if default-profile evidence fails.
+M1 calibrated 33-frame direction holds, one-frame source FIRE, 16-frame target FIRE, and one-frame releases, using 33-frame direction repeats at deterministic settings; at frameskip four, action frame requests quantize to ALE steps. Existing v5 evidence is only a small number of successful cycles. Sticky actions can alter cursor/action sequences. After target FIRE the controller permits up to three consecutive 33-frame RGB/NOOP settling windows while the selected preview remains visible; it never resends FIRE. Persistent uncertainty stops the attempt with the last verified state. Record each phase and RGB confirmation; never retry uncertain FIRE or resume an interrupted action from memory. Recalibrate within M6 before broad execution if default-profile evidence fails.
 
 ## Resource envelope proposal
 

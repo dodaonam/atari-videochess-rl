@@ -28,6 +28,7 @@ from .vision import BoardEvidenceSet, BoardObservation, BoardWindow, VideoChessV
 
 
 WINDOW_FRAMES = 33
+TARGET_FIRE_SETTLE_WINDOWS = 3
 MAX_CURSOR_ACTIONS_PER_MOVE = 64
 ACTION_NAMES = {
     0: "NOOP",
@@ -479,6 +480,7 @@ def run_episode(
             "selected_target_observation_frames": timing.selected_target_observation_frames,
             "frameskip": timing.frameskip,
             "repeat_action_probability": timing.repeat_action_probability,
+            "target_fire_settle_windows": TARGET_FIRE_SETTLE_WINDOWS,
         },
         "episode_budget": {
             "max_player_moves": max_player_moves,
@@ -1096,6 +1098,7 @@ def run_episode(
                 stagnant_windows = 0
                 mismatch_windows = 0
                 confirmation_frames = 0
+                selected_target_after_fire_windows = 0
                 for _ in range(8):
                     if terminal_observed or stop_reason:
                         break
@@ -1119,15 +1122,27 @@ def run_episode(
                         move_target,
                     )
                     if remaining_selection["verified"]:
+                        selected_target_after_fire_windows += 1
+                        if selected_target_after_fire_windows < TARGET_FIRE_SETTLE_WINDOWS:
+                            set_input_phase(
+                                turn,
+                                "target_confirmation_settle_wait",
+                                "RGB still showed the selected-piece preview; observed another bounded NOOP window without retrying FIRE",
+                                evidence=remaining_selection,
+                                consecutive_selected_windows=selected_target_after_fire_windows,
+                            )
+                            continue
                         set_input_phase(
                             turn,
                             "target_confirmation_uncertain",
-                            "RGB still showed the selected piece at source and target after FIRE; stopped without retry",
+                            "RGB still showed the selected piece at source and target after bounded passive settling; stopped without retry",
                             evidence=remaining_selection,
+                            consecutive_selected_windows=selected_target_after_fire_windows,
                         )
                         raise EpisodeStop(
-                            "Target FIRE did not produce a board transition; the selected-piece preview remained visible, so no retry was issued"
+                            "Target FIRE did not produce a board transition after bounded passive settling; selected-piece preview remained visible, so no retry was issued"
                         )
+                    selected_target_after_fire_windows = 0
                     if not window.is_stable:
                         mismatch_windows += 1
                     elif window.matches_board(expected_player_board):

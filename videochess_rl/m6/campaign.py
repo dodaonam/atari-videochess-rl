@@ -17,7 +17,7 @@ from typing import Any, Callable
 
 import chess
 
-from videochess_rl.episode import run_episode
+from videochess_rl.episode import TARGET_FIRE_SETTLE_WINDOWS, run_episode
 from videochess_rl.environment import ALEConfig, VideoChessEnv
 from videochess_rl.m6.adapter import (
     M4_CHECKPOINT_SHA256,
@@ -235,6 +235,7 @@ def _run_manifest(
             "target_fire_press_frames": 16,
             "release_frames": 1,
             "observation_window_frames": 66 if config.frameskip > 1 else 33,
+            "target_fire_settle_windows": TARGET_FIRE_SETTLE_WINDOWS,
         },
         "ale_config": config.as_dict(),
         "stockfish_in_inference": False,
@@ -1233,6 +1234,8 @@ class M6Campaign:
                 or config_data.get("mode") != 4 or config_data.get("difficulty") != 0
                 or config_data.get("frameskip") != 4 or config_data.get("repeat_action_probability") != 0.25):
             raise ExperimentIdentityError("Stage 3 ALE evaluation profile was changed")
+        if config_data.get("controller_timing", {}).get("target_fire_settle_windows") != TARGET_FIRE_SETTLE_WINDOWS:
+            raise ExperimentIdentityError("target FIRE passive-settling rule differs from the frozen M6 config")
         expected_checkpoints = {
             "m5-warm-seed-20261104-post-rl": (M5_WARM_CHECKPOINT_SHA256, M5_WARM_SIDECAR_SHA256),
             "m5-scratch-seed-20261104-post-rl": (M5_SCRATCH_CHECKPOINT_SHA256, M5_SCRATCH_SIDECAR_SHA256),

@@ -53,6 +53,7 @@ class M6CampaignPlanTests(unittest.TestCase):
         self.assertEqual(config["m4_root_artifact_manifest_sha256"], "f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921")
         self.assertEqual((config["mode"], config["difficulty"], config["agent_color"]), (4, 0, "white"))
         self.assertEqual((config["frameskip"], config["repeat_action_probability"]), (4, 0.25))
+        self.assertEqual(config["controller_timing"]["target_fire_settle_windows"], 3)
         self.assertEqual(config["campaign_limits"]["maximum_game_attempts"], 35)
         self.assertEqual(config["campaign_limits"]["maximum_gameplay_wall_seconds"], 36000)
         self.assertEqual(config["campaign_limits"]["gameplay_wall_budget_scope"], "all M6 ALE diagnostics plus Stage 3 evaluation attempts")

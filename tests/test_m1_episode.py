@@ -74,6 +74,7 @@ class FakeALE:
         stop_on_opponent_thinking: bool = False,
         opponent_thinking_noops: int = 35,
         overshoot_first_cursor_action: bool = False,
+        target_fire_delay_noops: int = 0,
     ):
         self.config = None
         self.board = chess.Board()
@@ -84,6 +85,9 @@ class FakeALE:
         self.held_frames = 0
         self.frame_number = 0
         self.fail_target_fire = fail_target_fire
+        self.target_fire_delay_noops = target_fire_delay_noops
+        self.target_fire_pending = False
+        self.target_fire_noops = 0
         self.fail_source_selection = fail_source_selection
         self.fail_selected_target_navigation = fail_selected_target_navigation
         self.overshoot_first_cursor_action = overshoot_first_cursor_action
@@ -129,6 +133,8 @@ class FakeALE:
         self.cursor = "d4"
         self.selected_source = None
         self.selected_target = None
+        self.target_fire_pending = False
+        self.target_fire_noops = 0
         return self._frame()
 
     def runtime_info(self):
@@ -230,6 +236,16 @@ class FakeALE:
         elif action == 0:
             self.held_action = None
             self.held_frames = 0
+            if self.target_fire_pending:
+                self.target_fire_noops += 1
+                if self.target_fire_noops >= self.target_fire_delay_noops:
+                    move = chess.Move.from_uci(self.selected_source + self.selected_target)
+                    if move in self.board.legal_moves:
+                        self.board.push(move)
+                        self.cursor = self.selected_source
+                    self.selected_source = None
+                    self.selected_target = None
+                    self.target_fire_pending = False
         elif action == 1:
             if self.held_action == 1:
                 return self._frame()
@@ -241,12 +257,15 @@ class FakeALE:
                     self.selected_source = self.cursor
                     self.selected_target = self.cursor
             elif not self.fail_target_fire:
-                move = chess.Move.from_uci(self.selected_source + self.selected_target)
-                if move in self.board.legal_moves:
-                    self.board.push(move)
-                    self.cursor = self.selected_source
-                self.selected_source = None
-                self.selected_target = None
+                if self.target_fire_delay_noops:
+                    self.target_fire_pending = True
+                else:
+                    move = chess.Move.from_uci(self.selected_source + self.selected_target)
+                    if move in self.board.legal_moves:
+                        self.board.push(move)
+                        self.cursor = self.selected_source
+                    self.selected_source = None
+                    self.selected_target = None
         return self._frame()
 
 
@@ -347,6 +366,19 @@ class EpisodeSafetyTests(unittest.TestCase):
         )
         self.assertFalse(result["turns"][0]["player_move"]["verified_from_rgb"])
         self.assertEqual(result["terminal"]["last_verified_fen"], chess.Board().fen())
+
+    def test_target_fire_settling_wait_accepts_a_delayed_rgb_transition_without_retry(self) -> None:
+        fake = FakeALE(target_fire_delay_noops=55)
+        result = self.run_fake(fake)
+
+        phases = [event["phase"] for event in result["turns"][0]["input_phases"]]
+        self.assertIn("target_confirmation_settle_wait", phases)
+        self.assertNotIn("target_confirmation_uncertain", phases)
+        self.assertEqual(result["turns"][0]["player_move"]["uci"], "e2e3")
+        self.assertEqual(result["turns"][0]["player_move"]["candidate_fen"], "rnbqkbnr/pppppppp/8/8/8/4P3/PPPP1PPP/RNBQKBNR b KQkq - 0 1")
+        self.assertFalse(result["turns"][0]["player_move"]["verified_from_rgb"], "without an Atari reply, full-board shadow advancement remains blocked")
+        self.assertIn("No stable unique legal Atari reply", result["failure"])
+        self.assertEqual(fake.fire_presses, 2, "the source and target each receive exactly one FIRE press")
 
     def test_unverified_source_selection_stops_before_target_navigation(self) -> None:
         fake = FakeALE(fail_source_selection=True)

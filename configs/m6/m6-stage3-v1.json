@@ -15,7 +15,8 @@
     "source_fire_press_frames": 1,
     "target_fire_press_frames": 16,
     "release_frames": 1,
-    "observation_window_frames": 66
+    "observation_window_frames": 66,
+    "target_fire_settle_windows": 3
   },
   "episode_limits": {
     "maximum_player_moves": 200,
