@@ -4191,9 +4191,37 @@
             "git_revision": null,
             "log_path": null
           }
+        },
+        {
+          "kind": "test",
+          "command": "<project-python> -m unittest discover -s tests -p test_m6_campaign.py -v",
+          "result": "PASS: 7 tests, 0 failures, 0 skips; unittest elapsed 0.084 seconds.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T16:38:25Z",
+            "recorded_at_utc": "2026-10-30T16:38:27Z",
+            "exit_code": 0,
+            "git_revision": "facb28face189bd5d90e8cbdba49e74d4758e1ab",
+            "log_path": ".agents/evidence/logs/M6-focused-campaign-facb28f.log",
+            "log_sha256": "7a4555c1bc9c3e985f5d3ae81afc96f95de6d18217792bcdadec8a6f00d23b50"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "Resolve the Warm checkpoint by its pinned SHA-256 from the verified M5 root manifest; set M4/M5 private artifact roots; run <project-python> -m unittest discover -s tests -v",
+          "result": "PASS: 423 tests, 0 failures, 0 skips; unittest elapsed 165.546 seconds.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T16:38:40Z",
+            "recorded_at_utc": "2026-10-30T16:41:28Z",
+            "exit_code": 0,
+            "git_revision": "facb28face189bd5d90e8cbdba49e74d4758e1ab",
+            "log_path": ".agents/evidence/logs/M6-full-suite-facb28f.log",
+            "log_sha256": "992e14a95c79054823a445b54023f11933facacd129226c072e2c5678491d8b8"
+          }
         }
       ],
-      "next_action": "The Stage 3 guard exposed an M4 checkpoint transcription error before gameplay. The accepted checkpoint bytes, sidecar, and root manifest match canonical M4 evidence; config and exact-roster regression test are corrected. Run focused and full tests at a clean commit, verify the corrected config hash and private artifacts, then launch Stage 3 only if all checks pass.",
+      "next_action": "The corrected Stage 3 config (including the exact accepted M4 digest) passed focused tests and the full 423-test suite at the clean source revision. Commit these verification records, verify the clean resulting feature HEAD and corrected roster/artifact identities, then run the fixed Stage 3 schedule within the campaign-wide resource limits; no code/config changes are allowed after the first Stage 3 result.",
       "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],
