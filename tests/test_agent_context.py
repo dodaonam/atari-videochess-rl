@@ -25,6 +25,7 @@ sys.dont_write_bytecode = True
 sys.path.insert(0, str(REPO / "scripts"))
 import agent_checkpoint
 import agent_preflight
+import audit_m6_closeout_provenance
 
 REQUIRED_FILES = [
     "AGENTS.md",
@@ -1345,6 +1346,16 @@ class AgentContextRecoveryTests(unittest.TestCase):
         self.assertIn("not authorized", acceptance)
         report = agent_preflight.build_report(REPO)
         self.assertTrue(report["ok"], report["errors"])
+
+    def test_m6_closeout_verified_provenance_is_bound_to_committed_files_and_logs(self) -> None:
+        result = audit_m6_closeout_provenance.audit(REPO)
+        self.assertTrue(result["ok"], json.dumps(result, indent=2, ensure_ascii=False))
+        self.assertEqual(len(result["file_evidence"]), 4)
+        self.assertEqual(len(result["command_log_evidence"]), 8)
+        self.assertGreaterEqual(len(result["machine_report_checks"]), 5)
+        self.assertTrue(all(item["status"] == "PASS" for item in result["file_evidence"]))
+        self.assertTrue(all(item["provenance_status"] == "verified" for item in result["command_log_evidence"]))
+        self.assertEqual(sum(item["execution_status"] == "FAIL" for item in result["command_log_evidence"]), 1)
 
     def test_start_authorized_boolean_without_direct_record_is_rejected(self) -> None:
         state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
