@@ -1,0 +1,6 @@
+command: <project-python> scripts/audit_m6_v2_artifacts.py --root artifacts/m6-preserved-20261031/v2/m6-stage3-v2-91f51b14690e-d05d42400cfc --repo-root <feature-worktree> --v1-root artifacts/m6-preserved-20261031/v1/m6-stage3-ad3998200e31-c5ff389dc4fe --output .agents/evidence/M6-stage3-v2-independent-raw-audit-20261031-r3.json
+started_at_utc: 2026-10-31T05:19:10.269584Z
+completed_at_utc: 2026-10-31T05:20:15.353505Z
+exit_code: 0
+audit_report=<feature-worktree>/.agents/evidence/M6-stage3-v2-independent-raw-audit-20261031-r3.json
+audit_report_sha256=e25855108441e8ed11fa2950943f9a6ffa1209064cff102de6432babf0ba56fb
