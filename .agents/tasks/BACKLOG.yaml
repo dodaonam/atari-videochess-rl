@@ -4858,11 +4858,107 @@
           },
           "detail": "Clean detached final closeout worktree HEAD 3e675f8f95527df335e54e405c92517cd436b5b1, tree 103d6a4f00c7032bee0949d13a11495e384fc507.",
           "audit_scope": "PM6C-F01"
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
+          "result": "FAIL: focused regression suite; see output.",
+          "detail": "Diagnostic failure: the new history audit ran in a synthetic one-commit portability clone, which omits prior M6 commits. Corrected to skip only this history-dependent audit in that explicitly flagged nested fixture; normal history and CI run it.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:35:51Z",
+            "recorded_at_utc": "2026-10-31T08:45:43Z",
+            "exit_code": 1,
+            "git_revision": "29b3dcdfcdd21a454e4faa3778336249e76b92e6",
+            "log_path": ".agents/evidence/logs/M6C-F01-focused-tests-fixture-diagnostic-20261031.log",
+            "log_sha256": "3c230c633f36583893e1afda8ed4ce275789b860749c8ff4f7faa97f8d5c6a2c"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/audit_m6_closeout_provenance.py --json",
+          "result": "PASS: M6 closeout provenance audit; 4 committed file identities, 8 command/test logs, and 8 machine-report logs checked; 2 prior diagnostics explicitly retained as historical_unverified.",
+          "detail": "Initial committed-source audit at fc34f34; it validated the four corrected file records, eight previously retained execution logs, machine-report hashes, and historical diagnostic classification. A later consolidated audit includes subsequent PM6C command records.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:37:31Z",
+            "recorded_at_utc": "2026-10-31T08:45:43Z",
+            "exit_code": 0,
+            "git_revision": "fc34f34d850e2830cbc0d9a14d331a197d6ae062",
+            "log_path": ".agents/evidence/logs/M6C-F01-final-audit-20261031.log",
+            "log_sha256": "dbf16a6e1f244daba57d80b01c60de40bf5e8db2268c74549939c7a866874d76"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
+          "result": "PASS: 109 focused tests; 109 passed, 0 failures, 0 errors, 0 skips.",
+          "detail": "Clean detached worktree at tree c933d33a0da149f81b1557a677411a601990e1d3.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:37:38Z",
+            "recorded_at_utc": "2026-10-31T08:45:43Z",
+            "exit_code": 0,
+            "git_revision": "fc34f34d850e2830cbc0d9a14d331a197d6ae062",
+            "log_path": ".agents/evidence/logs/M6C-F01-focused-tests-20261031.log",
+            "log_sha256": "c4ecd6ee2bb55d8f1b689b20a40f3fe0bdfc9fa700296e6d08d696297aac8528"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<accepted-M5-artifact-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<accepted-M4-r4-artifact-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<checkpoint-resolved-by-pinned-SHA> PYTHONDONTWRITEBYTECODE=1 PATH=<pre-existing-project-stockfish-readiness-dir>:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "PASS: 453 tests; 453 passed, 0 failures, 0 errors, 0 skips.",
+          "detail": "Clean detached worktree. Accepted M5/M4 manifests and the pinned M5 Warm checkpoint were verified before the full suite; no training or Atari campaign.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:38:56Z",
+            "recorded_at_utc": "2026-10-31T08:45:43Z",
+            "exit_code": 0,
+            "git_revision": "fc34f34d850e2830cbc0d9a14d331a197d6ae062",
+            "log_path": ".agents/evidence/logs/M6C-F01-full-suite-20261031.log",
+            "log_sha256": "7a7e0b86630fece97a7c913ec1c298b84448ca85a6706546743319a7ce28f629"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/agent_preflight.py",
+          "result": "PASS: canonical agent preflight; M6-001 done, G3 approved, G4 unapproved, M7 pending authorization; no validation errors.",
+          "detail": "Clean detached worktree; expected local artifact-manifest warning only.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:42:24Z",
+            "recorded_at_utc": "2026-10-31T08:45:43Z",
+            "exit_code": 0,
+            "git_revision": "fc34f34d850e2830cbc0d9a14d331a197d6ae062",
+            "log_path": ".agents/evidence/logs/M6C-F01-final-preflight-20261031.log",
+            "log_sha256": "ec0fc87560b72873f3dd85a1ed93ff739b240122c1a6bf842c50126553d1aa23"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/audit_m6_closeout_provenance.py --json",
+          "result": "PASS: consolidated M6 closeout provenance audit; 4 committed file identities, 13 verified execution logs, 8 machine-report logs, 2 explicit historical diagnostics, zero errors.",
+          "detail": "Final consolidated provenance audit after recording the original correction audit execution; historical diagnostic and failed setup executions remain distinguished from passes.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:47:35Z",
+            "recorded_at_utc": "2026-10-31T08:48:00Z",
+            "exit_code": 0,
+            "git_revision": "fc34f34d850e2830cbc0d9a14d331a197d6ae062",
+            "log_path": ".agents/evidence/logs/M6C-F01-consolidated-audit-20261031.log",
+            "log_sha256": "c970ef71710bc5a65d71c335dc0b71cb304a7040546723d61f279e5b8dde7f2c"
+          }
         }
       ],
       "next_action": "",
       "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],
-  "updated_at_utc": "2026-10-31T08:30:39Z"
+  "updated_at_utc": "2026-10-31T08:48:00Z"
 }

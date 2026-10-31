@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-29b3dcdf-20261031T083658193983Z -->
+<!-- checkpoint-id: cp-fc34f34d-20261031T085004507034Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -17,6 +17,10 @@ This file is a pointer, not a status snapshot. Do not infer current phase, task 
 `PROJECT_STATE.yaml` and `BACKLOG.yaml` are authoritative. The independent PM accepted M6-01–M6-05 at [PR #14 comment 6539798992](https://github.com/dodaonam/atari-videochess-rl/pull/14#issuecomment-6539798992); PR #14 was merged into `initial-idea` at `509f9f83f9249208fd5adba572efed2d2f0f82ff`. The accepted feature HEAD/tree were `e919ee3ad039c9d2de3ebdf6b82704ecd61c0a6f` / `7eb06fd9c0e0b363ca324d203e1debf26f233c08`. See the permanent [PM acceptance record](../evidence/M6-001-PM-acceptance-20261031.md), [post-merge identity verification](../evidence/logs/M6-postmerge-identity-verification-20261031.log), and [post-merge verification report](../evidence/M6-post-merge-verification-20261031.md).
 
 M6-001 is done. Preserve v1/v2 identities and all M6 scientific qualifications. The PM reviewed the implementation, reports and recorded logs, but did not personally rerun the private raw ALE audit or full Python suite. G3 remains approved; G4 is unapproved; M7 is not started or authorized. No PR #14 review or merge action remains outstanding. Await a separate G4 PM decision and separate direct owner authorization before M7.
+
+## PR #15 corrective continuation — PM6C-F01
+
+The PM requested changes on [PR #15 comment 6541119468](https://github.com/dodaonam/atari-videochess-rl/pull/15#issuecomment-6541119468), identifying false `verified` provenance for a non-resolving backlog revision. The existing PR #15 is being corrected in place. See the [PM6C-F01 provenance correction report](../evidence/M6C-F01-provenance-correction-20261031.md), its [machine-readable audit](../evidence/M6C-F01-provenance-audit-20261031.json), and `scripts/audit_m6_closeout_provenance.py`. Keep PR #15 open and unmerged until the updated HEAD has successful CI and fresh independent PM review. This continuation does not reopen M6 acceptance, run ALE, alter M6 artifacts, approve G4, or authorize M7.
 
 ## Historical pre-acceptance M6 handoff — before PR #14 merge
 
