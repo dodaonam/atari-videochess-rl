@@ -5481,6 +5481,20 @@
             "git_revision": "cbf4b27d4c9eb65108ee17c3138cf020c8c8ade9",
             "log_path": ".agents/evidence/logs/M7-G4-contract-tests-final-20261101-sanitized.log"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M7-clean-checkout-preflight-20261101.json",
+          "detail": "Independent fresh no-local clone preflight on the final G4 review package HEAD.",
+          "result": "PASS: portable baseline and repository content match; zero errors; only expected artifact-manifest warning.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T20:31:58Z",
+            "exit_code": null,
+            "git_revision": "28f6e8fd0c5b20089120b22f902789213b0c0818",
+            "log_path": null
+          }
         }
       ],
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
