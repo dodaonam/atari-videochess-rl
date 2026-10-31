@@ -1,6 +1,6 @@
 # M6 final corrective closeout — engineering handover
 
-**Engineering disposition:** Pending final full-suite and canonical preflight execution. No PM acceptance is claimed. M6 remains `in_progress`; G4 remains unapproved; M7 remains unauthorized.
+**Engineering disposition:** `READY_FOR_INDEPENDENT_PM_ACCEPTANCE_REVIEW`. The final full suite and canonical preflight passed on the committed closeout source. This is not PM acceptance. M6 remains `in_progress`; G4 remains unapproved; M7 remains unauthorized.
 
 **PR:** [#14](https://github.com/dodaonam/atari-videochess-rl/pull/14), base `initial-idea`. This closeout updates the existing PR and does not create a new experiment or milestone.
 
@@ -60,7 +60,9 @@ This is an engineering evidence assessment, not M6 PM acceptance. G4 remains una
 
 The focused corrective suite passed 27 tests at source revision `fbcc9826032bb390acb91b240787ba4b0d3409a0`, with zero failures or skips; see `logs/M6-F06-focused-tests-fbcc982.log` (SHA-256 `161528daf84177bfe0ef1437b5ac334d7c9a3eaec5d1cda861161d7b9abcb862`). The M5 artifact verifier passed seven manifests / 6,544,747,450 bytes at M5 revision `c9df9db36c6146a34ef301052a206fe8a3512ffc`; see `logs/M6-v2-m5-artifact-recheck-portable-20261031.log` (SHA-256 `7b81512158fb01bc39a5a6238573869ac7d4eac1a803d1844c42894036ff76a6`).
 
-Two earlier full-suite invocations failed for setup reasons and are preserved as sanitized logs: at `8c8eab8`, an M4 artifact root was selected one directory too high, Stockfish readiness was absent from `PATH`, and context tests saw an outdated checkpoint; at `4fe4af1`, the explicit Warm checkpoint path was mistyped. No test was weakened. The final full-suite result and canonical preflight are **pending** and will be appended with exact command, timestamps, counts, exit codes, revision, and log hashes before handover.
+Three earlier full-suite invocations failed and are preserved as sanitized logs. At `8c8eab8`, the M4 artifact root was one directory too high, Stockfish readiness was absent from `PATH`, and context tests saw a stale checkpoint. At `4fe4af1`, the explicitly supplied Warm checkpoint path was mistyped. At `89660a3`, two context tests found that the portable checkpoint still contained the pre-cleanup Markdown blob after whitespace cleanup; this was corrected by refreshing the checkpoint in commit `99f958dbb90b82705263f2ae95df701ba98d2f8b`. No test or assertion was weakened.
+
+The final full suite passed at `99f958dbb90b82705263f2ae95df701ba98d2f8b`: 452 passed, zero failed, zero errors, zero skipped; unittest elapsed 164.956 seconds and wall elapsed 167.049 seconds. See [the final suite log](logs/M6-F06-final-full-suite-99f958d.log), SHA-256 `aacfe86c0621c164e4f3fc00860a2689be61cfd9bb0321e5504d7d5c58300082`. The canonical context preflight passed at the same revision with only the expected artifact-manifest warning; see [the preflight log](logs/M6-F06-preflight-99f958d.log), SHA-256 `3430674d71c6561e1faab14d0643bb9e730287ea67351c5d02ff6ecd751e1b55`. The full suite used the accepted M5 root manifest and Warm checkpoint/sidecar hashes, plus the accepted M4 r4 manifest/checkpoint/sidecar hashes recorded in the log. No M5/M4 artifact bytes were changed.
 
 ## Independent PM handover
 

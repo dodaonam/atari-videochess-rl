@@ -4598,11 +4598,68 @@
             "log_path": ".agents/evidence/logs/M6-F06-full-suite-4fe4af1.log",
             "log_sha256": "f25b254ead50a0c9177838f8a8024ef7e8a21157564b76eef1ea57db96ddc1ea"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-final-corrective-closeout-20261031.md",
+          "detail": "Final engineering report incorporating PM6-F06, independent r3 raw audit, historical result reconstruction, complete verification provenance, limitations, and PM handover.",
+          "result": "Engineering closeout is ready for independent PM acceptance review; M6 remains in_progress and G4/M7 remain unauthorized.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T05:34:35Z",
+            "exit_code": null,
+            "git_revision": "99f958dbb90b82705263f2ae95df701ba98d2f8b",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<accepted-M5-artifact-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<accepted-M4-r4-artifact-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<pinned-Warm-checkpoint-resolved-by-manifest> PYTHONDONTWRITEBYTECODE=1 PATH=<project-stockfish-readiness-dir>:$PATH <project-python> -m unittest discover -s tests -v",
+          "result": "FAIL: 452 tests; 450 passed, 2 failures, 0 errors, 0 skips.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T05:27:40Z",
+            "recorded_at_utc": "2026-10-31T05:27:40Z",
+            "exit_code": 1,
+            "git_revision": "89660a31a39f42d1683a72dfd9053e14a48290fe",
+            "log_path": ".agents/evidence/logs/M6-F06-final-full-suite-89660a3.log",
+            "log_sha256": "b577e4e711e82c50b9ff387f9cdf4d03318f274e99399254b924a4cbdb22ed9a"
+          },
+          "detail": "The clean-clone context test found the committed report blob differed from the checkpoint portable manifest after whitespace cleanup. The checkpoint was refreshed before the successful rerun."
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<accepted-M5-artifact-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<accepted-M4-r4-artifact-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<pinned-Warm-checkpoint-resolved-by-manifest> PYTHONDONTWRITEBYTECODE=1 PATH=<project-stockfish-readiness-dir>:$PATH <project-python> -m unittest discover -s tests -v",
+          "result": "PASS: 452 tests; 452 passed, 0 failures, 0 errors, 0 skips.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T05:31:20Z",
+            "recorded_at_utc": "2026-10-31T05:31:20Z",
+            "exit_code": 0,
+            "git_revision": "99f958dbb90b82705263f2ae95df701ba98d2f8b",
+            "log_path": ".agents/evidence/logs/M6-F06-final-full-suite-99f958d.log",
+            "log_sha256": "aacfe86c0621c164e4f3fc00860a2689be61cfd9bb0321e5504d7d5c58300082"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/agent_preflight.py",
+          "result": "PASS: agent context preflight; G3 approved, M6-001 in_progress; no errors; artifact-manifest warning only.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T05:34:34Z",
+            "recorded_at_utc": "2026-10-31T05:34:34Z",
+            "exit_code": 0,
+            "git_revision": "99f958dbb90b82705263f2ae95df701ba98d2f8b",
+            "log_path": ".agents/evidence/logs/M6-F06-preflight-99f958d.log",
+            "log_sha256": "3430674d71c6561e1faab14d0643bb9e730287ea67351c5d02ff6ecd751e1b55"
+          }
         }
       ],
-      "next_action": "Independent PM: review PM6-F06 erratum, portable original/persistent raw audits, final exact-source regression and preflight records, and updated PR #14; decide M6-001 acceptance and merge separately. Keep M6 in_progress, G4 unapproved, and M7 unauthorized until their separate decisions are recorded.",
+      "next_action": "Independent PM: review PM6-F06 erratum, portable original/persistent raw audits, final 452-test and canonical preflight records, and updated PR #14; decide M6-001 acceptance and merge separately. Keep M6 in_progress, G4 unapproved, and M7 unauthorized until their separate decisions are recorded.",
       "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],
-  "updated_at_utc": "2026-10-31T05:26:15Z"
+  "updated_at_utc": "2026-10-31T05:34:35Z"
 }
