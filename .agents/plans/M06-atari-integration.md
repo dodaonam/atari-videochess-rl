@@ -7,9 +7,9 @@
 
 ## Objective and fixed scope
 
-Connect the accepted frozen M5 Double DQN policy to the existing M1 real-ALE VideoChess path. Preserve RGB as the authority for every Atari position; the complete UCI history and `python-chess` board track only verified moves and validate candidates. Run the approved bounded local CPU diagnostics and 35-attempt maximum Stage 3 roster, then retain hash-verifiable traces and a scientifically cautious report for independent PM review.
+Connect the accepted frozen M5 Double DQN policy to the existing M1 real-ALE VideoChess path. Preserve RGB as the authority for every Atari position; the complete UCI history and `python-chess` board track only verified moves and validate candidates. The initial v1 execution used the original bounded local CPU diagnostics and 35-attempt maximum Stage 3 roster. After the v1 review, the separately authorized v2 continuation ran a 20-attempt M5-only extended-horizon schedule; its distinct protocol and actual outcomes are recorded below and in the final v2 report.
 
-No training, fine-tuning, model selection from Atari outcomes, Stockfish use, cloud compute, uploads, G4 approval, release, self-acceptance, or merge is in scope. Preserve accepted M4/M5 artifacts and results.
+No training, fine-tuning, model selection from Atari outcomes, Stockfish use, cloud compute, uploads, G4 approval, release, self-acceptance, or merge is in scope. Preserve accepted M4/M5 artifacts and results. The original 35-attempt Stage 3 plan describes v1; the separately authorized v2 addendum supersedes only the follow-on corrective schedule, which contains 20 frozen M5 attempts and does not rerun controls.
 
 ## Dependencies and frozen roster
 
@@ -78,3 +78,7 @@ The owner issued a separate bounded continuation after the v1 review. Its direct
 | F05 timing/outcomes | Latency field tests; positive/negative/zero/NaN/infinite/unsupported reward tests | Separate policy chooser, input validation, adapter total, and end-to-end decision latency; ALE terminal flags/reward verified against trace |
 | Fixed roster/schedule | Exact hash/config/schedule and uniqueness tests | One manifest before first result; two policies × ten seeds, all scheduled slots accounted |
 | Reproducibility/resources | Streaming hash-chain/summary regression, duplicate IDs, interruption, cap handling | Hash-verified attempt artifacts, run summary, free space/RSS/wall/frame/resource observations |
+
+### Recorded v2 execution outcome
+
+Stage 3 v2 executed all 20 scheduled resets with no startup retry, omitted slot, or resource stop. The raw trace/manifest reconstruction passed on the frozen source identity. Eleven attempts reached ALE termination and were losses (Warm 4, Scratch 7); nine remain incomplete (five reply timeouts, two source-selection stops, two target-navigation stops). Both policies therefore have genuine full-game terminal evidence, while incomplete outcomes remain outside W/D/L. The primary RGB-verified move rates were 222/232 for Warm and 163/173 for Scratch. See the [final engineering report](../evidence/M6-001-final-report-v2-20261031.md), [execution record](../evidence/M6-stage3-v2-execution-record-20261031.json), and [post-run verification](../evidence/M6-stage3-v2-postrun-verification-20261031.json). M6-001 remains in progress pending independent PM acceptance; G4 remains unapproved.

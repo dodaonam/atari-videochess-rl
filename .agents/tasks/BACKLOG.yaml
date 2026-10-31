@@ -4346,9 +4346,149 @@
             "git_revision": "61c624b803a4481509e84fed767f103d8b521340",
             "log_path": ".agents/evidence/M6-001-v2-corrective-authorization-20261031.md"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-001-final-report-v2-20261031.md",
+          "detail": "Final M6 corrective engineering and research report, including PM6-F01–F05 resolution, all v2 per-policy/per-seed outcomes, acceptance evidence, limits, and PM handover.",
+          "result": "Engineering evidence is ready for independent PM review; M6 remains in_progress and is not PM accepted.",
+          "provenance": {
+            "status": "verified",
+            "recorded_at_utc": "2026-10-31T03:20:15Z",
+            "git_revision": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+            "executed_at_utc": null,
+            "exit_code": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-v2-execution-record-20261031.json",
+          "detail": "Sanitized source/config/schedule/runtime identity, all 20 attempt records, per-policy metrics, resource use, and local raw-artifact identities for the frozen v2 run.",
+          "result": "20/20 scheduled resets accounted for; 11 ALE-terminal losses and nine typed incomplete outcomes; no retry or resource stop.",
+          "provenance": {
+            "status": "verified",
+            "recorded_at_utc": "2026-10-31T03:20:15Z",
+            "git_revision": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+            "executed_at_utc": null,
+            "exit_code": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-v2-run-manifest-review-20261031.json",
+          "detail": "Sanitized review copy of the immutable run manifest; private absolute checkpoint paths are omitted while hashes and frozen roster remain.",
+          "result": "Source 91f51b1, v2 config/schedule, runtime, policy roster, profile, and 500000-frame effective horizon identities are retained.",
+          "provenance": {
+            "status": "verified",
+            "recorded_at_utc": "2026-10-31T03:20:15Z",
+            "git_revision": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+            "executed_at_utc": null,
+            "exit_code": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-v2-summary-review-20261031.json",
+          "detail": "Sanitized machine-readable Stage 3 v2 attempt and aggregate summary derived from the retained hash-verified traces.",
+          "result": "All 20 paired slots and per-policy outcomes, denominators, stops, latencies, frames, replies, and cursor diagnostics are represented.",
+          "provenance": {
+            "status": "verified",
+            "recorded_at_utc": "2026-10-31T03:20:15Z",
+            "git_revision": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+            "executed_at_utc": null,
+            "exit_code": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-v2-artifact-manifest-20261031.json",
+          "detail": "Sanitized hash-only inventory for the local-only v2 attempt traces, RGB evidence, ledger, and run metadata.",
+          "result": "The independently verified manifest binds 4159 files totaling 728148524 bytes; raw payloads are not in Git.",
+          "provenance": {
+            "status": "verified",
+            "recorded_at_utc": "2026-10-31T03:20:15Z",
+            "git_revision": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+            "executed_at_utc": null,
+            "exit_code": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-v2-postrun-verification-20261031.json",
+          "detail": "Post-run independent verification record for hash-chain, trace/attempt manifests, aggregate rederivation, resource limits, schedule, and v1 preservation.",
+          "result": "PASS: 968132 ledger events and all 20 attempt artifacts verified; schedule complete; v1 manifest/ledger/run-manifest hashes unchanged.",
+          "provenance": {
+            "status": "verified",
+            "recorded_at_utc": "2026-10-31T03:15:14Z",
+            "git_revision": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+            "executed_at_utc": null,
+            "exit_code": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "test",
+          "command": "python -m unittest discover -s tests -v",
+          "result": "PASS: 439 tests, 0 failures, 0 skips; unittest elapsed 176.189 seconds.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T02:09:09Z",
+            "recorded_at_utc": "2026-10-31T02:12:07Z",
+            "exit_code": 0,
+            "git_revision": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+            "log_path": ".agents/evidence/logs/M6-v2-full-suite-91f51b1.log",
+            "log_sha256": "dc7f92d6f43d0af984eb52eaa15cb693d72a2622015fe733ea975193ef263d3d"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "python -m unittest tests.test_m6_campaign tests.test_m6_ledger tests.test_m6_adapter tests.test_m1_episode -v",
+          "result": "PASS: 69 tests, 0 failures, 0 skips; unittest elapsed 7.974 seconds.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T03:17:01Z",
+            "recorded_at_utc": "2026-10-31T03:17:12Z",
+            "exit_code": 0,
+            "git_revision": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+            "log_path": ".agents/evidence/logs/M6-v2-focused-regressions-91f51b1.log",
+            "log_sha256": "5347728eb484561924bf4a510ea3a87930d7e6b2f1c9a1fa412f5c7fb02ce4cc"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-v2-pre-run-gate-20261031.json",
+          "detail": "Frozen-run entry gate record for clean source, config/schedule hashes, private policy loading, runtime/ROM/profile/horizon readback, v1 identity, and free-space threshold.",
+          "result": "PASS with zero official reset before the gate; 500000 effective ALE horizon and all pinned identities were verified.",
+          "provenance": {
+            "status": "verified",
+            "recorded_at_utc": "2026-10-31T02:13:53Z",
+            "git_revision": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+            "executed_at_utc": null,
+            "exit_code": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-v2-private-artifact-verification-20261031.json",
+          "detail": "Read-only post-campaign verification of the accepted private M5 root inventory and run manifests.",
+          "result": "PASS: seven run manifests and 6544747450 bytes verified; pinned M5 root manifest SHA-256 unchanged.",
+          "provenance": {
+            "status": "verified",
+            "recorded_at_utc": "2026-10-31T03:21:28Z",
+            "git_revision": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+            "executed_at_utc": null,
+            "exit_code": null,
+            "log_path": null
+          }
         }
       ],
-      "next_action": "Complete the authorized v2 corrective implementation and regression suite; verify the frozen M5 artifacts, dependency lock, ROM, v1 integrity, and effective 500000-frame ALE horizon without gameplay; then commit source/configuration and the frozen schedule before the first v2 reset.",
+      "next_action": "Request and complete independent PM review of the v2 corrective implementation, verified 20-attempt ALE evidence, and updated PR #14; keep M6-001 in_progress and G4 unapproved until separate decisions are recorded.",
       "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],
