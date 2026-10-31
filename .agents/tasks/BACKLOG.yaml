@@ -4687,8 +4687,8 @@
         {
           "kind": "file",
           "path": ".agents/evidence/M6-post-merge-verification-20261031.md",
-          "detail": "Post-merge engineering report covering the verified merge, canonical state transition, preserved M6 results/limitations, and separately executed post-merge checks.",
-          "result": "Records PR #14 integration and M6 acceptance without changing M6 experimental evidence or claiming a G4/M7 decision.",
+          "detail": "Post-merge engineering report with verified PR/merge/PM identities, canonical M6 completion, preserved outcomes and limitations, and post-merge checks.",
+          "result": "Records independent M6 acceptance and PR #14 integration; 452 full-suite and 108 focused tests pass at 5d4cfd9; raw artifact-tree audit was not rerun in this closeout.",
           "provenance": {
             "status": "verified",
             "executed_at_utc": null,
@@ -4709,7 +4709,63 @@
             "exit_code": 0,
             "git_revision": "509f9f83f9249208fd5adba572efed2d2f0f82ff",
             "log_path": ".agents/evidence/logs/M6-postmerge-lock-check-20261031.log",
-            "log_sha256": "8faf23b41cd5c0b70b25627e74853e46852fa67f200715067bc2ab717912a031"
+            "log_sha256": "079bb4dd58e4c7b88823a6836640915bf508ca2828f6af7be2e48fdacc208968"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-post-merge-verification-20261031.json",
+          "detail": "Machine-readable post-merge identity, governance, historical outcome, verification and limitation report.",
+          "result": "Reports the verified accepted feature/merge identities, separate v1/v2 outcomes, test runs, and the limitation that this closeout did not rerun the private raw-tree audit.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T07:55:24Z",
+            "exit_code": null,
+            "git_revision": "5d4cfd93a3895e5a4c2d68eb485379c25639f403",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 <project-python> -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
+          "result": "PASS: 108 focused tests; 108 passed, 0 failures, 0 errors, 0 skips.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T07:48:40Z",
+            "recorded_at_utc": "2026-10-31T07:55:24Z",
+            "exit_code": 0,
+            "git_revision": "5d4cfd93a3895e5a4c2d68eb485379c25639f403",
+            "log_path": ".agents/evidence/logs/M6-postmerge-focused-5d4cfd9.log",
+            "log_sha256": "766336d0434da6afb07bbbf32e0c256efc24d0d17fdadf715eb8eae100b6adf3"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<accepted-M5-artifact-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<accepted-M4-r4-artifact-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<Warm-checkpoint-resolved-by-manifest> PYTHONDONTWRITEBYTECODE=1 PATH=<project-stockfish-readiness-dir>:$PATH <project-python> -m unittest discover -s tests -v",
+          "result": "PASS: 452 tests; 452 passed, 0 failures, 0 errors, 0 skips.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T07:49:59Z",
+            "recorded_at_utc": "2026-10-31T07:55:24Z",
+            "exit_code": 0,
+            "git_revision": "5d4cfd93a3895e5a4c2d68eb485379c25639f403",
+            "log_path": ".agents/evidence/logs/M6-postmerge-full-suite-20261031.log",
+            "log_sha256": "3d92850c885afb024aadaeec1864d720d9576c4928a23fa57d55c84d3cbdba30"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 /usr/bin/python3 -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
+          "result": "FAIL: 92 tests; 90 passed, 1 assertion failure, 1 import error, 0 skips. System Python lacked NumPy and the context test detected that the workspace snapshot had not been checkpointed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T07:56:23Z",
+            "recorded_at_utc": "2026-10-31T07:58:00Z",
+            "exit_code": 1,
+            "git_revision": "5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f",
+            "log_path": ".agents/evidence/logs/M6-postmerge-final-focused-20261031.log",
+            "log_sha256": "595151aee2cf02bbf3f088c94a2ef7e876cb31889755af17ec1a91b46e43863f"
           }
         }
       ],
@@ -4717,5 +4773,5 @@
       "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],
-  "updated_at_utc": "2026-10-31T07:43:26Z"
+  "updated_at_utc": "2026-10-31T07:58:00Z"
 }

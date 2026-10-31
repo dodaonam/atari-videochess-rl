@@ -16,4 +16,30 @@ The merged M6 source/evidence, v1/v2 run identities, original PM6-F06 manifest d
 
 ## Post-merge verification
 
-This report records commands run after the PM acceptance/merge and distinguishes them from the pre-merge engineering test logs. Results will be filled in from the clean merge worktree before delivery.
+Verification ran in a clean worktree created directly from merge commit `509f9f83f9249208fd5adba572efed2d2f0f82ff`. The branch was clean at the accepted merge baseline before the governance changes.
+
+| Check | Revision | Result | Execution window (UTC) | Log SHA-256 |
+|---|---|---|---|---|
+| GitHub merge/PM identity audit | `509f9f83f9249208fd5adba572efed2d2f0f82ff` | PASS; accepted head/tree, merge parents/tree, PR state, and comment identity match | 2026-10-31 07:40:17.938–07:40:19.951 | `703c7ec0fba4bebf6bf11cc3b0925adaa5cf5f939a5def51d45d89fa678d1bb0` |
+| Lockfile consistency | `509f9f83f9249208fd5adba572efed2d2f0f82ff` | PASS; `uv lock --check --offline`, uv 0.9.26; no install or lock mutation | 2026-10-31 07:43:26.697–07:43:26.740 | `079bb4dd58e4c7b88823a6836640915bf508ca2828f6af7be2e48fdacc208968` |
+| Diagnostic focused run 1 | `318fd69a1d6964357e1b58b0f3c8a6ba81e5f49f` | FAIL; 108 tests, 106 passed, 2 failures; stale test expected pre-acceptance active M6 state | 2026-10-31 07:44:29.376–07:45:19.125 | `b120aabf4e3460d6adec2511b8536ead522c4fb17bfc6d9c16f4941df8455b58` |
+| Diagnostic focused run 2 | `0ee0a4845fa6b748a987e2a288a6691bce0c62b9` | FAIL; 108 tests, 106 passed, 2 failures; literal G4 wording assertion mismatch | 2026-10-31 07:46:15.866–07:47:06.291 | `fc58a1e080202c10ea70e49c01eaa58ccfeec19cdc8c29a82bf3fcf5555c39bc` |
+| Diagnostic focused run 3 | `511369e0742a6b8bc782a39b8c9e14363e2d0175` | FAIL; 108 tests, 106 passed, 2 failures; literal M7 wording assertion mismatch | 2026-10-31 07:47:27.874–07:48:22.209 | `2e34b8c5becfbd623bbefa8b1da453bf01b7a889e66aa4b583d4dd39e1a9a5ef` |
+| Earlier focused context/checkpoint/M6 run | Header revision is non-resolving; see provenance correction | Historical log reports 108 passed, but its recorded source identity is invalid and the result is superseded by the final rerun below | 2026-10-31 07:48:40.209–07:49:45.654 | `766336d0434da6afb07bbbf32e0c256efc24d0d17fdadf715eb8eae100b6adf3` |
+| Earlier full repository suite | Header revision is non-resolving; see provenance correction | Historical log reports 452 passed, but its recorded source identity is invalid and the result is superseded by the final rerun below | 2026-10-31 07:49:59.759–07:52:46.675 | `3d92850c885afb024aadaeec1864d720d9576c4928a23fa57d55c84d3cbdba30` |
+| Earlier canonical context preflight | Header revision is non-resolving; embedded output reports a live HEAD; see provenance correction | Historical preflight result is superseded by the final preflight below | 2026-10-31 07:53:01.322–07:53:02.645 | `4cc31dc80446b613a971a73282f5482965e6c95395063f45b9e8667367ffbaf0` |
+| System-Python focused diagnostic | `5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f` | FAIL; 92 tests run, 1 assertion failure and 1 import error: system Python lacked NumPy and the uncheckpointed workspace did not match its saved Git snapshot. This was a test-environment/setup failure, not accepted as a passing run. | 2026-10-31 07:56:23.063–07:57:15.596 | `3a1aca2ba4aa2b492d7693b06194ebd5a7c7d77dc83a1bc005906506b0c5d87f` |
+
+The full suite used Python 3.12.3 on local CPU, the accepted M4 r4 artifact manifest/checkpoint/sidecar, and the accepted M5 root manifest and Warm checkpoint/sidecar resolved by manifest SHA. No dependency was installed, and no lockfile was changed. The focused suite covered `test_agent_context`, checkpoint history, M6 campaign, and independent M6 raw-audit tests.
+
+Three preceding focused attempts exposed stale test assertions for the pre-acceptance M6-active state and literal G4/M7 wording. These were corrected to assert the canonical accepted-M6, G4-unapproved, M7-unauthorized invariants. The failed attempts and their exact revisions are retained in the corresponding focused logs; the final focused suite and full suite both pass.
+
+Additional read-only checks confirmed the original and preserved local v1/v2 artifact manifests are present and their manifest-file hashes match the previously recorded identities. The full raw-tree audit was not rerun in this post-merge mission; its accepted r3 reports remain separate evidence. The PM also explicitly stated they did not personally access or rerun the private raw audit or the 452-test suite.
+
+No Stage 3 attempt, ALE campaign, training, fine-tuning, or checkpoint mutation was performed. The existing Python suite includes bounded automated ALE integration tests; these are not an official campaign. No code in `videochess_rl/` changed after the full-suite revision `5d4cfd9`; the only later source-tree change was the context regression test that was itself exercised by the final focused and full-suite runs, followed by evidence/task/checkpoint metadata.
+
+GitHub protection inspection found no `initial-idea` branch-protection configuration (HTTP 404) and no repository rulesets were listed. Repository settings were not changed. The closeout PR requests independent PM review and an authorized human/operator merge under the repository workflow.
+
+## Verification provenance correction
+
+During closeout review, the earlier focused, full-suite, and preflight log headers were found to record `5d4cfd93a3895e5a4c2d68eb485379c25639f403`, which does not resolve to a Git object in this repository. The earlier preflight's embedded `Live Git` output reports `5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f`, the actual current feature HEAD. The original logs are retained unchanged; their test results are not used as final source-identity evidence. A system-Python attempt also failed because it lacked project dependencies and the working snapshot had not yet been checkpointed. The final focused/full-suite reruns below use the pre-existing project virtual environment, an aligned checkpoint, and a directly captured Git HEAD/tree; no dependency installation is performed.
