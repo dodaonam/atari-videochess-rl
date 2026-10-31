@@ -4645,15 +4645,15 @@
         {
           "kind": "command",
           "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/agent_preflight.py",
-          "result": "PASS: agent context preflight; G3 approved, M6-001 in_progress; no errors; artifact-manifest warning only.",
+          "result": "PASS: canonical agent preflight; M6-001 done, G3 approved, G4 unapproved, M7 pending authorization; no validation errors.",
           "provenance": {
             "status": "verified",
-            "executed_at_utc": "2026-10-31T05:34:34Z",
-            "recorded_at_utc": "2026-10-31T05:34:34Z",
+            "executed_at_utc": "2026-10-31T08:06:50Z",
+            "recorded_at_utc": "2026-10-31T08:06:51Z",
             "exit_code": 0,
-            "git_revision": "99f958dbb90b82705263f2ae95df701ba98d2f8b",
-            "log_path": ".agents/evidence/logs/M6-F06-preflight-99f958d.log",
-            "log_sha256": "3430674d71c6561e1faab14d0643bb9e730287ea67351c5d02ff6ecd751e1b55"
+            "git_revision": "4ab7d3a8ea8b9f718b790c03c27e9fe3dba95c08",
+            "log_path": ".agents/evidence/logs/M6-postmerge-final-preflight-closeout-20261031.log",
+            "log_sha256": "708b7bb9293d16930fdb009ef993d3bb4822bf92ab90c657a5b0c4a52b8caf06"
           }
         },
         {
@@ -4688,7 +4688,7 @@
           "kind": "file",
           "path": ".agents/evidence/M6-post-merge-verification-20261031.md",
           "detail": "Post-merge engineering report with verified PR/merge/PM identities, canonical M6 completion, preserved outcomes and limitations, and post-merge checks.",
-          "result": "Records independent M6 acceptance and PR #14 integration; 452 full-suite and 108 focused tests pass at 5d4cfd9; raw artifact-tree audit was not rerun in this closeout.",
+          "result": "Records independently verified M6 acceptance and PR #14 integration, exact source/test tree, 108 focused and 452 full-suite passing tests, final preflight, and the limitation that raw-tree audit was not rerun in this closeout.",
           "provenance": {
             "status": "verified",
             "executed_at_utc": null,
@@ -4731,28 +4731,30 @@
           "command": "PYTHONDONTWRITEBYTECODE=1 <project-python> -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
           "result": "PASS: 108 focused tests; 108 passed, 0 failures, 0 errors, 0 skips.",
           "provenance": {
-            "status": "verified",
-            "executed_at_utc": "2026-10-31T07:48:40Z",
-            "recorded_at_utc": "2026-10-31T07:55:24Z",
-            "exit_code": 0,
-            "git_revision": "5d4cfd93a3895e5a4c2d68eb485379c25639f403",
-            "log_path": ".agents/evidence/logs/M6-postmerge-focused-5d4cfd9.log",
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null,
             "log_sha256": "766336d0434da6afb07bbbf32e0c256efc24d0d17fdadf715eb8eae100b6adf3"
-          }
+          },
+          "detail": "Original log is preserved, but its recorded Git revision does not resolve; this historical result is superseded by the corrected post-merge rerun with captured HEAD and tested tree. Original retained log: .agents/evidence/logs/M6-postmerge-focused-5d4cfd9.log; logged source identity 5d4cfd93a3895e5a4c2d68eb485379c25639f403 does not resolve and is not relied on for acceptance. See the post-merge verification report for the correction and exact rerun."
         },
         {
           "kind": "test",
           "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<accepted-M5-artifact-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<accepted-M4-r4-artifact-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<Warm-checkpoint-resolved-by-manifest> PYTHONDONTWRITEBYTECODE=1 PATH=<project-stockfish-readiness-dir>:$PATH <project-python> -m unittest discover -s tests -v",
           "result": "PASS: 452 tests; 452 passed, 0 failures, 0 errors, 0 skips.",
           "provenance": {
-            "status": "verified",
-            "executed_at_utc": "2026-10-31T07:49:59Z",
-            "recorded_at_utc": "2026-10-31T07:55:24Z",
-            "exit_code": 0,
-            "git_revision": "5d4cfd93a3895e5a4c2d68eb485379c25639f403",
-            "log_path": ".agents/evidence/logs/M6-postmerge-full-suite-20261031.log",
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null,
             "log_sha256": "3d92850c885afb024aadaeec1864d720d9576c4928a23fa57d55c84d3cbdba30"
-          }
+          },
+          "detail": "Original log is preserved, but its recorded Git revision does not resolve; this historical result is superseded by the corrected post-merge rerun with captured HEAD and tested tree. Original retained log: .agents/evidence/logs/M6-postmerge-full-suite-20261031.log; logged source identity 5d4cfd93a3895e5a4c2d68eb485379c25639f403 does not resolve and is not relied on for acceptance. See the post-merge verification report for the correction and exact rerun."
         },
         {
           "kind": "test",
@@ -4767,11 +4769,41 @@
             "log_path": ".agents/evidence/logs/M6-postmerge-final-focused-20261031.log",
             "log_sha256": "595151aee2cf02bbf3f088c94a2ef7e876cb31889755af17ec1a91b46e43863f"
           }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
+          "result": "PASS: 108 focused tests; 108 passed, 0 failures, 0 errors, 0 skips.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:00:17Z",
+            "recorded_at_utc": "2026-10-31T08:06:02Z",
+            "exit_code": 0,
+            "git_revision": "5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f",
+            "log_path": ".agents/evidence/logs/M6-postmerge-final-focused-correct-env-20261031.log",
+            "log_sha256": "e349fbd4b3e84f9dd0c3ea578989ee224fd3492735a19dc7eb3ff000807486a5"
+          },
+          "detail": "Execution captured HEAD 5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f and staged tree 902900431798290ef2b012dc97c914f399f09085, which was committed exactly as 4ab7d3a8ea8b9f718b790c03c27e9fe3dba95c08."
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<accepted-M5-artifact-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<accepted-M4-r4-artifact-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<checkpoint-resolved-by-pinned-SHA> PYTHONDONTWRITEBYTECODE=1 PATH=<pre-existing-project-stockfish-readiness-dir>:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "PASS: 452 tests; 452 passed, 0 failures, 0 errors, 0 skips.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:01:25Z",
+            "recorded_at_utc": "2026-10-31T08:06:02Z",
+            "exit_code": 0,
+            "git_revision": "5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f",
+            "log_path": ".agents/evidence/logs/M6-postmerge-final-full-suite-20261031.log",
+            "log_sha256": "02e4b7a914247b5c57b7043eada7eb971bc7e93271b638176cf225a89bea6df3"
+          },
+          "detail": "Execution captured HEAD 5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f and staged tree 902900431798290ef2b012dc97c914f399f09085, which was committed exactly as 4ab7d3a8ea8b9f718b790c03c27e9fe3dba95c08."
         }
       ],
       "next_action": "",
       "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],
-  "updated_at_utc": "2026-10-31T07:58:00Z"
+  "updated_at_utc": "2026-10-31T08:06:51Z"
 }

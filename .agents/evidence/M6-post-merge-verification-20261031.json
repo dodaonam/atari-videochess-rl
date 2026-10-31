@@ -1,6 +1,6 @@
 {
   "schema": "videochess-m6-postmerge-verification/1.0",
-  "generated_at_utc": "2026-10-31T07:58:00Z",
+  "generated_at_utc": "2026-10-31T08:06:51Z",
   "verification_worktree": "clean isolated worktree at verified initial-idea merge commit",
   "identities": {
     "repository": "dodaonam/atari-videochess-rl",
@@ -85,66 +85,81 @@
       "dependency_install_performed": false
     },
     {
-      "name": "focused_regressions",
-      "status": "PASS",
-      "revision": "5d4cfd93a3895e5a4c2d68eb485379c25639f403",
-      "command": "PYTHONDONTWRITEBYTECODE=1 <project-python> -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
-      "command_log": ".agents/evidence/logs/M6-postmerge-focused-5d4cfd9.log",
-      "log_sha256": "766336d0434da6afb07bbbf32e0c256efc24d0d17fdadf715eb8eae100b6adf3",
-      "test_count": 108,
-      "passed": 108,
-      "failed": 0,
-      "errors": 0,
-      "skipped": 0,
-      "unittest_seconds": 63.521,
-      "wall_seconds": 65.444,
-      "started_at_utc": "2026-10-31T07:48:40.209075Z",
-      "completed_at_utc": "2026-10-31T07:49:45.653548Z",
-      "exit_code": 0
-    },
-    {
-      "name": "full_repository_suite",
-      "status": "PASS",
-      "revision": "5d4cfd93a3895e5a4c2d68eb485379c25639f403",
-      "command": "<project-python> -m unittest discover -s tests -v with accepted M4/M5 roots and manifest-resolved Warm checkpoint",
-      "command_log": ".agents/evidence/logs/M6-postmerge-full-suite-20261031.log",
-      "log_sha256": "3d92850c885afb024aadaeec1864d720d9576c4928a23fa57d55c84d3cbdba30",
-      "test_count": 452,
-      "passed": 452,
-      "failed": 0,
-      "errors": 0,
-      "skipped": 0,
-      "unittest_seconds": 164.804,
-      "wall_seconds": 166.916,
-      "started_at_utc": "2026-10-31T07:49:59.758975Z",
-      "completed_at_utc": "2026-10-31T07:52:46.675179Z",
-      "exit_code": 0,
-      "m5_root_manifest_sha256": "a201a254671ad59ae1fecb402abf994d5bf523097f1c3010b5c7fa237ae6dd4c",
-      "m4_r4_manifest_sha256": "f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921",
-      "warm_checkpoint_sha256": "0b2405017a8e1d539851f0cd278883d3fd23936fb5c2f7962c813590a6fd1767",
-      "warm_sidecar_sha256": "80d8689e4b349576c5708bb4dce3451e5a8c64d81470cd6f4273a4746844b682"
-    },
-    {
-      "name": "canonical_preflight",
-      "status": "PASS",
-      "revision": "5d4cfd93a3895e5a4c2d68eb485379c25639f403",
-      "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/agent_preflight.py",
-      "command_log": ".agents/evidence/logs/M6-postmerge-final-preflight-20261031.log",
-      "log_sha256": "4cc31dc80446b613a971a73282f5482965e6c95395063f45b9e8667367ffbaf0",
-      "exit_code": 0,
-      "errors": 0,
-      "warnings": [
-        "Expected artifact-manifest warning: local artifact directories are excluded from ordinary repository hashing."
-      ],
-      "started_at_utc": "2026-10-31T07:53:01.321707Z",
-      "completed_at_utc": "2026-10-31T07:53:02.645353Z"
-    },
-    {
       "name": "artifact_manifest_file_presence_and_identity",
       "status": "PASS",
       "scope": "Read-only presence and SHA-256 of the preserved v1/v2 artifact-manifest.json files only; the full raw trees were not re-audited in this closeout.",
       "v1_manifest_sha256": "22ac6ec7e0f4a48f52b2452654d4adecaf111f38ea37f5d9517f173c838716d7",
       "v2_manifest_sha256": "bc0068aa2254e4c15165247ee299f48940cca9b7c21f6a288fd13812631ea2b2"
+    },
+    {
+      "name": "focused_regressions_final",
+      "status": "PASS",
+      "git_head_at_execution": "5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f",
+      "tested_index_tree": "902900431798290ef2b012dc97c914f399f09085",
+      "tested_commit": "4ab7d3a8ea8b9f718b790c03c27e9fe3dba95c08",
+      "command": "PYTHONDONTWRITEBYTECODE=1 /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
+      "command_log": ".agents/evidence/logs/M6-postmerge-final-focused-correct-env-20261031.log",
+      "log_sha256": "e349fbd4b3e84f9dd0c3ea578989ee224fd3492735a19dc7eb3ff000807486a5",
+      "test_count": 108,
+      "passed": 108,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "unittest_seconds": 53.084,
+      "wall_seconds": 54.818,
+      "started_at_utc": "2026-10-31T08:00:17.604598Z",
+      "completed_at_utc": "2026-10-31T08:01:12.422268Z",
+      "exit_code": 0
+    },
+    {
+      "name": "full_repository_suite_final",
+      "status": "PASS",
+      "git_head_at_execution": "5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f",
+      "tested_index_tree": "902900431798290ef2b012dc97c914f399f09085",
+      "tested_commit": "4ab7d3a8ea8b9f718b790c03c27e9fe3dba95c08",
+      "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<accepted-M5-artifact-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<accepted-M4-r4-artifact-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<checkpoint-resolved-by-pinned-SHA> PYTHONDONTWRITEBYTECODE=1 PATH=<pre-existing-project-stockfish-readiness-dir>:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+      "command_log": ".agents/evidence/logs/M6-postmerge-final-full-suite-20261031.log",
+      "log_sha256": "02e4b7a914247b5c57b7043eada7eb971bc7e93271b638176cf225a89bea6df3",
+      "test_count": 452,
+      "passed": 452,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "unittest_seconds": 184.828,
+      "wall_seconds": 187.371,
+      "started_at_utc": "2026-10-31T08:01:25.248972Z",
+      "completed_at_utc": "2026-10-31T08:04:32.619728Z",
+      "exit_code": 0,
+      "m5_root_manifest_sha256": "a201a254671ad59ae1fecb402abf994d5bf523097f1c3010b5c7fa237ae6dd4c",
+      "warm_checkpoint_sha256": "0b2405017a8e1d539851f0cd278883d3fd23936fb5c2f7962c813590a6fd1767",
+      "m4_r4_root_manifest_sha256": "f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921",
+      "runtime_versions": {
+        "python": "3.12.3",
+        "numpy": "2.5.4",
+        "pytorch": "2.14.1+cpu",
+        "gymnasium": "1.4.0",
+        "ale_py": "0.11.2",
+        "python_chess": "1.11.2"
+      }
+    },
+    {
+      "name": "canonical_preflight_after_evidence_alignment",
+      "status": "PASS",
+      "git_head_at_execution": "4ab7d3a8ea8b9f718b790c03c27e9fe3dba95c08",
+      "tested_index_tree": "54a19c7faf5933b1ca394db6316e4257be416d34",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/agent_preflight.py",
+      "command_log": ".agents/evidence/logs/M6-postmerge-final-preflight-closeout-20261031.log",
+      "log_sha256": "708b7bb9293d16930fdb009ef993d3bb4822bf92ab90c657a5b0c4a52b8caf06",
+      "exit_code": 0,
+      "errors": 0,
+      "warnings": [
+        "Expected ARTIFACT_MANIFEST_REQUIRED warning for local artifacts excluded from ordinary content hashing."
+      ],
+      "tasks_done": 15,
+      "active_tasks": 0,
+      "active_blockers": 0,
+      "started_at_utc": "2026-10-31T08:06:50.262434Z",
+      "completed_at_utc": "2026-10-31T08:06:51.602751Z"
     }
   ],
   "known_repository_policy": "No initial-idea branch protection was configured (GitHub API 404); no repository rulesets were listed. Settings were not changed; closeout is delivered via PR and requires independent PM review and authorized human/operator merge.",
@@ -208,6 +223,9 @@
   },
   "historical_provenance_discrepancy": {
     "affected_logs": [
+      ".agents/evidence/logs/M6-postmerge-focused-318fd69.log",
+      ".agents/evidence/logs/M6-postmerge-focused-0ee0a48.log",
+      ".agents/evidence/logs/M6-postmerge-focused-511369e.log",
       ".agents/evidence/logs/M6-postmerge-focused-5d4cfd9.log",
       ".agents/evidence/logs/M6-postmerge-full-suite-20261031.log",
       ".agents/evidence/logs/M6-postmerge-final-preflight-20261031.log"
@@ -216,5 +234,11 @@
     "revision_resolves": false,
     "embedded_preflight_live_head": "5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f",
     "handling": "Original logs remain immutable and are retained as historical diagnostics; final acceptance verification is being rerun with explicit captured HEAD/tree."
-  }
+  },
+  "postmerge_closeout_commit": {
+    "commit": "4ab7d3a8ea8b9f718b790c03c27e9fe3dba95c08",
+    "tree": "902900431798290ef2b012dc97c914f399f09085",
+    "test_content_tree": "902900431798290ef2b012dc97c914f399f09085"
+  },
+  "python_environment_note": "A pre-existing local project virtual environment was reused; no dependencies were installed. An offline uv environment attempt did not find the locked torch wheel and was abandoned before installation."
 }
