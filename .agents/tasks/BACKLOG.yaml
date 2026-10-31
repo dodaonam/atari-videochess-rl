@@ -5359,6 +5359,128 @@
             "git_revision": "fe2cc4cc5e477841ffbc9368235eb9c5675f2f74",
             "log_path": ".agents/evidence/logs/M7-analysis-final-r2-20261101.log"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M7-full-suite-final-20261101.json",
+          "detail": "Full local repository suite result, command, source revision, count, skipped count, and sanitized output hash.",
+          "result": "PASS: 492 tests, zero failures, zero skips at source revision cbf4b27d4c9eb65108ee17c3138cf020c8c8ade9.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T20:28:54Z",
+            "exit_code": null,
+            "git_revision": "cbf4b27d4c9eb65108ee17c3138cf020c8c8ade9",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PATH=<existing project venv>/share/stockfish:$PATH VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<owner-local accepted M5 root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<owner-local accepted M5 Warm 20261104 post-RL snapshot> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<owner-local accepted M4 r4 root> PYTHONDONTWRITEBYTECODE=1 <existing project Python 3.12.3 venv>/bin/python -m unittest discover -s tests -v",
+          "result": "PASS: 492 tests, 0 skipped.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T20:25:21Z",
+            "recorded_at_utc": "2026-10-31T20:28:54Z",
+            "exit_code": 0,
+            "git_revision": "cbf4b27d4c9eb65108ee17c3138cf020c8c8ade9",
+            "log_path": ".agents/evidence/logs/M7-full-suite-final-20261101-sanitized.log"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M7-final-preflight-20261101.json",
+          "detail": "Final canonical repository preflight on the committed M7 Phase I snapshot.",
+          "result": "PASS: canonical state/backlog valid; portable commit transition matched; only the expected ARTIFACT_MANIFEST_REQUIRED warning remains.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T20:28:54Z",
+            "exit_code": null,
+            "git_revision": "cbf4b27d4c9eb65108ee17c3138cf020c8c8ade9",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "PASS: preflight passed; expected ARTIFACT_MANIFEST_REQUIRED warning only.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T20:25:11Z",
+            "recorded_at_utc": "2026-10-31T20:28:54Z",
+            "exit_code": 0,
+            "git_revision": "cbf4b27d4c9eb65108ee17c3138cf020c8c8ade9",
+            "log_path": ".agents/evidence/logs/M7-final-preflight-20261101-sanitized.log"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M7-focused-final-clean-20261101.json",
+          "detail": "Final focused M7 test record on a committed checkout.",
+          "result": "PASS: 29 focused M7 tests, zero failures, on source 21d980f815df4da78ff9632f5347ecb035f78cfa.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T20:29:34Z",
+            "exit_code": null,
+            "git_revision": "cbf4b27d4c9eb65108ee17c3138cf020c8c8ade9",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 <existing project Python 3.12.3 venv>/bin/python -m unittest tests.test_m7_protocol tests.test_m7_analysis tests.test_m7_analysis_integration tests.test_m7_policies tests.test_m7_campaign tests.test_m7_report -v",
+          "result": "PASS: 29 focused M7 tests.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T20:20:56Z",
+            "recorded_at_utc": "2026-10-31T20:29:34Z",
+            "exit_code": 0,
+            "git_revision": "cbf4b27d4c9eb65108ee17c3138cf020c8c8ade9",
+            "log_path": ".agents/evidence/logs/M7-focused-final-clean-20261101.log"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M7-G4-review-handover-20261101.md",
+          "detail": "Complete independent PM review handover and explicit Phase II gate boundary.",
+          "result": "Ready for independent PM G4 review; G4 remains HOLD / NOT APPROVED.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T20:30:05Z",
+            "exit_code": null,
+            "git_revision": "cbf4b27d4c9eb65108ee17c3138cf020c8c8ade9",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M7-G4-contract-tests-final-20261101.json",
+          "detail": "Post-handover local Markdown-link and governance contract verification.",
+          "result": "PASS: eight Pre-M7/M7 governance-contract tests.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T20:30:05Z",
+            "exit_code": null,
+            "git_revision": "cbf4b27d4c9eb65108ee17c3138cf020c8c8ade9",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 <existing project Python 3.12.3 venv>/bin/python -m unittest tests.test_pre_m7_contracts -v",
+          "result": "PASS: 8 Pre-M7/M7 governance contract tests.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T20:30:01Z",
+            "recorded_at_utc": "2026-10-31T20:30:05Z",
+            "exit_code": 0,
+            "git_revision": "cbf4b27d4c9eb65108ee17c3138cf020c8c8ade9",
+            "log_path": ".agents/evidence/logs/M7-G4-contract-tests-final-20261101-sanitized.log"
+          }
         }
       ],
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
