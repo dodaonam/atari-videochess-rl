@@ -84,6 +84,18 @@ def checked_root(value: str | Path) -> Path:
     return path.resolve(strict=True)
 
 
+def portable_artifact_root(root: str | Path) -> str:
+    """Return a project-relative artifact identity without host-specific roots."""
+    resolved = Path(root).resolve(strict=True)
+    artifacts_ancestors = [parent for parent in resolved.parents if parent.name == "artifacts"]
+    if artifacts_ancestors:
+        # The nearest artifacts directory is the logical root, regardless of
+        # which worktree mounted or preserved the bytes.
+        artifacts = artifacts_ancestors[0]
+        return (Path("artifacts") / resolved.relative_to(artifacts)).as_posix()
+    return (Path("external-artifact-root") / resolved.name).as_posix()
+
+
 def tree_files(root: Path) -> dict[str, Path]:
     """Enumerate only regular files; reject symlinks and special nodes anywhere."""
     found: dict[str, Path] = {}
@@ -380,7 +392,7 @@ def audit_v1(root_value: str | Path, repo_root: Path) -> dict[str, Any]:
         raise ValueError("v1 raw ledger no longer records all 35 original attempts")
     return {
         "run_id": expected_run,
-        "raw_root": str(root),
+        "raw_root": portable_artifact_root(root),
         "run_manifest_sha256": run_manifest_sha,
         "artifact_manifest": tree,
         "ledger": ledger,
@@ -1077,7 +1089,7 @@ def audit_v2(root_value: str | Path, repo_root_value: str | Path) -> dict[str, A
     return {
         "schema": "videochess-m6-independent-raw-audit/1.0",
         "run_id": RUN_ID,
-        "raw_root": str(root),
+        "raw_root": portable_artifact_root(root),
         "identities": {
             "execution_source_commit": manifest["git_commit"],
             "execution_source_tree": manifest["git_tree"],

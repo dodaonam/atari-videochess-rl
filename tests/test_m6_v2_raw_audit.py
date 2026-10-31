@@ -16,6 +16,7 @@ from scripts.audit_m6_v2_artifacts import (
     expected_schedule,
     latency_summary,
     outcome_from_trace,
+    portable_artifact_root,
     safe_relative,
     trace_rows,
     verify_ledger,
@@ -25,6 +26,18 @@ from scripts.audit_m6_v2_artifacts import (
 
 
 class M6V2RawAuditTests(unittest.TestCase):
+    def test_artifact_root_report_is_portable_and_repository_relative(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "artifacts" / "m6" / "v2" / "run-id"
+            root.mkdir(parents=True)
+            self.assertEqual(portable_artifact_root(root), "artifacts/m6/v2/run-id")
+
+    def test_external_artifact_root_report_does_not_expose_host_path(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "private-run-id"
+            root.mkdir()
+            self.assertEqual(portable_artifact_root(root), "external-artifact-root/private-run-id")
+
     def _write_tree_manifest(self, root: Path) -> None:
         payload = b"verified fixture bytes\x00"
         (root / "payload.bin").write_bytes(payload)
