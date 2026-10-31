@@ -5146,11 +5146,59 @@
             "log_path": ".agents/evidence/logs/M6C-F01-corrected-preflight-20261031.log",
             "log_sha256": "5497d5885d1a2b1bc2db8b81c74f900e44998e467eef9fb6e38b638245e0f994"
           }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/audit_m6_closeout_provenance.py",
+          "result": "PASS: 4 committed file identities, 26 verified command/test logs, 8 machine-report logs, 2 historical diagnostics, 0 errors.",
+          "detail": "Post-append full-scope audit at d20b8b7; validates all records included before this final check set.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T09:04:36Z",
+            "recorded_at_utc": "2026-10-31T09:05:50Z",
+            "exit_code": 0,
+            "git_revision": "d20b8b7942fdd5be77541d5605cabc5bebfde432",
+            "log_path": ".agents/evidence/logs/M6C-F01-postappend-audit-20261031.log",
+            "log_sha256": "bb5e64d9be722b1431b8fa52d643f535bdd6b7cb756fedfa0bf28ec0f3e6d11e"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/agent_preflight.py",
+          "result": "PASS: canonical preflight; zero validation errors; expected local artifact-manifest warning only.",
+          "detail": "Post-append canonical preflight at d20b8b7; clean detached checkout.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T09:04:36Z",
+            "recorded_at_utc": "2026-10-31T09:05:50Z",
+            "exit_code": 0,
+            "git_revision": "d20b8b7942fdd5be77541d5605cabc5bebfde432",
+            "log_path": ".agents/evidence/logs/M6C-F01-postappend-preflight-20261031.log",
+            "log_sha256": "e7fd76fe163b25d94aa27e1c8f4e39e5ac020898cd211cab5c709086c856355e"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
+          "result": "PASS: 110 focused tests; 110 passed, 0 failures, 0 errors, 0 skips.",
+          "detail": "Post-append focused governance/checkpoint/M6 regressions at d20b8b7.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T09:04:37Z",
+            "recorded_at_utc": "2026-10-31T09:05:50Z",
+            "exit_code": 0,
+            "git_revision": "d20b8b7942fdd5be77541d5605cabc5bebfde432",
+            "log_path": ".agents/evidence/logs/M6C-F01-postappend-focused-20261031.log",
+            "log_sha256": "80d7dd77c11e87a151cf8704bf4d11083ca1fe6b5cdc2c717ca407540e46ff4d"
+          }
         }
       ],
       "next_action": "",
       "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],
-  "updated_at_utc": "2026-10-31T09:04:09Z"
+  "updated_at_utc": "2026-10-31T09:05:50Z"
 }

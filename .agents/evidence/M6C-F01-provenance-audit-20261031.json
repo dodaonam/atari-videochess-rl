@@ -313,11 +313,11 @@
     "g4_approved": false,
     "m7_authorized": false
   },
-  "status": "SOURCE_AND_FULL_TESTS_PASS_AWAITING_POST_APPEND_AUDIT_CI_AND_FRESH_PM_REVIEW",
+  "status": "POST_APPEND_CHECKS_PASS_AWAITING_FINAL_AUDIT_CI_AND_PM_REVIEW",
   "scope": {
-    "m6_001_entries_audited": 32,
+    "m6_001_entries_audited": 35,
     "committed_file_identities": 4,
-    "verified_command_test_logs": 26,
+    "verified_command_test_logs": 29,
     "historical_unverified_diagnostics": 2,
     "machine_report_logs": 8,
     "errors_checked_by_last_audit": 0
@@ -446,15 +446,51 @@
     }
   },
   "post_append_audit": {
-    "status": "PENDING",
+    "status": "PENDING_FINAL_AUDIT_AFTER_RECORDING_POST_APPEND_CHECKS",
     "must_run_after_commit": true,
     "expected_scope": {
-      "m6_001_entries_audited": 32,
+      "m6_001_entries_audited": 35,
       "committed_file_identities": 4,
-      "verified_command_test_logs": 26,
+      "verified_command_test_logs": 29,
       "historical_unverified_diagnostics": 2,
       "machine_report_logs": 8,
       "errors_checked_by_last_audit": 0
     }
+  },
+  "post_append_checks": {
+    "source_commit": "d20b8b7942fdd5be77541d5605cabc5bebfde432",
+    "source_tree": "a1baa2fb4e94f8890d8075b75e0379e7261a673a",
+    "status": "PASS",
+    "runs": [
+      {
+        "path": ".agents/evidence/logs/M6C-F01-postappend-audit-20261031.log",
+        "sha256": "bb5e64d9be722b1431b8fa52d643f535bdd6b7cb756fedfa0bf28ec0f3e6d11e",
+        "started_at_utc": "2026-10-31T09:04:36.085755+00:00",
+        "completed_at_utc": "2026-10-31T09:04:36.316587+00:00",
+        "exit_code": 0
+      },
+      {
+        "path": ".agents/evidence/logs/M6C-F01-postappend-preflight-20261031.log",
+        "sha256": "e7fd76fe163b25d94aa27e1c8f4e39e5ac020898cd211cab5c709086c856355e",
+        "started_at_utc": "2026-10-31T09:04:36.316823+00:00",
+        "completed_at_utc": "2026-10-31T09:04:37.702051+00:00",
+        "exit_code": 0
+      },
+      {
+        "path": ".agents/evidence/logs/M6C-F01-postappend-focused-20261031.log",
+        "sha256": "80d7dd77c11e87a151cf8704bf4d11083ca1fe6b5cdc2c717ca407540e46ff4d",
+        "started_at_utc": "2026-10-31T09:04:37.702281+00:00",
+        "completed_at_utc": "2026-10-31T09:05:34.021452+00:00",
+        "exit_code": 0
+      }
+    ],
+    "provenance_audit_scope_at_execution": {
+      "committed_file_identities": 4,
+      "verified_command_test_logs": 26,
+      "machine_report_logs": 8,
+      "historical_unverified_diagnostics": 2,
+      "errors": 0
+    },
+    "checkout_clean": true
   }
 }
