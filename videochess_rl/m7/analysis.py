@@ -10,6 +10,8 @@ import random
 import statistics
 from typing import Any, Iterable
 
+import chess
+
 from videochess_rl.m6.ledger import (
     build_artifact_manifest,
     iter_verified_hash_chain,
@@ -544,6 +546,34 @@ def _trace_move_metrics(trace: dict[str, Any]) -> dict[str, Any]:
     corrections = cursor.get("unexpected_displacements_corrected", 0)
     if not isinstance(corrections, int) or corrections < 0:
         corrections = 0
+    shadow_terminal_diagnostic = None
+    if terminal.get("runner_stop_category") == "POLICY_INPUT_INVALID":
+        contexts = [turn.get("decision_input") for turn in trace.get("turns", [])
+                    if isinstance(turn, dict) and isinstance(turn.get("decision_input"), dict)]
+        if contexts:
+            context = contexts[-1]
+            history = context.get("history_uci")
+            if not isinstance(history, list) or any(not isinstance(move, str) for move in history):
+                raise AnalysisIntegrityError("policy-input terminal diagnostic lacks a valid ordered move history")
+            board = chess.Board()
+            try:
+                for move in history:
+                    board.push_uci(move)
+            except ValueError as exc:
+                raise AnalysisIntegrityError("policy-input terminal diagnostic has an illegal shadow history") from exc
+            if board.fen(en_passant="fen") != context.get("fen"):
+                raise AnalysisIntegrityError("policy-input terminal diagnostic FEN differs from its replayed history")
+            shadow_outcome = board.outcome(claim_draw=False)
+            if shadow_outcome is not None:
+                shadow_terminal_diagnostic = {
+                    "shadow_termination": shadow_outcome.termination.name,
+                    "shadow_winner": "white" if shadow_outcome.winner is chess.WHITE else "black" if shadow_outcome.winner is chess.BLACK else None,
+                    "shadow_legal_moves_available": board.legal_moves.count() > 0,
+                    "ale_terminated": terminal.get("ale_terminated") is True,
+                    "ale_truncated": terminal.get("ale_truncated") is True,
+                    "ale_reward_total": terminal.get("ale_reward_total"),
+                    "classification": "nonterminal_ALE_policy_stop; retain as incomplete, not a draw",
+                }
     return {
         "initiated_player_moves": initiated,
         "rgb_verified_initiated_player_moves": rgb_verified,
@@ -559,6 +589,7 @@ def _trace_move_metrics(trace: dict[str, Any]) -> dict[str, Any]:
         "policy_latency_samples": latencies,
         "stop_category": terminal.get("runner_stop_category"),
         "stop_reason": terminal.get("runner_stop_reason") or terminal.get("stop_reason"),
+        "shadow_terminal_policy_input_diagnostic": shadow_terminal_diagnostic,
         "incomplete_final_move_category": terminal.get("incomplete_final_move_category"),
         "ale_frames": terminal.get("ale_frames"),
         "post_reset_action_frames": terminal.get("post_reset_action_frames"),
@@ -578,6 +609,18 @@ def _distribution(values: list[float]) -> dict[str, Any]:
         "minimum": ordered[0],
         "maximum": ordered[-1],
     }
+
+
+def _artifact_tree_bytes(root: Path) -> int:
+    if root.is_symlink() or not root.is_dir():
+        raise AnalysisIntegrityError("campaign artifact parent is missing or unsafe")
+    total = 0
+    for path in root.rglob("*"):
+        if path.is_symlink():
+            raise AnalysisIntegrityError(f"symbolic link in campaign artifact parent: {path.name}")
+        if path.is_file():
+            total += path.stat().st_size
+    return total
 
 
 def _read_attempt_tree(attempt_dir: Path, *, repository_root: Path, expected_run_id: str,
@@ -1194,6 +1237,9 @@ def analyze_m7_run(run_dir: str | Path, *, config_path: str | Path) -> dict[str,
         or accounting.get("attempt_process_started_cells") != process_started_count
     ):
         raise AnalysisIntegrityError("M7 summary schedule totals differ from independent raw reconstruction")
+    artifact_parent_total_bytes = _artifact_tree_bytes(root.parent)
+    if artifact_parent_total_bytes > int(config["resource_limits"]["maximum_campaign_artifact_bytes"]):
+        raise AnalysisIntegrityError("final M7 artifact parent exceeds the authorized 8-GiB ceiling")
     comparisons = _m7_comparisons(config, reconstructed["cells"])
     return {
         "run_id": reconstructed["run_id"],
@@ -1210,6 +1256,7 @@ def analyze_m7_run(run_dir: str | Path, *, config_path: str | Path) -> dict[str,
         "paired_comparisons": comparisons,
         "resource_observations": reconstructed["resource_observations"],
         "artifact_bytes": reconstructed["artifact_bytes"],
+        "artifact_parent_total_bytes_after_finalization": artifact_parent_total_bytes,
         "resource_stop_reason": campaign_summary.get("resource_stop_reason"),
         "resource_limits": manifest.get("resource_limits"),
         "episode_limits": manifest.get("episode_limits"),
@@ -1224,6 +1271,8 @@ def analyze_m7_run(run_dir: str | Path, *, config_path: str | Path) -> dict[str,
         "campaign_resources": {
             "pre_campaign": manifest.get("campaign_resource_snapshot_before_first_attempt"),
             "campaign_artifact_bytes_after": campaign_summary.get("campaign_artifact_bytes"),
+            "run_manifest_inventory_bytes_excluding_manifest": reconstructed["artifact_bytes"],
+            "artifact_parent_total_bytes_after_finalization": artifact_parent_total_bytes,
             "free_disk_bytes_after": campaign_summary.get("free_disk_bytes_after_campaign"),
             "peak_process_rss_bytes": campaign_summary.get("maximum_process_rss_bytes"),
             "aggregate_process_cpu_seconds": campaign_summary.get("aggregate_process_cpu_seconds"),

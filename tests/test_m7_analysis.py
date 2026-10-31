@@ -10,6 +10,7 @@ from videochess_rl.m7.analysis import (
     normalized_recorded_outcome,
     paired_m5_comparison,
     paired_interval_with_censoring,
+    _trace_move_metrics,
     recorded_outcome_matches_raw,
     summarize_m5_rows,
 )
@@ -51,6 +52,28 @@ class M7AnalysisTests(unittest.TestCase):
         self.assertEqual(result["point_difference"], 0.5)
         self.assertIsNone(result["ci_95_crossed_cluster"])
         self.assertEqual(result["status"], "unavailable_incomplete_or_censored_pair_set")
+
+    def test_shadow_fivefold_stop_is_not_an_ale_terminal_result(self) -> None:
+        import chess
+
+        cycle = ("g1f3", "g8f6", "f3g1", "f6g8")
+        history = list(cycle * 4)
+        board = chess.Board()
+        for move in history:
+            board.push_uci(move)
+        self.assertEqual(board.outcome(claim_draw=False).termination.name, "FIVEFOLD_REPETITION")
+        metrics = _trace_move_metrics({
+            "turns": [{"decision_input": {"history_uci": history, "fen": board.fen(en_passant="fen")}}],
+            "terminal": {"runner_stop_category": "POLICY_INPUT_INVALID", "ale_terminated": False,
+                         "ale_truncated": False, "ale_reward_total": 0.0},
+        })
+        diagnostic = metrics["shadow_terminal_policy_input_diagnostic"]
+        self.assertEqual(diagnostic["shadow_termination"], "FIVEFOLD_REPETITION")
+        self.assertTrue(diagnostic["shadow_legal_moves_available"])
+        self.assertFalse(diagnostic["ale_terminated"])
+        self.assertFalse(diagnostic["ale_truncated"])
+        self.assertEqual(diagnostic["ale_reward_total"], 0.0)
+        self.assertEqual(diagnostic["classification"], "nonterminal_ALE_policy_stop; retain as incomplete, not a draw")
 
     def test_terminal_only_score_uses_known_wdl_denominator_and_can_be_null(self) -> None:
         summary = classify_terminal_cell([

@@ -135,6 +135,8 @@ class M7AnalysisIntegrationTests(unittest.TestCase):
             self.assertEqual(result["attempt_processes_started"], 90)
             self.assertEqual(result["reset_observed_cells"], 9)
             self.assertEqual(result["summary_reconciliation"]["summary_matches_verified_schedule"], True)
+            expected_parent_bytes = sum(path.stat().st_size for path in run_dir.parent.rglob("*") if path.is_file())
+            self.assertEqual(result["artifact_parent_total_bytes_after_finalization"], expected_parent_bytes)
             for policy in result["policy_summary"]["by_policy"].values():
                 self.assertEqual(policy["scheduled"], 10)
                 self.assertEqual(policy["losses"], 1)

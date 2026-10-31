@@ -158,6 +158,26 @@ def render_markdown(analysis: dict[str, Any], *, created_at: str, analysis_sourc
             f"| `{comparison['comparison']}` | {comparison['training_seed']} | {comparison['matched_terminal_seed_blocks']} | "
             f"{comparison['censored_or_unknown_seed_blocks']} | {_format_score(result.get('point_difference'))} | {_interval_text(result)} |"
         )
+    shadow_stops = [
+        {"policy": policy, **cell, "diagnostic": cell["metrics"]["shadow_terminal_policy_input_diagnostic"]}
+        for policy, summary in m7["policy_summary"]["by_policy"].items()
+        for cell in summary["per_seed_cells"]
+        if cell["metrics"].get("shadow_terminal_policy_input_diagnostic") is not None
+    ]
+    if shadow_stops:
+        lines.extend([
+            "", "#### Shadow-terminal policy-input stops", "",
+            "These stops came from the frozen adapter validating the replayed python-chess history. They remain incomplete because ALE had not emitted a terminal flag; they are not ALE draws or terminal results.",
+            "", "| Policy | ALE seed | Shadow termination | Legal moves available in shadow | ALE terminated/truncated | ALE reward |",
+            "|---|---:|---|---|---|---:|",
+        ])
+        for stop in shadow_stops:
+            diagnostic = stop["diagnostic"]
+            lines.append(
+                f"| `{stop['policy']}` | {stop['ale_seed']} | {diagnostic['shadow_termination']} | "
+                f"{diagnostic['shadow_legal_moves_available']} | {diagnostic['ale_terminated']}/{diagnostic['ale_truncated']} | "
+                f"{diagnostic['ale_reward_total']} |"
+            )
     resources = m7["campaign_resources"]
     pre = resources.get("pre_campaign") or {}
     limits = m7["resource_limits"]
@@ -165,7 +185,7 @@ def render_markdown(analysis: dict[str, Any], *, created_at: str, analysis_sourc
     lines.extend([
         "", "### Resource accounting", "",
         f"Device profile: local CPU; one serialized ALE process. Free disk before campaign: {pre.get('free_disk_bytes')}; after campaign: {resources.get('free_disk_bytes_after')}.",
-        f"Campaign artifact bytes after finalization: {resources.get('campaign_artifact_bytes_after')}; verified manifest bytes: {m7['artifact_bytes']}; peak process RSS: {resources.get('peak_process_rss_bytes')}.",
+        f"Artifact-parent bytes after finalization (including preregistration/preflight logs): {resources.get('artifact_parent_total_bytes_after_finalization')}; run-manifest inventory bytes excluding its manifest file: {resources.get('run_manifest_inventory_bytes_excluding_manifest')}; peak process RSS: {resources.get('peak_process_rss_bytes')}.",
         f"Frozen limits: {limits['maximum_wall_seconds_per_attempt']} seconds/attempt; {limits['maximum_campaign_artifact_bytes']} artifact bytes; at least {limits['minimum_free_bytes_before_first_attempt']} free bytes before start; aggregate gameplay cap {limits['maximum_aggregate_gameplay_seconds']} seconds.",
         f"Expected gameplay duration was approximately {expected_time['hours']} hours from {expected_time['historical_basis']}; this is a planning estimate, not a guarantee. The aggregate cap equals 45 hours, plus separately measured setup/recovery.",
         f"Aggregate process CPU seconds: {resources.get('aggregate_process_cpu_seconds')}; observed process wall seconds: {resources.get('aggregate_observed_process_wall_seconds')}; whole campaign session seconds: {resources.get('campaign_observed_session_wall_seconds')}.",
