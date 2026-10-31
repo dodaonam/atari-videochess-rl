@@ -1,0 +1,47 @@
+command: PYTHONDONTWRITEBYTECODE=1 python3 scripts/agent_preflight.py
+result: FAIL: preflight detected the same M6-001 verified evidence path was absent from the clean repository checkout.
+Exit code: 1
+execution_environment: clean detached worktree; Python 3.12.3 project environment; local CPU; private M5/M4 manifests were hash-verified before test execution
+git_head: f9622885f7b4ca750fac4ab7a1d99bed808d1386
+git_tree: d936eca1deefbb8797e38f7eaaf7a7f7572cd2ef
+started_at_utc: 2026-10-31T08:55:26.523541+00:00
+completed_at_utc: 2026-10-31T08:55:27.908882+00:00
+wall_elapsed_seconds: 1.385
+
+--- output ---
+Agent context preflight: FAIL
+Governance: G3 (approved); approved: G0, G1, G2, G3
+Next engineering milestone: M7 — not started (pending user approval)
+Tasks: done=15, in_progress=0, pending=0, blocked=0, cancelled=0
+Completed task IDs: G1-001, G1-002, G1-003, G1-004, G1-005, G1-006, G1-007, G1-008, M0-001, M1-001, M2-001, M3-001, M4-001, M5-001, M6-001
+In progress task IDs: none
+Pending task IDs: none
+Blocked task IDs: none
+Active blockers: none recorded
+Open confirmations:
+  O-02: Whether full-game performance on actual ALE is a hard submission requirement or a research target with an accepted fallback.
+  O-03: Future course checkpoints and any date changes. The owner confirmed the presentation date is Tuesday, 2026-11-03.
+  O-04: Actual Colab entitlement/quota, GPU availability, cloud storage, and whether paid compute is allowed. The owner selected local CPU for M3; no external compute/storage is used in this mission.
+  O-05: ALE/ROM runtime behavior, RAM mapping, game modes, difficulty behavior, and official evaluation settings.
+  O-06: Public redistribution rights and any new source/use beyond the scoped May 2022 archive. For M3, the owner authorized bounded internal academic use of the exact Lichess Elite May 2022 package with local retention and no redistribution; its third-party package license remains unstated/unverified.
+  O-07: Broader Stockfish roles: benchmark opponent, offline engine evaluation, and instructor-specific limits outside the M3 teacher-label scope.
+  O-08: Opponent pool and rating method for any Elo claim.
+Relevant decisions: docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md, docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md, docs/02-management/decisions/ADR-0003-pretraining-model-interface.md
+Acceptance criteria recognized: 51
+Last verified Git: feature/m6-post-merge-closeout @ fc34f34d850e2830cbc0d9a14d331a197d6ae062
+Live Git: DETACHED @ f9622885f7b4ca750fac4ab7a1d99bed808d1386
+Roadmap source: exact match; 19 sections; SHA-256 fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf
+Git recovery: expected commit/checkout transition; portable tracked-file manifest matches.
+Workspace Git status: differs from checkpoint
+Portable tracked baseline: matches
+Portable Git index: matches checkpoint
+Hashed ordinary-file snapshot: matches
+Content hashes: 898 ordinary files verified by SHA-256.
+Not content-verified by this hash map: PROJECT_STATE self-reference, chat history/credential-like paths, temp files, symlinks, and the excluded directories listed below.
+Excluded directories: .agents/state/checkpoint-history, artifacts
+Artifact directories requiring independent manifests: artifacts
+Last verified dirty paths (0): none
+Dirty paths no longer present since checkpoint: A  .agents/evidence/M6C-F01-provenance-audit-20261031.json; A  .agents/evidence/M6C-F01-provenance-correction-20261031.md; A  .agents/evidence/logs/M6C-F01-final-audit-20261031.log; A  .agents/evidence/logs/M6C-F01-final-preflight-20261031.log; A  .agents/evidence/logs/M6C-F01-focused-tests-20261031.log; A  .agents/evidence/logs/M6C-F01-focused-tests-fixture-diagnostic-20261031.log; A  .agents/evidence/logs/M6C-F01-full-suite-20261031.log; M  .agents/plans/M06-atari-integration.md; M  .agents/state/VERIFIED_FINDINGS.md; M  .agents/tasks/BACKLOG.yaml; M  tests/test_agent_context.py
+Next user action: Await a separate independent PM decision on G4. M6-001 is accepted and integrated. M7 is not started or authorized and requires separate direct owner authorization after the applicable G4 decision.
+WARNING ARTIFACT_MANIFEST_REQUIRED [.]: Artifact/data directories are excluded from content hashing and require independent manifest verification: artifacts.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[14]]: Verified command/test evidence requires an existing repository-relative log_path.

@@ -45,6 +45,11 @@ def _sha256(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def _committed_path(root: Path, relpath: str) -> bool:
+    """Return whether the evidence path exists in the current committed tree."""
+    return _git(root, "cat-file", "-e", f"HEAD:{relpath}", check=False).returncode == 0
+
+
 def audit(repo: Path) -> dict[str, Any]:
     root = repo.resolve()
     errors: list[str] = []
@@ -109,6 +114,8 @@ def audit(repo: Path) -> dict[str, Any]:
             historical_path = item.get("historical_log_path")
             historical_digest = item.get("historical_log_sha256")
             historical_revision = item.get("historical_git_revision")
+            if isinstance(historical_path, str) and not _committed_path(root, historical_path):
+                errors.append(f"historical diagnostic log is not committed at HEAD: {historical_path}")
             if not isinstance(historical_path, str) or not (root / historical_path).is_file():
                 errors.append(f"historical diagnostic log is missing: {historical_path}")
             elif _sha256((root / historical_path).read_bytes()) != historical_digest:
@@ -125,6 +132,8 @@ def audit(repo: Path) -> dict[str, Any]:
         if not _timestamp(provenance.get("executed_at_utc")) or not _timestamp(provenance.get("recorded_at_utc")):
             errors.append(f"{relpath}: command timestamps are invalid")
         path = root / relpath
+        if not _committed_path(root, relpath):
+            errors.append(f"{relpath}: retained command log is not committed at HEAD")
         if not path.is_file():
             errors.append(f"{relpath}: retained command log is missing")
             continue
@@ -176,6 +185,8 @@ def audit(repo: Path) -> dict[str, Any]:
         if not log_rel:
             continue
         path = root / log_rel
+        if not _committed_path(root, log_rel):
+            errors.append(f"machine report log is not committed at HEAD {log_rel}")
         if not path.is_file():
             errors.append(f"machine report references missing log {log_rel}")
             continue

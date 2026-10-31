@@ -1360,6 +1360,21 @@ class AgentContextRecoveryTests(unittest.TestCase):
         self.assertTrue(all(item["provenance_status"] == "verified" for item in result["command_log_evidence"]))
         self.assertGreaterEqual(sum(item["execution_status"] == "FAIL" for item in result["command_log_evidence"]), 1)
 
+    def test_m6_closeout_provenance_rejects_existing_but_uncommitted_log(self) -> None:
+        if os.environ.get("ATARI_VIDEOCHESS_SKIP_CLONE_RECOVERY_TEST") == "1":
+            self.skipTest("synthetic one-commit portability fixture omits the historical M6 closeout revisions")
+        real_git = audit_m6_closeout_provenance._git
+
+        def hide_head_evidence(root: Path, *args: str, check: bool = True) -> subprocess.CompletedProcess[bytes]:
+            if len(args) >= 3 and args[:2] == ("cat-file", "-e") and args[2].startswith("HEAD:.agents/evidence/logs/"):
+                return subprocess.CompletedProcess(["git", *args], 1, b"", b"")
+            return real_git(root, *args, check=check)
+
+        with patch.object(audit_m6_closeout_provenance, "_git", side_effect=hide_head_evidence):
+            result = audit_m6_closeout_provenance.audit(REPO)
+        self.assertFalse(result["ok"])
+        self.assertTrue(any("not committed at HEAD" in error for error in result["errors"]))
+
     def test_start_authorized_boolean_without_direct_record_is_rejected(self) -> None:
         state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
         state["engineering"].pop("start_authorization_record", None)

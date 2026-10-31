@@ -1,0 +1,15 @@
+command: PYTHONDONTWRITEBYTECODE=1 python3 scripts/audit_m6_closeout_provenance.py --json
+result: FAIL: audit detected that a referenced consolidated audit log existed locally but was not committed at HEAD.
+Exit code: 1
+execution_environment: clean detached worktree; Python 3.12.3 project environment; local CPU; private M5/M4 manifests were hash-verified before test execution
+git_head: f9622885f7b4ca750fac4ab7a1d99bed808d1386
+git_tree: d936eca1deefbb8797e38f7eaaf7a7f7572cd2ef
+started_at_utc: 2026-10-31T08:55:26.403424+00:00
+completed_at_utc: 2026-10-31T08:55:26.521588+00:00
+wall_elapsed_seconds: 0.118
+
+--- output ---
+M6 closeout provenance audit: FAIL
+Verified file entries: 4; command logs: 13; machine report logs: 8
+Historical diagnostics: 2
+ERROR: .agents/evidence/logs/M6C-F01-consolidated-audit-20261031.log: retained command log is missing

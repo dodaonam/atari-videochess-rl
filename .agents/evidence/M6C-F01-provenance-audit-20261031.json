@@ -312,7 +312,7 @@
     "g4_approved": false,
     "m7_authorized": false
   },
-  "status": "PASS_AWAITING_FRESH_INDEPENDENT_PM_REVIEW",
+  "status": "CORRECTIVE_VERIFICATION_IN_PROGRESS",
   "scope": {
     "m6_001_entries_audited": 20,
     "committed_file_identities": 4,
@@ -320,5 +320,60 @@
     "historical_unverified_diagnostics": 2,
     "machine_report_logs": 8,
     "errors": 0
+  },
+  "clean_checkout_diagnostic": {
+    "status": "FAIL_DIAGNOSTIC_BEFORE_REMEDIATION",
+    "source_commit": "f9622885f7b4ca750fac4ab7a1d99bed808d1386",
+    "source_tree": "d936eca1deefbb8797e38f7eaaf7a7f7572cd2ef",
+    "root_cause": "The prior auditor read a .log file that existed in the original workspace but was ignored by Git and absent from the committed tree. The isolated full-suite command also omitted the pre-existing project Stockfish readiness directory from PATH.",
+    "test_results": {
+      "focused": {
+        "tests": 109,
+        "passed": 103,
+        "failed": 6,
+        "exit_code": 1
+      },
+      "full_suite": {
+        "tests": 453,
+        "passed": 446,
+        "failed": 7,
+        "exit_code": 1
+      }
+    },
+    "audit_and_preflight": {
+      "provenance_audit_exit_code": 1,
+      "preflight_exit_code": 1
+    },
+    "logs": [
+      {
+        "path": ".agents/evidence/logs/M6C-F01-clean-checkout-focused-diagnostic-20261031.log",
+        "sha256": "e3fc515a3cbd84cbfba3c17a29aafb88f26fad23d1dd1c42fd9e1d7a84b7e240",
+        "started_at_utc": "2026-10-31T08:52:00.916253+00:00",
+        "exit_code": 1
+      },
+      {
+        "path": ".agents/evidence/logs/M6C-F01-clean-checkout-full-suite-diagnostic-20261031.log",
+        "sha256": "15de17685d85025a465a533ae23aca6d665f6cb49063a25839975efcc3852cfc",
+        "started_at_utc": "2026-10-31T08:52:42.246566+00:00",
+        "exit_code": 1
+      },
+      {
+        "path": ".agents/evidence/logs/M6C-F01-clean-checkout-audit-diagnostic-20261031.log",
+        "sha256": "e1e4a5dad292ab4fa8f8f59816a7f121df7dbf3e5356da7e882e356b6495d907",
+        "started_at_utc": "2026-10-31T08:55:26.403424+00:00",
+        "exit_code": 1
+      },
+      {
+        "path": ".agents/evidence/logs/M6C-F01-clean-checkout-preflight-diagnostic-20261031.log",
+        "sha256": "9015261b5e19e405ead32237720448ad808c09b921a0888e63cc9377b42fbc08",
+        "started_at_utc": "2026-10-31T08:55:26.523541+00:00",
+        "exit_code": 1
+      }
+    ]
+  },
+  "provenance_audit_implementation": {
+    "change": "All evidence logs must now exist in the committed HEAD tree, not only in the working filesystem.",
+    "regression_test": "test_m6_closeout_provenance_rejects_existing_but_uncommitted_log",
+    "status": "implemented_pending_clean_final_verification"
   }
 }

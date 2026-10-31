@@ -4954,11 +4954,139 @@
             "log_path": ".agents/evidence/logs/M6C-F01-consolidated-audit-20261031.log",
             "log_sha256": "c970ef71710bc5a65d71c335dc0b71cb304a7040546723d61f279e5b8dde7f2c"
           }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
+          "result": "FAIL: 109 tests; 103 passed and 6 failed because the consolidated audit log was present only as an ignored local file, not committed.",
+          "detail": "Clean detached checkout diagnostic at f9622885f7b4ca750fac4ab7a1d99bed808d1386; retained honestly as a failed execution before correction. clean focused tests.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:52:00Z",
+            "recorded_at_utc": "2026-10-31T08:57:15Z",
+            "exit_code": 1,
+            "git_revision": "f9622885f7b4ca750fac4ab7a1d99bed808d1386",
+            "log_path": ".agents/evidence/logs/M6C-F01-clean-checkout-focused-diagnostic-20261031.log",
+            "log_sha256": "e3fc515a3cbd84cbfba3c17a29aafb88f26fad23d1dd1c42fd9e1d7a84b7e240"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<accepted-M5-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<accepted-M4-r4-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<checkpoint-resolved-by-SHA> PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -v",
+          "result": "FAIL: 453 tests; 446 passed and 7 failed. Six failures came from the uncommitted audit log; one smoke test lacked the Stockfish PATH entry.",
+          "detail": "Clean detached checkout diagnostic at f9622885f7b4ca750fac4ab7a1d99bed808d1386; retained honestly as a failed execution before correction. clean full suite.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:52:42Z",
+            "recorded_at_utc": "2026-10-31T08:57:15Z",
+            "exit_code": 1,
+            "git_revision": "f9622885f7b4ca750fac4ab7a1d99bed808d1386",
+            "log_path": ".agents/evidence/logs/M6C-F01-clean-checkout-full-suite-diagnostic-20261031.log",
+            "log_sha256": "15de17685d85025a465a533ae23aca6d665f6cb49063a25839975efcc3852cfc"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/audit_m6_closeout_provenance.py --json",
+          "result": "FAIL: audit detected that a referenced consolidated audit log existed locally but was not committed at HEAD.",
+          "detail": "Clean detached checkout diagnostic at f9622885f7b4ca750fac4ab7a1d99bed808d1386; retained honestly as a failed execution before correction. clean provenance audit.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:55:26Z",
+            "recorded_at_utc": "2026-10-31T08:57:15Z",
+            "exit_code": 1,
+            "git_revision": "f9622885f7b4ca750fac4ab7a1d99bed808d1386",
+            "log_path": ".agents/evidence/logs/M6C-F01-clean-checkout-audit-diagnostic-20261031.log",
+            "log_sha256": "e1e4a5dad292ab4fa8f8f59816a7f121df7dbf3e5356da7e882e356b6495d907"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/agent_preflight.py",
+          "result": "FAIL: preflight detected the same M6-001 verified evidence path was absent from the clean repository checkout.",
+          "detail": "Clean detached checkout diagnostic at f9622885f7b4ca750fac4ab7a1d99bed808d1386; retained honestly as a failed execution before correction. clean canonical preflight.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:55:26Z",
+            "recorded_at_utc": "2026-10-31T08:57:15Z",
+            "exit_code": 1,
+            "git_revision": "f9622885f7b4ca750fac4ab7a1d99bed808d1386",
+            "log_path": ".agents/evidence/logs/M6C-F01-clean-checkout-preflight-diagnostic-20261031.log",
+            "log_sha256": "9015261b5e19e405ead32237720448ad808c09b921a0888e63cc9377b42fbc08"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
+          "result": "FAIL: 109 tests; 103 passed and 6 failed because the consolidated audit log was present only as an ignored local file, not committed.",
+          "detail": "clean focused suite; diagnostic failure before committed-log check was added; source revision f9622885f7b4ca750fac4ab7a1d99bed808d1386. Retained as a verified execution record with its nonzero exit, not as a passing check.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:52:00Z",
+            "recorded_at_utc": "2026-10-31T08:57:40Z",
+            "exit_code": 1,
+            "git_revision": "f9622885f7b4ca750fac4ab7a1d99bed808d1386",
+            "log_path": ".agents/evidence/logs/M6C-F01-clean-checkout-focused-diagnostic-20261031.log",
+            "log_sha256": "e3fc515a3cbd84cbfba3c17a29aafb88f26fad23d1dd1c42fd9e1d7a84b7e240"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<accepted-M5-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<accepted-M4-r4-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<checkpoint-resolved-by-SHA> PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -v",
+          "result": "FAIL: 453 tests; 446 passed and 7 failed. Six failures came from the uncommitted audit log; one smoke test lacked the Stockfish PATH entry.",
+          "detail": "clean full suite; diagnostic failure also lacked Stockfish readiness PATH; source revision f9622885f7b4ca750fac4ab7a1d99bed808d1386. Retained as a verified execution record with its nonzero exit, not as a passing check.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:52:42Z",
+            "recorded_at_utc": "2026-10-31T08:57:40Z",
+            "exit_code": 1,
+            "git_revision": "f9622885f7b4ca750fac4ab7a1d99bed808d1386",
+            "log_path": ".agents/evidence/logs/M6C-F01-clean-checkout-full-suite-diagnostic-20261031.log",
+            "log_sha256": "15de17685d85025a465a533ae23aca6d665f6cb49063a25839975efcc3852cfc"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/audit_m6_closeout_provenance.py --json",
+          "result": "FAIL: audit detected that a referenced consolidated audit log existed locally but was not committed at HEAD.",
+          "detail": "clean provenance audit; caught ignored log absent from HEAD; source revision f9622885f7b4ca750fac4ab7a1d99bed808d1386. Retained as a verified execution record with its nonzero exit, not as a passing check.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:55:26Z",
+            "recorded_at_utc": "2026-10-31T08:57:40Z",
+            "exit_code": 1,
+            "git_revision": "f9622885f7b4ca750fac4ab7a1d99bed808d1386",
+            "log_path": ".agents/evidence/logs/M6C-F01-clean-checkout-audit-diagnostic-20261031.log",
+            "log_sha256": "e1e4a5dad292ab4fa8f8f59816a7f121df7dbf3e5356da7e882e356b6495d907"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/agent_preflight.py",
+          "result": "FAIL: preflight detected the same M6-001 verified evidence path was absent from the clean repository checkout.",
+          "detail": "clean canonical preflight; caught referenced evidence log absent from checkout; source revision f9622885f7b4ca750fac4ab7a1d99bed808d1386. Retained as a verified execution record with its nonzero exit, not as a passing check.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:55:26Z",
+            "recorded_at_utc": "2026-10-31T08:57:40Z",
+            "exit_code": 1,
+            "git_revision": "f9622885f7b4ca750fac4ab7a1d99bed808d1386",
+            "log_path": ".agents/evidence/logs/M6C-F01-clean-checkout-preflight-diagnostic-20261031.log",
+            "log_sha256": "9015261b5e19e405ead32237720448ad808c09b921a0888e63cc9377b42fbc08"
+          }
         }
       ],
       "next_action": "",
       "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],
-  "updated_at_utc": "2026-10-31T08:48:00Z"
+  "updated_at_utc": "2026-10-31T08:57:40Z"
 }
