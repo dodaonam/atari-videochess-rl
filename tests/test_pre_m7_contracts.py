@@ -56,10 +56,14 @@ class PreM7ContractTests(unittest.TestCase):
         for task_id in m7_ids:
             task = self.tasks[task_id]
             self.assertEqual(task["milestone"], "M7")
-            self.assertTrue(task["next_action"].strip())
             self.assertFalse(task["blocker_ids"])
-        self.assertEqual(self.tasks["M7-001"]["status"], "in_progress")
-        for task_id in m7_ids[1:]:
+            if task["status"] in {"pending", "in_progress", "blocked"}:
+                self.assertTrue(task["next_action"].strip())
+            else:
+                self.assertEqual(task["next_action"], "")
+        for task_id in ("M7-001", "M7-002", "M7-003"):
+            self.assertEqual(self.tasks[task_id]["status"], "done")
+        for task_id in ("M7-004", "M7-005"):
             self.assertEqual(self.tasks[task_id]["status"], "pending")
         self.assertEqual(self.tasks["M7-001"]["depends_on"], ["M4-001", "M5-001", "M6-001", "M2-001", "M3-001"])
         self.assertEqual(self.tasks["M7-002"]["depends_on"], ["M7-001"])
@@ -77,7 +81,7 @@ class PreM7ContractTests(unittest.TestCase):
         self.assertEqual(engineering["start_authorization_record"]["authorization_id"], "M7-AUTH-20261031-OPTION-B")
         self.assertEqual(engineering["start_authorization_record"]["task_id"], "M7-001")
         self.assertEqual(engineering["start_authorization_record"]["evidence_path"], ".agents/evidence/M7-001-authorization-20261031.md")
-        self.assertEqual(self.state["task_refs"], {"active_task_id": "M7-001", "next_task_id": "M7-001"})
+        self.assertEqual(self.state["task_refs"], {"active_task_id": None, "next_task_id": "M7-004"})
         self.assertEqual(self.state["governance"]["approved_gates"], ["G0", "G1", "G2", "G3"])
         self.assertEqual(self.state["governance"]["next_governance_gate"], "G4")
         auth_evidence = (REPO / ".agents/evidence/M7-001-authorization-20261031.md").read_text(encoding="utf-8")

@@ -1,0 +1,20 @@
+{
+  "command": "PATH=<existing project venv>/share/stockfish:$PATH VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<owner-local accepted M5 root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<owner-local accepted M5 Warm 20261104 post-RL snapshot> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<owner-local accepted M4 r4 root> PYTHONDONTWRITEBYTECODE=1 <existing project Python 3.12.3 venv>/bin/python -m unittest discover -s tests -v",
+  "exit_code": 1,
+  "failure_count": 2,
+  "failure_diagnosis": [
+    "The selected M5 compatibility test received a mistyped checkpoint filename; the artifact root and manifest were correct. The next invocation will use the exact accepted relative path from the frozen M7 configuration.",
+    "The M7 gate contract test still asserted the historical M7-001-in-progress state. It now asserts M7-001 through M7-003 are complete and M7-004/005 remain pending behind G4."
+  ],
+  "finished_at_utc": "2026-10-31T20:24:10Z",
+  "log_bytes": 85892,
+  "log_path": ".agents/evidence/logs/M7-full-suite-second-failure-20261101-sanitized.log",
+  "log_sha256": "52617f04c0992452441b0dc804f1d1c557d844b56e42bc215256ab87a7d941b0",
+  "result": "FAILED: see retained sanitized log.",
+  "schema": "videochess-command-evidence/1.0",
+  "skipped": 0,
+  "source_git_revision": "21d980f815df4da78ff9632f5347ecb035f78cfa",
+  "started_at_utc": "2026-10-31T20:21:14Z",
+  "test_count": 492,
+  "working_tree_dirty": false
+}
