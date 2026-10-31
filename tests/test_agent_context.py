@@ -1348,6 +1348,8 @@ class AgentContextRecoveryTests(unittest.TestCase):
         self.assertTrue(report["ok"], report["errors"])
 
     def test_m6_closeout_verified_provenance_is_bound_to_committed_files_and_logs(self) -> None:
+        if os.environ.get("ATARI_VIDEOCHESS_SKIP_CLONE_RECOVERY_TEST") == "1":
+            self.skipTest("synthetic one-commit portability fixture omits the historical M6 closeout revisions")
         result = audit_m6_closeout_provenance.audit(REPO)
         self.assertTrue(result["ok"], json.dumps(result, indent=2, ensure_ascii=False))
         self.assertEqual(len(result["file_evidence"]), 4)
