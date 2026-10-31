@@ -1,0 +1,14 @@
+{
+  "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/run_m7_campaign.py --preflight-only --m4-artifact-root <owner-local accepted M4 r4 root> --m5-artifact-root <owner-local accepted M5 root> --artifact-parent artifacts/m7-option-b",
+  "exit_code": 0,
+  "finished_at_utc": "2026-10-31T16:56:29Z",
+  "free_bytes": 50057015296,
+  "official_attempts_started": 0,
+  "output_path": ".agents/evidence/M7-pre-run-final-preflight-20261031.json",
+  "output_sha256": "1ca6c670905aab13e22034ecfd65ee54ad14ab8e3f4212ac9c77b846c9077013",
+  "prospective_run_id": "m7-option-b-20261031-v1-8387b289432f",
+  "result": "passed",
+  "schema": "videochess-command-evidence/1.0",
+  "source_git_revision": "58a604f2bd4bcd9113a047ee709a80ee97bd02a6",
+  "started_at_utc": "2026-10-31T16:56:12Z"
+}

@@ -5203,8 +5203,8 @@
       "id": "M7-001",
       "title": "Reconcile accepted populations and run only the authorized comparison set",
       "milestone": "M7",
-      "status": "in_progress",
-      "next_action": "Reverify accepted M4/M5/M6 artifacts, freeze the owner-authorized Option B roster, seeds, run identity, and execution configuration, then execute the 90 scheduled ALE cells within the recorded local resource envelope.",
+      "status": "done",
+      "next_action": "",
       "depends_on": [
         "M4-001",
         "M5-001",
@@ -5231,6 +5231,75 @@
             "git_revision": "257fff94c64bc584797e0d191920a57befcae62c",
             "log_path": ".agents/evidence/M7-001-authorization-20261031.md"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M7-001-acceptance-20261101.md",
+          "detail": "M7-01 acceptance evidence: frozen nine-policy mapping, verified inputs, complete 90-cell local ALE schedule, immutable raw manifests, resource accounting, and honest outcome classification.",
+          "result": "PASS: 90/90 started and reset-observed; raw schedule and summaries independently reconciled; 60 terminal losses and 30 incomplete; all hashes verified.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T20:17:00Z",
+            "exit_code": null,
+            "git_revision": "fe2cc4cc5e477841ffbc9368235eb9c5675f2f74",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 <approved project Python venv>/bin/python scripts/run_m7_campaign.py --config configs/m7/m7-option-b-1.0.0.json --m4-artifact-root <owner-local accepted M4 r4 root> --m5-artifact-root <owner-local accepted M5 root> --artifact-parent artifacts/m7-option-b",
+          "result": "PASS: 90 scheduled cells started and reset-observed; run resource stop none.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T16:57:11Z",
+            "recorded_at_utc": "2026-10-31T20:17:00Z",
+            "exit_code": 0,
+            "git_revision": "58a604f2bd4bcd9113a047ee709a80ee97bd02a6",
+            "log_path": ".agents/evidence/logs/M7-campaign-run-20261031-sanitized.log"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M7-input-verification-prerun-20261031.json",
+          "detail": "Read-only M4 r4, M5, and distinct M6 v1/v2 root/checkpoint/sidecar verification before the campaign.",
+          "result": "PASS: accepted root and selected checkpoint/sidecar identities match the frozen M7 config; no historical artifact was modified.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T20:17:00Z",
+            "exit_code": null,
+            "git_revision": "58a604f2bd4bcd9113a047ee709a80ee97bd02a6",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M7-pre-run-final-preflight-20261031.json",
+          "detail": "Final read-only preflight immediately before official campaign startup.",
+          "result": "PASS: nine policies, exact 90-cell schedule, ROM/profile, runtime lock, conflict scan, free-space reserve, and output isolation verified; zero official cells had started.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T20:17:00Z",
+            "exit_code": null,
+            "git_revision": "58a604f2bd4bcd9113a047ee709a80ee97bd02a6",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M7-non-result-smoke-20261031.json",
+          "detail": "Non-result-bearing policy and RGB reset smoke, excluded from official metrics.",
+          "result": "PASS: nine adapters, 18 valid legal choices, repeated reset RGB hashes match; zero ALE actions and zero official attempts.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T20:17:00Z",
+            "exit_code": null,
+            "git_revision": "58a604f2bd4bcd9113a047ee709a80ee97bd02a6",
+            "log_path": null
+          }
         }
       ],
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
@@ -5239,8 +5308,8 @@
       "id": "M7-002",
       "title": "Analyze outcomes, uncertainty, missingness, and claims",
       "milestone": "M7",
-      "status": "pending",
-      "next_action": "Await M7-001 completion within its directly authorized scope; keep terminal, truncated, incomplete, and censored outcomes separate.",
+      "status": "done",
+      "next_action": "",
       "depends_on": [
         "M7-001"
       ],
@@ -5249,15 +5318,57 @@
         "M7-02"
       ],
       "blocker_ids": [],
-      "evidence": [],
+      "evidence": [
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M7-002-acceptance-20261101.md",
+          "detail": "M7-02 raw-derived statistical analysis, track separation, denominators, censoring, controller/resource metrics, uncertainty, claims, and limitations.",
+          "result": "PASS: five historical/new evidence tracks reconstructed separately; all M7 statuses and denominators match the verified hash-chained ledger; unsupported intervals and conclusions are withheld.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T20:17:00Z",
+            "exit_code": null,
+            "git_revision": "fe2cc4cc5e477841ffbc9368235eb9c5675f2f74",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M7-analysis-final-r2-20261101/m7-analysis.json",
+          "detail": "Machine-readable raw reconstruction and statistical outputs, including all per-seed/per-policy records, paired analyses, bootstrap definition, and resource observations.",
+          "result": "PASS: final bundle manifest SHA-256 af084e1cd99a6541c19cad2a1dfa163129a3cb873c393ec3669711e5d7b4ffa1; raw M4/M5/M6/M7 evidence verified.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T20:17:00Z",
+            "exit_code": null,
+            "git_revision": "fe2cc4cc5e477841ffbc9368235eb9c5675f2f74",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 <existing project Python 3.12.3 venv>/bin/python scripts/analyze_m7_campaign.py --config configs/m7/m7-option-b-1.0.0.json --m7-run-dir <owner-local M7 run directory> --m4-root <owner-local accepted M4 r4 root> --m5-root <owner-local accepted M5 root> --m6-v1-root <owner-local M6 v1 root> --m6-v2-root <owner-local M6 v2 root> --output-dir .agents/evidence/M7-analysis-final-r2-20261101",
+          "result": "PASS: final raw-derived M4/M5/M6 v1/v2/M7 analysis; schedule and summary reconcile.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T20:04:40Z",
+            "recorded_at_utc": "2026-10-31T20:17:00Z",
+            "exit_code": 0,
+            "git_revision": "fe2cc4cc5e477841ffbc9368235eb9c5675f2f74",
+            "log_path": ".agents/evidence/logs/M7-analysis-final-r2-20261101.log"
+          }
+        }
+      ],
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
     },
     {
       "id": "M7-003",
       "title": "Decide whether Elo is reportable",
       "milestone": "M7",
-      "status": "pending",
-      "next_action": "Await M7-002. Report Elo only if the owner-approved calibrated-pool and uncertainty conditions are met; otherwise record that Elo is not reported.",
+      "status": "done",
+      "next_action": "",
       "depends_on": [
         "M7-002"
       ],
@@ -5266,7 +5377,22 @@
         "M7-03"
       ],
       "blocker_ids": [],
-      "evidence": [],
+      "evidence": [
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M7-003-acceptance-20261101.md",
+          "detail": "M7-03 formal Elo reportability assessment against protocol pool, anchor, diversity, schedule, terminal-count, color, model, uncertainty, and dependence criteria.",
+          "result": "PASS: Elo not reported because the calibrated opponent pool/design is unapproved or unavailable; no unapproved match schedule or 1500 anchor was added.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T20:17:00Z",
+            "exit_code": null,
+            "git_revision": "fe2cc4cc5e477841ffbc9368235eb9c5675f2f74",
+            "log_path": null
+          }
+        }
+      ],
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
     },
     {
@@ -5274,7 +5400,7 @@
       "title": "Prepare evidence-linked delivery documents",
       "milestone": "M7",
       "status": "pending",
-      "next_action": "Await M7-001–003 completion and independent PM G4 approval. Prepare the report, model card, usage guide, and handover from verified identities.",
+      "next_action": "Wait for independent PM approval of G4 and verification of that decision in canonical state. Do not start delivery work while G4 is unapproved.",
       "depends_on": [
         "M7-003"
       ],
@@ -5291,7 +5417,7 @@
       "title": "Record release and publication disposition",
       "milestone": "M7",
       "status": "pending",
-      "next_action": "Await G4/G5 review and separate direct owner release authorization. Without explicit release authorization, record a no-release disposition.",
+      "next_action": "Wait for M7-004 and G4/G5 independent review. Record no release unless a separate direct owner release authorization is received.",
       "depends_on": [
         "M7-004"
       ],

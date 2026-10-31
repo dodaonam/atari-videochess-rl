@@ -34,3 +34,7 @@ test_shared_seed_grid_has_one_cell_for_each_frozen_policy_seed (tests.test_m7_re
 Ran 29 tests in 1.971s
 
 OK
+
+Command: PYTHONDONTWRITEBYTECODE=1 <existing project Python 3.12.3 venv>/bin/python -m unittest tests.test_m7_protocol tests.test_m7_analysis tests.test_m7_analysis_integration tests.test_m7_policies tests.test_m7_campaign tests.test_m7_report -v
+Result: PASS: 29 focused M7 tests.
+Exit code: 0

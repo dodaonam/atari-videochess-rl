@@ -1,0 +1,14 @@
+{
+  "command": "PYTHONDONTWRITEBYTECODE=1 <existing project Python 3.12.3 venv>/bin/python scripts/analyze_m7_campaign.py --config configs/m7/m7-option-b-1.0.0.json --m7-run-dir <owner-local M7 run directory> --m4-root <owner-local accepted M4 r4 root> --m5-root <owner-local accepted M5 root> --m6-v1-root <owner-local M6 v1 root> --m6-v2-root <owner-local M6 v2 root> --output-dir .agents/evidence/M7-analysis-final-r2-20261101",
+  "exit_code": 0,
+  "finished_at_utc": "2026-10-31T20:07:10Z",
+  "log_bytes": 766,
+  "log_path": ".agents/evidence/logs/M7-analysis-final-r2-20261101.log",
+  "log_sha256": "a29e66103d81da2fd06440dbf9453526603fd875b2f1d72dbaf37aa1af37fd8d",
+  "output_dir": ".agents/evidence/M7-analysis-final-r2-20261101",
+  "result": "passed",
+  "schema": "videochess-command-evidence/1.0",
+  "source_git_revision": "fe2cc4cc5e477841ffbc9368235eb9c5675f2f74",
+  "started_at_utc": "2026-10-31T20:04:40Z",
+  "working_tree_dirty": true
+}

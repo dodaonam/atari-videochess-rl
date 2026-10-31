@@ -1,0 +1,72 @@
+{
+  "check_records": [
+    {
+      "exit_code": 0,
+      "finished_at_utc": "2026-10-31T16:55:26Z",
+      "name": "pre-run-preflight.json",
+      "output_path": ".agents/evidence/M7-pre-run-preflight-20261031.json",
+      "output_sha256": "44e9bcbd06ba1509243b491007d3d4340230c81ba81ff4b9e257b1ad961a6b75",
+      "started_at_utc": "2026-10-31T16:55:09Z"
+    },
+    {
+      "exit_code": 0,
+      "finished_at_utc": "2026-10-31T16:55:43Z",
+      "name": "non-result-smoke.json",
+      "output_path": ".agents/evidence/M7-non-result-smoke-20261031.json",
+      "output_sha256": "948fd208a79749cf2e5974f9d56f6285683d8256aeb168d220db8a3041458bfd",
+      "started_at_utc": "2026-10-31T16:55:26Z"
+    }
+  ],
+  "checks": [
+    {
+      "configuration_sha256": "8ec8a42a808f4ffc410c938b4400d02461f96823eb5ac1b16cbd6e0d5e35f255",
+      "exit_code": 0,
+      "finished_at_utc": "2026-10-31T16:55:26Z",
+      "free_bytes": 50057109504,
+      "mode": "--preflight-only",
+      "name": "pre-run-preflight.json",
+      "no_conflicting_m7_run": true,
+      "official_attempts_started": 0,
+      "output_path": "artifacts/m7-option-b/pre-run-preflight.json",
+      "output_sha256": "44e9bcbd06ba1509243b491007d3d4340230c81ba81ff4b9e257b1ad961a6b75",
+      "policy_count": 9,
+      "prospective_run_id": "m7-option-b-20261031-v1-8387b289432f",
+      "schedule_sha256": "c479e65f944224ffbc584e15f43086e881e9df1a10c009c478be8ce5119e67d9",
+      "scheduled_cells": 90,
+      "source": {
+        "git_commit": "58a604f2bd4bcd9113a047ee709a80ee97bd02a6",
+        "git_tree": "18d4d93270665a1c2e90eb459381958e407c441f",
+        "source_bundle_sha256": "c6c5b5f3f2c52cf1b4119f84288d681f5700b21d2f492f84002cb7959c077c9f"
+      },
+      "started_at_utc": "2026-10-31T16:55:09Z",
+      "stderr": "A.L.E: Arcade Learning Environment (version 0.11.2+ecc1138)\n[Powered by Stella]\n",
+      "storage_preflight_pass": true
+    },
+    {
+      "exit_code": 0,
+      "finished_at_utc": "2026-10-31T16:55:43Z",
+      "mode": "--smoke-only",
+      "name": "non-result-smoke.json",
+      "output_path": "artifacts/m7-option-b/non-result-smoke.json",
+      "output_sha256": "948fd208a79749cf2e5974f9d56f6285683d8256aeb168d220db8a3041458bfd",
+      "smoke": {
+        "ale_actions_executed": 0,
+        "classification": "technical_smoke_only; excluded from official M7 schedule and metrics",
+        "legal_policy_decisions": 18,
+        "official_attempts_started": 0,
+        "policy_adapters_initialized": 9,
+        "reset_count": 2,
+        "reset_rgb_sha256": "583fdf4807b0dfdcea077c0174195de047da2455f675f3d85ed0c42347ac818d",
+        "same_seed_reset_rgb_reproducible": true,
+        "schema": "videochess-m7-non-result-bearing-smoke/1.0",
+        "seed_overlaps_official_schedule": false,
+        "smoke_seed": 0
+      },
+      "started_at_utc": "2026-10-31T16:55:26Z",
+      "stderr": "A.L.E: Arcade Learning Environment (version 0.11.2+ecc1138)\n[Powered by Stella]\n"
+    }
+  ],
+  "schema": "videochess-m7-prerun-checks/1.0",
+  "source_git_revision": "58a604f2bd4bcd9113a047ee709a80ee97bd02a6",
+  "working_tree_clean_after_outputs": true
+}

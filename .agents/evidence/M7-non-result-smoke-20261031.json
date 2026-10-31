@@ -1,0 +1,13 @@
+{
+  "ale_actions_executed": 0,
+  "classification": "technical_smoke_only; excluded from official M7 schedule and metrics",
+  "legal_policy_decisions": 18,
+  "official_attempts_started": 0,
+  "policy_adapters_initialized": 9,
+  "reset_count": 2,
+  "reset_rgb_sha256": "583fdf4807b0dfdcea077c0174195de047da2455f675f3d85ed0c42347ac818d",
+  "same_seed_reset_rgb_reproducible": true,
+  "schema": "videochess-m7-non-result-bearing-smoke/1.0",
+  "seed_overlaps_official_schedule": false,
+  "smoke_seed": 0
+}

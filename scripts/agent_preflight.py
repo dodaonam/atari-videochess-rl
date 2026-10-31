@@ -895,6 +895,25 @@ def _check_task_graph(backlog: dict[str, object], root: Path, state: dict[str, o
             active_task_id = refs.get("active_task_id")
             next_task_id = refs.get("next_task_id")
             task = tasks.get(task_id) if isinstance(task_id, str) else None
+            current_task_id = active_task_id if active_task_id is not None else next_task_id
+            current_task = tasks.get(current_task_id) if isinstance(current_task_id, str) else None
+
+            def depends_transitively_on(candidate_id: str, ancestor_id: str, seen: set[str] | None = None) -> bool:
+                if candidate_id == ancestor_id:
+                    return True
+                seen = seen or set()
+                if candidate_id in seen:
+                    return False
+                seen.add(candidate_id)
+                candidate = tasks.get(candidate_id)
+                if not isinstance(candidate, dict):
+                    return False
+                return any(
+                    dependency == ancestor_id
+                    or (dependency in tasks and depends_transitively_on(dependency, ancestor_id, seen))
+                    for dependency in candidate.get("depends_on", [])
+                )
+
             running_match = (
                 engineering.get("next_milestone_status") == "in_progress"
                 and active_task_id == task_id
@@ -918,8 +937,46 @@ def _check_task_graph(backlog: dict[str, object], root: Path, state: dict[str, o
                 and task.get("status") == "pending"
                 and task.get("milestone") == milestone
             )
-            if not (running_match or blocked_match or ready_match):
-                errors.append({"code": "MILESTONE_AUTHORIZATION_EVIDENCE", "path": rel, "message": "Authorization must identify either the pending next task in ready_to_start state, the active in-progress task, or an active blocked task with a blocker."})
+            continued_running_match = (
+                engineering.get("next_milestone_status") == "in_progress"
+                and active_task_id == current_task_id
+                and isinstance(current_task, dict)
+                and current_task.get("status") == "in_progress"
+                and current_task.get("milestone") == milestone
+                and isinstance(task, dict)
+                and task.get("status") == "done"
+                and depends_transitively_on(current_task_id, task_id)
+            )
+            continued_blocked_match = (
+                engineering.get("next_milestone_status") == "blocked"
+                and active_task_id == current_task_id
+                and isinstance(current_task, dict)
+                and current_task.get("status") == "blocked"
+                and current_task.get("milestone") == milestone
+                and bool(current_task.get("blocker_ids"))
+                and isinstance(task, dict)
+                and task.get("status") == "done"
+                and depends_transitively_on(current_task_id, task_id)
+            )
+            gated_phase_boundary_match = (
+                engineering.get("next_milestone_status") == "in_progress"
+                and active_task_id is None
+                and next_task_id == current_task_id
+                and isinstance(current_task, dict)
+                and current_task.get("status") == "pending"
+                and current_task.get("milestone") == milestone
+                and current_task.get("requires_user_gate_approval") is not None
+                and isinstance(task, dict)
+                and task.get("status") == "done"
+                and depends_transitively_on(current_task_id, task_id)
+            )
+            continued_milestone_match = (
+                task is not None
+                and task.get("milestone") == milestone
+                and (continued_running_match or continued_blocked_match or gated_phase_boundary_match)
+            )
+            if not (running_match or blocked_match or ready_match or continued_milestone_match):
+                errors.append({"code": "MILESTONE_AUTHORIZATION_EVIDENCE", "path": rel, "message": "Authorization must identify the pending next task, the active task, or a downstream task in the same milestone whose dependency chain starts at the originally authorized task. A pending downstream task may wait at its declared approval gate."})
             else:
                 path = authorization.get("evidence_path")
                 matches = [

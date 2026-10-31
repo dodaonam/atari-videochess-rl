@@ -1,0 +1,6 @@
+test_all_frozen_policies_score_one_verified_rgb_state_without_mutation (tests.test_m6_private_policy_roster.M6PrivatePolicyRosterTests.test_all_frozen_policies_score_one_verified_rgb_state_without_mutation) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 15.110s
+
+OK
