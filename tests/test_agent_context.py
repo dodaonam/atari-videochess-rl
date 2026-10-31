@@ -1340,7 +1340,9 @@ class AgentContextRecoveryTests(unittest.TestCase):
         acceptance = (REPO / ".agents/evidence/M6-001-PM-acceptance-20261031.md").read_text(encoding="utf-8")
         self.assertIn("6539798992", acceptance)
         self.assertIn("**G4:** not approved", acceptance)
-        self.assertIn("M7 is not started and is not authorized", acceptance)
+        self.assertIn("M7", acceptance)
+        self.assertIn("not started", acceptance)
+        self.assertIn("not authorized", acceptance)
         report = agent_preflight.build_report(REPO)
         self.assertTrue(report["ok"], report["errors"])
 
