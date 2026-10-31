@@ -1,6 +1,6 @@
 {
   "schema": "videochess-m6-postmerge-verification/1.0",
-  "generated_at_utc": "2026-10-31T08:06:51Z",
+  "generated_at_utc": "2026-10-31T08:12:27Z",
   "verification_worktree": "clean isolated worktree at verified initial-idea merge commit",
   "identities": {
     "repository": "dodaonam/atari-videochess-rl",
@@ -160,6 +160,57 @@
       "active_blockers": 0,
       "started_at_utc": "2026-10-31T08:06:50.262434Z",
       "completed_at_utc": "2026-10-31T08:06:51.602751Z"
+    },
+    {
+      "name": "clean_checkout_preflight_final_revision",
+      "status": "PASS",
+      "revision": "3e675f8f95527df335e54e405c92517cd436b5b1",
+      "tree": "103d6a4f00c7032bee0949d13a11495e384fc507",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/agent_preflight.py",
+      "command_log": ".agents/evidence/logs/M6-postmerge-clean-checkout-preflight-20261031.log",
+      "log_sha256": "93b315562afe6309ab12e6160559b32aa38b84e56b12b28758a7252be3040ae2",
+      "exit_code": 0,
+      "started_at_utc": "2026-10-31T08:08:22.670362Z",
+      "completed_at_utc": "2026-10-31T08:08:24.038178Z"
+    },
+    {
+      "name": "clean_checkout_focused_final_revision",
+      "status": "PASS",
+      "revision": "3e675f8f95527df335e54e405c92517cd436b5b1",
+      "tree": "103d6a4f00c7032bee0949d13a11495e384fc507",
+      "command": "PYTHONDONTWRITEBYTECODE=1 /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
+      "command_log": ".agents/evidence/logs/M6-postmerge-clean-checkout-focused-20261031.log",
+      "log_sha256": "94e4bd1f938c94ddfbedaa76df67e6788732eb34d397d374b4c5e7183f497a2a",
+      "test_count": 108,
+      "passed": 108,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "started_at_utc": "2026-10-31T08:08:28.401471Z",
+      "completed_at_utc": "2026-10-31T08:09:22.358102Z",
+      "exit_code": 0
+    },
+    {
+      "name": "clean_checkout_full_suite_final_revision",
+      "status": "PASS",
+      "revision": "3e675f8f95527df335e54e405c92517cd436b5b1",
+      "tree": "103d6a4f00c7032bee0949d13a11495e384fc507",
+      "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<accepted-M5-artifact-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<accepted-M4-r4-artifact-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<checkpoint-resolved-by-pinned-SHA> PYTHONDONTWRITEBYTECODE=1 PATH=<pre-existing-project-stockfish-readiness-dir>:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+      "command_log": ".agents/evidence/logs/M6-postmerge-clean-checkout-full-suite-20261031.log",
+      "log_sha256": "87097019792e56ab565a105828085c3e4146ea590048c73cd2f330894340509f",
+      "test_count": 452,
+      "passed": 452,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "unittest_seconds": 164.294,
+      "wall_seconds": 166.285,
+      "started_at_utc": "2026-10-31T08:09:29.460891Z",
+      "completed_at_utc": "2026-10-31T08:12:15.745964Z",
+      "exit_code": 0,
+      "m5_root_manifest_sha256": "a201a254671ad59ae1fecb402abf994d5bf523097f1c3010b5c7fa237ae6dd4c",
+      "warm_checkpoint_sha256": "0b2405017a8e1d539851f0cd278883d3fd23936fb5c2f7962c813590a6fd1767",
+      "m4_r4_root_manifest_sha256": "f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921"
     }
   ],
   "known_repository_policy": "No initial-idea branch protection was configured (GitHub API 404); no repository rulesets were listed. Settings were not changed; closeout is delivered via PR and requires independent PM review and authorized human/operator merge.",
@@ -240,5 +291,48 @@
     "tree": "902900431798290ef2b012dc97c914f399f09085",
     "test_content_tree": "902900431798290ef2b012dc97c914f399f09085"
   },
-  "python_environment_note": "A pre-existing local project virtual environment was reused; no dependencies were installed. An offline uv environment attempt did not find the locked torch wheel and was abandoned before installation."
+  "python_environment_note": "A pre-existing local project virtual environment was reused; no dependencies were installed. An offline uv environment attempt did not find the locked torch wheel and was abandoned before installation.",
+  "final_clean_checkout": {
+    "git_head": "3e675f8f95527df335e54e405c92517cd436b5b1",
+    "git_tree": "103d6a4f00c7032bee0949d13a11495e384fc507",
+    "worktree_mode": "separate clean detached worktree",
+    "focused": {
+      "status": "PASS",
+      "tests": 108,
+      "passed": 108,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "log_path": ".agents/evidence/logs/M6-postmerge-clean-checkout-focused-20261031.log",
+      "log_sha256": "94e4bd1f938c94ddfbedaa76df67e6788732eb34d397d374b4c5e7183f497a2a",
+      "started_at_utc": "2026-10-31T08:08:28.401471Z",
+      "completed_at_utc": "2026-10-31T08:09:22.358102Z"
+    },
+    "full_suite": {
+      "status": "PASS",
+      "tests": 452,
+      "passed": 452,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "log_path": ".agents/evidence/logs/M6-postmerge-clean-checkout-full-suite-20261031.log",
+      "log_sha256": "87097019792e56ab565a105828085c3e4146ea590048c73cd2f330894340509f",
+      "started_at_utc": "2026-10-31T08:09:29.460891Z",
+      "completed_at_utc": "2026-10-31T08:12:15.745964Z",
+      "unittest_seconds": 164.294,
+      "wall_seconds": 166.285,
+      "m5_root_manifest_sha256": "a201a254671ad59ae1fecb402abf994d5bf523097f1c3010b5c7fa237ae6dd4c",
+      "warm_checkpoint_sha256": "0b2405017a8e1d539851f0cd278883d3fd23936fb5c2f7962c813590a6fd1767",
+      "m4_r4_root_manifest_sha256": "f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921"
+    },
+    "preflight": {
+      "status": "PASS",
+      "log_path": ".agents/evidence/logs/M6-postmerge-clean-checkout-preflight-20261031.log",
+      "log_sha256": "93b315562afe6309ab12e6160559b32aa38b84e56b12b28758a7252be3040ae2",
+      "exit_code": 0,
+      "started_at_utc": "2026-10-31T08:08:22.670362Z",
+      "completed_at_utc": "2026-10-31T08:08:24.038178Z"
+    }
+  },
+  "no_source_or_test_code_changed_after_final_clean_checkout_verification": true
 }

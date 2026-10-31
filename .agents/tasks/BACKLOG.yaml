@@ -4648,13 +4648,14 @@
           "result": "PASS: canonical agent preflight; M6-001 done, G3 approved, G4 unapproved, M7 pending authorization; no validation errors.",
           "provenance": {
             "status": "verified",
-            "executed_at_utc": "2026-10-31T08:06:50Z",
-            "recorded_at_utc": "2026-10-31T08:06:51Z",
+            "executed_at_utc": "2026-10-31T08:08:22Z",
+            "recorded_at_utc": "2026-10-31T08:12:27Z",
             "exit_code": 0,
-            "git_revision": "4ab7d3a8ea8b9f718b790c03c27e9fe3dba95c08",
-            "log_path": ".agents/evidence/logs/M6-postmerge-final-preflight-closeout-20261031.log",
-            "log_sha256": "708b7bb9293d16930fdb009ef993d3bb4822bf92ab90c657a5b0c4a52b8caf06"
-          }
+            "git_revision": "3e675f8f95527df335e54e405c92517cd436b5b1",
+            "log_path": ".agents/evidence/logs/M6-postmerge-clean-checkout-preflight-20261031.log",
+            "log_sha256": "93b315562afe6309ab12e6160559b32aa38b84e56b12b28758a7252be3040ae2"
+          },
+          "detail": "Executed in a clean detached worktree at final closeout HEAD 3e675f8f95527df335e54e405c92517cd436b5b1 (tree 103d6a4f00c7032bee0949d13a11495e384fc507)."
         },
         {
           "kind": "file",
@@ -4688,7 +4689,7 @@
           "kind": "file",
           "path": ".agents/evidence/M6-post-merge-verification-20261031.md",
           "detail": "Post-merge engineering report with verified PR/merge/PM identities, canonical M6 completion, preserved outcomes and limitations, and post-merge checks.",
-          "result": "Records independently verified M6 acceptance and PR #14 integration, exact source/test tree, 108 focused and 452 full-suite passing tests, final preflight, and the limitation that raw-tree audit was not rerun in this closeout.",
+          "result": "Records M6 acceptance/merge identities, exact test-source tree, corrected verification provenance, 108 focused and 452 full tests on the final clean closeout HEAD 3e675f8, and the explicit limitation that this closeout did not rerun the private raw-data audit.",
           "provenance": {
             "status": "verified",
             "executed_at_utc": null,
@@ -4799,11 +4800,41 @@
             "log_sha256": "02e4b7a914247b5c57b7043eada7eb971bc7e93271b638176cf225a89bea6df3"
           },
           "detail": "Execution captured HEAD 5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f and staged tree 902900431798290ef2b012dc97c914f399f09085, which was committed exactly as 4ab7d3a8ea8b9f718b790c03c27e9fe3dba95c08."
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
+          "result": "PASS: 108 focused tests; 108 passed, 0 failures, 0 errors, 0 skips.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:08:28Z",
+            "recorded_at_utc": "2026-10-31T08:12:27Z",
+            "exit_code": 0,
+            "git_revision": "3e675f8f95527df335e54e405c92517cd436b5b1",
+            "log_path": ".agents/evidence/logs/M6-postmerge-clean-checkout-focused-20261031.log",
+            "log_sha256": "94e4bd1f938c94ddfbedaa76df67e6788732eb34d397d374b4c5e7183f497a2a"
+          },
+          "detail": "Clean detached final closeout worktree HEAD 3e675f8f95527df335e54e405c92517cd436b5b1, tree 103d6a4f00c7032bee0949d13a11495e384fc507."
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<accepted-M5-artifact-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<accepted-M4-r4-artifact-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<checkpoint-resolved-by-pinned-SHA> PYTHONDONTWRITEBYTECODE=1 PATH=<pre-existing-project-stockfish-readiness-dir>:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "PASS: 452 tests; 452 passed, 0 failures, 0 errors, 0 skips.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:09:29Z",
+            "recorded_at_utc": "2026-10-31T08:12:27Z",
+            "exit_code": 0,
+            "git_revision": "3e675f8f95527df335e54e405c92517cd436b5b1",
+            "log_path": ".agents/evidence/logs/M6-postmerge-clean-checkout-full-suite-20261031.log",
+            "log_sha256": "87097019792e56ab565a105828085c3e4146ea590048c73cd2f330894340509f"
+          },
+          "detail": "Clean detached final closeout worktree HEAD 3e675f8f95527df335e54e405c92517cd436b5b1, tree 103d6a4f00c7032bee0949d13a11495e384fc507."
         }
       ],
       "next_action": "",
       "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],
-  "updated_at_utc": "2026-10-31T08:06:51Z"
+  "updated_at_utc": "2026-10-31T08:12:27Z"
 }
