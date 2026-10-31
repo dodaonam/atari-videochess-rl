@@ -1,11 +1,13 @@
 # M7 Evaluation Protocol
 
 **Protocol ID:** `M7-EVAL/1.0.0`
-**Status:** Proposed for owner and independent PM review; not approved for execution.
+**Status:** Historical proposal status at PR #16: proposed for owner and independent PM review; the scientific rules remain the M7 basis. A later owner order authorizes only the separately versioned M7 Option B execution configuration identified below.
 **Date:** 2026-10-31.
 **Acceptance ownership:** M7-01–M7-03 are G4 evaluation evidence; M7-04–M7-05 are G5 delivery evidence. See [ACCEPTANCE_CRITERIA.md](../06-quality/ACCEPTANCE_CRITERIA.md) and [ADR-0001](../02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md).
 
 This contract supports Pre-M7 preparation only. It does not authorize a new simulator/ALE campaign, training, fine-tuning, cloud allocation, Stockfish role, G4/G5 approval, or release. Proposed branches below remain **NOT AUTHORIZED** until the owner separately approves the final protocol, exact populations, and resource envelope and records direct M7 authorization.
+
+**Historical status note:** The paragraph above and §8 accurately describe the state when PR #16 was prepared and reviewed. They are not the current execution authority. The project owner later issued a direct Option B master order; its Phase I scope and G4/G5 boundary are recorded in [ADR-0004](../02-management/decisions/ADR-0004-m7-option-b-execution-authorization.md) and [.agents/evidence/M7-001-authorization-20261031.md](../../.agents/evidence/M7-001-authorization-20261031.md). The executed schedule is frozen separately in [`configs/m7/m7-option-b-1.0.0.json`](../../configs/m7/m7-option-b-1.0.0.json). This later decision does not retroactively change the proposal's status at PR #16.
 
 ## 1. Scientific questions
 
@@ -119,6 +121,12 @@ No Elo value is currently reportable. Existing RandomLegal/SimpleHeuristic simul
 
 If any requirement is absent, the report must say “Elo not reported: calibrated pool/design not approved or unavailable.” Never assume a 1500 baseline or convert M4 imitation accuracy, M5 simulator score, or M6 move-execution rate into Elo.
 
-## 8. Owner authorization branches and decisions
+## 8. Historical owner authorization branches and decisions at PR #16
 
-**All new evaluation is NOT AUTHORIZED.** The owner must separately approve the final populations, protocol version, seed schedule, resource envelope, and M7-001 start after the G4 PM disposition. The 90-attempt ALE option is not a default execution plan. Local CPU is the proposal; Colab access/cost/storage remain unverified. O-02 (ALE requirement/fallback), O-05 (official runtime profile), O-08 (Elo pool), and G5 release scope require the decisions listed in [PRE-M7-readiness.md](../../.agents/plans/PRE-M7-readiness.md). A new training or fine-tuning request needs separate scope and authorization and cannot be smuggled into this evaluation protocol.
+At PR #16, all new evaluation was **NOT AUTHORIZED**. The owner still needed to approve final populations, protocol version, seed schedule, resource envelope, and M7-001 start after the G4 PM disposition. The 90-attempt ALE option was not a default execution plan. Local CPU was a proposal; Colab access/cost/storage remained unverified. O-02 (ALE requirement/fallback), O-05 (official runtime profile), O-08 (Elo pool), and G5 release scope were unresolved then. A new training or fine-tuning request needed separate scope and authorization. The subsequent owner decision below supersedes only the authorization conditions for M7-001–003.
+
+## 9. Subsequent owner decision and M4 hash-field clarification — 2026-10-31
+
+The project owner selected Option B and authorized M7-001–003, including exactly 90 local CPU ALE attempts over the nine frozen policy groups and ten new shared seeds. M7-004/005 remain unavailable until the independent PM approves G4 and the decision is recorded and verified in canonical state. G4 remains HOLD / NOT APPROVED during Phase I. The full scope, extended-horizon runtime profile, resource envelope, retry rule, schedule, and privacy boundary are recorded in the separately versioned execution configuration and authorization record above.
+
+The M4 identity row in this original proposal used “sidecar SHA-256” for `63615d…`. The accepted M4 machine record identifies that value as the checkpoint metadata checksum (`metadata_sha256`); the actual file SHA-256 of `pretrained-behavior-only.pt.manifest.json` is `cc0af4694e45fc23acb740c652dd9a62e1bcaf7851815d179693d09539f0f606`, and the accepted M4 root manifest SHA-256 is `f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921`. The M7 configuration stores the metadata checksum and sidecar-file hash as separate fields. The bytes pass the accepted root manifest; this is a field-label clarification, not an artifact repair or result change.
