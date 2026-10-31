@@ -313,7 +313,7 @@
     "g4_approved": false,
     "m7_authorized": false
   },
-  "status": "POST_APPEND_CHECKS_PASS_AWAITING_FINAL_AUDIT_CI_AND_PM_REVIEW",
+  "status": "FINAL_LOCAL_VERIFICATION_PASS_AWAITING_FRESH_PR_CI_AND_PM_REVIEW",
   "scope": {
     "m6_001_entries_audited": 35,
     "committed_file_identities": 4,
@@ -446,15 +446,14 @@
     }
   },
   "post_append_audit": {
-    "status": "PENDING_FINAL_AUDIT_AFTER_RECORDING_POST_APPEND_CHECKS",
-    "must_run_after_commit": true,
-    "expected_scope": {
-      "m6_001_entries_audited": 35,
+    "status": "PASS",
+    "source_commit": "d20b8b7942fdd5be77541d5605cabc5bebfde432",
+    "scope": {
       "committed_file_identities": 4,
-      "verified_command_test_logs": 29,
-      "historical_unverified_diagnostics": 2,
+      "verified_command_test_logs": 26,
       "machine_report_logs": 8,
-      "errors_checked_by_last_audit": 0
+      "historical_unverified_diagnostics": 2,
+      "errors": 0
     }
   },
   "post_append_checks": {
@@ -492,5 +491,80 @@
       "errors": 0
     },
     "checkout_clean": true
+  },
+  "final_head_verification": {
+    "source_commit": "2283153b089c8339456b5abee9acc195f59bd4e3",
+    "source_tree": "2cc2a727e408bd0bb7fd55a3caa8d2c23802522c",
+    "status": "PASS",
+    "runs": [
+      {
+        "name": "audit",
+        "log_path": ".agents/evidence/logs/M6C-F01-final-head-audit-20261031.log",
+        "log_sha256": "697955dfc54cf334e58cd83cddd05b7d91013eaea3689bcbd47de87e1af30ee1",
+        "started_at_utc": "2026-10-31T09:06:59.348511+00:00",
+        "completed_at_utc": "2026-10-31T09:06:59.596999+00:00",
+        "exit_code": 0
+      },
+      {
+        "name": "preflight",
+        "log_path": ".agents/evidence/logs/M6C-F01-final-head-preflight-20261031.log",
+        "log_sha256": "a1d1bbc01e5e4e6907e11bc6f3832e818e0b3266f4d75ac2435d8032477a5bb0",
+        "started_at_utc": "2026-10-31T09:06:59.597200+00:00",
+        "completed_at_utc": "2026-10-31T09:07:01.094923+00:00",
+        "exit_code": 0
+      },
+      {
+        "name": "focused",
+        "log_path": ".agents/evidence/logs/M6C-F01-final-head-focused-20261031.log",
+        "log_sha256": "ef35c6016d32d6da7892c59629ecc80b920e08edf40e5ebf8d44f5a5e874f201",
+        "started_at_utc": "2026-10-31T09:07:01.095147+00:00",
+        "completed_at_utc": "2026-10-31T09:07:58.214990+00:00",
+        "exit_code": 0
+      },
+      {
+        "name": "source_test_equivalence",
+        "log_path": ".agents/evidence/logs/M6C-F01-final-head-source-equivalence-20261031.log",
+        "log_sha256": "8ac83caa7ee57f474917445c535663f9960f223b83f7948a52daa6e54b56af3f",
+        "started_at_utc": "2026-10-31T09:08:13.662884+00:00",
+        "completed_at_utc": "2026-10-31T09:08:13.665210+00:00",
+        "exit_code": 0
+      }
+    ],
+    "provenance_audit_scope": {
+      "m6_001_entries_audited": 35,
+      "committed_file_identities": 4,
+      "verified_command_test_logs": 29,
+      "machine_report_logs": 8,
+      "historical_unverified_diagnostics": 2,
+      "errors": 0
+    },
+    "focused_tests": {
+      "count": 110,
+      "passed": 110,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "preflight": {
+      "validation_errors": 0,
+      "warning": "expected local artifact-manifest warning only"
+    },
+    "source_and_test_tree_equivalence": {
+      "from_commit": "2050db70894f40b8ca4e4b6ebdc7715f1664f3bc",
+      "to_commit": "2283153b089c8339456b5abee9acc195f59bd4e3",
+      "command": "git diff --quiet <from> <to> -- scripts tests",
+      "exit_code": 0,
+      "log_path": ".agents/evidence/logs/M6C-F01-final-head-source-equivalence-20261031.log",
+      "log_sha256": "8ac83caa7ee57f474917445c535663f9960f223b83f7948a52daa6e54b56af3f"
+    },
+    "full_suite": {
+      "count": 454,
+      "passed": 454,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "tested_commit": "2050db70894f40b8ca4e4b6ebdc7715f1664f3bc",
+      "source_and_test_tree_identical_at_final_head": true
+    }
   }
 }
