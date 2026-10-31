@@ -24,6 +24,7 @@ class PreM7ContractTests(unittest.TestCase):
         cls.protocol_path = REPO / "docs/04-research/M7_EVALUATION_PROTOCOL.md"
         cls.plan_path = REPO / ".agents/plans/M07-evaluation-delivery.md"
         cls.readiness_path = REPO / ".agents/plans/PRE-M7-readiness.md"
+        cls.readiness_evidence_path = REPO / ".agents/evidence/PRE-M7-readiness-20261031.md"
         cls.protocol = cls.protocol_path.read_text(encoding="utf-8")
         cls.plan = cls.plan_path.read_text(encoding="utf-8")
         cls.readiness = cls.readiness_path.read_text(encoding="utf-8")
@@ -173,7 +174,7 @@ class PreM7ContractTests(unittest.TestCase):
         self.assertIn("do not upload", self.plan.lower())
 
     def test_all_new_local_markdown_links_resolve(self) -> None:
-        sources = (self.protocol_path, self.plan_path, self.readiness_path)
+        sources = (self.protocol_path, self.plan_path, self.readiness_path, self.readiness_evidence_path)
         checked = 0
         for source in sources:
             text = source.read_text(encoding="utf-8")
@@ -186,6 +187,14 @@ class PreM7ContractTests(unittest.TestCase):
                 resolved = (source.parent / path).resolve()
                 with self.subTest(source=source.relative_to(REPO), target=target):
                     self.assertTrue(resolved.is_file(), f"unresolved local link: {target}")
+                    relative = resolved.relative_to(REPO).as_posix()
+                    committed = __import__("subprocess").run(
+                        ["git", "cat-file", "-e", f"HEAD:{relative}"],
+                        cwd=REPO,
+                        text=True,
+                        capture_output=True,
+                    )
+                    self.assertEqual(committed.returncode, 0, f"local link target is not committed in HEAD: {target}")
                 checked += 1
         self.assertGreaterEqual(checked, 13)
 

@@ -1,0 +1,10 @@
+source_revision=a40588bc8a6fed81d1cb99c64035d1b7e09d7bc3
+github_run_id=41212084476
+workflow=Repository preflight
+started_at_utc=2026-10-31T14:51:44Z
+finished_at_utc=2026-10-31T14:51:51Z
+exit_code=1
+step=Validate canonical context
+result=FAIL: LINK_BROKEN in .agents/evidence/PRE-M7-readiness-20261031.md for logs/PRE-M7-input-artifact-verification-20261031.log and logs/PRE-M7-M6-readonly-audit-20261031.log
+root_cause=Both sanitized read-only audit logs were ignored by Git and had not been force-added, so local Markdown link checks passed while a clean checkout lacked the linked files.
+remediation=Commit the two sanitized logs and extend the focused link test to require every linked local file to be tracked. Rerun preflight and wait for CI on the corrected PR head.
