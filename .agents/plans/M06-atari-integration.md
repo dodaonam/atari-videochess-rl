@@ -1,7 +1,7 @@
 # M06 — Atari Integration and Evaluation
 
 **Task:** M6-001
-**Status:** authorized and in progress; acceptance remains with the independent PM.
+**Status:** complete and accepted by the independent PM for M6-01–M6-05; PR #14 is merged. Current governance state is in `.agents/state/PROJECT_STATE.yaml` and the PM decision is recorded in [M6-001-PM-acceptance-20261031.md](../evidence/M6-001-PM-acceptance-20261031.md).
 **Baseline:** `initial-idea` at `e6d444e475e447e9f37951f16585bf496f804c9d`.
 **Authorization:** [M6-001 owner authorization](../evidence/M6-001-authorization-20261030.md).
 
@@ -9,7 +9,7 @@
 
 Connect the accepted frozen M5 Double DQN policy to the existing M1 real-ALE VideoChess path. Preserve RGB as the authority for every Atari position; the complete UCI history and `python-chess` board track only verified moves and validate candidates. The initial v1 execution used the original bounded local CPU diagnostics and 35-attempt maximum Stage 3 roster. After the v1 review, the separately authorized v2 continuation ran a 20-attempt M5-only extended-horizon schedule; its distinct protocol and actual outcomes are recorded below and in the final v2 report.
 
-No training, fine-tuning, model selection from Atari outcomes, Stockfish use, cloud compute, uploads, G4 approval, release, self-acceptance, or merge is in scope. Preserve accepted M4/M5 artifacts and results. The original 35-attempt Stage 3 plan describes v1; the separately authorized v2 addendum supersedes only the follow-on corrective schedule, which contains 20 frozen M5 attempts and does not rerun controls.
+The M6 engineering execution did not include training, fine-tuning, outcome-driven model selection, Stockfish inference, cloud compute, uploads, G4 approval, release, self-acceptance, or an executor merge. After the independent PM accepted the evidence, the project owner merged PR #14; that separate event is recorded below. Preserve accepted M4/M5 artifacts and results. The original 35-attempt Stage 3 plan describes v1; the separately authorized v2 addendum supersedes only the follow-on corrective schedule, which contains 20 frozen M5 attempts and does not rerun controls.
 
 ## Dependencies and frozen roster
 
@@ -33,7 +33,7 @@ M5 selection uses the lowest predeclared paired training seed, not M5 evaluation
 7. Stage 2: up to ten consecutive RGB-verified player moves and genuine Atari replies for Warm and Scratch under debug settings, then a bounded default-v5 reliability check only if debug is safe. A safe stop ends that attempt; preserve last verified state.
 8. Freeze Stage 3 source commit, lock/ROM/artifact identities, config, roster, seeds/order, and run manifest before inspecting Stage 3 outcomes. Run all declared attempts serially under default-v5, within the 35-attempt, 10-hour, per-game time/frame, and 2-GiB artifact ceilings. Retry only pre-action process-start failure, with a distinct ledger identity.
 9. Verify every raw trace/hash and rebuild summaries from attempt records. Run focused, M1, M4/M5, and full regression tests, preflight, archive checks, and diff/privacy review at the exact final feature HEAD.
-10. Commit/push the feature branch and open one PR against `initial-idea`; leave M6-001 in progress pending PM acceptance. Do not merge or mark G4 approved.
+10. **Completed:** the feature branch was reviewed by the independent PM and PR #14 was merged into `initial-idea` at `509f9f83f9249208fd5adba572efed2d2f0f82ff`. M6-001 is accepted and done; this does not approve G4 or authorize M7.
 
 ## Acceptance mapping
 
@@ -51,7 +51,7 @@ Use one local CPU ALE process. Cap each game at 900 seconds and 54,000 ALE frame
 
 ## Handover state
 
-This plan does not itself satisfy M6 criteria. On engineering completion, submit raw and summarized evidence for independent PM review, update the task with actual evidence, and retain M6 authorization until the PM decides acceptance. G4 is not part of this transition.
+The independent PM accepted M6-01–M6-05 at [PR #14 comment 6539798992](https://github.com/dodaonam/atari-videochess-rl/pull/14#issuecomment-6539798992), and the project owner merged the accepted feature at `509f9f83f9249208fd5adba572efed2d2f0f82ff`. The durable decision record is [M6-001-PM-acceptance-20261031.md](../evidence/M6-001-PM-acceptance-20261031.md). The acceptance retains the scientific and raw-artifact access qualifications. G3 remains approved; G4 remains unapproved. M7 is not started or authorized and requires its own direct owner authorization.
 
 ## Owner-authorized corrective continuation — Stage 3 v2
 
@@ -66,7 +66,7 @@ The owner issued a separate bounded continuation after the v1 review. Its direct
 5. Freeze a deterministic run identity derived from source commit/tree, config SHA-256 and 20-row schedule SHA-256. The manifest records the 500,000 ALE ceiling, 432,000 post-reset action-frame runner cap and reset counter origin before the first official outcome.
 6. Execute every scheduled pair serially under the extended-horizon profile. Continue after ordinary incomplete attempts; never retry a reset attempt or replay uncertain input. Respect 1,800 seconds, 432,000 action frames, 200 player moves, 40,000 reply frames, 12-hour campaign, 8 GiB new v2 output, 128 MiB finalization reserve, 12 GiB entry free-space threshold, 6 GiB process RSS, and one pre-action retry.
 7. Stream-verify the ledger; validate per-attempt traces/RGB/manifests; rederive outcomes, move censoring, cursor diagnostics, replies, and runtime metrics; verify v1 remains unchanged; report each policy and seed separately. V1/v2 are not pooled, and reused ALE seeds are not independent held-out evidence.
-8. Update M6-001 evidence and PR #14, keeping M6 in progress pending PM review and leaving G4 unapproved. If the resource ceiling or safe-stop conditions leave either M5 arm without ALE-terminal evidence, report M6-04 as partial.
+8. **Completed:** all authorized v2 attempts and evidence were retained; M6-001 was accepted by the independent PM and PR #14 was merged. The recorded outcome remains 11 ALE-terminal losses and nine incomplete attempts; this acceptance does not approve G4 or authorize M7.
 
 ### Corrective verification/acceptance evidence
 
@@ -81,7 +81,7 @@ The owner issued a separate bounded continuation after the v1 review. Its direct
 
 ### Recorded v2 execution outcome
 
-Stage 3 v2 executed all 20 scheduled resets with no startup retry, omitted slot, or resource stop. The raw trace/manifest reconstruction passed on the frozen source identity. Eleven attempts reached ALE termination and were losses (Warm 4, Scratch 7); nine remain incomplete (five reply timeouts, two source-selection stops, two target-navigation stops). Both policies therefore have genuine full-game terminal evidence, while incomplete outcomes remain outside W/D/L. The primary RGB-verified move rates were 222/232 for Warm and 163/173 for Scratch. See the [final engineering report](../evidence/M6-001-final-report-v2-20261031.md), [execution record](../evidence/M6-stage3-v2-execution-record-20261031.json), and [post-run verification](../evidence/M6-stage3-v2-postrun-verification-20261031.json). M6-001 remains in progress pending independent PM acceptance; G4 remains unapproved.
+Stage 3 v2 executed all 20 scheduled resets with no startup retry, omitted slot, or resource stop. The raw trace/manifest reconstruction passed on the frozen source identity. Eleven attempts reached ALE termination and were losses (Warm 4, Scratch 7); nine remain incomplete (five reply timeouts, two source-selection stops, two target-navigation stops). Both policies therefore have genuine full-game terminal evidence, while incomplete outcomes remain outside W/D/L. The primary RGB-verified move rates were 222/232 for Warm and 163/173 for Scratch. See the [final engineering report](../evidence/M6-001-final-report-v2-20261031.md), [execution record](../evidence/M6-stage3-v2-execution-record-20261031.json), and [post-run verification](../evidence/M6-stage3-v2-postrun-verification-20261031.json). At the time of the execution report, independent PM acceptance was pending. The post-merge decision is recorded separately in [M6-001-PM-acceptance-20261031.md](../evidence/M6-001-PM-acceptance-20261031.md); G4 remains unapproved.
 
 ## Final corrective closeout — PM6-F06 and raw-evidence audit
 
@@ -89,6 +89,6 @@ The independent PM's PM6-F06 finding identified an incorrect v2 metadata boolean
 
 The read-only independent audit is documented in [the r3 human report](../evidence/M6-stage3-v2-independent-raw-audit-20261031-r3.md) and [machine report](../evidence/M6-stage3-v2-independent-raw-audit-20261031-r3.json). It independently verified all v1/v2 artifact paths and hashes, the complete v2 ledger/trace chains, 20 unique schedule slots and resets, policy/checkpoint identity, reward/terminal evidence, per-attempt move/reply/history/censor records, cursor diagnostics, frame origins and resource ceilings. The reconstructed outcomes remain 11 ALE-terminal losses and nine incomplete attempts; no incomplete attempt is a draw. V1 and v2 remain separate datasets.
 
-The original raw roots under `the isolated execution worktree at repository-relative `artifacts/m6/`` were preserved in place. A second local copy was verified under the repository's ignored artifact store at `artifacts/m6-preserved-20261031/{v1,v2}/`; no raw bytes, private model, or ROM were added to Git or uploaded. The M5 root inventory was reverified read-only. Details and exact hashes are in the audit record.
+The original raw roots under repository-relative `artifacts/m6/` in the isolated execution worktree were preserved in place. A second local copy was verified under the repository's ignored artifact store at `artifacts/m6-preserved-20261031/{v1,v2}/`; no raw bytes, private model, or ROM were added to Git or uploaded. The M5 root inventory was reverified read-only. Details and exact hashes are in the audit record.
 
-The correction does not change the v2 config, schedule, enforcement arithmetic, checkpoint roster, or any gameplay result. No Stage 3 attempt, ALE reset, training run, or fine-tuning was performed during this closeout. M6-001 remains `in_progress` pending separate independent PM acceptance; G4 remains unapproved and M7 remains unauthorized.
+The correction does not change the v2 config, schedule, enforcement arithmetic, checkpoint roster, or any gameplay result. No Stage 3 attempt, ALE reset, training run, or fine-tuning was performed during this closeout. At the time of this pre-acceptance corrective report, M6-001 remained in progress. It was subsequently accepted by the independent PM; see [the acceptance record](../evidence/M6-001-PM-acceptance-20261031.md). G4 remains unapproved and M7 remains unauthorized.

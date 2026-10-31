@@ -4019,7 +4019,7 @@
       "id": "M6-001",
       "title": "Implement and verify frozen-policy Atari integration and bounded evaluation",
       "milestone": "M6",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "M1-001",
         "M4-001",
@@ -4322,7 +4322,7 @@
         {
           "kind": "file",
           "path": ".agents/evidence/M6-PR-handover-20261031.md",
-          "detail": "PR #14 was opened against initial-idea for independent review; this file records the initial branch/base/CI state without claiming PM acceptance.",
+          "detail": "Historical pre-merge handover snapshot; superseded for current state by the independent PM acceptance record and verified merge record.",
           "result": "PR #14 is open and non-draft, with no auto-merge or merge. M6-04 is partial; G4 remains unapproved.",
           "provenance": {
             "status": "verified",
@@ -4655,11 +4655,67 @@
             "log_path": ".agents/evidence/logs/M6-F06-preflight-99f958d.log",
             "log_sha256": "3430674d71c6561e1faab14d0643bb9e730287ea67351c5d02ff6ecd751e1b55"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-001-PM-acceptance-20261031.md",
+          "detail": "Permanent independent PM acceptance record for M6-01–M6-05, exact accepted feature HEAD/tree, PR #14 merge identity, and the PM-stated raw-evidence/test rerun qualification.",
+          "result": "Independent PM accepted M6-01–M6-05 at feature HEAD e919ee3ad039c9d2de3ebdf6b82704ecd61c0a6f (tree 7eb06fd9c0e0b363ca324d203e1debf26f233c08); PR #14 was merged into initial-idea at 509f9f83f9249208fd5adba572efed2d2f0f82ff. G4 remains unapproved and M7 unauthorized.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T07:40:19Z",
+            "exit_code": null,
+            "git_revision": "509f9f83f9249208fd5adba572efed2d2f0f82ff",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "git show -s --format=%H%n%T%n%P 509f9f83f9249208fd5adba572efed2d2f0f82ff",
+          "result": "PASS: PR #14 is merged into initial-idea at 509f9f83f9249208fd5adba572efed2d2f0f82ff; parent order is e6d444e475e447e9f37951f16585bf496f804c9d then e919ee3ad039c9d2de3ebdf6b82704ecd61c0a6f; integrated and accepted feature trees both equal 7eb06fd9c0e0b363ca324d203e1debf26f233c08. PM comment 6539798992 independently accepts M6-01–M6-05 and explicitly keeps G4 unapproved/M7 unauthorized; the PM notes they did not rerun private raw audit or the 452-test suite.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T07:40:17Z",
+            "recorded_at_utc": "2026-10-31T07:40:17Z",
+            "exit_code": 0,
+            "git_revision": "509f9f83f9249208fd5adba572efed2d2f0f82ff",
+            "log_path": ".agents/evidence/logs/M6-postmerge-identity-verification-20261031.log",
+            "log_sha256": "703c7ec0fba4bebf6bf11cc3b0925adaa5cf5f939a5def51d45d89fa678d1bb0"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-post-merge-verification-20261031.md",
+          "detail": "Post-merge engineering report covering the verified merge, canonical state transition, preserved M6 results/limitations, and separately executed post-merge checks.",
+          "result": "Records PR #14 integration and M6 acceptance without changing M6 experimental evidence or claiming a G4/M7 decision.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T07:42:36Z",
+            "exit_code": null,
+            "git_revision": "509f9f83f9249208fd5adba572efed2d2f0f82ff",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "<local-uv> lock --check --offline",
+          "result": "PASS: committed uv.lock is consistent with the project configuration; no dependency installation or lockfile mutation.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T07:43:26Z",
+            "recorded_at_utc": "2026-10-31T07:43:26Z",
+            "exit_code": 0,
+            "git_revision": "509f9f83f9249208fd5adba572efed2d2f0f82ff",
+            "log_path": ".agents/evidence/logs/M6-postmerge-lock-check-20261031.log",
+            "log_sha256": "8faf23b41cd5c0b70b25627e74853e46852fa67f200715067bc2ab717912a031"
+          }
         }
       ],
-      "next_action": "Independent PM: review PM6-F06 erratum, portable original/persistent raw audits, final 452-test and canonical preflight records, and updated PR #14; decide M6-001 acceptance and merge separately. Keep M6 in_progress, G4 unapproved, and M7 unauthorized until their separate decisions are recorded.",
+      "next_action": "",
       "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],
-  "updated_at_utc": "2026-10-31T05:34:35Z"
+  "updated_at_utc": "2026-10-31T07:43:26Z"
 }

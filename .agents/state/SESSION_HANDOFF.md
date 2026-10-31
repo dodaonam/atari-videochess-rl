@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-99f958db-20261031T053541540732Z -->
+<!-- checkpoint-id: cp-509f9f83-20261031T074411370384Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -12,9 +12,15 @@ This file is a pointer, not a status snapshot. Do not infer current phase, task 
    - The current governance decision is [`ADR-0001`](../../docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md); discover later decisions in `docs/02-management/decisions/`.
 5. Compare the portable tracked-file manifest with live HEAD/index. Treat the `git` snapshot as workspace-local; an exact portable manifest match after commit/checkout is expected even when branch, HEAD, status, ignored files, or caches differ. The local Git config UUID distinguishes the original workspace from a clean clone. For older checkpoints without a portable manifest, use the safe tracked-file migration path described in `AGENTS.md`. If version-controlled content or canonical references drift, inspect them and never discard work automatically.
 
-## Current canonical pointer — G3 approved, M6-001 v2 corrective continuation authorized and in progress (2026-10-31)
+## Current canonical pointer — G3 approved, M6 accepted and integrated; G4 pending (2026-10-31)
 
-The independent PM approved G3 after verifying M2–M5 completion and PR #11 integration. The approval and post-merge verification are recorded in [G3-final-approval-20261030.md](../evidence/G3-final-approval-20261030.md) and [comment 6519216543](https://github.com/dodaonam/atari-videochess-rl/pull/11#issuecomment-6519216543). `PROJECT_STATE.yaml` and `BACKLOG.yaml` are authoritative: G3 is approved, G4 remains the next governance gate, and M6-001 remains in progress under the original [owner authorization](../evidence/M6-001-authorization-20261030.md) plus the separately scoped [v2 corrective authorization](../evidence/M6-001-v2-corrective-authorization-20261031.md). Stage 3 v1 remains immutable. The separately authorized Stage 3 v2 run completed all 20 scheduled resets, with 11 ALE-terminal losses and nine typed incomplete outcomes. PM6-F06's incorrect v2 budget boolean is preserved and explained by the [immutable-evidence erratum](../evidence/M6-PM6-F06-erratum-20261031.md); the source correction and expanded independent raw audit are in [the corrective closeout](../evidence/M6-final-corrective-closeout-20261031.md), [human audit](../evidence/M6-stage3-v2-independent-raw-audit-20261031-r3.md), [persistent-copy machine audit](../evidence/M6-stage3-v2-independent-raw-audit-20261031-r3.json), and [original-root machine audit](../evidence/M6-stage3-v2-original-root-audit-20261031-r3.json). The original v1/v2 raw trees remain under the initial `/tmp` worktree and byte-identical verified copies are preserved locally under `artifacts/m6-preserved-20261031/`; neither is uploaded or tracked. The M5 scientific results and accepted RSK-014 limitation are unchanged. M6 criteria remain pending independent PM acceptance; do not infer approval, merge, or G4 approval from implementation or tests.
+`PROJECT_STATE.yaml` and `BACKLOG.yaml` are authoritative. The independent PM accepted M6-01–M6-05 at [PR #14 comment 6539798992](https://github.com/dodaonam/atari-videochess-rl/pull/14#issuecomment-6539798992); PR #14 was merged into `initial-idea` at `509f9f83f9249208fd5adba572efed2d2f0f82ff`. The accepted feature HEAD/tree were `e919ee3ad039c9d2de3ebdf6b82704ecd61c0a6f` / `7eb06fd9c0e0b363ca324d203e1debf26f233c08`. See the permanent [PM acceptance record](../evidence/M6-001-PM-acceptance-20261031.md), [post-merge identity verification](../evidence/logs/M6-postmerge-identity-verification-20261031.log), and [post-merge verification report](../evidence/M6-post-merge-verification-20261031.md).
+
+M6-001 is done. Preserve v1/v2 identities and all M6 scientific qualifications. The PM reviewed the implementation, reports and recorded logs, but did not personally rerun the private raw ALE audit or full Python suite. G3 remains approved; G4 is unapproved; M7 is not started or authorized. No PR #14 review or merge action remains outstanding. Await a separate G4 PM decision and separate direct owner authorization before M7.
+
+## Historical pre-acceptance M6 handoff — before PR #14 merge
+
+The dated M6 execution and corrective reports preserve their point-in-time pending-review wording. They are superseded for current governance by the PM acceptance record above; their historical results and limitations remain unchanged.
 
 ## Historical M5 technical acceptance handoff — before PR merge and G3 decision
 

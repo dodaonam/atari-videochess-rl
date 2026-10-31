@@ -1,6 +1,6 @@
 # Project Requirements and Decision Register
 
-**Status:** G0, G1 and G2 are approved. Live gate/task status and milestone authorization are owned by [project state](../../.agents/state/PROJECT_STATE.yaml).
+**Status:** G0–G3 are approved; G4 remains unapproved. Live gate/task status and milestone authorization are owned by [project state](../../.agents/state/PROJECT_STATE.yaml).
 **Purpose:** Consolidate the project baseline from [`ROADMAP.md`](ROADMAP.md) and `chat_history.md` while distinguishing source-stated constraints, proposed choices, and open approvals.
 
 ## 1. Status labels and authority
@@ -66,7 +66,7 @@ G1 was authorized, its hardening and independent-session acceptance were complet
 
 ### G2 — Technical Feasibility
 
-The M1-01 through M1-06 acceptance and G2 approval are recorded in [M1/G2 final verification](../../.agents/evidence/M1-G2-final-verification-20261016.md). M2-01 through M2-04 are accepted and M2 PR #1 was merged into `initial-idea` at `27dd9f73d2bf7545e194fe40391d0cae5f9b9003` on 2026-10-16; see the [post-M2 integration verification](../../.agents/evidence/POST-M2-INTEGRATION-VERIFICATION-20261017.md). This does not approve G3 or resolve the remaining O-02–O-08 questions. The O-01 internal owner decision is recorded in §6; current milestone authorization remains owned by `.agents/state/PROJECT_STATE.yaml`.
+The M1-01 through M1-06 acceptance and G2 approval are recorded in [M1/G2 final verification](../../.agents/evidence/M1-G2-final-verification-20261016.md). M2-01 through M2-04 are accepted and M2 PR #1 was merged into `initial-idea` at `27dd9f73d2bf7545e194fe40391d0cae5f9b9003` on 2026-10-16; see the [post-M2 integration verification](../../.agents/evidence/POST-M2-INTEGRATION-VERIFICATION-20261017.md). The G2 approval did not itself approve G3. G3 was separately approved by the independent PM on 2026-10-30 after M2–M5 acceptance and PR #11 integration; see [G3-final-approval](../../.agents/evidence/G3-final-approval-20261030.md). G4 remains unapproved, and this decision does not resolve the remaining O-02–O-08 questions. Current milestone authorization remains owned by `.agents/state/PROJECT_STATE.yaml`.
 
 ### Engineering milestones
 
