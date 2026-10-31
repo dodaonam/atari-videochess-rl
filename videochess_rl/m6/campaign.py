@@ -366,6 +366,36 @@ def _runtime_snapshot(config: ALEConfig) -> dict[str, Any]:
         return env.runtime_info()
 
 
+def _campaign_budget_scope_metadata(config_data: dict[str, Any]) -> tuple[str, bool]:
+    """Return the schema-bound campaign scope without inheriting another version's default."""
+    schema = config_data.get("schema")
+    limits = config_data.get("campaign_limits", {})
+    if not isinstance(limits, dict):
+        raise ExperimentIdentityError("campaign_limits must be an object")
+    recorded = limits.get("gameplay_wall_budget_includes_diagnostics")
+
+    if schema == "videochess-m6-stage3-config/2.0":
+        scope = limits.get("gameplay_wall_budget_scope")
+        expected = "Stage 3 v2 only; excludes historical v1 and completed M6 diagnostics"
+        if scope != expected:
+            raise ExperimentIdentityError("v2 campaign wall-budget scope differs from its frozen protocol")
+        if recorded is not None and (not isinstance(recorded, bool) or recorded is not False):
+            raise ExperimentIdentityError("v2 campaign metadata cannot include diagnostic gameplay")
+        return scope, False
+
+    if schema == "videochess-m6-stage3-config/1.0":
+        scope = limits.get("gameplay_wall_budget_scope")
+        expected = "all M6 ALE diagnostics plus Stage 3 evaluation attempts"
+        if scope != expected:
+            raise ExperimentIdentityError("v1 campaign wall-budget scope differs from its legacy protocol")
+        includes_diagnostics = True if recorded is None else recorded
+        if not isinstance(includes_diagnostics, bool) or includes_diagnostics is not True:
+            raise ExperimentIdentityError("legacy v1 campaign budget must continue to include diagnostics")
+        return scope, True
+
+    raise ExperimentIdentityError(f"unsupported M6 campaign budget schema: {schema!r}")
+
+
 def _run_manifest(
     root: Path,
     *,
@@ -379,6 +409,7 @@ def _run_manifest(
     git = git_identity(root)
     dependencies = dependency_identity(root)
     config_data = json.loads(config_path.read_text(encoding="utf-8"))
+    campaign_wall_scope, campaign_wall_includes_diagnostics = _campaign_budget_scope_metadata(config_data)
     ale_horizon = config_data.get("ale_horizon", {})
     expected_ale_limit = ale_horizon.get("max_num_frames_per_episode")
     runtime_config = ALEConfig(
@@ -415,6 +446,8 @@ def _run_manifest(
         } for _, identity in sorted(roster.values(), key=lambda row: row[1].policy_id)],
         "seed_schedule": seed_schedule,
         "protocol_schema": config_data.get("schema"),
+        "campaign_wall_budget_scope": campaign_wall_scope,
+        "campaign_wall_budget_includes_diagnostics": campaign_wall_includes_diagnostics,
         "attempt_limit": len(seed_schedule),
         "budget": {
             "wall_seconds_per_game": config_data.get("episode_limits", {}).get("maximum_wall_seconds", MAX_EPISODE_WALL_SECONDS),
@@ -423,7 +456,7 @@ def _run_manifest(
             "opponent_response_wait_frames": config_data.get("episode_limits", {}).get("maximum_opponent_wait_frames", 20_000),
             "maximum_player_moves": config_data.get("episode_limits", {}).get("maximum_player_moves", 200),
             "gameplay_wall_seconds_total": config_data.get("campaign_limits", {}).get("maximum_gameplay_wall_seconds", MAX_GAMEPLAY_WALL_SECONDS),
-            "gameplay_wall_budget_includes_diagnostics": config_data.get("campaign_limits", {}).get("gameplay_wall_budget_includes_diagnostics", True),
+            "gameplay_wall_budget_includes_diagnostics": campaign_wall_includes_diagnostics,
             "artifact_bytes_total": config_data.get("campaign_limits", {}).get("maximum_artifact_bytes", MAX_M6_ARTIFACT_BYTES),
             "artifact_metadata_reserve_bytes": config_data.get("campaign_limits", {}).get("artifact_metadata_reserve_bytes", ARTIFACT_METADATA_RESERVE_BYTES),
             "minimum_free_bytes_before_campaign": config_data.get("campaign_limits", {}).get("minimum_free_bytes_before_campaign"),

@@ -15,6 +15,9 @@ from videochess_rl.m6.campaign import (
     CONFIG_PATH,
     CONFIG_PATH_V2,
     M6Campaign,
+    ExperimentIdentityError,
+    _campaign_budget_scope_metadata,
+    _run_manifest,
     canonical_schedule_bytes,
     profile_config,
     stage3_schedule,
@@ -88,6 +91,61 @@ class M6CampaignPlanTests(unittest.TestCase):
         self.assertEqual(v2["campaign_limits"]["maximum_gameplay_wall_seconds"], 43_200)
         self.assertEqual(v2["ale_horizon"]["max_num_frames_per_episode"], 500_000)
         self.assertNotEqual(v1["schema"], v2["schema"])
+
+    def test_run_manifest_serializes_schema_specific_campaign_budget_scope(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        cases = (
+            (CONFIG_PATH, profile_config("ale-v5-default", mode=4), True,
+             "all M6 ALE diagnostics plus Stage 3 evaluation attempts"),
+            (CONFIG_PATH_V2, profile_config("ale-v5-extended-horizon", mode=4,
+                                           max_num_frames_per_episode=500_000), False,
+             "Stage 3 v2 only; excludes historical v1 and completed M6 diagnostics"),
+        )
+        for config_path, ale_config, expected_includes, expected_scope in cases:
+            runtime = {
+                "rom_sha256": "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7",
+                "config": ale_config.as_dict(),
+                "ale_episode_frame_limit": ale_config.max_num_frames_per_episode or 108_000,
+            }
+            with self.subTest(config=config_path.name), \
+                    patch("videochess_rl.m6.campaign.git_identity", return_value={
+                        "git_commit": "test-commit", "git_tree": "test-tree",
+                    }), patch("videochess_rl.m6.campaign.dependency_identity", return_value={
+                        "source_bundle_sha256": "a" * 64, "dependency_lock_sha256": "b" * 64,
+                    }), patch("videochess_rl.m6.campaign._runtime_snapshot", return_value=runtime):
+                manifest = _run_manifest(
+                    root, run_id="scope-test", stage="stage3-v2" if expected_includes is False else "stage3",
+                    config=ale_config, roster={}, seed_schedule=[], config_path=config_path,
+                )
+            roundtrip = json.loads(json.dumps(manifest))
+            self.assertEqual(roundtrip["campaign_wall_budget_scope"], expected_scope)
+            self.assertIs(roundtrip["campaign_wall_budget_includes_diagnostics"], expected_includes)
+            self.assertIs(roundtrip["budget"]["gameplay_wall_budget_includes_diagnostics"], expected_includes)
+
+    def test_v2_manifest_scope_rejects_missing_or_conflicting_metadata(self) -> None:
+        config = json.loads(CONFIG_PATH_V2.read_text(encoding="utf-8"))
+        conflicting = json.loads(json.dumps(config))
+        conflicting["campaign_limits"]["gameplay_wall_budget_includes_diagnostics"] = True
+        with self.assertRaisesRegex(ExperimentIdentityError, "cannot include diagnostic"):
+            _campaign_budget_scope_metadata(conflicting)
+        missing_scope = json.loads(json.dumps(config))
+        del missing_scope["campaign_limits"]["gameplay_wall_budget_scope"]
+        with self.assertRaisesRegex(ExperimentIdentityError, "scope differs"):
+            _campaign_budget_scope_metadata(missing_scope)
+
+    def test_v2_gameplay_budget_arithmetic_excludes_separate_diagnostic_root(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory) / "artifacts/m6"
+            campaign = M6Campaign.__new__(M6Campaign)
+            campaign.artifact_root = base / "v2"
+            for run, attempt, wall in (("diagnostic", "d", 88.0), ("v2-run", "a", 12.5)):
+                attempt_path = base / run / "attempts" / attempt / "attempt.json"
+                attempt_path.parent.mkdir(parents=True)
+                attempt_path.write_text(json.dumps({"wall_seconds": wall}), encoding="utf-8")
+            v2_attempt = campaign.artifact_root / "v2-run" / "attempts" / "b" / "attempt.json"
+            v2_attempt.parent.mkdir(parents=True)
+            v2_attempt.write_text(json.dumps({"wall_seconds": 12.5}), encoding="utf-8")
+            self.assertEqual(campaign._cumulative_gameplay_wall_seconds(), 12.5)
 
     def test_stage3_v2_schedule_is_exactly_paired_and_preordered(self) -> None:
         schedule = stage3_v2_schedule()
