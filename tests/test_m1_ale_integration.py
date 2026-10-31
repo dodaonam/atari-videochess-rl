@@ -10,7 +10,7 @@ import chess
 
 from videochess_rl.demo import run_closed_loop
 from videochess_rl.environment import ALEConfig, VideoChessEnv
-from videochess_rl.episode import choose_diagnostic_move, run_episode
+from videochess_rl.episode import DecisionResult, choose_diagnostic_move, run_episode
 from videochess_rl.episode import StopCategory
 from videochess_rl.shadow import DesynchronizationError, ShadowBoard
 from videochess_rl.vision import VideoChessVision
@@ -65,6 +65,40 @@ class RealALEClosedLoopTests(unittest.TestCase):
         self.assertIn(chess.Move.from_uci(reply), after_player.legal_moves)
         self.assertTrue(result["turns"][0]["opponent_reply"]["verified_from_rgb"])
         self.assertFalse(result["terminal"]["observed"])
+
+    def test_verified_context_selector_receives_real_rgb_history_and_candidate_set(self) -> None:
+        seen = []
+
+        def selector(context):
+            seen.append(context)
+            self.assertTrue(context.standard_reset_verified)
+            self.assertTrue(context.rgb_observation.matches_start_position())
+            self.assertEqual(context.history_uci, ())
+            self.assertEqual(context.fen, chess.Board().fen(en_passant="fen"))
+            self.assertEqual(context.side_to_move, chess.WHITE)
+            self.assertEqual(context.legal_moves_uci, tuple(sorted(move.uci() for move in chess.Board().legal_moves)))
+            return DecisionResult("e2e3", {"policy_id": "test-frozen-policy", "checkpoint_sha256": "a" * 64})
+
+        with tempfile.TemporaryDirectory(prefix="videochess-m6-selector-boundary-") as directory:
+            result = run_episode(
+                config=ALEConfig.deterministic_dev(mode=4),
+                seed=20261129,
+                decision_selector=selector,
+                max_player_moves=1,
+                max_opponent_wait_frames=10000,
+                max_episode_frames=20000,
+                max_episode_seconds=120,
+                artifact_dir=directory,
+            )
+
+        self.assertEqual(len(seen), 1)
+        self.assertEqual(result["selector_contract"], "verified_atari_context_v1")
+        self.assertEqual(result["turns"][0]["policy_decision"]["policy_id"], "test-frozen-policy")
+        self.assertTrue(result["turns"][0]["player_move"]["input_initiated"])
+        self.assertTrue(result["turns"][0]["player_move"]["verified_from_rgb"])
+        self.assertTrue(result["turns"][0]["opponent_reply"]["verified_from_rgb"])
+        self.assertEqual(result["terminal"]["player_moves_attempted"], 1)
+        self.assertEqual(result["terminal"]["verified_player_moves"], 1)
 
     def test_rgb_player_move_and_atari_opponent_reply_are_shadow_legal(self) -> None:
         with tempfile.TemporaryDirectory(prefix="videochess-m1-") as directory:

@@ -1,6 +1,6 @@
 # Frozen M5 Policy to ALE Integration Contract
 
-**Status:** Pre-M6 interface specification; runtime adapter and all Atari gameplay remain M6 work. This document does not pass M6-01 through M6-05.
+**Status:** M6 implementation contract. The adapter and closed-loop runner are implemented in the M6 feature branch. Automated tests and offline checkpoint checks do not pass M6-01 through M6-05; those criteria require the genuine ALE evidence listed in the M6 report.
 
 ## Authority and components
 
@@ -46,6 +46,8 @@ stable ALE RGB -> parse/stability check -> verify against complete history/shado
  -> next decision, actual ALE terminal/truncation, or typed safe stop
 ```
 
+After target FIRE, the runner performs at most three consecutive 33-frame RGB/NOOP settling windows while the selected-piece preview remains visible. This is passive observation only: it never resends FIRE or resumes an uncertain input. If the preview persists through all three windows, the controller stops with `CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN` and keeps the last verified history. Stage 3 records this settling rule in its immutable timing configuration. Corrected cursor-route displacements are recorded separately from board/shadow desynchronization.
+
 Every boundary records the last verified FEN/history length, RGB evidence hash/frame, selected UCI if any, control phase, and reason. A controller interruption, uncertain FIRE, stale evidence, reply timeout, ambiguity, or mismatch stops without guessing or re-sending input. Existing code explicitly avoids retrying uncertain FIRE. If ALE terminates before the board becomes parseable, preserve the last verified FEN; use ALE reward and flags as outcome evidence and label the final board unavailable. Never convert an incomplete runner stop into a draw.
 
 ## Terminal and truncation semantics
@@ -84,4 +86,22 @@ ALE reward is documented by the pinned VideoChess wrapper from White's perspecti
 | 19 | Repeated invocation without intended stochasticity | Same verified input returns same legal UCI action | Pre-M6 actual snapshot test passed for repeated initial-state inference. |
 | 20 | Frozen model weights mutate | No state tensor changes and no gradients appear | Pre-M6 actual snapshot test passed; M6 repeat in integration suite. |
 
-These cases define M6 tests; this table does not claim all adapter/integration cases passed in Pre-M6. Mock/offline tests establish only software behavior. M6 must separately produce genuine ALE evidence for real-runtime criteria.
+These cases define the M6 test surface. The dedicated `tests/test_m6_adapter.py`, `tests/test_m6_campaign.py`, `tests/test_m6_ledger.py`, and `tests/test_m6_private_policy_roster.py` tests exercise the offline policy, artifact, and accounting boundaries. `tests/test_m1_ale_integration.py` includes the genuine ALE RGB-to-selector regression. Mock/offline tests establish software behavior only; the M6 report records which closed-loop criteria also passed against real ALE.
+
+## Implemented runtime boundary
+
+`videochess_rl/m6/adapter.py` provides `M6PolicyAdapter`. It accepts the immutable `AtariDecisionContext` supplied by the existing `run_episode` loop, checks RGB shape/hash/frame identity and the existing vision evidence, rebuilds the board from the ordered UCI history, verifies FEN/side/legal candidates/shadow move stack, and calls the already loaded policy. The adapter returns a `DecisionResult` bound to the policy and observation identity. The episode runner independently checks that UCI action against its last verified board before controller planning.
+
+`videochess_rl/m6/campaign.py` loads only the pinned CPU snapshots and existing baselines, asserts actual environment construction/reset settings, and writes an append-only attempt ledger plus per-attempt trace/artifact manifests. Interrupted attempts are retained with explicit missing-detail markers; unknown move accounting is not replaced with zero. `videochess_rl/m6/ledger.py` verifies trace/manifest hashes and computes metrics from the retained attempt records.
+
+The current implementation is White-only. It preserves ALE RGB as the observation authority and uses RAM only to verify the numeric mode. No optimizer, replay insertion, Stockfish process, or model-weight update is in the inference path. Actual Stage 1, Stage 2, and v1 Stage 3 results and their limitations are recorded in [M6-001-final-report-20261031.md](../../.agents/evidence/M6-001-final-report-20261031.md); the v2 run receives a separate report.
+
+### Corrective continuation interfaces
+
+The Stage 3 v2 campaign is an explicit extended-horizon profile, configured by `configs/m6/m6-stage3-v2.json`. `ALEConfig.max_num_frames_per_episode` is optional so existing M1/v1 construction retains the registered default; v2 passes 500000 through Gymnasium's supported Atari constructor and verifies `ale.getInt("max_num_frames_per_episode")` on the emulator instance. Runtime evidence records both the v5 registration default (108000) and effective instance horizon (500000). The runner's 432000 action-frame cap is measured from the observed reset counter; traces retain both `reset_frame_number`, raw `ale_frames`, and `post_reset_action_frames`. ALE terminal and truncation flags remain independent from runner limits.
+
+V2 reporting preserves the move-success numerator and denominator and adds one exclusive category per initiated-but-unverified final move. Administrative caps, ALE terminal/truncation, controller uncertainties, reply timeout, desynchronization, and unknown interruption remain distinct. Cursor observations distinguish unexpected route movement, confirmed correction, no progress, ambiguity, and stable-board mismatch; none of these statistics are silently folded into board desynchronization. Legacy v1 cursor traces lack route-correction/ambiguity detail, so unavailable diagnostics remain unknown during reanalysis.
+
+Adapter timing records input validation, policy `choose_move`, and total adapter duration separately. `choose_move` may include feature preparation and legal-candidate scoring, so it is not labeled as a pure neural forward pass. Historical v1 `inference_latency_seconds` measured more than the neural forward pass and is retained as a legacy unclassified duration. Terminal reward classification requires finite numeric reward; zero, nonfinite, or unsupported rewards are terminal-unknown. Runner/ALE truncation is never a draw.
+
+The corrective protocol and owner-authorized limits are documented in the v2 addendum to [M6_ALE_EXPERIMENT_PROTOCOL.md](../04-research/M6_ALE_EXPERIMENT_PROTOCOL.md) and the [M6-001 v2 authorization record](../../.agents/evidence/M6-001-v2-corrective-authorization-20261031.md). These additions do not alter v1 configuration or historical evidence.

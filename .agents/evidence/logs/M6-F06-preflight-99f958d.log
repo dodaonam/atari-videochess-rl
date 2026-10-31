@@ -1,0 +1,48 @@
+command: PYTHONDONTWRITEBYTECODE=1 python3 scripts/agent_preflight.py
+result: PASS: agent context preflight; G3 approved, M6-001 in_progress; no errors; artifact-manifest warning only.
+Exit code: 0
+execution_environment: Python 3.12.3 on local CPU; canonical repository preflight
+git_head: 99f958dbb90b82705263f2ae95df701ba98d2f8b
+started_at_utc: 2026-10-31T05:34:34.073649Z
+completed_at_utc: 2026-10-31T05:34:35.359057Z
+
+--- preflight output ---
+Agent context preflight: PASS
+Governance: G3 (approved); approved: G0, G1, G2, G3
+Next engineering milestone: M6 — in_progress
+Active task: M6-001 — Implement and verify frozen-policy Atari integration and bounded evaluation
+Active task next action: Independent PM: review PM6-F06 erratum, portable original/persistent raw audits, final exact-source regression and preflight records, and updated PR #14; decide M6-001 acceptance and merge separately. Keep M6 in_progress, G4 unapproved, and M7 unauthorized until their separate decisions are recorded.
+Next task: M6-001 (in_progress) — Implement and verify frozen-policy Atari integration and bounded evaluation
+Next task dependencies: M1-001, M4-001, M5-001
+Next task acceptance criteria: M6-01, M6-02, M6-03, M6-04, M6-05
+Tasks: done=14, in_progress=1, pending=0, blocked=0, cancelled=0
+Completed task IDs: G1-001, G1-002, G1-003, G1-004, G1-005, G1-006, G1-007, G1-008, M0-001, M1-001, M2-001, M3-001, M4-001, M5-001
+In progress task IDs: M6-001
+Pending task IDs: none
+Blocked task IDs: none
+Active blockers: none recorded
+Open confirmations:
+  O-02: Whether full-game performance on actual ALE is a hard submission requirement or a research target with an accepted fallback.
+  O-03: Future course checkpoints and any date changes. The owner confirmed the presentation date is Tuesday, 2026-11-03.
+  O-04: Actual Colab entitlement/quota, GPU availability, cloud storage, and whether paid compute is allowed. The owner selected local CPU for M3; no external compute/storage is used in this mission.
+  O-05: ALE/ROM runtime behavior, RAM mapping, game modes, difficulty behavior, and official evaluation settings.
+  O-06: Public redistribution rights and any new source/use beyond the scoped May 2022 archive. For M3, the owner authorized bounded internal academic use of the exact Lichess Elite May 2022 package with local retention and no redistribution; its third-party package license remains unstated/unverified.
+  O-07: Broader Stockfish roles: benchmark opponent, offline engine evaluation, and instructor-specific limits outside the M3 teacher-label scope.
+  O-08: Opponent pool and rating method for any Elo claim.
+Relevant decisions: docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md, docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md, docs/02-management/decisions/ADR-0003-pretraining-model-interface.md
+Acceptance criteria recognized: 51
+Last verified Git: feature/m6-closeout-local @ 89660a31a39f42d1683a72dfd9053e14a48290fe
+Live Git: feature/m6-closeout-local @ 99f958dbb90b82705263f2ae95df701ba98d2f8b
+Roadmap source: exact match; 19 sections; SHA-256 fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf
+Git recovery: expected commit/checkout transition; portable tracked-file manifest matches.
+Workspace Git status: differs from checkpoint
+Portable tracked baseline: matches
+Portable Git index: matches checkpoint
+Hashed ordinary-file snapshot: matches
+Content hashes: 870 ordinary files verified by SHA-256.
+Not content-verified by this hash map: PROJECT_STATE self-reference, chat history/credential-like paths, temp files, symlinks, and the excluded directories listed below.
+Excluded directories: .agents/state/checkpoint-history, artifacts, scripts/__pycache__
+Artifact directories requiring independent manifests: artifacts
+Last verified dirty paths (0): none
+Next user action: Independently review PR #14, including the PM6-F06 erratum, original and persistent raw-evidence audits, final verification records, and M6 acceptance mapping; decide M6-001 acceptance and merge separately. Keep G4 unapproved and M7 unauthorized until separate decisions.
+WARNING ARTIFACT_MANIFEST_REQUIRED [.]: Artifact/data directories are excluded from content hashing and require independent manifest verification: artifacts.

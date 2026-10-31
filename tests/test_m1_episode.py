@@ -3,6 +3,10 @@
 from __future__ import annotations
 
 import unittest
+from types import SimpleNamespace
+from unittest.mock import patch
+from pathlib import Path
+import tempfile
 
 import chess
 import numpy as np
@@ -74,6 +78,8 @@ class FakeALE:
         stop_on_opponent_thinking: bool = False,
         opponent_thinking_noops: int = 35,
         overshoot_first_cursor_action: bool = False,
+        target_fire_delay_noops: int = 0,
+        desync_after_first_cursor_action: bool = False,
     ):
         self.config = None
         self.board = chess.Board()
@@ -84,10 +90,15 @@ class FakeALE:
         self.held_frames = 0
         self.frame_number = 0
         self.fail_target_fire = fail_target_fire
+        self.target_fire_delay_noops = target_fire_delay_noops
+        self.desync_after_first_cursor_action = desync_after_first_cursor_action
+        self.target_fire_pending = False
+        self.target_fire_noops = 0
         self.fail_source_selection = fail_source_selection
         self.fail_selected_target_navigation = fail_selected_target_navigation
         self.overshoot_first_cursor_action = overshoot_first_cursor_action
         self.overshot = False
+        self.did_desync = False
         self.stop_kind = stop_kind
         self.stop_reward = stop_reward
         self.stop_after_fire_presses = stop_after_fire_presses
@@ -129,6 +140,8 @@ class FakeALE:
         self.cursor = "d4"
         self.selected_source = None
         self.selected_target = None
+        self.target_fire_pending = False
+        self.target_fire_noops = 0
         return self._frame()
 
     def runtime_info(self):
@@ -205,6 +218,9 @@ class FakeALE:
                         row += step; col -= step
                     if 0 <= row < 8 and 0 <= col < 8:
                         self.cursor = chr(ord("a") + col) + str(8 - row)
+                        if self.desync_after_first_cursor_action and not self.did_desync:
+                            self.board.push_uci("g1f3")
+                            self.did_desync = True
                 else:
                     square = self.selected_target
                     row = 8 - int(square[1])
@@ -230,6 +246,16 @@ class FakeALE:
         elif action == 0:
             self.held_action = None
             self.held_frames = 0
+            if self.target_fire_pending:
+                self.target_fire_noops += 1
+                if self.target_fire_noops >= self.target_fire_delay_noops:
+                    move = chess.Move.from_uci(self.selected_source + self.selected_target)
+                    if move in self.board.legal_moves:
+                        self.board.push(move)
+                        self.cursor = self.selected_source
+                    self.selected_source = None
+                    self.selected_target = None
+                    self.target_fire_pending = False
         elif action == 1:
             if self.held_action == 1:
                 return self._frame()
@@ -241,12 +267,15 @@ class FakeALE:
                     self.selected_source = self.cursor
                     self.selected_target = self.cursor
             elif not self.fail_target_fire:
-                move = chess.Move.from_uci(self.selected_source + self.selected_target)
-                if move in self.board.legal_moves:
-                    self.board.push(move)
-                    self.cursor = self.selected_source
-                self.selected_source = None
-                self.selected_target = None
+                if self.target_fire_delay_noops:
+                    self.target_fire_pending = True
+                else:
+                    move = chess.Move.from_uci(self.selected_source + self.selected_target)
+                    if move in self.board.legal_moves:
+                        self.board.push(move)
+                        self.cursor = self.selected_source
+                    self.selected_source = None
+                    self.selected_target = None
         return self._frame()
 
 
@@ -348,6 +377,19 @@ class EpisodeSafetyTests(unittest.TestCase):
         self.assertFalse(result["turns"][0]["player_move"]["verified_from_rgb"])
         self.assertEqual(result["terminal"]["last_verified_fen"], chess.Board().fen())
 
+    def test_target_fire_settling_wait_accepts_a_delayed_rgb_transition_without_retry(self) -> None:
+        fake = FakeALE(target_fire_delay_noops=55)
+        result = self.run_fake(fake)
+
+        phases = [event["phase"] for event in result["turns"][0]["input_phases"]]
+        self.assertIn("target_confirmation_settle_wait", phases)
+        self.assertNotIn("target_confirmation_uncertain", phases)
+        self.assertEqual(result["turns"][0]["player_move"]["uci"], "e2e3")
+        self.assertEqual(result["turns"][0]["player_move"]["candidate_fen"], "rnbqkbnr/pppppppp/8/8/8/4P3/PPPP1PPP/RNBQKBNR b KQkq - 0 1")
+        self.assertFalse(result["turns"][0]["player_move"]["verified_from_rgb"], "without an Atari reply, full-board shadow advancement remains blocked")
+        self.assertIn("No stable unique legal Atari reply", result["failure"])
+        self.assertEqual(fake.fire_presses, 2, "the source and target each receive exactly one FIRE press")
+
     def test_unverified_source_selection_stops_before_target_navigation(self) -> None:
         fake = FakeALE(fail_source_selection=True)
         result = self.run_fake(fake)
@@ -387,6 +429,47 @@ class EpisodeSafetyTests(unittest.TestCase):
 
         self.assertTrue(any(event["unexpected_displacement"] for event in result["cursor_observations"]))
         self.assertTrue(any(event["from_square"] == "f2" and event["observed_square"] == "e3" for event in result["cursor_observations"]))
+        diagnostics = result["terminal"]["cursor_diagnostics"]
+        self.assertGreaterEqual(diagnostics["unexpected_displacements"], 1)
+        self.assertGreaterEqual(diagnostics["unexpected_displacements_corrected"], 1)
+        self.assertEqual(diagnostics["stable_board_disagreements"], 0)
+
+    def test_stable_rgb_board_disagreement_stops_and_is_not_cursor_correction(self) -> None:
+        result = self.run_fake(FakeALE(desync_after_first_cursor_action=True))
+        self.assertEqual(result["terminal"]["runner_stop_category"], StopCategory.CONTROLLER_BOARD_DESYNCHRONIZED.value)
+        diagnostics = result["terminal"]["cursor_diagnostics"]
+        self.assertEqual(diagnostics["stable_board_disagreements"], 1)
+        self.assertEqual(diagnostics["unexpected_displacements_corrected"], 0)
+
+    def test_recorded_post_reset_frame_budget_subtracts_reset_counter_origin(self) -> None:
+        result = self.run_fake(FakeALE(stop_kind="terminated", stop_reward=-1.0))
+        terminal = result["terminal"]
+        self.assertEqual(terminal["post_reset_action_frames"], terminal["ale_frames"] - terminal["reset_frame_number"])
+        self.assertEqual(terminal["reset_frame_number"], result["reset"]["frame_number"])
+
+    def test_process_rss_limit_stops_before_another_ale_action(self) -> None:
+        fake = FakeALE()
+        with patch("videochess_rl.episode.resource.getrusage", return_value=SimpleNamespace(ru_maxrss=1)):
+            result = self.run_fake(fake, max_process_rss_bytes=1)
+        self.assertEqual(result["terminal"]["runner_stop_category"], StopCategory.RUNNER_RESOURCE_LIMIT.value)
+        self.assertEqual(fake.actions_seen, [])
+
+    def test_artifact_limit_at_reset_is_recorded_without_gameplay(self) -> None:
+        fake = FakeALE()
+        with tempfile.TemporaryDirectory() as directory:
+            result = self.run_fake(fake, artifact_dir=str(Path(directory) / "frames"), max_artifact_bytes=1)
+        self.assertEqual(result["status"], "runner_stopped")
+        self.assertEqual(result["terminal"]["runner_stop_category"], StopCategory.RUNNER_ARTIFACT_LIMIT.value)
+        self.assertEqual(result["terminal"]["player_moves_attempted"], 0)
+        self.assertEqual(fake.actions_seen, [])
+
+    def test_wall_clock_limit_is_not_reported_as_ale_termination(self) -> None:
+        fake = FakeALE()
+        result = self.run_fake(fake, max_episode_seconds=1e-9)
+        self.assertEqual(result["status"], "runner_stopped")
+        self.assertEqual(result["terminal"]["runner_stop_category"], StopCategory.RUNNER_MAX_WALL_CLOCK.value)
+        self.assertFalse(result["terminal"]["ale_terminated"])
+        self.assertEqual(fake.actions_seen, [])
 
     def test_episode_frame_budget_is_not_reported_as_ale_truncation(self) -> None:
         result = self.run_fake(FakeALE(), max_episode_frames=40)

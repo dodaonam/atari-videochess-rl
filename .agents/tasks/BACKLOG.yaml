@@ -4014,7 +4014,652 @@
       ],
       "next_action": "",
       "plan_ref": ".agents/plans/M05-double-dqn.md"
+    },
+    {
+      "id": "M6-001",
+      "title": "Implement and verify frozen-policy Atari integration and bounded evaluation",
+      "milestone": "M6",
+      "status": "in_progress",
+      "depends_on": [
+        "M1-001",
+        "M4-001",
+        "M5-001"
+      ],
+      "requires_user_gate_approval": null,
+      "acceptance_criteria_ids": [
+        "M6-01",
+        "M6-02",
+        "M6-03",
+        "M6-04",
+        "M6-05"
+      ],
+      "blocker_ids": [],
+      "evidence": [
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-001-authorization-20261030.md",
+          "detail": "Direct project-owner authorization for the bounded M6-001 implementation, local ALE experiments, and one PR; PM conditional GO is stated in owner instruction.",
+          "result": "The project owner directly authorized M6-001 and its bounded implementation, local ALE experiments, and PR delivery. M6 is active; acceptance remains with the independent PM.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-30T14:41:17Z",
+            "recorded_at_utc": "2026-10-30T14:41:17Z",
+            "exit_code": null,
+            "git_revision": "e6d444e475e447e9f37951f16585bf496f804c9d",
+            "log_path": ".agents/evidence/M6-001-authorization-20261030.md"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-entry-verification-20261030.md",
+          "detail": "Verified merged baseline, accepted dependencies, private M4/M5 artifacts, CPU policy load, local ALE/ROM identity, and entry conditions before gameplay.",
+          "result": "M6 hard entry dependencies are present and verified; only the expected external artifact-manifest preflight warning remains.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T14:41:17Z",
+            "exit_code": null,
+            "git_revision": "e6d444e475e447e9f37951f16585bf496f804c9d",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<verified-private-m5-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<verified-private-m4-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<pinned-warm-snapshot-file> PATH=<project-local-stockfish-dir>:$PATH <project-python> -m unittest discover -s tests -v",
+          "result": "PASS: 419 tests, 0 failures, 0 skips; unittest elapsed 162.942 seconds.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T15:29:06Z",
+            "recorded_at_utc": "2026-10-30T15:32:28Z",
+            "exit_code": 0,
+            "git_revision": "d286e794b9cfb2bb5dbee0f88c6b74c946daf6ff",
+            "log_path": ".agents/evidence/logs/M6-full-suite-d286e794-rerun.log",
+            "log_sha256": "51ff0ade905eb2237704c3d4c46fe649b154d672bdfeba03e0a5bf9d351aeca8"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage1-evidence-20261030.md",
+          "detail": "Genuine ALE Stage 1 evidence for one frozen M5 Warm decision, controller execution, RGB-verified player move, and verified Atari reply; local trace hashes and limits recorded.",
+          "result": "Stage 1 PASS: g1f3 was selected and RGB verified, followed by RGB-verified Atari reply c7c5. One move, one reply, zero desynchronizations. The planned one-player-move runner stop is not a completed game.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T15:40:57Z",
+            "exit_code": null,
+            "git_revision": "5bb88459a1d38ad62dcbce6b4805541f8c2b3acf",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<verified-private-m5-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<verified-private-m4-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<pinned-warm-snapshot-file> PATH=<project-local-stockfish-dir>:$PATH <project-python> -m unittest discover -s tests -v",
+          "result": "PASS: 422 tests, 0 failures, 0 skips; unittest elapsed 170.954 seconds.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T15:56:07Z",
+            "recorded_at_utc": "2026-10-30T15:59:09Z",
+            "exit_code": 0,
+            "git_revision": "6833ac5a54dce8070f90b3012f47aa1e6ac0189f",
+            "log_path": ".agents/evidence/logs/M6-full-suite-6833ac5.log",
+            "log_sha256": "3a77fac124e9740603e4040053e12384b8e6c338ed7c6f4af7a5205fedc5bbe7"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage2-evidence-20261030.md",
+          "detail": "Genuine ALE debug multi-turn and limited default-v5 closed-loop evidence for M5 Warm/Scratch plus the bounded comparison policies; raw traces remain local and hash-verified.",
+          "result": "M5 Warm and Scratch each completed 10 RGB-verified player moves and 10 Atari replies under debug settings; each completed one player/reply cycle under default-v5. Two controls safe-stopped on target confirmation uncertainty. No diagnostic attempt was a completed game.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T16:19:52Z",
+            "exit_code": null,
+            "git_revision": "c709231295441a297fd28d4e1455fe5ef351fe15",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<verified-private-m5-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<verified-private-m4-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<pinned-warm-snapshot-file> PATH=<project-local-stockfish-dir>:$PATH <project-python> -m unittest discover -s tests -v",
+          "result": "PASS: 422 tests, 0 failures, 0 skips; unittest elapsed 175.525 seconds.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T16:14:32Z",
+            "recorded_at_utc": "2026-10-30T16:17:30Z",
+            "exit_code": 0,
+            "git_revision": "c709231295441a297fd28d4e1455fe5ef351fe15",
+            "log_path": ".agents/evidence/logs/M6-full-suite-c709231.log",
+            "log_sha256": "fa4fae000c040fb649d67e9b78012ff059cf698229b879b924add397fe7fb981"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<verified-private-m5-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<verified-private-m4-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<pinned-warm-snapshot-file> PATH=<project-local-stockfish-dir>:$PATH <project-python> -m unittest discover -s tests -v",
+          "result": "FAIL: 422 tests, 1 failures, 0 skips; unittest elapsed 195.705 seconds.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T16:21:21Z",
+            "recorded_at_utc": "2026-10-30T16:24:40Z",
+            "exit_code": 1,
+            "git_revision": "b42f0f63514853990ad4263540a4c4c0b3db4dd5",
+            "log_path": ".agents/evidence/logs/M6-full-suite-b42f0f6.log",
+            "log_sha256": "26e55df4e28dd49a38a6b49b3938431112b6ad445ef529fc95837a9123c7f057"
+          },
+          "detail": "The pinned-checkpoint smoke test failed because this invocation’s explicit path did not resolve to a file. The accepted checkpoint was subsequently resolved by its exact root-manifest SHA-256 and the full suite passed; no alternative checkpoint was used."
+        },
+        {
+          "kind": "test",
+          "command": "Resolve the M5 checkpoint by its approved SHA-256 from the verified root artifact manifest; set private-artifact environment variables; run <project-python> -m unittest discover -s tests -v",
+          "result": "PASS: 422 tests, 0 failures, 0 skips; unittest elapsed 184.733 seconds.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T16:26:45Z",
+            "recorded_at_utc": "2026-10-30T16:29:52Z",
+            "exit_code": 0,
+            "git_revision": "b42f0f63514853990ad4263540a4c4c0b3db4dd5",
+            "log_path": ".agents/evidence/logs/M6-full-suite-b42f0f6-manifest-resolved-rerun.log",
+            "log_sha256": "260ca8e431da3e16beb9c7d41cfc5c7f1c741eb0fc2c07754a1c07873688f288"
+          },
+          "detail": "The Warm checkpoint path was resolved from the verified M5 root manifest and matched the approved checkpoint SHA-256 before the suite ran."
+        },
+        {
+          "kind": "test",
+          "command": "Resolve the Warm checkpoint by its pinned SHA-256 from the verified M5 root manifest; set M4/M5 private artifact roots; run <project-python> -m unittest discover -s tests -v",
+          "result": "PASS: 422 tests, 0 failures, 0 skips; unittest elapsed 187.325 seconds.",
+          "detail": "This was the final full regression at the clean pre-campaign source/config freeze revision. The exact frozen M5 Warm checkpoint was resolved and SHA-256 verified from the accepted M5 root manifest.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T16:31:42Z",
+            "recorded_at_utc": "2026-10-30T16:34:51Z",
+            "exit_code": 0,
+            "git_revision": "875da1ec8d343f8736dbe5b2d85d6c180af9cc32",
+            "log_path": ".agents/evidence/logs/M6-full-suite-875da1e.log",
+            "log_sha256": "689ed25a172df4c54cb432b5c8f6303b183549df6407d4550be589d342d48bc7"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-preflight-correction-20261030.md",
+          "detail": "Records a pre-game Stage 3 guard stop, exact mismatch between the M4 checkpoint digest in the initial config and the accepted artifact, and the corrected configuration/test.",
+          "result": "The initial Stage 3 invocation exited before creating a run directory, ALE reset, or action. The selected M4 bytes and sidecar matched accepted manifests; a config transcription error was corrected before any Stage 3 result. The corrected frozen roster is guarded by an exact checkpoint/sidecar test.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "test",
+          "command": "<project-python> -m unittest discover -s tests -p test_m6_campaign.py -v",
+          "result": "PASS: 7 tests, 0 failures, 0 skips; unittest elapsed 0.084 seconds.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T16:38:25Z",
+            "recorded_at_utc": "2026-10-30T16:38:27Z",
+            "exit_code": 0,
+            "git_revision": "facb28face189bd5d90e8cbdba49e74d4758e1ab",
+            "log_path": ".agents/evidence/logs/M6-focused-campaign-facb28f.log",
+            "log_sha256": "7a4555c1bc9c3e985f5d3ae81afc96f95de6d18217792bcdadec8a6f00d23b50"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "Resolve the Warm checkpoint by its pinned SHA-256 from the verified M5 root manifest; set M4/M5 private artifact roots; run <project-python> -m unittest discover -s tests -v",
+          "result": "PASS: 423 tests, 0 failures, 0 skips; unittest elapsed 165.546 seconds.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T16:38:40Z",
+            "recorded_at_utc": "2026-10-30T16:41:28Z",
+            "exit_code": 0,
+            "git_revision": "facb28face189bd5d90e8cbdba49e74d4758e1ab",
+            "log_path": ".agents/evidence/logs/M6-full-suite-facb28f.log",
+            "log_sha256": "992e14a95c79054823a445b54023f11933facacd129226c072e2c5678491d8b8"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "Local M6 entry verifier: load frozen policy roster, compare every checkpoint/sidecar identity to configs/m6/m6-stage3-v1.json, and call VideoChessEnv.runtime_info() without reset or step",
+          "result": "PASS: 5 frozen policy identities and ALE v5 runtime assertions match; no ALE reset or gameplay action.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T16:43:07Z",
+            "recorded_at_utc": "2026-10-30T16:43:22Z",
+            "exit_code": 0,
+            "git_revision": "9e3c3726873c00c96db2c3141bda9678f8d878d3",
+            "log_path": ".agents/evidence/logs/M6-stage3-entry-verification-9e3c372.log",
+            "log_sha256": "9e6b02a715bb8483bbe21153c61289343f9ad4e4224726ab893ae9305d65a410"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-001-final-report-20261031.md",
+          "detail": "Final engineering and research report for all M6 stages, the 35-attempt Stage 3 campaign, evidence integrity, acceptance mapping, and the unmet M6-04 full-game RL evidence requirement.",
+          "result": "Stage 3 campaign and verification completed within the authorized schedule and limits; no frozen M5 RL attempt reached ALE termination, so M6-04 remains partial and M6 is not accepted.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T17:33:51Z",
+            "exit_code": null,
+            "git_revision": "ad3998200e31e77b292ffc1138d02354f188bf5f",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-review-summary-20261031.json",
+          "detail": "Sanitized machine-readable summary of all 35 attempts with per-attempt provenance, outcomes, trace/manifest hashes, metrics, and aggregate denominators.",
+          "result": "35 unique attempts are represented; attempt outcomes and metrics were rederived from the locally hash-verified raw traces.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T17:33:51Z",
+            "exit_code": null,
+            "git_revision": "ad3998200e31e77b292ffc1138d02354f188bf5f",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-run-manifest-20261031.json",
+          "detail": "Reviewable sanitized copy of the frozen Stage 3 run manifest, retaining the exact raw manifest SHA-256 and replacing private absolute checkpoint paths.",
+          "result": "The run identity, source/config, roster, schedule, runtime configuration, and seeds match the raw run manifest; private paths are omitted from the review copy.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T17:33:51Z",
+            "exit_code": null,
+            "git_revision": "ad3998200e31e77b292ffc1138d02354f188bf5f",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-artifact-manifest-20261031.json",
+          "detail": "Byte-identical copy of the 4,540-file M6 Stage 3 artifact manifest; raw RGB and trace bytes remain local.",
+          "result": "Artifact manifest SHA-256 matches the locally verified run manifest and post-run integrity check.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T17:33:51Z",
+            "exit_code": null,
+            "git_revision": "ad3998200e31e77b292ffc1138d02354f188bf5f",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "Verify Stage 3 run hash chain, rederive summaries from raw traces, and verify the complete run artifact manifest with videochess_rl.m6.campaign.summarize_run",
+          "result": "PASS: 35 retained Stage 3 attempts, raw trace and artifact hashes verified.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T17:28:45Z",
+            "recorded_at_utc": "2026-10-30T17:29:33Z",
+            "exit_code": 0,
+            "git_revision": "ad3998200e31e77b292ffc1138d02354f188bf5f",
+            "log_path": ".agents/evidence/logs/M6-stage3-posthoc-verification-ad3998200e31.log",
+            "log_sha256": "1705a4776cd0b05001f8eb5a6988c972f03a1aeb1d26f38e8794f6fe13af0708"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "Resolve the Warm checkpoint by its pinned SHA-256 from the verified M5 root manifest; set M4/M5 private artifact roots; run <project-python> -m unittest discover -s tests -v",
+          "result": "PASS: 423 tests, 0 failures, 0 skips; unittest elapsed 166.269 seconds.",
+          "detail": "Final full suite at the report revision; only evidence/governance documentation differs from the tested M6 source/config revision.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-30T17:35:06Z",
+            "recorded_at_utc": "2026-10-30T17:37:54Z",
+            "exit_code": 0,
+            "git_revision": "6f4f1d06c74c188cdb08a7e07140e605ffad05b7",
+            "log_path": ".agents/evidence/logs/M6-full-suite-6f4f1d0.log",
+            "log_sha256": "97ef037be1d6068193040067925aacebf89dde47665f3746b7317dd2e891c5af"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-PR-handover-20261031.md",
+          "detail": "PR #14 was opened against initial-idea for independent review; this file records the initial branch/base/CI state without claiming PM acceptance.",
+          "result": "PR #14 is open and non-draft, with no auto-merge or merge. M6-04 is partial; G4 remains unapproved.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-30T17:41:51Z",
+            "exit_code": null,
+            "git_revision": "0eddd06932de06d4651f7e6dc4c99e54db719ddd",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-001-v2-corrective-authorization-20261031.md",
+          "detail": "Separate direct owner authorization for the bounded Stage 3 v2 corrective continuation; preserves the original v1 authorization, run, and outcomes.",
+          "result": "The project owner directly authorized the fixed 20-attempt paired M5 extended-horizon local CPU v2 campaign and its resource limits. M6 remains in progress; no PM acceptance or G4 approval is claimed.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-31T01:49:17Z",
+            "recorded_at_utc": "2026-10-31T01:49:17Z",
+            "exit_code": null,
+            "git_revision": "61c624b803a4481509e84fed767f103d8b521340",
+            "log_path": ".agents/evidence/M6-001-v2-corrective-authorization-20261031.md"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-001-final-report-v2-20261031.md",
+          "detail": "Final M6 corrective engineering and research report, including PM6-F01–F05 resolution, all v2 per-policy/per-seed outcomes, acceptance evidence, limits, and PM handover.",
+          "result": "Engineering evidence is ready for independent PM review; M6 remains in_progress and is not PM accepted.",
+          "provenance": {
+            "status": "verified",
+            "recorded_at_utc": "2026-10-31T03:20:15Z",
+            "git_revision": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+            "executed_at_utc": null,
+            "exit_code": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-v2-execution-record-20261031.json",
+          "detail": "Sanitized source/config/schedule/runtime identity, all 20 attempt records, per-policy metrics, resource use, and local raw-artifact identities for the frozen v2 run.",
+          "result": "20/20 scheduled resets accounted for; 11 ALE-terminal losses and nine typed incomplete outcomes; no retry or resource stop.",
+          "provenance": {
+            "status": "verified",
+            "recorded_at_utc": "2026-10-31T03:20:15Z",
+            "git_revision": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+            "executed_at_utc": null,
+            "exit_code": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-v2-run-manifest-review-20261031.json",
+          "detail": "Sanitized review copy of the immutable run manifest; private absolute checkpoint paths are omitted while hashes and frozen roster remain.",
+          "result": "Source 91f51b1, v2 config/schedule, runtime, policy roster, profile, and 500000-frame effective horizon identities are retained.",
+          "provenance": {
+            "status": "verified",
+            "recorded_at_utc": "2026-10-31T03:20:15Z",
+            "git_revision": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+            "executed_at_utc": null,
+            "exit_code": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-v2-summary-review-20261031.json",
+          "detail": "Sanitized machine-readable Stage 3 v2 attempt and aggregate summary derived from the retained hash-verified traces.",
+          "result": "All 20 paired slots and per-policy outcomes, denominators, stops, latencies, frames, replies, and cursor diagnostics are represented.",
+          "provenance": {
+            "status": "verified",
+            "recorded_at_utc": "2026-10-31T03:20:15Z",
+            "git_revision": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+            "executed_at_utc": null,
+            "exit_code": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-v2-artifact-manifest-20261031.json",
+          "detail": "Sanitized hash-only inventory for the local-only v2 attempt traces, RGB evidence, ledger, and run metadata.",
+          "result": "The independently verified manifest binds 4159 files totaling 728148524 bytes; raw payloads are not in Git.",
+          "provenance": {
+            "status": "verified",
+            "recorded_at_utc": "2026-10-31T03:20:15Z",
+            "git_revision": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+            "executed_at_utc": null,
+            "exit_code": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-v2-postrun-verification-20261031.json",
+          "detail": "Post-run independent verification record for hash-chain, trace/attempt manifests, aggregate rederivation, resource limits, schedule, and v1 preservation.",
+          "result": "PASS: 968132 ledger events and all 20 attempt artifacts verified; schedule complete; v1 manifest/ledger/run-manifest hashes unchanged.",
+          "provenance": {
+            "status": "verified",
+            "recorded_at_utc": "2026-10-31T03:15:14Z",
+            "git_revision": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+            "executed_at_utc": null,
+            "exit_code": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "test",
+          "command": "python -m unittest discover -s tests -v",
+          "result": "PASS: 439 tests, 0 failures, 0 skips; unittest elapsed 176.189 seconds.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T02:09:09Z",
+            "recorded_at_utc": "2026-10-31T02:12:07Z",
+            "exit_code": 0,
+            "git_revision": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+            "log_path": ".agents/evidence/logs/M6-v2-full-suite-91f51b1.log",
+            "log_sha256": "dc7f92d6f43d0af984eb52eaa15cb693d72a2622015fe733ea975193ef263d3d"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "python -m unittest tests.test_m6_campaign tests.test_m6_ledger tests.test_m6_adapter tests.test_m1_episode -v",
+          "result": "PASS: 69 tests, 0 failures, 0 skips; unittest elapsed 7.974 seconds.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T03:17:01Z",
+            "recorded_at_utc": "2026-10-31T03:17:12Z",
+            "exit_code": 0,
+            "git_revision": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+            "log_path": ".agents/evidence/logs/M6-v2-focused-regressions-91f51b1.log",
+            "log_sha256": "5347728eb484561924bf4a510ea3a87930d7e6b2f1c9a1fa412f5c7fb02ce4cc"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-v2-pre-run-gate-20261031.json",
+          "detail": "Frozen-run entry gate record for clean source, config/schedule hashes, private policy loading, runtime/ROM/profile/horizon readback, v1 identity, and free-space threshold.",
+          "result": "PASS with zero official reset before the gate; 500000 effective ALE horizon and all pinned identities were verified.",
+          "provenance": {
+            "status": "verified",
+            "recorded_at_utc": "2026-10-31T02:13:53Z",
+            "git_revision": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+            "executed_at_utc": null,
+            "exit_code": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-v2-private-artifact-verification-20261031.json",
+          "detail": "Read-only post-campaign verification of the accepted private M5 root inventory and run manifests.",
+          "result": "PASS: seven run manifests and 6544747450 bytes verified; pinned M5 root manifest SHA-256 unchanged.",
+          "provenance": {
+            "status": "verified",
+            "recorded_at_utc": "2026-10-31T03:21:28Z",
+            "git_revision": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+            "executed_at_utc": null,
+            "exit_code": null,
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-v2-independent-raw-audit-20261031-r3.json",
+          "detail": "Portable machine-readable standard-library audit of persistent local v1/v2 evidence; artifact roots are repository-relative.",
+          "result": "PASS: 4,159 v2 files, 968,132 ledger events, all traces/manifests, 20 scheduled attempts, outcomes/moves/replies/cursors/frames/resources reconstructed; PM6-F06 remains explicit.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T05:20:15Z",
+            "exit_code": null,
+            "git_revision": "fbcc9826032bb390acb91b240787ba4b0d3409a0",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-v2-independent-raw-audit-20261031-r3.md",
+          "detail": "Human-readable portable v2 raw audit with all 20 schedule rows, terminal evidence, incomplete histories, and metrics.",
+          "result": "Confirms 11 ALE-terminal losses, nine incomplete attempts, 385/405 RGB-verified moves, no incomplete draw, and separate v1/v2 protocols.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T05:20:15Z",
+            "exit_code": null,
+            "git_revision": "fbcc9826032bb390acb91b240787ba4b0d3409a0",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-stage3-v2-original-root-audit-20261031-r3.json",
+          "detail": "Portable machine-readable r3 audit executed directly against the original transient v1/v2 source roots.",
+          "result": "PASS: original-root manifests, ledgers, schedules, traces, attempts, and reconstructed metrics match the independently audited persistent copy.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T05:21:25Z",
+            "exit_code": null,
+            "git_revision": "fbcc9826032bb390acb91b240787ba4b0d3409a0",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "<M5-project-python> scripts/m5_artifact_manifests.py --verify",
+          "result": "PASS: seven accepted M5 run manifests and 6,544,747,450 bytes verified; pinned M5 root manifest SHA-256 unchanged.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T04:54:01Z",
+            "recorded_at_utc": "2026-10-31T04:54:01Z",
+            "exit_code": 0,
+            "git_revision": "c9df9db36c6146a34ef301052a206fe8a3512ffc",
+            "log_path": ".agents/evidence/logs/M6-v2-m5-artifact-recheck-portable-20261031.log",
+            "log_sha256": "7b81512158fb01bc39a5a6238573869ac7d4eac1a803d1844c42894036ff76a6"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 <project-python> -m unittest tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
+          "result": "PASS: 27 focused tests, 0 failures, 0 skips.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T05:21:42Z",
+            "recorded_at_utc": "2026-10-31T05:21:42Z",
+            "exit_code": 0,
+            "git_revision": "fbcc9826032bb390acb91b240787ba4b0d3409a0",
+            "log_path": ".agents/evidence/logs/M6-F06-focused-tests-fbcc982.log",
+            "log_sha256": "161528daf84177bfe0ef1437b5ac334d7c9a3eaec5d1cda861161d7b9abcb862"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-PM6-F06-erratum-20261031.md",
+          "detail": "Immutable-evidence erratum for the v2 campaign budget-scope metadata inconsistency, root cause, runtime-impact analysis, schema-aware correction, and related checks.",
+          "result": "Original raw and derived records remain unchanged; future manifest generation is corrected; no gameplay/config/result was changed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T05:26:15Z",
+            "exit_code": null,
+            "git_revision": "fbcc9826032bb390acb91b240787ba4b0d3409a0",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "test",
+          "command": "Private M4/M5 artifact roots configured; PYTHONDONTWRITEBYTECODE=1 <project-python> -m unittest discover -s tests -v",
+          "result": "FAIL: 449 tests discovered; 3 failures and 1 error, 0 skips. Root cause: M4 artifact root one directory too high, Stockfish readiness PATH was absent, and context tests saw a stale checkpoint.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T04:59:26Z",
+            "recorded_at_utc": "2026-10-31T04:59:26Z",
+            "exit_code": 1,
+            "git_revision": "8c8eab874054db8e15afa7aa3a0cefb1876fddf2",
+            "log_path": ".agents/evidence/logs/M6-F06-full-suite-8c8eab8.log",
+            "log_sha256": "94e646243cd59643dd344cadb64dc1842774e4ad1c2a97aa1a242df7d3ba9bf6"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "Accepted M4/M5 artifact roots configured; pinned Warm checkpoint path explicitly set; PYTHONDONTWRITEBYTECODE=1 <project-python> -m unittest discover -s tests -v",
+          "result": "FAIL: 450 tests discovered; 1 failure, 0 skips. The policy roster smoke test could not resolve the explicitly supplied pinned Warm checkpoint path; no source failure was reported.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T05:04:55Z",
+            "recorded_at_utc": "2026-10-31T05:04:55Z",
+            "exit_code": 1,
+            "git_revision": "4fe4af1643cbf4eca5255428054f93a08495fc23",
+            "log_path": ".agents/evidence/logs/M6-F06-full-suite-4fe4af1.log",
+            "log_sha256": "f25b254ead50a0c9177838f8a8024ef7e8a21157564b76eef1ea57db96ddc1ea"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-final-corrective-closeout-20261031.md",
+          "detail": "Final engineering report incorporating PM6-F06, independent r3 raw audit, historical result reconstruction, complete verification provenance, limitations, and PM handover.",
+          "result": "Engineering closeout is ready for independent PM acceptance review; M6 remains in_progress and G4/M7 remain unauthorized.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T05:34:35Z",
+            "exit_code": null,
+            "git_revision": "99f958dbb90b82705263f2ae95df701ba98d2f8b",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<accepted-M5-artifact-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<accepted-M4-r4-artifact-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<pinned-Warm-checkpoint-resolved-by-manifest> PYTHONDONTWRITEBYTECODE=1 PATH=<project-stockfish-readiness-dir>:$PATH <project-python> -m unittest discover -s tests -v",
+          "result": "FAIL: 452 tests; 450 passed, 2 failures, 0 errors, 0 skips.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T05:27:40Z",
+            "recorded_at_utc": "2026-10-31T05:27:40Z",
+            "exit_code": 1,
+            "git_revision": "89660a31a39f42d1683a72dfd9053e14a48290fe",
+            "log_path": ".agents/evidence/logs/M6-F06-final-full-suite-89660a3.log",
+            "log_sha256": "b577e4e711e82c50b9ff387f9cdf4d03318f274e99399254b924a4cbdb22ed9a"
+          },
+          "detail": "The clean-clone context test found the committed report blob differed from the checkpoint portable manifest after whitespace cleanup. The checkpoint was refreshed before the successful rerun."
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<accepted-M5-artifact-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<accepted-M4-r4-artifact-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<pinned-Warm-checkpoint-resolved-by-manifest> PYTHONDONTWRITEBYTECODE=1 PATH=<project-stockfish-readiness-dir>:$PATH <project-python> -m unittest discover -s tests -v",
+          "result": "PASS: 452 tests; 452 passed, 0 failures, 0 errors, 0 skips.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T05:31:20Z",
+            "recorded_at_utc": "2026-10-31T05:31:20Z",
+            "exit_code": 0,
+            "git_revision": "99f958dbb90b82705263f2ae95df701ba98d2f8b",
+            "log_path": ".agents/evidence/logs/M6-F06-final-full-suite-99f958d.log",
+            "log_sha256": "aacfe86c0621c164e4f3fc00860a2689be61cfd9bb0321e5504d7d5c58300082"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/agent_preflight.py",
+          "result": "PASS: agent context preflight; G3 approved, M6-001 in_progress; no errors; artifact-manifest warning only.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T05:34:34Z",
+            "recorded_at_utc": "2026-10-31T05:34:34Z",
+            "exit_code": 0,
+            "git_revision": "99f958dbb90b82705263f2ae95df701ba98d2f8b",
+            "log_path": ".agents/evidence/logs/M6-F06-preflight-99f958d.log",
+            "log_sha256": "3430674d71c6561e1faab14d0643bb9e730287ea67351c5d02ff6ecd751e1b55"
+          }
+        }
+      ],
+      "next_action": "Independent PM: review PM6-F06 erratum, portable original/persistent raw audits, final 452-test and canonical preflight records, and updated PR #14; decide M6-001 acceptance and merge separately. Keep M6 in_progress, G4 unapproved, and M7 unauthorized until their separate decisions are recorded.",
+      "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],
-  "updated_at_utc": "2026-10-30T05:21:57Z"
+  "updated_at_utc": "2026-10-31T05:34:35Z"
 }

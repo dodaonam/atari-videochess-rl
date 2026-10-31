@@ -1,0 +1,18 @@
+{
+  "attempts_verified": 12,
+  "command": "python -c <sanitized Stage 2 trace, chain, and artifact-manifest reanalysis using videochess_rl.m6.campaign.summarize_run>",
+  "completed_at_utc": "2026-10-30T16:19:52Z",
+  "configuration_identity": {
+    "stage2_debug_run": "m6-stage2-debug-development-debug-b393b5180b45",
+    "stage2_default_run": "m6-stage2-default-ale-v5-default-b393b5180b45"
+  },
+  "executed_at_utc": "2026-10-30T16:19:36Z",
+  "execution_environment": "Local CPU; repository virtualenv; Python 3.12.3; no ALE gameplay or model inference.",
+  "exit_code": 0,
+  "git_revision": "c709231295441a297fd28d4e1455fe5ef351fe15",
+  "log_path": ".agents/evidence/logs/M6-stage2-posthoc-verification-c709231.log",
+  "log_sha256": "2ec199253e741f12f00762284730c3c69c699f8e06d74e9038bf1617e84bae90",
+  "result": "PASS: all retained Stage 2 raw traces, event chains, attempt manifests, and RGB files matched their recorded hashes; board-desynchronization and cursor-correction counts rederived from raw traces.",
+  "run_count": 3,
+  "wall_elapsed_seconds": 16.316
+}

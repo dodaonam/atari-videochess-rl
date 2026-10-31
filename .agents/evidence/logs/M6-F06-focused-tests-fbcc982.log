@@ -1,0 +1,42 @@
+command: PYTHONDONTWRITEBYTECODE=1 <project-python> -m unittest tests.test_m6_campaign tests.test_m6_v2_raw_audit -v
+result: PASS: 27 focused tests, 0 failures, 0 skips.
+Exit code: 0
+command: PYTHONDONTWRITEBYTECODE=1 <project-python> -m unittest tests.test_m6_campaign tests.test_m6_v2_raw_audit -v
+started_at_utc: 2026-10-31T05:21:42.518986Z
+completed_at_utc: 2026-10-31T05:21:44.564749Z
+git_revision: fbcc9826032bb390acb91b240787ba4b0d3409a0
+exit_code: 0
+test_debug_and_default_profiles_are_separate (tests.test_m6_campaign.M6CampaignPlanTests.test_debug_and_default_profiles_are_separate) ... ok
+test_frozen_stage3_seed_roster_counts_and_paired_order (tests.test_m6_campaign.M6CampaignPlanTests.test_frozen_stage3_seed_roster_counts_and_paired_order) ... ok
+test_global_gameplay_budget_counts_all_stage_attempt_records (tests.test_m6_campaign.M6CampaignPlanTests.test_global_gameplay_budget_counts_all_stage_attempt_records) ... ok
+test_installed_ale_honors_explicit_v2_horizon_without_reset_or_step (tests.test_m6_campaign.M6CampaignPlanTests.test_installed_ale_honors_explicit_v2_horizon_without_reset_or_step) ... A.L.E: Arcade Learning Environment (version 0.11.2+ecc1138)
+[Powered by Stella]
+ok
+test_installed_runtime_matches_committed_dependency_lock (tests.test_m6_campaign.M6CampaignPlanTests.test_installed_runtime_matches_committed_dependency_lock) ... ok
+test_interrupted_after_reset_is_sealed_without_guessing_or_replaying (tests.test_m6_campaign.M6CampaignPlanTests.test_interrupted_after_reset_is_sealed_without_guessing_or_replaying) ... ok
+test_relative_artifact_root_is_normalized_before_trace_paths_are_built (tests.test_m6_campaign.M6CampaignPlanTests.test_relative_artifact_root_is_normalized_before_trace_paths_are_built) ... ok
+test_run_manifest_serializes_schema_specific_campaign_budget_scope (tests.test_m6_campaign.M6CampaignPlanTests.test_run_manifest_serializes_schema_specific_campaign_budget_scope) ... ok
+test_stage3_roster_pins_exact_accepted_checkpoint_identities (tests.test_m6_campaign.M6CampaignPlanTests.test_stage3_roster_pins_exact_accepted_checkpoint_identities) ... ok
+test_stage3_v2_rejects_roster_and_underlying_horizon_drift (tests.test_m6_campaign.M6CampaignPlanTests.test_stage3_v2_rejects_roster_and_underlying_horizon_drift) ... ok
+test_stage3_v2_schedule_is_exactly_paired_and_preordered (tests.test_m6_campaign.M6CampaignPlanTests.test_stage3_v2_schedule_is_exactly_paired_and_preordered) ... ok
+test_v1_and_v2_frame_and_wall_limits_are_versioned_separately (tests.test_m6_campaign.M6CampaignPlanTests.test_v1_and_v2_frame_and_wall_limits_are_versioned_separately) ... ok
+test_v2_campaign_uses_isolated_artifact_namespace_and_its_own_limits (tests.test_m6_campaign.M6CampaignPlanTests.test_v2_campaign_uses_isolated_artifact_namespace_and_its_own_limits) ... ok
+test_v2_gameplay_budget_arithmetic_excludes_separate_diagnostic_root (tests.test_m6_campaign.M6CampaignPlanTests.test_v2_gameplay_budget_arithmetic_excludes_separate_diagnostic_root) ... ok
+test_v2_manifest_scope_rejects_missing_or_conflicting_metadata (tests.test_m6_campaign.M6CampaignPlanTests.test_v2_manifest_scope_rejects_missing_or_conflicting_metadata) ... ok
+test_v2_policy_roster_loader_returns_only_the_two_frozen_m5_policies (tests.test_m6_campaign.M6CampaignPlanTests.test_v2_policy_roster_loader_returns_only_the_two_frozen_m5_policies) ... ok
+test_versioned_stage3_configuration_matches_authorized_limits (tests.test_m6_campaign.M6CampaignPlanTests.test_versioned_stage3_configuration_matches_authorized_limits) ... ok
+test_artifact_root_report_is_portable_and_repository_relative (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_artifact_root_report_is_portable_and_repository_relative) ... ok
+test_external_artifact_root_report_does_not_expose_host_path (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_external_artifact_root_report_does_not_expose_host_path) ... ok
+test_frozen_schedule_reconstructs_predeclared_order (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_frozen_schedule_reconstructs_predeclared_order) ... ok
+test_latency_summary_uses_ordered_raw_observations (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_latency_summary_uses_ordered_raw_observations) ... ok
+test_ledger_chain_verifies_and_detects_payload_mutation (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_ledger_chain_verifies_and_detects_payload_mutation) ... ok
+test_outcome_classification_requires_finite_reward_and_ale_flags (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_outcome_classification_requires_finite_reward_and_ale_flags) ... ok
+test_safe_relative_path_rejects_traversal_and_absolute_paths (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_safe_relative_path_rejects_traversal_and_absolute_paths) ... ok
+test_trace_chain_verifies_and_detects_trace_mutation (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_trace_chain_verifies_and_detects_trace_mutation) ... ok
+test_tree_manifest_rejects_unlisted_files_and_symlinks (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_tree_manifest_rejects_unlisted_files_and_symlinks) ... ok
+test_tree_manifest_verifies_content_and_rejects_tampering (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_tree_manifest_verifies_content_and_rejects_tampering) ... ok
+
+----------------------------------------------------------------------
+Ran 27 tests in 0.450s
+
+OK

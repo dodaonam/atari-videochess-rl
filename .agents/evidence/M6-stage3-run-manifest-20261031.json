@@ -1,0 +1,416 @@
+{
+  "raw_run_manifest_sha256": "17491f1a82eacffda9189179cc63b2ebff422136d07925de1fb39a2bcff897e8",
+  "run_manifest": {
+    "agent_color": "white",
+    "ale_config": {
+      "difficulty": 0,
+      "env_id": "ALE/VideoChess-v5",
+      "frameskip": 4,
+      "mode": 4,
+      "obs_type": "rgb",
+      "repeat_action_probability": 0.25
+    },
+    "artifact_bytes_used_before": 303182466,
+    "attempt_limit": 35,
+    "budget": {
+      "ale_frames_per_game": 54000,
+      "artifact_bytes_total": 2147483648,
+      "artifact_metadata_reserve_bytes": 67108864,
+      "gameplay_wall_budget_includes_diagnostics": true,
+      "gameplay_wall_seconds_total": 36000,
+      "pre_action_startup_retries": 1,
+      "serialized_ale_processes": 1,
+      "wall_seconds_per_game": 900
+    },
+    "campaign_wall_budget_includes_diagnostics": true,
+    "campaign_wall_seconds_used_before": 1394.341505,
+    "configuration_path": "configs/m6/m6-stage3-v1.json",
+    "configuration_sha256": "05aedeb30efb8b6b97667c44f9d606b58d4da8ae20800d4ef143e629420cebac",
+    "controller_timing": {
+      "direction_hold_frames": 33,
+      "observation_window_frames": 66,
+      "release_frames": 1,
+      "source_fire_press_frames": 1,
+      "target_fire_press_frames": 16,
+      "target_fire_settle_windows": 3
+    },
+    "dependency_lock_path": "uv.lock",
+    "dependency_lock_sha256": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+    "environment_id": "ALE/VideoChess-v5",
+    "frozen_at_utc": "2026-10-30T16:44:26.647430Z",
+    "frozen_schedule_sha256": "c5ff389dc4fe5c796cd47281e504afa2f7d37e2b287b0802664d601805290f75",
+    "git_commit": "ad3998200e31e77b292ffc1138d02354f188bf5f",
+    "git_tree": "bc2f4851ceb84c9eae7d2719f70afd4cde6379da",
+    "m4_root_manifest_sha256": "f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921",
+    "m5_policy_selection_rule": "lowest predeclared paired training seed 20261104; not selected by M6 or final evaluation result",
+    "m5_root_manifest_sha256": "a201a254671ad59ae1fecb402abf994d5bf523097f1c3010b5c7fa237ae6dd4c",
+    "packages": {
+      "ale-py": "0.11.2",
+      "chess": "1.11.2",
+      "gymnasium": "1.4.0",
+      "torch": "2.14.1+cpu"
+    },
+    "policy_roster": [
+      {
+        "arm": null,
+        "artifact_manifest_sha256": "f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921",
+        "artifact_path": "<private accepted M4 checkpoint; outside Git>",
+        "checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+        "policy_id": "m4-behavior-only-seed-20261024",
+        "policy_type": "frozen_m4_supervised_behavior_policy",
+        "sidecar_sha256": "cc0af4694e45fc23acb740c652dd9a62e1bcaf7851815d179693d09539f0f606",
+        "snapshot_stage": "validation_best_behavior_only",
+        "training_seed": 20261024,
+        "valid_decisions": null
+      },
+      {
+        "arm": "scratch",
+        "artifact_manifest_sha256": "a201a254671ad59ae1fecb402abf994d5bf523097f1c3010b5c7fa237ae6dd4c",
+        "artifact_path": "<private accepted M5 Scratch checkpoint; outside Git>",
+        "checkpoint_sha256": "3749b0c0b6ae44d3ad5d6bf0863b60937a59fbe881e0bdf4932bdce6033ca400",
+        "policy_id": "m5-scratch-seed-20261104-post-rl",
+        "policy_type": "frozen_m5_double_dqn_q_policy",
+        "sidecar_sha256": "1c15e5bc4ba2437df113671dc316accbdfe6d8b59069ed29ed187daebf4fff1e",
+        "snapshot_stage": "post_rl",
+        "training_seed": 20261104,
+        "valid_decisions": 50000
+      },
+      {
+        "arm": "warm",
+        "artifact_manifest_sha256": "a201a254671ad59ae1fecb402abf994d5bf523097f1c3010b5c7fa237ae6dd4c",
+        "artifact_path": "<private accepted M5 Warm checkpoint; outside Git>",
+        "checkpoint_sha256": "0b2405017a8e1d539851f0cd278883d3fd23936fb5c2f7962c813590a6fd1767",
+        "policy_id": "m5-warm-seed-20261104-post-rl",
+        "policy_type": "frozen_m5_double_dqn_q_policy",
+        "sidecar_sha256": "80d8689e4b349576c5708bb4dce3451e5a8c64d81470cd6f4273a4746844b682",
+        "snapshot_stage": "post_rl",
+        "training_seed": 20261104,
+        "valid_decisions": 50000
+      },
+      {
+        "arm": null,
+        "artifact_manifest_sha256": null,
+        "artifact_path": null,
+        "checkpoint_sha256": null,
+        "policy_id": "random-legal",
+        "policy_type": "random_legal",
+        "sidecar_sha256": null,
+        "snapshot_stage": null,
+        "training_seed": null,
+        "valid_decisions": null
+      },
+      {
+        "arm": null,
+        "artifact_manifest_sha256": null,
+        "artifact_path": null,
+        "checkpoint_sha256": null,
+        "policy_id": "simple-material-heuristic",
+        "policy_type": "simple_heuristic",
+        "sidecar_sha256": null,
+        "snapshot_stage": null,
+        "training_seed": null,
+        "valid_decisions": null
+      }
+    ],
+    "profile_id": "ale-v5-default",
+    "python_version": "3.12.3",
+    "rom_sha256": "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7",
+    "run_id": "m6-stage3-ad3998200e31-c5ff389dc4fe",
+    "run_plan_sha256": "05aedeb30efb8b6b97667c44f9d606b58d4da8ae20800d4ef143e629420cebac",
+    "runtime_construction": {
+      "action_meanings": [
+        "NOOP",
+        "FIRE",
+        "UP",
+        "RIGHT",
+        "LEFT",
+        "DOWN",
+        "UPRIGHT",
+        "UPLEFT",
+        "DOWNRIGHT",
+        "DOWNLEFT"
+      ],
+      "action_space": "Discrete(10)",
+      "ale_py": "0.11.2",
+      "available_difficulties": [
+        0
+      ],
+      "available_modes": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "config": {
+        "difficulty": 0,
+        "env_id": "ALE/VideoChess-v5",
+        "frameskip": 4,
+        "mode": 4,
+        "obs_type": "rgb",
+        "repeat_action_probability": 0.25
+      },
+      "gymnasium": "1.4.0",
+      "instance_runtime": {
+        "action_count": 10,
+        "action_set": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "difficulty": 0,
+        "frameskip": 4,
+        "mode": 4,
+        "obs_type": "rgb",
+        "observation_shape": [
+          210,
+          160,
+          3
+        ],
+        "repeat_action_probability": 0.25
+      },
+      "machine": "x86_64",
+      "observation_space": "Box(0, 255, (210, 160, 3), uint8)",
+      "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+      "python": "3.12.3",
+      "ram_observation_shape": [
+        128
+      ],
+      "registered_defaults": {
+        "frameskip": 4,
+        "full_action_space": false,
+        "game": "video_chess",
+        "max_num_frames_per_episode": 108000,
+        "repeat_action_probability": 0.25
+      },
+      "rom_name": "video_chess.bin",
+      "rom_sha256": "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7"
+    },
+    "schema": "videochess-m6-run-manifest/1.0",
+    "seed_schedule": [
+      {
+        "ale_seed": 20261130,
+        "game_id": "m5-warm-seed-20261104-post-rl-ale-seed-20261130",
+        "policy_id": "m5-warm-seed-20261104-post-rl",
+        "slot": 0
+      },
+      {
+        "ale_seed": 20261130,
+        "game_id": "m5-scratch-seed-20261104-post-rl-ale-seed-20261130",
+        "policy_id": "m5-scratch-seed-20261104-post-rl",
+        "slot": 1
+      },
+      {
+        "ale_seed": 20261131,
+        "game_id": "m5-scratch-seed-20261104-post-rl-ale-seed-20261131",
+        "policy_id": "m5-scratch-seed-20261104-post-rl",
+        "slot": 2
+      },
+      {
+        "ale_seed": 20261131,
+        "game_id": "m5-warm-seed-20261104-post-rl-ale-seed-20261131",
+        "policy_id": "m5-warm-seed-20261104-post-rl",
+        "slot": 3
+      },
+      {
+        "ale_seed": 20261132,
+        "game_id": "m5-warm-seed-20261104-post-rl-ale-seed-20261132",
+        "policy_id": "m5-warm-seed-20261104-post-rl",
+        "slot": 4
+      },
+      {
+        "ale_seed": 20261132,
+        "game_id": "m5-scratch-seed-20261104-post-rl-ale-seed-20261132",
+        "policy_id": "m5-scratch-seed-20261104-post-rl",
+        "slot": 5
+      },
+      {
+        "ale_seed": 20261133,
+        "game_id": "m5-scratch-seed-20261104-post-rl-ale-seed-20261133",
+        "policy_id": "m5-scratch-seed-20261104-post-rl",
+        "slot": 6
+      },
+      {
+        "ale_seed": 20261133,
+        "game_id": "m5-warm-seed-20261104-post-rl-ale-seed-20261133",
+        "policy_id": "m5-warm-seed-20261104-post-rl",
+        "slot": 7
+      },
+      {
+        "ale_seed": 20261134,
+        "game_id": "m5-warm-seed-20261104-post-rl-ale-seed-20261134",
+        "policy_id": "m5-warm-seed-20261104-post-rl",
+        "slot": 8
+      },
+      {
+        "ale_seed": 20261134,
+        "game_id": "m5-scratch-seed-20261104-post-rl-ale-seed-20261134",
+        "policy_id": "m5-scratch-seed-20261104-post-rl",
+        "slot": 9
+      },
+      {
+        "ale_seed": 20261135,
+        "game_id": "m5-scratch-seed-20261104-post-rl-ale-seed-20261135",
+        "policy_id": "m5-scratch-seed-20261104-post-rl",
+        "slot": 10
+      },
+      {
+        "ale_seed": 20261135,
+        "game_id": "m5-warm-seed-20261104-post-rl-ale-seed-20261135",
+        "policy_id": "m5-warm-seed-20261104-post-rl",
+        "slot": 11
+      },
+      {
+        "ale_seed": 20261136,
+        "game_id": "m5-warm-seed-20261104-post-rl-ale-seed-20261136",
+        "policy_id": "m5-warm-seed-20261104-post-rl",
+        "slot": 12
+      },
+      {
+        "ale_seed": 20261136,
+        "game_id": "m5-scratch-seed-20261104-post-rl-ale-seed-20261136",
+        "policy_id": "m5-scratch-seed-20261104-post-rl",
+        "slot": 13
+      },
+      {
+        "ale_seed": 20261137,
+        "game_id": "m5-scratch-seed-20261104-post-rl-ale-seed-20261137",
+        "policy_id": "m5-scratch-seed-20261104-post-rl",
+        "slot": 14
+      },
+      {
+        "ale_seed": 20261137,
+        "game_id": "m5-warm-seed-20261104-post-rl-ale-seed-20261137",
+        "policy_id": "m5-warm-seed-20261104-post-rl",
+        "slot": 15
+      },
+      {
+        "ale_seed": 20261138,
+        "game_id": "m5-warm-seed-20261104-post-rl-ale-seed-20261138",
+        "policy_id": "m5-warm-seed-20261104-post-rl",
+        "slot": 16
+      },
+      {
+        "ale_seed": 20261138,
+        "game_id": "m5-scratch-seed-20261104-post-rl-ale-seed-20261138",
+        "policy_id": "m5-scratch-seed-20261104-post-rl",
+        "slot": 17
+      },
+      {
+        "ale_seed": 20261139,
+        "game_id": "m5-scratch-seed-20261104-post-rl-ale-seed-20261139",
+        "policy_id": "m5-scratch-seed-20261104-post-rl",
+        "slot": 18
+      },
+      {
+        "ale_seed": 20261139,
+        "game_id": "m5-warm-seed-20261104-post-rl-ale-seed-20261139",
+        "policy_id": "m5-warm-seed-20261104-post-rl",
+        "slot": 19
+      },
+      {
+        "ale_seed": 20261130,
+        "game_id": "m4-behavior-only-seed-20261024-ale-seed-20261130",
+        "policy_id": "m4-behavior-only-seed-20261024",
+        "slot": 20
+      },
+      {
+        "ale_seed": 20261131,
+        "game_id": "m4-behavior-only-seed-20261024-ale-seed-20261131",
+        "policy_id": "m4-behavior-only-seed-20261024",
+        "slot": 21
+      },
+      {
+        "ale_seed": 20261132,
+        "game_id": "m4-behavior-only-seed-20261024-ale-seed-20261132",
+        "policy_id": "m4-behavior-only-seed-20261024",
+        "slot": 22
+      },
+      {
+        "ale_seed": 20261133,
+        "game_id": "m4-behavior-only-seed-20261024-ale-seed-20261133",
+        "policy_id": "m4-behavior-only-seed-20261024",
+        "slot": 23
+      },
+      {
+        "ale_seed": 20261134,
+        "game_id": "m4-behavior-only-seed-20261024-ale-seed-20261134",
+        "policy_id": "m4-behavior-only-seed-20261024",
+        "slot": 24
+      },
+      {
+        "ale_seed": 20261130,
+        "game_id": "simple-material-heuristic-ale-seed-20261130",
+        "policy_id": "simple-material-heuristic",
+        "slot": 25
+      },
+      {
+        "ale_seed": 20261131,
+        "game_id": "simple-material-heuristic-ale-seed-20261131",
+        "policy_id": "simple-material-heuristic",
+        "slot": 26
+      },
+      {
+        "ale_seed": 20261132,
+        "game_id": "simple-material-heuristic-ale-seed-20261132",
+        "policy_id": "simple-material-heuristic",
+        "slot": 27
+      },
+      {
+        "ale_seed": 20261133,
+        "game_id": "simple-material-heuristic-ale-seed-20261133",
+        "policy_id": "simple-material-heuristic",
+        "slot": 28
+      },
+      {
+        "ale_seed": 20261134,
+        "game_id": "simple-material-heuristic-ale-seed-20261134",
+        "policy_id": "simple-material-heuristic",
+        "slot": 29
+      },
+      {
+        "ale_seed": 20261130,
+        "game_id": "random-legal-ale-seed-20261130",
+        "policy_id": "random-legal",
+        "slot": 30
+      },
+      {
+        "ale_seed": 20261131,
+        "game_id": "random-legal-ale-seed-20261131",
+        "policy_id": "random-legal",
+        "slot": 31
+      },
+      {
+        "ale_seed": 20261132,
+        "game_id": "random-legal-ale-seed-20261132",
+        "policy_id": "random-legal",
+        "slot": 32
+      },
+      {
+        "ale_seed": 20261133,
+        "game_id": "random-legal-ale-seed-20261133",
+        "policy_id": "random-legal",
+        "slot": 33
+      },
+      {
+        "ale_seed": 20261134,
+        "game_id": "random-legal-ale-seed-20261134",
+        "policy_id": "random-legal",
+        "slot": 34
+      }
+    ],
+    "source_bundle_sha256": "73af24ab61e60e364297e3fda993503557be393ad0b0e2d14b23c01f66b5ea8a",
+    "stage": "stage3",
+    "stockfish_in_inference": false,
+    "training_or_finetuning": false
+  },
+  "sanitization": "Only private absolute checkpoint paths in policy_roster.artifact_path are replaced with role labels; identities, runtime, schedule, and all other fields match the locally hash-verified run manifest.",
+  "schema": "videochess-m6-reviewable-run-manifest/1.0"
+}

@@ -1,0 +1,13 @@
+{
+  "command": "python scripts/m5_artifact_manifests.py --root <accepted private M5 artifact root> --verify",
+  "exit_code": 0,
+  "finished_at_utc": "2026-10-31T03:21:28+00:00",
+  "git_head": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+  "raw_output_path": "private artifact root omitted",
+  "root_manifest_sha256": "a201a254671ad59ae1fecb402abf994d5bf523097f1c3010b5c7fa237ae6dd4c",
+  "run_manifests": 7,
+  "started_at_utc": "2026-10-31T03:20:59+00:00",
+  "status": "verified",
+  "total_bytes": 6544747450,
+  "verification_scope": "all listed M5 run manifests and byte inventories read-only"
+}
