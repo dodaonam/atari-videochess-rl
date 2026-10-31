@@ -5082,11 +5082,75 @@
             "log_path": ".agents/evidence/logs/M6C-F01-clean-checkout-preflight-diagnostic-20261031.log",
             "log_sha256": "9015261b5e19e405ead32237720448ad808c09b921a0888e63cc9377b42fbc08"
           }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
+          "result": "PASS: focused",
+          "detail": "Clean detached checkout at source commit 2050db70894f40b8ca4e4b6ebdc7715f1664f3bc, tree deb4fcb0395632deebd48e0bab67a70e8fe7d828. Accepted private M5/M4 manifests and the selected Warm checkpoint were verified before full-suite execution.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:58:23Z",
+            "recorded_at_utc": "2026-10-31T09:02:54Z",
+            "exit_code": 0,
+            "git_revision": "2050db70894f40b8ca4e4b6ebdc7715f1664f3bc",
+            "log_path": ".agents/evidence/logs/M6C-F01-final-focused-20261031.log",
+            "log_sha256": "22336b13d492e6b406e6f61237c6a1789032483d929e0931e910124145a57aa2"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<accepted-M5-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<accepted-M4-r4-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<checkpoint-resolved-by-SHA> PATH=<project-stockfish-readiness-dir>:$PATH PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -v",
+          "result": "PASS: full-suite",
+          "detail": "Clean detached checkout at source commit 2050db70894f40b8ca4e4b6ebdc7715f1664f3bc, tree deb4fcb0395632deebd48e0bab67a70e8fe7d828. Accepted private M5/M4 manifests and the selected Warm checkpoint were verified before full-suite execution.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:59:20Z",
+            "recorded_at_utc": "2026-10-31T09:02:54Z",
+            "exit_code": 0,
+            "git_revision": "2050db70894f40b8ca4e4b6ebdc7715f1664f3bc",
+            "log_path": ".agents/evidence/logs/M6C-F01-final-full-suite-20261031.log",
+            "log_sha256": "4448b26845633e2d4ab1e48063f8a67e68ace80400ebc613303ed0f444dfa141"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/audit_m6_closeout_provenance.py",
+          "result": "PASS: provenance-audit",
+          "detail": "Clean detached checkout at source commit 2050db70894f40b8ca4e4b6ebdc7715f1664f3bc, tree deb4fcb0395632deebd48e0bab67a70e8fe7d828. Accepted private M5/M4 manifests and the selected Warm checkpoint were verified before full-suite execution.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T09:02:11Z",
+            "recorded_at_utc": "2026-10-31T09:02:54Z",
+            "exit_code": 0,
+            "git_revision": "2050db70894f40b8ca4e4b6ebdc7715f1664f3bc",
+            "log_path": ".agents/evidence/logs/M6C-F01-final-provenance-audit-20261031.log",
+            "log_sha256": "da46999c8c5f3bf513df4206ae9532e910b543c232bf8bd4cb5aed1bbf54cb1c"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/agent_preflight.py",
+          "result": "PASS: preflight",
+          "detail": "Clean detached checkout at source commit 2050db70894f40b8ca4e4b6ebdc7715f1664f3bc, tree deb4fcb0395632deebd48e0bab67a70e8fe7d828. Accepted private M5/M4 manifests and the selected Warm checkpoint were verified before full-suite execution.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T09:02:11Z",
+            "recorded_at_utc": "2026-10-31T09:02:54Z",
+            "exit_code": 0,
+            "git_revision": "2050db70894f40b8ca4e4b6ebdc7715f1664f3bc",
+            "log_path": ".agents/evidence/logs/M6C-F01-corrected-preflight-20261031.log",
+            "log_sha256": "5497d5885d1a2b1bc2db8b81c74f900e44998e467eef9fb6e38b638245e0f994"
+          }
         }
       ],
       "next_action": "",
       "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],
-  "updated_at_utc": "2026-10-31T08:57:40Z"
+  "updated_at_utc": "2026-10-31T09:04:09Z"
 }

@@ -1,0 +1,13 @@
+command: PYTHONDONTWRITEBYTECODE=1 python3 scripts/audit_m6_closeout_provenance.py
+result: PASS: provenance-audit
+Exit code: 0
+execution_environment: clean detached checkout; Python 3.12.3 project environment; local CPU; accepted M5 root manifest a201a254671ad59ae1fecb402abf994d5bf523097f1c3010b5c7fa237ae6dd4c; accepted M4 r4 manifest f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921; selected Warm checkpoint SHA-256 0b2405017a8e1d539851f0cd278883d3fd23936fb5c2f7962c813590a6fd1767; pre-existing Stockfish readiness binary on PATH for its UCI smoke test only
+git_head: 2050db70894f40b8ca4e4b6ebdc7715f1664f3bc
+git_tree: deb4fcb0395632deebd48e0bab67a70e8fe7d828
+started_at_utc: 2026-10-31T09:02:11.277373+00:00
+completed_at_utc: 2026-10-31T09:02:11.490709+00:00
+wall_elapsed_seconds: 0.213
+
+--- output ---
+M6 closeout provenance audit: PASS
+Verified file entries: 4; command logs: 22; machine report logs: 8

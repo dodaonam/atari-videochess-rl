@@ -241,7 +241,7 @@
     "ok": true
   },
   "consolidated_audit_execution": {
-    "status": "PASS",
+    "status": "PASS_LOCAL_WORKTREE_ONLY_SUPERSEDED",
     "source_commit": "fc34f34d850e2830cbc0d9a14d331a197d6ae062",
     "source_tree": "c933d33a0da149f81b1557a677411a601990e1d3",
     "backlog_sha256": "81acff813bdcd994658e21e5e5e6a73ccf2c8b0d29d1ebee0269fb4d06529e37",
@@ -257,7 +257,8 @@
     "completed_at_utc": "2026-10-31T08:48:13.164805Z",
     "exit_code": 0,
     "log_path": ".agents/evidence/logs/M6C-F01-final-consolidated-audit-20261031.log",
-    "log_sha256": "381a2f90051c9640612c9a2959e7e23d33d0130e7b98e633125e922488d1148f"
+    "log_sha256": "381a2f90051c9640612c9a2959e7e23d33d0130e7b98e633125e922488d1148f",
+    "interpretation": "The 08:48 command itself exited 0, but a later clean-checkout retest showed the audit had read an ignored, uncommitted log from the original working tree; it did not prove committed-tree completeness. The corrected auditor now checks HEAD membership."
   },
   "verification_runs": {
     "preflight": {
@@ -312,14 +313,14 @@
     "g4_approved": false,
     "m7_authorized": false
   },
-  "status": "CORRECTIVE_VERIFICATION_IN_PROGRESS",
+  "status": "SOURCE_AND_FULL_TESTS_PASS_AWAITING_POST_APPEND_AUDIT_CI_AND_FRESH_PM_REVIEW",
   "scope": {
-    "m6_001_entries_audited": 20,
+    "m6_001_entries_audited": 32,
     "committed_file_identities": 4,
-    "verified_command_test_logs": 14,
+    "verified_command_test_logs": 26,
     "historical_unverified_diagnostics": 2,
     "machine_report_logs": 8,
-    "errors": 0
+    "errors_checked_by_last_audit": 0
   },
   "clean_checkout_diagnostic": {
     "status": "FAIL_DIAGNOSTIC_BEFORE_REMEDIATION",
@@ -374,6 +375,86 @@
   "provenance_audit_implementation": {
     "change": "All evidence logs must now exist in the committed HEAD tree, not only in the working filesystem.",
     "regression_test": "test_m6_closeout_provenance_rejects_existing_but_uncommitted_log",
-    "status": "implemented_pending_clean_final_verification"
+    "status": "PASS",
+    "source_commit": "2050db70894f40b8ca4e4b6ebdc7715f1664f3bc"
+  },
+  "final_verification": {
+    "source_commit": "2050db70894f40b8ca4e4b6ebdc7715f1664f3bc",
+    "source_tree": "deb4fcb0395632deebd48e0bab67a70e8fe7d828",
+    "status": "PASS",
+    "verification_runs": [
+      {
+        "path": ".agents/evidence/logs/M6C-F01-final-focused-20261031.log",
+        "sha256": "d67ecfeb96b200a82b228439d20feaee971b7100a9030c22898a01b1f55e33fb",
+        "started_at_utc": "2026-10-31T08:58:23.556639+00:00",
+        "completed_at_utc": "2026-10-31T08:59:20.283227+00:00",
+        "exit_code": 0
+      },
+      {
+        "path": ".agents/evidence/logs/M6C-F01-final-full-suite-20261031.log",
+        "sha256": "05cf4f776cdd2168255c28c6634ad01b432518d4d146b3a3114d9352fa53a251",
+        "started_at_utc": "2026-10-31T08:59:20.283489+00:00",
+        "completed_at_utc": "2026-10-31T09:02:11.276991+00:00",
+        "exit_code": 0
+      },
+      {
+        "path": ".agents/evidence/logs/M6C-F01-final-provenance-audit-20261031.log",
+        "sha256": "e4ee0d551c47c7aad9eebcd993dbe2db4fb9268a48f00499db9dbfb2858b0960",
+        "started_at_utc": "2026-10-31T09:02:11.277373+00:00",
+        "completed_at_utc": "2026-10-31T09:02:11.490709+00:00",
+        "exit_code": 0
+      },
+      {
+        "path": ".agents/evidence/logs/M6C-F01-corrected-preflight-20261031.log",
+        "sha256": "5497d5885d1a2b1bc2db8b81c74f900e44998e467eef9fb6e38b638245e0f994",
+        "started_at_utc": "2026-10-31T09:02:11.490893+00:00",
+        "completed_at_utc": "2026-10-31T09:02:12.933111+00:00",
+        "exit_code": 0
+      }
+    ],
+    "focused_tests": {
+      "count": 110,
+      "passed": 110,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "full_suite": {
+      "count": 454,
+      "passed": 454,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "unittest_seconds": 168.898
+    },
+    "provenance_audit": {
+      "committed_file_identities": 4,
+      "verified_command_test_logs": 22,
+      "machine_report_logs": 8,
+      "historical_unverified_diagnostics": 2,
+      "errors": 0
+    },
+    "preflight": {
+      "validation_errors": 0,
+      "warning": "expected local artifact-manifest warning"
+    },
+    "checkout_clean": true,
+    "private_artifact_identities": {
+      "m5_root_manifest_sha256": "a201a254671ad59ae1fecb402abf994d5bf523097f1c3010b5c7fa237ae6dd4c",
+      "m4_r4_manifest_sha256": "f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921",
+      "warm_checkpoint_sha256": "0b2405017a8e1d539851f0cd278883d3fd23936fb5c2f7962c813590a6fd1767"
+    }
+  },
+  "post_append_audit": {
+    "status": "PENDING",
+    "must_run_after_commit": true,
+    "expected_scope": {
+      "m6_001_entries_audited": 32,
+      "committed_file_identities": 4,
+      "verified_command_test_logs": 26,
+      "historical_unverified_diagnostics": 2,
+      "machine_report_logs": 8,
+      "errors_checked_by_last_audit": 0
+    }
   }
 }
