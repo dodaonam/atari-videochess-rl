@@ -1,0 +1,295 @@
+{
+  "artifact_roots": {
+    "v1": "artifacts/m6-preserved-20261031/v1/m6-stage3-ad3998200e31-c5ff389dc4fe",
+    "v2": "artifacts/m6-preserved-20261031/v2/m6-stage3-v2-91f51b14690e-d05d42400cfc"
+  },
+  "command": "python3 scripts/audit_m6_v2_artifacts.py --root <local-preserved-v2-root> --v1-root <local-preserved-v1-root>",
+  "exit_code": 0,
+  "finished_at_utc": "2026-10-31T14:19:11Z",
+  "result": {
+    "audit": {
+      "current_command_included_v1_root": true,
+      "v1_integrity_check": {
+        "artifact_manifest": {
+          "file_count": 4540,
+          "sha256": "22ac6ec7e0f4a48f52b2452654d4adecaf111f38ea37f5d9517f173c838716d7",
+          "total_bytes": 616539017
+        },
+        "budget_metadata": {
+          "campaign_wall_budget_includes_diagnostics": true,
+          "gameplay_wall_budget_includes_diagnostics": true
+        },
+        "current_invocation_exit_code": 0,
+        "current_invocation_stdout_sha256": "467788cdc5ec5b291bd0d7aa66c987f9beac14c2b51395b1101f0963fadd5197",
+        "finished_attempts": 35,
+        "ledger": {
+          "event_count": 839785,
+          "event_counts": {
+            "ale_action_observed": 419839,
+            "ale_action_started": 419839,
+            "ale_reset_observed": 35,
+            "attempt_finished": 35,
+            "attempt_started": 35,
+            "run_progress_checkpoint": 1,
+            "run_started": 1
+          },
+          "head_sha256": "cea5840f0ff10124d6dc85eb315b614aad092abe19c7af9d396cd32f5636b138",
+          "sha256": "c8ad5b26c28bb8f934a8541c4b69846afedd3ad4a3eb8c302ac835b20fdf27d3"
+        },
+        "previous_independent_audit_report": ".agents/evidence/M6-stage3-v2-independent-raw-audit-20261031-r3.json",
+        "previous_independent_audit_source_revision": "fbcc9826032bb390acb91b240787ba4b0d3409a0",
+        "protocol_config_sha256": "05aedeb30efb8b6b97667c44f9d606b58d4da8ae20800d4ef143e629420cebac",
+        "raw_root": "artifacts/m6-preserved-20261031/v1/m6-stage3-ad3998200e31-c5ff389dc4fe",
+        "reset_attempts": 35,
+        "run_id": "m6-stage3-ad3998200e31-c5ff389dc4fe",
+        "run_manifest_sha256": "17491f1a82eacffda9189179cc63b2ebff422136d07925de1fb39a2bcff897e8"
+      }
+    },
+    "budget_enforcement_cross_check": {
+      "configured_wall_limit_seconds": 43200,
+      "diagnostics_excluded_by_frozen_scope": true,
+      "observed_v2_gameplay_seconds": 3519.969,
+      "original_manifest_metadata_flag_is_incorrect": true,
+      "recorded_wall_limit_seconds": 43200,
+      "recorded_wall_used_before_campaign_seconds": 0.0,
+      "resource_stop_events": 0
+    },
+    "discrepancies": [
+      {
+        "authoritative_scope": "Stage 3 v2 only; excludes historical v1 and completed M6 diagnostics",
+        "execution_record_path": ".agents/evidence/M6-stage3-v2-execution-record-20261031.json",
+        "execution_record_sha256": "727b8c2b20198019568dc2f6bbfc8ffcfff287de517377f7bdccb89d6611627e",
+        "execution_record_value": true,
+        "expected_boolean": false,
+        "finding_id": "PM6-F06",
+        "historical_field": "budget.gameplay_wall_budget_includes_diagnostics",
+        "historical_value": true,
+        "raw_manifest_sha256": "e5870bdc4c1aa05108ed58eacc6ec95123ab2b4bc9436d43c9c9640113eabd83",
+        "sanitized_review_copy_path": ".agents/evidence/M6-stage3-v2-run-manifest-review-20261031.json",
+        "sanitized_review_copy_sha256": "523193e4f4660d9dea40f1864622b72c11d6f24b93fe0eb31c81319a7a3efd8c",
+        "sanitized_review_copy_value": true,
+        "status": "historical_manifest_inconsistency_preserved_and_erratum_required"
+      }
+    ],
+    "disposition": "PASS_WITH_IMMUTABLE_PM6_F06_ERRATUM_REQUIRED",
+    "identities": {
+      "configuration_sha256": "663651050db80ab027b452241c7d39837ec7986927c0aefc7c7be631f459a49b",
+      "dependency_lock_sha256": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+      "execution_source_commit": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+      "execution_source_tree": "4d6ed616971c8f5606a0a7250fe68fa2eea40949",
+      "m5_root_artifact_manifest_sha256": "a201a254671ad59ae1fecb402abf994d5bf523097f1c3010b5c7fa237ae6dd4c",
+      "rom_sha256_recorded_by_runtime": "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7",
+      "schedule_sha256": "be4e6548e6fd3e3db4605e6b55fbe860848dccb2df87d8a7122145bdabe22ffc",
+      "scratch_checkpoint_sha256": "3749b0c0b6ae44d3ad5d6bf0863b60937a59fbe881e0bdf4932bdce6033ca400",
+      "scratch_sidecar_sha256": "1c15e5bc4ba2437df113671dc316accbdfe6d8b59069ed29ed187daebf4fff1e",
+      "source_bundle_sha256": "bd1ddd7c1b01af3f762bec0dcc71b54d97b9098f8f23bd2a93e652edd71b0d61",
+      "warm_checkpoint_sha256": "0b2405017a8e1d539851f0cd278883d3fd23936fb5c2f7962c813590a6fd1767",
+      "warm_sidecar_sha256": "80d8689e4b349576c5708bb4dce3451e5a8c64d81470cd6f4273a4746844b682"
+    },
+    "integrity": {
+      "artifact_manifest": {
+        "file_count": 4159,
+        "sha256": "bc0068aa2254e4c15165247ee299f48940cca9b7c21f6a288fd13812631ea2b2",
+        "total_bytes": 728148524
+      },
+      "attempt_json_matches_ledger": 20,
+      "episode_traces_validated": 20,
+      "ledger": {
+        "event_count": 968132,
+        "event_counts": {
+          "ale_action_observed": 484035,
+          "ale_action_started": 484035,
+          "ale_reset_observed": 20,
+          "attempt_finished": 20,
+          "attempt_started": 20,
+          "run_progress_checkpoint": 1,
+          "run_started": 1
+        },
+        "head_sha256": "cab519a452728b9b2b388d5517e8e1bc34ec612a0162c338210ee57d36b4480f",
+        "sha256": "c8364fa194a65c8de6d90bf9165743a411d0a63eba2459f3023821f3d0d838cb"
+      },
+      "missing_or_unexpected_artifacts": 0,
+      "per_attempt_manifests_validated": 20,
+      "raw_run_manifest_sha256": "e5870bdc4c1aa05108ed58eacc6ec95123ab2b4bc9436d43c9c9640113eabd83",
+      "symlinks_or_unsafe_paths": 0,
+      "trace_hash_chains_validated": 20
+    },
+    "known_historical_discrepancy": {
+      "authoritative_scope": "Stage 3 v2 only; excludes historical v1 and completed M6 diagnostics",
+      "execution_record_path": ".agents/evidence/M6-stage3-v2-execution-record-20261031.json",
+      "execution_record_sha256": "727b8c2b20198019568dc2f6bbfc8ffcfff287de517377f7bdccb89d6611627e",
+      "execution_record_value": true,
+      "expected_boolean": false,
+      "finding_id": "PM6-F06",
+      "historical_field": "budget.gameplay_wall_budget_includes_diagnostics",
+      "historical_value": true,
+      "raw_manifest_sha256": "e5870bdc4c1aa05108ed58eacc6ec95123ab2b4bc9436d43c9c9640113eabd83",
+      "sanitized_review_copy_path": ".agents/evidence/M6-stage3-v2-run-manifest-review-20261031.json",
+      "sanitized_review_copy_sha256": "523193e4f4660d9dea40f1864622b72c11d6f24b93fe0eb31c81319a7a3efd8c",
+      "sanitized_review_copy_value": true,
+      "status": "historical_manifest_inconsistency_preserved_and_erratum_required"
+    },
+    "protocol": {
+      "agent_color": "white",
+      "campaign_wall_limit_seconds": 43200,
+      "difficulty": 0,
+      "environment_id": "ALE/VideoChess-v5",
+      "frameskip": 4,
+      "maximum_opponent_wait_frames": 40000,
+      "maximum_player_moves": 200,
+      "mode": 4,
+      "observation_type": "rgb",
+      "per_attempt_wall_limit_seconds": 1800,
+      "repeat_action_probability": 0.25,
+      "runner_max_post_reset_frames": 432000,
+      "underlying_ale_frame_limit": 500000
+    },
+    "reconstructed": {
+      "ale_counter_frames": 1936199,
+      "ambiguous_or_unlocated_observations": 6131,
+      "attempts_by_policy": {
+        "m5-scratch-seed-20261104-post-rl": {
+          "ale_counter_frames": 977838,
+          "attempts": 10,
+          "cursor_displacements": 714,
+          "cursor_displacements_corrected": 714,
+          "desynchronizations": 0,
+          "environment_steps": 244453,
+          "incomplete": 3,
+          "initiated_moves": 173,
+          "loss": 7,
+          "peak_rss_bytes_max": 620105728,
+          "policy_decision_latency_seconds": {
+            "adapter_total_latency_seconds": {
+              "count": 173,
+              "iqr": 0.0031954689766280353,
+              "max": 0.10062633600318804,
+              "median": 0.009074929024791345,
+              "p95": 0.016352952789748087
+            },
+            "input_validation_latency_seconds": {
+              "count": 173,
+              "iqr": 0.0017615819961065426,
+              "max": 0.01934146200073883,
+              "median": 0.0054474599892273545,
+              "p95": 0.010154138199868615
+            },
+            "policy_choose_move_latency_seconds": {
+              "count": 173,
+              "iqr": 0.0014126449823379517,
+              "max": 0.08934527900419198,
+              "median": 0.0030647459934698418,
+              "p95": 0.005977858416736128
+            }
+          },
+          "policy_decisions": 173,
+          "post_reset_action_frames": 977798,
+          "rgb_verified_move_rate": 0.9421965317919075,
+          "stop_reasons": {
+            "ALE_TERMINATED": 7,
+            "Selected target e2 was not verifiable from RGB; stopped before FIRE": 2,
+            "Source FIRE did not produce a verified selected-piece RGB signature": 1
+          },
+          "verified_moves": 163,
+          "verified_replies": 163,
+          "wall_seconds": 1755.929
+        },
+        "m5-warm-seed-20261104-post-rl": {
+          "ale_counter_frames": 958361,
+          "attempts": 10,
+          "cursor_displacements": 1157,
+          "cursor_displacements_corrected": 1157,
+          "desynchronizations": 0,
+          "environment_steps": 239582,
+          "incomplete": 6,
+          "initiated_moves": 232,
+          "loss": 4,
+          "peak_rss_bytes_max": 620105728,
+          "policy_decision_latency_seconds": {
+            "adapter_total_latency_seconds": {
+              "count": 232,
+              "iqr": 0.0034403542449581437,
+              "max": 0.12669091999123339,
+              "median": 0.00915328151313588,
+              "p95": 0.02287631570652593
+            },
+            "input_validation_latency_seconds": {
+              "count": 232,
+              "iqr": 0.001666047774051549,
+              "max": 0.0323841710051056,
+              "median": 0.005447816496598534,
+              "p95": 0.01203231269828389
+            },
+            "policy_choose_move_latency_seconds": {
+              "count": 232,
+              "iqr": 0.0013509652417269535,
+              "max": 0.10905950699816458,
+              "median": 0.0032518350053578615,
+              "p95": 0.009864477706287244
+            }
+          },
+          "policy_decisions": 232,
+          "post_reset_action_frames": 958321,
+          "rgb_verified_move_rate": 0.9568965517241379,
+          "stop_reasons": {
+            "ALE_TERMINATED": 4,
+            "No stable unique legal Atari reply appeared within the bounded wait of 40000 ALE frames": 5,
+            "Source FIRE did not produce a verified selected-piece RGB signature": 1
+          },
+          "verified_moves": 222,
+          "verified_replies": 222,
+          "wall_seconds": 1764.04
+        }
+      },
+      "board_desynchronizations": 0,
+      "cursor_displacements": 1871,
+      "cursor_displacements_corrected": 1871,
+      "cursor_displacements_unresolved": 0,
+      "environment_steps": 484035,
+      "gameplay_wall_seconds": 3519.969,
+      "initiated_player_moves": 405,
+      "maximum_attempt_peak_rss_bytes": 620105728,
+      "outcomes": {
+        "ale_terminated_draws": 0,
+        "ale_terminated_losses": 11,
+        "ale_terminated_wins": 0,
+        "ale_truncated": 0,
+        "incomplete": 9,
+        "incomplete_not_draws": true,
+        "runner_truncated": 0,
+        "terminal_unknown": 0
+      },
+      "pending_final_moves": 20,
+      "pending_final_moves_by_category": {
+        "ale_terminal": 11,
+        "opponent_response_timeout": 5,
+        "source_selection_uncertainty": 2,
+        "target_navigation_uncertainty": 2
+      },
+      "policy_decisions": 405,
+      "post_reset_action_frames": 1936119,
+      "primary_move_rate": 0.9506172839506173,
+      "recorded_resets": 20,
+      "repeated_movement_without_progress": 0,
+      "resource_stops": 0,
+      "rgb_verified_player_moves": 385,
+      "scheduled_attempts": 20,
+      "stable_board_disagreements": 0,
+      "startup_retries": 0,
+      "stop_reason_counts": {
+        "ALE_TERMINATED": 11,
+        "CONTROLLER_SOURCE_SELECTION_UNCERTAIN": 2,
+        "CONTROLLER_TARGET_NAVIGATION_UNCERTAIN": 2,
+        "OPPONENT_RESPONSE_TIMEOUT": 5
+      },
+      "verified_atari_replies": 385
+    },
+    "run_id": "m6-stage3-v2-91f51b14690e-d05d42400cfc",
+    "schema": "videochess-m6-independent-raw-audit/1.0"
+  },
+  "schema": "videochess-pre-m7-m6-readonly-audit/1.0",
+  "source_revision": "fa7683822c436f3e9d6c3455a24cd1f4a6cbb463",
+  "started_at_utc": "2026-10-31T14:18:14Z",
+  "stderr_sha256": null,
+  "stdout_sha256": "467788cdc5ec5b291bd0d7aa66c987f9beac14c2b51395b1101f0963fadd5197"
+}

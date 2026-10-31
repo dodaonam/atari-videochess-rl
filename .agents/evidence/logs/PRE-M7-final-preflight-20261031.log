@@ -1,0 +1,45 @@
+source_revision=fa7683822c436f3e9d6c3455a24cd1f4a6cbb463
+candidate_tree=65aafcb957a18b1012e019a03453f1ff8609830f
+started_at_utc=2026-10-31T14:48:16Z
+finished_at_utc=2026-10-31T14:48:17Z
+exit_code=0
+command=PYTHONDONTWRITEBYTECODE=1 python3 scripts/agent_preflight.py
+
+Agent context preflight: PASS
+Governance: G3 (approved); approved: G0, G1, G2, G3
+Next engineering milestone: M7 — not started (pending user approval)
+Next task: M7-001 (pending) — Reconcile accepted populations and run only the authorized comparison set
+Next task action: Await the independent G4 decision and separate direct owner authorization for M7-001. Reuse accepted evidence by default; run only an explicitly authorized evaluation population and resource envelope.
+Next task dependencies: M4-001, M5-001, M6-001, M2-001, M3-001
+Next task acceptance criteria: M7-01
+Tasks: done=15, in_progress=0, pending=5, blocked=0, cancelled=0
+Completed task IDs: G1-001, G1-002, G1-003, G1-004, G1-005, G1-006, G1-007, G1-008, M0-001, M1-001, M2-001, M3-001, M4-001, M5-001, M6-001
+In progress task IDs: none
+Pending task IDs: M7-001, M7-002, M7-003, M7-004, M7-005
+Blocked task IDs: none
+Active blockers: none recorded
+Open confirmations:
+  O-02: Whether full-game performance on actual ALE is a hard submission requirement or a research target with an accepted fallback.
+  O-03: Future course checkpoints and any date changes. The owner confirmed the presentation date is Tuesday, 2026-11-03.
+  O-04: Actual Colab entitlement/quota, GPU availability, cloud storage, and whether paid compute is allowed. The owner selected local CPU for M3; no external compute/storage is used in this mission.
+  O-05: ALE/ROM runtime behavior, RAM mapping, game modes, difficulty behavior, and official evaluation settings.
+  O-06: Public redistribution rights and any new source/use beyond the scoped May 2022 archive. For M3, the owner authorized bounded internal academic use of the exact Lichess Elite May 2022 package with local retention and no redistribution; its third-party package license remains unstated/unverified.
+  O-07: Broader Stockfish roles: benchmark opponent, offline engine evaluation, and instructor-specific limits outside the M3 teacher-label scope.
+  O-08: Opponent pool and rating method for any Elo claim.
+Relevant decisions: docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md, docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md, docs/02-management/decisions/ADR-0003-pretraining-model-interface.md
+Acceptance criteria recognized: 51
+Last verified Git: feature/pre-m7-readiness @ fa7683822c436f3e9d6c3455a24cd1f4a6cbb463
+Live Git: feature/pre-m7-readiness @ fa7683822c436f3e9d6c3455a24cd1f4a6cbb463
+Roadmap source: exact match; 19 sections; SHA-256 fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf
+Git recovery: workspace-specific checkpoint snapshot.
+Workspace Git status: matches checkpoint
+Portable tracked baseline: not yet committed or differs
+Portable Git index: matches checkpoint
+Hashed ordinary-file snapshot: matches
+Content hashes: 932 ordinary files verified by SHA-256.
+Not content-verified by this hash map: PROJECT_STATE self-reference, chat history/credential-like paths, temp files, symlinks, and the excluded directories listed below.
+Excluded directories: .agents/state/checkpoint-history, artifacts, scripts/__pycache__, videochess_rl/__pycache__, videochess_rl/data/__pycache__, videochess_rl/model/__pycache__
+Artifact directories requiring independent manifests: artifacts
+Last verified dirty paths (20): A  .agents/evidence/PRE-M7-M6-readonly-audit-20261031.json; A  .agents/evidence/PRE-M7-input-integrity-20261031.json; A  .agents/evidence/PRE-M7-readiness-20261031.md; A  .agents/evidence/PRE-M7-resource-snapshot-20261031.json; A  .agents/evidence/logs/PRE-M7-final-contract-tests-20261031.log; A  .agents/evidence/logs/PRE-M7-focused-context-contract-tests-20261031.log; A  .agents/evidence/logs/PRE-M7-focused-contract-tests-20261031.log; A  .agents/evidence/logs/PRE-M7-focused-contract-tests-initial-diagnostic-20261031.log; A  .agents/evidence/logs/PRE-M7-focused-contract-tests-remediation-diagnostic-20261031.log; A  .agents/evidence/logs/PRE-M7-full-suite-diagnostic-checkpoint-path-20261031.log; A  .agents/evidence/logs/PRE-M7-full-suite-diagnostic-failure-20261031.log; A  .agents/evidence/logs/PRE-M7-full-suite-pass2-20261031.log; A  .agents/plans/M07-evaluation-delivery.md; A  .agents/plans/PRE-M7-readiness.md; A  docs/04-research/M7_EVALUATION_PROTOCOL.md; A  tests/test_pre_m7_contracts.py; M  .agents/tasks/BACKLOG.yaml; M  tests/test_agent_context.py; MM .agents/state/PROJECT_STATE.yaml; MM .agents/state/SESSION_HANDOFF.md
+Next user action: Review the Pre-M7 readiness PR and issue a separate independent G4 decision. M7 remains not started and unauthorized; any M7-001 work requires a separate direct owner authorization after the applicable G4 decision.
+WARNING ARTIFACT_MANIFEST_REQUIRED [.]: Artifact/data directories are excluded from content hashing and require independent manifest verification: artifacts.

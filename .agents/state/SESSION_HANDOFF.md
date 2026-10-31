@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-2283153b-20261031T090844836891Z -->
+<!-- checkpoint-id: cp-e0204e1c-20261031T150541674376Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -12,15 +12,19 @@ This file is a pointer, not a status snapshot. Do not infer current phase, task 
    - The current governance decision is [`ADR-0001`](../../docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md); discover later decisions in `docs/02-management/decisions/`.
 5. Compare the portable tracked-file manifest with live HEAD/index. Treat the `git` snapshot as workspace-local; an exact portable manifest match after commit/checkout is expected even when branch, HEAD, status, ignored files, or caches differ. The local Git config UUID distinguishes the original workspace from a clean clone. For older checkpoints without a portable manifest, use the safe tracked-file migration path described in `AGENTS.md`. If version-controlled content or canonical references drift, inspect them and never discard work automatically.
 
+## Pre-M7 review package pointer — 2026-10-31
+
+For the preparation-only assessment, M7 work breakdown, and evaluation contract, follow the [Pre-M7 readiness plan](../plans/PRE-M7-readiness.md), [M7 engineering plan](../plans/M07-evaluation-delivery.md), [M7 evaluation protocol](../../docs/04-research/M7_EVALUATION_PROTOCOL.md), and [Pre-M7 verification evidence](../evidence/PRE-M7-readiness-20261031.md). These are independent-review materials, not authorization; live gate, task, and M7 authorization remain in `PROJECT_STATE.yaml` and `BACKLOG.yaml`.
+
 ## Current canonical pointer — G3 approved, M6 accepted and integrated; G4 pending (2026-10-31)
 
 `PROJECT_STATE.yaml` and `BACKLOG.yaml` are authoritative. The independent PM accepted M6-01–M6-05 at [PR #14 comment 6539798992](https://github.com/dodaonam/atari-videochess-rl/pull/14#issuecomment-6539798992); PR #14 was merged into `initial-idea` at `509f9f83f9249208fd5adba572efed2d2f0f82ff`. The accepted feature HEAD/tree were `e919ee3ad039c9d2de3ebdf6b82704ecd61c0a6f` / `7eb06fd9c0e0b363ca324d203e1debf26f233c08`. See the permanent [PM acceptance record](../evidence/M6-001-PM-acceptance-20261031.md), [post-merge identity verification](../evidence/logs/M6-postmerge-identity-verification-20261031.log), and [post-merge verification report](../evidence/M6-post-merge-verification-20261031.md).
 
 M6-001 is done. Preserve v1/v2 identities and all M6 scientific qualifications. The PM reviewed the implementation, reports and recorded logs, but did not personally rerun the private raw ALE audit or full Python suite. G3 remains approved; G4 is unapproved; M7 is not started or authorized. No PR #14 review or merge action remains outstanding. Await a separate G4 PM decision and separate direct owner authorization before M7.
 
-## PR #15 corrective continuation — PM6C-F01
+## Historical PR #15 corrective continuation — PM6C-F01 (completed)
 
-The PM requested changes on [PR #15 comment 6541119468](https://github.com/dodaonam/atari-videochess-rl/pull/15#issuecomment-6541119468), identifying false `verified` provenance for a non-resolving backlog revision. The existing PR #15 is being corrected in place. See the [PM6C-F01 provenance correction report](../evidence/M6C-F01-provenance-correction-20261031.md), its [machine-readable audit](../evidence/M6C-F01-provenance-audit-20261031.json), and `scripts/audit_m6_closeout_provenance.py`. Keep PR #15 open and unmerged until the updated HEAD has successful CI and fresh independent PM review. This continuation does not reopen M6 acceptance, run ALE, alter M6 artifacts, approve G4, or authorize M7.
+The PM requested changes on [PR #15 comment 6541119468](https://github.com/dodaonam/atari-videochess-rl/pull/15#issuecomment-6541119468), identifying false `verified` provenance for a non-resolving backlog revision. The correction was completed and independently accepted at feature HEAD `b0d4a1303d2a639e164a9b9fb103bb442d366f1d`; PR #15 was merged into `initial-idea` at `fa7683822c436f3e9d6c3455a24cd1f4a6cbb463`. See the [PM6C-F01 provenance correction report](../evidence/M6C-F01-provenance-correction-20261031.md), its [machine-readable audit](../evidence/M6C-F01-provenance-audit-20261031.json), and `scripts/audit_m6_closeout_provenance.py`. This historical correction did not reopen M6 acceptance, run ALE, alter M6 artifacts, approve G4, or authorize M7.
 
 ## Historical pre-acceptance M6 handoff — before PR #14 merge
 

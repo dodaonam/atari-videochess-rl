@@ -5198,7 +5198,96 @@
       ],
       "next_action": "",
       "plan_ref": ".agents/plans/M06-atari-integration.md"
+    },
+    {
+      "id": "M7-001",
+      "title": "Reconcile accepted populations and run only the authorized comparison set",
+      "milestone": "M7",
+      "status": "pending",
+      "next_action": "Await the independent G4 decision and separate direct owner authorization for M7-001. Reuse accepted evidence by default; run only an explicitly authorized evaluation population and resource envelope.",
+      "depends_on": [
+        "M4-001",
+        "M5-001",
+        "M6-001",
+        "M2-001",
+        "M3-001"
+      ],
+      "requires_user_gate_approval": null,
+      "acceptance_criteria_ids": [
+        "M7-01"
+      ],
+      "blocker_ids": [],
+      "evidence": [],
+      "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
+    },
+    {
+      "id": "M7-002",
+      "title": "Analyze outcomes, uncertainty, missingness, and claims",
+      "milestone": "M7",
+      "status": "pending",
+      "next_action": "Await M7-001 completion within its directly authorized scope; keep terminal, truncated, incomplete, and censored outcomes separate.",
+      "depends_on": [
+        "M7-001"
+      ],
+      "requires_user_gate_approval": null,
+      "acceptance_criteria_ids": [
+        "M7-02"
+      ],
+      "blocker_ids": [],
+      "evidence": [],
+      "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
+    },
+    {
+      "id": "M7-003",
+      "title": "Decide whether Elo is reportable",
+      "milestone": "M7",
+      "status": "pending",
+      "next_action": "Await M7-002. Report Elo only if the owner-approved calibrated-pool and uncertainty conditions are met; otherwise record that Elo is not reported.",
+      "depends_on": [
+        "M7-002"
+      ],
+      "requires_user_gate_approval": null,
+      "acceptance_criteria_ids": [
+        "M7-03"
+      ],
+      "blocker_ids": [],
+      "evidence": [],
+      "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
+    },
+    {
+      "id": "M7-004",
+      "title": "Prepare evidence-linked delivery documents",
+      "milestone": "M7",
+      "status": "pending",
+      "next_action": "Await M7-001–003 completion and independent PM G4 approval. Prepare the report, model card, usage guide, and handover from verified identities.",
+      "depends_on": [
+        "M7-003"
+      ],
+      "requires_user_gate_approval": "G4",
+      "acceptance_criteria_ids": [
+        "M7-04"
+      ],
+      "blocker_ids": [],
+      "evidence": [],
+      "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
+    },
+    {
+      "id": "M7-005",
+      "title": "Record release and publication disposition",
+      "milestone": "M7",
+      "status": "pending",
+      "next_action": "Await G4/G5 review and separate direct owner release authorization. Without explicit release authorization, record a no-release disposition.",
+      "depends_on": [
+        "M7-004"
+      ],
+      "requires_user_gate_approval": "G4",
+      "acceptance_criteria_ids": [
+        "M7-05"
+      ],
+      "blocker_ids": [],
+      "evidence": [],
+      "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
     }
   ],
-  "updated_at_utc": "2026-10-31T09:05:50Z"
+  "updated_at_utc": "2026-10-31T14:25:30Z"
 }
