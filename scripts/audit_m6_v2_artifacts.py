@@ -814,11 +814,14 @@ def audit_v2(root_value: str | Path, repo_root_value: str | Path) -> dict[str, A
         terminal_observation = trace.get("terminal_observation") or {}
         frame_artifact = terminal_observation.get("frame_artifact")
         terminal_frame_path = None
+        terminal_frame_sha256 = None
+        terminal_rgb_sha256 = terminal_observation.get("rgb_sha256")
         if isinstance(frame_artifact, dict):
             terminal_frame_path, terminal_frame_rel = repo_relative_artifact(root, RUN_ID, frame_artifact.get("path"))
             frame_row = file_rows.get(terminal_frame_rel)
             if frame_row is None or not isinstance(frame_artifact.get("rgb_sha256"), str):
                 raise ValueError(f"terminal RGB frame artifact is not present in the verified file manifest at slot {slot}")
+            terminal_frame_sha256 = frame_row["sha256"]
             if (frame_artifact.get("rgb_sha256") != terminal_observation.get("rgb_sha256")
                     or frame_artifact.get("frame_number") != terminal_observation.get("frame_number")):
                 raise ValueError(f"terminal PNG reference is not bound to the ALE observation RGB hash at slot {slot}")
@@ -886,6 +889,14 @@ def audit_v2(root_value: str | Path, repo_root_value: str | Path) -> dict[str, A
         all_totals[outcome] += 1
         stop = record.get("terminal_or_stop_reason", record.get("runner_stop_category"))
         stop_counts[str(stop)] += 1
+        if pending_category in {"source_selection_uncertainty", "target_navigation_uncertainty"}:
+            safe_stop_check = "one source FIRE; target FIRE withheld; no retry"
+        elif pending_category == "opponent_response_timeout":
+            safe_stop_check = "last player move RGB-verified; no reply retry or attempt replacement"
+        elif terminal.get("ale_terminated") is True:
+            safe_stop_check = "ALE terminal stopped action loop; no post-terminal ALE action"
+        else:
+            safe_stop_check = "no action retry or attempt replacement recorded"
         attempts.append({
             "slot": slot,
             "attempt_id": attempt_id,
@@ -900,6 +911,7 @@ def audit_v2(root_value: str | Path, repo_root_value: str | Path) -> dict[str, A
             "stop_category": record.get("runner_stop_category"),
             "stop_reason": record.get("stop_reason"),
             "last_verified_fen": terminal.get("last_verified_fen"),
+            "verified_move_history": list(record.get("verified_move_history", [])),
             "initiated_moves": attempted,
             "policy_decision_count": decision_count,
             "rgb_verified_moves": verified,
@@ -920,9 +932,14 @@ def audit_v2(root_value: str | Path, repo_root_value: str | Path) -> dict[str, A
             "ale_action_start_events": started_count,
             "ale_action_observed_events": observed_count,
             "terminal_frame_path": terminal_frame_rel if terminal_frame_path else None,
+            "terminal_frame_file_sha256": terminal_frame_sha256,
+            "terminal_rgb_bytes_sha256": terminal_rgb_sha256,
+            "trace_path": record.get("trace_path"),
             "attempt_manifest_sha256": record["artifact_manifest_sha256"],
+            "attempt_manifest_path": record.get("artifact_manifest_path"),
             "trace_sha256": record["trace_sha256"],
             "trace_chain_head_sha256": trace_chain["head_sha256"],
+            "controller_safe_stop_check": safe_stop_check,
         })
 
     # Independently sum ALE reward observations directly from the raw ledger.
