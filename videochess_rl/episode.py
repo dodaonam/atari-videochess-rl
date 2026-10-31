@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 from enum import Enum
 import hashlib
 import math
+import resource
 import time
 from typing import Callable
 
@@ -118,6 +119,7 @@ class StopCategory(str, Enum):
     RUNNER_MAX_ENV_STEPS = "RUNNER_MAX_ENV_STEPS"
     RUNNER_MAX_WALL_CLOCK = "RUNNER_MAX_WALL_CLOCK"
     RUNNER_ARTIFACT_LIMIT = "RUNNER_ARTIFACT_LIMIT"
+    RUNNER_RESOURCE_LIMIT = "RUNNER_RESOURCE_LIMIT"
     CONTROLLER_SOURCE_SELECTION_UNCERTAIN = "CONTROLLER_SOURCE_SELECTION_UNCERTAIN"
     CONTROLLER_TARGET_NAVIGATION_UNCERTAIN = "CONTROLLER_TARGET_NAVIGATION_UNCERTAIN"
     CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN = "CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN"
@@ -250,6 +252,8 @@ def _classify_stop(reason: str | None, phase: str | None) -> StopCategory:
         return StopCategory.RUNNER_MAX_ALE_FRAMES
     if "artifact-byte budget" in reason:
         return StopCategory.RUNNER_ARTIFACT_LIMIT
+    if "RSS" in reason or "memory resource" in reason:
+        return StopCategory.RUNNER_RESOURCE_LIMIT
     if "stale ALE observation" in reason or "stale observation" in reason:
         return StopCategory.STALE_OBSERVATION
     if "ambiguous" in reason.lower():
@@ -427,6 +431,7 @@ def run_episode(
     max_episode_env_steps: int | None = None,
     max_episode_seconds: float = 900.0,
     max_artifact_bytes: int = 250 * 1024 * 1024,
+    max_process_rss_bytes: int | None = None,
     target_fire_press_frames: int = 16,
     artifact_dir: str | None = None,
     env_factory: Callable[[ALEConfig], VideoChessEnv] = VideoChessEnv,
@@ -489,6 +494,7 @@ def run_episode(
             "max_episode_env_steps": max_episode_env_steps,
             "max_episode_seconds": max_episode_seconds,
             "max_artifact_bytes": max_artifact_bytes,
+            "max_process_rss_bytes": max_process_rss_bytes,
         },
         "runtime": {},
         "reset": {},
@@ -529,6 +535,7 @@ def run_episode(
         vision = VideoChessVision()
         reset = env.reset(seed=seed)
         last_frame = reset
+        reset_frame_number = reset.frame_number
 
         def mark_blocked(
             reason: str,
@@ -556,6 +563,7 @@ def run_episode(
         trace["runtime"] = env.runtime_info()
         trace["reset"] = {
             "frame_number": reset.frame_number,
+            "frame_counter_origin": "ALE episode-frame counter immediately after reset; includes reset-time ALE frames",
             "rgb_shape": list(reset.rgb.shape),
             "rgb_dtype": str(reset.rgb.dtype),
             "rgb_sha256": hashlib.sha256(reset.rgb.tobytes()).hexdigest(),
@@ -592,6 +600,14 @@ def run_episode(
                     return mark_blocked("ALE instance runtime differs from the requested RGB/profile/action configuration", StopCategory.ENVIRONMENT_PROFILE_MISMATCH)
                 if instance_runtime.get("action_set") != list(range(10)):
                     return mark_blocked("ALE minimal action set differs from the calibrated VideoChess controller contract", StopCategory.ENVIRONMENT_PROFILE_MISMATCH)
+                if (
+                    config.max_num_frames_per_episode is not None
+                    and runtime.get("ale_episode_frame_limit") != config.max_num_frames_per_episode
+                ):
+                    return mark_blocked(
+                        "ALE emulator episode-frame ceiling differs from the requested configuration",
+                        StopCategory.ENVIRONMENT_PROFILE_MISMATCH,
+                    )
         if "0xEA" in reset_ram and int(reset_ram["0xEA"]) != config.mode:
             return mark_blocked("ALE reset mode byte differs from the requested numeric mode", StopCategory.ENVIRONMENT_PROFILE_MISMATCH)
         if not initial_observation.matches_start_position() or not initial_window.is_stable:
@@ -669,6 +685,14 @@ def run_episode(
                 if episode_env_steps >= max_env_steps:
                     set_stop("per-episode ALE frame budget reached", StopCategory.RUNNER_MAX_ALE_FRAMES)
                     break
+                if max_process_rss_bytes is not None:
+                    peak_rss_bytes = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * 1024)
+                    if peak_rss_bytes >= max_process_rss_bytes:
+                        set_stop(
+                            f"process RSS reached the configured {max_process_rss_bytes}-byte memory resource limit",
+                            StopCategory.RUNNER_RESOURCE_LIMIT,
+                        )
+                        break
                 frame_before_step = last_frame
                 if control_execution_active and active_turn_record is not None:
                     move_record = active_turn_record.get("player_move")
@@ -744,14 +768,40 @@ def run_episode(
 
         def move_cursor_to(target: str, reference_board: chess.Board, window: BoardWindow) -> BoardWindow:
             nonlocal current_window
+            route_event_start = len(trace["cursor_observations"])
             retries_without_progress = 0
             cursor_actions = 0
             inconclusive_windows = 0
             while cursor_actions < MAX_CURSOR_ACTIONS_PER_MOVE:
                 if stop_reason or terminal_observed:
                     raise EpisodeStop(stop_reason or "ALE ended while moving the cursor")
-                if not window.is_stable or not window.matches_board_except_cursor(reference_board):
+                if window.is_stable and not window.matches_board_except_cursor(reference_board):
+                    trace["cursor_observations"].append({
+                        "frame_number": last_frame.frame_number,
+                        "from_square": _unique_cursor(window),
+                        "planned_square": None,
+                        "observed_square": _unique_cursor(window),
+                        "observation_status": "stable_board_mismatch",
+                        "board_agreement": False,
+                        "movement_confirmed": None,
+                        "unexpected_displacement": None,
+                        "correction_completed": False,
+                    })
+                    raise EpisodeStop("Stable RGB board disagreed with the verified shadow during cursor routing")
+                if not window.is_stable:
                     window = observe_window("cursor state verification", reference_board)
+                    trace["cursor_observations"].append({
+                        "frame_number": last_frame.frame_number,
+                        "from_square": _unique_cursor(window),
+                        "planned_square": None,
+                        "observed_square": _unique_cursor(window),
+                        "observation_status": "ambiguous_or_cursor_unlocated",
+                        "board_agreement": None,
+                        "movement_confirmed": None,
+                        "unexpected_displacement": None,
+                        "correction_completed": False,
+                        "cursor_squares": sorted(window.cursor_squares),
+                    })
                     inconclusive_windows += 1
                     if inconclusive_windows > 4:
                         raise EpisodeStop("RGB did not provide a stable board/cursor view")
@@ -759,12 +809,27 @@ def run_episode(
                 observed = _unique_cursor(window)
                 if observed is None:
                     window = observe_window("cursor location retry", reference_board)
+                    trace["cursor_observations"].append({
+                        "frame_number": last_frame.frame_number,
+                        "from_square": None,
+                        "planned_square": None,
+                        "observed_square": None,
+                        "observation_status": "ambiguous_or_cursor_unlocated",
+                        "board_agreement": True if window.matches_board_except_cursor(reference_board) else None,
+                        "movement_confirmed": None,
+                        "unexpected_displacement": None,
+                        "correction_completed": False,
+                        "cursor_squares": sorted(window.cursor_squares),
+                    })
                     inconclusive_windows += 1
                     if inconclusive_windows > 4:
                         raise EpisodeStop("Cursor remained missing or ambiguous in RGB windows")
                     continue
                 if observed == target:
                     current_window = window
+                    for event in trace["cursor_observations"][route_event_start:]:
+                        if event.get("unexpected_displacement"):
+                            event["correction_completed"] = True
                     return window
                 route = plan_cursor_route(observed, target, timing)
                 if not route:
@@ -787,11 +852,21 @@ def run_episode(
                         continue
                     candidate_window = vision.window(tuple(frame.rgb for frame in samples))
                     actual = _unique_cursor(candidate_window)
-                    if (
-                        candidate_window.is_stable
-                        and actual is not None
-                        and BoardEvidenceSet((window, candidate_window)).matches_board(reference_board)
-                    ):
+                    board_matches = BoardEvidenceSet((window, candidate_window)).matches_board(reference_board)
+                    if candidate_window.is_stable and actual is not None and not board_matches:
+                        trace["cursor_observations"].append({
+                            "frame_number": last_frame.frame_number,
+                            "from_square": observed,
+                            "planned_square": step.cursor_after,
+                            "observed_square": actual,
+                            "observation_status": "stable_board_mismatch",
+                            "board_agreement": False,
+                            "movement_confirmed": actual != observed,
+                            "unexpected_displacement": actual != step.cursor_after,
+                            "correction_completed": False,
+                        })
+                        raise EpisodeStop("Stable RGB board disagreed with the verified shadow during cursor routing")
+                    if candidate_window.is_stable and actual is not None and board_matches:
                         window = candidate_window
                         confirmed = True
                         trace["cursor_observations"].append(
@@ -800,8 +875,11 @@ def run_episode(
                                 "from_square": observed,
                                 "planned_square": step.cursor_after,
                                 "observed_square": actual,
+                                "observation_status": "verified",
+                                "board_agreement": True,
                                 "movement_confirmed": actual != observed,
                                 "unexpected_displacement": actual != step.cursor_after,
+                                "correction_completed": False,
                             }
                         )
                         if actual == observed:
@@ -812,6 +890,18 @@ def run_episode(
                             retries_without_progress = 0
                             inconclusive_windows = 0
                         break
+                    trace["cursor_observations"].append({
+                        "frame_number": last_frame.frame_number,
+                        "from_square": observed,
+                        "planned_square": step.cursor_after,
+                        "observed_square": actual,
+                        "observation_status": "ambiguous_or_cursor_unlocated",
+                        "board_agreement": None,
+                        "movement_confirmed": None,
+                        "unexpected_displacement": None,
+                        "correction_completed": False,
+                        "cursor_squares": sorted(candidate_window.cursor_squares),
+                    })
                     inconclusive_windows += 1
                     if inconclusive_windows > WINDOW_FRAMES:
                         raise EpisodeStop("Cursor action changed or obscured the verified board")
@@ -846,7 +936,31 @@ def run_episode(
             trace.setdefault("frames", []).append(item)
             return item
 
-        save_frame("reset")
+        try:
+            save_frame("reset")
+        except EpisodeStop:
+            trace["terminal"].update({
+                "runner_stopped": True,
+                "runner_stop_category": (stop_category or StopCategory.RUNNER_ARTIFACT_LIMIT).value,
+                "runner_stop_reason": stop_reason,
+                "stop_reason": stop_reason,
+                "ale_frames": last_frame.frame_number,
+                "frame_number": last_frame.frame_number,
+                "reset_frame_number": reset_frame_number,
+                "post_reset_action_frames": 0,
+                "environment_steps": 0,
+                "env_steps": 0,
+                "wall_seconds": round(time.monotonic() - started_monotonic, 3),
+                "last_verified_fen": shadow.board.fen() if shadow.board else None,
+                "player_moves_attempted": 0,
+                "verified_player_moves": 0,
+                "verified_atari_replies": 0,
+                "incomplete_final_move_count": 0,
+                "incomplete_final_move_category": None,
+            })
+            trace["status"] = "runner_stopped"
+            trace["failure"] = stop_reason
+            return trace
         set_turn_state(0, TurnState.PLAYER_TURN, "stable reset RGB; white is the observed player side")
 
         for turn_index in range(1, max_player_moves + 1):
@@ -863,7 +977,32 @@ def run_episode(
                 if not current_window.is_stable or not current_window.matches_board_except_cursor(board_before):
                     current_window = observe_window("player turn validation", board_before)
                 current_cursor = _unique_cursor(current_window)
-                if current_cursor is None or not current_window.matches_board_except_cursor(board_before):
+                if current_window.is_stable and not current_window.matches_board_except_cursor(board_before):
+                    trace["cursor_observations"].append({
+                        "frame_number": last_frame.frame_number,
+                        "from_square": current_cursor,
+                        "planned_square": None,
+                        "observed_square": current_cursor,
+                        "observation_status": "stable_board_mismatch",
+                        "board_agreement": False,
+                        "movement_confirmed": None,
+                        "unexpected_displacement": None,
+                        "correction_completed": False,
+                    })
+                    raise EpisodeStop("Stable RGB board disagreed with the verified shadow at player-turn validation")
+                if current_cursor is None or not current_window.is_stable:
+                    trace["cursor_observations"].append({
+                        "frame_number": last_frame.frame_number,
+                        "from_square": None,
+                        "planned_square": None,
+                        "observed_square": None,
+                        "observation_status": "ambiguous_or_cursor_unlocated",
+                        "board_agreement": None,
+                        "movement_confirmed": None,
+                        "unexpected_displacement": None,
+                        "correction_completed": False,
+                        "cursor_squares": sorted(current_window.cursor_squares),
+                    })
                     raise EpisodeStop("Player turn lacked a stable legal board and unique cursor observation")
 
                 history_uci = tuple(move.uci() for move in board_before.move_stack)
@@ -1461,6 +1600,8 @@ def run_episode(
                 "last_verified_fen": shadow.board.fen() if shadow.board else None,
                 "frame_number": last_frame.frame_number,
                 "ale_frames": last_frame.frame_number,
+                "reset_frame_number": reset_frame_number,
+                "post_reset_action_frames": last_frame.frame_number - reset_frame_number,
                 "wall_seconds": round(time.monotonic() - started_monotonic, 3),
                 "env_steps": episode_env_steps,
                 "environment_steps": episode_env_steps,
@@ -1496,6 +1637,31 @@ def run_episode(
                 "unexpected_directional_displacements": sum(
                     1 for event in trace["cursor_observations"] if event.get("unexpected_displacement")
                 ),
+                "cursor_diagnostics": {
+                    "unexpected_displacements": sum(
+                        1 for event in trace["cursor_observations"] if event.get("unexpected_displacement") is True
+                    ),
+                    "unexpected_displacements_corrected": sum(
+                        1 for event in trace["cursor_observations"]
+                        if event.get("unexpected_displacement") is True and event.get("correction_completed") is True
+                    ),
+                    "unexpected_displacements_unresolved": sum(
+                        1 for event in trace["cursor_observations"]
+                        if event.get("unexpected_displacement") is True and event.get("correction_completed") is not True
+                    ),
+                    "repeated_movement_without_progress": sum(
+                        1 for event in trace["cursor_observations"]
+                        if event.get("observation_status") == "verified" and event.get("movement_confirmed") is False
+                    ),
+                    "ambiguous_or_unlocated_observations": sum(
+                        1 for event in trace["cursor_observations"]
+                        if event.get("observation_status") == "ambiguous_or_cursor_unlocated"
+                    ),
+                    "stable_board_disagreements": sum(
+                        1 for event in trace["cursor_observations"]
+                        if event.get("observation_status") == "stable_board_mismatch"
+                    ),
+                },
                 "last_verified_progress": _game_progress(shadow.board) if shadow.board else None,
                 "runner_stopped": not terminal_observed,
                 "runner_stop_category": (
@@ -1509,6 +1675,27 @@ def run_episode(
                 "stop_reason": stop_reason,
             }
         )
+        attempted_moves = trace["terminal"]["player_moves_attempted"]
+        verified_moves = trace["terminal"]["verified_player_moves"]
+        pending_moves = attempted_moves - verified_moves
+        stop_category_name = trace["terminal"]["runner_stop_category"]
+        pending_category = None
+        if pending_moves:
+            pending_category = {
+                StopCategory.RUNNER_MAX_ALE_FRAMES.value: "frame_cap",
+                StopCategory.RUNNER_MAX_ENV_STEPS.value: "frame_cap",
+                StopCategory.RUNNER_MAX_WALL_CLOCK.value: "wall_clock_cap",
+                StopCategory.RUNNER_ARTIFACT_LIMIT.value: "artifact_cap",
+                StopCategory.ALE_TERMINATED.value: "ale_terminal",
+                StopCategory.ALE_TRUNCATED.value: "ale_truncation",
+                StopCategory.CONTROLLER_SOURCE_SELECTION_UNCERTAIN.value: "source_selection_uncertainty",
+                StopCategory.CONTROLLER_TARGET_NAVIGATION_UNCERTAIN.value: "target_navigation_uncertainty",
+                StopCategory.CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN.value: "target_confirmation_uncertainty",
+                StopCategory.OPPONENT_RESPONSE_TIMEOUT.value: "opponent_response_timeout",
+                StopCategory.CONTROLLER_BOARD_DESYNCHRONIZED.value: "board_desynchronization",
+            }.get(stop_category_name, "other_interrupted_or_unknown")
+        trace["terminal"]["incomplete_final_move_count"] = pending_moves
+        trace["terminal"]["incomplete_final_move_category"] = pending_category
         if last_frame.terminated:
             set_turn_state(len(trace["turns"]), TurnState.EPISODE_FINISHED, "ALE terminated=True")
         elif last_frame.truncated:
@@ -1523,6 +1710,7 @@ def run_episode(
             StopCategory.RUNNER_MAX_WALL_CLOCK,
             StopCategory.RUNNER_ARTIFACT_LIMIT,
             StopCategory.RUNNER_MAX_PLAYER_MOVES,
+            StopCategory.RUNNER_RESOURCE_LIMIT,
         }:
             trace["status"] = "runner_stopped"
             trace["failure"] = stop_reason

@@ -8,7 +8,7 @@ import math
 import os
 from pathlib import Path
 import tempfile
-from typing import Any, Iterable
+from typing import Any, Iterable, Iterator
 
 
 LEDGER_SCHEMA = "videochess-m6-attempt-ledger/1.0"
@@ -73,9 +73,7 @@ class HashChainLedger:
             self._seq = 0
             self._previous = GENESIS
         else:
-            events = verify_hash_chain(self.path, expected_run_id=run_id)
-            self._seq = len(events)
-            self._previous = events[-1]["event_sha256"] if events else GENESIS
+            self._seq, self._previous = verify_hash_chain_head(self.path, expected_run_id=run_id)
 
     def append(self, event_type: str, payload: dict[str, Any]) -> dict[str, Any]:
         if not event_type or not isinstance(payload, dict):
@@ -100,37 +98,54 @@ class HashChainLedger:
         return record
 
 
-def verify_hash_chain(path: str | Path, *, expected_run_id: str | None = None) -> list[dict[str, Any]]:
+def iter_verified_hash_chain(
+    path: str | Path,
+    *,
+    expected_run_id: str | None = None,
+) -> Iterator[dict[str, Any]]:
     target = Path(path)
     if target.is_symlink() or not target.is_file():
         raise ValueError("M6 ledger is missing or unsafe")
-    raw = target.read_bytes()
-    if raw and not raw.endswith(b"\n"):
-        raise ValueError("M6 ledger has a partial final record")
     previous = GENESIS
-    events: list[dict[str, Any]] = []
-    for line_number, line in enumerate(raw.splitlines(), 1):
-        try:
-            record = json.loads(line)
-        except (json.JSONDecodeError, UnicodeDecodeError) as exc:
-            raise ValueError(f"invalid M6 ledger JSON at line {line_number}") from exc
-        if not isinstance(record, dict) or record.get("schema") != LEDGER_SCHEMA:
-            raise ValueError(f"unsupported M6 ledger record at line {line_number}")
-        if expected_run_id is not None and record.get("run_id") != expected_run_id:
-            raise ValueError(f"M6 ledger run ID mismatch at line {line_number}")
-        if record.get("sequence") != line_number or record.get("previous_event_sha256") != previous:
-            raise ValueError(f"M6 ledger sequence/hash predecessor mismatch at line {line_number}")
-        core = {key: record[key] for key in (
-            "schema", "run_id", "sequence", "previous_event_sha256", "event_type", "payload"
-        )}
-        digest = hashlib.sha256(previous.encode("ascii") + canonical_json_bytes(core)).hexdigest()
-        if record.get("event_sha256") != digest:
-            raise ValueError(f"M6 ledger event hash mismatch at line {line_number}")
-        if not isinstance(record.get("payload"), dict):
-            raise ValueError(f"M6 ledger payload is malformed at line {line_number}")
-        events.append(record)
-        previous = digest
-    return events
+    with target.open("rb") as stream:
+        for line_number, line in enumerate(stream, 1):
+            if not line.endswith(b"\n"):
+                raise ValueError("M6 ledger has a partial final record")
+            line = line[:-1]
+            try:
+                record = json.loads(line)
+            except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+                raise ValueError(f"invalid M6 ledger JSON at line {line_number}") from exc
+            if not isinstance(record, dict) or record.get("schema") != LEDGER_SCHEMA:
+                raise ValueError(f"unsupported M6 ledger record at line {line_number}")
+            if expected_run_id is not None and record.get("run_id") != expected_run_id:
+                raise ValueError(f"M6 ledger run ID mismatch at line {line_number}")
+            if record.get("sequence") != line_number or record.get("previous_event_sha256") != previous:
+                raise ValueError(f"M6 ledger sequence/hash predecessor mismatch at line {line_number}")
+            core = {key: record[key] for key in (
+                "schema", "run_id", "sequence", "previous_event_sha256", "event_type", "payload"
+            )}
+            digest = hashlib.sha256(previous.encode("ascii") + canonical_json_bytes(core)).hexdigest()
+            if record.get("event_sha256") != digest:
+                raise ValueError(f"M6 ledger event hash mismatch at line {line_number}")
+            if not isinstance(record.get("payload"), dict):
+                raise ValueError(f"M6 ledger payload is malformed at line {line_number}")
+            previous = digest
+            yield record
+
+
+def verify_hash_chain_head(path: str | Path, *, expected_run_id: str | None = None) -> tuple[int, str]:
+    sequence = 0
+    head = GENESIS
+    for event in iter_verified_hash_chain(path, expected_run_id=expected_run_id):
+        sequence = int(event["sequence"])
+        head = event["event_sha256"]
+    return sequence, head
+
+
+def verify_hash_chain(path: str | Path, *, expected_run_id: str | None = None) -> list[dict[str, Any]]:
+    """Compatibility wrapper for tests/tools that explicitly need all records."""
+    return list(iter_verified_hash_chain(path, expected_run_id=expected_run_id))
 
 
 def _trace_event_rows(trace: dict[str, Any]) -> list[tuple[str, Any]]:
@@ -243,7 +258,13 @@ def classify_attempt(trace: dict[str, Any]) -> str:
     terminal = trace.get("terminal", {})
     if terminal.get("ale_terminated") is True and terminal.get("ale_truncated") is not True:
         reward = terminal.get("ale_reward_total")
+        finite_reward = False
         if isinstance(reward, (int, float)) and not isinstance(reward, bool):
+            try:
+                finite_reward = math.isfinite(float(reward))
+            except (OverflowError, ValueError):
+                finite_reward = False
+        if finite_reward:
             if reward > 0:
                 return "win"
             if reward < 0:
@@ -254,7 +275,7 @@ def classify_attempt(trace: dict[str, Any]) -> str:
     if terminal.get("ale_truncated") is True:
         return "ale_truncated"
     category = terminal.get("runner_stop_category")
-    if category in {"RUNNER_MAX_ALE_FRAMES", "RUNNER_MAX_ENV_STEPS", "RUNNER_MAX_WALL_CLOCK", "RUNNER_MAX_PLAYER_MOVES", "RUNNER_ARTIFACT_LIMIT"}:
+    if category in {"RUNNER_MAX_ALE_FRAMES", "RUNNER_MAX_ENV_STEPS", "RUNNER_MAX_WALL_CLOCK", "RUNNER_MAX_PLAYER_MOVES", "RUNNER_ARTIFACT_LIMIT", "RUNNER_RESOURCE_LIMIT"}:
         return "runner_truncated"
     if terminal.get("runner_stopped"):
         return "incomplete"
@@ -305,8 +326,58 @@ def summarize_attempts(attempts: list[dict[str, Any]]) -> dict[str, Any]:
     cursor_displacements = sum(int(value) for value in known_cursor_displacements)
     if cursor_displacements < 0:
         raise ValueError("unexpected cursor displacement count cannot be negative")
+    censor_categories = (
+        "frame_cap", "wall_clock_cap", "artifact_cap", "ale_terminal", "ale_truncation",
+        "source_selection_uncertainty", "target_navigation_uncertainty",
+        "target_confirmation_uncertainty", "opponent_response_timeout",
+        "board_desynchronization", "other_interrupted_or_unknown",
+    )
+    censor_counts = {category: 0 for category in censor_categories}
+    pending_known = pending_unknown = 0
+    for row in attempts:
+        attempted = row.get("player_moves_attempted")
+        verified = row.get("rgb_verified_player_moves")
+        pending = row.get("incomplete_final_move_count")
+        if pending is None and attempted is not None and verified is not None:
+            pending = int(attempted) - int(verified)
+        if pending is None:
+            pending_unknown += 1
+            continue
+        if isinstance(pending, bool) or not isinstance(pending, int) or pending < 0:
+            raise ValueError("incomplete final move count must be a nonnegative integer or unknown")
+        if attempted is not None and verified is not None and pending != int(attempted) - int(verified):
+            raise ValueError("incomplete final move count disagrees with the attempted/verified denominators")
+        pending_known += pending
+        category = row.get("incomplete_final_move_category")
+        if pending == 0:
+            if category is not None:
+                raise ValueError("a completed final move cannot have an incomplete-move category")
+        elif category in censor_counts:
+            censor_counts[category] += pending
+        else:
+            censor_counts["other_interrupted_or_unknown"] += pending
+    cursor_metric_names = (
+        "unexpected_displacements_corrected", "unexpected_displacements_unresolved",
+        "repeated_movement_without_progress", "ambiguous_or_unlocated_observations",
+        "stable_board_disagreements",
+    )
+    cursor_totals: dict[str, int | None] = {}
+    cursor_unknown_attempts: dict[str, int] = {}
+    for metric in cursor_metric_names:
+        values = [
+            row.get("cursor_diagnostics", {}).get(metric)
+            if isinstance(row.get("cursor_diagnostics"), dict) else None
+            for row in attempts
+        ]
+        known = [value for value in values if isinstance(value, int) and not isinstance(value, bool)]
+        cursor_totals[metric] = sum(known) if known else None
+        cursor_unknown_attempts[metric] = sum(value is None for value in values)
     known_replies = [row.get("verified_atari_replies", 0) for row in attempts if row.get("verified_atari_replies", 0) is not None]
     known_frames = [row.get("ale_frames", 0) for row in attempts if row.get("ale_frames", 0) is not None]
+    known_post_reset_frames = [
+        row.get("post_reset_action_frames")
+        for row in attempts if row.get("post_reset_action_frames") is not None
+    ]
     known_steps = [row.get("environment_steps", 0) for row in attempts if row.get("environment_steps", 0) is not None]
     move_rate = verified_moves / attempted_moves if attempted_moves else None
     match_score = (counts["win"] + 0.5 * counts["draw"]) / completed if completed else None
@@ -328,12 +399,27 @@ def summarize_attempts(attempts: list[dict[str, Any]]) -> dict[str, Any]:
         "rgb_verified_player_moves": verified_moves,
         "move_success_rate": move_rate,
         "move_success_wilson_95": wilson_interval(verified_moves, attempted_moves),
+        "move_success_interval_note": "Wilson interval treats moves as binomial trials; within-game dependence means this interval alone is not an independent-reliability guarantee.",
+        "incomplete_final_moves": pending_known,
+        "attempts_with_unknown_incomplete_move_accounting": pending_unknown,
+        "incomplete_final_moves_by_category": censor_counts,
+        "administrative_budget_censored_final_moves": sum(
+            censor_counts[category] for category in ("frame_cap", "wall_clock_cap", "artifact_cap")
+        ),
+        "controller_uncertainty_censored_final_moves": sum(
+            censor_counts[category] for category in (
+                "source_selection_uncertainty", "target_navigation_uncertainty",
+                "target_confirmation_uncertainty", "board_desynchronization",
+            )
+        ),
         "desynchronization_count": desyncs,
         "attempts_with_unknown_desynchronization_accounting": sum(
             1 for row in attempts if row.get("desynchronization_count", 0) is None
         ),
         "desynchronization_rate_per_attempted_move": desyncs / attempted_moves if attempted_moves else None,
         "unexpected_cursor_displacements": cursor_displacements,
+        "cursor_diagnostics": cursor_totals,
+        "cursor_diagnostic_unknown_attempts": cursor_unknown_attempts,
         "attempts_with_unknown_cursor_displacement_accounting": sum(
             1 for row in attempts if row.get("unexpected_cursor_displacements", 0) is None
         ),
@@ -341,6 +427,10 @@ def summarize_attempts(attempts: list[dict[str, Any]]) -> dict[str, Any]:
         "attempts_with_unknown_reply_accounting": sum(1 for row in attempts if row.get("verified_atari_replies", 0) is None),
         "ale_frames": sum(int(value) for value in known_frames),
         "attempts_with_unknown_ale_frames": sum(1 for row in attempts if row.get("ale_frames", 0) is None),
+        "post_reset_action_frames": sum(int(value) for value in known_post_reset_frames),
+        "attempts_with_unknown_post_reset_action_frames": sum(
+            1 for row in attempts if row.get("post_reset_action_frames") is None
+        ),
         "environment_steps": sum(int(value) for value in known_steps),
         "attempts_with_unknown_environment_steps": sum(1 for row in attempts if row.get("environment_steps", 0) is None),
         "wall_seconds": sum(float(row.get("wall_seconds", 0.0)) for row in attempts if row.get("wall_seconds", 0.0) is not None),
@@ -351,7 +441,7 @@ def summarize_attempts(attempts: list[dict[str, Any]]) -> dict[str, Any]:
         "resource_limit_stops": sum(
             1 for row in attempts
             if str(row.get("terminal_or_stop_reason", row.get("runner_stop_category", ""))).startswith(
-                ("RUNNER_MAX_", "RUNNER_ARTIFACT_LIMIT", "RESOURCE_LIMIT")
+                ("RUNNER_MAX_", "RUNNER_ARTIFACT_LIMIT", "RUNNER_RESOURCE_LIMIT", "RESOURCE_LIMIT")
             )
         ),
         "stop_reasons": {

@@ -52,3 +52,29 @@ Use one local CPU ALE process. Cap each game at 900 seconds and 54,000 ALE frame
 ## Handover state
 
 This plan does not itself satisfy M6 criteria. On engineering completion, submit raw and summarized evidence for independent PM review, update the task with actual evidence, and retain M6 authorization until the PM decides acceptance. G4 is not part of this transition.
+
+## Owner-authorized corrective continuation — Stage 3 v2
+
+The owner issued a separate bounded continuation after the v1 review. Its direct authorization is recorded in [M6-001-v2-corrective-authorization-20261031.md](../evidence/M6-001-v2-corrective-authorization-20261031.md). It supplements the initial M6 authorization and does not change v1 records or claim PM acceptance. The executable contract and frozen values are owned by [`m6-stage3-v2.json`](../../configs/m6/m6-stage3-v2.json) and the v2 addendum in [`M6_ALE_EXPERIMENT_PROTOCOL.md`](../../docs/04-research/M6_ALE_EXPERIMENT_PROTOCOL.md).
+
+### Corrective execution order
+
+1. Resolve PM findings against code and immutable v1 traces: separate the runner frame cap from ALE's registered/native horizon; distinguish budget-censored, controller-uncertain, ALE-terminal and unknown final moves; classify cursor displacement correction and board disagreement separately; name validation, policy selection and adapter-total latency independently; and reject nonfinite/unsupported terminal rewards as unknown.
+2. Add v2-only configuration/runner limits and tests. Keep v1's config, 54,000 action-frame cap, 108,000 registration default and source/run identities unchanged. Load only the two pinned M5 policies for v2.
+3. Verify the installed constructor and emulator report the requested 500,000 `max_num_frames_per_episode`; assert all runtime profile fields and ROM. Verify all selected checkpoint/sidecar/root hashes, CPU deterministic inference, frozen weights, dependency-lock match, schedule hash, v1 artifact integrity, ≥12 GiB free storage, and RSS monitoring.
+4. Run focused M1/M6 tests and the complete test suite. Run canonical preflight and inspect task/archive state. Commit the exact code, tests, config, plan, and authorization evidence before writing the v2 run manifest.
+5. Freeze a deterministic run identity derived from source commit/tree, config SHA-256 and 20-row schedule SHA-256. The manifest records the 500,000 ALE ceiling, 432,000 post-reset action-frame runner cap and reset counter origin before the first official outcome.
+6. Execute every scheduled pair serially under the extended-horizon profile. Continue after ordinary incomplete attempts; never retry a reset attempt or replay uncertain input. Respect 1,800 seconds, 432,000 action frames, 200 player moves, 40,000 reply frames, 12-hour campaign, 8 GiB new v2 output, 128 MiB finalization reserve, 12 GiB entry free-space threshold, 6 GiB process RSS, and one pre-action retry.
+7. Stream-verify the ledger; validate per-attempt traces/RGB/manifests; rederive outcomes, move censoring, cursor diagnostics, replies, and runtime metrics; verify v1 remains unchanged; report each policy and seed separately. V1/v2 are not pooled, and reused ALE seeds are not independent held-out evidence.
+8. Update M6-001 evidence and PR #14, keeping M6 in progress pending PM review and leaving G4 unapproved. If the resource ceiling or safe-stop conditions leave either M5 arm without ALE-terminal evidence, report M6-04 as partial.
+
+### Corrective verification/acceptance evidence
+
+| Concern | Required software evidence | Required v2 runtime evidence |
+|---|---|---|
+| F01/F02 horizon | V1/v2 limit-separation tests; environment wrapper passes configured horizon; runtime check reads the effective ALE integer | Constructor/runtime record shows registration 108,000 and actual instance 500,000; each attempt reports reset frame and post-reset action frames; no inherited 108,000 truncation |
+| F03 move censoring | Disjoint final-move category accounting; attempted/verified numerator/denominator invariants; Wilson dependence note | Per-attempt and per-policy counts for each category, including unknowns |
+| F04 cursor motion | Tests for overshoot/replan, no progress, ambiguous/unlocated observations, and stable board mismatch stop | Raw cursor events and aggregate corrected/unresolved/ambiguous/mismatch counts; board desync remains separate |
+| F05 timing/outcomes | Latency field tests; positive/negative/zero/NaN/infinite/unsupported reward tests | Separate policy chooser, input validation, adapter total, and end-to-end decision latency; ALE terminal flags/reward verified against trace |
+| Fixed roster/schedule | Exact hash/config/schedule and uniqueness tests | One manifest before first result; two policies × ten seeds, all scheduled slots accounted |
+| Reproducibility/resources | Streaming hash-chain/summary regression, duplicate IDs, interruption, cap handling | Hash-verified attempt artifacts, run summary, free space/RSS/wall/frame/resource observations |

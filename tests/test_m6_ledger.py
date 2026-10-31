@@ -16,6 +16,8 @@ from videochess_rl.m6.ledger import (
     verify_artifact_manifest,
     verify_episode_trace,
     verify_hash_chain,
+    iter_verified_hash_chain,
+    verify_hash_chain_head,
     wilson_interval,
     write_json_atomic,
 )
@@ -36,6 +38,18 @@ class M6LedgerTests(unittest.TestCase):
             path.write_text("\n".join(records) + "\n", encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "hash mismatch"):
                 verify_hash_chain(path, expected_run_id="m6-test-run")
+
+    def test_hash_chain_streaming_verifier_matches_legacy_records(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "events.jsonl"
+            ledger = HashChainLedger(path, run_id="m6-streaming-test")
+            for index in range(25):
+                ledger.append("sample", {"index": index})
+            legacy = verify_hash_chain(path, expected_run_id="m6-streaming-test")
+            streamed = list(iter_verified_hash_chain(path, expected_run_id="m6-streaming-test"))
+            self.assertEqual(streamed, legacy)
+            self.assertEqual(verify_hash_chain_head(path, expected_run_id="m6-streaming-test"),
+                             (len(legacy), legacy[-1]["event_sha256"]))
 
     def test_partial_ledger_tail_is_preserved_and_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -160,6 +174,38 @@ class M6LedgerTests(unittest.TestCase):
         self.assertEqual(classify_attempt({"terminal": {"ale_terminated": False, "ale_truncated": True}}), "ale_truncated")
         self.assertEqual(classify_attempt({"terminal": {"ale_terminated": False, "runner_stop_category": "RUNNER_MAX_WALL_CLOCK"}}), "runner_truncated")
         self.assertEqual(classify_attempt({"terminal": {"ale_terminated": False, "runner_stopped": True}}), "incomplete")
+
+    def test_nonfinite_and_unsupported_terminal_rewards_remain_unknown(self) -> None:
+        for reward in (float("inf"), float("-inf"), float("nan"), "1", True, None, 10**1000):
+            with self.subTest(reward=repr(reward)[:40]):
+                result = classify_attempt({"terminal": {
+                    "ale_terminated": True,
+                    "ale_truncated": False,
+                    "ale_reward_total": reward,
+                }})
+                self.assertEqual(result, "terminal_unknown")
+
+    def test_final_move_censoring_categories_are_mutually_exclusive(self) -> None:
+        categories = (
+            "frame_cap", "wall_clock_cap", "artifact_cap", "ale_terminal", "ale_truncation",
+            "source_selection_uncertainty", "target_navigation_uncertainty",
+            "target_confirmation_uncertainty", "opponent_response_timeout",
+            "board_desynchronization", "other_interrupted_or_unknown",
+        )
+        rows = [{
+            "attempt_id": category,
+            "outcome": "incomplete" if category not in {"ale_terminal", "ale_truncation"} else "terminal_unknown",
+            "player_moves_attempted": 1,
+            "rgb_verified_player_moves": 0,
+            "incomplete_final_move_count": 1,
+            "incomplete_final_move_category": category,
+        } for category in categories]
+        summary = summarize_attempts(rows)
+        self.assertEqual(summary["incomplete_final_moves"], len(categories))
+        self.assertEqual(sum(summary["incomplete_final_moves_by_category"].values()), len(categories))
+        self.assertEqual(summary["administrative_budget_censored_final_moves"], 3)
+        self.assertEqual(summary["controller_uncertainty_censored_final_moves"], 4)
+        self.assertIn("within-game dependence", summary["move_success_interval_note"])
 
     def test_metrics_keep_wdl_incomplete_and_move_denominators_separate(self) -> None:
         rows = [

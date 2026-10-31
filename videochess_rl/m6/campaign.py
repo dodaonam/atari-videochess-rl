@@ -10,9 +10,11 @@ import os
 from pathlib import Path
 import re
 import resource
+import shutil
 import subprocess
 import sys
 import time
+import tomllib
 from typing import Any, Callable
 
 import chess
@@ -47,16 +49,25 @@ from videochess_rl.m6.ledger import (
     verify_artifact_manifest,
     verify_episode_trace,
     verify_hash_chain,
+    iter_verified_hash_chain,
     write_json_atomic,
 )
 
 
 CONFIG_PATH = Path(__file__).resolve().parents[2] / "configs/m6/m6-stage3-v1.json"
+CONFIG_PATH_V2 = Path(__file__).resolve().parents[2] / "configs/m6/m6-stage3-v2.json"
+STAGE3_V2_CONFIG_SHA256 = "663651050db80ab027b452241c7d39837ec7986927c0aefc7c7be631f459a49b"
+STAGE3_V2_SCHEDULE_SHA256 = "be4e6548e6fd3e3db4605e6b55fbe860848dccb2df87d8a7122145bdabe22ffc"
 ROM_SHA256 = "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7"
 MAX_GAMEPLAY_WALL_SECONDS = 36_000
 MAX_EPISODE_WALL_SECONDS = 900
 MAX_M6_ARTIFACT_BYTES = 2 * 1024 * 1024 * 1024
 ARTIFACT_METADATA_RESERVE_BYTES = 64 * 1024 * 1024
+V2_POLICY_IDS = (
+    "m5-warm-seed-20261104-post-rl",
+    "m5-scratch-seed-20261104-post-rl",
+)
+V2_MIN_FREE_BYTES = 12 * 1024 * 1024 * 1024
 M5_RUN_IDS = {
     ("warm", 20261104): "m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__warm__attempt-0001",
     ("scratch", 20261104): "m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__scratch__attempt-0000",
@@ -99,11 +110,52 @@ def dependency_identity(root: Path) -> dict[str, Any]:
     }
 
 
-def profile_config(profile: str, *, mode: int = 4) -> ALEConfig:
+def verify_runtime_matches_lock(root: Path) -> dict[str, Any]:
+    lock_path = root / "uv.lock"
+    lock_document = tomllib.loads(lock_path.read_text(encoding="utf-8"))
+    installed = {
+        name: importlib.metadata.version(name)
+        for name in ("gymnasium", "ale-py", "torch", "chess")
+    }
+    locked: dict[str, set[str]] = {}
+    for package in lock_document.get("package", []):
+        name = package.get("name")
+        version = package.get("version")
+        if name in installed and isinstance(version, str):
+            locked.setdefault(name, set()).add(version)
+    for name, version in installed.items():
+        if version not in locked.get(name, set()):
+            raise ExperimentIdentityError(
+                f"installed {name} version {version!r} is absent from the committed uv.lock package set"
+            )
+    if sys.version_info[:2] != (3, 12):
+        raise ExperimentIdentityError("M6 v2 is frozen for the repository's Python 3.12 environment")
+    return {
+        "python": sys.version.split()[0],
+        "installed_packages": installed,
+        "locked_package_versions": {name: sorted(versions) for name, versions in sorted(locked.items())},
+        "dependency_lock_sha256": sha256_file(lock_path),
+    }
+
+
+def profile_config(
+    profile: str,
+    *,
+    mode: int = 4,
+    max_num_frames_per_episode: int | None = None,
+) -> ALEConfig:
     if profile == "development-debug":
         return ALEConfig.deterministic_dev(mode=mode)
-    if profile == "ale-v5-default":
-        return ALEConfig.default_v5(mode=mode)
+    if profile in {"ale-v5-default", "ale-v5-extended-horizon"}:
+        return ALEConfig(
+            env_id="ALE/VideoChess-v5",
+            obs_type="rgb",
+            frameskip=4,
+            repeat_action_probability=0.25,
+            mode=mode,
+            difficulty=0,
+            max_num_frames_per_episode=max_num_frames_per_episode,
+        )
     raise ValueError(f"unsupported M6 ALE profile: {profile}")
 
 
@@ -127,6 +179,122 @@ def stage3_schedule() -> list[dict[str, Any]]:
     return [{**row, "slot": index} for index, row in enumerate(rows)]
 
 
+def stage3_v2_schedule() -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    warm = "m5-warm-seed-20261104-post-rl"
+    scratch = "m5-scratch-seed-20261104-post-rl"
+    for seed in range(20261130, 20261140):
+        pair = [warm, scratch] if seed % 2 == 0 else [scratch, warm]
+        for policy_id in pair:
+            rows.append({
+                "policy_id": policy_id,
+                "ale_seed": seed,
+                "game_id": f"{policy_id}-ale-seed-{seed}-stage3-v2",
+            })
+    if len(rows) != 20 or len({row["game_id"] for row in rows}) != 20:
+        raise AssertionError("M6 Stage 3 v2 must contain 20 unique paired M5 attempts")
+    return [{**row, "slot": index} for index, row in enumerate(rows)]
+
+
+def validate_stage3_v2_config(config_data: dict[str, Any]) -> None:
+    """Reject any v2 config that differs from the direct owner amendment."""
+    if config_data.get("schema") != "videochess-m6-stage3-config/2.0":
+        raise ExperimentIdentityError("Stage 3 v2 config schema is unsupported")
+    if config_data.get("protocol_id") != "M6-Stage3-v2-extended-horizon-frozen-m5":
+        raise ExperimentIdentityError("Stage 3 v2 protocol identity changed")
+    expected_environment = {
+        "profile_id": "ale-v5-extended-horizon",
+        "environment": "ALE/VideoChess-v5",
+        "rom_sha256": ROM_SHA256,
+        "agent_color": "white",
+        "mode": 4,
+        "difficulty": 0,
+        "observation_type": "rgb",
+        "frameskip": 4,
+        "repeat_action_probability": 0.25,
+    }
+    if any(config_data.get(key) != value for key, value in expected_environment.items()):
+        raise ExperimentIdentityError("Stage 3 v2 ALE profile differs from the authorized profile")
+    if config_data.get("m5_root_artifact_manifest_sha256") != M5_ROOT_MANIFEST_SHA256:
+        raise ExperimentIdentityError("Stage 3 v2 M5 root manifest identity changed")
+    if config_data.get("ale_horizon") != {
+        "registered_default_max_num_frames_per_episode": 108_000,
+        "max_num_frames_per_episode": 500_000,
+        "runner_maximum_post_reset_action_frames": 432_000,
+        "frame_counter_reset_offset_expected": 4,
+    }:
+        raise ExperimentIdentityError("Stage 3 v2 extended ALE horizon changed")
+    roster = config_data.get("policy_roster")
+    expected_roster = {
+        V2_POLICY_IDS[0]: (
+            "warm", 20261104, "post_rl", 50_000,
+            M5_WARM_CHECKPOINT_SHA256, M5_WARM_SIDECAR_SHA256,
+        ),
+        V2_POLICY_IDS[1]: (
+            "scratch", 20261104, "post_rl", 50_000,
+            M5_SCRATCH_CHECKPOINT_SHA256, M5_SCRATCH_SIDECAR_SHA256,
+        ),
+    }
+    actual = {
+        row.get("policy_id"): (
+            row.get("arm"), row.get("training_seed"), row.get("snapshot_stage"), row.get("valid_decisions"),
+            row.get("checkpoint_sha256"), row.get("sidecar_sha256"), row.get("attempts"),
+        )
+        for row in roster if isinstance(row, dict)
+    } if isinstance(roster, list) else {}
+    if actual != {key: (*value, 10) for key, value in expected_roster.items()}:
+        raise ExperimentIdentityError("Stage 3 v2 frozen roster or attempt counts changed")
+    if config_data.get("paired_m5_seeds") != list(range(20261130, 20261140)):
+        raise ExperimentIdentityError("Stage 3 v2 paired seed schedule changed")
+    if config_data.get("schedule_order") != {
+        "paired_policy_order": "warm first for even ALE seeds; scratch first for odd ALE seeds",
+        "same_seed_use": "extended-horizon re-evaluation of the v1 paired seeds; not independent held-out evidence",
+        "intermediate_outcome_selection": "none",
+    }:
+        raise ExperimentIdentityError("Stage 3 v2 schedule-order rule changed")
+    expected_episode = {
+        "maximum_player_moves": 200,
+        "maximum_opponent_wait_frames": 40_000,
+        "maximum_ale_frames": 432_000,
+        "maximum_wall_seconds": 1_800,
+    }
+    if config_data.get("episode_limits") != expected_episode:
+        raise ExperimentIdentityError("Stage 3 v2 per-attempt limits changed")
+    expected_campaign = {
+        "maximum_game_attempts": 20,
+        "maximum_gameplay_wall_seconds": 43_200,
+        "gameplay_wall_budget_scope": "Stage 3 v2 only; excludes historical v1 and completed M6 diagnostics",
+        "maximum_artifact_bytes": 8 * 1024 * 1024 * 1024,
+        "artifact_metadata_reserve_bytes": 128 * 1024 * 1024,
+        "minimum_free_bytes_before_campaign": V2_MIN_FREE_BYTES,
+        "maximum_process_rss_bytes": 6 * 1024 * 1024 * 1024,
+        "serialized_ale_processes": 1,
+        "maximum_pre_action_process_start_retries": 1,
+        "retry_scope": "one global retry only for process-start failure before any ALE action; no reset attempt replacement",
+    }
+    if config_data.get("campaign_limits") != expected_campaign:
+        raise ExperimentIdentityError("Stage 3 v2 campaign resource envelope changed")
+    if config_data.get("controller_timing") != {
+        "direction_hold_frames": 33,
+        "source_fire_press_frames": 1,
+        "target_fire_press_frames": 16,
+        "release_frames": 1,
+        "observation_window_frames": 66,
+        "target_fire_settle_windows": TARGET_FIRE_SETTLE_WINDOWS,
+    }:
+        raise ExperimentIdentityError("Stage 3 v2 controller timing differs from the verified contract")
+    if config_data.get("outcome_semantics") != {
+        "ale_reward_perspective": "white",
+        "positive_finite_terminal_reward": "white_win",
+        "negative_finite_terminal_reward": "white_loss",
+        "zero_terminal_reward": "terminal_unknown",
+        "unsupported_or_nonfinite_reward": "terminal_unknown",
+        "incomplete_or_runner_truncated_is_draw": False,
+        "shadow_board_alone_can_establish_result": False,
+    }:
+        raise ExperimentIdentityError("Stage 3 v2 outcome rules changed")
+
+
 def _slug(value: str) -> str:
     return re.sub(r"[^a-zA-Z0-9_.-]+", "-", value).strip("-_")[:120]
 
@@ -145,7 +313,14 @@ def _load_m5_path(root: Path, arm: str) -> Path:
     return root / candidates[0]
 
 
-def load_policy_roster(m5_root: str | Path, m4_root: str | Path) -> dict[str, tuple[Any, PolicyIdentity]]:
+def load_policy_roster(
+    m5_root: str | Path,
+    m4_root: str | Path | None,
+    *,
+    m5_only: bool = False,
+) -> dict[str, tuple[Any, PolicyIdentity]]:
+    if not m5_only and m4_root is None:
+        raise ValueError("the Stage 3 v1 and diagnostic rosters require the accepted M4 artifact root")
     m5_root_path = Path(m5_root).expanduser()
     root_manifest = verify_selected_m5_root(m5_root_path)
     if root_manifest.get("schema") != "videochess-m5-artifact-manifest/1.0":
@@ -170,6 +345,11 @@ def load_policy_roster(m5_root: str | Path, m4_root: str | Path) -> dict[str, tu
         expected_sidecar_sha256=M5_SCRATCH_SIDECAR_SHA256,
         artifact_root=m5_root_path,
     )
+    if m5_only:
+        return {
+            warm_identity.policy_id: (warm_policy, warm_identity),
+            scratch_identity.policy_id: (scratch_policy, scratch_identity),
+        }
     m4_policy, m4_identity = load_m4_policy(m4_root)
     roster = {
         warm_identity.policy_id: (warm_policy, warm_identity),
@@ -194,23 +374,38 @@ def _run_manifest(
     config: ALEConfig,
     roster: dict[str, tuple[Any, PolicyIdentity]],
     seed_schedule: list[dict[str, Any]],
+    config_path: Path = CONFIG_PATH,
 ) -> dict[str, Any]:
     git = git_identity(root)
     dependencies = dependency_identity(root)
-    runtime = _runtime_snapshot(config)
+    config_data = json.loads(config_path.read_text(encoding="utf-8"))
+    ale_horizon = config_data.get("ale_horizon", {})
+    expected_ale_limit = ale_horizon.get("max_num_frames_per_episode")
+    runtime_config = ALEConfig(
+        env_id=config.env_id,
+        obs_type=config.obs_type,
+        frameskip=config.frameskip,
+        repeat_action_probability=config.repeat_action_probability,
+        mode=config.mode,
+        difficulty=config.difficulty,
+        max_num_frames_per_episode=expected_ale_limit,
+    )
+    runtime = _runtime_snapshot(runtime_config)
     if runtime.get("rom_sha256") != ROM_SHA256:
         raise ExperimentIdentityError("installed VideoChess ROM differs from the verified M1/M6 identity")
     if runtime.get("config") != config.as_dict():
         raise ExperimentIdentityError("constructed ALE configuration differs from the frozen profile")
+    if expected_ale_limit is not None and runtime.get("ale_episode_frame_limit") != expected_ale_limit:
+        raise ExperimentIdentityError("ALE emulator did not honor the frozen per-episode frame ceiling")
     return {
-        "schema": "videochess-m6-run-manifest/1.0",
+        "schema": "videochess-m6-run-manifest/2.0" if config_data.get("schema") == "videochess-m6-stage3-config/2.0" else "videochess-m6-run-manifest/1.0",
         "run_id": run_id,
         "stage": stage,
         "frozen_at_utc": utc_now(),
         **git,
         **dependencies,
-        "configuration_path": "configs/m6/m6-stage3-v1.json",
-        "configuration_sha256": sha256_file(CONFIG_PATH),
+        "configuration_path": config_path.relative_to(root).as_posix(),
+        "configuration_sha256": sha256_file(config_path),
         "runtime_construction": runtime,
         "rom_sha256": runtime["rom_sha256"],
         "environment_id": config.env_id,
@@ -219,16 +414,22 @@ def _run_manifest(
             key: getattr(identity, key) for key in identity.__slots__
         } for _, identity in sorted(roster.values(), key=lambda row: row[1].policy_id)],
         "seed_schedule": seed_schedule,
-        "attempt_limit": 35 if stage == "stage3" else len(seed_schedule),
+        "protocol_schema": config_data.get("schema"),
+        "attempt_limit": len(seed_schedule),
         "budget": {
-            "wall_seconds_per_game": MAX_EPISODE_WALL_SECONDS,
-            "ale_frames_per_game": 54000,
-            "gameplay_wall_seconds_total": MAX_GAMEPLAY_WALL_SECONDS,
-            "gameplay_wall_budget_includes_diagnostics": True,
-            "artifact_bytes_total": MAX_M6_ARTIFACT_BYTES,
-            "artifact_metadata_reserve_bytes": ARTIFACT_METADATA_RESERVE_BYTES,
-            "serialized_ale_processes": 1,
-            "pre_action_startup_retries": 1 if stage == "stage3" else 0,
+            "wall_seconds_per_game": config_data.get("episode_limits", {}).get("maximum_wall_seconds", MAX_EPISODE_WALL_SECONDS),
+            "ale_post_reset_action_frames_per_game": config_data.get("episode_limits", {}).get("maximum_ale_frames", 54000),
+            "underlying_ale_frames_per_episode": expected_ale_limit or runtime.get("ale_episode_frame_limit"),
+            "opponent_response_wait_frames": config_data.get("episode_limits", {}).get("maximum_opponent_wait_frames", 20_000),
+            "maximum_player_moves": config_data.get("episode_limits", {}).get("maximum_player_moves", 200),
+            "gameplay_wall_seconds_total": config_data.get("campaign_limits", {}).get("maximum_gameplay_wall_seconds", MAX_GAMEPLAY_WALL_SECONDS),
+            "gameplay_wall_budget_includes_diagnostics": config_data.get("campaign_limits", {}).get("gameplay_wall_budget_includes_diagnostics", True),
+            "artifact_bytes_total": config_data.get("campaign_limits", {}).get("maximum_artifact_bytes", MAX_M6_ARTIFACT_BYTES),
+            "artifact_metadata_reserve_bytes": config_data.get("campaign_limits", {}).get("artifact_metadata_reserve_bytes", ARTIFACT_METADATA_RESERVE_BYTES),
+            "minimum_free_bytes_before_campaign": config_data.get("campaign_limits", {}).get("minimum_free_bytes_before_campaign"),
+            "maximum_process_rss_bytes": config_data.get("campaign_limits", {}).get("maximum_process_rss_bytes"),
+            "serialized_ale_processes": config_data.get("campaign_limits", {}).get("serialized_ale_processes", 1),
+            "pre_action_startup_retries": config_data.get("campaign_limits", {}).get("maximum_pre_action_process_start_retries", 1 if stage == "stage3" else 0),
         },
         "controller_timing": {
             "direction_hold_frames": 33,
@@ -322,6 +523,7 @@ def _attempt_record(
     terminal = trace.get("terminal", {}) if trace else {}
     result = classify_attempt(trace) if trace else "incomplete"
     runtime = trace.get("runtime", {}) if trace else {}
+    episode_budget = trace.get("episode_budget", {}) if trace else {}
     return {
         "schema": "videochess-m6-attempt-record/1.0",
         "run_id": trace.get("run_id") if trace else None,
@@ -349,8 +551,13 @@ def _attempt_record(
         "difficulty": runtime.get("config", {}).get("difficulty"),
         "observation_type": runtime.get("config", {}).get("obs_type"),
         "action_space": runtime.get("action_space"),
+        "ale_episode_frame_limit": runtime.get("ale_episode_frame_limit"),
         "frameskip": runtime.get("config", {}).get("frameskip"),
         "repeat_action_probability": runtime.get("config", {}).get("repeat_action_probability"),
+        "runner_post_reset_action_frame_limit": episode_budget.get("max_episode_frames"),
+        "episode_wall_time_limit_seconds": episode_budget.get("max_episode_seconds"),
+        "maximum_player_moves": episode_budget.get("max_player_moves"),
+        "maximum_opponent_wait_frames": episode_budget.get("max_opponent_wait_frames"),
         "controller_timing": trace.get("controller_timing") if trace else None,
         "ale_seed": seed,
         "agent_color": "white",
@@ -375,6 +582,11 @@ def _attempt_record(
             else int(terminal.get("runner_stop_category") == "CONTROLLER_BOARD_DESYNCHRONIZED")
         ),
         "unexpected_cursor_displacements": _optional_int(terminal.get("unexpected_directional_displacements", 0)),
+        "cursor_diagnostics": terminal.get("cursor_diagnostics"),
+        "incomplete_final_move_count": _optional_int(terminal.get("incomplete_final_move_count", 0)),
+        "incomplete_final_move_category": terminal.get("incomplete_final_move_category"),
+        "post_reset_action_frames": _optional_int(terminal.get("post_reset_action_frames")),
+        "reset_frame_number": _optional_int(terminal.get("reset_frame_number")),
         "ale_frames": _optional_int(terminal.get("ale_frames", 0)),
         "environment_steps": _optional_int(terminal.get("environment_steps", 0)),
         "wall_seconds": None if terminal.get("wall_seconds") is None else float(terminal.get("wall_seconds", 0.0)),
@@ -456,16 +668,49 @@ def _exception_episode(state: dict[str, Any], *, seed: int, config: ALEConfig, r
     })
 
 
-def _trace_latency_rows(trace: dict[str, Any]) -> tuple[list[float], list[float]]:
-    inference = []
+def _trace_latency_rows(trace: dict[str, Any]) -> tuple[list[float], list[float], list[float], list[float], list[float]]:
+    choose_move = []
+    validation = []
+    adapter_total = []
+    legacy_unclassified = []
     decisions = []
     for turn in trace.get("turns", []):
         policy = turn.get("policy_decision") or {}
+        if isinstance(policy.get("policy_choose_move_latency_seconds"), (int, float)):
+            choose_move.append(float(policy["policy_choose_move_latency_seconds"]))
+        if isinstance(policy.get("input_validation_latency_seconds"), (int, float)):
+            validation.append(float(policy["input_validation_latency_seconds"]))
+        if isinstance(policy.get("adapter_total_latency_seconds"), (int, float)):
+            adapter_total.append(float(policy["adapter_total_latency_seconds"]))
         if isinstance(policy.get("inference_latency_seconds"), (int, float)):
-            inference.append(float(policy["inference_latency_seconds"]))
+            # Preserve the historical field without claiming it measured only
+            # the neural forward pass; it included context validation.
+            legacy_unclassified.append(float(policy["inference_latency_seconds"]))
         if isinstance(turn.get("decision_latency_seconds"), (int, float)):
             decisions.append(float(turn["decision_latency_seconds"]))
-    return inference, decisions
+    return choose_move, validation, adapter_total, legacy_unclassified, decisions
+
+
+def _cursor_diagnostics_from_trace(trace: dict[str, Any]) -> dict[str, int | None]:
+    terminal = trace.get("terminal", {})
+    recorded = terminal.get("cursor_diagnostics")
+    if isinstance(recorded, dict):
+        return recorded
+    events = trace.get("cursor_observations", [])
+    unexpected_events = [event for event in events if event.get("unexpected_displacement") is True]
+    return {
+        "unexpected_displacements": len(unexpected_events),
+        # Legacy v1 traces do not bind each displacement to a completed cursor
+        # route, so correction status cannot be reconstructed safely.
+        "unexpected_displacements_corrected": None,
+        "unexpected_displacements_unresolved": None,
+        "repeated_movement_without_progress": sum(
+            event.get("movement_confirmed") is False for event in events
+        ),
+        # The historical trace schema did not retain these observation states.
+        "ambiguous_or_unlocated_observations": None,
+        "stable_board_disagreements": None,
+    }
 
 
 def _distribution(values: list[float]) -> dict[str, float | None]:
@@ -488,11 +733,19 @@ def _distribution(values: list[float]) -> dict[str, float | None]:
     }
 
 
-def _records_from_events(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def _records_from_events(
+    events: Any,
+    *,
+    event_counts: dict[str, int] | None = None,
+) -> list[dict[str, Any]]:
     started: dict[str, dict[str, Any]] = {}
     reset_ids: set[str] = set()
     finished: dict[str, dict[str, Any]] = {}
     for event in events:
+        if event_counts is not None:
+            event_counts[event["event_type"]] = event_counts.get(event["event_type"], 0) + 1
+            event_counts["event_count"] = event["sequence"]
+            event_counts["last_event_sha256"] = event["event_sha256"]
         payload = event["payload"]
         attempt_id = payload.get("attempt_id")
         if event["event_type"] == "attempt_started" and isinstance(attempt_id, str):
@@ -537,8 +790,11 @@ def _records_from_events(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 
 def summarize_run(ledger_path: str | Path, *, run_id: str, repo_root: str | Path) -> dict[str, Any]:
-    events = verify_hash_chain(ledger_path, expected_run_id=run_id)
-    records = _records_from_events(events)
+    event_counts: dict[str, int] = {}
+    records = _records_from_events(
+        iter_verified_hash_chain(ledger_path, expected_run_id=run_id),
+        event_counts=event_counts,
+    )
     root = Path(repo_root).resolve()
     reset_records = []
     for row in records:
@@ -573,6 +829,40 @@ def summarize_run(ledger_path: str | Path, *, run_id: str, repo_root: str | Path
             else int(terminal.get("runner_stop_category") == "CONTROLLER_BOARD_DESYNCHRONIZED")
         )
         row["unexpected_cursor_displacements"] = _optional_int(raw_cursor_displacements)
+        row["cursor_diagnostics"] = _cursor_diagnostics_from_trace(trace)
+        row["incomplete_final_move_count"] = _optional_int(terminal.get("incomplete_final_move_count"))
+        row["incomplete_final_move_category"] = terminal.get("incomplete_final_move_category")
+        if row["incomplete_final_move_count"] is None:
+            attempted = row.get("player_moves_attempted")
+            verified = row.get("rgb_verified_player_moves")
+            if attempted is not None and verified is not None:
+                row["incomplete_final_move_count"] = int(attempted) - int(verified)
+        if row["incomplete_final_move_count"] and row["incomplete_final_move_category"] is None:
+            row["incomplete_final_move_category"] = {
+                "RUNNER_MAX_ALE_FRAMES": "frame_cap",
+                "RUNNER_MAX_ENV_STEPS": "frame_cap",
+                "RUNNER_MAX_WALL_CLOCK": "wall_clock_cap",
+                "RUNNER_ARTIFACT_LIMIT": "artifact_cap",
+                "RUNNER_RESOURCE_LIMIT": "other_interrupted_or_unknown",
+                "ALE_TERMINATED": "ale_terminal",
+                "ALE_TRUNCATED": "ale_truncation",
+                "CONTROLLER_SOURCE_SELECTION_UNCERTAIN": "source_selection_uncertainty",
+                "CONTROLLER_TARGET_NAVIGATION_UNCERTAIN": "target_navigation_uncertainty",
+                "CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN": "target_confirmation_uncertainty",
+                "OPPONENT_RESPONSE_TIMEOUT": "opponent_response_timeout",
+                "CONTROLLER_BOARD_DESYNCHRONIZED": "board_desynchronization",
+            }.get(terminal.get("runner_stop_category"), "other_interrupted_or_unknown")
+        row["post_reset_action_frames"] = _optional_int(terminal.get("post_reset_action_frames"))
+        row["reset_frame_number"] = _optional_int(terminal.get("reset_frame_number"))
+        if row["post_reset_action_frames"] is None:
+            reset_frame = trace.get("reset", {}).get("frame_number")
+            final_frame = terminal.get("ale_frames")
+            if (isinstance(reset_frame, int) and not isinstance(reset_frame, bool)
+                    and isinstance(final_frame, int) and not isinstance(final_frame, bool)
+                    and final_frame >= reset_frame):
+                row["post_reset_action_frames"] = final_frame - reset_frame
+                row["reset_frame_number"] = reset_frame
+                row["post_reset_action_frames_derived_from_v1_trace"] = True
         manifest_rel = row.get("artifact_manifest_path")
         manifest_path = root / manifest_rel if isinstance(manifest_rel, str) else None
         if manifest_path is None or manifest_path.is_symlink() or not manifest_path.is_file():
@@ -584,11 +874,17 @@ def summarize_run(ledger_path: str | Path, *, run_id: str, repo_root: str | Path
         if actual_manifest != manifest:
             raise ValueError(f"attempt files do not match their manifest: {manifest_rel}")
         reset_records.append(row)
+    reset_game_ids = [row.get("game_id") for row in reset_records]
+    if len(reset_game_ids) != len(set(reset_game_ids)):
+        raise ValueError("duplicate M6 reset/game IDs cannot be summarized")
     by_policy = {}
     for policy_id in sorted({row["policy_id"] for row in reset_records}):
         subset = [row for row in reset_records if row["policy_id"] == policy_id]
         summary = summarize_attempts(subset)
-        inference = []
+        choose_move = []
+        validation = []
+        adapter_total = []
+        legacy_unclassified = []
         decisions = []
         for row in subset:
             path = row.get("trace_path")
@@ -596,18 +892,42 @@ def summarize_run(ledger_path: str | Path, *, run_id: str, repo_root: str | Path
                 trace_path = root / path
                 if trace_path.is_file():
                     trace = json.loads(trace_path.read_text(encoding="utf-8"))["episode"]
-                    inf, dec = _trace_latency_rows(trace)
-                    inference.extend(inf)
+                    choice, valid, total, legacy, dec = _trace_latency_rows(trace)
+                    choose_move.extend(choice)
+                    validation.extend(valid)
+                    adapter_total.extend(total)
+                    legacy_unclassified.extend(legacy)
                     decisions.extend(dec)
-        summary["inference_latency_seconds"] = _distribution(inference)
+        summary["policy_choose_move_latency_seconds"] = _distribution(choose_move)
+        summary["input_validation_latency_seconds"] = _distribution(validation)
+        summary["adapter_total_latency_seconds"] = _distribution(adapter_total)
+        summary["legacy_unclassified_adapter_latency_seconds"] = _distribution(legacy_unclassified)
         summary["decision_latency_seconds"] = _distribution(decisions)
+        summary["ale_frames_per_attempt"] = _distribution([
+            float(row["ale_frames"]) for row in subset if isinstance(row.get("ale_frames"), int)
+        ])
+        summary["post_reset_action_frames_per_attempt"] = _distribution([
+            float(row["post_reset_action_frames"])
+            for row in subset if isinstance(row.get("post_reset_action_frames"), int)
+        ])
+        summary["environment_steps_per_attempt"] = _distribution([
+            float(row["environment_steps"]) for row in subset if isinstance(row.get("environment_steps"), int)
+        ])
+        summary["wall_seconds_per_attempt"] = _distribution([
+            float(row["wall_seconds"]) for row in subset if isinstance(row.get("wall_seconds"), (int, float))
+        ])
+        summary["peak_rss_bytes_per_attempt"] = _distribution([
+            float(row["peak_rss_bytes"]) for row in subset if isinstance(row.get("peak_rss_bytes"), int)
+        ])
         summary["per_game_records"] = subset
         by_policy[policy_id] = summary
     return {
-        "schema": "videochess-m6-summary/1.0",
+        "schema": "videochess-m6-summary/2.0",
         "run_id": run_id,
         "ledger_path": Path(ledger_path).as_posix(),
         "ledger_sha256": sha256_file(ledger_path),
+        "ledger_event_count": event_counts.get("event_count", 0),
+        "ledger_head_sha256": event_counts.get("last_event_sha256"),
         "attempt_process_count": len(records),
         "attempted_reset_count": len(reset_records),
         "process_start_failures": sum(1 for row in records if not row.get("reset_observed")),
@@ -615,27 +935,49 @@ def summarize_run(ledger_path: str | Path, *, run_id: str, repo_root: str | Path
             policy_id: sum(1 for row in records if row.get("policy_id") == policy_id and not row.get("reset_observed"))
             for policy_id in sorted({row.get("policy_id") for row in records})
         },
-        "resource_limit_stop_events": sum(1 for event in events if event["event_type"] == "resource_stop"),
-        "startup_retry_events": sum(1 for event in events if event["event_type"] == "process_start_retry"),
+        "resource_limit_stop_events": event_counts.get("resource_stop", 0),
+        "startup_retry_events": event_counts.get("process_start_retry", 0),
         "by_policy": by_policy,
         "all_attempts": reset_records,
     }
 
 
 class M6Campaign:
-    def __init__(self, *, artifact_root: str | Path, m5_root: str | Path, m4_root: str | Path) -> None:
+    def __init__(
+        self,
+        *,
+        artifact_root: str | Path,
+        m5_root: str | Path,
+        m4_root: str | Path | None,
+        config_path: str | Path = CONFIG_PATH,
+    ) -> None:
         self.repo_root = Path(__file__).resolve().parents[2]
-        self.artifact_root = Path(artifact_root).expanduser().resolve()
+        requested_artifact_root = Path(artifact_root).expanduser().resolve()
+        self.config_path = Path(config_path).expanduser().resolve()
+        self.config_data = json.loads(self.config_path.read_text(encoding="utf-8"))
+        if self.config_data.get("schema") not in {
+            "videochess-m6-stage3-config/1.0", "videochess-m6-stage3-config/2.0"
+        }:
+            raise ExperimentIdentityError("M6 campaign configuration schema is unsupported")
+        self.protocol_v2 = self.config_data.get("schema") == "videochess-m6-stage3-config/2.0"
+        self.artifact_root = requested_artifact_root / "v2" if self.protocol_v2 else requested_artifact_root
         self.m5_root = Path(m5_root)
-        self.m4_root = Path(m4_root)
+        self.m4_root = Path(m4_root) if m4_root is not None else None
         self.artifact_root.mkdir(parents=True, exist_ok=True)
-        self.roster = load_policy_roster(self.m5_root, self.m4_root)
+        self.episode_limits = self.config_data.get("episode_limits", {})
+        self.campaign_limits = self.config_data.get("campaign_limits", {})
+        self.ale_horizon = self.config_data.get("ale_horizon", {}).get("max_num_frames_per_episode")
+        self.roster = load_policy_roster(self.m5_root, self.m4_root, m5_only=self.protocol_v2)
         self.startup_retries_used = 0
 
     def _write_frozen_manifest(
         self, run_dir: Path, *, run_id: str, stage: str, profile: str, schedule: list[dict[str, Any]]
     ) -> tuple[dict[str, Any], ALEConfig]:
-        config = profile_config(profile, mode=4)
+        config = profile_config(
+            profile,
+            mode=int(self.config_data.get("mode", 4)),
+            max_num_frames_per_episode=self.ale_horizon,
+        )
         manifest = _run_manifest(
             self.repo_root,
             run_id=run_id,
@@ -643,12 +985,15 @@ class M6Campaign:
             config=config,
             roster=self.roster,
             seed_schedule=schedule,
+            config_path=self.config_path,
         )
         manifest["profile_id"] = profile
         manifest["m5_root_manifest_sha256"] = M5_ROOT_MANIFEST_SHA256
-        manifest["m4_root_manifest_sha256"] = M4_ROOT_MANIFEST_SHA256
+        manifest["m4_root_manifest_sha256"] = None if self.protocol_v2 else M4_ROOT_MANIFEST_SHA256
         manifest["m5_policy_selection_rule"] = "lowest predeclared paired training seed 20261104; not selected by M6 or final evaluation result"
-        manifest["run_plan_sha256"] = sha256_file(CONFIG_PATH)
+        manifest["run_plan_sha256"] = sha256_file(self.config_path)
+        manifest["protocol_version"] = "v2" if self.protocol_v2 else "v1"
+        manifest["max_num_frames_per_episode"] = self.ale_horizon or manifest["runtime_construction"]["ale_episode_frame_limit"]
         write_json_atomic(run_dir / "run-manifest.json", manifest)
         return manifest, config
 
@@ -775,10 +1120,16 @@ class M6Campaign:
                     expected_rom_sha256=ROM_SHA256,
                     decision_selector=adapter,
                     max_player_moves=max_player_moves,
-                    max_opponent_wait_frames=20_000,
-                    max_episode_frames=54_000,
+                    max_opponent_wait_frames=int(self.episode_limits.get("maximum_opponent_wait_frames", 20_000)),
+                    max_episode_frames=int(self.episode_limits.get("maximum_ale_frames", 54_000)),
                     max_episode_seconds=max_episode_seconds,
-                    max_artifact_bytes=max(0, 2 * 1024 * 1024 * 1024 - self._artifact_bytes() - 16 * 1024 * 1024),
+                    max_artifact_bytes=max(
+                        1,
+                        int(self.campaign_limits.get("maximum_artifact_bytes", MAX_M6_ARTIFACT_BYTES))
+                        - self._artifact_bytes()
+                        - int(self.campaign_limits.get("artifact_metadata_reserve_bytes", ARTIFACT_METADATA_RESERVE_BYTES)),
+                    ),
+                    max_process_rss_bytes=self.campaign_limits.get("maximum_process_rss_bytes"),
                     target_fire_press_frames=16,
                     artifact_dir=str(frames_dir),
                     env_factory=factory,
@@ -832,11 +1183,11 @@ class M6Campaign:
                 "run_id": run_id,
                 "reset_observed": bool(trace.get("reset")),
                 "retries": 0,
-                "policy_inference_latencies_seconds": [
-                    turn["policy_decision"]["inference_latency_seconds"]
+                "policy_choose_move_latencies_seconds": [
+                    turn["policy_decision"]["policy_choose_move_latency_seconds"]
                     for turn in trace.get("turns", [])
                     if isinstance(turn.get("policy_decision"), dict)
-                    and isinstance(turn["policy_decision"].get("inference_latency_seconds"), (int, float))
+                    and isinstance(turn["policy_decision"].get("policy_choose_move_latency_seconds"), (int, float))
                 ],
                 "decision_latencies_seconds": [
                     turn["decision_latency_seconds"] for turn in trace.get("turns", [])
@@ -880,9 +1231,12 @@ class M6Campaign:
                 raise ExperimentIdentityError("actual reset mode byte differs from frozen numeric mode")
         return record
 
-    def _artifact_bytes(self) -> int:
+    def _artifact_bytes(self, root: str | Path | None = None) -> int:
         total = 0
-        for path in self.artifact_root.rglob("*"):
+        search_root = Path(root) if root is not None else self.artifact_root
+        if not search_root.exists():
+            return 0
+        for path in search_root.rglob("*"):
             if path.is_file() and not path.is_symlink():
                 total += path.stat().st_size
         return total
@@ -931,7 +1285,7 @@ class M6Campaign:
             "game_id": game_id,
             "attempt_id": attempt_id,
             "policy_id": policy_id,
-            "profile_id": "ale-v5-default",
+            "profile_id": self.config_data.get("profile_id", "ale-v5-default"),
             "ale_seed": seed,
             "agent_color": "white",
             "reset_observed": False,
@@ -1038,7 +1392,7 @@ class M6Campaign:
             "game_id": schedule["game_id"],
             "attempt_id": attempt_id,
             "policy_identity": _manifest_policy_row(identity),
-            "profile_id": "ale-v5-default",
+            "profile_id": run_manifest.get("profile_id", "ale-v5-default"),
             "seed": int(schedule["ale_seed"]),
             "created_at_utc": now,
             "git": {"head": run_manifest.get("git_commit"), "tree": run_manifest.get("git_tree")},
@@ -1049,6 +1403,12 @@ class M6Campaign:
             "rom_sha256": run_manifest.get("rom_sha256"),
             "config": run_manifest.get("ale_config"),
             "controller_timing": run_manifest.get("controller_timing"),
+            "episode_budget": {
+                "max_player_moves": run_manifest.get("budget", {}).get("maximum_player_moves"),
+                "max_opponent_wait_frames": run_manifest.get("budget", {}).get("opponent_response_wait_frames"),
+                "max_episode_frames": run_manifest.get("budget", {}).get("ale_post_reset_action_frames_per_game"),
+                "max_episode_seconds": run_manifest.get("budget", {}).get("wall_seconds_per_game"),
+            },
             "runtime": runtime,
             "reset": {
                 "frame_number": reset_event.get("frame_number"),
@@ -1118,8 +1478,13 @@ class M6Campaign:
             "mode": run_manifest.get("ale_config", {}).get("mode"),
             "difficulty": run_manifest.get("ale_config", {}).get("difficulty"),
             "observation_type": run_manifest.get("ale_config", {}).get("obs_type"),
+            "ale_episode_frame_limit": runtime.get("ale_episode_frame_limit"),
             "frameskip": run_manifest.get("ale_config", {}).get("frameskip"),
             "repeat_action_probability": run_manifest.get("ale_config", {}).get("repeat_action_probability"),
+            "runner_post_reset_action_frame_limit": run_manifest.get("budget", {}).get("ale_post_reset_action_frames_per_game"),
+            "episode_wall_time_limit_seconds": run_manifest.get("budget", {}).get("wall_seconds_per_game"),
+            "maximum_player_moves": run_manifest.get("budget", {}).get("maximum_player_moves"),
+            "maximum_opponent_wait_frames": run_manifest.get("budget", {}).get("opponent_response_wait_frames"),
             "controller_timing": run_manifest.get("controller_timing"),
             "ale_seed": int(schedule["ale_seed"]),
             "agent_color": "white",
@@ -1159,6 +1524,19 @@ class M6Campaign:
 
     def _finalize(self, run_dir: Path, *, run_id: str, ledger: HashChainLedger) -> dict[str, Any]:
         summary = summarize_run(run_dir / "events.jsonl", run_id=run_id, repo_root=self.repo_root)
+        run_manifest = json.loads((run_dir / "run-manifest.json").read_text(encoding="utf-8"))
+        if run_manifest.get("stage") == "stage3-v2":
+            scheduled = run_manifest.get("seed_schedule", [])
+            scheduled_ids = [row.get("game_id") for row in scheduled]
+            if len(scheduled_ids) != 20 or len(set(scheduled_ids)) != 20:
+                raise ExperimentIdentityError("frozen v2 run manifest does not contain 20 unique scheduled game IDs")
+            completed_ids = {row.get("game_id") for row in summary["all_attempts"]}
+            summary.update({
+                "scheduled_game_count": len(scheduled_ids),
+                "reset_game_count": len(completed_ids),
+                "unexecuted_game_ids": [game_id for game_id in scheduled_ids if game_id not in completed_ids],
+                "schedule_accounting_complete": len(completed_ids) == len(scheduled_ids),
+            })
         summary_path = run_dir / "summary.json"
         write_json_atomic(summary_path, summary, refuse_existing=False)
         manifest = build_artifact_manifest(run_dir)
@@ -1167,6 +1545,8 @@ class M6Campaign:
         return summary
 
     def run_diagnostics(self, *, stage: str, profile: str = "development-debug") -> dict[str, Any]:
+        if self.protocol_v2:
+            raise ValueError("the Stage 3 v2 campaign does not authorize additional diagnostic runs")
         if stage not in {"stage1", "stage2-debug", "stage2-default"}:
             raise ValueError("diagnostic stage must be stage1, stage2-debug, or stage2-default")
         if stage == "stage1":
@@ -1227,7 +1607,7 @@ class M6Campaign:
         ledger.append("run_finished", {"stage": stage, "profile_id": profile})
         return self._finalize(run_dir, run_id=run_id, ledger=ledger)
 
-    def run_stage3(self, *, resume: bool = False) -> dict[str, Any]:
+    def _run_stage3_v1(self, *, resume: bool = False) -> dict[str, Any]:
         config_data = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
         if config_data.get("schema") != "videochess-m6-stage3-config/1.0":
             raise ExperimentIdentityError("Stage 3 config schema is unsupported")
@@ -1482,6 +1862,364 @@ class M6Campaign:
             "remaining_schedule_count": 35 - len({
                 record.get("game_id") for record in finished_records.values() if record.get("reset_observed")
             }),
+            "run_manifest_sha256": sha256_file(run_dir / "run-manifest.json"),
+        })
+        return self._finalize(run_dir, run_id=run_id, ledger=ledger)
+
+    def run_stage3(self, *, resume: bool = False) -> dict[str, Any]:
+        if self.protocol_v2:
+            return self._run_stage3_v2(resume=resume)
+        return self._run_stage3_v1(resume=resume)
+
+    def _run_stage3_v2(self, *, resume: bool = False) -> dict[str, Any]:
+        config_data = self.config_data
+        validate_stage3_v2_config(config_data)
+        if self.config_path != CONFIG_PATH_V2:
+            raise ExperimentIdentityError("v2 execution requires the canonical versioned v2 configuration path")
+        schedule = stage3_v2_schedule()
+        expected_schedule_sha = hashlib.sha256(canonical_schedule_bytes(schedule)).hexdigest()
+        config_sha = sha256_file(self.config_path)
+        if config_sha != STAGE3_V2_CONFIG_SHA256 or expected_schedule_sha != STAGE3_V2_SCHEDULE_SHA256:
+            raise ExperimentIdentityError("Stage 3 v2 config or schedule hash differs from the owner-authorized freeze")
+        source = git_identity(self.repo_root)
+        identity_bytes = json.dumps(
+            {
+                "source_commit": source["git_commit"],
+                "source_tree": source["git_tree"],
+                "configuration_sha256": config_sha,
+                "schedule_sha256": expected_schedule_sha,
+            },
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+        run_digest = hashlib.sha256(identity_bytes).hexdigest()
+        run_id = f"m6-stage3-v2-{source['git_commit'][:12]}-{run_digest[:12]}"
+        run_dir = self.artifact_root / run_id
+        expected_runtime_config = profile_config(
+            "ale-v5-extended-horizon",
+            mode=4,
+            max_num_frames_per_episode=500_000,
+        )
+        locked_runtime_identity = verify_runtime_matches_lock(self.repo_root)
+
+        free_bytes = shutil.disk_usage(self.artifact_root).free
+        minimum_free = int(self.campaign_limits["minimum_free_bytes_before_campaign"])
+        if free_bytes < minimum_free:
+            raise ExperimentIdentityError(
+                f"v2 campaign requires {minimum_free} free bytes before starting; observed {free_bytes}"
+            )
+
+        if not resume:
+            if run_dir.exists() or run_dir.is_symlink():
+                raise FileExistsError(f"refusing to reuse the deterministic v2 run identity: {run_dir}")
+            artifact_bytes_before = self._artifact_bytes()
+            wall_seconds_before = self._cumulative_gameplay_wall_seconds()
+            run_dir.mkdir(parents=True, exist_ok=False)
+            manifest, config = self._write_frozen_manifest(
+                run_dir,
+                run_id=run_id,
+                stage="stage3-v2",
+                profile="ale-v5-extended-horizon",
+                schedule=schedule,
+            )
+            if config != expected_runtime_config:
+                raise ExperimentIdentityError("v2 runner profile differs from the frozen extended-horizon config")
+            runtime = manifest["runtime_construction"]
+            if runtime.get("ale_episode_frame_limit") != 500_000:
+                raise ExperimentIdentityError("constructed ALE did not retain the requested 500,000-frame horizon")
+            manifest.update({
+                "protocol_id": config_data["protocol_id"],
+                "protocol_version": "v2",
+                "run_id_derivation": "SHA-256 of canonical source commit/tree, config SHA-256, and schedule SHA-256",
+                "frozen_schedule_sha256": expected_schedule_sha,
+                "schedule_sha256": expected_schedule_sha,
+                "campaign_wall_seconds_used_before": wall_seconds_before,
+                "campaign_wall_budget_scope": config_data["campaign_limits"]["gameplay_wall_budget_scope"],
+                "artifact_bytes_used_before": artifact_bytes_before,
+                "v1_run_id_excluded_from_this_run": "m6-stage3-ad3998200e31-c5ff389dc4fe",
+                "protocol_interpretation": config_data["scientific_interpretation"],
+                "runtime_lock_verification": locked_runtime_identity,
+                "policy_roster": [
+                    _manifest_policy_row(self.roster[policy_id][1]) for policy_id in V2_POLICY_IDS
+                ],
+                "run_identity_inputs": {
+                    "source_commit": source["git_commit"],
+                    "source_tree": source["git_tree"],
+                    "configuration_sha256": config_sha,
+                    "schedule_sha256": expected_schedule_sha,
+                },
+            })
+            manifest_path = run_dir / "run-manifest.json"
+            write_json_atomic(manifest_path, manifest, refuse_existing=False)
+            # The immutable manifest is durable before the first reset/outcome.
+            ledger = HashChainLedger(run_dir / "events.jsonl", run_id=run_id)
+            ledger.append("run_started", {
+                "run_manifest_sha256": sha256_file(manifest_path),
+                "schedule_sha256": expected_schedule_sha,
+                "schedule": schedule,
+                "protocol_id": config_data["protocol_id"],
+            })
+            started_payloads: dict[str, dict[str, Any]] = {}
+            started_ids: set[str] = set()
+            reset_ids: set[str] = set()
+            completed_ids: set[str] = set()
+            finished_records: dict[str, dict[str, Any]] = {}
+            self.startup_retries_used = 0
+        else:
+            if run_dir.is_symlink() or not run_dir.is_dir():
+                raise FileNotFoundError("the frozen Stage 3 v2 run directory is unavailable")
+            manifest_path = run_dir / "run-manifest.json"
+            if manifest_path.is_symlink() or not manifest_path.is_file():
+                raise ExperimentIdentityError("the frozen v2 run manifest is missing or unsafe")
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            for key, value in source.items():
+                if manifest.get(key) != value:
+                    raise ExperimentIdentityError(f"v2 resume source identity differs for {key}")
+            if (manifest.get("configuration_sha256") != config_sha
+                    or manifest.get("schedule_sha256") != expected_schedule_sha
+                    or manifest.get("runtime_construction", {}).get("ale_episode_frame_limit") != 500_000
+                    or manifest.get("protocol_id") != config_data["protocol_id"]
+                    or manifest.get("seed_schedule") != schedule
+                    or manifest.get("frozen_schedule_sha256") != expected_schedule_sha
+                    or manifest.get("attempt_limit") != 20):
+                raise ExperimentIdentityError("v2 resume configuration, schedule, protocol, or ALE horizon changed")
+            ledger = HashChainLedger(run_dir / "events.jsonl", run_id=run_id, create=False)
+            started_payloads = {}
+            started_ids = set()
+            reset_ids = set()
+            completed_ids = set()
+            finished_records = {}
+            reset_game_ids: set[str] = set()
+            self.startup_retries_used = 0
+            run_started_manifest_hash: str | None = None
+            for event in iter_verified_hash_chain(run_dir / "events.jsonl", expected_run_id=run_id):
+                payload = event["payload"]
+                attempt_id = payload.get("attempt_id")
+                if event["event_type"] == "run_started":
+                    if run_started_manifest_hash is not None:
+                        raise ExperimentIdentityError("v2 ledger has multiple run_started events")
+                    run_started_manifest_hash = payload.get("run_manifest_sha256")
+                elif event["event_type"] == "attempt_started" and isinstance(attempt_id, str):
+                    if attempt_id in started_ids:
+                        raise ExperimentIdentityError(f"duplicate v2 attempt ID in ledger: {attempt_id}")
+                    started_ids.add(attempt_id)
+                    started_payloads[attempt_id] = payload
+                elif event["event_type"] == "ale_reset_observed" and isinstance(attempt_id, str):
+                    game_id = payload.get("game_id")
+                    if game_id in reset_game_ids:
+                        raise ExperimentIdentityError(f"duplicate v2 reset/game identity: {game_id}")
+                    reset_game_ids.add(game_id)
+                    reset_ids.add(attempt_id)
+                elif event["event_type"] == "attempt_finished" and isinstance(attempt_id, str):
+                    if attempt_id in completed_ids:
+                        raise ExperimentIdentityError(f"duplicate v2 attempt completion: {attempt_id}")
+                    completed_ids.add(attempt_id)
+                    finished_records[attempt_id] = payload["attempt_record"]
+                elif event["event_type"] == "process_start_retry":
+                    self.startup_retries_used += 1
+            if self.startup_retries_used > 1:
+                raise ExperimentIdentityError("v2 ledger exceeds the one global pre-action retry allowance")
+            if run_started_manifest_hash != sha256_file(manifest_path):
+                raise ExperimentIdentityError("v2 frozen run manifest does not match its run_started ledger identity")
+            config = expected_runtime_config
+
+        campaign_wall_used_before = self._cumulative_gameplay_wall_seconds(exclude_run_id=run_id)
+        gameplay_start = time.monotonic()
+        consumed_before = sum(self._record_wall_bound_seconds(row) for row in finished_records.values())
+        campaign_wall_limit = int(self.campaign_limits["maximum_gameplay_wall_seconds"])
+        artifact_limit = int(self.campaign_limits["maximum_artifact_bytes"])
+        artifact_reserve = int(self.campaign_limits["artifact_metadata_reserve_bytes"])
+        max_rss = int(self.campaign_limits["maximum_process_rss_bytes"])
+
+        def run_slot(item: dict[str, Any], attempt_id: str, max_seconds: float) -> dict[str, Any]:
+            record = self._run_one(
+                ledger=ledger,
+                run_id=run_id,
+                stage="stage3-v2",
+                profile="ale-v5-extended-horizon",
+                config=config,
+                schedule=item,
+                max_player_moves=int(self.episode_limits["maximum_player_moves"]),
+                max_episode_seconds=max_seconds,
+                attempt_id_override=attempt_id,
+            )
+            started_ids.add(attempt_id)
+            completed_ids.add(attempt_id)
+            finished_records[attempt_id] = record
+            if record.get("reset_observed"):
+                reset_ids.add(attempt_id)
+            return record
+
+        resource_stop_reason: str | None = None
+        for item in schedule:
+            base_attempt_id = (
+                f"{_slug(item['policy_id'])}-seed-{item['ale_seed']}-slot-{item['slot']:03d}-attempt-0000-v2"
+            )
+            retry_attempt_id = f"{base_attempt_id}-startup-retry-0001"
+            related_ids = (base_attempt_id, retry_attempt_id)
+            recovered = False
+            for attempt_id in related_ids:
+                if attempt_id in reset_ids and attempt_id not in completed_ids:
+                    attempt_events = [
+                        event for event in iter_verified_hash_chain(run_dir / "events.jsonl", expected_run_id=run_id)
+                        if event["payload"].get("attempt_id") == attempt_id
+                    ]
+                    record = self._recover_interrupted_reset(
+                        run_id=run_id,
+                        schedule=item,
+                        attempt_id=attempt_id,
+                        events=attempt_events,
+                        ledger=ledger,
+                    )
+                    completed_ids.add(attempt_id)
+                    finished_records[attempt_id] = record
+                    recovered = True
+                    break
+            if recovered:
+                continue
+            if retry_attempt_id in started_ids and retry_attempt_id not in completed_ids:
+                self._finish_pre_reset_failure(
+                    ledger=ledger,
+                    run_id=run_id,
+                    game_id=item["game_id"],
+                    attempt_id=retry_attempt_id,
+                    policy_id=item["policy_id"],
+                    seed=int(item["ale_seed"]),
+                    reason="the single v2 pre-action retry was interrupted before reset/action evidence",
+                )
+                completed_ids.add(retry_attempt_id)
+                finished_records[retry_attempt_id] = {
+                    "attempt_id": retry_attempt_id,
+                    "reset_observed": False,
+                    "outcome": "incomplete",
+                    "start_timestamp_utc": started_payloads.get(retry_attempt_id, {}).get("start_timestamp_utc"),
+                    "end_timestamp_utc": utc_now(),
+                    "wall_seconds": None,
+                }
+                continue
+
+            if base_attempt_id in completed_ids:
+                existing = finished_records[base_attempt_id]
+                if existing.get("reset_observed") or retry_attempt_id in started_ids:
+                    continue
+                if self.startup_retries_used >= 1:
+                    continue
+                pre_action_failure = True
+            elif base_attempt_id in started_ids:
+                if base_attempt_id in reset_ids:
+                    continue
+                self._finish_pre_reset_failure(
+                    ledger=ledger,
+                    run_id=run_id,
+                    game_id=item["game_id"],
+                    attempt_id=base_attempt_id,
+                    policy_id=item["policy_id"],
+                    seed=int(item["ale_seed"]),
+                    reason="resumed process ended before reset or action evidence was durable",
+                )
+                completed_ids.add(base_attempt_id)
+                finished_records[base_attempt_id] = {
+                    "attempt_id": base_attempt_id,
+                    "reset_observed": False,
+                    "outcome": "incomplete",
+                    "start_timestamp_utc": started_payloads.get(base_attempt_id, {}).get("start_timestamp_utc"),
+                    "end_timestamp_utc": utc_now(),
+                    "wall_seconds": None,
+                }
+                pre_action_failure = True
+            else:
+                pre_action_failure = False
+
+            total_used = campaign_wall_used_before + consumed_before + (time.monotonic() - gameplay_start)
+            remaining_seconds = campaign_wall_limit - total_used
+            current_rss = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * 1024)
+            current_artifacts = self._artifact_bytes()
+            available_disk = shutil.disk_usage(self.artifact_root).free
+            if remaining_seconds <= 0:
+                resource_stop_reason = "12-hour v2 cumulative gameplay wall-time ceiling reached"
+            elif current_artifacts + artifact_reserve >= artifact_limit:
+                resource_stop_reason = "8-GiB v2 retained-artifact ceiling reached with finalization reserve"
+            elif available_disk <= artifact_reserve:
+                resource_stop_reason = "free disk space reached the v2 artifact-finalization reserve"
+            elif current_rss >= max_rss:
+                resource_stop_reason = "process RSS reached the 6-GiB v2 memory ceiling"
+            if resource_stop_reason:
+                ledger.append("resource_stop", {
+                    "reason": resource_stop_reason,
+                    "next_game_id": item["game_id"],
+                    "remaining_schedule_count": len(schedule) - int(item["slot"]),
+                    "rss_bytes": current_rss,
+                    "artifact_bytes": current_artifacts,
+                    "free_disk_bytes": available_disk,
+                })
+                break
+
+            max_seconds = min(float(self.episode_limits["maximum_wall_seconds"]), remaining_seconds)
+            attempt_id = retry_attempt_id if pre_action_failure else base_attempt_id
+            if pre_action_failure:
+                if self.startup_retries_used >= 1:
+                    continue
+                self.startup_retries_used += 1
+                ledger.append("process_start_retry", {
+                    "attempt_id": base_attempt_id,
+                    "retry_attempt_id": retry_attempt_id,
+                    "game_id": item["game_id"],
+                    "action_attempted": False,
+                    "reason": finished_records.get(base_attempt_id, {}).get("stop_reason", "recovered pre-reset process failure"),
+                })
+            record = run_slot(item, attempt_id, max_seconds)
+            resource_records = [record]
+            state = record.get("startup_state", {})
+            if (not record.get("reset_observed")
+                    and record.get("runner_stop_category") == "PROCESS_START_FAILURE"
+                    and not state.get("action_attempted")
+                    and self.startup_retries_used < 1):
+                remaining_after = campaign_wall_limit - campaign_wall_used_before - consumed_before - (time.monotonic() - gameplay_start)
+                if remaining_after > 0 and self._artifact_bytes() + artifact_reserve < artifact_limit:
+                    self.startup_retries_used += 1
+                    ledger.append("process_start_retry", {
+                        "attempt_id": record["attempt_id"],
+                        "retry_attempt_id": retry_attempt_id,
+                        "game_id": item["game_id"],
+                        "action_attempted": False,
+                        "reason": record.get("stop_reason"),
+                    })
+                    retry_record = run_slot(
+                        item,
+                        retry_attempt_id,
+                        min(float(self.episode_limits["maximum_wall_seconds"]), remaining_after),
+                    )
+                    resource_records.append(retry_record)
+            if any(
+                item_record.get("runner_stop_category") == "RUNNER_RESOURCE_LIMIT"
+                or (isinstance(item_record.get("peak_rss_bytes"), int) and item_record["peak_rss_bytes"] >= max_rss)
+                for item_record in resource_records
+            ):
+                resource_stop_reason = "process RSS reached the 6-GiB v2 memory ceiling during an attempt"
+                ledger.append("resource_stop", {
+                    "reason": resource_stop_reason,
+                    "completed_attempt_ids": [item_record["attempt_id"] for item_record in resource_records],
+                    "rss_bytes": max((item_record.get("peak_rss_bytes", 0) or 0 for item_record in resource_records), default=None),
+                })
+                break
+            if self._artifact_bytes() > artifact_limit:
+                ledger.append("resource_stop", {
+                    "reason": "v2 retained-artifact size exceeded its hard ceiling",
+                    "completed_attempt_id": record["attempt_id"],
+                })
+                resource_stop_reason = "8-GiB v2 retained-artifact hard ceiling exceeded"
+                break
+
+        reset_game_ids = sorted({
+            record.get("game_id") for record in finished_records.values() if record.get("reset_observed")
+        })
+        ledger.append("run_progress_checkpoint", {
+            "completed_attempt_ids": sorted(completed_ids),
+            "completed_reset_game_ids": reset_game_ids,
+            "scheduled_game_ids": [row["game_id"] for row in schedule],
+            "unexecuted_game_ids": [row["game_id"] for row in schedule if row["game_id"] not in reset_game_ids],
+            "remaining_schedule_count": 20 - len(reset_game_ids),
+            "resource_stop_reason": resource_stop_reason,
             "run_manifest_sha256": sha256_file(run_dir / "run-manifest.json"),
         })
         return self._finalize(run_dir, run_id=run_id, ledger=ledger)

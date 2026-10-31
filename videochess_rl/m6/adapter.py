@@ -293,8 +293,10 @@ class M6PolicyAdapter:
         return self.identity.policy_id
 
     def __call__(self, context: AtariDecisionContext) -> DecisionResult:
-        started = time.perf_counter()
+        adapter_started = time.perf_counter()
+        validation_started = adapter_started
         board, observation = validate_decision_context(context, agent_color=self.agent_color)
+        input_validation_latency = time.perf_counter() - validation_started
         if context.frame_number < self._last_frame_number:
             raise PolicyInputError("stale ALE observation frame")
         prior_hash = self._frame_hashes.get(context.frame_number)
@@ -321,7 +323,9 @@ class M6PolicyAdapter:
         ).digest()
         rng = random.Random(int.from_bytes(digest[:8], "big"))
         legal_moves = tuple(chess.Move.from_uci(uci) for uci in observation.legal_moves_uci)
+        choose_started = time.perf_counter()
         selected = self.policy.choose_move(observation, legal_moves, rng)
+        choose_move_latency = time.perf_counter() - choose_started
         if isinstance(selected, chess.Move):
             uci = selected.uci()
         elif isinstance(selected, str):
@@ -354,7 +358,9 @@ class M6PolicyAdapter:
             "history_uci": list(observation.history_uci),
             "legal_candidates_uci": list(observation.legal_moves_uci),
             "selected_uci": uci,
-            "inference_latency_seconds": time.perf_counter() - started,
+            "input_validation_latency_seconds": input_validation_latency,
+            "policy_choose_move_latency_seconds": choose_move_latency,
+            "adapter_total_latency_seconds": time.perf_counter() - adapter_started,
             "decision_index": self._decision_count,
             "training": False,
             "optimizer": False,

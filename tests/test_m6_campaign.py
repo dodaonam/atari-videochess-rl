@@ -10,8 +10,20 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from videochess_rl.environment import ALEConfig
-from videochess_rl.m6.campaign import CONFIG_PATH, M6Campaign, profile_config, stage3_schedule, summarize_run
+from videochess_rl.environment import ALEConfig, VideoChessEnv
+from videochess_rl.m6.campaign import (
+    CONFIG_PATH,
+    CONFIG_PATH_V2,
+    M6Campaign,
+    canonical_schedule_bytes,
+    profile_config,
+    stage3_schedule,
+    stage3_v2_schedule,
+    summarize_run,
+    validate_stage3_v2_config,
+    verify_runtime_matches_lock,
+    load_policy_roster,
+)
 from videochess_rl.m6.adapter import PolicyIdentity
 from videochess_rl.m6.ledger import HashChainLedger, verify_hash_chain
 
@@ -62,6 +74,102 @@ class M6CampaignPlanTests(unittest.TestCase):
         self.assertEqual(config["episode_limits"]["maximum_ale_frames"], 54000)
         self.assertFalse(config["outcome_semantics"]["truncation_is_draw"])
 
+    def test_v1_and_v2_frame_and_wall_limits_are_versioned_separately(self) -> None:
+        v1 = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+        v2 = json.loads(CONFIG_PATH_V2.read_text(encoding="utf-8"))
+        validate_stage3_v2_config(v2)
+        self.assertEqual(hashlib.sha256(CONFIG_PATH.read_bytes()).hexdigest(),
+                         "05aedeb30efb8b6b97667c44f9d606b58d4da8ae20800d4ef143e629420cebac")
+        self.assertEqual(v1["episode_limits"]["maximum_ale_frames"], 54_000)
+        self.assertEqual(v1["episode_limits"]["maximum_wall_seconds"], 900)
+        self.assertEqual(v1["campaign_limits"]["maximum_gameplay_wall_seconds"], 36_000)
+        self.assertEqual(v2["episode_limits"]["maximum_ale_frames"], 432_000)
+        self.assertEqual(v2["episode_limits"]["maximum_wall_seconds"], 1_800)
+        self.assertEqual(v2["campaign_limits"]["maximum_gameplay_wall_seconds"], 43_200)
+        self.assertEqual(v2["ale_horizon"]["max_num_frames_per_episode"], 500_000)
+        self.assertNotEqual(v1["schema"], v2["schema"])
+
+    def test_stage3_v2_schedule_is_exactly_paired_and_preordered(self) -> None:
+        schedule = stage3_v2_schedule()
+        self.assertEqual(len(schedule), 20)
+        self.assertEqual(len({row["game_id"] for row in schedule}), 20)
+        self.assertEqual({row["policy_id"] for row in schedule}, {
+            "m5-warm-seed-20261104-post-rl", "m5-scratch-seed-20261104-post-rl",
+        })
+        for seed in range(20261130, 20261140):
+            pair = [row["policy_id"] for row in schedule if row["ale_seed"] == seed]
+            expected = ["m5-warm-seed-20261104-post-rl", "m5-scratch-seed-20261104-post-rl"]
+            if seed % 2:
+                expected.reverse()
+            self.assertEqual(pair, expected)
+        self.assertEqual(hashlib.sha256(canonical_schedule_bytes(schedule)).hexdigest(),
+                         "be4e6548e6fd3e3db4605e6b55fbe860848dccb2df87d8a7122145bdabe22ffc")
+        self.assertEqual(hashlib.sha256(CONFIG_PATH_V2.read_bytes()).hexdigest(),
+                         "663651050db80ab027b452241c7d39837ec7986927c0aefc7c7be631f459a49b")
+
+    def test_stage3_v2_rejects_roster_and_underlying_horizon_drift(self) -> None:
+        config = json.loads(CONFIG_PATH_V2.read_text(encoding="utf-8"))
+        bad_roster = json.loads(json.dumps(config))
+        bad_roster["policy_roster"][0]["checkpoint_sha256"] = "0" * 64
+        with self.assertRaisesRegex(RuntimeError, "roster"):
+            validate_stage3_v2_config(bad_roster)
+        bad_horizon = json.loads(json.dumps(config))
+        bad_horizon["ale_horizon"]["max_num_frames_per_episode"] = 108_000
+        with self.assertRaisesRegex(RuntimeError, "horizon"):
+            validate_stage3_v2_config(bad_horizon)
+
+    def test_installed_ale_honors_explicit_v2_horizon_without_reset_or_step(self) -> None:
+        with VideoChessEnv(ALEConfig.default_v5(mode=4)) as default_env:
+            default_info = default_env.runtime_info()
+            self.assertEqual(default_info["ale_episode_frame_limit"], 108_000)
+        extended = ALEConfig(
+            env_id="ALE/VideoChess-v5", obs_type="rgb", frameskip=4,
+            repeat_action_probability=0.25, mode=4, difficulty=0,
+            max_num_frames_per_episode=500_000,
+        )
+        with VideoChessEnv(extended) as extended_env:
+            info = extended_env.runtime_info()
+            self.assertEqual(info["registered_defaults"]["max_num_frames_per_episode"], 108_000)
+            self.assertEqual(info["ale_episode_frame_limit"], 500_000)
+            self.assertEqual(info["instance_runtime"]["max_num_frames_per_episode"], 500_000)
+            self.assertEqual(info["instance_runtime"]["mode"], 4)
+            self.assertEqual(info["instance_runtime"]["difficulty"], 0)
+            self.assertEqual(info["instance_runtime"]["observation_shape"], [210, 160, 3])
+            self.assertEqual(info["rom_sha256"], "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7")
+            self.assertEqual(info["instance_runtime"]["action_set"], list(range(10)))
+            self.assertEqual(info["instance_runtime"]["frameskip"], 4)
+            self.assertEqual(info["instance_runtime"]["repeat_action_probability"], 0.25)
+            self.assertEqual(info["available_modes"], [0, 1, 2, 3, 4])
+            self.assertEqual(info["available_difficulties"], [0])
+
+    def test_v2_policy_roster_loader_returns_only_the_two_frozen_m5_policies(self) -> None:
+        warm = PolicyIdentity(
+            "m5-warm-seed-20261104-post-rl", "frozen_m5_double_dqn_q_policy",
+            checkpoint_sha256="0b2405017a8e1d539851f0cd278883d3fd23936fb5c2f7962c813590a6fd1767",
+        )
+        scratch = PolicyIdentity(
+            "m5-scratch-seed-20261104-post-rl", "frozen_m5_double_dqn_q_policy",
+            checkpoint_sha256="3749b0c0b6ae44d3ad5d6bf0863b60937a59fbe881e0bdf4932bdce6033ca400",
+        )
+        with patch("videochess_rl.m6.campaign.verify_selected_m5_root", return_value={
+            "schema": "videochess-m5-artifact-manifest/1.0",
+        }), patch("videochess_rl.m6.campaign._load_m5_path", side_effect=(Path("warm.pt"), Path("scratch.pt"))), \
+                patch("videochess_rl.m6.campaign.load_m5_policy", side_effect=(
+                    (object(), warm), (object(), scratch),
+                )) as loader, patch("videochess_rl.m6.campaign.load_m4_policy") as m4_loader, \
+                patch("videochess_rl.m6.campaign.load_baseline") as baseline_loader:
+            roster = load_policy_roster("/unused/m5", None, m5_only=True)
+        self.assertEqual(set(roster), {warm.policy_id, scratch.policy_id})
+        self.assertEqual(loader.call_count, 2)
+        m4_loader.assert_not_called()
+        baseline_loader.assert_not_called()
+
+    def test_installed_runtime_matches_committed_dependency_lock(self) -> None:
+        identity = verify_runtime_matches_lock(Path(__file__).resolve().parents[1])
+        self.assertEqual(identity["installed_packages"]["gymnasium"], "1.4.0")
+        self.assertEqual(identity["installed_packages"]["ale-py"], "0.11.2")
+        self.assertIn(identity["installed_packages"]["torch"], identity["locked_package_versions"]["torch"])
+
     def test_stage3_roster_pins_exact_accepted_checkpoint_identities(self) -> None:
         config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
         identities = {
@@ -100,6 +208,23 @@ class M6CampaignPlanTests(unittest.TestCase):
                 os.chdir(original_cwd)
             self.assertTrue(campaign.artifact_root.is_absolute())
             self.assertEqual(campaign.artifact_root, (Path(temporary) / "relative/m6-artifacts").resolve())
+
+    def test_v2_campaign_uses_isolated_artifact_namespace_and_its_own_limits(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / "artifacts/m6"
+            with patch("videochess_rl.m6.campaign.load_policy_roster", return_value={}) as loader:
+                campaign = M6Campaign(
+                    artifact_root=root,
+                    m5_root="/unused/private-m5",
+                    m4_root=None,
+                    config_path=CONFIG_PATH_V2,
+                )
+            loader.assert_called_once()
+            self.assertTrue(loader.call_args.kwargs["m5_only"])
+            self.assertEqual(campaign.artifact_root, root / "v2")
+            self.assertEqual(campaign.episode_limits["maximum_ale_frames"], 432_000)
+            self.assertEqual(campaign.episode_limits["maximum_wall_seconds"], 1_800)
+            self.assertEqual(campaign.campaign_limits["maximum_artifact_bytes"], 8 * 1024**3)
 
     def test_global_gameplay_budget_counts_all_stage_attempt_records(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

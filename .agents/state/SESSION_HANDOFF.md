@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-0eddd069-20261030T174229132416Z -->
+<!-- checkpoint-id: cp-61c624b8-20261031T020641116735Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -12,9 +12,9 @@ This file is a pointer, not a status snapshot. Do not infer current phase, task 
    - The current governance decision is [`ADR-0001`](../../docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md); discover later decisions in `docs/02-management/decisions/`.
 5. Compare the portable tracked-file manifest with live HEAD/index. Treat the `git` snapshot as workspace-local; an exact portable manifest match after commit/checkout is expected even when branch, HEAD, status, ignored files, or caches differ. The local Git config UUID distinguishes the original workspace from a clean clone. For older checkpoints without a portable manifest, use the safe tracked-file migration path described in `AGENTS.md`. If version-controlled content or canonical references drift, inspect them and never discard work automatically.
 
-## Current canonical pointer — G3 approved, M6-001 authorized and in progress (2026-10-30)
+## Current canonical pointer — G3 approved, M6-001 v2 corrective continuation authorized and in progress (2026-10-31)
 
-The independent PM approved G3 after verifying M2–M5 completion and PR #11 integration. The approval and post-merge verification are recorded in [G3-final-approval-20261030.md](../evidence/G3-final-approval-20261030.md) and [comment 6519216543](https://github.com/dodaonam/atari-videochess-rl/pull/11#issuecomment-6519216543). `PROJECT_STATE.yaml` and `BACKLOG.yaml` are authoritative: G3 is approved, G4 remains the next governance gate, and M6-001 is authorized and in progress under [the owner authorization](../evidence/M6-001-authorization-20261030.md). The baseline, PM Pre-M6 acceptance, artifact/runtime checks, and entry disposition are recorded in [M6-entry-verification-20261030.md](../evidence/M6-entry-verification-20261030.md). M5 scientific results and the accepted RSK-014 limitation remain unchanged. M6 criteria are not yet accepted; do not infer acceptance or G4 approval from implementation or tests.
+The independent PM approved G3 after verifying M2–M5 completion and PR #11 integration. The approval and post-merge verification are recorded in [G3-final-approval-20261030.md](../evidence/G3-final-approval-20261030.md) and [comment 6519216543](https://github.com/dodaonam/atari-videochess-rl/pull/11#issuecomment-6519216543). `PROJECT_STATE.yaml` and `BACKLOG.yaml` are authoritative: G3 is approved, G4 remains the next governance gate, and M6-001 remains in progress under the original [owner authorization](../evidence/M6-001-authorization-20261030.md) plus the separately scoped [v2 corrective authorization](../evidence/M6-001-v2-corrective-authorization-20261031.md). Stage 3 v1 remains immutable and M6-04 was partial; v2 uses a separate config, deterministic schedule, extended 500000-frame ALE ceiling, and resource envelope. Follow the current M6 plan and v2 protocol addendum for execution, and the new v2 evidence/report after execution. The M5 scientific results and accepted RSK-014 limitation remain unchanged. M6 criteria are not accepted; do not infer PM acceptance, merge, or G4 approval from implementation or tests.
 
 ## Historical M5 technical acceptance handoff — before PR merge and G3 decision
 

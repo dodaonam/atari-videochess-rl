@@ -4332,9 +4332,23 @@
             "git_revision": "0eddd06932de06d4651f7e6dc4c99e54db719ddd",
             "log_path": null
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-001-v2-corrective-authorization-20261031.md",
+          "detail": "Separate direct owner authorization for the bounded Stage 3 v2 corrective continuation; preserves the original v1 authorization, run, and outcomes.",
+          "result": "The project owner directly authorized the fixed 20-attempt paired M5 extended-horizon local CPU v2 campaign and its resource limits. M6 remains in progress; no PM acceptance or G4 approval is claimed.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-10-31T01:49:17Z",
+            "recorded_at_utc": "2026-10-31T01:49:17Z",
+            "exit_code": null,
+            "git_revision": "61c624b803a4481509e84fed767f103d8b521340",
+            "log_path": ".agents/evidence/M6-001-v2-corrective-authorization-20261031.md"
+          }
         }
       ],
-      "next_action": "Await independent PM review on PR #14. M6-001 remains in_progress and M6-04 partial; any follow-on Atari attempts require a separately authorized protocol amendment. Do not merge, self-accept, or mark G4 approved.",
+      "next_action": "Complete the authorized v2 corrective implementation and regression suite; verify the frozen M5 artifacts, dependency lock, ROM, v1 integrity, and effective 500000-frame ALE horizon without gameplay; then commit source/configuration and the frozen schedule before the first v2 reset.",
       "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],

@@ -219,6 +219,13 @@ class M6PolicyAdapterTests(unittest.TestCase):
         self.assertFalse(result.metadata["replay_insertion"])
         self.assertFalse(result.metadata["stockfish"])
 
+    def test_policy_latency_fields_do_not_mislabel_adapter_validation_as_neural_inference(self) -> None:
+        result = _adapter(action="e2e4")(_context())
+        self.assertGreaterEqual(result.metadata["input_validation_latency_seconds"], 0.0)
+        self.assertGreaterEqual(result.metadata["policy_choose_move_latency_seconds"], 0.0)
+        self.assertGreaterEqual(result.metadata["adapter_total_latency_seconds"], 0.0)
+        self.assertNotIn("inference_latency_seconds", result.metadata)
+
     def test_model_weights_and_gradients_remain_frozen(self) -> None:
         model = nn.Linear(4, 3).eval()
         before = {name: value.detach().clone() for name, value in model.state_dict().items()}

@@ -19,6 +19,7 @@ class ALEConfig:
     repeat_action_probability: float = 0.0
     mode: int = 0
     difficulty: int = 0
+    max_num_frames_per_episode: int | None = None
 
     def __post_init__(self) -> None:
         if self.env_id != "ALE/VideoChess-v5" or self.obs_type != "rgb":
@@ -29,6 +30,12 @@ class ALEConfig:
             raise ValueError("repeat_action_probability must be between 0 and 1")
         if self.mode not in range(5) or self.difficulty != 0:
             raise ValueError("VideoChess supports modes 0-4 and difficulty 0 in ALE-Py 0.11.2")
+        if self.max_num_frames_per_episode is not None and (
+            isinstance(self.max_num_frames_per_episode, bool)
+            or not isinstance(self.max_num_frames_per_episode, int)
+            or self.max_num_frames_per_episode < 1
+        ):
+            raise ValueError("max_num_frames_per_episode must be a positive integer or None")
 
     @classmethod
     def deterministic_dev(cls, *, mode: int = 0) -> "ALEConfig":
@@ -46,6 +53,7 @@ class ALEConfig:
             "repeat_action_probability": self.repeat_action_probability,
             "mode": self.mode,
             "difficulty": self.difficulty,
+            "max_num_frames_per_episode": self.max_num_frames_per_episode,
         }
 
 
@@ -68,13 +76,18 @@ class VideoChessEnv:
 
         self.config = config or ALEConfig.deterministic_dev()
         gym.register_envs(ale_py)
+        env_kwargs = {
+            "obs_type": self.config.obs_type,
+            "frameskip": self.config.frameskip,
+            "repeat_action_probability": self.config.repeat_action_probability,
+            "mode": self.config.mode,
+            "difficulty": self.config.difficulty,
+        }
+        if self.config.max_num_frames_per_episode is not None:
+            env_kwargs["max_num_frames_per_episode"] = self.config.max_num_frames_per_episode
         self.env = gym.make(
             self.config.env_id,
-            obs_type=self.config.obs_type,
-            frameskip=self.config.frameskip,
-            repeat_action_probability=self.config.repeat_action_probability,
-            mode=self.config.mode,
-            difficulty=self.config.difficulty,
+            **env_kwargs,
         )
         self._ale_py = ale_py
         self._gymnasium = gym
@@ -149,6 +162,7 @@ class VideoChessEnv:
             "available_modes": [int(mode) for mode in ale.getAvailableModes()],
             "available_difficulties": [int(level) for level in ale.getAvailableDifficulties()],
             "registered_defaults": registered_defaults,
+            "ale_episode_frame_limit": int(ale.getInt("max_num_frames_per_episode")),
             "instance_runtime": {
                 "mode": int(instance._game_mode),
                 "difficulty": int(instance._game_difficulty),
@@ -158,6 +172,7 @@ class VideoChessEnv:
                 "action_set": [int(action) for action in instance._action_set],
                 "observation_shape": list(self.env.observation_space.shape),
                 "action_count": int(self.env.action_space.n),
+                "max_num_frames_per_episode": int(ale.getInt("max_num_frames_per_episode")),
             },
             "config": self.config.as_dict(),
         }
