@@ -2,10 +2,20 @@ from __future__ import annotations
 
 import unittest
 
-from scripts.analyze_m7_campaign import m7_seed_grid_svg, outcome_svg
+from scripts.analyze_m7_campaign import _track_table, m7_seed_grid_svg, outcome_svg
 
 
 class M7ReportTests(unittest.TestCase):
+    def test_outcome_table_reports_scheduled_started_and_not_started_denominators(self) -> None:
+        table = "\n".join(_track_table("M7 policy outcomes", {
+            "policy-a": {"scheduled": 10, "started_after_ale_reset": 8, "not_started": 2,
+                         "wins": 1, "draws": 0, "losses": 3, "incomplete": 4,
+                         "terminal_wdl_denominator": 4, "terminal_only_game_score": 0.25},
+        }))
+        self.assertIn("| Policy | Scheduled | Started | W / D / L |", table)
+        self.assertIn("| `policy-a` | 10 | 8 | 1 / 0 / 3 |", table)
+        self.assertIn("| `policy-a` | 10 | 8 | 1 / 0 / 3 | 0 | 0 | 4 | 2 | 0.250 (4) |", table)
+
     def _rows(self):
         outcomes = ("win", "draw", "loss", "terminal_unknown", "truncated", "incomplete", "not_started", "win", "loss", "incomplete")
         return {

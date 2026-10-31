@@ -54,12 +54,16 @@ def _interval_text(interval: dict[str, Any]) -> str:
 
 
 def _track_table(name: str, rows: dict[str, dict[str, Any]]) -> list[str]:
-    lines = [f"### {name}", "", "| Policy | Scheduled | W / D / L | Unknown | Truncated | Incomplete | Not started | Terminal score (n) |", "|---|---:|---:|---:|---:|---:|---:|---:|"]
+    lines = [f"### {name}", "", "| Policy | Scheduled | Started | W / D / L | Unknown | Truncated | Incomplete | Not started | Terminal score (n) |", "|---|---:|---:|---:|---:|---:|---:|---:|---:|"]
     for policy, row in sorted(rows.items()):
         score = _format_score(row.get("terminal_only_game_score"))
         denom = row.get("terminal_wdl_denominator", row.get("terminal_known_games", 0))
+        scheduled = row.get("scheduled", "—")
+        started = row.get("started_after_ale_reset", row.get("attempt_process_count"))
+        if started is None and isinstance(scheduled, int):
+            started = scheduled - row.get("not_started", 0)
         lines.append(
-            f"| `{policy}` | {row.get('scheduled', '—')} | "
+            f"| `{policy}` | {scheduled} | {started if started is not None else '—'} | "
             f"{row.get('wins', 0)} / {row.get('draws', 0)} / {row.get('losses', 0)} | "
             f"{row.get('terminal_unknown', 0)} | {row.get('truncated', 0)} | "
             f"{row.get('incomplete', 0)} | {row.get('not_started', 0)} | {score} ({denom}) |"
