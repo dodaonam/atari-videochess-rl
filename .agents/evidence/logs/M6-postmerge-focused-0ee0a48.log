@@ -1,0 +1,208 @@
+command: PYTHONDONTWRITEBYTECODE=1 <project-python> -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v
+result: FAIL: 108 focused tests; 106 passed, 2 failures, 0 errors, 0 skips. The new governance test expected the literal phrase “G4 remains unapproved”, while the PM record used “G4: not approved”; assertion text was corrected.
+Exit code: 1
+execution_environment: clean merge-derived worktree; local CPU; Python 3.12.3
+git_head: 0ee0a4845fa6b748a987e2a288a6691bce0c62b9
+started_at_utc: 2026-10-31T07:46:15.865943Z
+completed_at_utc: 2026-10-31T07:47:06.290850Z
+wall_elapsed_seconds: 50.425
+test_summary: 108 tests; 106 passed; 2 failures; 0 errors; 0 skips; unittest_elapsed_seconds=48.536
+
+--- unittest output ---
+test_blocked_task_must_reference_an_active_blocker (tests.test_agent_context.AgentContextRecoveryTests.test_blocked_task_must_reference_an_active_blocker) ... ok
+test_checkpoint_compacts_serialization_without_changing_history (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_compacts_serialization_without_changing_history) ... ok
+test_checkpoint_is_consistent_after_one_run_from_clean_worktree (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_is_consistent_after_one_run_from_clean_worktree) ... ok
+test_checkpoint_repairs_stale_handoff_pointer (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_repairs_stale_handoff_pointer) ... ok
+test_checkpoint_rolls_back_provisional_files_after_final_size_guard_failure (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_rolls_back_provisional_files_after_final_size_guard_failure) ... ok
+test_checkpoint_rolls_back_provisional_files_after_final_snapshot_failure (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_rolls_back_provisional_files_after_final_snapshot_failure) ... ok
+test_checkpoint_size_limit_fails_before_state_or_workspace_mutation (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_size_limit_fails_before_state_or_workspace_mutation) ... ok
+test_clean_clone_recovers_current_committed_state_without_local_artifacts (tests.test_agent_context.AgentContextRecoveryTests.test_clean_clone_recovers_current_committed_state_without_local_artifacts) ... FAIL
+test_clean_clone_recovers_g2_and_future_milestone_transitions (tests.test_agent_context.AgentContextRecoveryTests.test_clean_clone_recovers_g2_and_future_milestone_transitions) ... ok
+test_completed_task_must_have_empty_next_action (tests.test_agent_context.AgentContextRecoveryTests.test_completed_task_must_have_empty_next_action) ... ok
+test_completed_task_requires_existing_evidence (tests.test_agent_context.AgentContextRecoveryTests.test_completed_task_requires_existing_evidence) ... ok
+test_context_ci_runs_m5_fixture_as_a_contract_oracle (tests.test_agent_context.AgentContextRecoveryTests.test_context_ci_runs_m5_fixture_as_a_contract_oracle) ... ok
+test_direct_m3_authorization_is_preserved_across_milestone_completion (tests.test_agent_context.AgentContextRecoveryTests.test_direct_m3_authorization_is_preserved_across_milestone_completion) ... ok
+test_done_task_cannot_rely_only_on_historical_unverified_evidence (tests.test_agent_context.AgentContextRecoveryTests.test_done_task_cannot_rely_only_on_historical_unverified_evidence) ... ok
+test_dry_run_with_partial_recovery_does_not_mutate_files (tests.test_agent_context.AgentContextRecoveryTests.test_dry_run_with_partial_recovery_does_not_mutate_files) ... ok
+test_future_milestone_bullet_criteria_are_valid_task_references (tests.test_agent_context.AgentContextRecoveryTests.test_future_milestone_bullet_criteria_are_valid_task_references) ... ok
+test_g1_cannot_be_ready_with_incomplete_g1_tasks (tests.test_agent_context.AgentContextRecoveryTests.test_g1_cannot_be_ready_with_incomplete_g1_tasks) ... ok
+test_git_ignored_zip_is_still_content_hashed (tests.test_agent_context.AgentContextRecoveryTests.test_git_ignored_zip_is_still_content_hashed) ... ok
+test_historical_baseline_checksum_detects_record_mutation (tests.test_agent_context.AgentContextRecoveryTests.test_historical_baseline_checksum_detects_record_mutation) ... ok
+test_historical_baseline_is_not_recompared_to_current_files (tests.test_agent_context.AgentContextRecoveryTests.test_historical_baseline_is_not_recompared_to_current_files) ... ok
+test_historical_g1_recovery_matches_recorded_baseline (tests.test_agent_context.AgentContextRecoveryTests.test_historical_g1_recovery_matches_recorded_baseline) ... ok
+test_ignored_cache_generation_does_not_create_source_content_drift (tests.test_agent_context.AgentContextRecoveryTests.test_ignored_cache_generation_does_not_create_source_content_drift) ... ok
+test_json_output_is_machine_readable_and_paths_are_portable (tests.test_agent_context.AgentContextRecoveryTests.test_json_output_is_machine_readable_and_paths_are_portable) ... ok
+test_large_files_and_artifact_directories_are_reported_once_and_separately (tests.test_agent_context.AgentContextRecoveryTests.test_large_files_and_artifact_directories_are_reported_once_and_separately) ... ok
+test_m0_cannot_be_authorized_before_g1_approval (tests.test_agent_context.AgentContextRecoveryTests.test_m0_cannot_be_authorized_before_g1_approval) ... ok
+test_m3_authorization_does_not_change_governance_approvals (tests.test_agent_context.AgentContextRecoveryTests.test_m3_authorization_does_not_change_governance_approvals) ... ok
+test_m4_authorization_can_be_ready_without_claiming_implementation_started (tests.test_agent_context.AgentContextRecoveryTests.test_m4_authorization_can_be_ready_without_claiming_implementation_started) ... ok
+test_m5_verified_command_log_must_be_tracked_for_clean_clone (tests.test_agent_context.AgentContextRecoveryTests.test_m5_verified_command_log_must_be_tracked_for_clean_clone) ... ok
+test_m6_pm_acceptance_closes_task_without_approving_g4_or_authorizing_m7 (tests.test_agent_context.AgentContextRecoveryTests.test_m6_pm_acceptance_closes_task_without_approving_g4_or_authorizing_m7) ... FAIL
+test_manual_session_evidence_requires_sanitized_record_and_revision (tests.test_agent_context.AgentContextRecoveryTests.test_manual_session_evidence_requires_sanitized_record_and_revision) ... ok
+test_partial_state_file_is_detected_and_recovered (tests.test_agent_context.AgentContextRecoveryTests.test_partial_state_file_is_detected_and_recovered) ... ok
+test_pr_review_policy_explicitly_separates_codex_and_pm_authority (tests.test_agent_context.AgentContextRecoveryTests.test_pr_review_policy_explicitly_separates_codex_and_pm_authority) ... ok
+test_preflight_detects_content_change_inside_existing_dirty_path (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_detects_content_change_inside_existing_dirty_path) ... ok
+test_preflight_detects_gate_coverage_used_as_its_own_start_prerequisite (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_detects_gate_coverage_used_as_its_own_start_prerequisite) ... ok
+test_preflight_detects_roadmap_source_mismatch (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_detects_roadmap_source_mismatch) ... ok
+test_preflight_discovers_every_documented_acceptance_criterion (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_discovers_every_documented_acceptance_criterion) ... ok
+test_preflight_finds_broken_markdown_link (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_finds_broken_markdown_link) ... ok
+test_preflight_recovers_project_state_without_conversation (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_recovers_project_state_without_conversation) ... ok
+test_preflight_rejects_dependency_cycle (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_rejects_dependency_cycle) ... ok
+test_preflight_rejects_invalid_state_schema (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_rejects_invalid_state_schema) ... ok
+test_preflight_reports_dirty_worktree_and_checkpoint_refreshes_it (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_reports_dirty_worktree_and_checkpoint_refreshes_it) ... ok
+test_preflight_reports_files_it_could_not_hash (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_reports_files_it_could_not_hash) ... ok
+test_preflight_reports_malformed_git_snapshot_without_crashing (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_reports_malformed_git_snapshot_without_crashing) ... ok
+test_preflight_reports_malformed_task_status_without_crashing (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_reports_malformed_task_status_without_crashing) ... ok
+test_project_context_can_be_recovered_without_chat_history (tests.test_agent_context.AgentContextRecoveryTests.test_project_context_can_be_recovered_without_chat_history) ... ok
+test_repeated_checkpoint_does_not_append_unchanged_snapshot (tests.test_agent_context.AgentContextRecoveryTests.test_repeated_checkpoint_does_not_append_unchanged_snapshot) ... ok
+test_staging_checkpoint_control_files_does_not_create_snapshot_drift (tests.test_agent_context.AgentContextRecoveryTests.test_staging_checkpoint_control_files_does_not_create_snapshot_drift) ... ok
+test_start_authorized_boolean_without_direct_record_is_rejected (tests.test_agent_context.AgentContextRecoveryTests.test_start_authorized_boolean_without_direct_record_is_rejected) ... ok
+test_state_blocker_index_must_match_active_blocker_records (tests.test_agent_context.AgentContextRecoveryTests.test_state_blocker_index_must_match_active_blocker_records) ... ok
+test_tracked_content_drift_is_detected_without_a_status_path_change (tests.test_agent_context.AgentContextRecoveryTests.test_tracked_content_drift_is_detected_without_a_status_path_change) ... ok
+test_verified_command_evidence_must_match_retained_log (tests.test_agent_context.AgentContextRecoveryTests.test_verified_command_evidence_must_match_retained_log) ... ok
+test_verified_command_evidence_requires_timestamp_revision_exit_and_log (tests.test_agent_context.AgentContextRecoveryTests.test_verified_command_evidence_requires_timestamp_revision_exit_and_log) ... ok
+test_verified_command_evidence_with_provenance_passes (tests.test_agent_context.AgentContextRecoveryTests.test_verified_command_evidence_with_provenance_passes) ... ok
+test_append_after_migration_is_lossless_and_unchanged_repeat_is_noop (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_append_after_migration_is_lossless_and_unchanged_repeat_is_noop) ... ok
+test_checkpoint_archive_failure_restores_all_canonical_and_archive_files (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_checkpoint_archive_failure_restores_all_canonical_and_archive_files) ... ok
+test_checkpoint_state_write_failure_rolls_back_archive_append (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_checkpoint_state_write_failure_rolls_back_archive_append) ... ok
+test_clean_clone_recovers_migrated_archive_without_local_workspace_state (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_clean_clone_recovers_migrated_archive_without_local_workspace_state) ... ok
+test_duplicate_append_does_not_insert_same_record_twice (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_duplicate_append_does_not_insert_same_record_twice) ... ok
+test_duplicate_legacy_ids_are_rejected_without_mutation (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_duplicate_legacy_ids_are_rejected_without_mutation) ... ok
+test_empty_and_single_inline_histories_preserve_current_checkpoint (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_empty_and_single_inline_histories_preserve_current_checkpoint) ... ok
+test_failure_writing_archive_leaves_legacy_state_unchanged (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_failure_writing_archive_leaves_legacy_state_unchanged) ... ok
+test_failure_writing_canonical_state_rolls_back_new_archive_files (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_failure_writing_canonical_state_rolls_back_new_archive_files) ... ok
+test_interrupted_migration_is_detected_and_can_resume_idempotently (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_interrupted_migration_is_detected_and_can_resume_idempotently) ... ok
+test_invalid_gzip_stream_is_reported_as_archive_corruption (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_invalid_gzip_stream_is_reported_as_archive_corruption) ... ok
+test_malformed_legacy_history_is_rejected_without_mutation (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_malformed_legacy_history_is_rejected_without_mutation) ... ok
+test_manifest_rejects_boolean_schema_versions_and_counts (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_manifest_rejects_boolean_schema_versions_and_counts) ... ok
+test_migration_is_idempotent_and_does_not_duplicate_history (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_migration_is_idempotent_and_does_not_duplicate_history) ... ok
+test_migration_preserves_every_record_and_original_state_byte_exactly (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_migration_preserves_every_record_and_original_state_byte_exactly) ... ok
+test_missing_or_corrupted_archive_is_rejected_but_source_state_can_be_restored (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_missing_or_corrupted_archive_is_rejected_but_source_state_can_be_restored) ... ok
+test_partial_archive_write_after_replace_is_detected_and_resumable (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_partial_archive_write_after_replace_is_detected_and_resumable) ... ok
+test_pending_manifest_append_rolls_forward_only_when_checkpoint_matches (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_pending_manifest_append_rolls_forward_only_when_checkpoint_matches) ... ok
+test_pending_orphan_segment_recovers_from_current_checkpoint (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_pending_orphan_segment_recovers_from_current_checkpoint) ... ok
+test_portable_state_checksum_matches_preflight_for_unicode (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_portable_state_checksum_matches_preflight_for_unicode) ... ok
+test_preview_does_not_mutate_loaded_state (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_preview_does_not_mutate_loaded_state) ... ok
+test_retry_finalizes_migration_after_interrupted_post_switch_checkpoint (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_retry_finalizes_migration_after_interrupted_post_switch_checkpoint) ... ok
+test_segment_boundary_splits_at_sixteen_records (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_segment_boundary_splits_at_sixteen_records) ... ok
+test_segment_byte_tampering_and_manifest_hash_tampering_are_detected (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_segment_byte_tampering_and_manifest_hash_tampering_are_detected) ... ok
+test_stale_handoff_after_migration_is_detected_and_checkpoint_repairs_it (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_stale_handoff_after_migration_is_detected_and_checkpoint_repairs_it) ... ok
+test_unchanged_checkpoint_rejects_corrupt_archive_before_noop (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_unchanged_checkpoint_rejects_corrupt_archive_before_noop) ... ok
+test_unreferenced_archive_backup_is_detected (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_unreferenced_archive_backup_is_detected) ... ok
+test_unreferenced_file_in_valid_archive_is_detected (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_unreferenced_file_in_valid_archive_is_detected) ... ok
+test_debug_and_default_profiles_are_separate (tests.test_m6_campaign.M6CampaignPlanTests.test_debug_and_default_profiles_are_separate) ... ok
+test_frozen_stage3_seed_roster_counts_and_paired_order (tests.test_m6_campaign.M6CampaignPlanTests.test_frozen_stage3_seed_roster_counts_and_paired_order) ... ok
+test_global_gameplay_budget_counts_all_stage_attempt_records (tests.test_m6_campaign.M6CampaignPlanTests.test_global_gameplay_budget_counts_all_stage_attempt_records) ... ok
+test_installed_ale_honors_explicit_v2_horizon_without_reset_or_step (tests.test_m6_campaign.M6CampaignPlanTests.test_installed_ale_honors_explicit_v2_horizon_without_reset_or_step) ... A.L.E: Arcade Learning Environment (version 0.11.2+ecc1138)
+[Powered by Stella]
+ok
+test_installed_runtime_matches_committed_dependency_lock (tests.test_m6_campaign.M6CampaignPlanTests.test_installed_runtime_matches_committed_dependency_lock) ... ok
+test_interrupted_after_reset_is_sealed_without_guessing_or_replaying (tests.test_m6_campaign.M6CampaignPlanTests.test_interrupted_after_reset_is_sealed_without_guessing_or_replaying) ... ok
+test_relative_artifact_root_is_normalized_before_trace_paths_are_built (tests.test_m6_campaign.M6CampaignPlanTests.test_relative_artifact_root_is_normalized_before_trace_paths_are_built) ... ok
+test_run_manifest_serializes_schema_specific_campaign_budget_scope (tests.test_m6_campaign.M6CampaignPlanTests.test_run_manifest_serializes_schema_specific_campaign_budget_scope) ... ok
+test_stage3_roster_pins_exact_accepted_checkpoint_identities (tests.test_m6_campaign.M6CampaignPlanTests.test_stage3_roster_pins_exact_accepted_checkpoint_identities) ... ok
+test_stage3_v2_rejects_roster_and_underlying_horizon_drift (tests.test_m6_campaign.M6CampaignPlanTests.test_stage3_v2_rejects_roster_and_underlying_horizon_drift) ... ok
+test_stage3_v2_schedule_is_exactly_paired_and_preordered (tests.test_m6_campaign.M6CampaignPlanTests.test_stage3_v2_schedule_is_exactly_paired_and_preordered) ... ok
+test_v1_and_v2_frame_and_wall_limits_are_versioned_separately (tests.test_m6_campaign.M6CampaignPlanTests.test_v1_and_v2_frame_and_wall_limits_are_versioned_separately) ... ok
+test_v2_campaign_uses_isolated_artifact_namespace_and_its_own_limits (tests.test_m6_campaign.M6CampaignPlanTests.test_v2_campaign_uses_isolated_artifact_namespace_and_its_own_limits) ... ok
+test_v2_gameplay_budget_arithmetic_excludes_separate_diagnostic_root (tests.test_m6_campaign.M6CampaignPlanTests.test_v2_gameplay_budget_arithmetic_excludes_separate_diagnostic_root) ... ok
+test_v2_manifest_scope_rejects_missing_or_conflicting_metadata (tests.test_m6_campaign.M6CampaignPlanTests.test_v2_manifest_scope_rejects_missing_or_conflicting_metadata) ... ok
+test_v2_policy_roster_loader_returns_only_the_two_frozen_m5_policies (tests.test_m6_campaign.M6CampaignPlanTests.test_v2_policy_roster_loader_returns_only_the_two_frozen_m5_policies) ... ok
+test_versioned_stage3_configuration_matches_authorized_limits (tests.test_m6_campaign.M6CampaignPlanTests.test_versioned_stage3_configuration_matches_authorized_limits) ... ok
+test_artifact_root_report_is_portable_and_repository_relative (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_artifact_root_report_is_portable_and_repository_relative) ... ok
+test_external_artifact_root_report_does_not_expose_host_path (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_external_artifact_root_report_does_not_expose_host_path) ... ok
+test_frozen_schedule_reconstructs_predeclared_order (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_frozen_schedule_reconstructs_predeclared_order) ... ok
+test_latency_summary_uses_ordered_raw_observations (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_latency_summary_uses_ordered_raw_observations) ... ok
+test_ledger_chain_verifies_and_detects_payload_mutation (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_ledger_chain_verifies_and_detects_payload_mutation) ... ok
+test_outcome_classification_requires_finite_reward_and_ale_flags (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_outcome_classification_requires_finite_reward_and_ale_flags) ... ok
+test_safe_relative_path_rejects_traversal_and_absolute_paths (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_safe_relative_path_rejects_traversal_and_absolute_paths) ... ok
+test_trace_chain_verifies_and_detects_trace_mutation (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_trace_chain_verifies_and_detects_trace_mutation) ... ok
+test_tree_manifest_rejects_unlisted_files_and_symlinks (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_tree_manifest_rejects_unlisted_files_and_symlinks) ... ok
+test_tree_manifest_verifies_content_and_rejects_tampering (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_tree_manifest_verifies_content_and_rejects_tampering) ... ok
+
+======================================================================
+FAIL: test_clean_clone_recovers_current_committed_state_without_local_artifacts (tests.test_agent_context.AgentContextRecoveryTests.test_clean_clone_recovers_current_committed_state_without_local_artifacts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<post-merge-worktree>/tests/test_agent_context.py", line 814, in test_clean_clone_recovers_current_committed_state_without_local_artifacts
+    self.assertEqual(clone_tests.returncode, 0, clone_tests.stdout + clone_tests.stderr)
+AssertionError: 1 != 0 : test_blocked_task_must_reference_an_active_blocker (test_agent_context.AgentContextRecoveryTests.test_blocked_task_must_reference_an_active_blocker) ... ok
+test_checkpoint_compacts_serialization_without_changing_history (test_agent_context.AgentContextRecoveryTests.test_checkpoint_compacts_serialization_without_changing_history) ... ok
+test_checkpoint_is_consistent_after_one_run_from_clean_worktree (test_agent_context.AgentContextRecoveryTests.test_checkpoint_is_consistent_after_one_run_from_clean_worktree) ... ok
+test_checkpoint_repairs_stale_handoff_pointer (test_agent_context.AgentContextRecoveryTests.test_checkpoint_repairs_stale_handoff_pointer) ... ok
+test_checkpoint_rolls_back_provisional_files_after_final_size_guard_failure (test_agent_context.AgentContextRecoveryTests.test_checkpoint_rolls_back_provisional_files_after_final_size_guard_failure) ... ok
+test_checkpoint_rolls_back_provisional_files_after_final_snapshot_failure (test_agent_context.AgentContextRecoveryTests.test_checkpoint_rolls_back_provisional_files_after_final_snapshot_failure) ... ok
+test_checkpoint_size_limit_fails_before_state_or_workspace_mutation (test_agent_context.AgentContextRecoveryTests.test_checkpoint_size_limit_fails_before_state_or_workspace_mutation) ... ok
+test_clean_clone_recovers_current_committed_state_without_local_artifacts (test_agent_context.AgentContextRecoveryTests.test_clean_clone_recovers_current_committed_state_without_local_artifacts) ... skipped 'avoid recursive clean-clone test invocation'
+test_clean_clone_recovers_g2_and_future_milestone_transitions (test_agent_context.AgentContextRecoveryTests.test_clean_clone_recovers_g2_and_future_milestone_transitions) ... skipped 'avoid nested milestone transition fixture'
+test_completed_task_must_have_empty_next_action (test_agent_context.AgentContextRecoveryTests.test_completed_task_must_have_empty_next_action) ... ok
+test_completed_task_requires_existing_evidence (test_agent_context.AgentContextRecoveryTests.test_completed_task_requires_existing_evidence) ... ok
+test_context_ci_runs_m5_fixture_as_a_contract_oracle (test_agent_context.AgentContextRecoveryTests.test_context_ci_runs_m5_fixture_as_a_contract_oracle) ... ok
+test_direct_m3_authorization_is_preserved_across_milestone_completion (test_agent_context.AgentContextRecoveryTests.test_direct_m3_authorization_is_preserved_across_milestone_completion) ... ok
+test_done_task_cannot_rely_only_on_historical_unverified_evidence (test_agent_context.AgentContextRecoveryTests.test_done_task_cannot_rely_only_on_historical_unverified_evidence) ... ok
+test_dry_run_with_partial_recovery_does_not_mutate_files (test_agent_context.AgentContextRecoveryTests.test_dry_run_with_partial_recovery_does_not_mutate_files) ... ok
+test_future_milestone_bullet_criteria_are_valid_task_references (test_agent_context.AgentContextRecoveryTests.test_future_milestone_bullet_criteria_are_valid_task_references) ... ok
+test_g1_cannot_be_ready_with_incomplete_g1_tasks (test_agent_context.AgentContextRecoveryTests.test_g1_cannot_be_ready_with_incomplete_g1_tasks) ... ok
+test_git_ignored_zip_is_still_content_hashed (test_agent_context.AgentContextRecoveryTests.test_git_ignored_zip_is_still_content_hashed) ... ok
+test_historical_baseline_checksum_detects_record_mutation (test_agent_context.AgentContextRecoveryTests.test_historical_baseline_checksum_detects_record_mutation) ... ok
+test_historical_baseline_is_not_recompared_to_current_files (test_agent_context.AgentContextRecoveryTests.test_historical_baseline_is_not_recompared_to_current_files) ... ok
+test_historical_g1_recovery_matches_recorded_baseline (test_agent_context.AgentContextRecoveryTests.test_historical_g1_recovery_matches_recorded_baseline) ... skipped 'avoid nested historical recovery fixture'
+test_ignored_cache_generation_does_not_create_source_content_drift (test_agent_context.AgentContextRecoveryTests.test_ignored_cache_generation_does_not_create_source_content_drift) ... ok
+test_json_output_is_machine_readable_and_paths_are_portable (test_agent_context.AgentContextRecoveryTests.test_json_output_is_machine_readable_and_paths_are_portable) ... ok
+test_large_files_and_artifact_directories_are_reported_once_and_separately (test_agent_context.AgentContextRecoveryTests.test_large_files_and_artifact_directories_are_reported_once_and_separately) ... ok
+test_m0_cannot_be_authorized_before_g1_approval (test_agent_context.AgentContextRecoveryTests.test_m0_cannot_be_authorized_before_g1_approval) ... ok
+test_m3_authorization_does_not_change_governance_approvals (test_agent_context.AgentContextRecoveryTests.test_m3_authorization_does_not_change_governance_approvals) ... ok
+test_m4_authorization_can_be_ready_without_claiming_implementation_started (test_agent_context.AgentContextRecoveryTests.test_m4_authorization_can_be_ready_without_claiming_implementation_started) ... ok
+test_m5_verified_command_log_must_be_tracked_for_clean_clone (test_agent_context.AgentContextRecoveryTests.test_m5_verified_command_log_must_be_tracked_for_clean_clone) ... ok
+test_m6_pm_acceptance_closes_task_without_approving_g4_or_authorizing_m7 (test_agent_context.AgentContextRecoveryTests.test_m6_pm_acceptance_closes_task_without_approving_g4_or_authorizing_m7) ... FAIL
+test_manual_session_evidence_requires_sanitized_record_and_revision (test_agent_context.AgentContextRecoveryTests.test_manual_session_evidence_requires_sanitized_record_and_revision) ... ok
+test_partial_state_file_is_detected_and_recovered (test_agent_context.AgentContextRecoveryTests.test_partial_state_file_is_detected_and_recovered) ... ok
+test_pr_review_policy_explicitly_separates_codex_and_pm_authority (test_agent_context.AgentContextRecoveryTests.test_pr_review_policy_explicitly_separates_codex_and_pm_authority) ... ok
+test_preflight_detects_content_change_inside_existing_dirty_path (test_agent_context.AgentContextRecoveryTests.test_preflight_detects_content_change_inside_existing_dirty_path) ... ok
+test_preflight_detects_gate_coverage_used_as_its_own_start_prerequisite (test_agent_context.AgentContextRecoveryTests.test_preflight_detects_gate_coverage_used_as_its_own_start_prerequisite) ... ok
+test_preflight_detects_roadmap_source_mismatch (test_agent_context.AgentContextRecoveryTests.test_preflight_detects_roadmap_source_mismatch) ... ok
+test_preflight_discovers_every_documented_acceptance_criterion (test_agent_context.AgentContextRecoveryTests.test_preflight_discovers_every_documented_acceptance_criterion) ... ok
+test_preflight_finds_broken_markdown_link (test_agent_context.AgentContextRecoveryTests.test_preflight_finds_broken_markdown_link) ... ok
+test_preflight_recovers_project_state_without_conversation (test_agent_context.AgentContextRecoveryTests.test_preflight_recovers_project_state_without_conversation) ... ok
+test_preflight_rejects_dependency_cycle (test_agent_context.AgentContextRecoveryTests.test_preflight_rejects_dependency_cycle) ... ok
+test_preflight_rejects_invalid_state_schema (test_agent_context.AgentContextRecoveryTests.test_preflight_rejects_invalid_state_schema) ... ok
+test_preflight_reports_dirty_worktree_and_checkpoint_refreshes_it (test_agent_context.AgentContextRecoveryTests.test_preflight_reports_dirty_worktree_and_checkpoint_refreshes_it) ... ok
+test_preflight_reports_files_it_could_not_hash (test_agent_context.AgentContextRecoveryTests.test_preflight_reports_files_it_could_not_hash) ... ok
+test_preflight_reports_malformed_git_snapshot_without_crashing (test_agent_context.AgentContextRecoveryTests.test_preflight_reports_malformed_git_snapshot_without_crashing) ... ok
+test_preflight_reports_malformed_task_status_without_crashing (test_agent_context.AgentContextRecoveryTests.test_preflight_reports_malformed_task_status_without_crashing) ... ok
+test_project_context_can_be_recovered_without_chat_history (test_agent_context.AgentContextRecoveryTests.test_project_context_can_be_recovered_without_chat_history) ... ok
+test_repeated_checkpoint_does_not_append_unchanged_snapshot (test_agent_context.AgentContextRecoveryTests.test_repeated_checkpoint_does_not_append_unchanged_snapshot) ... ok
+test_staging_checkpoint_control_files_does_not_create_snapshot_drift (test_agent_context.AgentContextRecoveryTests.test_staging_checkpoint_control_files_does_not_create_snapshot_drift) ... ok
+test_start_authorized_boolean_without_direct_record_is_rejected (test_agent_context.AgentContextRecoveryTests.test_start_authorized_boolean_without_direct_record_is_rejected) ... ok
+test_state_blocker_index_must_match_active_blocker_records (test_agent_context.AgentContextRecoveryTests.test_state_blocker_index_must_match_active_blocker_records) ... ok
+test_tracked_content_drift_is_detected_without_a_status_path_change (test_agent_context.AgentContextRecoveryTests.test_tracked_content_drift_is_detected_without_a_status_path_change) ... ok
+test_verified_command_evidence_must_match_retained_log (test_agent_context.AgentContextRecoveryTests.test_verified_command_evidence_must_match_retained_log) ... ok
+test_verified_command_evidence_requires_timestamp_revision_exit_and_log (test_agent_context.AgentContextRecoveryTests.test_verified_command_evidence_requires_timestamp_revision_exit_and_log) ... ok
+test_verified_command_evidence_with_provenance_passes (test_agent_context.AgentContextRecoveryTests.test_verified_command_evidence_with_provenance_passes) ... ok
+
+======================================================================
+FAIL: test_m6_pm_acceptance_closes_task_without_approving_g4_or_authorizing_m7 (test_agent_context.AgentContextRecoveryTests.test_m6_pm_acceptance_closes_task_without_approving_g4_or_authorizing_m7)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/tmpqh9k166_/clean-clone/tests/test_agent_context.py", line 1342, in test_m6_pm_acceptance_closes_task_without_approving_g4_or_authorizing_m7
+    self.assertIn("G4 remains unapproved", acceptance)
+AssertionError: 'G4 remains unapproved' not found in "# M6-001 — Independent PM acceptance and merge record\n\n**Decision date:** 2026-10-31\n**Decision authority:** Independent Project Manager, recorded on GitHub PR #14\n**Decision comment:** [PR #14 comment 6539798992](https://github.com/dodaonam/atari-videochess-rl/pull/14#issuecomment-6539798992)\n**Decision:** M6-01 through M6-05 accepted for the M6 engineering acceptance scope, with the qualifications below.\n**Repository integration:** PR #14 merged by the project owner into `initial-idea`.\n\n## Accepted identities\n\n| Identity | Value |\n|---|---|\n| Accepted feature HEAD | `e919ee3ad039c9d2de3ebdf6b82704ecd61c0a6f` |\n| Accepted feature tree | `7eb06fd9c0e0b363ca324d203e1debf26f233c08` |\n| Merge commit | `509f9f83f9249208fd5adba572efed2d2f0f82ff` |\n| Merge parent 1 (`initial-idea` before PR) | `e6d444e475e447e9f37951f16585bf496f804c9d` |\n| Merge parent 2 (accepted feature HEAD) | `e919ee3ad039c9d2de3ebdf6b82704ecd61c0a6f` |\n| Integrated tree | `7eb06fd9c0e0b363ca324d203e1debf26f233c08` |\n| PR state | #14 merged into `initial-idea` at 2026-10-31T05:55:49Z |\n| M6 v2 execution source | `91f51b14690eba12e9e4fd25a4fc1671801fac0d`, tree `4d6ed616971c8f5606a0a7250fe68fa2eea40949` |\n\nThe PM decision was verified from the live PR and the original GitHub comment. A separate [post-merge identity verification log](logs/M6-postmerge-identity-verification-20261031.log) records the PR state, remote branch, both merge parents, tree equality, comment URL, timestamp, and comment-body SHA-256.\n\n## PM decision and review scope\n\nThe PM stated: “M6 ACCEPTED for the M6-01–M6-05 engineering acceptance scope.” The PM approved merge at the exact accepted feature HEAD above. This record captures that existing decision; it is not a new approval issued by the engineering executor.\n\nThe PM reviewed the source, tests, configuration/policy identities, independent audit implementation and reports, and recorded verification logs. The PM explicitly stated that they **did not personally access, rehash, or rerun the private original raw ALE artifacts or the 452 Python tests on the owner's host**. The local audit and test runs remain engineering-executor evidence; they are not represented as PM-executed checks.\n\n## Accepted evidence and preserved limitations\n\n- **M6-01–M6-03:** The frozen M5 policies used ALE RGB-derived observations through the validated adapter and controller loop. Inference remained frozen and engine-free; recorded evidence reports zero board desynchronizations.\n- **M6-04:** The separately authorized 20-attempt v2 campaign produced 11 ALE-terminated games, all losses, and 9 incomplete attempts. Warm: 4 losses / 6 incomplete from 10; Scratch: 7 losses / 3 incomplete from 10. Incomplete categories were five reply timeouts, two source-selection uncertainty stops, and two target-navigation uncertainty stops. Incomplete attempts were not counted as draws.\n- **M6-05:** Stage 3 v2 is an explicitly identified extended-horizon v5 profile: 500,000 ALE episode-frame horizon and 432,000 post-reset runner limit, distinct from the 108,000 registered default and from debug runs.\n- **Operational counts:** 385/405 RGB-verified initiated player moves, 385 verified Atari replies, and zero recorded board desynchronizations. Cursor corrections and censor categories remain separate.\n- **Scientific interpretation:** V1 and v2 remain separate protocols. V2 reuses v1 seeds under an extended horizon, so it is not an independent held-out replication. The observed losses do not support Warm/Scratch superiority, Elo, strong-playing-performance, or generalization claims.\n- **PM6-F06:** The original v2 run manifest remains immutable; the corrected future metadata behavior and historical discrepancy are documented in the [separate erratum](M6-PM6-F06-erratum-20261031.md).\n- **Artifacts:** Raw ALE evidence and private M4/M5 checkpoints remain local-only and unpublished. The PM reviewed tracked audit reports and logs, but did not personally re-run the raw audit.\n\nThe detailed pre-acceptance engineering and experiment record is in the [M6 corrective closeout report](M6-final-corrective-closeout-20261031.md), the [human-readable r3 raw audit](M6-stage3-v2-independent-raw-audit-20261031-r3.md), and its linked machine reports. This acceptance record does not change those reports or any experiment bytes.\n\n## Governance after acceptance\n\n- **G3:** approved.\n- **M6 / M6-001:** accepted and complete; PR #14 integrated at `509f9f83f9249208fd5adba572efed2d2f0f82ff`.\n- **G4:** not approved; its separate PM decision remains pending.\n- **M7:** not started and not authorized. It requires a separate direct owner authorization and applicable G4 decision.\n"
+
+----------------------------------------------------------------------
+Ran 53 tests in 15.519s
+
+FAILED (failures=1, skipped=3)
+
+
+======================================================================
+FAIL: test_m6_pm_acceptance_closes_task_without_approving_g4_or_authorizing_m7 (tests.test_agent_context.AgentContextRecoveryTests.test_m6_pm_acceptance_closes_task_without_approving_g4_or_authorizing_m7)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<post-merge-worktree>/tests/test_agent_context.py", line 1342, in test_m6_pm_acceptance_closes_task_without_approving_g4_or_authorizing_m7
+    self.assertIn("G4 remains unapproved", acceptance)
+AssertionError: 'G4 remains unapproved' not found in "# M6-001 — Independent PM acceptance and merge record\n\n**Decision date:** 2026-10-31\n**Decision authority:** Independent Project Manager, recorded on GitHub PR #14\n**Decision comment:** [PR #14 comment 6539798992](https://github.com/dodaonam/atari-videochess-rl/pull/14#issuecomment-6539798992)\n**Decision:** M6-01 through M6-05 accepted for the M6 engineering acceptance scope, with the qualifications below.\n**Repository integration:** PR #14 merged by the project owner into `initial-idea`.\n\n## Accepted identities\n\n| Identity | Value |\n|---|---|\n| Accepted feature HEAD | `e919ee3ad039c9d2de3ebdf6b82704ecd61c0a6f` |\n| Accepted feature tree | `7eb06fd9c0e0b363ca324d203e1debf26f233c08` |\n| Merge commit | `509f9f83f9249208fd5adba572efed2d2f0f82ff` |\n| Merge parent 1 (`initial-idea` before PR) | `e6d444e475e447e9f37951f16585bf496f804c9d` |\n| Merge parent 2 (accepted feature HEAD) | `e919ee3ad039c9d2de3ebdf6b82704ecd61c0a6f` |\n| Integrated tree | `7eb06fd9c0e0b363ca324d203e1debf26f233c08` |\n| PR state | #14 merged into `initial-idea` at 2026-10-31T05:55:49Z |\n| M6 v2 execution source | `91f51b14690eba12e9e4fd25a4fc1671801fac0d`, tree `4d6ed616971c8f5606a0a7250fe68fa2eea40949` |\n\nThe PM decision was verified from the live PR and the original GitHub comment. A separate [post-merge identity verification log](logs/M6-postmerge-identity-verification-20261031.log) records the PR state, remote branch, both merge parents, tree equality, comment URL, timestamp, and comment-body SHA-256.\n\n## PM decision and review scope\n\nThe PM stated: “M6 ACCEPTED for the M6-01–M6-05 engineering acceptance scope.” The PM approved merge at the exact accepted feature HEAD above. This record captures that existing decision; it is not a new approval issued by the engineering executor.\n\nThe PM reviewed the source, tests, configuration/policy identities, independent audit implementation and reports, and recorded verification logs. The PM explicitly stated that they **did not personally access, rehash, or rerun the private original raw ALE artifacts or the 452 Python tests on the owner's host**. The local audit and test runs remain engineering-executor evidence; they are not represented as PM-executed checks.\n\n## Accepted evidence and preserved limitations\n\n- **M6-01–M6-03:** The frozen M5 policies used ALE RGB-derived observations through the validated adapter and controller loop. Inference remained frozen and engine-free; recorded evidence reports zero board desynchronizations.\n- **M6-04:** The separately authorized 20-attempt v2 campaign produced 11 ALE-terminated games, all losses, and 9 incomplete attempts. Warm: 4 losses / 6 incomplete from 10; Scratch: 7 losses / 3 incomplete from 10. Incomplete categories were five reply timeouts, two source-selection uncertainty stops, and two target-navigation uncertainty stops. Incomplete attempts were not counted as draws.\n- **M6-05:** Stage 3 v2 is an explicitly identified extended-horizon v5 profile: 500,000 ALE episode-frame horizon and 432,000 post-reset runner limit, distinct from the 108,000 registered default and from debug runs.\n- **Operational counts:** 385/405 RGB-verified initiated player moves, 385 verified Atari replies, and zero recorded board desynchronizations. Cursor corrections and censor categories remain separate.\n- **Scientific interpretation:** V1 and v2 remain separate protocols. V2 reuses v1 seeds under an extended horizon, so it is not an independent held-out replication. The observed losses do not support Warm/Scratch superiority, Elo, strong-playing-performance, or generalization claims.\n- **PM6-F06:** The original v2 run manifest remains immutable; the corrected future metadata behavior and historical discrepancy are documented in the [separate erratum](M6-PM6-F06-erratum-20261031.md).\n- **Artifacts:** Raw ALE evidence and private M4/M5 checkpoints remain local-only and unpublished. The PM reviewed tracked audit reports and logs, but did not personally re-run the raw audit.\n\nThe detailed pre-acceptance engineering and experiment record is in the [M6 corrective closeout report](M6-final-corrective-closeout-20261031.md), the [human-readable r3 raw audit](M6-stage3-v2-independent-raw-audit-20261031-r3.md), and its linked machine reports. This acceptance record does not change those reports or any experiment bytes.\n\n## Governance after acceptance\n\n- **G3:** approved.\n- **M6 / M6-001:** accepted and complete; PR #14 integrated at `509f9f83f9249208fd5adba572efed2d2f0f82ff`.\n- **G4:** not approved; its separate PM decision remains pending.\n- **M7:** not started and not authorized. It requires a separate direct owner authorization and applicable G4 decision.\n"
+
+----------------------------------------------------------------------
+Ran 108 tests in 48.536s
+
+FAILED (failures=2)

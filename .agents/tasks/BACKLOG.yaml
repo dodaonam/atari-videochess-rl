@@ -4019,7 +4019,7 @@
       "id": "M6-001",
       "title": "Implement and verify frozen-policy Atari integration and bounded evaluation",
       "milestone": "M6",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "M1-001",
         "M4-001",
@@ -4322,16 +4322,19 @@
         {
           "kind": "file",
           "path": ".agents/evidence/M6-PR-handover-20261031.md",
-          "detail": "PR #14 was opened against initial-idea for independent review; this file records the initial branch/base/CI state without claiming PM acceptance.",
-          "result": "PR #14 is open and non-draft, with no auto-merge or merge. M6-04 is partial; G4 remains unapproved.",
+          "detail": "Read-only byte identity was verified in commit 94635ad871fd0853fc0c5b1024d8963ced864300 at 2026-10-31T08:30:39Z; committed blob and current file SHA-256 are f9dfe3aeb3e4658eaf9896d077c93b68c5412db0e97cb10cfde2115543f80670. The prior recorded revision 0eddd06932de06d4651f7e6dc4c99e54db719ddd did not contain this file (or did not resolve), so this replaces that unsupported file-provenance claim without changing the file or its historical meaning.",
+          "result": "PR #14 is open and non-draft, with no auto-merge or merge. M6-04 is partial; G4 remains unapproved. Committed file identity verified at 94635ad871fd0853fc0c5b1024d8963ced864300, SHA-256 f9dfe3aeb3e4658eaf9896d077c93b68c5412db0e97cb10cfde2115543f80670.",
           "provenance": {
             "status": "verified",
             "executed_at_utc": null,
-            "recorded_at_utc": "2026-10-30T17:41:51Z",
+            "recorded_at_utc": "2026-10-31T08:30:39Z",
             "exit_code": null,
-            "git_revision": "0eddd06932de06d4651f7e6dc4c99e54db719ddd",
+            "git_revision": "94635ad871fd0853fc0c5b1024d8963ced864300",
             "log_path": null
-          }
+          },
+          "audit_scope": "PM6C-F01",
+          "previous_git_revision": "0eddd06932de06d4651f7e6dc4c99e54db719ddd",
+          "file_sha256": "f9dfe3aeb3e4658eaf9896d077c93b68c5412db0e97cb10cfde2115543f80670"
         },
         {
           "kind": "file",
@@ -4645,21 +4648,557 @@
         {
           "kind": "command",
           "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/agent_preflight.py",
-          "result": "PASS: agent context preflight; G3 approved, M6-001 in_progress; no errors; artifact-manifest warning only.",
+          "result": "PASS: canonical agent preflight; M6-001 done, G3 approved, G4 unapproved, M7 pending authorization; no validation errors.",
           "provenance": {
             "status": "verified",
-            "executed_at_utc": "2026-10-31T05:34:34Z",
-            "recorded_at_utc": "2026-10-31T05:34:34Z",
+            "executed_at_utc": "2026-10-31T08:08:22Z",
+            "recorded_at_utc": "2026-10-31T08:12:27Z",
             "exit_code": 0,
-            "git_revision": "99f958dbb90b82705263f2ae95df701ba98d2f8b",
-            "log_path": ".agents/evidence/logs/M6-F06-preflight-99f958d.log",
-            "log_sha256": "3430674d71c6561e1faab14d0643bb9e730287ea67351c5d02ff6ecd751e1b55"
+            "git_revision": "3e675f8f95527df335e54e405c92517cd436b5b1",
+            "log_path": ".agents/evidence/logs/M6-postmerge-clean-checkout-preflight-20261031.log",
+            "log_sha256": "93b315562afe6309ab12e6160559b32aa38b84e56b12b28758a7252be3040ae2"
+          },
+          "detail": "Executed in a clean detached worktree at final closeout HEAD 3e675f8f95527df335e54e405c92517cd436b5b1 (tree 103d6a4f00c7032bee0949d13a11495e384fc507).",
+          "audit_scope": "PM6C-F01"
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-001-PM-acceptance-20261031.md",
+          "detail": "Read-only byte identity was verified in commit 94635ad871fd0853fc0c5b1024d8963ced864300 at 2026-10-31T08:30:39Z; committed blob and current file SHA-256 are f890126a6259e5c19e5314ca2376cf310afc52e4d256e8597c98df762bf38f6d. The prior recorded revision 509f9f83f9249208fd5adba572efed2d2f0f82ff did not contain this file (or did not resolve), so this replaces that unsupported file-provenance claim without changing the file or its historical meaning.",
+          "result": "Independent PM accepted M6-01–M6-05 at feature HEAD e919ee3ad039c9d2de3ebdf6b82704ecd61c0a6f (tree 7eb06fd9c0e0b363ca324d203e1debf26f233c08); PR #14 was merged into initial-idea at 509f9f83f9249208fd5adba572efed2d2f0f82ff. G4 remains unapproved and M7 unauthorized. Committed file identity verified at 94635ad871fd0853fc0c5b1024d8963ced864300, SHA-256 f890126a6259e5c19e5314ca2376cf310afc52e4d256e8597c98df762bf38f6d.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T08:30:39Z",
+            "exit_code": null,
+            "git_revision": "94635ad871fd0853fc0c5b1024d8963ced864300",
+            "log_path": null
+          },
+          "audit_scope": "PM6C-F01",
+          "previous_git_revision": "509f9f83f9249208fd5adba572efed2d2f0f82ff",
+          "file_sha256": "f890126a6259e5c19e5314ca2376cf310afc52e4d256e8597c98df762bf38f6d"
+        },
+        {
+          "kind": "command",
+          "command": "git show -s --format=%H%n%T%n%P 509f9f83f9249208fd5adba572efed2d2f0f82ff",
+          "result": "PASS: PR #14 is merged into initial-idea at 509f9f83f9249208fd5adba572efed2d2f0f82ff; parent order is e6d444e475e447e9f37951f16585bf496f804c9d then e919ee3ad039c9d2de3ebdf6b82704ecd61c0a6f; integrated and accepted feature trees both equal 7eb06fd9c0e0b363ca324d203e1debf26f233c08. PM comment 6539798992 independently accepts M6-01–M6-05 and explicitly keeps G4 unapproved/M7 unauthorized; the PM notes they did not rerun private raw audit or the 452-test suite.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T07:40:17Z",
+            "recorded_at_utc": "2026-10-31T07:40:17Z",
+            "exit_code": 0,
+            "git_revision": "509f9f83f9249208fd5adba572efed2d2f0f82ff",
+            "log_path": ".agents/evidence/logs/M6-postmerge-identity-verification-20261031.log",
+            "log_sha256": "703c7ec0fba4bebf6bf11cc3b0925adaa5cf5f939a5def51d45d89fa678d1bb0"
+          },
+          "audit_scope": "PM6C-F01"
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-post-merge-verification-20261031.md",
+          "detail": "Read-only byte identity was verified in commit 94635ad871fd0853fc0c5b1024d8963ced864300 at 2026-10-31T08:30:39Z; committed blob and current file SHA-256 are e7b5b9c0238802879e23728753c556f011508ba621fb5b5324d4a93d90be5d6f. The prior recorded revision 509f9f83f9249208fd5adba572efed2d2f0f82ff did not contain this file (or did not resolve), so this replaces that unsupported file-provenance claim without changing the file or its historical meaning.",
+          "result": "Records M6 acceptance/merge identities, exact test-source tree, corrected verification provenance, 108 focused and 452 full tests on the final clean closeout HEAD 3e675f8, and the explicit limitation that this closeout did not rerun the private raw-data audit. Committed file identity verified at 94635ad871fd0853fc0c5b1024d8963ced864300, SHA-256 e7b5b9c0238802879e23728753c556f011508ba621fb5b5324d4a93d90be5d6f.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T08:30:39Z",
+            "exit_code": null,
+            "git_revision": "94635ad871fd0853fc0c5b1024d8963ced864300",
+            "log_path": null
+          },
+          "audit_scope": "PM6C-F01",
+          "previous_git_revision": "509f9f83f9249208fd5adba572efed2d2f0f82ff",
+          "file_sha256": "e7b5b9c0238802879e23728753c556f011508ba621fb5b5324d4a93d90be5d6f"
+        },
+        {
+          "kind": "command",
+          "command": "<local-uv> lock --check --offline",
+          "result": "PASS: committed uv.lock is consistent with the project configuration; no dependency installation or lockfile mutation.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T07:43:26Z",
+            "recorded_at_utc": "2026-10-31T07:43:26Z",
+            "exit_code": 0,
+            "git_revision": "509f9f83f9249208fd5adba572efed2d2f0f82ff",
+            "log_path": ".agents/evidence/logs/M6-postmerge-lock-check-20261031.log",
+            "log_sha256": "079bb4dd58e4c7b88823a6836640915bf508ca2828f6af7be2e48fdacc208968"
+          },
+          "audit_scope": "PM6C-F01"
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M6-post-merge-verification-20261031.json",
+          "detail": "Read-only byte identity was verified in commit 94635ad871fd0853fc0c5b1024d8963ced864300 at 2026-10-31T08:30:39Z; committed blob and current file SHA-256 are 46c2c41a14b6f33c3c55c7bddac6dea32bdd1b45887b1498e9f6857ed61d2ea4. The prior recorded revision 5d4cfd93a3895e5a4c2d68eb485379c25639f403 did not contain this file (or did not resolve), so this replaces that unsupported file-provenance claim without changing the file or its historical meaning.",
+          "result": "Reports the verified accepted feature/merge identities, separate v1/v2 outcomes, test runs, and the limitation that this closeout did not rerun the private raw-tree audit. Committed file identity verified at 94635ad871fd0853fc0c5b1024d8963ced864300, SHA-256 46c2c41a14b6f33c3c55c7bddac6dea32bdd1b45887b1498e9f6857ed61d2ea4.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-10-31T08:30:39Z",
+            "exit_code": null,
+            "git_revision": "94635ad871fd0853fc0c5b1024d8963ced864300",
+            "log_path": null
+          },
+          "audit_scope": "PM6C-F01",
+          "previous_git_revision": "5d4cfd93a3895e5a4c2d68eb485379c25639f403",
+          "file_sha256": "46c2c41a14b6f33c3c55c7bddac6dea32bdd1b45887b1498e9f6857ed61d2ea4"
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 <project-python> -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
+          "result": "PASS: 108 focused tests; 108 passed, 0 failures, 0 errors, 0 skips.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null,
+            "log_sha256": "766336d0434da6afb07bbbf32e0c256efc24d0d17fdadf715eb8eae100b6adf3"
+          },
+          "detail": "Original log is preserved, but its recorded Git revision does not resolve; this historical result is superseded by the corrected post-merge rerun with captured HEAD and tested tree. Original retained log: .agents/evidence/logs/M6-postmerge-focused-5d4cfd9.log; logged source identity 5d4cfd93a3895e5a4c2d68eb485379c25639f403 does not resolve and is not relied on for acceptance. See the post-merge verification report for the correction and exact rerun.",
+          "audit_scope": "PM6C-F01",
+          "historical_log_path": ".agents/evidence/logs/M6-postmerge-focused-5d4cfd9.log",
+          "historical_log_sha256": "766336d0434da6afb07bbbf32e0c256efc24d0d17fdadf715eb8eae100b6adf3",
+          "historical_git_revision": "5d4cfd93a3895e5a4c2d68eb485379c25639f403"
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<accepted-M5-artifact-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<accepted-M4-r4-artifact-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<Warm-checkpoint-resolved-by-manifest> PYTHONDONTWRITEBYTECODE=1 PATH=<project-stockfish-readiness-dir>:$PATH <project-python> -m unittest discover -s tests -v",
+          "result": "PASS: 452 tests; 452 passed, 0 failures, 0 errors, 0 skips.",
+          "provenance": {
+            "status": "historical_unverified",
+            "executed_at_utc": null,
+            "recorded_at_utc": null,
+            "exit_code": null,
+            "git_revision": null,
+            "log_path": null,
+            "log_sha256": "3d92850c885afb024aadaeec1864d720d9576c4928a23fa57d55c84d3cbdba30"
+          },
+          "detail": "Original log is preserved, but its recorded Git revision does not resolve; this historical result is superseded by the corrected post-merge rerun with captured HEAD and tested tree. Original retained log: .agents/evidence/logs/M6-postmerge-full-suite-20261031.log; logged source identity 5d4cfd93a3895e5a4c2d68eb485379c25639f403 does not resolve and is not relied on for acceptance. See the post-merge verification report for the correction and exact rerun.",
+          "audit_scope": "PM6C-F01",
+          "historical_log_path": ".agents/evidence/logs/M6-postmerge-full-suite-20261031.log",
+          "historical_log_sha256": "3d92850c885afb024aadaeec1864d720d9576c4928a23fa57d55c84d3cbdba30",
+          "historical_git_revision": "5d4cfd93a3895e5a4c2d68eb485379c25639f403"
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 /usr/bin/python3 -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
+          "result": "FAIL: 92 tests; 90 passed, 1 assertion failure, 1 import error, 0 skips. System Python lacked NumPy and the context test detected that the workspace snapshot had not been checkpointed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T07:56:23Z",
+            "recorded_at_utc": "2026-10-31T07:58:00Z",
+            "exit_code": 1,
+            "git_revision": "5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f",
+            "log_path": ".agents/evidence/logs/M6-postmerge-final-focused-20261031.log",
+            "log_sha256": "595151aee2cf02bbf3f088c94a2ef7e876cb31889755af17ec1a91b46e43863f"
+          },
+          "audit_scope": "PM6C-F01"
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
+          "result": "PASS: 108 focused tests; 108 passed, 0 failures, 0 errors, 0 skips.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:00:17Z",
+            "recorded_at_utc": "2026-10-31T08:06:02Z",
+            "exit_code": 0,
+            "git_revision": "5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f",
+            "log_path": ".agents/evidence/logs/M6-postmerge-final-focused-correct-env-20261031.log",
+            "log_sha256": "e349fbd4b3e84f9dd0c3ea578989ee224fd3492735a19dc7eb3ff000807486a5"
+          },
+          "detail": "Execution captured HEAD 5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f and staged tree 902900431798290ef2b012dc97c914f399f09085, which was committed exactly as 4ab7d3a8ea8b9f718b790c03c27e9fe3dba95c08.",
+          "audit_scope": "PM6C-F01"
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<accepted-M5-artifact-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<accepted-M4-r4-artifact-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<checkpoint-resolved-by-pinned-SHA> PYTHONDONTWRITEBYTECODE=1 PATH=<pre-existing-project-stockfish-readiness-dir>:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "PASS: 452 tests; 452 passed, 0 failures, 0 errors, 0 skips.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:01:25Z",
+            "recorded_at_utc": "2026-10-31T08:06:02Z",
+            "exit_code": 0,
+            "git_revision": "5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f",
+            "log_path": ".agents/evidence/logs/M6-postmerge-final-full-suite-20261031.log",
+            "log_sha256": "02e4b7a914247b5c57b7043eada7eb971bc7e93271b638176cf225a89bea6df3"
+          },
+          "detail": "Execution captured HEAD 5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f and staged tree 902900431798290ef2b012dc97c914f399f09085, which was committed exactly as 4ab7d3a8ea8b9f718b790c03c27e9fe3dba95c08.",
+          "audit_scope": "PM6C-F01"
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
+          "result": "PASS: 108 focused tests; 108 passed, 0 failures, 0 errors, 0 skips.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:08:28Z",
+            "recorded_at_utc": "2026-10-31T08:12:27Z",
+            "exit_code": 0,
+            "git_revision": "3e675f8f95527df335e54e405c92517cd436b5b1",
+            "log_path": ".agents/evidence/logs/M6-postmerge-clean-checkout-focused-20261031.log",
+            "log_sha256": "94e4bd1f938c94ddfbedaa76df67e6788732eb34d397d374b4c5e7183f497a2a"
+          },
+          "detail": "Clean detached final closeout worktree HEAD 3e675f8f95527df335e54e405c92517cd436b5b1, tree 103d6a4f00c7032bee0949d13a11495e384fc507.",
+          "audit_scope": "PM6C-F01"
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<accepted-M5-artifact-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<accepted-M4-r4-artifact-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<checkpoint-resolved-by-pinned-SHA> PYTHONDONTWRITEBYTECODE=1 PATH=<pre-existing-project-stockfish-readiness-dir>:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "PASS: 452 tests; 452 passed, 0 failures, 0 errors, 0 skips.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:09:29Z",
+            "recorded_at_utc": "2026-10-31T08:12:27Z",
+            "exit_code": 0,
+            "git_revision": "3e675f8f95527df335e54e405c92517cd436b5b1",
+            "log_path": ".agents/evidence/logs/M6-postmerge-clean-checkout-full-suite-20261031.log",
+            "log_sha256": "87097019792e56ab565a105828085c3e4146ea590048c73cd2f330894340509f"
+          },
+          "detail": "Clean detached final closeout worktree HEAD 3e675f8f95527df335e54e405c92517cd436b5b1, tree 103d6a4f00c7032bee0949d13a11495e384fc507.",
+          "audit_scope": "PM6C-F01"
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
+          "result": "FAIL: focused regression suite; see output.",
+          "detail": "Diagnostic failure: the new history audit ran in a synthetic one-commit portability clone, which omits prior M6 commits. Corrected to skip only this history-dependent audit in that explicitly flagged nested fixture; normal history and CI run it.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:35:51Z",
+            "recorded_at_utc": "2026-10-31T08:45:43Z",
+            "exit_code": 1,
+            "git_revision": "29b3dcdfcdd21a454e4faa3778336249e76b92e6",
+            "log_path": ".agents/evidence/logs/M6C-F01-focused-tests-fixture-diagnostic-20261031.log",
+            "log_sha256": "3c230c633f36583893e1afda8ed4ce275789b860749c8ff4f7faa97f8d5c6a2c"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/audit_m6_closeout_provenance.py --json",
+          "result": "PASS: M6 closeout provenance audit; 4 committed file identities, 8 command/test logs, and 8 machine-report logs checked; 2 prior diagnostics explicitly retained as historical_unverified.",
+          "detail": "Initial committed-source audit at fc34f34; it validated the four corrected file records, eight previously retained execution logs, machine-report hashes, and historical diagnostic classification. A later consolidated audit includes subsequent PM6C command records.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:37:31Z",
+            "recorded_at_utc": "2026-10-31T08:45:43Z",
+            "exit_code": 0,
+            "git_revision": "fc34f34d850e2830cbc0d9a14d331a197d6ae062",
+            "log_path": ".agents/evidence/logs/M6C-F01-final-audit-20261031.log",
+            "log_sha256": "dbf16a6e1f244daba57d80b01c60de40bf5e8db2268c74549939c7a866874d76"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
+          "result": "PASS: 109 focused tests; 109 passed, 0 failures, 0 errors, 0 skips.",
+          "detail": "Clean detached worktree at tree c933d33a0da149f81b1557a677411a601990e1d3.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:37:38Z",
+            "recorded_at_utc": "2026-10-31T08:45:43Z",
+            "exit_code": 0,
+            "git_revision": "fc34f34d850e2830cbc0d9a14d331a197d6ae062",
+            "log_path": ".agents/evidence/logs/M6C-F01-focused-tests-20261031.log",
+            "log_sha256": "c4ecd6ee2bb55d8f1b689b20a40f3fe0bdfc9fa700296e6d08d696297aac8528"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<accepted-M5-artifact-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<accepted-M4-r4-artifact-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<checkpoint-resolved-by-pinned-SHA> PYTHONDONTWRITEBYTECODE=1 PATH=<pre-existing-project-stockfish-readiness-dir>:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+          "result": "PASS: 453 tests; 453 passed, 0 failures, 0 errors, 0 skips.",
+          "detail": "Clean detached worktree. Accepted M5/M4 manifests and the pinned M5 Warm checkpoint were verified before the full suite; no training or Atari campaign.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:38:56Z",
+            "recorded_at_utc": "2026-10-31T08:45:43Z",
+            "exit_code": 0,
+            "git_revision": "fc34f34d850e2830cbc0d9a14d331a197d6ae062",
+            "log_path": ".agents/evidence/logs/M6C-F01-full-suite-20261031.log",
+            "log_sha256": "7a7e0b86630fece97a7c913ec1c298b84448ca85a6706546743319a7ce28f629"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/agent_preflight.py",
+          "result": "PASS: canonical agent preflight; M6-001 done, G3 approved, G4 unapproved, M7 pending authorization; no validation errors.",
+          "detail": "Clean detached worktree; expected local artifact-manifest warning only.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:42:24Z",
+            "recorded_at_utc": "2026-10-31T08:45:43Z",
+            "exit_code": 0,
+            "git_revision": "fc34f34d850e2830cbc0d9a14d331a197d6ae062",
+            "log_path": ".agents/evidence/logs/M6C-F01-final-preflight-20261031.log",
+            "log_sha256": "ec0fc87560b72873f3dd85a1ed93ff739b240122c1a6bf842c50126553d1aa23"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/audit_m6_closeout_provenance.py --json",
+          "result": "PASS: consolidated M6 closeout provenance audit; 4 committed file identities, 13 verified execution logs, 8 machine-report logs, 2 explicit historical diagnostics, zero errors.",
+          "detail": "Final consolidated provenance audit after recording the original correction audit execution; historical diagnostic and failed setup executions remain distinguished from passes.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:47:35Z",
+            "recorded_at_utc": "2026-10-31T08:48:00Z",
+            "exit_code": 0,
+            "git_revision": "fc34f34d850e2830cbc0d9a14d331a197d6ae062",
+            "log_path": ".agents/evidence/logs/M6C-F01-consolidated-audit-20261031.log",
+            "log_sha256": "c970ef71710bc5a65d71c335dc0b71cb304a7040546723d61f279e5b8dde7f2c"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
+          "result": "FAIL: 109 tests; 103 passed and 6 failed because the consolidated audit log was present only as an ignored local file, not committed.",
+          "detail": "Clean detached checkout diagnostic at f9622885f7b4ca750fac4ab7a1d99bed808d1386; retained honestly as a failed execution before correction. clean focused tests.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:52:00Z",
+            "recorded_at_utc": "2026-10-31T08:57:15Z",
+            "exit_code": 1,
+            "git_revision": "f9622885f7b4ca750fac4ab7a1d99bed808d1386",
+            "log_path": ".agents/evidence/logs/M6C-F01-clean-checkout-focused-diagnostic-20261031.log",
+            "log_sha256": "e3fc515a3cbd84cbfba3c17a29aafb88f26fad23d1dd1c42fd9e1d7a84b7e240"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<accepted-M5-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<accepted-M4-r4-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<checkpoint-resolved-by-SHA> PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -v",
+          "result": "FAIL: 453 tests; 446 passed and 7 failed. Six failures came from the uncommitted audit log; one smoke test lacked the Stockfish PATH entry.",
+          "detail": "Clean detached checkout diagnostic at f9622885f7b4ca750fac4ab7a1d99bed808d1386; retained honestly as a failed execution before correction. clean full suite.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:52:42Z",
+            "recorded_at_utc": "2026-10-31T08:57:15Z",
+            "exit_code": 1,
+            "git_revision": "f9622885f7b4ca750fac4ab7a1d99bed808d1386",
+            "log_path": ".agents/evidence/logs/M6C-F01-clean-checkout-full-suite-diagnostic-20261031.log",
+            "log_sha256": "15de17685d85025a465a533ae23aca6d665f6cb49063a25839975efcc3852cfc"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/audit_m6_closeout_provenance.py --json",
+          "result": "FAIL: audit detected that a referenced consolidated audit log existed locally but was not committed at HEAD.",
+          "detail": "Clean detached checkout diagnostic at f9622885f7b4ca750fac4ab7a1d99bed808d1386; retained honestly as a failed execution before correction. clean provenance audit.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:55:26Z",
+            "recorded_at_utc": "2026-10-31T08:57:15Z",
+            "exit_code": 1,
+            "git_revision": "f9622885f7b4ca750fac4ab7a1d99bed808d1386",
+            "log_path": ".agents/evidence/logs/M6C-F01-clean-checkout-audit-diagnostic-20261031.log",
+            "log_sha256": "e1e4a5dad292ab4fa8f8f59816a7f121df7dbf3e5356da7e882e356b6495d907"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/agent_preflight.py",
+          "result": "FAIL: preflight detected the same M6-001 verified evidence path was absent from the clean repository checkout.",
+          "detail": "Clean detached checkout diagnostic at f9622885f7b4ca750fac4ab7a1d99bed808d1386; retained honestly as a failed execution before correction. clean canonical preflight.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:55:26Z",
+            "recorded_at_utc": "2026-10-31T08:57:15Z",
+            "exit_code": 1,
+            "git_revision": "f9622885f7b4ca750fac4ab7a1d99bed808d1386",
+            "log_path": ".agents/evidence/logs/M6C-F01-clean-checkout-preflight-diagnostic-20261031.log",
+            "log_sha256": "9015261b5e19e405ead32237720448ad808c09b921a0888e63cc9377b42fbc08"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
+          "result": "FAIL: 109 tests; 103 passed and 6 failed because the consolidated audit log was present only as an ignored local file, not committed.",
+          "detail": "clean focused suite; diagnostic failure before committed-log check was added; source revision f9622885f7b4ca750fac4ab7a1d99bed808d1386. Retained as a verified execution record with its nonzero exit, not as a passing check.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:52:00Z",
+            "recorded_at_utc": "2026-10-31T08:57:40Z",
+            "exit_code": 1,
+            "git_revision": "f9622885f7b4ca750fac4ab7a1d99bed808d1386",
+            "log_path": ".agents/evidence/logs/M6C-F01-clean-checkout-focused-diagnostic-20261031.log",
+            "log_sha256": "e3fc515a3cbd84cbfba3c17a29aafb88f26fad23d1dd1c42fd9e1d7a84b7e240"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<accepted-M5-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<accepted-M4-r4-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<checkpoint-resolved-by-SHA> PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -v",
+          "result": "FAIL: 453 tests; 446 passed and 7 failed. Six failures came from the uncommitted audit log; one smoke test lacked the Stockfish PATH entry.",
+          "detail": "clean full suite; diagnostic failure also lacked Stockfish readiness PATH; source revision f9622885f7b4ca750fac4ab7a1d99bed808d1386. Retained as a verified execution record with its nonzero exit, not as a passing check.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:52:42Z",
+            "recorded_at_utc": "2026-10-31T08:57:40Z",
+            "exit_code": 1,
+            "git_revision": "f9622885f7b4ca750fac4ab7a1d99bed808d1386",
+            "log_path": ".agents/evidence/logs/M6C-F01-clean-checkout-full-suite-diagnostic-20261031.log",
+            "log_sha256": "15de17685d85025a465a533ae23aca6d665f6cb49063a25839975efcc3852cfc"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/audit_m6_closeout_provenance.py --json",
+          "result": "FAIL: audit detected that a referenced consolidated audit log existed locally but was not committed at HEAD.",
+          "detail": "clean provenance audit; caught ignored log absent from HEAD; source revision f9622885f7b4ca750fac4ab7a1d99bed808d1386. Retained as a verified execution record with its nonzero exit, not as a passing check.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:55:26Z",
+            "recorded_at_utc": "2026-10-31T08:57:40Z",
+            "exit_code": 1,
+            "git_revision": "f9622885f7b4ca750fac4ab7a1d99bed808d1386",
+            "log_path": ".agents/evidence/logs/M6C-F01-clean-checkout-audit-diagnostic-20261031.log",
+            "log_sha256": "e1e4a5dad292ab4fa8f8f59816a7f121df7dbf3e5356da7e882e356b6495d907"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/agent_preflight.py",
+          "result": "FAIL: preflight detected the same M6-001 verified evidence path was absent from the clean repository checkout.",
+          "detail": "clean canonical preflight; caught referenced evidence log absent from checkout; source revision f9622885f7b4ca750fac4ab7a1d99bed808d1386. Retained as a verified execution record with its nonzero exit, not as a passing check.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:55:26Z",
+            "recorded_at_utc": "2026-10-31T08:57:40Z",
+            "exit_code": 1,
+            "git_revision": "f9622885f7b4ca750fac4ab7a1d99bed808d1386",
+            "log_path": ".agents/evidence/logs/M6C-F01-clean-checkout-preflight-diagnostic-20261031.log",
+            "log_sha256": "9015261b5e19e405ead32237720448ad808c09b921a0888e63cc9377b42fbc08"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
+          "result": "PASS: focused",
+          "detail": "Clean detached checkout at source commit 2050db70894f40b8ca4e4b6ebdc7715f1664f3bc, tree deb4fcb0395632deebd48e0bab67a70e8fe7d828. Accepted private M5/M4 manifests and the selected Warm checkpoint were verified before full-suite execution.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:58:23Z",
+            "recorded_at_utc": "2026-10-31T09:02:54Z",
+            "exit_code": 0,
+            "git_revision": "2050db70894f40b8ca4e4b6ebdc7715f1664f3bc",
+            "log_path": ".agents/evidence/logs/M6C-F01-final-focused-20261031.log",
+            "log_sha256": "22336b13d492e6b406e6f61237c6a1789032483d929e0931e910124145a57aa2"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<accepted-M5-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<accepted-M4-r4-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<checkpoint-resolved-by-SHA> PATH=<project-stockfish-readiness-dir>:$PATH PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -v",
+          "result": "PASS: full-suite",
+          "detail": "Clean detached checkout at source commit 2050db70894f40b8ca4e4b6ebdc7715f1664f3bc, tree deb4fcb0395632deebd48e0bab67a70e8fe7d828. Accepted private M5/M4 manifests and the selected Warm checkpoint were verified before full-suite execution.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T08:59:20Z",
+            "recorded_at_utc": "2026-10-31T09:02:54Z",
+            "exit_code": 0,
+            "git_revision": "2050db70894f40b8ca4e4b6ebdc7715f1664f3bc",
+            "log_path": ".agents/evidence/logs/M6C-F01-final-full-suite-20261031.log",
+            "log_sha256": "4448b26845633e2d4ab1e48063f8a67e68ace80400ebc613303ed0f444dfa141"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/audit_m6_closeout_provenance.py",
+          "result": "PASS: provenance-audit",
+          "detail": "Clean detached checkout at source commit 2050db70894f40b8ca4e4b6ebdc7715f1664f3bc, tree deb4fcb0395632deebd48e0bab67a70e8fe7d828. Accepted private M5/M4 manifests and the selected Warm checkpoint were verified before full-suite execution.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T09:02:11Z",
+            "recorded_at_utc": "2026-10-31T09:02:54Z",
+            "exit_code": 0,
+            "git_revision": "2050db70894f40b8ca4e4b6ebdc7715f1664f3bc",
+            "log_path": ".agents/evidence/logs/M6C-F01-final-provenance-audit-20261031.log",
+            "log_sha256": "da46999c8c5f3bf513df4206ae9532e910b543c232bf8bd4cb5aed1bbf54cb1c"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/agent_preflight.py",
+          "result": "PASS: preflight",
+          "detail": "Clean detached checkout at source commit 2050db70894f40b8ca4e4b6ebdc7715f1664f3bc, tree deb4fcb0395632deebd48e0bab67a70e8fe7d828. Accepted private M5/M4 manifests and the selected Warm checkpoint were verified before full-suite execution.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T09:02:11Z",
+            "recorded_at_utc": "2026-10-31T09:02:54Z",
+            "exit_code": 0,
+            "git_revision": "2050db70894f40b8ca4e4b6ebdc7715f1664f3bc",
+            "log_path": ".agents/evidence/logs/M6C-F01-corrected-preflight-20261031.log",
+            "log_sha256": "5497d5885d1a2b1bc2db8b81c74f900e44998e467eef9fb6e38b638245e0f994"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/audit_m6_closeout_provenance.py",
+          "result": "PASS: 4 committed file identities, 26 verified command/test logs, 8 machine-report logs, 2 historical diagnostics, 0 errors.",
+          "detail": "Post-append full-scope audit at d20b8b7; validates all records included before this final check set.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T09:04:36Z",
+            "recorded_at_utc": "2026-10-31T09:05:50Z",
+            "exit_code": 0,
+            "git_revision": "d20b8b7942fdd5be77541d5605cabc5bebfde432",
+            "log_path": ".agents/evidence/logs/M6C-F01-postappend-audit-20261031.log",
+            "log_sha256": "bb5e64d9be722b1431b8fa52d643f535bdd6b7cb756fedfa0bf28ec0f3e6d11e"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONDONTWRITEBYTECODE=1 /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/agent_preflight.py",
+          "result": "PASS: canonical preflight; zero validation errors; expected local artifact-manifest warning only.",
+          "detail": "Post-append canonical preflight at d20b8b7; clean detached checkout.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T09:04:36Z",
+            "recorded_at_utc": "2026-10-31T09:05:50Z",
+            "exit_code": 0,
+            "git_revision": "d20b8b7942fdd5be77541d5605cabc5bebfde432",
+            "log_path": ".agents/evidence/logs/M6C-F01-postappend-preflight-20261031.log",
+            "log_sha256": "e7fd76fe163b25d94aa27e1c8f4e39e5ac020898cd211cab5c709086c856355e"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONDONTWRITEBYTECODE=1 /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v",
+          "result": "PASS: 110 focused tests; 110 passed, 0 failures, 0 errors, 0 skips.",
+          "detail": "Post-append focused governance/checkpoint/M6 regressions at d20b8b7.",
+          "audit_scope": "PM6C-F01",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-10-31T09:04:37Z",
+            "recorded_at_utc": "2026-10-31T09:05:50Z",
+            "exit_code": 0,
+            "git_revision": "d20b8b7942fdd5be77541d5605cabc5bebfde432",
+            "log_path": ".agents/evidence/logs/M6C-F01-postappend-focused-20261031.log",
+            "log_sha256": "80d7dd77c11e87a151cf8704bf4d11083ca1fe6b5cdc2c717ca407540e46ff4d"
           }
         }
       ],
-      "next_action": "Independent PM: review PM6-F06 erratum, portable original/persistent raw audits, final 452-test and canonical preflight records, and updated PR #14; decide M6-001 acceptance and merge separately. Keep M6 in_progress, G4 unapproved, and M7 unauthorized until their separate decisions are recorded.",
+      "next_action": "",
       "plan_ref": ".agents/plans/M06-atari-integration.md"
     }
   ],
-  "updated_at_utc": "2026-10-31T05:34:35Z"
+  "updated_at_utc": "2026-10-31T09:05:50Z"
 }

@@ -25,6 +25,7 @@ sys.dont_write_bytecode = True
 sys.path.insert(0, str(REPO / "scripts"))
 import agent_checkpoint
 import agent_preflight
+import audit_m6_closeout_provenance
 
 REQUIRED_FILES = [
     "AGENTS.md",
@@ -1318,7 +1319,7 @@ class AgentContextRecoveryTests(unittest.TestCase):
         self.assertIsNone(state["engineering"]["active_milestone"])
         self.assertEqual(state["governance"]["approved_gates"], approved_gates_before)
 
-    def test_direct_m6_authorization_keeps_g4_separate(self) -> None:
+    def test_m6_pm_acceptance_closes_task_without_approving_g4_or_authorizing_m7(self) -> None:
         state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
         backlog = json.loads((REPO / ".agents/tasks/BACKLOG.yaml").read_text(encoding="utf-8"))
         self.assertEqual(state["governance"]["current_gate"], "G3")
@@ -1326,20 +1327,53 @@ class AgentContextRecoveryTests(unittest.TestCase):
         self.assertIn("G3", state["governance"]["approved_gates"])
         self.assertEqual(state["governance"]["next_governance_gate"], "G4")
         self.assertNotIn("G4", state["governance"]["approved_gates"])
-        self.assertEqual(state["engineering"]["active_milestone"], "M6")
-        self.assertEqual(state["engineering"]["next_milestone"], "M6")
-        self.assertEqual(state["engineering"]["next_milestone_status"], "in_progress")
-        self.assertTrue(state["engineering"]["start_authorized"])
-        authorization = state["engineering"]["start_authorization_record"]
-        self.assertEqual(authorization["task_id"], "M6-001")
-        self.assertEqual(authorization["milestone"], "M6")
-        self.assertEqual(authorization["authority"], "direct_user_or_pm_instruction")
-        self.assertEqual(state["task_refs"]["active_task_id"], "M6-001")
+        self.assertIsNone(state["engineering"]["active_milestone"])
+        self.assertEqual(state["engineering"]["next_milestone"], "M7")
+        self.assertEqual(state["engineering"]["next_milestone_status"], "pending_user_approval")
+        self.assertFalse(state["engineering"]["start_authorized"])
+        self.assertIsNone(state["engineering"]["start_authorization_record"])
+        self.assertIsNone(state["task_refs"]["active_task_id"])
+        self.assertIsNone(state["task_refs"]["next_task_id"])
         m6 = next(task for task in backlog["tasks"] if task["id"] == "M6-001")
-        self.assertEqual(m6["status"], "in_progress")
+        self.assertEqual(m6["status"], "done")
         self.assertEqual(m6["acceptance_criteria_ids"], ["M6-01", "M6-02", "M6-03", "M6-04", "M6-05"])
+        self.assertTrue(any(e.get("path") == ".agents/evidence/M6-001-PM-acceptance-20261031.md" for e in m6["evidence"]))
+        acceptance = (REPO / ".agents/evidence/M6-001-PM-acceptance-20261031.md").read_text(encoding="utf-8")
+        self.assertIn("6539798992", acceptance)
+        self.assertIn("**G4:** not approved", acceptance)
+        self.assertIn("M7", acceptance)
+        self.assertIn("not started", acceptance)
+        self.assertIn("not authorized", acceptance)
         report = agent_preflight.build_report(REPO)
         self.assertTrue(report["ok"], report["errors"])
+
+    def test_m6_closeout_verified_provenance_is_bound_to_committed_files_and_logs(self) -> None:
+        if os.environ.get("ATARI_VIDEOCHESS_SKIP_CLONE_RECOVERY_TEST") == "1":
+            self.skipTest("synthetic one-commit portability fixture omits the historical M6 closeout revisions")
+        result = audit_m6_closeout_provenance.audit(REPO)
+        self.assertTrue(result["ok"], json.dumps(result, indent=2, ensure_ascii=False))
+        self.assertEqual(len(result["file_evidence"]), 4)
+        self.assertGreaterEqual(len(result["command_log_evidence"]), 8)
+        self.assertGreaterEqual(len(result["machine_report_checks"]), 5)
+        self.assertEqual(len(result["historical_diagnostics"]), 2)
+        self.assertTrue(all(item["status"] == "PASS" for item in result["file_evidence"]))
+        self.assertTrue(all(item["provenance_status"] == "verified" for item in result["command_log_evidence"]))
+        self.assertGreaterEqual(sum(item["execution_status"] == "FAIL" for item in result["command_log_evidence"]), 1)
+
+    def test_m6_closeout_provenance_rejects_existing_but_uncommitted_log(self) -> None:
+        if os.environ.get("ATARI_VIDEOCHESS_SKIP_CLONE_RECOVERY_TEST") == "1":
+            self.skipTest("synthetic one-commit portability fixture omits the historical M6 closeout revisions")
+        real_git = audit_m6_closeout_provenance._git
+
+        def hide_head_evidence(root: Path, *args: str, check: bool = True) -> subprocess.CompletedProcess[bytes]:
+            if len(args) >= 3 and args[:2] == ("cat-file", "-e") and args[2].startswith("HEAD:.agents/evidence/logs/"):
+                return subprocess.CompletedProcess(["git", *args], 1, b"", b"")
+            return real_git(root, *args, check=check)
+
+        with patch.object(audit_m6_closeout_provenance, "_git", side_effect=hide_head_evidence):
+            result = audit_m6_closeout_provenance.audit(REPO)
+        self.assertFalse(result["ok"])
+        self.assertTrue(any("not committed at HEAD" in error for error in result["errors"]))
 
     def test_start_authorized_boolean_without_direct_record_is_rejected(self) -> None:
         state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))

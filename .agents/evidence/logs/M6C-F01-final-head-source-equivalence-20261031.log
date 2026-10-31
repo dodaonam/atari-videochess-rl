@@ -1,0 +1,9 @@
+command: git -C /tmp/m6c-postmerge-final-228 diff --quiet 2050db70894f40b8ca4e4b6ebdc7715f1664f3bc 2283153b089c8339456b5abee9acc195f59bd4e3 -- scripts tests
+result: PASS: source and test trees are unchanged since the full-suite-tested commit 2050db70894f40b8ca4e4b6ebdc7715f1664f3bc.
+Exit code: 0
+execution_environment: clean detached local checkout
+git_head: 2283153b089c8339456b5abee9acc195f59bd4e3
+git_tree: 2cc2a727e408bd0bb7fd55a3caa8d2c23802522c
+started_at_utc: 2026-10-31T09:08:13.662884+00:00
+completed_at_utc: 2026-10-31T09:08:13.665210+00:00
+wall_elapsed_seconds: 0.004

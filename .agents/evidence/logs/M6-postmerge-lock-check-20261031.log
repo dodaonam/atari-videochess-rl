@@ -1,0 +1,11 @@
+command: <local-uv> lock --check --offline
+result: PASS: committed uv.lock is consistent with the project configuration; no dependency installation or lockfile mutation.
+Exit code: 0
+execution_environment: local CPU; uv 0.9.26; Python 3.12.3
+git_head: 509f9f83f9249208fd5adba572efed2d2f0f82ff
+started_at_utc: 2026-10-31T07:43:26.696882Z
+completed_at_utc: 2026-10-31T07:43:26.740171Z
+
+--- command output ---
+Using CPython 3.12.3 interpreter at: /usr/bin/python3.12
+Resolved 18 packages in 1ms
