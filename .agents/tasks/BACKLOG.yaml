@@ -5757,6 +5757,32 @@
             "git_revision": "a80dbae1e9185d0e5545803710b0793f3405aa84",
             "log_path": ".agents/evidence/logs/M7-004-final-clean-clone-focused-tests-20261101.log"
           }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "RESULT: PASS with expected ARTIFACT_MANIFEST_REQUIRED warning only.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-11-01T04:39:48.585489Z",
+            "recorded_at_utc": "2026-11-01T04:39:55Z",
+            "exit_code": 0,
+            "git_revision": "e23e8f3cc64ec2797697bc4116f215907b3d9c31",
+            "log_path": ".agents/evidence/logs/M7-004-final-local-preflight-20261101.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONPATH=. <project-python> -m unittest tests.test_m7_delivery_docs tests.test_m7_artifact_manifest_cli tests.test_pre_m7_contracts tests.test_agent_context.AgentContextRecoveryTests.test_m7_004_done_for_review_and_m7_005_remains_unstarted tests.test_agent_context.AgentContextRecoveryTests.test_m6_pm_acceptance_is_historical_and_g4_is_now_approved_for_m7_evaluation -v",
+          "result": "RESULT: PASS; 24 focused tests; 0 failures.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-11-01T04:39:48.587681Z",
+            "recorded_at_utc": "2026-11-01T04:39:55Z",
+            "exit_code": 0,
+            "git_revision": "e23e8f3cc64ec2797697bc4116f215907b3d9c31",
+            "log_path": ".agents/evidence/logs/M7-004-final-local-focused-tests-20261101.log"
+          }
         }
       ],
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
@@ -5779,5 +5805,5 @@
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
     }
   ],
-  "updated_at_utc": "2026-11-01T04:39:19Z"
+  "updated_at_utc": "2026-11-01T04:40:22Z"
 }

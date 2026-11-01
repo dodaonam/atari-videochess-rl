@@ -50,6 +50,8 @@ This record preserves documented failures encountered while preparing delivery e
 
 After the canonical M7-004 completion state was committed at source revision a80dbae1e9185d0e5545803710b0793f3405aa84, another clean clone passed preflight with only ARTIFACT_MANIFEST_REQUIRED and passed the 24 focused documentation/manifest/governance tests. See the final clean-clone preflight and focused-test logs. These results include the final done/pending gate pointers.
 
+After the evidence records were linked at source revision e23e8f3cc64ec2797697bc4116f215907b3d9c31, repository preflight and the 24-test focused suite passed again; the only preflight warning remains the expected artifact-manifest requirement.
+
 ## 7. Verification boundary
 
 The incorrect-path and interpreter failures are diagnostic failures, not frozen experiment results. The successful checks used accepted identities, did not repair or regenerate historical artifacts, and did not add campaign attempts. M7-004 focused/full-suite and clean-clone outcomes are recorded separately in the M7-004 acceptance evidence.
