@@ -4,16 +4,20 @@
 
 **Integration branch:** initial-idea
 
-**M7-004 base revision:** d7332b91128d3daf919421db2e71a9f2ee4b48ec (PR #18 merge)
+**M7-004 integration:** 0f45fa06c235658da48d3d41a9091c06580bfe27 (PR #19 merge)
 
-**Current status:** M7-004 engineering package complete and prepared for Independent PM review; G5 remains NOT APPROVED.
+**Current status:** M7-001 through M7-005 are complete as engineering tasks on the M7-005 submission branch. G4 is approved with scientific limitations; G5 remains NOT APPROVED pending Independent PM review. The owner disposition is NO RELEASE / NO PUBLICATION AUTHORIZED.
 
 
 ## Project overview and governance
 
 The project built a legal-action-conditioned supervised behavior model (M4), trained custom Double DQN policies in the M2 chess simulator (M5), integrated frozen policies with ALE RGB and cursor control (M6), then ran and analyzed the frozen Option B ALE comparison (M7 Phase I). The evidence does not establish strong chess play, Atari RL superiority, equivalence, broad generalization, Elo, or satisfaction of academic requirement O-02.
 
-The canonical status is in .agents/state/PROJECT_STATE.yaml and .agents/tasks/BACKLOG.yaml. At this delivery handover, M7-001 through M7-004 are done as engineering tasks; M7-005 is pending and unstarted. G0–G4 are approved in canonical state; G4 is specifically APPROVED WITH SCIENTIFIC LIMITATIONS for M7-01 through M7-03. G5 is NOT APPROVED. The original owner authorization M7-AUTH-20261031-OPTION-B remains unchanged; it does not authorize release.
+The canonical status is in .agents/state/PROJECT_STATE.yaml and .agents/tasks/BACKLOG.yaml. The M7-004 submission snapshot recorded M7-005 as pending and unstarted; that point-in-time statement is superseded by the M7-005 closeout update below. G0–G4 are approved in canonical state; G4 is specifically APPROVED WITH SCIENTIFIC LIMITATIONS for M7-01 through M7-03. G5 is NOT APPROVED. The original owner authorization M7-AUTH-20261031-OPTION-B remains unchanged and is retained separately from the new M7-005-only authorization.
+
+## M7-005 closeout update — 2026-11-01
+
+The Project Owner directly authorized M7-005 and selected **NO RELEASE / NO PUBLICATION AUTHORIZED**. The decision, artifact-by-artifact disposition, acceptance evidence, verification record, and G5 review request are linked from [M7-005 acceptance](../../.agents/evidence/M7-005-acceptance-20261101.md), [release disposition](RELEASE_DISPOSITION.md), and [G5 review handover](../../.agents/evidence/M7-G5-review-handover-20261101.md). M7-005 is complete at the engineering level on its feature branch. This does not approve G5, merge the PR, or authorize a release. The next action is Independent PM review of the M7-005 PR and an explicit G5 decision.
 
 Independent PM source: [G4 acceptance record](../../.agents/evidence/G4-PM-acceptance-20261101.md), [source decision comment on PR #17](https://github.com/dodaonam/atari-videochess-rl/pull/17#issuecomment-6552570969), and [PR #17 merge](https://github.com/dodaonam/atari-videochess-rl/pull/17) at 2bca79001ed94324b725dce2dfdc485e3a51ad3e. PR #18 integrated that decision and canonical closeout at d7332b91128d3daf919421db2e71a9f2ee4b48ec.
 
@@ -79,7 +83,7 @@ There were 1,670/1,670 valid legal selections, 1,581/1,670 RGB-verified initiate
 | RSK-014 | Accepted M5 residual provenance limitation; byte-identical source across all historical runs is not established |
 | PM6-F06 | Accepted M6 v2 metadata erratum; original evidence remains immutable |
 | M7 limitations | Censoring, one opponent, White-only, three training-seed pairs, controller uncertainty, and private raw artifacts |
-| G5 / M7-005 | G5 not approved; M7-005 pending; no release/publication authorization |
+| G5 / M7-005 | M7-005 engineering complete; G5 not approved and pending Independent PM review; no release/publication authorization |
 
 O-03 and O-04 are also tracked in canonical requirements/state. Course expectations and resource authorization must not be inferred from prior experiment settings.
 
@@ -101,8 +105,8 @@ O-03 and O-04 are also tracked in canonical requirements/state. Course expectati
 - **Independent Project Manager:** ChatGPT; responsible for independent review and gate disposition.
 - **Project Owner:** Nam; owns scope, artifact access, and any future release authorization.
 
-G5 is not approved. M7-005 has not started and remains pending. No public model, dataset, ROM, raw trace, or private artifact release is authorized. The next action for this package is Independent PM review of the M7-004/M7-04 evidence and exact PR HEAD. Do not treat this handover as G5 approval or permission to publish.
+G5 is not approved. M7-005 is complete as engineering work and awaits Independent PM review. No public model, dataset, ROM, raw trace, or private artifact release is authorized. The next action is Independent PM review of the M7-005/G5 package and exact PR HEAD. Do not treat this handover as G5 approval or permission to publish.
 
 ## Delivery revision
 
-This file is versioned in the M7-004 feature PR. The PR metadata and M7-004 acceptance evidence record the exact final feature HEAD, base revision, checks, and CI result. No merge is claimed here.
+The M7-004 delivery snapshot was submitted in PR #19 and merged at `0f45fa06c235658da48d3d41a9091c06580bfe27`. The current M7-005 PR metadata and acceptance record identify the separate feature HEAD, base revision, checks, and CI result. The M7-005 PR remains open and unmerged pending Independent PM review.

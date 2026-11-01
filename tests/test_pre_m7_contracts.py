@@ -51,7 +51,7 @@ class PreM7ContractTests(unittest.TestCase):
             with self.subTest(task=task_id):
                 self.assertEqual(self.tasks[task_id]["acceptance_criteria_ids"], criteria)
 
-    def test_m7_004_complete_m7_005_pending_and_g5_unapproved(self) -> None:
+    def test_m7_engineering_complete_g5_unapproved_and_no_release(self) -> None:
         m7_ids = [f"M7-{number:03d}" for number in range(1, 6)]
         for task_id in m7_ids:
             task = self.tasks[task_id]
@@ -64,7 +64,7 @@ class PreM7ContractTests(unittest.TestCase):
         for task_id in ("M7-001", "M7-002", "M7-003"):
             self.assertEqual(self.tasks[task_id]["status"], "done")
         self.assertEqual(self.tasks["M7-004"]["status"], "done")
-        self.assertEqual(self.tasks["M7-005"]["status"], "pending")
+        self.assertEqual(self.tasks["M7-005"]["status"], "done")
         self.assertEqual(self.tasks["M7-001"]["depends_on"], ["M4-001", "M5-001", "M6-001", "M2-001", "M3-001"])
         self.assertEqual(self.tasks["M7-002"]["depends_on"], ["M7-001"])
         self.assertEqual(self.tasks["M7-003"]["depends_on"], ["M7-002"])
@@ -79,20 +79,24 @@ class PreM7ContractTests(unittest.TestCase):
         # G5 owns M7-05 acceptance; making G5 a prerequisite to start its own
         # deliverable would create a circular gate dependency.
         self.assertIsNone(self.tasks["M7-005"]["requires_user_gate_approval"])
-        self.assertIn("G5-owned", self.tasks["M7-005"]["next_action"])
+        self.assertEqual(self.tasks["M7-005"]["next_action"], "")
         engineering = self.state["engineering"]
         self.assertEqual(engineering["next_milestone"], "M7")
-        self.assertEqual(engineering["active_milestone"], "M7")
-        self.assertEqual(engineering["next_milestone_status"], "pending_user_approval")
+        self.assertIsNone(engineering["active_milestone"])
+        self.assertEqual(engineering["next_milestone_status"], "complete")
         self.assertFalse(engineering["start_authorized"])
-        self.assertIn("M7-005", engineering["hold_reason"])
+        self.assertIn("G5", engineering["hold_reason"])
         self.assertEqual(engineering["start_authorization_record"]["authorization_id"], "M7-AUTH-20261031-OPTION-B")
         self.assertEqual(engineering["start_authorization_record"]["task_id"], "M7-001")
         self.assertEqual(engineering["start_authorization_record"]["evidence_path"], ".agents/evidence/M7-001-authorization-20261031.md")
-        self.assertEqual(self.state["task_refs"], {"active_task_id": None, "next_task_id": "M7-005"})
+        self.assertEqual(self.state["task_refs"], {"active_task_id": None, "next_task_id": None})
+        self.assertTrue(any(
+            item.get("path") == ".agents/evidence/M7-005-authorization-20261101.md"
+            for item in self.tasks["M7-005"]["evidence"]
+        ))
         self.assertEqual(self.state["governance"]["approved_gates"], ["G0", "G1", "G2", "G3", "G4"])
-        self.assertEqual(self.state["governance"]["current_gate"], "G4")
-        self.assertEqual(self.state["governance"]["gate_status"], "approved")
+        self.assertEqual(self.state["governance"]["current_gate"], "G5")
+        self.assertEqual(self.state["governance"]["gate_status"], "ready_for_user_review")
         self.assertEqual(self.state["governance"]["next_governance_gate"], "G5")
         g4 = (REPO / ".agents/evidence/G4-PM-acceptance-20261101.md").read_text(encoding="utf-8")
         self.assertIn("issuecomment-6552570969", g4)
@@ -104,6 +108,14 @@ class PreM7ContractTests(unittest.TestCase):
         self.assertIn("HOLD / NOT APPROVED", auth_evidence)
         self.assertIn("M7-004 and M7-005 remain gated", auth_evidence)
         self.assertIn("independent PM has approved G4", auth_evidence)
+        self.assertTrue(any(
+            item.get("path") == ".agents/evidence/M7-005-acceptance-20261101.md"
+            for item in self.tasks["M7-005"]["evidence"]
+        ))
+        release = (REPO / "docs/07-delivery/RELEASE_DISPOSITION.md").read_text(encoding="utf-8")
+        self.assertIn("NO RELEASE / NO PUBLICATION AUTHORIZED", release)
+        self.assertIn("O-06", release)
+        self.assertNotIn("G5", self.state["governance"]["approved_gates"])
         self.assertEqual(self.tasks["M6-001"]["status"], "done")
 
     def test_canonical_state_and_backlog_are_json_yaml_and_dependency_valid(self) -> None:

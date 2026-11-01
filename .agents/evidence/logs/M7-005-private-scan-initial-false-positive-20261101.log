@@ -1,0 +1,3 @@
+executed_at_utc=2026-11-01T05:24:52Z
+new_or_modified_private_path_or_credential_matches= [('.agents/state/BLOCKERS.md', '/home/[^\\\\s`]+'), ('.agents/tasks/BACKLOG.yaml', '/home/[^\\\\s`]+'), ('tests/test_m7_delivery_docs.py', '/home/[^\\\\s`]+'), ('tests/test_m7_delivery_docs.py', '/Users/[^\\\\s`]+'), ('tests/test_m7_release_disposition.py', '/home/[^\\\\s`]+'), ('tests/test_m7_release_disposition.py', '/root/[^\\\\s`]+'), ('tests/test_m7_release_disposition.py', '/Users/[^\\\\s`]+'), ('tests/test_pre_m7_contracts.py', '/home/[^\\\\s`]+')]
+Exit code: 1

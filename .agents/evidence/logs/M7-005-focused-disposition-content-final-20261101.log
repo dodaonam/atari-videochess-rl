@@ -1,0 +1,10 @@
+executed_at_utc=2026-11-01T05:12:44Z
+test_inventory_covers_restricted_artifact_classes_and_rights (tests.test_m7_release_disposition.M7ReleaseDispositionTests.test_inventory_covers_restricted_artifact_classes_and_rights) ... ok
+test_g5_handover_preserves_accepted_scientific_boundaries (tests.test_m7_release_disposition.M7ReleaseDispositionTests.test_g5_handover_preserves_accepted_scientific_boundaries) ... ok
+test_delivery_documents_and_governance_records_have_no_machine_paths (tests.test_m7_release_disposition.M7ReleaseDispositionTests.test_delivery_documents_and_governance_records_have_no_machine_paths) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.006s
+
+OK
+exit_code=0
