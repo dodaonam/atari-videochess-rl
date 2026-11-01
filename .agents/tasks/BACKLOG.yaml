@@ -5848,6 +5848,20 @@
             "git_revision": "c6f69b6096aa066dcca68c1246a2c488c839f9be",
             "log_path": ".agents/evidence/logs/M7-004-model-design-clean-clone-focused-tests-20261101.log"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/G5-PM-acceptance-20261101.md",
+          "detail": "Authentic Independent PM G5 disposition for M7-04 and M7-05, sourced from the exact PR #20 decision comment and bounded by scientific, environment-verification, and no-release limitations.",
+          "result": "G5 APPROVED WITH SCIENTIFIC, ENVIRONMENT-VERIFICATION, AND NO-RELEASE LIMITATIONS; M7-04/M7-05 accepted; G5-F01 resolved. NO RELEASE / NO PUBLICATION AUTHORIZED.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-11-01T10:52:33Z",
+            "recorded_at_utc": "2026-11-01T10:52:55Z",
+            "exit_code": null,
+            "git_revision": "0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b",
+            "log_path": ".agents/evidence/logs/G5-source-verification-20261101.log"
+          }
         }
       ],
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
@@ -6019,6 +6033,20 @@
             "exit_code": 0,
             "git_revision": "5503ba83e8141ee0df26daffd491e745edf6cf69",
             "log_path": ".agents/evidence/logs/M7-005-submission-head-private-scan-20261101.log"
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/G5-PM-acceptance-20261101.md",
+          "detail": "Authentic Independent PM G5 disposition for M7-04 and M7-05, sourced from the exact PR #20 decision comment and bounded by scientific, environment-verification, and no-release limitations.",
+          "result": "G5 APPROVED WITH SCIENTIFIC, ENVIRONMENT-VERIFICATION, AND NO-RELEASE LIMITATIONS; M7-04/M7-05 accepted; G5-F01 resolved. NO RELEASE / NO PUBLICATION AUTHORIZED.",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-11-01T10:52:33Z",
+            "recorded_at_utc": "2026-11-01T10:52:55Z",
+            "exit_code": null,
+            "git_revision": "0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b",
+            "log_path": ".agents/evidence/logs/G5-source-verification-20261101.log"
           }
         }
       ],

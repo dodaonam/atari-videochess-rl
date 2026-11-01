@@ -4,7 +4,7 @@
 
 ## Current status
 
-G0–G4 are approved; G4 is limited to M7-01–M7-03 and retains the qualifications in `.agents/evidence/G4-PM-acceptance-20261101.md`. G5 remains unapproved pending Independent PM review of the M7-005 PR. PR #19 integrated M7-004 at `0f45fa06c235658da48d3d41a9091c06580bfe27`. M0-001 through M6-001 and M7-001 through M7-005 are complete as engineering tasks on the submitted M7-005 branch. The owner decision is NO RELEASE / NO PUBLICATION AUTHORIZED; no release, upload, or deployment is authorized. M6 v1/v2 remain distinct and immutable, including PM6-F06. There are no active technical blockers. O-02–O-08 and accepted residual RSK-014 retain their existing scope and status.
+G0–G5 are approved, with G4 limited to M7-01–M7-03 and G5 limited by the scientific, environment-verification, and no-release qualifications recorded in `.agents/evidence/G4-PM-acceptance-20261101.md` and `.agents/evidence/G5-PM-acceptance-20261101.md`. The G5 PM decision was issued on PR #20 and its approved content was integrated at `0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b`; a separate governance-closeout PR proposes the canonical state transition and awaits Independent PM review. M0-001 through M6-001 and M7-001 through M7-005 are complete as engineering tasks. The owner decision is NO RELEASE / NO PUBLICATION AUTHORIZED; no release, upload, or deployment is authorized. M6 v1/v2 remain distinct and immutable, including PM6-F06. There are no active technical blockers. O-02–O-08 and accepted residual RSK-014 retain their existing scope and status.
 
 ## Record format
 

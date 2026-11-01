@@ -51,7 +51,7 @@ class PreM7ContractTests(unittest.TestCase):
             with self.subTest(task=task_id):
                 self.assertEqual(self.tasks[task_id]["acceptance_criteria_ids"], criteria)
 
-    def test_m7_engineering_complete_g5_unapproved_and_no_release(self) -> None:
+    def test_m7_engineering_complete_g5_approved_with_no_release(self) -> None:
         m7_ids = [f"M7-{number:03d}" for number in range(1, 6)]
         for task_id in m7_ids:
             task = self.tasks[task_id]
@@ -94,10 +94,10 @@ class PreM7ContractTests(unittest.TestCase):
             item.get("path") == ".agents/evidence/M7-005-authorization-20261101.md"
             for item in self.tasks["M7-005"]["evidence"]
         ))
-        self.assertEqual(self.state["governance"]["approved_gates"], ["G0", "G1", "G2", "G3", "G4"])
+        self.assertEqual(self.state["governance"]["approved_gates"], ["G0", "G1", "G2", "G3", "G4", "G5"])
         self.assertEqual(self.state["governance"]["current_gate"], "G5")
-        self.assertEqual(self.state["governance"]["gate_status"], "ready_for_user_review")
-        self.assertEqual(self.state["governance"]["next_governance_gate"], "G5")
+        self.assertEqual(self.state["governance"]["gate_status"], "approved")
+        self.assertIsNone(self.state["governance"]["next_governance_gate"])
         g4 = (REPO / ".agents/evidence/G4-PM-acceptance-20261101.md").read_text(encoding="utf-8")
         self.assertIn("issuecomment-6552570969", g4)
         self.assertIn("2bca79001ed94324b725dce2dfdc485e3a51ad3e", g4)
@@ -115,8 +115,36 @@ class PreM7ContractTests(unittest.TestCase):
         release = (REPO / "docs/07-delivery/RELEASE_DISPOSITION.md").read_text(encoding="utf-8")
         self.assertIn("NO RELEASE / NO PUBLICATION AUTHORIZED", release)
         self.assertIn("O-06", release)
-        self.assertNotIn("G5", self.state["governance"]["approved_gates"])
+        self.assertIn("G5", self.state["governance"]["approved_gates"])
         self.assertEqual(self.tasks["M6-001"]["status"], "done")
+
+    def test_g5_status_requires_the_recorded_independent_pm_decision(self) -> None:
+        decision = read_json(".agents/evidence/G5-PM-acceptance-20261101.json")
+        self.assertEqual(decision["decision"], "approved_with_limitations")
+        self.assertEqual(
+            decision["decision_text"],
+            "G5 APPROVED WITH SCIENTIFIC, ENVIRONMENT-VERIFICATION, AND NO-RELEASE LIMITATIONS",
+        )
+        self.assertEqual(decision["authority"]["source_comment_id"], 6556836388)
+        self.assertEqual(
+            decision["authority"]["source_url"],
+            "https://github.com/dodaonam/atari-videochess-rl/pull/20#issuecomment-6556836388",
+        )
+        self.assertEqual(decision["review_target"]["approved_head"], "ec7ab8c0fe097004eb4d37018be898c68f41364b")
+        self.assertEqual(decision["review_target"]["base_sha"], "0f45fa06c235658da48d3d41a9091c06580bfe27")
+        self.assertEqual(decision["integration"]["merge_commit_sha"], "0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b")
+        self.assertEqual(
+            decision["integration"]["parent_shas"],
+            [decision["review_target"]["base_sha"], decision["review_target"]["approved_head"]],
+        )
+        self.assertEqual(decision["accepted_scope"], ["M7-04", "M7-05"])
+        self.assertEqual(decision["finding"], {"id": "G5-F01", "status": "resolved"})
+        self.assertFalse(decision["release_authorization"]["authorized"])
+        self.assertFalse(decision["release_authorization"]["g5_approval_grants_distribution_rights"])
+        self.assertIn("G5", self.state["governance"]["approved_gates"])
+        self.assertEqual(self.state["governance"]["gate_status"], "approved")
+        self.assertFalse(self.state["engineering"]["start_authorized"])
+        self.assertEqual(self.state["engineering"]["next_milestone_status"], "complete")
 
     def test_canonical_state_and_backlog_are_json_yaml_and_dependency_valid(self) -> None:
         self.assertEqual(self.state["format"], "JSON-compatible YAML 1.2")

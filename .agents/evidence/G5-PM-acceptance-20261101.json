@@ -1,0 +1,107 @@
+{
+  "format": "JSON-compatible YAML 1.2",
+  "schema_version": 1,
+  "decision_id": "G5-PM-20261101-APPROVED-WITH-LIMITATIONS",
+  "project_id": "atari-videochess-rl",
+  "gate": "G5",
+  "decision": "approved_with_limitations",
+  "decision_text": "G5 APPROVED WITH SCIENTIFIC, ENVIRONMENT-VERIFICATION, AND NO-RELEASE LIMITATIONS",
+  "authority": {
+    "role": "Independent Project Manager",
+    "source_url": "https://github.com/dodaonam/atari-videochess-rl/pull/20#issuecomment-6556836388",
+    "source_comment_id": 6556836388,
+    "created_at_utc": "2026-11-01T10:39:28Z",
+    "github_author_login": "dodaonam",
+    "github_author_association": "OWNER",
+    "attribution_note": "The comment body identifies itself as the Independent PM final review. GitHub identifies the posting account as dodaonam with OWNER association; this record does not infer a distinct account identity from the comment."
+  },
+  "review_target": {
+    "pull_request": 20,
+    "url": "https://github.com/dodaonam/atari-videochess-rl/pull/20",
+    "base_branch": "initial-idea",
+    "base_sha": "0f45fa06c235658da48d3d41a9091c06580bfe27",
+    "approved_head": "ec7ab8c0fe097004eb4d37018be898c68f41364b"
+  },
+  "integration": {
+    "status": "merged",
+    "merge_method": "merge",
+    "previous_integration_sha": "0f45fa06c235658da48d3d41a9091c06580bfe27",
+    "merge_commit_sha": "0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b",
+    "parent_shas": [
+      "0f45fa06c235658da48d3d41a9091c06580bfe27",
+      "ec7ab8c0fe097004eb4d37018be898c68f41364b"
+    ],
+    "merged_at_utc": "2026-11-01T10:47:15Z",
+    "merge_url": "https://github.com/dodaonam/atari-videochess-rl/pull/20"
+  },
+  "accepted_scope": ["M7-04", "M7-05"],
+  "finding": {
+    "id": "G5-F01",
+    "status": "resolved"
+  },
+  "m7_04": {
+    "status": "accepted",
+    "prior_delivery_review_url": "https://github.com/dodaonam/atari-videochess-rl/pull/19#issuecomment-6553580590",
+    "deliverables": [
+      "docs/07-delivery/FINAL_REPORT.md",
+      "docs/07-delivery/MODEL_CARD.md",
+      "docs/07-delivery/USER_GUIDE.md",
+      "docs/07-delivery/HANDOVER.md"
+    ],
+    "environment_verification_limitation": "Unfiltered clean-clone suite had one unavailable-Stockfish UCI readiness failure and three skips; the precisely filtered suite passed with only that test excluded."
+  },
+  "m7_05": {
+    "status": "accepted",
+    "acceptance_basis": "The explicit owner-controlled no-release disposition is recorded and no unauthorized release occurred.",
+    "owner_decision_id": "M7-REL-DISP-20261101-NO-RELEASE",
+    "release_authorized": false,
+    "release_disposition": "NO RELEASE / NO PUBLICATION AUTHORIZED"
+  },
+  "scientific_limitations": [
+    "M7 recorded 90 scheduled and started/reset-observed attempts, 60 terminal White losses, 30 incomplete attempts, zero wins, and zero draws; incomplete attempts are not terminal outcomes.",
+    "Only 9/30 Warm/Scratch matched cells had terminal observations; no valid paired confidence interval was available.",
+    "No RL superiority, equivalence, or broad generalization was established.",
+    "No calibrated Elo was reported.",
+    "O-02 and O-06 remain unresolved; RSK-014 and PM6-F06 remain disclosed.",
+    "M4, M5, M6 v1, M6 v2, and M7 remain separate evidence tracks; accepted M3-M7 science was not amended."
+  ],
+  "environment_limitations": {
+    "unfiltered_full_suite": {
+      "tests": 513,
+      "failures": 1,
+      "skipped": 3,
+      "failure": "Stockfish UCI-readiness test could not run successfully because the executable was unavailable.",
+      "passed": false
+    },
+    "precisely_filtered_full_suite": {
+      "tests": 512,
+      "failures": 0,
+      "skipped": 3,
+      "excluded_test": "test_m0_smoke.M0EnvironmentSmokeTests.test_stockfish_answers_uci_readiness_without_searching",
+      "passed": true
+    },
+    "focused_suite": {
+      "tests": 86,
+      "failures": 0,
+      "passed": true
+    },
+    "private_artifact_tests_skipped": 3,
+    "expected_preflight_warning": "ARTIFACT_MANIFEST_REQUIRED",
+    "exact_head_ci": {
+      "url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/41297779574",
+      "workflow": "Repository preflight",
+      "job": "context",
+      "head": "ec7ab8c0fe097004eb4d37018be898c68f41364b",
+      "scope_note": "This check is not the full Python test suite."
+    }
+  },
+  "release_authorization": {
+    "authorized": false,
+    "decision": "NO RELEASE / NO PUBLICATION AUTHORIZED",
+    "g5_approval_grants_distribution_rights": false
+  },
+  "canonical_closeout": {
+    "proposed_on_governance_branch": true,
+    "integration_status_at_record_creation": "pending separate governance-closeout PR review and merge"
+  }
+}

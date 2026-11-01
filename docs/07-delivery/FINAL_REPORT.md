@@ -8,7 +8,7 @@
 
 **G4:** APPROVED WITH SCIENTIFIC LIMITATIONS for M7-01 through M7-03
 
-**G5:** NOT APPROVED
+**G5 (2026-11-01):** APPROVED WITH SCIENTIFIC, ENVIRONMENT-VERIFICATION, AND NO-RELEASE LIMITATIONS for M7-04/M7-05. See [the Independent PM acceptance record](../../.agents/evidence/G5-PM-acceptance-20261101.md) and [official decision comment](https://github.com/dodaonam/atari-videochess-rl/pull/20#issuecomment-6556836388). This gate decision does not grant release or publication permission.
 
 
 > G4 accepts the bounded evaluation evidence and its analysis. It does not establish that the agent plays strong chess, that RL improved Atari performance, or that an academic requirement has been met.

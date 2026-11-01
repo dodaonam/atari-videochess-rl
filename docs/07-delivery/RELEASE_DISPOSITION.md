@@ -5,7 +5,7 @@
 **Owner authorization:** `M7-AUTH-20261101-M7-005-NO-RELEASE`
 **Engineering task / criterion:** M7-005 / M7-05
 **Decision authority:** Project Owner, direct instruction recorded in [the authorization record](../../.agents/evidence/M7-005-authorization-20261101.md)
-**Gates:** G4 approved with scientific limitations for M7-01–M7-03; G5 remains unapproved pending Independent PM review.
+**Gates:** G4 approved with scientific limitations for M7-01–M7-03; G5 approved for M7-04/M7-05 with scientific, environment-verification, and no-release limitations. G5 approval does not change the owner's decision above. See [G5 PM acceptance](../../.agents/evidence/G5-PM-acceptance-20261101.md).
 
 ## Decision and scope
 

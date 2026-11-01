@@ -6,6 +6,8 @@
 **PM status:** G4 approved with scientific limitations; M7-04 accepted as delivery engineering evidence; G5 pending Independent PM decision
 **Owner release decision:** **NO RELEASE / NO PUBLICATION AUTHORIZED**
 
+**Status note:** This dossier's original review request is a pre-decision snapshot. The Independent PM later approved G5 for M7-04/M7-05 with limitations; see the post-decision supplement and [G5-PM acceptance](G5-PM-acceptance-20261101.md). The separate canonical governance-closeout PR still requires independent review.
+
 ## A. Executive verdict
 
 The engineering package is prepared for independent G5 review. The owner has authorized M7-005 engineering and has expressly decided that no model, dataset, ROM, raw record, private artifact, deployment, or release package may be published or distributed. No release is part of this PR. M7 engineering completion does not constitute G5 approval. The verification qualification inherited from M7-004 remains visible: the unfiltered clean-clone suite had one environment failure because Stockfish was unavailable; it is not represented as passing.
@@ -83,3 +85,9 @@ A clean clone at `545c95589b078f5249951d3d869b4eb42fb0f96a` also passed prefligh
 The latest document-bearing PR candidate `0f9cc3942018cd12e82d1643d9b61eb475363c83` passed clean-clone preflight and the same 86 focused contracts. The remaining changes are verification logs/checkpoint metadata; no experiment, source, test, or research conclusion changed. Please review the live exact PR HEAD and its own CI result.
 
 On subsequent PR HEAD `d1cb5b087d196c588696d1cf8e7905536debfb52`, a clean clone again passed preflight and the focused 86-test suite. GitHub Actions `Repository preflight` passed on that exact HEAD in [run 41297568134](https://github.com/dodaonam/atari-videochess-rl/actions/runs/41297568134). The workflow is not the full Python suite. The final PR head may include further evidence-only logs/checkpoint metadata; review its live exact SHA and check before the G5 decision.
+
+## Historical review request and subsequent PM decision — 2026-11-01
+
+The preceding sections are the G5 review dossier as submitted before the PM decision. Their “G5 pending” and review-request statements are historical and are superseded by the actual Independent PM decision at [PR #20 comment 6556836388](https://github.com/dodaonam/atari-videochess-rl/pull/20#issuecomment-6556836388). The PM approved G5 for M7-04/M7-05 with scientific, environment-verification, and no-release limitations, resolved G5-F01, and accepted the exact reviewed PR head `ec7ab8c0fe097004eb4d37018be898c68f41364b` for integration. That PR is now integrated at `0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b`; see [G5 PM acceptance](G5-PM-acceptance-20261101.md).
+
+This record preserves the historical review request and results. The current canonical G5 state update is proposed on a separate governance-closeout PR and remains subject to fresh Independent PM review. **NO RELEASE / NO PUBLICATION AUTHORIZED** remains binding.

@@ -45,6 +45,7 @@ class M7ReleaseDispositionTests(unittest.TestCase):
         cls.disposition = read("docs/07-delivery/RELEASE_DISPOSITION.md")
         cls.acceptance = read(".agents/evidence/M7-005-acceptance-20261101.md")
         cls.handover = read(".agents/evidence/M7-G5-review-handover-20261101.md")
+        cls.g5_pm_acceptance = json.loads(read(".agents/evidence/G5-PM-acceptance-20261101.json"))
         cls.m3_acceptance = read(".agents/evidence/M3-acceptance-20261021.md")
         cls.m3_final = json.loads(read(".agents/evidence/M3-final-closure-record-20261021.json"))
         cls.m3_corrective_release = json.loads(
@@ -213,11 +214,25 @@ class M7ReleaseDispositionTests(unittest.TestCase):
         ))
         self.assertEqual([self.tasks[f"M7-{n:03d}"]["status"] for n in range(1, 6)], ["done"] * 5)
         self.assertIn("G4", self.state["governance"]["approved_gates"])
-        self.assertNotIn("G5", self.state["governance"]["approved_gates"])
+        self.assertIn("G5", self.state["governance"]["approved_gates"])
         self.assertEqual(self.state["governance"]["current_gate"], "G5")
-        self.assertEqual(self.state["governance"]["gate_status"], "ready_for_user_review")
-        self.assertEqual(self.state["governance"]["next_governance_gate"], "G5")
+        self.assertEqual(self.state["governance"]["gate_status"], "approved")
+        self.assertIsNone(self.state["governance"]["next_governance_gate"])
         self.assertEqual(self.state["engineering"]["next_milestone_status"], "complete")
+        self.assertEqual(self.g5_pm_acceptance["decision"], "approved_with_limitations")
+        self.assertEqual(self.g5_pm_acceptance["accepted_scope"], ["M7-04", "M7-05"])
+        self.assertFalse(self.g5_pm_acceptance["release_authorization"]["authorized"])
+
+    def test_pm_approval_does_not_authorize_release_or_close_unrelated_decisions(self) -> None:
+        self.assertEqual(self.g5_pm_acceptance["finding"]["status"], "resolved")
+        self.assertIn("scientific", self.g5_pm_acceptance["decision_text"].lower())
+        self.assertIn("environment-verification", self.g5_pm_acceptance["decision_text"].lower())
+        self.assertIn("no-release", self.g5_pm_acceptance["decision_text"].lower())
+        self.assertFalse(self.g5_pm_acceptance["release_authorization"]["g5_approval_grants_distribution_rights"])
+        self.assertIn("NO RELEASE / NO PUBLICATION AUTHORIZED", read(".agents/evidence/M7-005-owner-no-release-decision-20261101.md"))
+        self.assertEqual(self.state["engineering"]["next_milestone_status"], "complete")
+        self.assertFalse(self.state["engineering"]["start_authorized"])
+        self.assertIn("no new milestone", self.state["engineering"]["hold_reason"].lower())
 
     def test_inventory_covers_restricted_artifact_classes_and_rights(self) -> None:
         for category in (

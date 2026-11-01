@@ -1,0 +1,25 @@
+Started UTC: 2026-11-01T11:13:39Z
+Revision: 0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b plus staged G5 closeout changes.
+Command: git diff --cached --check
+.agents/evidence/G5-PM-acceptance-20261101.md:3: trailing whitespace.
++**Decision ID:** `G5-PM-20261101-APPROVED-WITH-LIMITATIONS`
+.agents/evidence/G5-PM-acceptance-20261101.md:4: trailing whitespace.
++**Decision:** **G5 APPROVED WITH SCIENTIFIC, ENVIRONMENT-VERIFICATION, AND NO-RELEASE LIMITATIONS**
+.agents/evidence/G5-PM-acceptance-20261101.md:5: trailing whitespace.
++**Accepted criteria:** M7-04 and M7-05
+.agents/evidence/G5-PM-acceptance-20261101.md:6: trailing whitespace.
++**Finding:** G5-F01 — resolved
+.agents/evidence/G5-PM-acceptance-20261101.md:7: trailing whitespace.
++**Decision authority:** Independent Project Manager, as identified in the source comment
+.agents/evidence/G5-PR20-integration-authorization-20261101.md:3: trailing whitespace.
++**Authorization ID:** `G5-AUTH-20261101-PR20-INTEGRATION`
+.agents/evidence/G5-PR20-integration-authorization-20261101.md:4: trailing whitespace.
++**Project:** `atari-videochess-rl`
+.agents/evidence/G5-PR20-integration-authorization-20261101.md:5: trailing whitespace.
++**Authority:** Project Owner, direct instruction in the current Codex session
+.agents/evidence/G5-PR20-integration-authorization-20261101.md:6: trailing whitespace.
++**Scope:** Integrate PR #20 only at its exact Independent PM-approved head `ec7ab8c0fe097004eb4d37018be898c68f41364b`, after verifying the official G5 decision, exact base/head, CI, and mergeability.
+Exit code: 2
+Finished UTC: 2026-11-01T11:13:39Z
+
+Sanitization: trailing Markdown spaces echoed by the failed check were removed from this retained diagnostic; the file/line findings and exit code 2 are preserved.

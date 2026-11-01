@@ -47,3 +47,7 @@ Any future release requires a separate, explicit direct Project Owner decision. 
 The authorization was received as the current user instruction in this session. It supplied no external approval URL/comment ID, signature, or separate issuance timestamp; none is fabricated. The recorded date is the session date, not a claimed exact issuance timestamp.
 
 G4 remains **APPROVED WITH SCIENTIFIC LIMITATIONS** for M7-01 through M7-03. PR #19's Independent PM decision accepted M7-04 engineering evidence but explicitly stated it was **not G5 approval**. G5 remains **NOT APPROVED** pending a separate Independent PM decision. Engineering completion of M7-005 does not approve G5.
+
+## Subsequent governance status supplement — 2026-11-01
+
+The preceding paragraph records the status when this owner no-release decision was issued. The Independent PM subsequently approved G5 for M7-04/M7-05 with scientific, environment-verification, and no-release limitations in [the official PR #20 decision](https://github.com/dodaonam/atari-videochess-rl/pull/20#issuecomment-6556836388), and PR #20 was integrated at `0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b`. The PM approval does not change this Project Owner decision: **NO RELEASE / NO PUBLICATION AUTHORIZED.** See [G5 PM acceptance](G5-PM-acceptance-20261101.md) for the decision record and remaining limitations.

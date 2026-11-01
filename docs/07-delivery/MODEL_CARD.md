@@ -2,7 +2,7 @@
 
 **Status:** Research artifacts; no champion model selected; public distribution not authorized. See [the owner release disposition](RELEASE_DISPOSITION.md).
 
-**Governance:** G4 approved with scientific limitations; G5 not approved
+**Governance (2026-11-01):** G4 approved with scientific limitations; G5 approved for M7-04/M7-05 with scientific, environment-verification, and no-release limitations. **NO RELEASE / NO PUBLICATION AUTHORIZED.** See [G5 PM acceptance](../../.agents/evidence/G5-PM-acceptance-20261101.md).
 
 **Scope:** accepted M4 behavior model and six M5 post-RL checkpoints
 

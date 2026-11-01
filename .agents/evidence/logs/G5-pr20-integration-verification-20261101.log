@@ -1,0 +1,12 @@
+Verification started UTC: 2026-11-01T10:52:41Z
+Command: git fetch origin initial-idea; gh pr view 20; git rev-parse/show; git merge-base --is-ancestor
+{"baseRefName":"initial-idea","headRefName":"feature/m7-005-no-release-closeout","headRefOid":"ec7ab8c0fe097004eb4d37018be898c68f41364b","isDraft":false,"mergeCommit":{"oid":"0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b"},"mergedAt":"2026-11-01T10:47:15Z","state":"MERGED"}
+Integration ref: 0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b
+Merge commit and parents:
+0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b
+0f45fa06c235658da48d3d41a9091c06580bfe27 ec7ab8c0fe097004eb4d37018be898c68f41364b
+2026-11-01 17:47:15 +0700
+Merge PR #20: M7-005 G5-approved delivery closeout
+fetch=0 pr=0 ref=0 show=0 approved_head_ancestor=0
+Result: PR #20 merged at 0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b; approved head is included in initial-idea.
+Exit code: 0

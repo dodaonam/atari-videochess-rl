@@ -1,0 +1,25 @@
+Started UTC: 2026-11-01T11:13:55Z
+Revision: 0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b plus staged G5 closeout changes.
+Command: git diff --cached --check
+.agents/evidence/logs/G5-diff-check-format-failure-20261101.log:5: trailing whitespace.
+++**Decision ID:** `G5-PM-20261101-APPROVED-WITH-LIMITATIONS`
+.agents/evidence/logs/G5-diff-check-format-failure-20261101.log:7: trailing whitespace.
+++**Decision:** **G5 APPROVED WITH SCIENTIFIC, ENVIRONMENT-VERIFICATION, AND NO-RELEASE LIMITATIONS**
+.agents/evidence/logs/G5-diff-check-format-failure-20261101.log:9: trailing whitespace.
+++**Accepted criteria:** M7-04 and M7-05
+.agents/evidence/logs/G5-diff-check-format-failure-20261101.log:11: trailing whitespace.
+++**Finding:** G5-F01 — resolved
+.agents/evidence/logs/G5-diff-check-format-failure-20261101.log:13: trailing whitespace.
+++**Decision authority:** Independent Project Manager, as identified in the source comment
+.agents/evidence/logs/G5-diff-check-format-failure-20261101.log:15: trailing whitespace.
+++**Authorization ID:** `G5-AUTH-20261101-PR20-INTEGRATION`
+.agents/evidence/logs/G5-diff-check-format-failure-20261101.log:17: trailing whitespace.
+++**Project:** `atari-videochess-rl`
+.agents/evidence/logs/G5-diff-check-format-failure-20261101.log:19: trailing whitespace.
+++**Authority:** Project Owner, direct instruction in the current Codex session
+.agents/evidence/logs/G5-diff-check-format-failure-20261101.log:21: trailing whitespace.
+++**Scope:** Integrate PR #20 only at its exact Independent PM-approved head `ec7ab8c0fe097004eb4d37018be898c68f41364b`, after verifying the official G5 decision, exact base/head, CI, and mergeability.
+Exit code: 2
+Finished UTC: 2026-11-01T11:13:55Z
+
+Sanitization: trailing Markdown spaces echoed from the earlier retained diagnostic were removed from this retained diagnostic; the file/line findings and exit code 2 are preserved.
