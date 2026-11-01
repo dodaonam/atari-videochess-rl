@@ -51,7 +51,7 @@ class PreM7ContractTests(unittest.TestCase):
             with self.subTest(task=task_id):
                 self.assertEqual(self.tasks[task_id]["acceptance_criteria_ids"], criteria)
 
-    def test_phase_one_is_authorized_and_phase_two_remains_g4_gated(self) -> None:
+    def test_phase_one_is_accepted_and_phase_two_respects_g4_and_g5_gates(self) -> None:
         m7_ids = [f"M7-{number:03d}" for number in range(1, 6)]
         for task_id in m7_ids:
             task = self.tasks[task_id]
@@ -72,7 +72,10 @@ class PreM7ContractTests(unittest.TestCase):
         self.assertEqual(self.tasks["M7-005"]["depends_on"], ["M7-004"])
         self.assertTrue(all(self.tasks[f"M7-{n:03d}"]["requires_user_gate_approval"] is None for n in (1, 2, 3)))
         self.assertEqual(self.tasks["M7-004"]["requires_user_gate_approval"], "G4")
-        self.assertEqual(self.tasks["M7-005"]["requires_user_gate_approval"], "G4")
+        # G5 owns M7-05 acceptance; making G5 a prerequisite to start its own
+        # deliverable would create a circular gate dependency.
+        self.assertIsNone(self.tasks["M7-005"]["requires_user_gate_approval"])
+        self.assertIn("G5-owned", self.tasks["M7-005"]["next_action"])
         engineering = self.state["engineering"]
         self.assertEqual(engineering["next_milestone"], "M7")
         self.assertEqual(engineering["active_milestone"], "M7")
@@ -82,8 +85,15 @@ class PreM7ContractTests(unittest.TestCase):
         self.assertEqual(engineering["start_authorization_record"]["task_id"], "M7-001")
         self.assertEqual(engineering["start_authorization_record"]["evidence_path"], ".agents/evidence/M7-001-authorization-20261031.md")
         self.assertEqual(self.state["task_refs"], {"active_task_id": None, "next_task_id": "M7-004"})
-        self.assertEqual(self.state["governance"]["approved_gates"], ["G0", "G1", "G2", "G3"])
-        self.assertEqual(self.state["governance"]["next_governance_gate"], "G4")
+        self.assertEqual(self.state["governance"]["approved_gates"], ["G0", "G1", "G2", "G3", "G4"])
+        self.assertEqual(self.state["governance"]["current_gate"], "G4")
+        self.assertEqual(self.state["governance"]["gate_status"], "approved")
+        self.assertEqual(self.state["governance"]["next_governance_gate"], "G5")
+        g4 = (REPO / ".agents/evidence/G4-PM-acceptance-20261101.md").read_text(encoding="utf-8")
+        self.assertIn("issuecomment-6552570969", g4)
+        self.assertIn("2bca79001ed94324b725dce2dfdc485e3a51ad3e", g4)
+        self.assertIn("G5 remains **NOT APPROVED**", g4)
+        self.assertIn("NO RELEASE / NO PUBLICATION AUTHORIZED", g4)
         auth_evidence = (REPO / ".agents/evidence/M7-001-authorization-20261031.md").read_text(encoding="utf-8")
         self.assertIn("M7-001, M7-002, and M7-003", auth_evidence)
         self.assertIn("HOLD / NOT APPROVED", auth_evidence)

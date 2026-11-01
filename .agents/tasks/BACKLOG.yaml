@@ -5300,6 +5300,20 @@
             "git_revision": "58a604f2bd4bcd9113a047ee709a80ee97bd02a6",
             "log_path": null
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/G4-PM-acceptance-20261101.md",
+          "detail": "Independent PM G4 acceptance of this evaluation criterion, bounded by the scientific limitations in the source decision.",
+          "result": "**Decision: APPROVE G4 for the bounded M7 Option B evaluation evidence (M7-01 through M7-03), with explicit scientific limitations.**",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-11-01T03:13:18Z",
+            "recorded_at_utc": "2026-11-01T03:13:25Z",
+            "exit_code": null,
+            "git_revision": "2bca79001ed94324b725dce2dfdc485e3a51ad3e",
+            "log_path": ".agents/evidence/logs/G4-source-verification-20261101.log"
+          }
         }
       ],
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
@@ -5509,6 +5523,20 @@
             "git_revision": "e6e9edc8385f4305719a0234f896d032bb21d4fa",
             "log_path": null
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/G4-PM-acceptance-20261101.md",
+          "detail": "Independent PM G4 acceptance of this evaluation criterion, bounded by the scientific limitations in the source decision.",
+          "result": "**Decision: APPROVE G4 for the bounded M7 Option B evaluation evidence (M7-01 through M7-03), with explicit scientific limitations.**",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-11-01T03:13:18Z",
+            "recorded_at_utc": "2026-11-01T03:13:25Z",
+            "exit_code": null,
+            "git_revision": "2bca79001ed94324b725dce2dfdc485e3a51ad3e",
+            "log_path": ".agents/evidence/logs/G4-source-verification-20261101.log"
+          }
         }
       ],
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
@@ -5541,6 +5569,20 @@
             "git_revision": "fe2cc4cc5e477841ffbc9368235eb9c5675f2f74",
             "log_path": null
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/G4-PM-acceptance-20261101.md",
+          "detail": "Independent PM G4 acceptance of this evaluation criterion, bounded by the scientific limitations in the source decision.",
+          "result": "**Decision: APPROVE G4 for the bounded M7 Option B evaluation evidence (M7-01 through M7-03), with explicit scientific limitations.**",
+          "provenance": {
+            "status": "manual_verified",
+            "executed_at_utc": "2026-11-01T03:13:18Z",
+            "recorded_at_utc": "2026-11-01T03:13:25Z",
+            "exit_code": null,
+            "git_revision": "2bca79001ed94324b725dce2dfdc485e3a51ad3e",
+            "log_path": ".agents/evidence/logs/G4-source-verification-20261101.log"
+          }
         }
       ],
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
@@ -5550,7 +5592,7 @@
       "title": "Prepare evidence-linked delivery documents",
       "milestone": "M7",
       "status": "pending",
-      "next_action": "Wait for independent PM approval of G4 and verification of that decision in canonical state. Do not start delivery work while G4 is unapproved.",
+      "next_action": "Wait for independent PM review and merge of the G4 governance-record PR (#18); verify the integrated initial-idea canonical state records G4 approved before starting delivery documentation.",
       "depends_on": [
         "M7-003"
       ],
@@ -5567,11 +5609,11 @@
       "title": "Record release and publication disposition",
       "milestone": "M7",
       "status": "pending",
-      "next_action": "Wait for M7-004 and G4/G5 independent review. Record no release unless a separate direct owner release authorization is received.",
+      "next_action": "Wait for M7-004. This G5-owned task requires independent G5 acceptance; record NO RELEASE / NO PUBLICATION unless separate direct Project Owner release authorization is received, which is not currently authorized.",
       "depends_on": [
         "M7-004"
       ],
-      "requires_user_gate_approval": "G4",
+      "requires_user_gate_approval": null,
       "acceptance_criteria_ids": [
         "M7-05"
       ],
@@ -5580,5 +5622,5 @@
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
     }
   ],
-  "updated_at_utc": "2026-10-31T16:02:51Z"
+  "updated_at_utc": "2026-11-01T03:22:25Z"
 }
