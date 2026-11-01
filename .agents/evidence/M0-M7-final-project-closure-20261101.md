@@ -71,6 +71,8 @@ At clean-clone source revision `2a26ce76c95eedfa216d31d482f6c0fd942e7fd5`, `pyth
 
 The same preflight, focused suite, and unfiltered full suite were rerun on PR HEAD `6504ecaea7b685d22fdb2d2effae4e0cb3588a78` after the clean-clone evidence update: preflight passed, 91 focused tests passed, and 524 full tests passed with three skips. Exact-HEAD GitHub Actions run [41309565210](https://github.com/dodaonam/atari-videochess-rl/actions/runs/41309565210) succeeded on that revision. The full suite used the already-existing project environment; no package or system dependency was installed. The final G5-F02 record separates these checks from earlier system-Python diagnostics and retains all failures/remediation chronology.
 
+After C3 preflight found three C2 log links missing from the committed tree, C4 committed those logs. A fresh C4 clone passed preflight and all 91 focused governance/delivery/context tests; exact-head GitHub Actions run [41310316412](https://github.com/dodaonam/atari-videochess-rl/actions/runs/41310316412) succeeded. C4 changes only sanitized verification logs and checkpoint history; no application/test source or experimental evidence changed after the 524-test full-suite pass at C2.
+
 The path-level diff contains governance state, sanitized documentation/evidence, regression tests, and checkpoint history only. It contains no M3–M7 dataset, metric, raw trace, configuration, model checkpoint, experiment manifest, ROM, or accepted scientific conclusion. The exact candidate was checked for concrete paths, credentials, restricted payload suffixes, and compressed checkpoint contents; the results are in the [G5-F02 remediation record](G5-F02-remediation-20261101.md).
 
 ## Residual future work
