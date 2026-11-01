@@ -73,6 +73,8 @@ The same preflight, focused suite, and unfiltered full suite were rerun on PR HE
 
 After C3 preflight found three C2 log links missing from the committed tree, C4 committed those logs. A fresh C4 clone passed preflight and all 91 focused governance/delivery/context tests; exact-head GitHub Actions run [41310316412](https://github.com/dodaonam/atari-videochess-rl/actions/runs/41310316412) succeeded. C4 changes only sanitized verification logs and checkpoint history; no application/test source or experimental evidence changed after the 524-test full-suite pass at C2.
 
+C6's exact-head CI then detected a portable-checkpoint transition error caused by adding tracked verification logs without refreshing the checkpoint. C7 refreshed the canonical checkpoint; a fresh C7 clone passed preflight and 91 focused tests, and exact-head GitHub Actions run [41311026076](https://github.com/dodaonam/atari-videochess-rl/actions/runs/41311026076) succeeded. The C7 privacy scan checked 12,578 added tracked lines, 56 text/log items, and 29 compressed checkpoint segments without finding sensitive paths, credentials, or restricted payloads. The unfiltered full suite remains the 524-test C2 run; no application or test source changed after that full-suite run.
+
 The path-level diff contains governance state, sanitized documentation/evidence, regression tests, and checkpoint history only. It contains no M3–M7 dataset, metric, raw trace, configuration, model checkpoint, experiment manifest, ROM, or accepted scientific conclusion. The exact candidate was checked for concrete paths, credentials, restricted payload suffixes, and compressed checkpoint contents; the results are in the [G5-F02 remediation record](G5-F02-remediation-20261101.md).
 
 ## Residual future work
