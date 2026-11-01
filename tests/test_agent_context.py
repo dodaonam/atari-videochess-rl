@@ -1159,7 +1159,8 @@ class AgentContextRecoveryTests(unittest.TestCase):
         self.assertIn("G5-AUTH-20261101-PR20-INTEGRATION", authorization)
         self.assertIn("ec7ab8c0fe097004eb4d37018be898c68f41364b", authorization)
         self.assertIn("0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b", authorization)
-        self.assertIn("NO RELEASE / NO PUBLICATION AUTHORIZED", authorization)
+        self.assertIn("did not itself grant release/publication permission", authorization)
+        self.assertIn("not an independently authenticated Project Owner blanket prohibition", authorization)
 
 
     def test_context_ci_runs_m5_fixture_as_a_contract_oracle(self) -> None:
@@ -1330,12 +1331,12 @@ class AgentContextRecoveryTests(unittest.TestCase):
         self.assertIsNone(state["engineering"]["active_milestone"])
         self.assertEqual(state["governance"]["approved_gates"], approved_gates_before)
 
-    def test_m6_pm_acceptance_is_historical_and_g4_is_now_approved_for_m7_evaluation(self) -> None:
+    def test_m6_pm_acceptance_is_historical_g4_is_approved_and_g5_review_is_pending(self) -> None:
         state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
         backlog = json.loads((REPO / ".agents/tasks/BACKLOG.yaml").read_text(encoding="utf-8"))
         self.assertEqual(state["governance"]["current_gate"], "G5")
-        self.assertEqual(state["governance"]["gate_status"], "approved")
-        self.assertEqual(state["governance"]["approved_gates"], ["G0", "G1", "G2", "G3", "G4", "G5"])
+        self.assertEqual(state["governance"]["gate_status"], "ready_for_user_review")
+        self.assertEqual(state["governance"]["approved_gates"], ["G0", "G1", "G2", "G3", "G4"])
         self.assertIsNone(state["governance"]["next_governance_gate"])
         self.assertEqual(state["engineering"]["next_milestone"], "M7")
         self.assertIsNone(state["engineering"]["active_milestone"])
@@ -1357,13 +1358,13 @@ class AgentContextRecoveryTests(unittest.TestCase):
         report = agent_preflight.build_report(REPO)
         self.assertTrue(report["ok"], report["errors"])
 
-    def test_m7_001_through_m7_005_engineering_done_and_g5_pm_approved(self) -> None:
+    def test_m7_001_through_m7_005_engineering_done_and_g5_f02_review_pending(self) -> None:
         state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
         backlog = json.loads((REPO / ".agents/tasks/BACKLOG.yaml").read_text(encoding="utf-8"))
         tasks = {task["id"]: task for task in backlog["tasks"]}
         self.assertIn("G4", state["governance"]["approved_gates"])
-        self.assertIn("G5", state["governance"]["approved_gates"])
-        self.assertEqual(state["governance"]["gate_status"], "approved")
+        self.assertNotIn("G5", state["governance"]["approved_gates"])
+        self.assertEqual(state["governance"]["gate_status"], "ready_for_user_review")
         self.assertIsNone(state["governance"]["next_governance_gate"])
         self.assertEqual(state["engineering"]["next_milestone_status"], "complete")
         self.assertFalse(state["engineering"]["start_authorized"])
@@ -1389,12 +1390,16 @@ class AgentContextRecoveryTests(unittest.TestCase):
             item.get("path") == ".agents/evidence/M7-005-acceptance-20261101.md"
             for item in tasks["M7-005"]["evidence"]
         ))
-        self.assertIn("G5", state["governance"]["approved_gates"])
+        self.assertNotIn("G5", state["governance"]["approved_gates"])
         self.assertIn("Independent PM", state["governance"]["next_user_action"])
-        self.assertIn("NO RELEASE", state["governance"]["next_user_action"])
+        self.assertIn("G5-F02", state["governance"]["next_user_action"])
+        self.assertIn("no affirmative authorization", state["governance"]["next_user_action"].lower())
         g5_decision = json.loads((REPO / ".agents/evidence/G5-PM-acceptance-20261101.json").read_text(encoding="utf-8"))
         self.assertEqual(g5_decision["authority"]["source_comment_id"], 6556836388)
         self.assertFalse(g5_decision["release_authorization"]["authorized"])
+        current = json.loads((REPO / ".agents/evidence/G5-F02-provenance-status-20261101.json").read_text(encoding="utf-8"))
+        self.assertEqual(current["current_governance"]["g5"], "not_approved_pending_fresh_independent_pm_review")
+        self.assertEqual(current["owner_release_authorization"]["explicit_blanket_owner_prohibition"], "unverified")
         report = agent_preflight.build_report(REPO)
         self.assertTrue(report["ok"], report["errors"])
 

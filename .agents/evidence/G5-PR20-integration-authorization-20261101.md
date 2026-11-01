@@ -14,4 +14,4 @@ This is a one-PR exception to the general policy in [PR_REVIEW_AND_INTEGRATION.m
 
 The separate G5 governance-closeout PR is outside this exception and must remain open and unmerged for fresh Independent PM review and an authorized integration action.
 
-**Release boundary:** **NO RELEASE / NO PUBLICATION AUTHORIZED.**
+**Scoped release boundary:** This one-time PR #20 integration instruction did not itself grant release/publication permission. This is a limit on that instruction's scope, not an independently authenticated Project Owner blanket prohibition. The global owner-prohibition attribution is unverified under [G5-F02](G5-F02-provenance-erratum-20261101.md); current status is in the erratum and corrected release inventory.

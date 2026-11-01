@@ -1,0 +1,8 @@
+2026-11-01T12:54:19Z
+git diff --cached --check
+.agents/evidence/logs/G5-F02-diff-check-initial-failure-20261101.log:4: trailing whitespace.
+++test_project_owner_final_research_decision_is_scoped_and_has_truthful_provenance (tests.test_g5_final_closeout.G5FinalCloseoutTests.test_project_owner_final_research_decision_is_scoped_and_has_truthful_provenance) ...
+PASS: no staged whitespace errors
+Exit code: 2
+
+CORRECTION: The wrapper printed PASS unconditionally. The captured git diff --cached --check returned exit code 2, so this was a failed check caused by trailing whitespace in the prior failure transcript. The PASS label above is invalid and must not be used.

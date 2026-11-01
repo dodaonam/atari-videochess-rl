@@ -1,4 +1,6 @@
-# G5 Governance Closeout — Independent PM Handover
+> **Historical submission snapshot, supplemented 2026-11-01:** This handover predates the G5-F02 PM finding. Its owner no-release attribution and proposed G5-approved canonical state are superseded for current status. The latest PM decision is [PR #21 comment 6557663143](https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6557663143); see the [provenance erratum](G5-F02-provenance-erratum-20261101.md). M7-04 acceptance and G5-F01 resolution remain intact; G5 is not approved pending fresh PM review.
+
+# G5 Governance Closeout — Independent PM Handover (Historical Snapshot)
 
 ## A. Executive verdict
 
@@ -81,6 +83,12 @@ Please independently verify:
 6. That this governance PR itself remains unmerged and G5 approval does not grant release permission.
 
 The repository currently has no branch protection or ruleset for `initial-idea`; the read-only query and the one-time owner-authorized PR #20 integration are documented in the policy exception record. This new PR requires fresh Independent PM review. Codex must not approve or merge it.
+
+## G5-F02 and final research-scope update — 2026-11-01
+
+The later PM finding on [PR #21 comment 6557663143](https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6557663143) identifies the earlier executor-authored owner no-release attribution as unsupported and suspends reliance on that premise for M7-05. The prior G5 PM decision and this handover remain as historical records; M7-04 acceptance and G5-F01 resolution are preserved. Current status is in the [G5-F02 provenance erratum](G5-F02-provenance-erratum-20261101.md): no affirmative restricted-artifact publication authorization is established, the blanket owner-prohibition attribution is unverified, and G5 is not approved pending fresh Independent PM review.
+
+The Project Owner separately records that the currently accepted research results are final and no further research campaign or milestone is authorized. This decision does not authorize or prohibit publication. See the [owner research-scope decision](PROJECT-OWNER-final-research-scope-decision-20261101.md) and [M0–M7 closure matrix](M0-M7-final-project-closure-20261101.md).
 
 ## Verification remediation record
 

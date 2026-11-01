@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-a2e38cfe-20261101T114856477975Z -->
+<!-- checkpoint-id: cp-fc51b724-20261101T125534227787Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -16,13 +16,13 @@ This file is a pointer, not a status snapshot. Do not infer current phase, task 
 
 For the preparation-only assessment, M7 work breakdown, and evaluation contract, follow the [Pre-M7 readiness plan](../plans/PRE-M7-readiness.md), [M7 engineering plan](../plans/M07-evaluation-delivery.md), [M7 evaluation protocol](../../docs/04-research/M7_EVALUATION_PROTOCOL.md), and [Pre-M7 verification evidence](../evidence/PRE-M7-readiness-20261031.md). These are independent-review materials, not authorization; live gate, task, and M7 authorization remain in `PROJECT_STATE.yaml` and `BACKLOG.yaml`.
 
-## Current canonical pointer — G5 approved; governance closeout proposed (2026-11-01)
+## Current canonical pointer — G5-F02 remediation submitted; fresh PM review pending (2026-11-01)
 
-The Independent PM's G5 approval for M7-04/M7-05 and G5-F01 resolution is recorded in [G5-PM acceptance](../evidence/G5-PM-acceptance-20261101.md), sourced from [PR #20 comment 6556836388](https://github.com/dodaonam/atari-videochess-rl/pull/20#issuecomment-6556836388). PR #20 was integrated at `0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b`. The canonical G5 state update is proposed on [PR #21](https://github.com/dodaonam/atari-videochess-rl/pull/21), branch `feature/g5-governance-closeout`; it is not integrated until PM review and merge. At PR creation its head was `8bdee29275199cc638025e3eb92c9cf861055ebf`; use the live PR for any subsequent head. The Project Owner's **NO RELEASE / NO PUBLICATION AUTHORIZED** decision remains binding. Follow `PROJECT_STATE.yaml`, `BACKLOG.yaml`, and [the G5 governance-closeout handover](../evidence/G5-governance-closeout-handover-20261101.md); do not infer a new milestone or release permission.
+PR #20 remains integrated at `0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b`; its earlier PM G5 decision is preserved as historical. The later Independent PM finding [G5-F02](https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6557663143) suspends reliance on the disputed M7-05 owner-release premise and requires fresh review. M7-04 acceptance and G5-F01 resolution remain intact. Current proposed canonical state on amended [PR #21](https://github.com/dodaonam/atari-videochess-rl/pull/21), branch `feature/g5-governance-closeout`, has G0–G4 approved and G5 ready for review, not approved. No affirmative authorization to distribute restricted artifacts is established; the prior blanket owner-prohibition attribution is unverified. The Project Owner has separately recorded existing accepted research results as final; no further research milestone or campaign is authorized. See [G5-F02 erratum](../evidence/G5-F02-provenance-erratum-20261101.md), [research-scope decision](../evidence/PROJECT-OWNER-final-research-scope-decision-20261101.md), and [project closure matrix](../evidence/M0-M7-final-project-closure-20261101.md).
 
-## Historical pointer — M7-005 G5-F01 remediation ready for independent re-review (2026-11-01)
+## Historical pointer — M7-005 G5-F01 remediation before later G5 decisions (2026-11-01)
 
-At that historical checkpoint, `PROJECT_STATE.yaml` and `BACKLOG.yaml` recorded G5 pending. PR #19 had been reviewed and merged at `0f45fa06c235658da48d3d41a9091c06580bfe27`; the owner had authorized M7-005 with **NO RELEASE / NO PUBLICATION AUTHORIZED**. PR #20 was awaiting the PM re-review that subsequently approved G5 at exact head `ec7ab8c0fe097004eb4d37018be898c68f41364b`. See the current pointer above and the G5 acceptance/closeout evidence for subsequent decisions.
+This point-in-time section records the prior executor-authored owner no-release attribution, which is now unverified under G5-F02. Do not use it as current authorization evidence. The PM later issued a G5 decision on PR #20; its M7-05 premise is now subject to fresh review. See the current pointer above and the provenance erratum.
 
 ## Historical canonical pointer — M7-004 package ready for Independent PM review (2026-11-01)
 

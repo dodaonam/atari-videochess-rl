@@ -1,4 +1,6 @@
-# G5 Independent PM Acceptance — M7 Delivery
+> **Current-status supplement added 2026-11-01:** The decision below is an authentic historical PM decision sourced from PR #20. The later PM review at [PR #21 comment 6557663143](https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6557663143) states that its M7-05 owner-disposition premise is suspended pending correction and fresh PM review. M7-04 acceptance and G5-F01 resolution remain intact. Current canonical G5 status is **NOT APPROVED pending fresh Independent PM review**; see the [G5-F02 erratum](G5-F02-provenance-erratum-20261101.md). The original decision text below is retained as historical evidence and is not the current G5 status record.
+
+# G5 Independent PM Acceptance — M7 Delivery (Historical Decision)
 
 **Decision ID:** `G5-PM-20261101-APPROVED-WITH-LIMITATIONS`
 **Decision:** **G5 APPROVED WITH SCIENTIFIC, ENVIRONMENT-VERIFICATION, AND NO-RELEASE LIMITATIONS**

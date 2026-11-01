@@ -51,7 +51,7 @@ class PreM7ContractTests(unittest.TestCase):
             with self.subTest(task=task_id):
                 self.assertEqual(self.tasks[task_id]["acceptance_criteria_ids"], criteria)
 
-    def test_m7_engineering_complete_g5_approved_with_no_release(self) -> None:
+    def test_m7_engineering_complete_g5_ready_for_review_and_research_closed(self) -> None:
         m7_ids = [f"M7-{number:03d}" for number in range(1, 6)]
         for task_id in m7_ids:
             task = self.tasks[task_id]
@@ -94,15 +94,18 @@ class PreM7ContractTests(unittest.TestCase):
             item.get("path") == ".agents/evidence/M7-005-authorization-20261101.md"
             for item in self.tasks["M7-005"]["evidence"]
         ))
-        self.assertEqual(self.state["governance"]["approved_gates"], ["G0", "G1", "G2", "G3", "G4", "G5"])
+        self.assertEqual(self.state["governance"]["approved_gates"], ["G0", "G1", "G2", "G3", "G4"])
         self.assertEqual(self.state["governance"]["current_gate"], "G5")
-        self.assertEqual(self.state["governance"]["gate_status"], "approved")
+        self.assertEqual(self.state["governance"]["gate_status"], "ready_for_user_review")
+        self.assertNotIn("G5", self.state["governance"]["approved_gates"])
+        self.assertIn("G5-F02", self.state["governance"]["next_user_action"])
+        self.assertIn("Independent PM", self.state["governance"]["next_user_action"])
         self.assertIsNone(self.state["governance"]["next_governance_gate"])
         g4 = (REPO / ".agents/evidence/G4-PM-acceptance-20261101.md").read_text(encoding="utf-8")
         self.assertIn("issuecomment-6552570969", g4)
         self.assertIn("2bca79001ed94324b725dce2dfdc485e3a51ad3e", g4)
         self.assertIn("G5 remains **NOT APPROVED**", g4)
-        self.assertIn("NO RELEASE / NO PUBLICATION AUTHORIZED", g4)
+        self.assertIn("NO RELEASE / NO PUBLICATION AUTHORIZED", g4)  # historical G4 review text
         auth_evidence = (REPO / ".agents/evidence/M7-001-authorization-20261031.md").read_text(encoding="utf-8")
         self.assertIn("M7-001, M7-002, and M7-003", auth_evidence)
         self.assertIn("HOLD / NOT APPROVED", auth_evidence)
@@ -113,9 +116,12 @@ class PreM7ContractTests(unittest.TestCase):
             for item in self.tasks["M7-005"]["evidence"]
         ))
         release = (REPO / "docs/07-delivery/RELEASE_DISPOSITION.md").read_text(encoding="utf-8")
-        self.assertIn("NO RELEASE / NO PUBLICATION AUTHORIZED", release)
+        self.assertIn("affirmative authorization", release.lower())
+        self.assertIn("blanket owner prohibition is **unverified**", release)
+        self.assertIn("G5-F02", release)
+        self.assertNotIn("NO RELEASE / NO PUBLICATION AUTHORIZED", release)
         self.assertIn("O-06", release)
-        self.assertIn("G5", self.state["governance"]["approved_gates"])
+        self.assertEqual(self.state["governance"]["approved_gates"][-1], "G4")
         self.assertEqual(self.tasks["M6-001"]["status"], "done")
 
     def test_g5_status_requires_the_recorded_independent_pm_decision(self) -> None:
@@ -141,10 +147,16 @@ class PreM7ContractTests(unittest.TestCase):
         self.assertEqual(decision["finding"], {"id": "G5-F01", "status": "resolved"})
         self.assertFalse(decision["release_authorization"]["authorized"])
         self.assertFalse(decision["release_authorization"]["g5_approval_grants_distribution_rights"])
-        self.assertIn("G5", self.state["governance"]["approved_gates"])
-        self.assertEqual(self.state["governance"]["gate_status"], "approved")
+        self.assertNotIn("G5", self.state["governance"]["approved_gates"])
+        self.assertEqual(self.state["governance"]["gate_status"], "ready_for_user_review")
         self.assertFalse(self.state["engineering"]["start_authorized"])
         self.assertEqual(self.state["engineering"]["next_milestone_status"], "complete")
+        current = read_json(".agents/evidence/G5-F02-provenance-status-20261101.json")
+        self.assertEqual(current["finding"]["id"], "G5-F02")
+        self.assertEqual(current["finding"]["pm_disposition"], "open_pending_fresh_independent_review")
+        self.assertEqual(current["owner_release_authorization"]["explicit_blanket_owner_prohibition"], "unverified")
+        self.assertEqual(current["owner_release_authorization"]["affirmative_authorization_for_restricted_artifacts"], "not_established")
+        self.assertEqual(current["current_governance"]["m7_04"], "accepted; not reopened by G5-F02")
 
     def test_canonical_state_and_backlog_are_json_yaml_and_dependency_valid(self) -> None:
         self.assertEqual(self.state["format"], "JSON-compatible YAML 1.2")

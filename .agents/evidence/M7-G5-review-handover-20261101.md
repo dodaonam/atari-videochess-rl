@@ -1,4 +1,6 @@
-# M7 G5 Delivery Review Handover
+> **Current-status supplement added 2026-11-01:** This dossier contains historical statements attributing a blanket no-release decision to the Project Owner and reporting a prior G5 approval. Under [G5-F02](https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6557663143), the owner-prohibition attribution is unverified and the earlier G5 M7-05 premise is suspended pending fresh Independent PM review. M7-04 acceptance and G5-F01 resolution remain intact. See the [provenance erratum](G5-F02-provenance-erratum-20261101.md) and use current canonical state for live status.
+
+# M7 G5 Delivery Review Handover — Historical Snapshot
 
 **Review scope:** M7-004/M7-04 and M7-005/M7-05 delivery acceptance
 **Review gate:** G5 — Delivery

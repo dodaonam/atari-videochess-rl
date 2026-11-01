@@ -6,7 +6,7 @@
 
 **M7-004 integration:** 0f45fa06c235658da48d3d41a9091c06580bfe27 (PR #19 merge)
 
-**Current status:** M7-001 through M7-005 are complete as engineering tasks. G4 is approved with scientific limitations. The Independent PM approved G5 for M7-04/M7-05 with scientific, environment-verification, and no-release limitations; PR #20 was integrated at `0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b`. The canonical G5 closeout is proposed on [PR #21](https://github.com/dodaonam/atari-videochess-rl/pull/21), currently open and unmerged for fresh Independent PM review. At PR creation its head was `8bdee29275199cc638025e3eb92c9cf861055ebf`; use the live PR for the final head and CI. **NO RELEASE / NO PUBLICATION AUTHORIZED.**
+**Current status:** M0–M7 engineering scope is complete; M7-001 through M7-005 remain engineering-complete. The Project Owner has recorded the accepted research results as final and no further campaign or research milestone is authorized. G4 remains approved with scientific limitations. G5 is **not approved in current canonical state** pending fresh Independent PM review of G5-F02/M7-05; M7-04 acceptance and G5-F01 resolution remain intact. PR #21 is the open, unmerged closeout PR. No affirmative authorization to distribute restricted artifacts is established; the earlier blanket owner-prohibition attribution is unverified. See [final project closure](../../.agents/evidence/M0-M7-final-project-closure-20261101.md), [owner research-scope decision](../../.agents/evidence/PROJECT-OWNER-final-research-scope-decision-20261101.md), and [G5-F02 erratum](../../.agents/evidence/G5-F02-provenance-erratum-20261101.md).
 
 
 ## Project overview and governance
@@ -15,13 +15,19 @@ The project built a legal-action-conditioned supervised behavior model (M4), tra
 
 The canonical status is in .agents/state/PROJECT_STATE.yaml and .agents/tasks/BACKLOG.yaml. The M7-004 submission snapshot recorded M7-005 as pending and unstarted; that point-in-time state is historical. At that stage G0–G4 were approved, G4 was limited to M7-01 through M7-03, and G5 had not yet been approved. The original owner authorization M7-AUTH-20261031-OPTION-B remains unchanged and is retained separately from the new M7-005-only authorization.
 
-## M7-005 closeout update before the G5 PM decision — 2026-11-01
+## M7-005 closeout update before the G5 PM decision — historical snapshot
+
+> The owner no-release attribution in this section was later challenged by the Independent PM and is unverified. Do not rely on it as current owner authorization or prohibition. See [G5-F02](../../.agents/evidence/G5-F02-provenance-erratum-20261101.md).
 
 The Project Owner directly authorized M7-005 and selected **NO RELEASE / NO PUBLICATION AUTHORIZED**. The decision, artifact-by-artifact disposition, acceptance evidence, verification record, and G5 review request are linked from [M7-005 acceptance](../../.agents/evidence/M7-005-acceptance-20261101.md), [release disposition](RELEASE_DISPOSITION.md), and [G5 review handover](../../.agents/evidence/M7-G5-review-handover-20261101.md). M7-005 is complete at the engineering level on its feature branch. This is a pre-decision snapshot; the subsequent PM disposition is recorded below.
 
-## G5 PM decision and integration update — 2026-11-01
+## G5 PM decision and integration update — historical snapshot
+
+> The PR #20 decision and merge identity remain historical facts. Its M7-05 premise is suspended pending fresh review under G5-F02; current canonical G5 is not approved. See the current status above and [G5-F02](../../.agents/evidence/G5-F02-provenance-erratum-20261101.md).
 
 The Independent PM approved G5 for M7-04/M7-05 with scientific, environment-verification, and no-release limitations and resolved G5-F01 in [the official PR #20 decision](https://github.com/dodaonam/atari-videochess-rl/pull/20#issuecomment-6556836388). PR #20's exact approved head `ec7ab8c0fe097004eb4d37018be898c68f41364b` was integrated at merge commit `0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b`; see [G5 PM acceptance](../../.agents/evidence/G5-PM-acceptance-20261101.md). The canonical G5 update is proposed separately on the current governance-closeout PR and is not integrated until that PR is reviewed and merged. **NO RELEASE / NO PUBLICATION AUTHORIZED** remains binding.
+
+> **G5-F02 correction to this historical snapshot:** The final sentence above repeats an unverified owner-prohibition attribution and is superseded. The earlier PM decision's M7-05 premise is suspended pending fresh review. Current status is that affirmative authorization for restricted-artifact distribution is not established; this is not an authenticated owner prohibition. No release is performed by this closeout. See the [G5-F02 provenance erratum](../../.agents/evidence/G5-F02-provenance-erratum-20261101.md).
 
 The G4 Independent PM source is the [G4 acceptance record](../../.agents/evidence/G4-PM-acceptance-20261101.md), the [PR #17 source decision](https://github.com/dodaonam/atari-videochess-rl/pull/17#issuecomment-6552570969), and its merge at `2bca79001ed94324b725dce2dfdc485e3a51ad3e`. PR #18 integrated that G4 decision at `d7332b91128d3daf919421db2e71a9f2ee4b48ec`.
 
@@ -62,7 +68,7 @@ Committed hash identities do not mean payloads are included in Git. Do not copy 
 
 ## Completed research and engineering
 
-The canonical state proposed on this governance-closeout branch records G0–G5 as approved; `initial-idea` remains at the PR #20 merge until PR #21 is independently reviewed and integrated. Gate approvals are separate from engineering task completion; do not infer that every milestone has a separate PM gate approval.
+The prior PR #21 proposal recorded G0–G5 as approved; that proposed state is superseded after G5-F02. The amended closeout proposal records G0–G4 as approved and G5 as ready for fresh Independent PM review, not approved. `initial-idea` remains at the PR #20 merge until amended PR #21 is independently reviewed and integrated. Gate approvals are separate from engineering task completion; do not infer that every milestone has a separate PM gate approval.
 
 - **M3:** accepted bounded source/release and teacher-provenance work; third-party dataset license remains unstated/unverified.
 - **M4:** accepted supervised imitation model; 29.8979% legal top-1 and 54.3996% legal top-3 on 2,057 test positions. These are not game-strength metrics.
@@ -89,7 +95,7 @@ There were 1,670/1,670 valid legal selections, 1,581/1,670 RGB-verified initiate
 | RSK-014 | Accepted M5 residual provenance limitation; byte-identical source across all historical runs is not established |
 | PM6-F06 | Accepted M6 v2 metadata erratum; original evidence remains immutable |
 | M7 limitations | Censoring, one opponent, White-only, three training-seed pairs, controller uncertainty, and private raw artifacts |
-| G5 / M7-005 | G5 approved with limitations by the Independent PM for M7-04/M7-05; PR #20 merged at `0b9c4c2`; canonical closeout is proposed on [PR #21](https://github.com/dodaonam/atari-videochess-rl/pull/21); no release/publication authorization |
+| G5 / M7-005 | Earlier PR #20 decision is historical; its M7-05 premise is suspended pending fresh PM review under G5-F02. G5 is not approved in current canonical state. PR #20 merge `0b9c4c2` remains valid; amended closeout is proposed on [PR #21](https://github.com/dodaonam/atari-videochess-rl/pull/21). |
 
 O-03 and O-04 are also tracked in canonical requirements/state. Course expectations and resource authorization must not be inferred from prior experiment settings.
 
@@ -111,8 +117,17 @@ O-03 and O-04 are also tracked in canonical requirements/state. Course expectati
 - **Independent Project Manager:** ChatGPT; responsible for independent review and gate disposition.
 - **Project Owner:** Nam; owns scope, artifact access, and any future release authorization.
 
-The Independent PM's G5 decision is recorded in [G5-PM acceptance](../../.agents/evidence/G5-PM-acceptance-20261101.md), linked to the [official PR #20 decision](https://github.com/dodaonam/atari-videochess-rl/pull/20#issuecomment-6556836388). The separate [G5 governance-closeout handover](../../.agents/evidence/G5-governance-closeout-handover-20261101.md) and [PR #21](https://github.com/dodaonam/atari-videochess-rl/pull/21) describe the canonical update proposed for review. Until PR #21 is integrated, the current `initial-idea` state still reflects the pre-closeout snapshot. No public model, dataset, ROM, raw trace, or private artifact release is authorized. The next action is Independent PM review of PR #21; this handover does not approve that PR or authorize publication.
+The earlier Independent PM G5 decision is recorded in [G5-PM acceptance](../../.agents/evidence/G5-PM-acceptance-20261101.md), linked to the [official PR #20 decision](https://github.com/dodaonam/atari-videochess-rl/pull/20#issuecomment-6556836388), and supplemented by the later [G5-F02 finding](https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6557663143). The amended [PR #21](https://github.com/dodaonam/atari-videochess-rl/pull/21) proposes canonical state with G5 awaiting fresh review. Until that PR is integrated, `initial-idea` contains the prior G5-pending state. No affirmative authorization to distribute restricted artifacts is established; this is not an attributed owner prohibition. The next action is Independent PM review of amended PR #21; this handover does not approve it or authorize publication.
 
 ## Delivery revision
 
-The M7-004 delivery snapshot was submitted in PR #19 and merged at `0f45fa06c235658da48d3d41a9091c06580bfe27`. PR #20 was approved at exact head `ec7ab8c0fe097004eb4d37018be898c68f41364b` and merged at `0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b`. A separate G5 governance-closeout PR is required to integrate the canonical gate-state update; it must remain open and unmerged pending Independent PM review.
+The M7-004 delivery snapshot was submitted in PR #19 and merged at `0f45fa06c235658da48d3d41a9091c06580bfe27`. PR #20 was approved at exact head `ec7ab8c0fe097004eb4d37018be898c68f41364b` and merged at `0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b`. A separate G5 governance-closeout PR is required to integrate the corrected canonical state; it must remain open and unmerged pending Independent PM review.
+
+
+## Final research-scope closure — 2026-11-01
+
+The Project Owner records the currently accepted research results as final. No new training, simulator/ALE evaluation, opponent/Elo campaign, model-selection campaign, or milestone is authorized. The decision does not resolve external course requirements or authorize artifact publication. See [the owner decision record](../../.agents/evidence/PROJECT-OWNER-final-research-scope-decision-20261101.md) and [M0–M7 closure matrix](../../.agents/evidence/M0-M7-final-project-closure-20261101.md).
+
+## Current G5-F02 disposition
+
+The earlier owner no-release attribution is unverified, not an authenticated prohibition. No affirmative authorization for restricted artifact distribution is established; no release is performed by this closeout. Fresh Independent PM review of amended PR #21 is required. See the [provenance erratum](../../.agents/evidence/G5-F02-provenance-erratum-20261101.md).

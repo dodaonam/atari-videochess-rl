@@ -1,3 +1,5 @@
+> **Provenance note added 2026-11-01:** This historical log contains a prior claim that an owner no-release decision was supplied. That attribution is disputed and unverified under [G5-F02](https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6557663143); the log is retained as the record of earlier engineering actions, not as primary evidence of an owner release prohibition. See the [provenance erratum](G5-F02-provenance-erratum-20261101.md).
+
 # M7-005 Failure and Remediation History
 
 This record preserves failures from the M7-005 governance transition and verification. It must not be rewritten to present a later pass as if the failure did not occur.

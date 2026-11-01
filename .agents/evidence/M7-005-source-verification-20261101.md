@@ -1,4 +1,6 @@
-# M7-005 Governance Source Verification
+> **Provenance supplement added 2026-11-01:** The final table row below repeats an earlier executor-authored owner no-release attribution. G5-F02 establishes that this claim is not supported by an independently verifiable primary source; treat it as unverified. The G4, PR #19, integration, and M7-05 criterion checks remain historical source checks. Current release wording and PM status are in the [G5-F02 erratum](G5-F02-provenance-erratum-20261101.md).
+
+# M7-005 Governance Source Verification — Historical Snapshot
 
 **Verified at:** 2026-11-01T05:11:29Z–2026-11-01T05:11:32Z
 **Source revision / integration baseline:** `0f45fa06c235658da48d3d41a9091c06580bfe27`
