@@ -5,7 +5,7 @@
 **Owner research-scope decision:** Existing accepted research results are final; this decision does not authorize publication. See the [Project Owner decision record](../../.agents/evidence/PROJECT-OWNER-final-research-scope-decision-20261101.md).
 **Engineering task / criterion:** M7-005 / M7-05
 **Current authorization status:** No affirmative restricted-artifact release authorization is established; this is not an attributed owner prohibition.
-**Gates:** G4 is approved with scientific limitations for M7-01–M7-03. G5 is **not approved in current canonical state** pending fresh Independent PM review of G5-F02/M7-05. M7-04 acceptance remains intact. See the [current G5-F02 status](../../.agents/evidence/G5-F02-provenance-status-20261101.json).
+**Gates:** G4 is approved with scientific limitations for M7-01–M7-03. G5 is **approved with limitations** by the [fresh Independent PM decision](../../.agents/evidence/G5-PM-final-decision-20261101.md) after G5-F02 was resolved for M7-05. M7-04 acceptance remains intact. Gate approval grants no publication or distribution rights. See the [current G5-F02 status](../../.agents/evidence/G5-F02-provenance-status-20261101.json).
 
 ## Decision and scope
 

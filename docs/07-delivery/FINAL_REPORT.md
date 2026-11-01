@@ -8,7 +8,7 @@
 
 **G4:** APPROVED WITH SCIENTIFIC LIMITATIONS for M7-01 through M7-03
 
-**G5 current status:** **NOT APPROVED pending fresh Independent PM review** of G5-F02 and M7-05. The earlier PM decision at [PR #20](https://github.com/dodaonam/atari-videochess-rl/pull/20#issuecomment-6556836388) is retained historically; the later [G5-F02 finding](https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6557663143) suspends reliance on its M7-05 owner-release premise. M7-04 acceptance and G5-F01 resolution remain intact. See the [provenance erratum](../../.agents/evidence/G5-F02-provenance-erratum-20261101.md).
+**G5 current status:** **APPROVED WITH LIMITATIONS** after fresh Independent PM review of corrected G5-F02/M7-05 evidence at [PR #21 comment 6558975009](https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6558975009). G5-F02 is resolved; M7-04 remains accepted and G5-F01 remains resolved. The earlier PR #20 approval's disputed owner-prohibition premise is superseded by the [provenance erratum](../../.agents/evidence/G5-F02-provenance-erratum-20261101.md). See the [current final PM decision](../../.agents/evidence/G5-PM-final-decision-20261101.md). No affirmative authorization to distribute restricted artifacts has been established.
 
 
 > G4 accepts the bounded evaluation evidence and its analysis. It does not establish that the agent plays strong chess, that RL improved Atari performance, or that an academic requirement has been met.

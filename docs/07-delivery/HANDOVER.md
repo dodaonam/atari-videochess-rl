@@ -6,7 +6,7 @@
 
 **M7-004 integration:** 0f45fa06c235658da48d3d41a9091c06580bfe27 (PR #19 merge)
 
-**Current status:** M0–M7 engineering scope is complete; M7-001 through M7-005 remain engineering-complete. The Project Owner has recorded the accepted research results as final and no further campaign or research milestone is authorized. G4 remains approved with scientific limitations. G5 is **not approved in current canonical state** pending fresh Independent PM review of G5-F02/M7-05; M7-04 acceptance and G5-F01 resolution remain intact. PR #21 is the open, unmerged closeout PR. No affirmative authorization to distribute restricted artifacts is established; the earlier blanket owner-prohibition attribution is unverified. See [final project closure](../../.agents/evidence/M0-M7-final-project-closure-20261101.md), [owner research-scope decision](../../.agents/evidence/PROJECT-OWNER-final-research-scope-decision-20261101.md), and [G5-F02 erratum](../../.agents/evidence/G5-F02-provenance-erratum-20261101.md).
+**Current status:** M0–M7 engineering scope is complete; M7-001 through M7-005 remain engineering-complete. The Project Owner accepts the recorded research results as final; no further campaign or milestone is authorized. G0–G5 are approved for their respective scopes and limitations after the [fresh G5 PM decision](../../.agents/evidence/G5-PM-final-decision-20261101.md). G5-F02 is resolved, M7-04 remains accepted, and G5-F01 remains resolved. PR #21 was integrated at 6495bda01daae557a084e8863d2148e08be6cca7. No affirmative authorization to distribute restricted artifacts is established; the earlier blanket owner-prohibition attribution is unverified. This is research and governance closure, not release approval. See [final project closure](../../.agents/evidence/M0-M7-final-project-closure-20261101.md), [owner research-scope decision](../../.agents/evidence/PROJECT-OWNER-final-research-scope-decision-20261101.md), and [G5-F02 erratum](../../.agents/evidence/G5-F02-provenance-erratum-20261101.md).
 
 
 ## Project overview and governance
@@ -95,7 +95,7 @@ There were 1,670/1,670 valid legal selections, 1,581/1,670 RGB-verified initiate
 | RSK-014 | Accepted M5 residual provenance limitation; byte-identical source across all historical runs is not established |
 | PM6-F06 | Accepted M6 v2 metadata erratum; original evidence remains immutable |
 | M7 limitations | Censoring, one opponent, White-only, three training-seed pairs, controller uncertainty, and private raw artifacts |
-| G5 / M7-005 | Earlier PR #20 decision is historical; its M7-05 premise is suspended pending fresh PM review under G5-F02. G5 is not approved in current canonical state. PR #20 merge `0b9c4c2` remains valid; amended closeout is proposed on [PR #21](https://github.com/dodaonam/atari-videochess-rl/pull/21). |
+| G5 / M7-005 | Fresh Independent PM decision [PR #21 comment 6558975009](https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6558975009) APPROVED G5 with limitations and RESOLVED G5-F02; PR #21 merged at 6495bda01daae557a084e8863d2148e08be6cca7. No affirmative restricted-artifact publication authorization is established; the prior blanket owner-prohibition attribution is unverified. |
 
 O-03 and O-04 are also tracked in canonical requirements/state. Course expectations and resource authorization must not be inferred from prior experiment settings.
 

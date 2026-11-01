@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-2b7e71ff-20261101T132716594988Z -->
+<!-- checkpoint-id: cp-6495bda0-20261101T141723774807Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -16,7 +16,11 @@ This file is a pointer, not a status snapshot. Do not infer current phase, task 
 
 For the preparation-only assessment, M7 work breakdown, and evaluation contract, follow the [Pre-M7 readiness plan](../plans/PRE-M7-readiness.md), [M7 engineering plan](../plans/M07-evaluation-delivery.md), [M7 evaluation protocol](../../docs/04-research/M7_EVALUATION_PROTOCOL.md), and [Pre-M7 verification evidence](../evidence/PRE-M7-readiness-20261031.md). These are independent-review materials, not authorization; live gate, task, and M7 authorization remain in `PROJECT_STATE.yaml` and `BACKLOG.yaml`.
 
-## Current canonical pointer — G5-F02 remediation submitted; fresh PM review pending (2026-11-01)
+## Current canonical pointer — G5 approved with limitations; M0–M7 research and governance closed (2026-11-01)
+
+The Independent PM approved G5 with limitations and resolved G5-F02 at [PR #21 comment 6558975009](https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6558975009). PR #21 was merged at 6495bda01daae557a084e8863d2148e08be6cca7. All G0–G5 gates have approved decisions for their recorded scopes; all M0–M7 engineering tasks are done. The Project Owner accepts existing research results as final; no new campaign or milestone is authorized. G5-F01's M3 provenance repair and M7-04 acceptance remain intact. There is no affirmative owner authorization for restricted artifact distribution and no verified blanket owner prohibition; no release was performed. See the [final G5 PM acceptance](../evidence/G5-PM-final-decision-20261101.md), [G5-F02 status](../evidence/G5-F02-provenance-status-20261101.json), [owner research-scope decision](../evidence/PROJECT-OWNER-final-research-scope-decision-20261101.md), and [final project matrix](../evidence/M0-M7-final-project-closure-20261101.md). The earlier pending-review pointers below are historical.
+
+## Historical pointer — G5-F02 remediation submitted before fresh PM approval (2026-11-01)
 
 PR #20 remains integrated at `0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b`; its earlier PM G5 decision is preserved as historical. The later Independent PM finding [G5-F02](https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6557663143) suspends reliance on the disputed M7-05 owner-release premise and requires fresh review. M7-04 acceptance and G5-F01 resolution remain intact. Current proposed canonical state on amended [PR #21](https://github.com/dodaonam/atari-videochess-rl/pull/21), branch `feature/g5-governance-closeout`, has G0–G4 approved and G5 ready for review, not approved. No affirmative authorization to distribute restricted artifacts is established; the prior blanket owner-prohibition attribution is unverified. The Project Owner has separately recorded existing accepted research results as final; no further research milestone or campaign is authorized. See [G5-F02 erratum](../evidence/G5-F02-provenance-erratum-20261101.md), [research-scope decision](../evidence/PROJECT-OWNER-final-research-scope-decision-20261101.md), and [project closure matrix](../evidence/M0-M7-final-project-closure-20261101.md).
 

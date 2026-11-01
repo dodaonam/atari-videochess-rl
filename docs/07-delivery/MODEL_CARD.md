@@ -2,7 +2,7 @@
 
 **Status:** Research artifacts; no champion model selected. No affirmative permission to distribute restricted checkpoints is established; this model card grants no distribution rights. See [the release-disposition inventory](RELEASE_DISPOSITION.md).
 
-**Governance (2026-11-01):** G4 is approved with scientific limitations. G5 is **not approved in current canonical state pending fresh Independent PM review** after G5-F02; M7-04 acceptance remains intact. The earlier PR #20 decision is historical; see the [G5-F02 provenance erratum](../../.agents/evidence/G5-F02-provenance-erratum-20261101.md). No affirmative authorization to distribute private checkpoints is established.
+**Governance (2026-11-01):** G4 is approved with scientific limitations. G5 is **approved with limitations** by the [fresh PM decision](../../.agents/evidence/G5-PM-final-decision-20261101.md) after G5-F02 correction; M7-04 acceptance remains intact. The earlier PR #20 decision is historical; see the [G5-F02 provenance erratum](../../.agents/evidence/G5-F02-provenance-erratum-20261101.md). No affirmative authorization to distribute private checkpoints is established.
 
 **Scope:** accepted M4 behavior model and six M5 post-RL checkpoints
 
@@ -98,7 +98,7 @@ M7 terminal-only scores are 0.000 for groups with terminal games because every o
 
 Checkpoint binaries are owner-controlled local artifacts and are not stored in this repository. Sidecars and accepted root/run manifests provide integrity identities. M4/M5/M6/M7 artifact hashes are summarized in accepted evidence; committed hashes do not imply that private files are present in a clone. Access must be supplied by the Project Owner through an authorized local path.
 
-**No public model release is authorized.** G4 evaluation approval does not approve G5 or publication.
+**No affirmative authorization for a public model release is established.** G4 and G5 acceptance do not grant publication rights, and neither establishes a blanket owner prohibition.
 
 
 ## Evidence

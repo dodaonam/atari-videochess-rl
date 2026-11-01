@@ -2,8 +2,8 @@
 
 **Recorded:** 2026-11-01
 **Project Owner scope decision:** Existing accepted research results are final; no further research campaigns or milestone are authorized.
-**Engineering disposition:** M0–M7 engineering scope complete; final governance package submitted for Independent PM review.
-**Current G5:** Not approved pending fresh review of G5-F02 remediation and M7-05 evidence.
+**Engineering disposition:** M0–M7 engineering scope complete; research accepted as final; final governance decision approved and recorded.
+**Current G5:** Approved with scientific, environment/artifact-verification, and distribution-authorization limitations under the [fresh PM decision](G5-PM-final-decision-20261101.md). G5-F02 is resolved.
 **Release status:** No affirmative authorization for restricted artifact publication is established; no release is part of this closeout. The earlier blanket-owner-prohibition attribution is unverified.
 
 ## Project closure summary
@@ -29,9 +29,13 @@ M7's accepted Option B run scheduled 90 policy × seed attempts; 90 started and 
 | M7-02 | Engineering complete; G4 accepted with scientific limitations | [M7-002 acceptance](M7-002-acceptance-20261101.md), [final raw-derived analysis](M7-analysis-final-r2-20261101/M7_ANALYSIS.md), machine-readable analysis and manifest | Censoring, seed dependence, and unavailable paired uncertainty remain. |
 | M7-03 | Engineering complete; G4 accepted | [M7-003 acceptance](M7-003-acceptance-20261101.md) | Elo not reported; no calibrated pool or design was approved/available. |
 | M7-04 | Engineering complete and independently accepted | [M7-004 acceptance](M7-004-acceptance-20261101.md), [PR #19 PM decision](https://github.com/dodaonam/atari-videochess-rl/pull/19#issuecomment-6553580590), PR #19 merge | The accepted environment-verification qualification remains. G5-F02 does not reopen M7-04. |
-| M7-05 | Engineering evidence complete; fresh PM review required | [corrected disposition assessment](M7-005-corrected-disposition-assessment-20261101.md), [G5-F02 erratum](G5-F02-provenance-erratum-20261101.md), [release inventory](../../docs/07-delivery/RELEASE_DISPOSITION.md) | Prior owner-prohibition attribution is unverified; no affirmative restricted-artifact release authorization is established. G5 is not approved pending fresh PM decision. |
+| M7-05 | Engineering complete; independently accepted with limitations | [corrected disposition assessment](M7-005-corrected-disposition-assessment-20261101.md), [G5-F02 erratum](G5-F02-provenance-erratum-20261101.md), [release inventory](../../docs/07-delivery/RELEASE_DISPOSITION.md), [fresh PM acceptance](G5-PM-final-decision-20261101.md) | G5-F02 resolved; prior owner-prohibition attribution is unverified; no affirmative restricted-artifact release authorization is established. |
 
-## Governance chronology and live boundary
+## Final PM acceptance and integration
+
+The Independent PM approved corrected M7-05/G5 evidence with limitations, resolved G5-F02, and authorized exact-head integration in [PR #21 comment 6558975009](https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6558975009), reviewing HEAD 57555b4c9da588b0122fffbc01f61b8cb13075a8. PR #21 was merged into initial-idea at 6495bda01daae557a084e8863d2148e08be6cca7. See the [final PM acceptance record](G5-PM-final-decision-20261101.md) for the scope and caveats. The earlier interim G5-F02 HOLD and pending-review handover were accurate historical states and no longer control current canonical status. This decision grants no publication permission.
+
+## Governance chronology and historical review boundary
 
 - G0/G1: user approved; foundational acceptance records remain authoritative.
 - G2: user-approved after M1 feasibility evidence.
@@ -79,4 +83,4 @@ The path-level diff contains governance state, sanitized documentation/evidence,
 
 ## Residual future work
 
-No planned Codex engineering task or research campaign remains in the currently authorized scope. Optional future research, instructor clarification, licensing review, or a release proposal would require its own decision and authorization. Such possibilities are not active tasks. The current required external action is Independent PM review and disposition of G5-F02/M7-05 on amended PR #21, followed by the PM's own post-merge verification if accepted.
+No planned Codex engineering task, research campaign, or governance milestone remains in the authorized M0–M7 project scope. Optional future research, instructor clarification, licensing review, or a release proposal would require its own separate decision and authorization. Such possibilities are not active tasks. The current Independent PM decision is recorded in [the G5 final acceptance](G5-PM-final-decision-20261101.md); after integration of the PM-operated canonical closeout, only read-only verification and preservation of records remain.

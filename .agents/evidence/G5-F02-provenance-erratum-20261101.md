@@ -1,5 +1,7 @@
 # G5-F02 — Owner Release-Disposition Provenance Erratum
 
+> **Final PM disposition addendum — 2026-11-01:** The fresh Independent PM review at [PR #21 comment 6558975009](https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6558975009) **RESOLVED G5-F02 and APPROVED G5 WITH LIMITATIONS** after the correction below. The engineering-stage "pending review" wording retained below is historical; the [current machine-readable status](G5-F02-provenance-status-20261101.json) and [final PM decision](G5-PM-final-decision-20261101.md) control present status. Neither affirmative release permission nor a blanket owner prohibition is established.
+
 **Recorded:** 2026-11-01. No separate issue timestamp or signed owner record is asserted.
 **Finding:** G5-F02 — unsupported attribution of an explicit owner no-release decision
 **Independent PM source:** [PR #21 review comment 6557663143](https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6557663143)

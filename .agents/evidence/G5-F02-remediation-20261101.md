@@ -1,5 +1,7 @@
 # G5-F02 Remediation and M0–M7 Final Closure Evidence
 
+> **Final PM status update — 2026-11-01:** The engineering-stage handover below preceded the fresh [Independent PM acceptance on PR #21](https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6558975009). G5-F02 has since been resolved, M7-05 accepted with limitations, and G5 approved with limitations. PR #21 merged at 6495bda01daae557a084e8863d2148e08be6cca7. The [final PM decision](G5-PM-final-decision-20261101.md) is the current authority. Historical failures and review-pending statements below remain for auditability.
+
 **Finding:** G5-F02 — unsupported attribution of a Project Owner no-release prohibition
 **Independent PM source:** [PR #21 comment 6557663143](https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6557663143)
 **Reviewed PR #21 HEAD:** `fc51b724d6a812ec648aaeb3ba26b8371b8d1989`
