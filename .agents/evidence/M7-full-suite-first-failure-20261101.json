@@ -1,0 +1,23 @@
+{
+  "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<owner-local accepted M5 root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<owner-local accepted M4 r4 root> PYTHONDONTWRITEBYTECODE=1 <existing project Python 3.12.3 venv>/bin/python -m unittest discover -s tests -v",
+  "exit_code": 1,
+  "failure_diagnosis": [
+    "Two agent-context recovery tests observed the stale pre-M7 checkpoint and unexplained tracked-file transition.",
+    "One agent-context assertion still expected M7 to be unauthorized after the owner authorization had been recorded; the assertion has been updated to preserve G4 HOLD while checking the later authorization.",
+    "M0 Stockfish UCI-readiness test could not discover the existing project-venv binary because the venv share/stockfish directory was not on PATH; the final retry adds that existing directory to the test process PATH.",
+    "One optional M5 private checkpoint compatibility test was skipped because its checkpoint path was not configured; the final retry configures the accepted snapshot path."
+  ],
+  "failures": 4,
+  "finished_at_utc": "2026-10-31T20:12:35Z",
+  "log_bytes": 86379,
+  "log_path": ".agents/evidence/logs/M7-full-suite-first-failure-20261101-sanitized.log",
+  "log_sha256": "161cf242d9c612e3db214581950cce2b59264fe4692874cbef4e70495081536a",
+  "no_dependency_installation": true,
+  "result": "failed",
+  "schema": "videochess-command-evidence/1.0",
+  "skipped": 1,
+  "source_git_revision": "fe2cc4cc5e477841ffbc9368235eb9c5675f2f74",
+  "started_at_utc": "2026-10-31T20:10:07Z",
+  "test_count": 491,
+  "working_tree_dirty": true
+}

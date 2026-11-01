@@ -1,0 +1,4 @@
+Script started on 2026-10-31 23:56:36+07:00 [COMMAND="PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/run_m7_campaign.py --config configs/m7/m7-option-b-1.0.0.json --m4-artifact-root <owner-local accepted M4 r4 root> --m5-artifact-root <owner-local accepted M5 root> --artifact-parent artifacts/m7-option-b" <not executed on terminal>]
+bash: line 1: .venv/bin/python: No such file or directory
+
+Script done on 2026-10-31 23:56:36+07:00 [COMMAND_EXIT_CODE="127"]

@@ -1,4 +1,4 @@
-"""Focused, dependency-free contracts for the proposed Pre-M7 package."""
+"""Focused, dependency-free contracts for Pre-M7 history and live M7 governance."""
 
 from __future__ import annotations
 
@@ -51,14 +51,20 @@ class PreM7ContractTests(unittest.TestCase):
             with self.subTest(task=task_id):
                 self.assertEqual(self.tasks[task_id]["acceptance_criteria_ids"], criteria)
 
-    def test_m7_tasks_are_pending_and_require_separate_authorization(self) -> None:
+    def test_phase_one_is_authorized_and_phase_two_remains_g4_gated(self) -> None:
         m7_ids = [f"M7-{number:03d}" for number in range(1, 6)]
         for task_id in m7_ids:
             task = self.tasks[task_id]
             self.assertEqual(task["milestone"], "M7")
-            self.assertEqual(task["status"], "pending")
-            self.assertTrue(task["next_action"].strip())
             self.assertFalse(task["blocker_ids"])
+            if task["status"] in {"pending", "in_progress", "blocked"}:
+                self.assertTrue(task["next_action"].strip())
+            else:
+                self.assertEqual(task["next_action"], "")
+        for task_id in ("M7-001", "M7-002", "M7-003"):
+            self.assertEqual(self.tasks[task_id]["status"], "done")
+        for task_id in ("M7-004", "M7-005"):
+            self.assertEqual(self.tasks[task_id]["status"], "pending")
         self.assertEqual(self.tasks["M7-001"]["depends_on"], ["M4-001", "M5-001", "M6-001", "M2-001", "M3-001"])
         self.assertEqual(self.tasks["M7-002"]["depends_on"], ["M7-001"])
         self.assertEqual(self.tasks["M7-003"]["depends_on"], ["M7-002"])
@@ -69,11 +75,20 @@ class PreM7ContractTests(unittest.TestCase):
         self.assertEqual(self.tasks["M7-005"]["requires_user_gate_approval"], "G4")
         engineering = self.state["engineering"]
         self.assertEqual(engineering["next_milestone"], "M7")
-        self.assertEqual(engineering["next_milestone_status"], "pending_user_approval")
-        self.assertFalse(engineering["start_authorized"])
-        self.assertIsNone(engineering["start_authorization_record"])
-        self.assertEqual(self.state["task_refs"], {"active_task_id": None, "next_task_id": "M7-001"})
+        self.assertEqual(engineering["active_milestone"], "M7")
+        self.assertEqual(engineering["next_milestone_status"], "in_progress")
+        self.assertTrue(engineering["start_authorized"])
+        self.assertEqual(engineering["start_authorization_record"]["authorization_id"], "M7-AUTH-20261031-OPTION-B")
+        self.assertEqual(engineering["start_authorization_record"]["task_id"], "M7-001")
+        self.assertEqual(engineering["start_authorization_record"]["evidence_path"], ".agents/evidence/M7-001-authorization-20261031.md")
+        self.assertEqual(self.state["task_refs"], {"active_task_id": None, "next_task_id": "M7-004"})
         self.assertEqual(self.state["governance"]["approved_gates"], ["G0", "G1", "G2", "G3"])
+        self.assertEqual(self.state["governance"]["next_governance_gate"], "G4")
+        auth_evidence = (REPO / ".agents/evidence/M7-001-authorization-20261031.md").read_text(encoding="utf-8")
+        self.assertIn("M7-001, M7-002, and M7-003", auth_evidence)
+        self.assertIn("HOLD / NOT APPROVED", auth_evidence)
+        self.assertIn("M7-004 and M7-005 remain gated", auth_evidence)
+        self.assertIn("independent PM has approved G4", auth_evidence)
         self.assertEqual(self.tasks["M6-001"]["status"], "done")
 
     def test_canonical_state_and_backlog_are_json_yaml_and_dependency_valid(self) -> None:

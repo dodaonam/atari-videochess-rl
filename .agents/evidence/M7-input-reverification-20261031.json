@@ -1,0 +1,40 @@
+{
+  "schema": "videochess-m7-input-reverification/1.0",
+  "read_only": true,
+  "source_revision": "257fff94c64bc584797e0d191920a57befcae62c",
+  "checks": [
+    {
+      "input": "M4",
+      "command": "python -m videochess_rl.model.cli verify-artifacts <accepted-m4-r4-root>",
+      "started_at_utc": "2026-10-31T16:04:42Z",
+      "finished_at_utc": "2026-10-31T16:04:45Z",
+      "source_revision": "257fff94c64bc584797e0d191920a57befcae62c",
+      "exit_code": 0,
+      "status": "PASS",
+      "log_path": ".agents/evidence/logs/M7-m4-input-reverification-20261031.log",
+      "stdout_sha256": "334e16f50e5678b85dd5dbf8803540414622870cc4c76e53a1acaa513f1429f8"
+    },
+    {
+      "input": "M5",
+      "command": "python3 scripts/m5_artifact_manifests.py --root <accepted-m5-root> --verify",
+      "started_at_utc": "2026-10-31T16:04:45Z",
+      "finished_at_utc": "2026-10-31T16:05:20Z",
+      "source_revision": "257fff94c64bc584797e0d191920a57befcae62c",
+      "exit_code": 0,
+      "status": "PASS",
+      "log_path": ".agents/evidence/logs/M7-m5-input-reverification-20261031.log",
+      "stdout_sha256": "428df8b98a05e4b374eb8f243c8923889ee92bf0a6c03fe8d2ea4fcd81d73926"
+    },
+    {
+      "input": "M6",
+      "command": "python3 scripts/audit_m6_v2_artifacts.py --root <accepted-m6-v2-root> --v1-root <accepted-m6-v1-root> --output .agents/evidence/M7-M6-reverification-20261031.json",
+      "started_at_utc": "2026-10-31T16:05:20Z",
+      "finished_at_utc": "2026-10-31T16:06:20Z",
+      "source_revision": "257fff94c64bc584797e0d191920a57befcae62c",
+      "exit_code": 0,
+      "status": "PASS",
+      "log_path": ".agents/evidence/logs/M7-m6-input-reverification-20261031.log",
+      "stdout_sha256": "ec8d11019501c0a9a3f148eeb4f0ee003f88157e2878342a3091255181522171"
+    }
+  ]
+}

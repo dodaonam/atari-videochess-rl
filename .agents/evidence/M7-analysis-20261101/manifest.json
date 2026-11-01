@@ -1,0 +1,35 @@
+{
+  "analysis_source": {
+    "commit": "58a604f2bd4bcd9113a047ee709a80ee97bd02a6",
+    "tree": "18d4d93270665a1c2e90eb459381958e407c441f"
+  },
+  "created_at_utc": "2026-10-31T19:56:57Z",
+  "files": [
+    {
+      "bytes": 19637,
+      "path": "M7_ANALYSIS.md",
+      "sha256": "0c36162eb783b9c3d37f054387843bfb7e4ea575cd6ba1da15f5254b33cc00ed"
+    },
+    {
+      "bytes": 3150,
+      "path": "m5-pre-post.svg",
+      "sha256": "3f77a9fa01cbffbe7c2858d3e9a3d6cb9f4ca02fc62d217b33266dd007f582ec"
+    },
+    {
+      "bytes": 984157,
+      "path": "m7-analysis.json",
+      "sha256": "b504762f8433b091ad78179a0961b58144901561cad3834a6c37f0a962d92bf1"
+    },
+    {
+      "bytes": 5737,
+      "path": "m7-outcomes.svg",
+      "sha256": "a46d9e491ac86e703c3cf2566796924b8c143aadddab71f8a9ac6f979bca748f"
+    },
+    {
+      "bytes": 18157,
+      "path": "m7-seed-grid.svg",
+      "sha256": "22b4b223d5abbcc0f7a74f851cc5c541f01c704a368a24ae12fe8cd6fc82923a"
+    }
+  ],
+  "schema": "videochess-m7-analysis-output-manifest/1.0"
+}

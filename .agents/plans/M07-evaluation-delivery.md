@@ -1,15 +1,17 @@
 # M7 Evaluation and Delivery Plan
 
-**Status:** Proposed Pre-M7 plan; M7 is not started or authorized.
+**Status:** Historical Pre-M7 proposal. Phase I is now authorized by the later direct owner order; current task status is owned by `.agents/state/PROJECT_STATE.yaml` and `.agents/tasks/BACKLOG.yaml`.
 **Acceptance source:** [`ACCEPTANCE_CRITERIA.md`](../../docs/06-quality/ACCEPTANCE_CRITERIA.md), M7-01–M7-05.
 **Scientific contract:** [`M7_EVALUATION_PROTOCOL.md`](../../docs/04-research/M7_EVALUATION_PROTOCOL.md).
 **Ownership:** ADR-0001 assigns M7-01–M7-03 evaluation evidence to G4 and M7-04–M7-05 delivery evidence to G5.
 
-## 1. Entry boundaries
+**Subsequent owner decision:** The entry condition below was the proposal's status at PR #16. The project owner later authorized M7-001–003 immediately despite the PM's G4 HOLD / NOT APPROVED disposition. This supersedes the proposal's G4 prerequisite for Phase I only. M7-004/005 still require verified independent G4 approval. See [ADR-0004](../../docs/02-management/decisions/ADR-0004-m7-option-b-execution-authorization.md), [the direct authorization record](../evidence/M7-001-authorization-20261031.md), and the separately frozen [`M7 Option B configuration`](../../configs/m7/m7-option-b-1.0.0.json). The live backlog/state, not this historical plan, records active task status.
 
-M7 work starts only after a separate direct owner authorization is recorded in canonical state/backlog and the independent PM has made the applicable G4 decision. This plan and a passing PR do not authorize execution. M7 contains evaluation and delivery only; it does not authorize retraining, fine-tuning, a new simulator/ALE campaign, cloud allocation, Stockfish use, or publication. The protocol and resource choices are proposals pending owner approval. Any new official evaluation needs its own written scope and resource envelope.
+## 1. Entry boundaries (proposal state at PR #16)
 
-The planned task records are `M7-001` through `M7-005`, all `pending`. M7-001 is the next task pointer only; it is not active. M7-001–003 implement the G4 evaluation criteria and therefore do not require G4 approval as a prerequisite to their own acceptance. M7-004/005 depend on completed evaluation and G4 approval. All tasks still require the direct M7 task authorization in canonical state before starting.
+When this plan was prepared and reviewed, M7 work was waiting for a separate direct owner authorization and the applicable G4 decision. This is historical proposal text; the later owner order in ADR-0004 supersedes the G4 prerequisite for M7-001–003 only. The current authorization and limits are recorded in canonical state/backlog and the immutable M7 Option B configuration. M7 still excludes retraining, fine-tuning, any additional simulator campaign, cloud allocation, Stockfish use, and publication.
+
+At the proposal date, the task records were pending and no new run was authorized. The live records now mark M7-001 in progress under the direct owner authorization. M7-002/003 follow Phase I; M7-004/005 remain gated on independent G4 approval.
 
 ## 2. Work breakdown and acceptance
 
@@ -21,11 +23,11 @@ The planned task records are `M7-001` through `M7-005`, all `pending`. M7-001 is
 | M7-004 — Prepare evidence-linked final report, model card, usage guide, and handover | M7-04 / G5 | M7-003; G4 decision approved | `docs/07-delivery/FINAL_REPORT.md`, `MODEL_CARD.md`, `USER_GUIDE.md`, and `HANDOVER.md` cite actual run IDs, source revisions, configs, checkpoint hashes, raw evidence boundaries, limitations, and reproduction steps. Delivery remains private until separately authorized. |
 | M7-005 — Record release/publication disposition | M7-05 / G5 | M7-004; G4 approved | Record explicit owner authorization before any release or publication. If no authorization exists, record a no-release disposition and retain private artifacts locally. G5 approval alone is not publication authorization. |
 
-All tasks have explicit next actions and remain pending/unauthorized in `BACKLOG.yaml`. Criterion ownership remains split: G4 decides M7-01–03; G5 decides M7-04–05. PM gate decisions do not substitute for direct owner task authorization; task authorization does not imply a PM gate decision.
+The pending/unauthorized status above reflected the proposal before the later owner order. Current statuses are owned only by `PROJECT_STATE.yaml` and `BACKLOG.yaml`. Criterion ownership remains split: G4 decides M7-01–03; G5 decides M7-04–05. The owner's M7 task authorization does not imply a PM gate decision.
 
 ## 3. Execution order and checkpoints
 
-1. Obtain the G4 PM decision and separate direct owner authorization for M7-001. Resolve the owner choices that affect population, protocol, and resources.
+1. Verify the later owner authorization in canonical state. It now authorizes M7-001–003 despite G4 HOLD; M7-004/005 still wait for verified independent G4 approval.
 2. Reverify frozen inputs read-only against the identities in the approved protocol. Stop on a manifest mismatch; do not repair or regenerate frozen evidence.
 3. Use existing accepted measurements first. Run only explicitly authorized new evaluation, with a predeclared schedule and terminal/incomplete policy. No model update or Stockfish evaluation/opponent is allowed under this plan.
 4. Freeze the analysis and disclose all scheduled denominators, missing attempts, deviations, and inference limits before writing conclusions.
@@ -35,7 +37,7 @@ All tasks have explicit next actions and remain pending/unauthorized in `BACKLOG
 
 Refresh checkpoints before a long authorized task, after task/gate transitions, and before handoff. Preserve a failed run and its log; do not rerun or replace a scheduled attempt unless a new approved protocol explicitly permits it.
 
-## 4. Resource plan and decision matrix
+## 4. Historical resource plan and decision matrix (proposal state at PR #16)
 
 ### Measured baseline
 
@@ -45,7 +47,7 @@ Refresh checkpoints before a long authorized task, after task/gate transitions, 
 | M6 v2 ALE | 20 attempts in 3,519.969 gameplay seconds (0.978 hours); peak RSS 620,105,728 bytes; 728,148,524 artifact bytes; v2 caps 1,800 seconds/attempt, 43,200 seconds/campaign, 6 GiB RSS, and 8 GiB artifacts. | Observed duration was 175.998 seconds/attempt, but incomplete/timeouts and long tails make that an expectation only. Keep the accepted 1,800-second stop per attempt. |
 | Current local host snapshot | 8 logical CPUs; 33.49 GB RAM total, 24.91 GB available; 50.71 GB filesystem free at 2026-10-31T14:22:18Z. | Local CPU and current free storage exceed the historical M6 v2 preflight minimum of 12 GiB. This is a point-in-time capacity observation, not future reservation. See [resource snapshot](../evidence/PRE-M7-resource-snapshot-20261031.json). |
 
-### Bounded options (none authorized)
+### Bounded options (none authorized at the time of the proposal)
 
 | Option | Purpose / expected resource | Maximum / storage / limitation | Decision |
 |---|---|---|---|
@@ -54,7 +56,7 @@ Refresh checkpoints before a long authorized task, after task/gate transitions, 
 | Optional ALE comparison across the complete frozen population | 9 policy groups: six M5 post-RL snapshots (Warm/Scratch × 3 training seeds), one M4 r4 model, RandomLegal, and SimpleHeuristic; 10 common new ALE seeds per policy = 90 attempts. Agent White; same approved ROM/profile/opponent; no policy selection or replacement. | Expected ≈4.4 gameplay hours if the M6 v2 observed mean repeats; strict max = 90 × 1,800 s = 45 hours, before setup/recovery. Linear storage estimate ≈3.28 GB based on 728,148,524 bytes/20 attempts; cap at 8 GiB plus reserve and recheck free disk before authorization. Three training-seed clusters still limit generalization; 10 ALE seeds per policy is operationally informative, not strong proof of superiority. Current M6 config's 20-attempt ceiling cannot be silently reused; a separately versioned and approved config/budget is required. | Scientifically useful for breadth across all three M5 training seeds, but not justified before the 2026-11-03 presentation deadline without explicit owner approval. Do not run during Pre-M7. |
 | Colab CPU/T4 | No current evidence that remote compute improves this serial controller/ALE loop; T4 does not accelerate Atari frame stepping. | Entitlement, quota, storage, privacy pathway, and paid-use permission are unknown. A T4 would be serialized with no concurrent T4 sessions and would add transfer/runtime variance. No Colab CU accounting. | Not proposed. Owner must separately approve any cloud use and verify access first. |
 
-If the optional ALE branch is later authorized, use one local ALE process at a time, no concurrent T4 session, no cloud transfer, and a separately approved 8 GiB artifact ceiling. Before the first reset verify disk reserve, exact checkpoint/ROM/config hashes, and output path. Stop an attempt at 1,800 seconds or any controller/synchronization uncertainty; classify it as incomplete and preserve it. Allow at most one global process-start retry before any ALE action, no reset replacement, and no post-result rerun. Resume only from an independently verified checkpoint/ledger boundary and with explicit approval; otherwise close the campaign as partial with the original schedule denominator. Never overwrite a frozen M4/M5/M6 path.
+The optional ALE branch was later authorized under ADR-0004 and the separately frozen M7 configuration linked above. This historical decision matrix is not the execution configuration. The actual campaign uses its exact seed/order/profile/resource settings and current owner authorization; M6 v2's configuration and 20-attempt ceiling remain unchanged. Before the first official reset, verify disk reserve, exact checkpoint/ROM/config hashes, committed source, and isolated output path. Preserve uncertainty stops and every scheduled cell, allow at most one process-start retry before reset/action, and prohibit outcome-based replacement attempts. Never overwrite a frozen M4/M5/M6 path.
 
 ## 5. Privacy and handling
 

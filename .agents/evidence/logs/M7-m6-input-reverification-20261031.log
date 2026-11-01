@@ -1,0 +1,9 @@
+Command: python3 scripts/audit_m6_v2_artifacts.py --root <accepted-m6-v2-root> --v1-root <accepted-m6-v1-root> --output .agents/evidence/M7-M6-reverification-20261031.json
+Started at UTC: 2026-10-31T16:05:20Z
+Finished at UTC: 2026-10-31T16:06:20Z
+Source revision: 257fff94c64bc584797e0d191920a57befcae62c
+Result: PASS — M6 v1/v2 read-only raw artifact reconstruction
+Exit code: 0
+Sanitized output:
+audit_report=<m7-worktree>/.agents/evidence/M7-M6-reverification-20261031.json
+audit_report_sha256=4ff0ef8edda6546aefeb3f23aab055521e9ac909301b0b46592e0937c7b45c68
