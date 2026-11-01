@@ -1,0 +1,20 @@
+2026-11-01T13:01:51Z
+source_revision=2a26ce76c95eedfa216d31d482f6c0fd942e7fd5
+python3 .agents/evidence/logs/M7-005-private-content-scan-20261101.py
+fatal: ambiguous argument 'origin/initial-idea': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+Traceback (most recent call last):
+  File "<clean-clone>/.agents/evidence/logs/M7-005-private-content-scan-20261101.py", line 26, in <module>
+    added = git("diff", "--unified=0", BASE)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<clean-clone>/.agents/evidence/logs/M7-005-private-content-scan-20261101.py", line 23, in git
+    return subprocess.check_output(["git", *args], text=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'diff', '--unified=0', 'origin/initial-idea']' returned non-zero exit status 128.
+Exit code: 1

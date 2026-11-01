@@ -1,0 +1,9 @@
+2026-11-01T13:02:00Z
+source_revision=2a26ce76c95eedfa216d31d482f6c0fd942e7fd5
+python3 .agents/evidence/logs/M7-005-private-content-scan-20261101.py
+source_revision=2a26ce76c95eedfa216d31d482f6c0fd942e7fd5
+added_tracked_lines=10823
+untracked_text_and_task_logs=56
+concrete_path_or_credential_matches=[]
+restricted_payload_suffixes=[]
+Exit code: 0
