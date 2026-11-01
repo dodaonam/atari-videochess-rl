@@ -1,0 +1,10 @@
+GitHub Actions verification failure retained for review.
+
+Workflow: Repository preflight
+Run: https://github.com/dodaonam/atari-videochess-rl/actions/runs/41310094477
+Reviewed head: 3119e425f0e7041817ddb87e5ba363fe47f1ea1a
+Execution: 2026-11-01T13:11:59Z–13:12:06Z
+Job/step: context / Validate canonical context
+Result: FAIL, process exit 1. Preflight reported three `LINK_BROKEN` errors in `.agents/evidence/G5-F02-remediation-20261101.md` for the C2 preflight, focused-suite, and full-suite logs.
+Cause: The remediation document linked to the C2 clean-clone logs while those logs were still in temporary storage and had not yet been copied into the repository. This was a documentation packaging defect, not a governance, scientific, or privacy failure.
+Remediation: The sanitized C2 logs are being added to `.agents/evidence/logs/`; the corrected exact HEAD will be pushed and CI rerun. No experimental data or scientific results were changed.
