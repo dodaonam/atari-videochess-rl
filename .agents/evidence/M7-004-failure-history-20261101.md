@@ -48,6 +48,8 @@ This record preserves documented failures encountered while preparing delivery e
 - **Remediation/verification:** reran all discovered tests in the same clean clone while excluding exactly the unavailable Stockfish readiness test. Result: 504 executed, three existing skips, zero failures/errors. The excluded test ID and complete filter source are in [the filtered-suite log](logs/M7-004-clean-clone-suite-excluding-stockfish-20261101.log).
 - **Boundary:** this is an explicitly qualified suite result, not a claim that all repository tests passed. No Stockfish binary was installed or invoked.
 
+After the canonical M7-004 completion state was committed at source revision a80dbae1e9185d0e5545803710b0793f3405aa84, another clean clone passed preflight with only ARTIFACT_MANIFEST_REQUIRED and passed the 24 focused documentation/manifest/governance tests. See the final clean-clone preflight and focused-test logs. These results include the final done/pending gate pointers.
+
 ## 7. Verification boundary
 
 The incorrect-path and interpreter failures are diagnostic failures, not frozen experiment results. The successful checks used accepted identities, did not repair or regenerate historical artifacts, and did not add campaign attempts. M7-004 focused/full-suite and clean-clone outcomes are recorded separately in the M7-004 acceptance evidence.

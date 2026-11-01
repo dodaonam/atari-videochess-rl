@@ -270,6 +270,17 @@
       "source_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
       "tests_run": 504
     },
+    "final_clean_clone_focused_tests": {
+      "failures": 0,
+      "log_path": ".agents/evidence/logs/M7-004-final-clean-clone-focused-tests-20261101.log",
+      "source_revision": "a80dbae1e9185d0e5545803710b0793f3405aa84",
+      "tests_passed": 24
+    },
+    "final_clean_clone_preflight": {
+      "log_path": ".agents/evidence/logs/M7-004-final-clean-clone-preflight-20261101.log",
+      "source_revision": "a80dbae1e9185d0e5545803710b0793f3405aa84",
+      "status": "PASS with expected ARTIFACT_MANIFEST_REQUIRED warning only"
+    },
     "focused_suite_pre_final_state": {
       "failures": 0,
       "log_path": ".agents/evidence/logs/M7-004-focused-tests-20261101.log",
@@ -284,7 +295,7 @@
       "source_revision": "d7332b91128d3daf919421db2e71a9f2ee4b48ec",
       "tests_run": 503
     },
-    "preflight_clean_clone": {
+    "preflight_clean_clone_pre_final_state": {
       "raw_artifacts_copied": false,
       "source_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
       "status": "PASS with expected ARTIFACT_MANIFEST_REQUIRED warning"
