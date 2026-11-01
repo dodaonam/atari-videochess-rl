@@ -5591,8 +5591,8 @@
       "id": "M7-004",
       "title": "Prepare evidence-linked delivery documents",
       "milestone": "M7",
-      "status": "pending",
-      "next_action": "Wait for independent PM review and merge of the G4 governance-record PR (#18); verify the integrated initial-idea canonical state records G4 approved before starting delivery documentation.",
+      "status": "done",
+      "next_action": "",
       "depends_on": [
         "M7-003"
       ],
@@ -5601,7 +5601,255 @@
         "M7-04"
       ],
       "blocker_ids": [],
-      "evidence": [],
+      "evidence": [
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M7-004-acceptance-20261101.md",
+          "detail": "M7-04 engineering completion mapping, scientific boundaries, verification summary, and Independent PM review request.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T04:33:12Z",
+            "exit_code": null,
+            "git_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "docs/07-delivery/FINAL_REPORT.md",
+          "detail": "Final research report with separate M3–M7 tracks, raw-derived M7 comparisons, censoring, and limitations.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T04:33:12Z",
+            "exit_code": null,
+            "git_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "docs/07-delivery/MODEL_CARD.md",
+          "detail": "M4 behavior model and six M5 checkpoint identities, provenance, intended use, limitations, and distribution restriction.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T04:33:12Z",
+            "exit_code": null,
+            "git_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "docs/07-delivery/USER_GUIDE.md",
+          "detail": "Actual command contracts, reproduction levels, private-artifact prerequisites, troubleshooting, and privacy.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T04:33:12Z",
+            "exit_code": null,
+            "git_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "docs/07-delivery/HANDOVER.md",
+          "detail": "Canonical source map, evidence/artifact inventory, open requirements, owners, and gate boundaries.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T04:33:12Z",
+            "exit_code": null,
+            "git_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M7-004-evidence-inventory-20261101.json",
+          "detail": "Claim/source map, committed evidence hashes, private manifest identities, and run verification outcomes.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T04:33:12Z",
+            "exit_code": null,
+            "git_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M7-004-failure-history-20261101.md",
+          "detail": "Preserved command/test failures and remediations, including the environment-blocked Stockfish check.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T04:33:12Z",
+            "exit_code": null,
+            "git_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/logs/M7-004-clean-clone-full-suite-20261101.log",
+          "detail": "Unfiltered clean-clone suite: 505 tests, one missing-Stockfish executable failure, three skips; Git snapshot test passed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T04:33:12Z",
+            "exit_code": null,
+            "git_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONPATH=. <project-python> -m unittest discover -s tests -v",
+          "result": "RESULT: 505 tests; one Stockfish UCI readiness failure because the executable was unavailable; 3 skipped.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-11-01T04:25:17.360241Z",
+            "recorded_at_utc": "2026-11-01T04:34:27Z",
+            "exit_code": 1,
+            "git_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+            "log_path": ".agents/evidence/logs/M7-004-clean-clone-full-suite-20261101.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONPATH=. <project-python> - (runner source follows)",
+          "result": "RESULT: executed 504 tests; 3 skipped; 0 failures; 0 errors; exactly the unavailable Stockfish readiness test was excluded.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-11-01T04:28:26.894327Z",
+            "recorded_at_utc": "2026-11-01T04:34:27Z",
+            "exit_code": 0,
+            "git_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+            "log_path": ".agents/evidence/logs/M7-004-clean-clone-suite-excluding-stockfish-20261101.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "RESULT: PASS; expected ARTIFACT_MANIFEST_REQUIRED warning only.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-11-01T04:38:14.049633Z",
+            "recorded_at_utc": "2026-11-01T04:38:31Z",
+            "exit_code": 0,
+            "git_revision": "a80dbae1e9185d0e5545803710b0793f3405aa84",
+            "log_path": ".agents/evidence/logs/M7-004-final-clean-clone-preflight-20261101.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONPATH=. <project-python> -m unittest tests.test_m7_delivery_docs tests.test_m7_artifact_manifest_cli tests.test_pre_m7_contracts tests.test_agent_context.AgentContextRecoveryTests.test_m7_004_done_for_review_and_m7_005_remains_unstarted tests.test_agent_context.AgentContextRecoveryTests.test_m6_pm_acceptance_is_historical_and_g4_is_now_approved_for_m7_evaluation -v",
+          "result": "RESULT: PASS; 24 focused tests; 0 failures.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-11-01T04:38:14.055007Z",
+            "recorded_at_utc": "2026-11-01T04:38:31Z",
+            "exit_code": 0,
+            "git_revision": "a80dbae1e9185d0e5545803710b0793f3405aa84",
+            "log_path": ".agents/evidence/logs/M7-004-final-clean-clone-focused-tests-20261101.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "RESULT: PASS with expected ARTIFACT_MANIFEST_REQUIRED warning only.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-11-01T04:39:48.585489Z",
+            "recorded_at_utc": "2026-11-01T04:39:55Z",
+            "exit_code": 0,
+            "git_revision": "e23e8f3cc64ec2797697bc4116f215907b3d9c31",
+            "log_path": ".agents/evidence/logs/M7-004-final-local-preflight-20261101.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONPATH=. <project-python> -m unittest tests.test_m7_delivery_docs tests.test_m7_artifact_manifest_cli tests.test_pre_m7_contracts tests.test_agent_context.AgentContextRecoveryTests.test_m7_004_done_for_review_and_m7_005_remains_unstarted tests.test_agent_context.AgentContextRecoveryTests.test_m6_pm_acceptance_is_historical_and_g4_is_now_approved_for_m7_evaluation -v",
+          "result": "RESULT: PASS; 24 focused tests; 0 failures.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-11-01T04:39:48.587681Z",
+            "recorded_at_utc": "2026-11-01T04:39:55Z",
+            "exit_code": 0,
+            "git_revision": "e23e8f3cc64ec2797697bc4116f215907b3d9c31",
+            "log_path": ".agents/evidence/logs/M7-004-final-local-focused-tests-20261101.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "RESULT: PASS with expected ARTIFACT_MANIFEST_REQUIRED warning only.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-11-01T04:40:59Z",
+            "recorded_at_utc": "2026-11-01T04:41:07Z",
+            "exit_code": 0,
+            "git_revision": "fb39917cd1fb7c87e6c5bbd62497a1e2aaa6b62e",
+            "log_path": ".agents/evidence/logs/M7-004-exact-head-clean-clone-preflight-20261101.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONPATH=. <project-python> -m unittest tests.test_m7_delivery_docs tests.test_m7_artifact_manifest_cli tests.test_pre_m7_contracts tests.test_agent_context.AgentContextRecoveryTests.test_m7_004_done_for_review_and_m7_005_remains_unstarted tests.test_agent_context.AgentContextRecoveryTests.test_m6_pm_acceptance_is_historical_and_g4_is_now_approved_for_m7_evaluation -v",
+          "result": "RESULT: PASS; 24 focused tests; 0 failures.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-11-01T04:40:59Z",
+            "recorded_at_utc": "2026-11-01T04:41:07Z",
+            "exit_code": 0,
+            "git_revision": "fb39917cd1fb7c87e6c5bbd62497a1e2aaa6b62e",
+            "log_path": ".agents/evidence/logs/M7-004-exact-head-clean-clone-focused-tests-20261101.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "RESULT: PASS with expected ARTIFACT_MANIFEST_REQUIRED warning only.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-11-01T04:42:09.264150Z",
+            "recorded_at_utc": "2026-11-01T04:42:13Z",
+            "exit_code": 0,
+            "git_revision": "cadf17647fc8990a42b74f70aa984f67d15091ff",
+            "log_path": ".agents/evidence/logs/M7-004-current-head-clean-clone-preflight-20261101.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "RESULT: PASS with expected ARTIFACT_MANIFEST_REQUIRED warning only.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-11-01T04:44:03.088736Z",
+            "recorded_at_utc": "2026-11-01T04:44:11Z",
+            "exit_code": 0,
+            "git_revision": "c6f69b6096aa066dcca68c1246a2c488c839f9be",
+            "log_path": ".agents/evidence/logs/M7-004-model-design-clean-clone-preflight-20261101.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONPATH=. <project-python> -m unittest tests.test_m7_delivery_docs tests.test_m7_artifact_manifest_cli tests.test_pre_m7_contracts tests.test_agent_context.AgentContextRecoveryTests.test_m7_004_done_for_review_and_m7_005_remains_unstarted tests.test_agent_context.AgentContextRecoveryTests.test_m6_pm_acceptance_is_historical_and_g4_is_now_approved_for_m7_evaluation -v",
+          "result": "RESULT: PASS; 24 focused tests; 0 failures.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-11-01T04:44:03.091450Z",
+            "recorded_at_utc": "2026-11-01T04:44:11Z",
+            "exit_code": 0,
+            "git_revision": "c6f69b6096aa066dcca68c1246a2c488c839f9be",
+            "log_path": ".agents/evidence/logs/M7-004-model-design-clean-clone-focused-tests-20261101.log"
+          }
+        }
+      ],
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
     },
     {
@@ -5609,7 +5857,7 @@
       "title": "Record release and publication disposition",
       "milestone": "M7",
       "status": "pending",
-      "next_action": "Wait for M7-004. This G5-owned task requires independent G5 acceptance; record NO RELEASE / NO PUBLICATION unless separate direct Project Owner release authorization is received, which is not currently authorized.",
+      "next_action": "Do not start M7-005 under the M7-004 work order. It is G5-owned acceptance work. Await separate direct Project Owner instruction and Independent PM G5 decision. No public model, dataset, ROM, or private artifact release/publication is currently authorized.",
       "depends_on": [
         "M7-004"
       ],
@@ -5622,5 +5870,5 @@
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
     }
   ],
-  "updated_at_utc": "2026-11-01T03:22:25Z"
+  "updated_at_utc": "2026-11-01T04:44:35Z"
 }

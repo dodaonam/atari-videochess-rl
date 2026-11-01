@@ -1,0 +1,40 @@
+M7-004 command-environment failure capture
+Purpose: preserve initial host-interpreter CLI help failures; no campaign or artifact operation was started.
+STARTED_AT_UTC: 2026-11-01T04:12:04.629248+00:00
+COMMAND: python3 scripts/verify_m7_inputs.py --help
+EXIT_CODE: 1
+STDOUT:
+
+STDERR:
+Traceback (most recent call last):
+  File "<checkout>/scripts/verify_m7_inputs.py", line 17, in <module>
+    from videochess_rl.m7.analysis import (
+  File "<checkout>/videochess_rl/m7/analysis.py", line 13, in <module>
+    import chess
+ModuleNotFoundError: No module named 'chess'
+COMMAND: python3 scripts/analyze_m7_campaign.py --help
+EXIT_CODE: 1
+STDOUT:
+
+STDERR:
+Traceback (most recent call last):
+  File "<checkout>/scripts/analyze_m7_campaign.py", line 22, in <module>
+    from videochess_rl.m7.analysis import AnalysisIntegrityError, analyze_all_tracks
+  File "<checkout>/videochess_rl/m7/analysis.py", line 13, in <module>
+    import chess
+ModuleNotFoundError: No module named 'chess'
+COMMAND: python3 scripts/run_m7_campaign.py --help
+EXIT_CODE: 1
+STDOUT:
+
+STDERR:
+Traceback (most recent call last):
+  File "<checkout>/scripts/run_m7_campaign.py", line 15, in <module>
+    from videochess_rl.m7.campaign import M7CampaignRunner
+  File "<checkout>/videochess_rl/m7/campaign.py", line 18, in <module>
+    from videochess_rl.environment import ALEConfig, VideoChessEnv
+  File "<checkout>/videochess_rl/environment.py", line 11, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+FINISHED_AT_UTC: 2026-11-01T04:12:05.285708+00:00
+REMEDIATION: reran all documented dependency-bearing --help commands with the existing locked project interpreter and PYTHONPATH=.; all exited 0. No dependency was installed.

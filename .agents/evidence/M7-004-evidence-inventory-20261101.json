@@ -1,0 +1,342 @@
+{
+  "analysis_bundle": {
+    "file_count": 5,
+    "manifest_path": ".agents/evidence/M7-analysis-final-r2-20261101/manifest.json",
+    "manifest_sha256": "af084e1cd99a6541c19cad2a1dfa163129a3cb873c393ec3669711e5d7b4ffa1",
+    "verification_log": ".agents/evidence/logs/M7-004-analysis-bundle-verification-20261101.log"
+  },
+  "claims": [
+    {
+      "claim_id": "M3-data-provenance",
+      "denominator": "games and retained positions",
+      "environment": "bounded historical source processing",
+      "evidence": [
+        ".agents/evidence/M3-acceptance-20261021.md"
+      ],
+      "limitations": "third-party source license unstated/unverified; private source data",
+      "value": "1,000 games; 19,268 positions; release f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890"
+    },
+    {
+      "claim_id": "M4-imitation",
+      "denominator": "2,057 positions; 61,419 legal-candidate evaluations",
+      "environment": "held-out M3 test split",
+      "evidence": [
+        ".agents/evidence/M4-final-acceptance-20261027.md",
+        ".agents/evidence/M7-analysis-final-r2-20261101/m7-analysis.json"
+      ],
+      "limitations": "imitation agreement, not wins, playing strength, Elo, RL, or Atari performance",
+      "value": "legal top-1 29.8979%; top-3 54.3996%; MRR 0.4643745951"
+    },
+    {
+      "claim_id": "M5-simulator",
+      "denominator": "three paired training-seed pairs; 15 × 100 evaluation rows",
+      "environment": "M2 chess simulator",
+      "evidence": [
+        "docs/04-research/M5_FINAL_REPORT.md",
+        ".agents/evidence/M7-analysis-final-r2-20261101/M7_ANALYSIS.md"
+      ],
+      "limitations": "simulator-only; RSK-014; three training-seed pairs",
+      "value": "six 50,000-decision training runs; 1,500 evaluation rows; 1,494 terminals; six truncations"
+    },
+    {
+      "claim_id": "M6-v1",
+      "denominator": "35 attempts",
+      "environment": "ALE/VideoChess-v5; v1 profile",
+      "evidence": [
+        ".agents/evidence/M6-001-final-report-20261031.md",
+        ".agents/evidence/M7-analysis-final-r2-20261101/M7_ANALYSIS.md"
+      ],
+      "limitations": "distinct 54,000-frame/900-second profile",
+      "value": "35 scheduled; three terminal losses; 32 incomplete"
+    },
+    {
+      "claim_id": "M6-v2",
+      "denominator": "20 attempts; 405 initiated moves",
+      "environment": "ALE/VideoChess-v5; v2 extended profile",
+      "evidence": [
+        ".agents/evidence/M6-001-final-report-v2-20261031.md",
+        ".agents/evidence/M6-PM6-F06-erratum-20261031.md",
+        ".agents/evidence/M7-analysis-final-r2-20261101/M7_ANALYSIS.md"
+      ],
+      "limitations": "v2 is separate from v1 and reuses its ALE seeds; PM6-F06 retained",
+      "value": "20 scheduled; 11 terminal losses; nine incomplete; 385/405 RGB-verified; zero desynchronizations"
+    },
+    {
+      "claim_id": "M7-option-b-outcomes",
+      "denominator": "9 policy groups × 10 shared ALE seeds",
+      "environment": "ALE/VideoChess-v5, White, built-in opponent, extended horizon",
+      "evidence": [
+        "configs/m7/m7-option-b-1.0.0.json",
+        ".agents/evidence/M7-001-acceptance-20261101.md",
+        ".agents/evidence/M7-002-acceptance-20261101.md",
+        ".agents/evidence/M7-analysis-final-r2-20261101/M7_ANALYSIS.md",
+        ".agents/evidence/M7-analysis-final-r2-20261101/m7-analysis.json"
+      ],
+      "limitations": "censoring; single opponent; White only; not a strength result",
+      "value": "90 scheduled/started/reset-observed; 60 terminal White losses; 30 incomplete; zero wins/draws"
+    },
+    {
+      "claim_id": "M7-paired-warm-scratch",
+      "denominator": "30 scheduled matched policy cells",
+      "environment": "M7 common ALE seed blocks × M5 training-seed pair identities",
+      "evidence": [
+        ".agents/evidence/M7-002-acceptance-20261101.md",
+        ".agents/evidence/M7-analysis-final-r2-20261101/m7-analysis.json"
+      ],
+      "limitations": "zero point difference does not establish equivalence",
+      "value": "9/30 terminal matched cells; 21 censored/unknown; point difference 0.000; interval unavailable"
+    },
+    {
+      "claim_id": "elo-disposition",
+      "denominator": "not applicable",
+      "environment": "protocol design assessment",
+      "evidence": [
+        ".agents/evidence/M7-003-acceptance-20261101.md",
+        ".agents/evidence/G4-PM-acceptance-20261101.md"
+      ],
+      "limitations": "no calibrated pool, anchor, color-balanced schedule, or approved rating analysis",
+      "value": "Elo not reported: calibrated pool/design not approved or unavailable"
+    }
+  ],
+  "committed_source_file_sha256": [
+    {
+      "path": ".agents/evidence/M3-acceptance-20261021.md",
+      "sha256": "c47ca1049625f00d697f0d4ee7ae9bf19f154089d9e193b0c0e3082c3e0eb4ce",
+      "visibility": "committed"
+    },
+    {
+      "path": ".agents/evidence/M4-final-acceptance-20261027.md",
+      "sha256": "2f7f0c2cb8105b84b74a88b3783932d5181f671a360c7faeae0d9f6809c92fdd",
+      "visibility": "committed"
+    },
+    {
+      "path": ".agents/evidence/M4-final-acceptance-20261027.json",
+      "sha256": "42a3e2e06f8e5a2eb75f80c8496ee1b3be4c8c2bda81d77d13e4aa1522b3d4ec",
+      "visibility": "committed"
+    },
+    {
+      "path": "docs/04-research/M5_FINAL_REPORT.md",
+      "sha256": "d8e9eff59e842fd7250c2f0922946cffaa8936c136503b096d2a3ebc0726f166",
+      "visibility": "committed"
+    },
+    {
+      "path": ".agents/evidence/M5-PM-acceptance-20261030.md",
+      "sha256": "f5228869fe59230fa24cab900bf56afbb42476e27bf792c1acf202707339cbc2",
+      "visibility": "committed"
+    },
+    {
+      "path": ".agents/evidence/M6-001-final-report-20261031.md",
+      "sha256": "158d39b28df99df580244ce16e34f64b8029240d4dc6c35ddb178735020ac652",
+      "visibility": "committed"
+    },
+    {
+      "path": ".agents/evidence/M6-001-final-report-v2-20261031.md",
+      "sha256": "8b24d68f9d9938450d8ab3e3c30c0620f22ea11e96b27f19b7e7a8f865957e2c",
+      "visibility": "committed"
+    },
+    {
+      "path": ".agents/evidence/M6-PM6-F06-erratum-20261031.md",
+      "sha256": "9ae1963ab2c5a025a69740329ebfd7a0696b607c657b5f3a118cf0210fa21e47",
+      "visibility": "committed"
+    },
+    {
+      "path": ".agents/evidence/M7-001-acceptance-20261101.md",
+      "sha256": "7ccd554b954cb8682772a82230b61736078cb5223499195b2eaecc22aa59a085",
+      "visibility": "committed"
+    },
+    {
+      "path": ".agents/evidence/M7-002-acceptance-20261101.md",
+      "sha256": "5fd72eee6eb6f5b1513ef9672ae6ea7759dacb9770b38047519472f6b032426d",
+      "visibility": "committed"
+    },
+    {
+      "path": ".agents/evidence/M7-003-acceptance-20261101.md",
+      "sha256": "a070e197c5364f8f467c8f309cf29d41b4aca988c35179dcb7178eaf7f10efc7",
+      "visibility": "committed"
+    },
+    {
+      "path": ".agents/evidence/G4-PM-acceptance-20261101.md",
+      "sha256": "b26a07a792bcd07ffccca5f79005c0ae37d290ef49372a965d62f1dafc2c4d47",
+      "visibility": "committed"
+    },
+    {
+      "path": "configs/m7/m7-option-b-1.0.0.json",
+      "sha256": "8ec8a42a808f4ffc410c938b4400d02461f96823eb5ac1b16cbd6e0d5e35f255",
+      "visibility": "committed"
+    },
+    {
+      "path": ".agents/evidence/M7-analysis-final-r2-20261101/M7_ANALYSIS.md",
+      "sha256": "10c3561230c4f676c404e7f072ac4907b6d29c187f0e603c48a3c87dd7cab76b",
+      "visibility": "committed"
+    },
+    {
+      "path": ".agents/evidence/M7-analysis-final-r2-20261101/m7-analysis.json",
+      "sha256": "487cf0f9b0563653f6fb98dc9e2d6058a7757e2fd48c82abbd4ed0db3db5e9f8",
+      "visibility": "committed"
+    },
+    {
+      "path": ".agents/evidence/M7-analysis-final-r2-20261101/manifest.json",
+      "sha256": "af084e1cd99a6541c19cad2a1dfa163129a3cb873c393ec3669711e5d7b4ffa1",
+      "visibility": "committed"
+    }
+  ],
+  "governance": {
+    "G4": "APPROVED WITH SCIENTIFIC LIMITATIONS; M7-01–M7-03 only",
+    "G5": "NOT APPROVED",
+    "M7-001": "done",
+    "M7-002": "done",
+    "M7-003": "done",
+    "M7-004": "done; engineering evidence complete; Independent PM review pending",
+    "M7-005": "pending; not started"
+  },
+  "integrity_and_privacy": {
+    "failure_history": ".agents/evidence/M7-004-failure-history-20261101.md",
+    "historical_evidence_modified": false,
+    "private_payloads_committed": false,
+    "public_release_authorized": false,
+    "training_or_campaign_run_for_M7_004": false
+  },
+  "private_artifact_verification": [
+    {
+      "artifact": "M3 accepted release",
+      "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+      "payload_visibility": "owner-local",
+      "status": "read-only verified",
+      "verification_log": ".agents/evidence/logs/M7-004-private-input-verification-rerun1-20261101.log"
+    },
+    {
+      "artifact": "M4 accepted root",
+      "checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+      "manifest_sha256": "f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921",
+      "payload_visibility": "owner-local",
+      "status": "read-only verified",
+      "verification_log": ".agents/evidence/logs/M7-004-private-input-verification-rerun1-20261101.log"
+    },
+    {
+      "artifact": "M5 accepted root",
+      "manifest_sha256": "a201a254671ad59ae1fecb402abf994d5bf523097f1c3010b5c7fa237ae6dd4c",
+      "payload_visibility": "owner-local",
+      "status": "read-only verified",
+      "verification_log": ".agents/evidence/logs/M7-004-private-input-verification-rerun1-20261101.log"
+    },
+    {
+      "artifact": "M6 Stage 3 v1 root",
+      "manifest_sha256": "22ac6ec7e0f4a48f52b2452654d4adecaf111f38ea37f5d9517f173c838716d7",
+      "payload_visibility": "owner-local",
+      "status": "read-only verified",
+      "verification_log": ".agents/evidence/logs/M7-004-private-input-verification-rerun1-20261101.log"
+    },
+    {
+      "artifact": "M6 Stage 3 v2 root",
+      "manifest_sha256": "bc0068aa2254e4c15165247ee299f48940cca9b7c21f6a288fd13812631ea2b2",
+      "payload_visibility": "owner-local",
+      "status": "read-only verified",
+      "verification_log": ".agents/evidence/logs/M7-004-private-input-verification-rerun1-20261101.log"
+    },
+    {
+      "artifact": "M7 Option B raw artifact root",
+      "files": 16192,
+      "manifest_sha256": "25a8b6bcfbf1d948bed886a0a4964cf48210fb1be12809c72bf122157b8d05e4",
+      "payload_visibility": "owner-local",
+      "status": "read-only verified",
+      "total_bytes": 2459601127,
+      "verification_log": ".agents/evidence/logs/M7-004-M7-manifest-verification-20261101.log"
+    }
+  ],
+  "schema": "videochess-m7-004-evidence-inventory/1.0",
+  "scope": {
+    "acceptance_criterion": "M7-04",
+    "base_branch": "initial-idea",
+    "base_revision": "d7332b91128d3daf919421db2e71a9f2ee4b48ec",
+    "owner_authorization_id": "M7-AUTH-20261031-OPTION-B",
+    "task_id": "M7-004"
+  },
+  "verification": {
+    "clean_clone_full_suite": {
+      "exit_code": 1,
+      "failure": "Stockfish UCI readiness executable absent; Git snapshot test passed",
+      "failures": 1,
+      "log_path": ".agents/evidence/logs/M7-004-clean-clone-full-suite-20261101.log",
+      "skipped": 3,
+      "source_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+      "tests_run": 505
+    },
+    "clean_clone_suite_excluding_one_environment_blocked_test": {
+      "errors": 0,
+      "excluded_test": "test_m0_smoke.M0EnvironmentSmokeTests.test_stockfish_answers_uci_readiness_without_searching",
+      "failures": 0,
+      "log_path": ".agents/evidence/logs/M7-004-clean-clone-suite-excluding-stockfish-20261101.log",
+      "skipped": 3,
+      "source_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+      "tests_run": 504
+    },
+    "current_head_clean_clone_preflight": {
+      "log_path": ".agents/evidence/logs/M7-004-current-head-clean-clone-preflight-20261101.log",
+      "source_revision": "cadf17647fc8990a42b74f70aa984f67d15091ff",
+      "status": "PASS with expected ARTIFACT_MANIFEST_REQUIRED warning only"
+    },
+    "final_clean_clone_focused_tests": {
+      "failures": 0,
+      "log_path": ".agents/evidence/logs/M7-004-final-clean-clone-focused-tests-20261101.log",
+      "source_revision": "a80dbae1e9185d0e5545803710b0793f3405aa84",
+      "tests_passed": 24
+    },
+    "final_clean_clone_preflight": {
+      "log_path": ".agents/evidence/logs/M7-004-final-clean-clone-preflight-20261101.log",
+      "source_revision": "a80dbae1e9185d0e5545803710b0793f3405aa84",
+      "status": "PASS with expected ARTIFACT_MANIFEST_REQUIRED warning only"
+    },
+    "final_local_focused_tests": {
+      "failures": 0,
+      "log_path": ".agents/evidence/logs/M7-004-final-local-focused-tests-20261101.log",
+      "source_revision": "e23e8f3cc64ec2797697bc4116f215907b3d9c31",
+      "tests_passed": 24
+    },
+    "final_local_preflight": {
+      "log_path": ".agents/evidence/logs/M7-004-final-local-preflight-20261101.log",
+      "source_revision": "e23e8f3cc64ec2797697bc4116f215907b3d9c31",
+      "status": "PASS with expected ARTIFACT_MANIFEST_REQUIRED warning only"
+    },
+    "final_submitted_candidate_clean_clone_focused_tests": {
+      "failures": 0,
+      "log_path": ".agents/evidence/logs/M7-004-exact-head-clean-clone-focused-tests-20261101.log",
+      "source_revision": "fb39917cd1fb7c87e6c5bbd62497a1e2aaa6b62e",
+      "tests_passed": 24
+    },
+    "final_submitted_candidate_clean_clone_preflight": {
+      "log_path": ".agents/evidence/logs/M7-004-exact-head-clean-clone-preflight-20261101.log",
+      "source_revision": "fb39917cd1fb7c87e6c5bbd62497a1e2aaa6b62e",
+      "status": "PASS with expected ARTIFACT_MANIFEST_REQUIRED warning only"
+    },
+    "focused_suite_pre_final_state": {
+      "failures": 0,
+      "log_path": ".agents/evidence/logs/M7-004-focused-tests-20261101.log",
+      "note": "pre-final canonical M7-004 state; final state-specific focused suite will be recorded after committed transition",
+      "source_revision": "d7332b91128d3daf919421db2e71a9f2ee4b48ec",
+      "tests_passed": 24
+    },
+    "historical_worktree_full_suite": {
+      "failures": 2,
+      "log_path": ".agents/evidence/logs/M7-004-full-suite-20261101.log",
+      "skipped": 3,
+      "source_revision": "d7332b91128d3daf919421db2e71a9f2ee4b48ec",
+      "tests_run": 503
+    },
+    "preflight_clean_clone_pre_final_state": {
+      "raw_artifacts_copied": false,
+      "source_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+      "status": "PASS with expected ARTIFACT_MANIFEST_REQUIRED warning"
+    },
+    "privacy_corrected_clean_clone_focused_tests": {
+      "failures": 0,
+      "log_path": ".agents/evidence/logs/M7-004-model-design-clean-clone-focused-tests-20261101.log",
+      "source_revision": "c6f69b6096aa066dcca68c1246a2c488c839f9be",
+      "tests_passed": 24
+    },
+    "privacy_corrected_clean_clone_preflight": {
+      "log_path": ".agents/evidence/logs/M7-004-model-design-clean-clone-preflight-20261101.log",
+      "source_revision": "c6f69b6096aa066dcca68c1246a2c488c839f9be",
+      "status": "PASS with expected ARTIFACT_MANIFEST_REQUIRED warning only"
+    }
+  }
+}

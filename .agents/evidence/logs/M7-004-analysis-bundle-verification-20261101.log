@@ -1,0 +1,8 @@
+M7-004 read-only verification of committed final-r2 analysis bundle
+COMMAND: python3 <stdlib verifier> against .agents/evidence/M7-analysis-final-r2-20261101/manifest.json
+SOURCE_REVISION: d7332b91128d3daf919421db2e71a9f2ee4b48ec
+STARTED_AT_UTC: 2026-11-01T04:13:07.212059+00:00
+EXIT_CODE: 0
+RESULT: {"files": 5, "manifest_sha256": "af084e1cd99a6541c19cad2a1dfa163129a3cb873c393ec3669711e5d7b4ffa1", "read_only": true, "status": "verified"}
+FINISHED_AT_UTC: 2026-11-01T04:13:07.217053+00:00
+NOTE: validated every manifest-listed file size and SHA-256; no files written.
