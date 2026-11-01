@@ -1,0 +1,13 @@
+GitHub Actions failure retained for the C6 PR head.
+
+Run: https://github.com/dodaonam/atari-videochess-rl/actions/runs/41310888888
+Reviewed head: `ac2570e0fe13094df8f5f770012a93b8e8efd266`
+Workflow: Repository preflight; job `context`; completed 2026-11-01T13:22:23Z with conclusion `failure`.
+Failure step: `Run standard-library context, bundle, and M5 contract-oracle tests`.
+Tests failing:
+- `test_clean_clone_recovers_current_committed_state_without_local_artifacts`: expected `portable_commit_transition`, observed `unexplained_git_transition`.
+- `test_project_context_can_be_recovered_without_chat_history`: `summary["git_snapshot_matches"]` was false.
+
+Cause: C6 added tracked verification logs in a commit without first refreshing the canonical checkpoint to include those tracked files. The failure concerns portable checkpoint provenance, not scientific evidence or experiment results.
+
+Correction: Refresh the checkpoint on C6 with the new tracked evidence, commit the resulting canonical snapshot, and rerun preflight/context CI on the new exact head. No model, dataset, ROM, configuration, experiment manifest, raw metric, or scientific conclusion changed.
