@@ -5809,6 +5809,19 @@
             "git_revision": "fb39917cd1fb7c87e6c5bbd62497a1e2aaa6b62e",
             "log_path": ".agents/evidence/logs/M7-004-exact-head-clean-clone-focused-tests-20261101.log"
           }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "RESULT: PASS with expected ARTIFACT_MANIFEST_REQUIRED warning only.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-11-01T04:42:09.264150Z",
+            "recorded_at_utc": "2026-11-01T04:42:13Z",
+            "exit_code": 0,
+            "git_revision": "cadf17647fc8990a42b74f70aa984f67d15091ff",
+            "log_path": ".agents/evidence/logs/M7-004-current-head-clean-clone-preflight-20261101.log"
+          }
         }
       ],
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
@@ -5831,5 +5844,5 @@
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
     }
   ],
-  "updated_at_utc": "2026-11-01T04:41:37Z"
+  "updated_at_utc": "2026-11-01T04:42:33Z"
 }

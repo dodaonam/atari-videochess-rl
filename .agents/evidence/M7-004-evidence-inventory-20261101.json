@@ -270,6 +270,11 @@
       "source_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
       "tests_run": 504
     },
+    "current_head_clean_clone_preflight": {
+      "log_path": ".agents/evidence/logs/M7-004-current-head-clean-clone-preflight-20261101.log",
+      "source_revision": "cadf17647fc8990a42b74f70aa984f67d15091ff",
+      "status": "PASS with expected ARTIFACT_MANIFEST_REQUIRED warning only"
+    },
     "final_clean_clone_focused_tests": {
       "failures": 0,
       "log_path": ".agents/evidence/logs/M7-004-final-clean-clone-focused-tests-20261101.log",
