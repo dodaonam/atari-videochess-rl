@@ -1,0 +1,99 @@
+M7-004 documented CLI argument verification
+SOURCE_REVISION: d7332b91128d3daf919421db2e71a9f2ee4b48ec
+STARTED_AT_UTC: 2026-11-01T04:14:59.582864+00:00
+COMMAND: <project-python> scripts/m5_artifact_manifests.py --help
+EXIT_CODE: 0
+usage: m5_artifact_manifests.py [-h] [--root ROOT] [--allow-incomplete]
+                                [--verify]
+
+Create and verify immutable M5 run and private artifact inventories.
+
+options:
+  -h, --help          show this help message and exit
+  --root ROOT
+  --allow-incomplete  inventory preserved partial artifacts without calling
+                      them complete
+  --verify            verify existing root and per-run manifests
+
+COMMAND: <project-python> scripts/verify_m7_artifact_manifest.py --help
+EXIT_CODE: 0
+usage: verify_m7_artifact_manifest.py [-h] --root ROOT
+                                      [--expected-manifest-sha256 EXPECTED_MANIFEST_SHA256]
+
+Read-only verification of an owner-local M6/M7 artifact manifest.
+
+options:
+  -h, --help            show this help message and exit
+  --root ROOT           owner-local artifact root
+  --expected-manifest-sha256 EXPECTED_MANIFEST_SHA256
+                        optional frozen root-manifest SHA-256
+
+COMMAND: <project-python> scripts/verify_m7_inputs.py --help
+EXIT_CODE: 0
+usage: verify_m7_inputs.py [-h] --config CONFIG --m4-root M4_ROOT --m5-root
+                           M5_ROOT --m6-v1-root M6_V1_ROOT --m6-v2-root
+                           M6_V2_ROOT
+
+Read-only reverification of the frozen M7 policy population and M4–M6 inputs.
+
+options:
+  -h, --help            show this help message and exit
+  --config CONFIG
+  --m4-root M4_ROOT
+  --m5-root M5_ROOT
+  --m6-v1-root M6_V1_ROOT
+  --m6-v2-root M6_V2_ROOT
+
+COMMAND: <project-python> scripts/analyze_m7_campaign.py --help
+EXIT_CODE: 0
+usage: analyze_m7_campaign.py [-h] --config CONFIG --m7-run-dir M7_RUN_DIR
+                              --m4-root M4_ROOT --m5-root M5_ROOT --m6-v1-root
+                              M6_V1_ROOT --m6-v2-root M6_V2_ROOT --output-dir
+                              OUTPUT_DIR
+
+Reconstruct and report M4–M7 evidence from frozen raw records.
+
+options:
+  -h, --help            show this help message and exit
+  --config CONFIG
+  --m7-run-dir M7_RUN_DIR
+  --m4-root M4_ROOT
+  --m5-root M5_ROOT
+  --m6-v1-root M6_V1_ROOT
+  --m6-v2-root M6_V2_ROOT
+  --output-dir OUTPUT_DIR
+
+COMMAND: <project-python> scripts/run_m7_campaign.py --help
+EXIT_CODE: 0
+usage: run_m7_campaign.py [-h] [--config CONFIG] --m4-artifact-root
+                          M4_ARTIFACT_ROOT --m5-artifact-root M5_ARTIFACT_ROOT
+                          [--artifact-parent ARTIFACT_PARENT]
+                          [--preflight-only | --smoke-only | --resume]
+
+Preflight, non-result-bearing smoke, run, or safely resume M7 Option B.
+
+options:
+  -h, --help            show this help message and exit
+  --config CONFIG
+  --m4-artifact-root M4_ARTIFACT_ROOT
+  --m5-artifact-root M5_ARTIFACT_ROOT
+  --artifact-parent ARTIFACT_PARENT
+  --preflight-only      verify committed config, inputs, runtime and resource
+                        reserve; no reset
+  --smoke-only          run two same-seed RGB resets and legal policy
+                        decisions; no ALE actions
+  --resume              verify run identity/ledger and resume only eligible
+                        unstarted cells
+
+COMMAND: <project-python> -m videochess_rl.model.cli verify-artifacts --help
+EXIT_CODE: 0
+usage: python -m videochess_rl.model.cli verify-artifacts [-h] directory
+
+positional arguments:
+  directory
+
+options:
+  -h, --help  show this help message and exit
+
+FINISHED_AT_UTC: 2026-11-01T04:15:10.059151+00:00
+NOTE: help-only invocations; no campaign, artifact verification, or analysis execution was started.

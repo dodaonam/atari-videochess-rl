@@ -5591,8 +5591,8 @@
       "id": "M7-004",
       "title": "Prepare evidence-linked delivery documents",
       "milestone": "M7",
-      "status": "pending",
-      "next_action": "Wait for independent PM review and merge of the G4 governance-record PR (#18); verify the integrated initial-idea canonical state records G4 approved before starting delivery documentation.",
+      "status": "in_progress",
+      "next_action": "Create and cross-check the evidence-linked final report, model card, user guide, and handover; validate documented commands, source identities, claims, links, privacy boundaries, and clean-clone behavior. Do not change frozen evidence, run new experiments, or start M7-005.",
       "depends_on": [
         "M7-003"
       ],
@@ -5622,5 +5622,5 @@
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
     }
   ],
-  "updated_at_utc": "2026-11-01T03:22:25Z"
+  "updated_at_utc": "2026-11-01T03:58:01Z"
 }

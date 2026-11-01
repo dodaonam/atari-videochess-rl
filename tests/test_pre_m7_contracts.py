@@ -51,7 +51,7 @@ class PreM7ContractTests(unittest.TestCase):
             with self.subTest(task=task_id):
                 self.assertEqual(self.tasks[task_id]["acceptance_criteria_ids"], criteria)
 
-    def test_phase_one_is_accepted_and_phase_two_respects_g4_and_g5_gates(self) -> None:
+    def test_phase_one_accepted_m7_004_active_and_m7_005_pending_for_g5(self) -> None:
         m7_ids = [f"M7-{number:03d}" for number in range(1, 6)]
         for task_id in m7_ids:
             task = self.tasks[task_id]
@@ -63,8 +63,8 @@ class PreM7ContractTests(unittest.TestCase):
                 self.assertEqual(task["next_action"], "")
         for task_id in ("M7-001", "M7-002", "M7-003"):
             self.assertEqual(self.tasks[task_id]["status"], "done")
-        for task_id in ("M7-004", "M7-005"):
-            self.assertEqual(self.tasks[task_id]["status"], "pending")
+        self.assertEqual(self.tasks["M7-004"]["status"], "in_progress")
+        self.assertEqual(self.tasks["M7-005"]["status"], "pending")
         self.assertEqual(self.tasks["M7-001"]["depends_on"], ["M4-001", "M5-001", "M6-001", "M2-001", "M3-001"])
         self.assertEqual(self.tasks["M7-002"]["depends_on"], ["M7-001"])
         self.assertEqual(self.tasks["M7-003"]["depends_on"], ["M7-002"])
@@ -84,7 +84,7 @@ class PreM7ContractTests(unittest.TestCase):
         self.assertEqual(engineering["start_authorization_record"]["authorization_id"], "M7-AUTH-20261031-OPTION-B")
         self.assertEqual(engineering["start_authorization_record"]["task_id"], "M7-001")
         self.assertEqual(engineering["start_authorization_record"]["evidence_path"], ".agents/evidence/M7-001-authorization-20261031.md")
-        self.assertEqual(self.state["task_refs"], {"active_task_id": None, "next_task_id": "M7-004"})
+        self.assertEqual(self.state["task_refs"], {"active_task_id": "M7-004", "next_task_id": "M7-004"})
         self.assertEqual(self.state["governance"]["approved_gates"], ["G0", "G1", "G2", "G3", "G4"])
         self.assertEqual(self.state["governance"]["current_gate"], "G4")
         self.assertEqual(self.state["governance"]["gate_status"], "approved")
