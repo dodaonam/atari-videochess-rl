@@ -1,0 +1,79 @@
+SOURCE_REVISION: 866060dc34ebd424a60056492f16226ae8895897
+STARTED_AT_UTC: 2026-11-01T03:21:26Z
+CLONE_PATH: /tmp/atari-videochess-g4-clean-20261101
+## fresh HTTPS clone
+COMMAND: git clone --no-local --branch feature/g4-governance-closeout https://github.com/dodaonam/atari-videochess-rl.git /tmp/atari-videochess-g4-clean-20261101
+EXIT_CODE: 0
+Cloning into '/tmp/atari-videochess-g4-clean-20261101'...
+
+## clone HEAD
+COMMAND: git rev-parse HEAD
+EXIT_CODE: 0
+866060dc34ebd424a60056492f16226ae8895897
+
+## clone status
+COMMAND: git status --short --branch
+EXIT_CODE: 0
+## feature/g4-governance-closeout...origin/feature/g4-governance-closeout
+
+## canonical preflight
+COMMAND: python3 scripts/agent_preflight.py
+EXIT_CODE: 0
+Agent context preflight: PASS
+Governance: G4 (approved); approved: G0, G1, G2, G3, G4
+Next engineering milestone: M7 — in_progress
+Next task: M7-004 (pending) — Prepare evidence-linked delivery documents
+Next task action: Wait for independent PM review and merge of the G4 governance-record PR; verify the integrated canonical state records G4 approved before starting delivery documentation.
+Next task dependencies: M7-003
+Next task acceptance criteria: M7-04
+Tasks: done=18, in_progress=0, pending=2, blocked=0, cancelled=0
+Completed task IDs: G1-001, G1-002, G1-003, G1-004, G1-005, G1-006, G1-007, G1-008, M0-001, M1-001, M2-001, M3-001, M4-001, M5-001, M6-001, M7-001, M7-002, M7-003
+In progress task IDs: none
+Pending task IDs: M7-004, M7-005
+Blocked task IDs: none
+Active blockers: none recorded
+Open confirmations:
+  O-02: Whether full-game performance on actual ALE is a hard submission requirement or a research target with an accepted fallback.
+  O-03: Future course checkpoints and any date changes. The owner confirmed the presentation date is Tuesday, 2026-11-03.
+  O-04: Actual Colab entitlement/quota, GPU availability, cloud storage, and whether paid compute is allowed. The owner selected local CPU for M3; no external compute/storage is used in this mission.
+  O-05: ALE/ROM runtime behavior, RAM mapping, game modes, difficulty behavior, and official evaluation settings.
+  O-06: Public redistribution rights and any new source/use beyond the scoped May 2022 archive. For M3, the owner authorized bounded internal academic use of the exact Lichess Elite May 2022 package with local retention and no redistribution; its third-party package license remains unstated/unverified.
+  O-07: Broader Stockfish roles: benchmark opponent, offline engine evaluation, and instructor-specific limits outside the M3 teacher-label scope.
+  O-08: Opponent pool and rating method for any Elo claim.
+Relevant decisions: docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md, docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md, docs/02-management/decisions/ADR-0003-pretraining-model-interface.md, docs/02-management/decisions/ADR-0004-m7-option-b-execution-authorization.md
+Acceptance criteria recognized: 51
+Last verified Git: feature/g4-governance-closeout @ 2bca79001ed94324b725dce2dfdc485e3a51ad3e
+Live Git: feature/g4-governance-closeout @ 866060dc34ebd424a60056492f16226ae8895897
+Roadmap source: exact match; 19 sections; SHA-256 fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf
+Git recovery: expected commit/checkout transition; portable tracked-file manifest matches.
+Workspace Git status: differs from checkpoint
+Portable tracked baseline: matches
+Portable Git index: matches checkpoint
+Hashed ordinary-file snapshot: matches
+Content hashes: 1046 ordinary files verified by SHA-256.
+Not content-verified by this hash map: PROJECT_STATE self-reference, chat history/credential-like paths, temp files, symlinks, and the excluded directories listed below.
+Excluded directories: .agents/state/checkpoint-history, .git, artifacts, scripts/__pycache__
+Artifact directories requiring independent manifests: artifacts
+Last verified dirty paths (0): none
+Dirty paths no longer present since checkpoint: A  .agents/evidence/G4-PM-acceptance-20261101.md; A  .agents/evidence/G4-governance-test-remediation-20261101.md; A  .agents/evidence/logs/G4-governance-tests-20261101.log; A  .agents/evidence/logs/G4-governance-tests-rerun-20261101.log; A  .agents/evidence/logs/G4-source-verification-20261101.log; M  .agents/state/BLOCKERS.md; M  .agents/tasks/BACKLOG.yaml; M  docs/01-foundation/REQUIREMENTS.md; M  tests/test_agent_context.py; M  tests/test_pre_m7_contracts.py
+Next user action: Independent PM: review and decide the G4 governance-record PR; after its merge, verify initial-idea records G4 approved before starting M7-004. M7-005 remains G5-gated, and release/publication requires separate direct Project Owner authorization.
+WARNING ARTIFACT_MANIFEST_REQUIRED [.]: Artifact/data directories are excluded from content hashing and require independent manifest verification: artifacts.
+
+## G4 governance contract tests
+COMMAND: python3 -B -m unittest tests.test_pre_m7_contracts -v
+EXIT_CODE: 0
+test_all_new_local_markdown_links_resolve (tests.test_pre_m7_contracts.PreM7ContractTests.test_all_new_local_markdown_links_resolve) ... ok
+test_canonical_state_and_backlog_are_json_yaml_and_dependency_valid (tests.test_pre_m7_contracts.PreM7ContractTests.test_canonical_state_and_backlog_are_json_yaml_and_dependency_valid) ... ok
+test_g4_g5_criterion_mapping_matches_canonical_acceptance (tests.test_pre_m7_contracts.PreM7ContractTests.test_g4_g5_criterion_mapping_matches_canonical_acceptance) ... ok
+test_phase_one_is_accepted_and_phase_two_respects_g4_and_g5_gates (tests.test_pre_m7_contracts.PreM7ContractTests.test_phase_one_is_accepted_and_phase_two_respects_g4_and_g5_gates) ... ok
+test_private_assets_remain_local_and_sanitized_reports_are_portable (tests.test_pre_m7_contracts.PreM7ContractTests.test_private_assets_remain_local_and_sanitized_reports_are_portable) ... ok
+test_protocol_rejects_pseudoreplication_unsupported_strength_and_elo_claims (tests.test_pre_m7_contracts.PreM7ContractTests.test_protocol_rejects_pseudoreplication_unsupported_strength_and_elo_claims) ... ok
+test_read_only_input_audits_bind_frozen_identities_and_provenance (tests.test_pre_m7_contracts.PreM7ContractTests.test_read_only_input_audits_bind_frozen_identities_and_provenance) ... ok
+test_tracks_protocols_terminal_states_and_historical_provenance_stay_distinct (tests.test_pre_m7_contracts.PreM7ContractTests.test_tracks_protocols_terminal_states_and_historical_provenance_stay_distinct) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.079s
+
+OK
+FINISHED_AT_UTC: 2026-11-01T03:21:32Z
+RESULT: PASS

@@ -5592,7 +5592,7 @@
       "title": "Prepare evidence-linked delivery documents",
       "milestone": "M7",
       "status": "pending",
-      "next_action": "Wait for independent PM review and merge of the G4 governance-record PR; verify the integrated canonical state records G4 approved before starting delivery documentation.",
+      "next_action": "Wait for independent PM review and merge of the G4 governance-record PR (#18); verify the integrated initial-idea canonical state records G4 approved before starting delivery documentation.",
       "depends_on": [
         "M7-003"
       ],
@@ -5622,5 +5622,5 @@
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
     }
   ],
-  "updated_at_utc": "2026-11-01T03:13:25Z"
+  "updated_at_utc": "2026-11-01T03:22:25Z"
 }

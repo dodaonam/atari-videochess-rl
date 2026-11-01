@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-2bca7900-20261101T031922249805Z -->
+<!-- checkpoint-id: cp-866060dc-20261101T032320208083Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -18,7 +18,7 @@ For the preparation-only assessment, M7 work breakdown, and evaluation contract,
 
 ## Current canonical pointer — G4 approved with limitations; governance-record PR pending integration (2026-11-01)
 
-`PROJECT_STATE.yaml` and `BACKLOG.yaml` are authoritative. The Independent PM approved G4 for M7-01–M7-03 with scientific limitations in [the original PR #17 decision comment](https://github.com/dodaonam/atari-videochess-rl/pull/17#issuecomment-6552570969). PR #17 merged into `initial-idea` at `2bca79001ed94324b725dce2dfdc485e3a51ad3e`; the formal record is [G4 PM acceptance](../evidence/G4-PM-acceptance-20261101.md), with source verification at [the retained log](../evidence/logs/G4-source-verification-20261101.log). The canonical state update is submitted separately for independent PM review and integration. Do not start M7-004/005 until that governance PR is merged and the integrated state is verified. G5 remains unapproved; M7-005 requires G5 acceptance and there is no release/publication authorization.
+`PROJECT_STATE.yaml` and `BACKLOG.yaml` are authoritative. The Independent PM approved G4 for M7-01–M7-03 with scientific limitations in [the original PR #17 decision comment](https://github.com/dodaonam/atari-videochess-rl/pull/17#issuecomment-6552570969). PR #17 merged into `initial-idea` at `2bca79001ed94324b725dce2dfdc485e3a51ad3e`; the formal record is [G4 PM acceptance](../evidence/G4-PM-acceptance-20261101.md), with source verification at [the retained log](../evidence/logs/G4-source-verification-20261101.log). The canonical state update is submitted in [PR #18](https://github.com/dodaonam/atari-videochess-rl/pull/18); use the [G4 closeout handover](../evidence/G4-governance-closeout-handover-20261101.md) and [verification record](../evidence/G4-governance-closeout-verification-20261101.json). Do not start M7-004/005 until PR #18 is merged and the integrated state is verified. G5 remains unapproved; M7-005 requires G5 acceptance and there is no release/publication authorization.
 
 ## Historical PR #15 corrective continuation — PM6C-F01 (completed)
 
