@@ -1,4 +1,6 @@
-> **Historical submission snapshot, supplemented 2026-11-01:** This handover predates the G5-F02 PM finding. Its owner no-release attribution and proposed G5-approved canonical state are superseded for current status. The latest PM decision is [PR #21 comment 6557663143](https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6557663143); see the [provenance erratum](G5-F02-provenance-erratum-20261101.md). M7-04 acceptance and G5-F01 resolution remain intact; G5 is not approved pending fresh PM review.
+> **Latest PM status — 2026-11-01:** The [fresh PM acceptance](G5-PM-final-decision-20261101.md) resolves G5-F02 and approves corrected M7-05/G5 with limitations. The old no-release owner attribution is still unverified; no affirmative restricted-artifact release permission is established. The original handover and intermediate pending-review status below remain historical.
+
+> **Historical submission snapshot, supplemented 2026-11-01:** This handover predates the G5-F02 PM finding. Its owner no-release attribution and original proposed G5-approved canonical state were superseded. The intermediate PM decision was [PR #21 comment 6557663143](https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6557663143); see the [provenance erratum](G5-F02-provenance-erratum-20261101.md). M7-04 acceptance and G5-F01 resolution remain intact. At that intermediate stage G5 was not approved pending fresh PM review.
 
 # G5 Governance Closeout — Independent PM Handover (Historical Snapshot)
 

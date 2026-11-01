@@ -1,5 +1,7 @@
 # M7-005 Corrected Release-Disposition Engineering Assessment
 
+> **Final PM disposition addendum — 2026-11-01:** This engineering assessment was submitted while G5 awaited review. The [fresh PM decision](G5-PM-final-decision-20261101.md) subsequently **ACCEPTED M7-05 WITH LIMITATIONS, RESOLVED G5-F02, and APPROVED G5 WITH LIMITATIONS**. The review-pending fields below are an immutable engineering-stage snapshot, not current governance state. No affirmative restricted-artifact release permission is established; no verified blanket owner ban is asserted.
+
 **Task / criterion:** M7-005 / M7-05
 **Engineering status:** Complete; corrected evidence submitted for fresh Independent PM review
 **G5 status:** Not approved in current canonical state; fresh PM decision pending

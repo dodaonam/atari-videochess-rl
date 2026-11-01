@@ -70,20 +70,27 @@ class G5FinalCloseoutTests(unittest.TestCase):
         self.assertIn("ale evaluation", self.research_decision.lower())
         self.assertIn("new research milestone is requested or authorized", self.research_decision.lower())
 
-    def test_current_governance_does_not_promote_historical_g5_approval(self) -> None:
+    def test_current_governance_uses_fresh_independent_pm_approval(self) -> None:
         self.assertEqual(
             self.status["finding"]["latest_pm_source"],
-            "https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6557663143",
+            "https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6558975009",
         )
-        self.assertEqual(self.status["finding"]["reviewed_pr21_head"], "fc51b724d6a812ec648aaeb3ba26b8371b8d1989")
+        self.assertEqual(self.status["finding"]["reviewed_pr21_head"], "57555b4c9da588b0122fffbc01f61b8cb13075a8")
         governance = self.state["governance"]
         self.assertEqual(governance["current_gate"], "G5")
-        self.assertEqual(governance["gate_status"], "ready_for_user_review")
-        self.assertEqual(governance["approved_gates"], ["G0", "G1", "G2", "G3", "G4"])
+        self.assertEqual(governance["gate_status"], "approved")
+        self.assertEqual(governance["approved_gates"], ["G0", "G1", "G2", "G3", "G4", "G5"])
         self.assertIn("G5-F02", governance["next_user_action"])
-        self.assertEqual(self.status["current_governance"]["g5"], "not_approved_pending_fresh_independent_pm_review")
+        self.assertEqual(self.status["current_governance"]["g5"], "approved_with_scientific_environment_and_distribution_authorization_limitations")
         self.assertEqual(self.status["current_governance"]["m7_04"], "accepted; not reopened by G5-F02")
         self.assertEqual(self.status["current_governance"]["g5_f01"], "resolved_and_preserved")
+        self.assertEqual(self.status["finding"]["pm_disposition"], "resolved_by_fresh_independent_pm_review")
+        self.assertEqual(self.status["final_pm_decision"]["pr21_merge_commit"], "6495bda01daae557a084e8863d2148e08be6cca7")
+        self.assertFalse(self.status["final_pm_decision"]["publication_or_release_authorized"])
+        final_record = read(".agents/evidence/G5-PM-final-decision-20261101.md")
+        self.assertIn("issuecomment-6558975009", final_record)
+        self.assertIn("G5-F02 RESOLVED", final_record)
+        self.assertIn("no affirmative permission", final_record.lower())
         self.assertEqual(self.old_pm_decision["decision"], "approved_with_limitations")
         self.assertIn("suspended pending correction and fresh review", self.erratum)
         self.assertEqual(self.state["engineering"]["start_authorization_record"]["authorization_id"], "M7-AUTH-20261031-OPTION-B")
@@ -140,9 +147,9 @@ class G5FinalCloseoutTests(unittest.TestCase):
         for milestone in ("M0-01", "M1-01", "M2-01", "M3-01", "M4-01", "M5-01", "M6-01", "M7-01", "M7-04", "M7-05"):
             with self.subTest(milestone=milestone):
                 self.assertIn(milestone, self.closeout)
-        self.assertIn("M7-05 | Engineering evidence complete; fresh PM review required", self.closeout)
+        self.assertIn("M7-05 | Engineering complete; independently accepted with limitations", self.closeout)
         self.assertIn("PR #21", self.closeout)
-        self.assertIn("G5 is not approved", self.closeout)
+        self.assertIn("G5-F02 is resolved", self.closeout)
 
 
 if __name__ == "__main__":
