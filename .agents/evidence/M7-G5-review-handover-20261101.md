@@ -79,3 +79,5 @@ At code-bearing commit `0d3ee8221698f52bf2c7658657e505900ab5485d`, clean-clone p
 G5 remains **NOT APPROVED pending Independent PM re-review**. The Project Owner's **NO RELEASE / NO PUBLICATION AUTHORIZED** decision is unchanged. This supplement records no approval and does not authorize merge or distribution.
 
 A clean clone at `545c95589b078f5249951d3d869b4eb42fb0f96a` also passed preflight and the 86-test focused suite after the acceptance/handover corrections. The full suite results remain those at code-bearing `0d3ee822…`, with the one unavailable-Stockfish failure and the exact single-test filtered pass. Both code-bearing and final-document checks, plus logs, are mapped in the [G5-F01 remediation evidence](M7-005-G5-F01-remediation-20261101.md). Please verify the live amended PR HEAD and its own CI before deciding G5.
+
+The latest document-bearing PR candidate `0f9cc3942018cd12e82d1643d9b61eb475363c83` passed clean-clone preflight and the same 86 focused contracts. The remaining changes are verification logs/checkpoint metadata; no experiment, source, test, or research conclusion changed. Please review the live exact PR HEAD and its own CI result.
