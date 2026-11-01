@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-7a8d1d06-20261101T112358320199Z -->
+<!-- checkpoint-id: cp-8bdee292-20261101T113645050080Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -18,7 +18,7 @@ For the preparation-only assessment, M7 work breakdown, and evaluation contract,
 
 ## Current canonical pointer — G5 approved; governance closeout proposed (2026-11-01)
 
-The Independent PM's G5 approval for M7-04/M7-05 and G5-F01 resolution is recorded in [G5-PM acceptance](../evidence/G5-PM-acceptance-20261101.md), sourced from [PR #20 comment 6556836388](https://github.com/dodaonam/atari-videochess-rl/pull/20#issuecomment-6556836388). PR #20 was integrated at `0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b`. The current feature branch proposes the canonical G5 state update and supporting tests; that closeout is not integrated until its separate PR is reviewed and merged. The Project Owner's **NO RELEASE / NO PUBLICATION AUTHORIZED** decision remains binding. Follow `PROJECT_STATE.yaml`, `BACKLOG.yaml`, and [the G5 governance-closeout handover](../evidence/G5-governance-closeout-handover-20261101.md); do not infer a new milestone or release permission.
+The Independent PM's G5 approval for M7-04/M7-05 and G5-F01 resolution is recorded in [G5-PM acceptance](../evidence/G5-PM-acceptance-20261101.md), sourced from [PR #20 comment 6556836388](https://github.com/dodaonam/atari-videochess-rl/pull/20#issuecomment-6556836388). PR #20 was integrated at `0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b`. The canonical G5 state update is proposed on [PR #21](https://github.com/dodaonam/atari-videochess-rl/pull/21), branch `feature/g5-governance-closeout`; it is not integrated until PM review and merge. At PR creation its head was `8bdee29275199cc638025e3eb92c9cf861055ebf`; use the live PR for any subsequent head. The Project Owner's **NO RELEASE / NO PUBLICATION AUTHORIZED** decision remains binding. Follow `PROJECT_STATE.yaml`, `BACKLOG.yaml`, and [the G5 governance-closeout handover](../evidence/G5-governance-closeout-handover-20261101.md); do not infer a new milestone or release permission.
 
 ## Historical pointer — M7-005 G5-F01 remediation ready for independent re-review (2026-11-01)
 

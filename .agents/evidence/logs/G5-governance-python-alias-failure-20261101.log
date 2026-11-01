@@ -1,0 +1,11 @@
+Captured command failure record
+
+Observed timestamp (UTC): 2026-11-01T11:27:03Z
+Tested source HEAD: 8bdee29275199cc638025e3eb92c9cf861055ebf
+Working directory: M7 G5 governance-closeout worktree
+Command attempted: python -m unittest tests.test_pre_m7_contracts tests.test_agent_context tests.test_m7_delivery_docs tests.test_m7_release_disposition -v
+Outcome: command did not start; shell returned 127 because `python` was not installed as a command name. No tests ran in this attempt.
+Captured terminal output:
+/bin/bash: line 1: python: command not found
+exit_code=127
+Remediation: reran using the already-existing project environment at <redacted-project-venv>/bin/python (Python 3.12.3). No package installation occurred.

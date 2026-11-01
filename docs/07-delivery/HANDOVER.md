@@ -6,7 +6,7 @@
 
 **M7-004 integration:** 0f45fa06c235658da48d3d41a9091c06580bfe27 (PR #19 merge)
 
-**Current status:** M7-001 through M7-005 are complete as engineering tasks. G4 is approved with scientific limitations. The Independent PM approved G5 for M7-04/M7-05 with scientific, environment-verification, and no-release limitations; PR #20 was integrated at `0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b`. This document's G5 canonical closeout is proposed on a separate governance PR and is not integrated until that PR is reviewed and merged. **NO RELEASE / NO PUBLICATION AUTHORIZED.**
+**Current status:** M7-001 through M7-005 are complete as engineering tasks. G4 is approved with scientific limitations. The Independent PM approved G5 for M7-04/M7-05 with scientific, environment-verification, and no-release limitations; PR #20 was integrated at `0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b`. The canonical G5 closeout is proposed on [PR #21](https://github.com/dodaonam/atari-videochess-rl/pull/21), currently open and unmerged for fresh Independent PM review. At PR creation its head was `8bdee29275199cc638025e3eb92c9cf861055ebf`; use the live PR for the final head and CI. **NO RELEASE / NO PUBLICATION AUTHORIZED.**
 
 
 ## Project overview and governance
@@ -62,14 +62,14 @@ Committed hash identities do not mean payloads are included in Git. Do not copy 
 
 ## Completed research and engineering
 
-The canonical backlog records M0 through M6 and M7-001/002/003 engineering tasks as done. Gate approvals are separate: only G0–G4 are approved in current state; do not infer that every milestone has a separate PM gate approval.
+The canonical state proposed on this governance-closeout branch records G0–G5 as approved; `initial-idea` remains at the PR #20 merge until PR #21 is independently reviewed and integrated. Gate approvals are separate from engineering task completion; do not infer that every milestone has a separate PM gate approval.
 
 - **M3:** accepted bounded source/release and teacher-provenance work; third-party dataset license remains unstated/unverified.
 - **M4:** accepted supervised imitation model; 29.8979% legal top-1 and 54.3996% legal top-3 on 2,057 test positions. These are not game-strength metrics.
 - **M5:** six Double DQN simulator runs and 1,500-row evaluation; three paired training seeds; RSK-014 remains.
 - **M6:** separate v1 and v2 ALE records. V2 had 11 terminal losses and nine incomplete attempts; PM6-F06 remains an immutable metadata erratum.
 - **M7-001/002/003:** accepted Option B schedule, raw-derived analysis, and formal Elo non-reportability. G4 acceptance is bounded and does not validate strong gameplay.
-- **M7-004:** engineering deliverables for M7-04 are complete and mapped in the [acceptance record](../../.agents/evidence/M7-004-acceptance-20261101.md). Independent PM review remains pending.
+- **M7-004:** engineering deliverables for M7-04 are complete and mapped in the [acceptance record](../../.agents/evidence/M7-004-acceptance-20261101.md). The Independent PM accepted them with the environment-verification qualification recorded in the [PR #19 decision](https://github.com/dodaonam/atari-videochess-rl/pull/19#issuecomment-6553580590).
 
 ## M7 result summary and limitations
 
@@ -89,7 +89,7 @@ There were 1,670/1,670 valid legal selections, 1,581/1,670 RGB-verified initiate
 | RSK-014 | Accepted M5 residual provenance limitation; byte-identical source across all historical runs is not established |
 | PM6-F06 | Accepted M6 v2 metadata erratum; original evidence remains immutable |
 | M7 limitations | Censoring, one opponent, White-only, three training-seed pairs, controller uncertainty, and private raw artifacts |
-| G5 / M7-005 | G5 approved with limitations by the Independent PM for M7-04/M7-05; PR #20 merged at `0b9c4c2`; canonical closeout proposed on a separate PR; no release/publication authorization |
+| G5 / M7-005 | G5 approved with limitations by the Independent PM for M7-04/M7-05; PR #20 merged at `0b9c4c2`; canonical closeout is proposed on [PR #21](https://github.com/dodaonam/atari-videochess-rl/pull/21); no release/publication authorization |
 
 O-03 and O-04 are also tracked in canonical requirements/state. Course expectations and resource authorization must not be inferred from prior experiment settings.
 
@@ -111,7 +111,7 @@ O-03 and O-04 are also tracked in canonical requirements/state. Course expectati
 - **Independent Project Manager:** ChatGPT; responsible for independent review and gate disposition.
 - **Project Owner:** Nam; owns scope, artifact access, and any future release authorization.
 
-The Independent PM's G5 decision is recorded in [G5-PM acceptance](../../.agents/evidence/G5-PM-acceptance-20261101.md), linked to the [official PR #20 decision](https://github.com/dodaonam/atari-videochess-rl/pull/20#issuecomment-6556836388). The separate [G5 governance-closeout handover](../../.agents/evidence/G5-governance-closeout-handover-20261101.md) describes the canonical update proposed for review. Until that governance PR is integrated, the current `initial-idea` state still reflects the pre-closeout snapshot. No public model, dataset, ROM, raw trace, or private artifact release is authorized. The next action is Independent PM review of the separate G5 governance-closeout PR; this handover does not approve that PR or authorize publication.
+The Independent PM's G5 decision is recorded in [G5-PM acceptance](../../.agents/evidence/G5-PM-acceptance-20261101.md), linked to the [official PR #20 decision](https://github.com/dodaonam/atari-videochess-rl/pull/20#issuecomment-6556836388). The separate [G5 governance-closeout handover](../../.agents/evidence/G5-governance-closeout-handover-20261101.md) and [PR #21](https://github.com/dodaonam/atari-videochess-rl/pull/21) describe the canonical update proposed for review. Until PR #21 is integrated, the current `initial-idea` state still reflects the pre-closeout snapshot. No public model, dataset, ROM, raw trace, or private artifact release is authorized. The next action is Independent PM review of PR #21; this handover does not approve that PR or authorize publication.
 
 ## Delivery revision
 

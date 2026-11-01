@@ -1,0 +1,16 @@
+timestamp_utc=2026-11-01T11:36:06Z
+base=origin/initial-idea at 0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b
+feature_head=8bdee29275199cc638025e3eb92c9cf861055ebf plus currently staged governance-closeout changes
+procedure=Compare added text lines in the PR diff for fixed sensitive markers; scan newly added compressed checkpoint segments after decompression; compare absolute-path marker counts in canonical state files against the base.
+added_text_lines=3699
+added_text_lines_with_absolute_path_markers=0
+added_text_lines_with_credential_markers=0
+new_checkpoint_segments_scanned=9
+new_checkpoint_segment_absolute_path_markers=0
+PROJECT_STATE.yaml absolute markers: base 0, candidate 0
+BACKLOG.yaml absolute markers: base 139, candidate 139 (all existing; no count increase)
+BLOCKERS.md absolute markers: base 1, candidate 1 (existing; no count increase)
+restricted artifact/payload paths added=0
+result=PASS for added-content privacy scan; existing baseline paths were not introduced by this PR.
+limitations=This scan checks marker strings and path classes, not legal rights. Private artifact access and redistribution remain owner-controlled. No restricted artifact was uploaded.
+remediation_note=An earlier broad regex scan over the complete state/checkpoint diff did not complete and was terminated (exit 143); no result was claimed. Its exact start time was not retained. The bounded added-line and decompressed-segment scan above completed successfully.
