@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-d1cb5b08-20261101T103008663580Z -->
+<!-- checkpoint-id: cp-2b7e71ff-20261101T132716594988Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -16,9 +16,13 @@ This file is a pointer, not a status snapshot. Do not infer current phase, task 
 
 For the preparation-only assessment, M7 work breakdown, and evaluation contract, follow the [Pre-M7 readiness plan](../plans/PRE-M7-readiness.md), [M7 engineering plan](../plans/M07-evaluation-delivery.md), [M7 evaluation protocol](../../docs/04-research/M7_EVALUATION_PROTOCOL.md), and [Pre-M7 verification evidence](../evidence/PRE-M7-readiness-20261031.md). These are independent-review materials, not authorization; live gate, task, and M7 authorization remain in `PROJECT_STATE.yaml` and `BACKLOG.yaml`.
 
-## Current canonical pointer — M7-005 G5-F01 remediation ready for independent re-review (2026-11-01)
+## Current canonical pointer — G5-F02 remediation submitted; fresh PM review pending (2026-11-01)
 
-`PROJECT_STATE.yaml` and `BACKLOG.yaml` are authoritative. PR #19 was reviewed and merged at `0f45fa06c235658da48d3d41a9091c06580bfe27`; its reviewed M7-004 source was `05a94ef096da9bc0467970e0ea8ec1dc88d953e3`. The source PM comment accepts M7-04 engineering evidence but explicitly does not approve G5. The owner directly authorized M7-005 under `.agents/evidence/M7-005-authorization-20261101.md` and chose **NO RELEASE / NO PUBLICATION AUTHORIZED**. Review the [M7-005 acceptance record](../evidence/M7-005-acceptance-20261101.md), [G5-F01 remediation evidence](../evidence/M7-005-G5-F01-remediation-20261101.md), [release disposition](../../docs/07-delivery/RELEASE_DISPOSITION.md), and [G5 review handover](../evidence/M7-G5-review-handover-20261101.md). All five M7 tasks are recorded complete as engineering work on the submitted feature branch; G4 is approved with limitations; G5 remains unapproved. The first PR #20 review held G5 at head `f3ef2976f446594dca6e4b6d5d219734cc33f966`; after the documented G5-F01 remediation, the next action is Independent PM re-review of amended PR #20 and an explicit G5 decision. No release, merge, or new milestone is authorized.
+PR #20 remains integrated at `0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b`; its earlier PM G5 decision is preserved as historical. The later Independent PM finding [G5-F02](https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6557663143) suspends reliance on the disputed M7-05 owner-release premise and requires fresh review. M7-04 acceptance and G5-F01 resolution remain intact. Current proposed canonical state on amended [PR #21](https://github.com/dodaonam/atari-videochess-rl/pull/21), branch `feature/g5-governance-closeout`, has G0–G4 approved and G5 ready for review, not approved. No affirmative authorization to distribute restricted artifacts is established; the prior blanket owner-prohibition attribution is unverified. The Project Owner has separately recorded existing accepted research results as final; no further research milestone or campaign is authorized. See [G5-F02 erratum](../evidence/G5-F02-provenance-erratum-20261101.md), [research-scope decision](../evidence/PROJECT-OWNER-final-research-scope-decision-20261101.md), and [project closure matrix](../evidence/M0-M7-final-project-closure-20261101.md).
+
+## Historical pointer — M7-005 G5-F01 remediation before later G5 decisions (2026-11-01)
+
+This point-in-time section records the prior executor-authored owner no-release attribution, which is now unverified under G5-F02. Do not use it as current authorization evidence. The PM later issued a G5 decision on PR #20; its M7-05 premise is now subject to fresh review. See the current pointer above and the provenance erratum.
 
 ## Historical canonical pointer — M7-004 package ready for Independent PM review (2026-11-01)
 

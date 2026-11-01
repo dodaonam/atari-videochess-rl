@@ -1,8 +1,8 @@
 # Model Card — Atari VideoChess RL
 
-**Status:** Research artifacts; no champion model selected; public distribution not authorized. See [the owner release disposition](RELEASE_DISPOSITION.md).
+**Status:** Research artifacts; no champion model selected. No affirmative permission to distribute restricted checkpoints is established; this model card grants no distribution rights. See [the release-disposition inventory](RELEASE_DISPOSITION.md).
 
-**Governance:** G4 approved with scientific limitations; G5 not approved
+**Governance (2026-11-01):** G4 is approved with scientific limitations. G5 is **not approved in current canonical state pending fresh Independent PM review** after G5-F02; M7-04 acceptance remains intact. The earlier PR #20 decision is historical; see the [G5-F02 provenance erratum](../../.agents/evidence/G5-F02-provenance-erratum-20261101.md). No affirmative authorization to distribute private checkpoints is established.
 
 **Scope:** accepted M4 behavior model and six M5 post-RL checkpoints
 

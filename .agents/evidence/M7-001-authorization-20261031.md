@@ -1,3 +1,5 @@
+> **Release-provenance supplement added 2026-11-01:** This record's historical statement that the M7-001 authorization did not grant a release is a limit on that task's authorization scope. Its additional statement that the owner had not authorized release and M7-005 must be “no release” has no independently verifiable primary-source locator and is not an authenticated blanket owner prohibition. The latest PM finding G5-F02 treats that broader attribution as disputed; see [the provenance erratum](G5-F02-provenance-erratum-20261101.md). This supplement does not alter the Option B M7-001–003 research authorization or authorize artifact distribution.
+
 # M7-001 Direct Owner Authorization — Option B
 
 **Recorded at:** 2026-10-31T16:02:51Z

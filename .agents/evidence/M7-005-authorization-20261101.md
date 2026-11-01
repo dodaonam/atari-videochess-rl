@@ -1,4 +1,6 @@
-# M7-005 Direct Project Owner Authorization
+> **Provenance notice added 2026-11-01:** This is a historical executor-authored record. The attribution below that the Project Owner selected a blanket no-release decision is unverified and is not primary-source proof. The latest Independent PM finding is [G5-F02](https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6557663143); see the [provenance erratum](G5-F02-provenance-erratum-20261101.md). Preserve the original text below for audit history. The M7-005 engineering scope is represented in the corrected [disposition assessment](M7-005-corrected-disposition-assessment-20261101.md).
+
+# M7-005 Direct Project Owner Authorization — Historical Attribution
 
 **Authorization ID:** `M7-AUTH-20261101-M7-005-NO-RELEASE`
 **Project:** `atari-videochess-rl`

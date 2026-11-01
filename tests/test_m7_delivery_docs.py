@@ -164,7 +164,6 @@ class M7DeliveryDocumentationTests(unittest.TestCase):
         for required in (
             "G4",
             "G5",
-            "NOT APPROVED",
             "RSK-014",
             "PM6-F06",
             "Elo is not reported",
@@ -173,6 +172,14 @@ class M7DeliveryDocumentationTests(unittest.TestCase):
         ):
             self.assertIn(required.lower(), all_docs.lower())
         self.assertIn("M7-005 is complete at the engineering level", self.texts["HANDOVER.md"])
+        self.assertIn("G5 is **not approved in current canonical state**", self.texts["HANDOVER.md"])
+        self.assertIn("amended closeout is proposed", self.texts["HANDOVER.md"])
+        self.assertIn("blanket owner-prohibition attribution is unverified", self.texts["HANDOVER.md"])
+        self.assertIn("G5 current status:** **NOT APPROVED", self.texts["FINAL_REPORT.md"])
+        self.assertIn("G5 is **not approved in current canonical state", self.texts["MODEL_CARD.md"])
+        self.assertIn("No affirmative authorization to distribute restricted artifacts is established", self.texts["USER_GUIDE.md"])
+        self.assertIn("currently accepted research results as final", self.texts["FINAL_REPORT.md"])
+        self.assertIn("G5-F02", self.texts["HANDOVER.md"])
         self.assertIn("undefined", self.texts["FINAL_REPORT.md"].lower())
 
     def test_delivery_docs_do_not_contain_machine_specific_private_paths(self) -> None:

@@ -1,6 +1,6 @@
 # User Guide — Atari VideoChess RL
 
-This guide covers repository-only checks and read-only verification of authorized local artifacts. It does not authorize training, evaluation campaigns, artifact redistribution, or publication.
+This guide covers repository-only checks and read-only verification of authorized local artifacts. The Project Owner has recorded existing accepted research results as final; no further training or evaluation campaign is authorized in this project scope. This guide does not authorize artifact redistribution or publication. No affirmative permission to distribute restricted artifacts is established; the earlier blanket-owner-prohibition attribution is unverified. See the [research-scope decision](../../.agents/evidence/PROJECT-OWNER-final-research-scope-decision-20261101.md), [G5-F02 erratum](../../.agents/evidence/G5-F02-provenance-erratum-20261101.md), and [release disposition](RELEASE_DISPOSITION.md).
 
 ## Prerequisites and artifact access
 
@@ -124,4 +124,4 @@ The official campaign runner is scripts/run_m7_campaign.py. It can execute or re
 
 ## Privacy
 
-Do not commit or externally upload ROMs, checkpoints, raw RGB, raw traces, datasets, credentials, or private artifact paths. Do not bypass access controls. Public model/data/ROM release is not authorized. M7-005 recorded the owner's no-release disposition; see [the release inventory](RELEASE_DISPOSITION.md). G5 remains pending Independent PM review.
+Do not commit or externally upload ROMs, checkpoints, raw RGB, raw traces, datasets, credentials, or private artifact paths. Do not bypass access controls. No affirmative authorization to distribute restricted artifacts is established; this is not an owner prohibition. M7-005's earlier owner-decision attribution is superseded by [G5-F02](../../.agents/evidence/G5-F02-provenance-erratum-20261101.md). G5 is not approved in current canonical state pending fresh Independent PM review; M7-04 acceptance remains intact. See the [current release inventory](RELEASE_DISPOSITION.md) and [G5 PM decision history](../../.agents/evidence/G5-PM-acceptance-20261101.md).

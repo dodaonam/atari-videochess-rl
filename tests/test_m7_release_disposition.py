@@ -45,6 +45,11 @@ class M7ReleaseDispositionTests(unittest.TestCase):
         cls.disposition = read("docs/07-delivery/RELEASE_DISPOSITION.md")
         cls.acceptance = read(".agents/evidence/M7-005-acceptance-20261101.md")
         cls.handover = read(".agents/evidence/M7-G5-review-handover-20261101.md")
+        cls.g5_pm_acceptance = json.loads(read(".agents/evidence/G5-PM-acceptance-20261101.json"))
+        cls.f02_status = json.loads(read(".agents/evidence/G5-F02-provenance-status-20261101.json"))
+        cls.erratum = read(".agents/evidence/G5-F02-provenance-erratum-20261101.md")
+        cls.corrected_assessment = read(".agents/evidence/M7-005-corrected-disposition-assessment-20261101.md")
+        cls.research_scope = read(".agents/evidence/PROJECT-OWNER-final-research-scope-decision-20261101.md")
         cls.m3_acceptance = read(".agents/evidence/M3-acceptance-20261021.md")
         cls.m3_final = json.loads(read(".agents/evidence/M3-final-closure-record-20261021.json"))
         cls.m3_corrective_release = json.loads(
@@ -194,14 +199,17 @@ class M7ReleaseDispositionTests(unittest.TestCase):
         self.assertGreaterEqual(len(rows), 4)
         for row in rows:
             with self.subTest(category=row[0]):
-                self.assertIn("NO RELEASE", row[8])
+                self.assertIn("No release performed", row[8])
+                self.assertIn("affirmative authorization not established", row[8])
                 self.assertIn("no redistribution", row[7].lower())
 
-    def test_owner_authorization_and_no_release_are_distinct_from_pm_approval(self) -> None:
+    def test_historical_owner_prohibition_attribution_is_superseded_and_unverified(self) -> None:
         self.assertIn("M7-AUTH-20261101-M7-005-NO-RELEASE", self.owner)
         self.assertIn("M7-005 only", self.authorization)
         self.assertIn("NO RELEASE / NO PUBLICATION AUTHORIZED", self.owner)
-        self.assertIn("separate issuance timestamp", self.owner)
+        self.assertIn("historical executor-authored record", self.owner.lower())
+        self.assertIn("unverified", self.owner.lower())
+        self.assertIn("unsupported by an independently verifiable primary source", self.owner.lower())
         engineering = self.state["engineering"]
         self.assertEqual(
             engineering["start_authorization_record"]["authorization_id"],
@@ -216,8 +224,32 @@ class M7ReleaseDispositionTests(unittest.TestCase):
         self.assertNotIn("G5", self.state["governance"]["approved_gates"])
         self.assertEqual(self.state["governance"]["current_gate"], "G5")
         self.assertEqual(self.state["governance"]["gate_status"], "ready_for_user_review")
-        self.assertEqual(self.state["governance"]["next_governance_gate"], "G5")
+        self.assertIsNone(self.state["governance"]["next_governance_gate"])
         self.assertEqual(self.state["engineering"]["next_milestone_status"], "complete")
+        self.assertEqual(self.f02_status["owner_release_authorization"]["explicit_blanket_owner_prohibition"], "unverified")
+        self.assertEqual(self.f02_status["owner_release_authorization"]["affirmative_authorization_for_restricted_artifacts"], "not_established")
+        self.assertEqual(self.f02_status["current_governance"]["g5"], "not_approved_pending_fresh_independent_pm_review")
+        self.assertEqual(self.g5_pm_acceptance["decision"], "approved_with_limitations")
+        self.assertEqual(self.g5_pm_acceptance["accepted_scope"], ["M7-04", "M7-05"])
+        self.assertFalse(self.g5_pm_acceptance["release_authorization"]["authorized"])
+
+    def test_historical_pm_decision_is_preserved_but_m7_05_requires_fresh_review(self) -> None:
+        self.assertEqual(self.g5_pm_acceptance["finding"]["status"], "resolved")
+        self.assertIn("scientific", self.g5_pm_acceptance["decision_text"].lower())
+        self.assertIn("environment-verification", self.g5_pm_acceptance["decision_text"].lower())
+        self.assertIn("no-release", self.g5_pm_acceptance["decision_text"].lower())
+        self.assertFalse(self.g5_pm_acceptance["release_authorization"]["g5_approval_grants_distribution_rights"])
+        self.assertIn("earlier PM G5 approval", self.erratum)
+        self.assertIn("suspended pending correction and fresh review", self.erratum)
+        self.assertIn("M7-04 delivery acceptance remains independently accepted", self.erratum)
+        self.assertIn("does not authorize publication", self.research_scope)
+        self.assertIn("does not state a blanket owner prohibition", self.research_scope)
+        self.assertIn("affirmative", self.disposition.lower())
+        self.assertNotIn("NO RELEASE / NO PUBLICATION AUTHORIZED", self.disposition)
+        self.assertEqual(self.state["engineering"]["next_milestone_status"], "complete")
+        self.assertFalse(self.state["engineering"]["start_authorized"])
+        self.assertIn("no additional training", self.state["engineering"]["hold_reason"].lower())
+        self.assertIn("no additional training", self.state["engineering"]["hold_reason"].lower())
 
     def test_inventory_covers_restricted_artifact_classes_and_rights(self) -> None:
         for category in (
@@ -242,10 +274,7 @@ class M7ReleaseDispositionTests(unittest.TestCase):
         self.assertIn("25a8b6bcfbf1d948bed886a0a4964cf48210fb1be12809c72bf122157b8d05e4", self.disposition)
         self.assertIn("unstated/unverified", self.disposition)
         self.assertIn("A committed checksum identifies bytes; it does not grant permission", self.disposition)
-        self.assertGreaterEqual(
-            self.disposition.count("NO RELEASE — OWNER AUTHORIZATION NOT GRANTED"),
-            10,
-        )
+        self.assertGreaterEqual(self.disposition.count("No release performed; affirmative authorization not established"), 10)
 
     def test_g5_handover_preserves_accepted_scientific_boundaries(self) -> None:
         for claim in (
@@ -260,15 +289,17 @@ class M7ReleaseDispositionTests(unittest.TestCase):
         ):
             with self.subTest(claim=claim):
                 self.assertIn(claim.lower(), self.handover.lower())
-        self.assertIn("G5 pending Independent PM decision", self.handover)
-        self.assertIn("not G5 approval", self.handover)
+        self.assertIn("G5 remains **NOT APPROVED pending Independent PM re-review**", self.handover)
+        self.assertIn("M7-04 delivery acceptance remains independently accepted", self.erratum)
         self.assertIn("O-02", self.handover)
         self.assertIn("O-06", self.handover)
         self.assertIn("issuecomment-6553580590", self.handover)
         self.assertIn("M7-005", self.acceptance)
         self.assertIn("M7-05", self.acceptance)
         self.assertIn("NOT APPROVED", self.acceptance)
-        self.assertIn("NO RELEASE", self.acceptance)
+        self.assertIn("M7-005 engineering is complete", self.acceptance)
+        self.assertIn("owner no-release decision", self.acceptance)
+        self.assertIn("do not use its owner-decision premise as current evidence", self.acceptance.lower())
 
     def test_delivery_documents_and_governance_records_have_no_machine_paths(self) -> None:
         paths = (
@@ -280,6 +311,9 @@ class M7ReleaseDispositionTests(unittest.TestCase):
             ".agents/evidence/M7-005-owner-no-release-decision-20261101.md",
             ".agents/evidence/M7-005-acceptance-20261101.md",
             ".agents/evidence/M7-G5-review-handover-20261101.md",
+            ".agents/evidence/G5-F02-provenance-erratum-20261101.md",
+            ".agents/evidence/PROJECT-OWNER-final-research-scope-decision-20261101.md",
+            ".agents/evidence/M0-M7-final-project-closure-20261101.md",
         )
         for relative in paths:
             content = read(relative)

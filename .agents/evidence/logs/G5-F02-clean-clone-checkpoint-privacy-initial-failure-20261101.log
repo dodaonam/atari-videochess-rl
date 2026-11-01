@@ -1,0 +1,5 @@
+Sanitized failure summary from the second scan command in the 2026-11-01 13:01 UTC clean-clone privacy check. The command attempted to list checkpoint-history changes with `git diff --name-only origin/initial-idea HEAD -- .agents/state/checkpoint-history/segments`, then decompress and scan those segments.
+
+Observed error: `fatal: bad revision 'origin/initial-idea'`; Python raised `CalledProcessError` because the single-branch clone had fetched the branch only to `FETCH_HEAD` and had not created the `origin/initial-idea` remote-tracking ref. Exit code: 1. No checkpoint-content privacy verdict was produced by this attempt. After fetching `initial-idea` into `refs/remotes/origin/initial-idea`, the rerun scanned 22 segments and passed; see `G5-F02-clean-clone-checkpoint-privacy-pass-20261101.log`. The corrected current-candidate scan later checked 24 segments and also passed.
+
+The initial scan output did not retain a separate exact timestamp for this second command; it was issued sequentially after the text scanner's 2026-11-01T13:01:51Z failure in the same execution block. This record does not invent a more precise time.

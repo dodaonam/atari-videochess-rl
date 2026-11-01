@@ -1,0 +1,5 @@
+2026-11-01T12:54:05Z
+git diff --cached --check
+.agents/evidence/logs/G5-F02-focused-tests-initial-20261101.log:7: trailing whitespace.
++test_project_owner_final_research_decision_is_scoped_and_has_truthful_provenance (tests.test_g5_final_closeout.G5FinalCloseoutTests.test_project_owner_final_research_decision_is_scoped_and_has_truthful_provenance) ...
+Exit code: 2

@@ -5848,6 +5848,20 @@
             "git_revision": "c6f69b6096aa066dcca68c1246a2c488c839f9be",
             "log_path": ".agents/evidence/logs/M7-004-model-design-clean-clone-focused-tests-20261101.log"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/G5-PM-acceptance-20261101.md",
+          "detail": "Historical G5 decision record, with M7-04 scope remaining independently accepted under PR #19.",
+          "result": "The later G5-F02 finding does not reopen M7-04 acceptance; the earlier M7-05 premise is suspended pending fresh PM review.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T12:28:50Z",
+            "exit_code": null,
+            "git_revision": "fc51b724d6a812ec648aaeb3ba26b8371b8d1989",
+            "log_path": null
+          }
         }
       ],
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
@@ -5870,71 +5884,71 @@
         {
           "kind": "file",
           "path": ".agents/evidence/M7-005-authorization-20261101.md",
-          "detail": "Direct Project Owner authorization for M7-005 only and explicit NO RELEASE / NO PUBLICATION disposition.",
-          "result": "Direct owner authorization recorded; no release, publication, upload, deployment, merge, or G5 approval is permitted.",
+          "detail": "Historical executor-authored M7-005 authorization record, now annotated with a G5-F02 provenance notice.",
+          "result": "The bounded engineering work is complete; its blanket no-release attribution is unverified and is not current owner authorization evidence.",
           "provenance": {
-            "status": "manual_verified",
-            "executed_at_utc": "2026-11-01T05:06:27Z",
-            "recorded_at_utc": "2026-11-01T05:06:27Z",
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T12:28:50Z",
             "exit_code": null,
-            "git_revision": "0f45fa06c235658da48d3d41a9091c06580bfe27",
-            "log_path": ".agents/evidence/M7-005-authorization-20261101.md"
+            "git_revision": "fc51b724d6a812ec648aaeb3ba26b8371b8d1989",
+            "log_path": null
           }
         },
         {
           "kind": "file",
           "path": ".agents/evidence/M7-005-owner-no-release-decision-20261101.md",
-          "detail": "Formal Project Owner NO RELEASE / NO PUBLICATION decision for M7-005.",
-          "result": "The Project Owner explicitly selected NO RELEASE / NO PUBLICATION AUTHORIZED; no third-party access or redistribution right is granted.",
+          "detail": "Historical executor-authored release-decision attribution, retained with a supersession notice.",
+          "result": "Not authenticated as an owner prohibition; see G5-F02 erratum. No affirmative permission for restricted artifact distribution is established.",
           "provenance": {
             "status": "verified",
             "executed_at_utc": null,
-            "recorded_at_utc": "2026-11-01T05:14:38Z",
+            "recorded_at_utc": "2026-11-01T12:28:50Z",
             "exit_code": null,
-            "git_revision": "0f45fa06c235658da48d3d41a9091c06580bfe27",
+            "git_revision": "fc51b724d6a812ec648aaeb3ba26b8371b8d1989",
             "log_path": null
           }
         },
         {
           "kind": "file",
           "path": "docs/07-delivery/RELEASE_DISPOSITION.md",
-          "detail": "Artifact-by-artifact release/distribution permissions, rights, integrity references, and future reconsideration conditions.",
-          "result": "Restricted M3–M7 data/model/ROM/raw artifacts are not authorized for release; existing committed source and sanitized evidence are distinguished.",
+          "detail": "Current artifact inventory with historical/final identity separation and corrected owner-authorization terminology.",
+          "result": "Records no new release in this closeout and no affirmative restricted-artifact authorization in reviewed evidence; it does not assert a blanket owner prohibition.",
           "provenance": {
             "status": "verified",
             "executed_at_utc": null,
-            "recorded_at_utc": "2026-11-01T05:14:38Z",
+            "recorded_at_utc": "2026-11-01T12:28:50Z",
             "exit_code": null,
-            "git_revision": "0f45fa06c235658da48d3d41a9091c06580bfe27",
+            "git_revision": "fc51b724d6a812ec648aaeb3ba26b8371b8d1989",
             "log_path": null
           }
         },
         {
           "kind": "file",
           "path": ".agents/evidence/M7-005-source-verification-20261101.md",
-          "detail": "Verified PR #17/#18/#19 review, merge, G4, M7-004 integration, and M7-05 criterion identities.",
-          "result": "PR #19 reviewed head 05a94ef096da9bc0467970e0ea8ec1dc88d953e3 merged at 0f45fa06c235658da48d3d41a9091c06580bfe27; G4 is approved with limitations; G5 remains pending.",
+          "detail": "Historical source-verification record, annotated to identify the unverified owner no-release attribution.",
+          "result": "PR #19/G4 and M7-05 criterion provenance remain historical; use the G5-F02 erratum for current release status.",
           "provenance": {
             "status": "verified",
             "executed_at_utc": null,
-            "recorded_at_utc": "2026-11-01T05:14:38Z",
+            "recorded_at_utc": "2026-11-01T12:28:50Z",
             "exit_code": null,
-            "git_revision": "0f45fa06c235658da48d3d41a9091c06580bfe27",
+            "git_revision": "fc51b724d6a812ec648aaeb3ba26b8371b8d1989",
             "log_path": null
           }
         },
         {
           "kind": "file",
           "path": ".agents/evidence/M7-005-acceptance-20261101.md",
-          "detail": "M7-05 acceptance evidence and verification results; final command and PR evidence is retained in linked logs.",
-          "result": "M7-005 engineering complete; final-head clean-clone verification passed; exact-PR CI remains before G5 handover",
+          "detail": "Historical M7-005 acceptance record retained and annotated with a G5-F02 status correction.",
+          "result": "Its no-release owner-decision premise is superseded; use the corrected disposition assessment and await fresh PM review.",
           "provenance": {
-            "status": "manual_verified",
-            "executed_at_utc": "2026-11-01T06:02:11Z",
-            "recorded_at_utc": "2026-11-01T06:02:11Z",
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T12:28:50Z",
             "exit_code": null,
-            "git_revision": "5503ba83e8141ee0df26daffd491e745edf6cf69",
-            "log_path": ".agents/evidence/M7-005-acceptance-20261101.md"
+            "git_revision": "fc51b724d6a812ec648aaeb3ba26b8371b8d1989",
+            "log_path": null
           }
         },
         {
@@ -6020,10 +6034,108 @@
             "git_revision": "5503ba83e8141ee0df26daffd491e745edf6cf69",
             "log_path": ".agents/evidence/logs/M7-005-submission-head-private-scan-20261101.log"
           }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/G5-PM-acceptance-20261101.md",
+          "detail": "Authentic historical Independent PM G5 decision; current M7-05 premise and canonical status are superseded by the later G5-F02 review.",
+          "result": "Historical PM decision verified from its official source; its M7-05 owner-disposition premise is suspended pending fresh review. M7-04 acceptance and G5-F01 resolution remain intact.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T12:31:36Z",
+            "exit_code": null,
+            "git_revision": "fc51b724d6a812ec648aaeb3ba26b8371b8d1989",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M7-005-corrected-disposition-assessment-20261101.md",
+          "detail": "Corrected M7-05 engineering assessment separating release performed, owner authorization, prohibition attribution, and PM acceptance.",
+          "result": "Engineering evidence complete; no release operation is part of the closeout; G5/M7-05 fresh PM review remains pending.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T12:28:50Z",
+            "exit_code": null,
+            "git_revision": "fc51b724d6a812ec648aaeb3ba26b8371b8d1989",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/G5-F02-provenance-erratum-20261101.md",
+          "detail": "Dated provenance erratum preserving historical records and correcting the unsupported owner-prohibition attribution.",
+          "result": "Technical correction submitted; G5-F02 remains open pending Independent PM disposition.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T12:28:50Z",
+            "exit_code": null,
+            "git_revision": "fc51b724d6a812ec648aaeb3ba26b8371b8d1989",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/G5-F02-provenance-status-20261101.json",
+          "detail": "Machine-readable current G5-F02, owner authorization, and G5 status classification.",
+          "result": "No affirmative release authorization established; blanket owner prohibition unverified; G5 pending fresh PM review.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T12:28:50Z",
+            "exit_code": null,
+            "git_revision": "fc51b724d6a812ec648aaeb3ba26b8371b8d1989",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/PROJECT-OWNER-final-research-scope-decision-20261101.md",
+          "detail": "Direct Project Owner decision that current accepted research results are final and no further research campaign/milestone is authorized.",
+          "result": "Recorded from current user instruction; no external permalink or exact issuance timestamp is asserted; does not authorize publication.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T12:28:50Z",
+            "exit_code": null,
+            "git_revision": "fc51b724d6a812ec648aaeb3ba26b8371b8d1989",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M0-M7-final-project-closure-20261101.md",
+          "detail": "Evidence-linked M0-M7 final closure matrix, governance chronology, requirement disposition, artifacts, and PM handover.",
+          "result": "Engineering closeout prepared; G5 remains for fresh Independent PM review and integration.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T12:28:50Z",
+            "exit_code": null,
+            "git_revision": "fc51b724d6a812ec648aaeb3ba26b8371b8d1989",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/G5-governance-closeout-handover-20261101.md",
+          "detail": "Historical G5 closeout handover with a current-status supplement and G5-F02 erratum link.",
+          "result": "Prior canonical proposal superseded; current amended proposal records G5 ready for fresh review, not approved.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T12:28:50Z",
+            "exit_code": null,
+            "git_revision": "fc51b724d6a812ec648aaeb3ba26b8371b8d1989",
+            "log_path": null
+          }
         }
       ],
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
     }
   ],
-  "updated_at_utc": "2026-11-01T06:02:11Z"
+  "updated_at_utc": "2026-11-01T12:31:36Z"
 }
