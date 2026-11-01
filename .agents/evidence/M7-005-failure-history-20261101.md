@@ -52,7 +52,21 @@ Other verification failures, if any, will be appended with exact commands, sourc
 - **Execution:** 2026-11-01T05:22:01Z–2026-11-01T05:23:11Z
 - **Result / exit:** 181 selected tests, 42 import errors, one dirty-worktree snapshot failure; exit 1. The initial runner discovered `tests` without setting the repository top-level directory, so modules under test could not import `videochess_rl` or `scripts`; the repository was also dirty during the snapshot assertion.
 - **Log:** [initial filtered-runner failure](logs/M7-005-full-suite-excluding-stockfish-initial-failure-20261101.log).
-- **Remediation:** Set `top_level_dir="."` so discovery matches the repository's documented command. Final filtered-suite verification will run from a clean clone, where the snapshot assertion is applicable.
+- **Remediation:** The first attempted correction set `top_level_dir="."`, which then failed because `tests/` is not an importable package; that second failure is recorded below. The final correction inserts the repository root into `sys.path` and uses `discover("tests")`, matching the repository's `PYTHONPATH=.` invocation. The final filtered suite ran in a clean clone so the snapshot assertion was valid.
+
+## Clean-clone exclusion runner start-directory attempt — remediated
+
+- **Command:** `PYTHONPATH=. <project Python>/bin/python -B <M7-005 single-test exclusion runner>` from the clean clone at `8696a189f25be4e366a393a4fea1960ef2108ed3`.
+- **Execution:** 2026-11-01T05:31:34Z–05:31:35Z; exit code 1.
+- **Failure:** `unittest` rejected `top_level_dir="."` because the `tests` directory is not an importable package. A sanitized excerpt reconstructed from the captured tool output is retained at [start-directory failure](logs/M7-005-clean-clone-filtered-runner-start-dir-failure-20261101.log); the original raw stdout was not saved locally.
+- **Remediation:** Insert the clean clone root into `sys.path` and use `discover("tests")`; the runner then excluded exactly the named Stockfish test and executed the rest of the clean-clone suite.
+- **Successful rerun:** 508 tests executed, three skipped, zero failures/errors at `2026-11-01T05:35:00Z`–`05:37:47Z`; see [final filtered clean-clone log](logs/M7-005-clean-clone-filtered-suite-final-20261101.log). The earlier pass had an auxiliary “selected cases” count that did not match unittest's actual tests-run count; the helper output was simplified and the clean-clone suite was rerun. The final log's `Ran 508 tests` is authoritative.
+
+The earlier clean-clone pass with the auxiliary count is retained at [initial filtered clean-clone log](logs/M7-005-clean-clone-filtered-suite-initial-20261101.log); it also reported 508 tests, three skips, zero failures. The final runner log above removes the confusing count line.
+
+## Clean-clone source-root confirmation
+
+The first clean-clone full-suite invocation did not explicitly set `PYTHONPATH=.`. It reproduced the single Stockfish readiness failure and three skips. The suite was rerun with `PYTHONPATH=.` so imports resolve from the clone's working tree; it again ran 509 tests with only that one failure and three skips. Both logs are retained; the latter is the source-root-confirmed result.
 
 ## Initial private-path scan — false positives corrected
 
@@ -61,6 +75,7 @@ Other verification failures, if any, will be appended with exact commands, sourc
 - **Finding:** The whole-file scanner matched the literal generic path regexes in tests that verify documentation privacy, and historical path text in files whose unchanged lines were scanned. No added documentation/private payload was identified by this output.
 - **Cause:** The scan did not distinguish newly added lines from unchanged history and treated regex test patterns as literal machine paths.
 - **Remediation:** Re-scanned only added tracked lines and untracked text files using concrete machine-path and credential patterns. At `2026-11-01T05:25:02Z`, exit 0: 153 added tracked lines and 9 untracked text files scanned, zero matches; see [corrected privacy scan](logs/M7-005-private-scan-corrected-20261101.log).
+- **Final scan after clean-clone evidence was added:** At `2026-11-01T05:46:43Z`, 2,523 added tracked lines and 23 M7-005 text/log files were scanned; zero concrete path, credential, or restricted-suffix matches. See [final privacy/content scan](logs/M7-005-private-content-scan-final-20261101.log).
 
 ## Focused release-disposition test assertion corrections — remediated
 

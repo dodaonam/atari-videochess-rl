@@ -5931,9 +5931,9 @@
           "provenance": {
             "status": "verified",
             "executed_at_utc": null,
-            "recorded_at_utc": "2026-11-01T05:14:38Z",
+            "recorded_at_utc": "2026-11-01T05:44:59Z",
             "exit_code": null,
-            "git_revision": "0f45fa06c235658da48d3d41a9091c06580bfe27",
+            "git_revision": "8696a189f25be4e366a393a4fea1960ef2108ed3",
             "log_path": null
           }
         },
@@ -5945,15 +5945,85 @@
           "provenance": {
             "status": "verified",
             "executed_at_utc": null,
-            "recorded_at_utc": "2026-11-01T05:14:38Z",
+            "recorded_at_utc": "2026-11-01T05:44:59Z",
             "exit_code": null,
-            "git_revision": "0f45fa06c235658da48d3d41a9091c06580bfe27",
+            "git_revision": "8696a189f25be4e366a393a4fea1960ef2108ed3",
             "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 scripts/agent_preflight.py",
+          "result": "Agent context preflight: PASS",
+          "detail": "Clean-clone canonical governance preflight; expected ARTIFACT_MANIFEST_REQUIRED warning only.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-11-01T05:27:40Z",
+            "recorded_at_utc": "2026-11-01T05:44:59Z",
+            "exit_code": 0,
+            "git_revision": "8696a189f25be4e366a393a4fea1960ef2108ed3",
+            "log_path": ".agents/evidence/logs/M7-005-clean-clone-preflight-20261101.log"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONPATH=. <existing project Python 3.12.3 venv>/bin/python -m unittest tests.test_pre_m7_contracts tests.test_agent_context tests.test_m7_delivery_docs tests.test_m7_artifact_manifest_cli tests.test_m7_release_disposition -v",
+          "result": "Ran 82 tests in 53.687s",
+          "detail": "Clean-clone focused governance, M7 documentation, manifest, and release-disposition suite passed; zero failures.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-11-01T05:42:09Z",
+            "recorded_at_utc": "2026-11-01T05:44:59Z",
+            "exit_code": 0,
+            "git_revision": "8696a189f25be4e366a393a4fea1960ef2108ed3",
+            "log_path": ".agents/evidence/logs/M7-005-clean-clone-focused-suite-20261101.log"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONPATH=. <existing project Python 3.12.3 venv>/bin/python -m unittest discover -s tests -v",
+          "result": "Ran 509 tests in 165.164s",
+          "detail": "Unfiltered clean-clone full suite: one Stockfish UCI readiness failure because the executable is unavailable; three skips. This is not reported as a passing suite.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-11-01T05:31:52Z",
+            "recorded_at_utc": "2026-11-01T05:44:59Z",
+            "exit_code": 1,
+            "git_revision": "8696a189f25be4e366a393a4fea1960ef2108ed3",
+            "log_path": ".agents/evidence/logs/M7-005-clean-clone-full-suite-unfiltered-20261101.log"
+          }
+        },
+        {
+          "kind": "test",
+          "command": "PYTHONPATH=. <existing project Python 3.12.3 venv>/bin/python -B <M7-005 single-test exclusion runner>",
+          "result": "Ran 508 tests in 164.373s",
+          "detail": "Clean-clone suite excluding only the unavailable Stockfish readiness test: three skips, zero failures/errors. The runner asserts the exact test ID.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-11-01T05:35:00Z",
+            "recorded_at_utc": "2026-11-01T05:44:59Z",
+            "exit_code": 0,
+            "git_revision": "8696a189f25be4e366a393a4fea1960ef2108ed3",
+            "log_path": ".agents/evidence/logs/M7-005-clean-clone-filtered-suite-final-20261101.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "python3 .agents/evidence/logs/M7-005-private-content-scan-20261101.py",
+          "result": "concrete_path_or_credential_matches=[]",
+          "detail": "Final M7-005 candidate content scan; 2,523 added tracked lines and 23 task text/log files scanned; zero sensitive path/credential matches and zero restricted payload suffixes.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-11-01T05:46:43Z",
+            "recorded_at_utc": "2026-11-01T05:47:08Z",
+            "exit_code": 0,
+            "git_revision": "8696a189f25be4e366a393a4fea1960ef2108ed3",
+            "log_path": ".agents/evidence/logs/M7-005-private-content-scan-final-20261101.log"
           }
         }
       ],
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
     }
   ],
-  "updated_at_utc": "2026-11-01T05:14:38Z"
+  "updated_at_utc": "2026-11-01T05:47:08Z"
 }

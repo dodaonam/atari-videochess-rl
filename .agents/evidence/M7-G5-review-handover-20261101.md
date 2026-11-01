@@ -46,7 +46,9 @@ Previously committed source, sanitized reports, configurations, hashes, and acce
 
 ## E. Verification and known limitations
 
-The [M7-005 acceptance record](M7-005-acceptance-20261101.md) links the exact commands, timestamps, source revisions, exit codes, sanitized logs, privacy inspection, and clean-clone result for this PR. It distinguishes the current M7-005 checks from inherited M7-004 evidence.
+The [M7-005 acceptance record](M7-005-acceptance-20261101.md) links the exact commands, timestamps, source revisions, exit codes, sanitized logs, privacy inspection, and clean-clone result for this PR. At candidate commit `8696a189f25be4e366a393a4fea1960ef2108ed3`, clean-clone preflight passed with the expected artifact-manifest warning; the focused suite passed 82 tests; the unfiltered suite ran 509 tests with one unavailable-Stockfish readiness failure and three skips; excluding exactly that test yielded 508 tests, three skips, and zero failures/errors. These are engineering verification results, not G5 acceptance.
+
+The read-only GitHub branch-protection query for `initial-idea` returned HTTP 404 (“Branch not protected”); no branch protections or rulesets were changed. The PR therefore still requires explicit Independent PM review and an authorized operator's integration action under the repository review policy.
 
 Inherited M7-004 results remain: the focused delivery/manifest/governance tests passed 24 tests; clean-clone preflight passed with the expected `ARTIFACT_MANIFEST_REQUIRED` warning; the unfiltered clean-clone suite ran 505 tests, with one failure in `test_m0_smoke.M0EnvironmentSmokeTests.test_stockfish_answers_uci_readiness_without_searching` because no Stockfish executable was available, and three skips. Excluding exactly that unavailable test yielded 504 executed, three skipped, zero failures/errors. This exclusion is not reported as an unfiltered pass. GitHub Actions run 41274320489 passed on the exact M7-004 reviewed HEAD, but it was a repository-preflight/context suite, not the full repository suite.
 
