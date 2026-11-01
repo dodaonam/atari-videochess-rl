@@ -1,0 +1,12 @@
+command: /usr/bin/python3 .agents/evidence/logs/M7-005-private-content-scan-20261101.py
+source_revision: f3ef2976f446594dca6e4b6d5d219734cc33f966
+working_tree: modified; remediation docs/tests/logs were uncommitted
+started_at_utc: 2026-11-01T09:57:53+00:00
+finished_at_utc: 2026-11-01T09:57:53+00:00
+exit_code: 1
+
+source_revision=f3ef2976f446594dca6e4b6d5d219734cc33f966
+added_tracked_lines=6376
+untracked_text_and_task_logs=31
+concrete_path_or_credential_matches=[('.agents/evidence/logs/M7-005-G5-F01-pre-fix-regression-20261101.log', 'concrete_machine_path'), ('.agents/evidence/logs/M7-005-provenance-test-implementation-failure-20261101.log', 'concrete_machine_path')]
+restricted_payload_suffixes=[]
