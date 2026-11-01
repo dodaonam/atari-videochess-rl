@@ -5927,56 +5927,56 @@
           "kind": "file",
           "path": ".agents/evidence/M7-005-acceptance-20261101.md",
           "detail": "M7-05 acceptance evidence and verification results; final command and PR evidence is retained in linked logs.",
-          "result": "Engineering disposition is NO RELEASE; no public release or publication is authorized; Independent PM G5 decision remains pending.",
+          "result": "M7-005 engineering complete; final-head clean-clone verification passed; exact-PR CI remains before G5 handover",
           "provenance": {
-            "status": "manual_pending",
-            "executed_at_utc": null,
-            "recorded_at_utc": null,
+            "status": "manual_verified",
+            "executed_at_utc": "2026-11-01T06:02:11Z",
+            "recorded_at_utc": "2026-11-01T06:02:11Z",
             "exit_code": null,
-            "git_revision": null,
-            "log_path": null
+            "git_revision": "5503ba83e8141ee0df26daffd491e745edf6cf69",
+            "log_path": ".agents/evidence/M7-005-acceptance-20261101.md"
           }
         },
         {
           "kind": "file",
           "path": ".agents/evidence/M7-G5-review-handover-20261101.md",
           "detail": "G5 acceptance mapping, scientific limitations, privacy/release disposition, open requirements, and Independent PM review request.",
-          "result": "M7-001 through M7-005 are engineering-complete; G4 remains approved with limitations; G5 is not approved and awaits Independent PM review.",
+          "result": "M7-001 through M7-005 complete as engineering tasks on the submitted branch",
           "provenance": {
-            "status": "manual_pending",
-            "executed_at_utc": null,
-            "recorded_at_utc": null,
+            "status": "manual_verified",
+            "executed_at_utc": "2026-11-01T06:01:37Z",
+            "recorded_at_utc": "2026-11-01T06:01:37Z",
             "exit_code": null,
-            "git_revision": null,
-            "log_path": null
+            "git_revision": "5503ba83e8141ee0df26daffd491e745edf6cf69",
+            "log_path": ".agents/evidence/M7-G5-review-handover-20261101.md"
           }
         },
         {
           "kind": "command",
           "command": "python3 scripts/agent_preflight.py",
           "result": "Agent context preflight: PASS",
-          "detail": "Clean-clone canonical governance preflight; expected ARTIFACT_MANIFEST_REQUIRED warning only.",
+          "detail": "Final-submission clean-clone canonical preflight; expected ARTIFACT_MANIFEST_REQUIRED warning only.",
           "provenance": {
             "status": "verified",
-            "executed_at_utc": "2026-11-01T05:48:06Z",
-            "recorded_at_utc": "2026-11-01T05:55:52Z",
+            "executed_at_utc": "2026-11-01T05:57:38Z",
+            "recorded_at_utc": "2026-11-01T06:01:37Z",
             "exit_code": 0,
-            "git_revision": "007d52397e68b9cadce71f6cc833317d9667dc4c",
-            "log_path": ".agents/evidence/logs/M7-005-final-head-clean-clone-preflight-20261101.log"
+            "git_revision": "5503ba83e8141ee0df26daffd491e745edf6cf69",
+            "log_path": ".agents/evidence/logs/M7-005-submission-head-preflight-20261101.log"
           }
         },
         {
           "kind": "test",
           "command": "PYTHONPATH=. <existing project Python 3.12.3 venv>/bin/python -m unittest tests.test_pre_m7_contracts tests.test_agent_context tests.test_m7_delivery_docs tests.test_m7_artifact_manifest_cli tests.test_m7_release_disposition -v",
-          "result": "Ran 82 tests in 54.855s",
-          "detail": "Clean-clone focused governance, M7 documentation, manifest, and release-disposition suite passed; zero failures.",
+          "result": "Ran 82 tests in 54.133s",
+          "detail": "Final-submission clean-clone focused governance/M7/docs/manifest suite passed; zero failures.",
           "provenance": {
             "status": "verified",
-            "executed_at_utc": "2026-11-01T05:48:11Z",
-            "recorded_at_utc": "2026-11-01T05:55:52Z",
+            "executed_at_utc": "2026-11-01T05:57:43Z",
+            "recorded_at_utc": "2026-11-01T06:01:37Z",
             "exit_code": 0,
-            "git_revision": "007d52397e68b9cadce71f6cc833317d9667dc4c",
-            "log_path": ".agents/evidence/logs/M7-005-final-head-clean-clone-focused-20261101.log"
+            "git_revision": "5503ba83e8141ee0df26daffd491e745edf6cf69",
+            "log_path": ".agents/evidence/logs/M7-005-submission-head-focused-20261101.log"
           }
         },
         {
@@ -6011,19 +6011,19 @@
           "kind": "command",
           "command": "python3 .agents/evidence/logs/M7-005-private-content-scan-20261101.py",
           "result": "concrete_path_or_credential_matches=[]",
-          "detail": "Final pre-submission scan: 4,860 added tracked lines and 26 task text/log files; no concrete path/credential matches or restricted payload suffixes.",
+          "detail": "Final submission-head scan: 6,057 added tracked lines and 29 task text/log files; zero concrete path/credential matches or restricted payload suffixes.",
           "provenance": {
             "status": "verified",
-            "executed_at_utc": "2026-11-01T05:55:57Z",
-            "recorded_at_utc": "2026-11-01T05:56:13Z",
+            "executed_at_utc": "2026-11-01T06:01:50Z",
+            "recorded_at_utc": "2026-11-01T06:02:04Z",
             "exit_code": 0,
-            "git_revision": "007d52397e68b9cadce71f6cc833317d9667dc4c",
-            "log_path": ".agents/evidence/logs/M7-005-private-content-scan-final-20261101.log"
+            "git_revision": "5503ba83e8141ee0df26daffd491e745edf6cf69",
+            "log_path": ".agents/evidence/logs/M7-005-submission-head-private-scan-20261101.log"
           }
         }
       ],
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
     }
   ],
-  "updated_at_utc": "2026-11-01T05:56:48Z"
+  "updated_at_utc": "2026-11-01T06:02:11Z"
 }

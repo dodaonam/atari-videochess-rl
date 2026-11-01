@@ -75,7 +75,7 @@ The first clean-clone full-suite invocation did not explicitly set `PYTHONPATH=.
 - **Finding:** The whole-file scanner matched the literal generic path regexes in tests that verify documentation privacy, and historical path text in files whose unchanged lines were scanned. No added documentation/private payload was identified by this output.
 - **Cause:** The scan did not distinguish newly added lines from unchanged history and treated regex test patterns as literal machine paths.
 - **Remediation:** Re-scanned only added tracked lines and untracked text files using concrete machine-path and credential patterns. At `2026-11-01T05:25:02Z`, exit 0: 153 added tracked lines and 9 untracked text files scanned, zero matches; see [corrected privacy scan](logs/M7-005-private-scan-corrected-20261101.log).
-- **Final pre-submission scan after all clean-clone evidence was added:** At `2026-11-01T05:55:57Z`, 4,860 added tracked lines and 26 M7-005 text/log files were scanned; zero concrete path, credential, or restricted-suffix matches. See [final privacy/content scan](logs/M7-005-private-content-scan-final-20261101.log). The earlier 2,523-line/23-file pass is superseded by this broader final scan.
+- **Final submission-head scan after acceptance/backlog provenance updates:** At `2026-11-01T06:01:50Z`, 6,057 added tracked lines and 29 M7-005 text/log files were scanned; zero concrete path, credential, or restricted-suffix matches. See [submission-head privacy/content scan](logs/M7-005-submission-head-private-scan-20261101.log). Earlier scans remain preserved.
 
 ## Focused release-disposition test assertion corrections — remediated
 
