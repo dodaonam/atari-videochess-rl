@@ -1,0 +1,10 @@
+# Sanitized failure excerpt reconstructed from captured tool output; original stdout was not saved locally.
+started_at_utc=2026-11-01T05:31:34Z
+source_revision=8696a189f25be4e366a393a4fea1960ef2108ed3
+command: PYTHONPATH=. <existing project Python 3.12.3 venv>/bin/python -B <M7-005 single-test exclusion runner>
+Traceback (most recent call last):
+  File "<clean-clone>/.agents/evidence/logs/M7-005-exclude-stockfish-test-runner-20261101.py", line 20, in <module>
+    all_tests = list(unittest.defaultTestLoader.discover("tests", top_level_dir="."))
+ImportError: Start directory is not importable: '<clean-clone>/tests'
+Exit code: 1
+finished_at_utc=2026-11-01T05:31:35Z

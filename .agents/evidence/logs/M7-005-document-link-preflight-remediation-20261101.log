@@ -1,0 +1,47 @@
+started_at_utc=2026-11-01T05:10:05Z
+Agent context preflight: PASS
+Governance: G4 (approved); approved: G0, G1, G2, G3, G4
+Next engineering milestone: M7 — in_progress
+Active task: M7-005 — Record release and publication disposition
+Active task next action: Complete the owner no-release decision, disposition inventory, M7-005 evidence and G5 dossier; verify and submit an open unmerged PR. Do not release, publish, approve G5, or merge.
+Next task: M7-005 (in_progress) — Record release and publication disposition
+Next task dependencies: M7-004
+Next task acceptance criteria: M7-05
+Tasks: done=19, in_progress=1, pending=0, blocked=0, cancelled=0
+Completed task IDs: G1-001, G1-002, G1-003, G1-004, G1-005, G1-006, G1-007, G1-008, M0-001, M1-001, M2-001, M3-001, M4-001, M5-001, M6-001, M7-001, M7-002, M7-003, M7-004
+In progress task IDs: M7-005
+Pending task IDs: none
+Blocked task IDs: none
+Active blockers: none recorded
+Open confirmations:
+  O-02: Whether full-game performance on actual ALE is a hard submission requirement or a research target with an accepted fallback.
+  O-03: Future course checkpoints and any date changes. The owner confirmed the presentation date is Tuesday, 2026-11-03.
+  O-04: Actual Colab entitlement/quota, GPU availability, cloud storage, and whether paid compute is allowed. The owner selected local CPU for M3; no external compute/storage is used in this mission.
+  O-05: ALE/ROM runtime behavior, RAM mapping, game modes, difficulty behavior, and official evaluation settings.
+  O-06: Public redistribution rights and any new source/use beyond the scoped May 2022 archive. For M3, the owner authorized bounded internal academic use of the exact Lichess Elite May 2022 package with local retention and no redistribution; its third-party package license remains unstated/unverified.
+  O-07: Broader Stockfish roles: benchmark opponent, offline engine evaluation, and instructor-specific limits outside the M3 teacher-label scope.
+  O-08: Opponent pool and rating method for any Elo claim.
+Relevant decisions: docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md, docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md, docs/02-management/decisions/ADR-0003-pretraining-model-interface.md, docs/02-management/decisions/ADR-0004-m7-option-b-execution-authorization.md
+Acceptance criteria recognized: 51
+Last verified Git: feature/m7-005-no-release-closeout @ 0f45fa06c235658da48d3d41a9091c06580bfe27
+Live Git: feature/m7-005-no-release-closeout @ 0f45fa06c235658da48d3d41a9091c06580bfe27
+Roadmap source: exact match; 19 sections; SHA-256 fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf
+Git recovery: portable HEAD matches, but local tracked or state changes remain.
+Workspace Git status: differs from checkpoint
+Portable tracked baseline: matches
+Portable Git index: matches checkpoint
+Hashed ordinary-file snapshot: differs
+Content hashes: 1091 ordinary files verified by SHA-256.
+Not content-verified by this hash map: PROJECT_STATE self-reference, chat history/credential-like paths, temp files, symlinks, and the excluded directories listed below.
+Excluded directories: .agents/state/checkpoint-history, artifacts, scripts/__pycache__
+Artifact directories requiring independent manifests: artifacts
+Last verified dirty paths (4):  M .agents/state/PROJECT_STATE.yaml;  M .agents/state/SESSION_HANDOFF.md;  M .agents/tasks/BACKLOG.yaml; ?? .agents/evidence/M7-005-authorization-20261101.md
+New/changed dirty paths since checkpoint:  M .agents/state/BLOCKERS.md;  M docs/07-delivery/FINAL_REPORT.md;  M docs/07-delivery/HANDOVER.md;  M docs/07-delivery/MODEL_CARD.md;  M docs/07-delivery/USER_GUIDE.md;  M tests/test_agent_context.py;  M tests/test_m7_delivery_docs.py;  M tests/test_pre_m7_contracts.py; ?? .agents/evidence/M7-005-acceptance-20261101.md; ?? .agents/evidence/M7-005-failure-history-20261101.md; ?? .agents/evidence/M7-005-owner-no-release-decision-20261101.md; ?? .agents/evidence/M7-G5-review-handover-20261101.md; ?? docs/07-delivery/RELEASE_DISPOSITION.md; ?? tests/test_m7_release_disposition.py
+Next user action: Codex is completing the owner-authorized M7-005 engineering package. G5 remains unapproved; the final open PR must receive Independent PM review. No release/publication is authorized.
+WARNING PORTABLE_HANDOFF_DRIFT [.agents/state/SESSION_HANDOFF.md]: Portable handoff checksum differs from the recorded checkpoint.
+WARNING WORKTREE_CONTENT_DRIFT [.]: Tracked worktree changes exist after the portable baseline checkpoint:  M .agents/state/BLOCKERS.md;  M .agents/tasks/BACKLOG.yaml;  M docs/07-delivery/FINAL_REPORT.md;  M docs/07-delivery/HANDOVER.md;  M docs/07-delivery/MODEL_CARD.md;  M docs/07-delivery/USER_GUIDE.md;  M tests/test_agent_context.py;  M tests/test_m7_delivery_docs.py;  M tests/test_pre_m7_contracts.py.
+WARNING GIT_SNAPSHOT_DRIFT [.]: Changed fields: status_entries. New/changed status entries:  M .agents/state/BLOCKERS.md;  M docs/07-delivery/FINAL_REPORT.md;  M docs/07-delivery/HANDOVER.md;  M docs/07-delivery/MODEL_CARD.md;  M docs/07-delivery/USER_GUIDE.md;  M tests/test_agent_context.py;  M tests/test_m7_delivery_docs.py;  M tests/test_pre_m7_contracts.py; ?? .agents/evidence/M7-005-acceptance-20261101.md; ?? .agents/evidence/M7-005-failure-history-20261101.md; …. Inspect the workspace snapshot; do not discard changes.
+WARNING WORKTREE_CONTENT_DRIFT [.]: newly hashed workspace files: .agents/evidence/M7-005-acceptance-20261101.md, .agents/evidence/M7-005-failure-history-20261101.md, .agents/evidence/M7-005-owner-no-release-decision-20261101.md, .agents/evidence/M7-G5-review-handover-20261101.md, .agents/evidence/logs/M7-005-document-link-preflight-failure-20261101.log, .agents/evidence/logs/M7-005-document-link-preflight-remediation-20261101.log, docs/07-delivery/RELEASE_DISPOSITION.md, tests/test_m7_release_disposition.py; workspace content changed: .agents/state/BLOCKERS.md, .agents/state/SESSION_HANDOFF.md, docs/07-delivery/FINAL_REPORT.md, docs/07-delivery/HANDOVER.md, docs/07-delivery/MODEL_CARD.md, docs/07-delivery/USER_GUIDE.md, tests/test_agent_context.py, tests/test_m7_delivery_docs.py, tests/test_pre_m7_contracts.py. Inspect before checkpointing.
+WARNING ARTIFACT_MANIFEST_REQUIRED [.]: Artifact/data directories are excluded from content hashing and require independent manifest verification: artifacts.
+finished_at_utc=2026-11-01T05:10:07Z
+exit_code=0

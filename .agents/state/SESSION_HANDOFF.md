@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-c6f69b60-20261101T044442661788Z -->
+<!-- checkpoint-id: cp-d1cb5b08-20261101T103008663580Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -16,9 +16,13 @@ This file is a pointer, not a status snapshot. Do not infer current phase, task 
 
 For the preparation-only assessment, M7 work breakdown, and evaluation contract, follow the [Pre-M7 readiness plan](../plans/PRE-M7-readiness.md), [M7 engineering plan](../plans/M07-evaluation-delivery.md), [M7 evaluation protocol](../../docs/04-research/M7_EVALUATION_PROTOCOL.md), and [Pre-M7 verification evidence](../evidence/PRE-M7-readiness-20261031.md). These are independent-review materials, not authorization; live gate, task, and M7 authorization remain in `PROJECT_STATE.yaml` and `BACKLOG.yaml`.
 
-## Current canonical pointer — M7-004 package ready for Independent PM review (2026-11-01)
+## Current canonical pointer — M7-005 G5-F01 remediation ready for independent re-review (2026-11-01)
 
-`PROJECT_STATE.yaml` and `BACKLOG.yaml` are authoritative. PR #18 is merged into `initial-idea` at `d7332b91128d3daf919421db2e71a9f2ee4b48ec`; the Independent PM's bounded G4 decision is recorded in [G4 PM acceptance](../evidence/G4-PM-acceptance-20261101.md), with the source comment linked there. M7-004 engineering is complete; see [M7-004 acceptance evidence](../evidence/M7-004-acceptance-20261101.md), [evidence inventory](../evidence/M7-004-evidence-inventory-20261101.json), and the four delivery documents under docs/07-delivery/. Independent PM review of the delivery PR is the next action. M7-005 remains pending and unstarted; G5 is not approved and no release/publication authorization exists.
+`PROJECT_STATE.yaml` and `BACKLOG.yaml` are authoritative. PR #19 was reviewed and merged at `0f45fa06c235658da48d3d41a9091c06580bfe27`; its reviewed M7-004 source was `05a94ef096da9bc0467970e0ea8ec1dc88d953e3`. The source PM comment accepts M7-04 engineering evidence but explicitly does not approve G5. The owner directly authorized M7-005 under `.agents/evidence/M7-005-authorization-20261101.md` and chose **NO RELEASE / NO PUBLICATION AUTHORIZED**. Review the [M7-005 acceptance record](../evidence/M7-005-acceptance-20261101.md), [G5-F01 remediation evidence](../evidence/M7-005-G5-F01-remediation-20261101.md), [release disposition](../../docs/07-delivery/RELEASE_DISPOSITION.md), and [G5 review handover](../evidence/M7-G5-review-handover-20261101.md). All five M7 tasks are recorded complete as engineering work on the submitted feature branch; G4 is approved with limitations; G5 remains unapproved. The first PR #20 review held G5 at head `f3ef2976f446594dca6e4b6d5d219734cc33f966`; after the documented G5-F01 remediation, the next action is Independent PM re-review of amended PR #20 and an explicit G5 decision. No release, merge, or new milestone is authorized.
+
+## Historical canonical pointer — M7-004 package ready for Independent PM review (2026-11-01)
+
+At the M7-004 submission checkpoint, PR #18 was the latest integration and M7-005 remained pending and unstarted. That point-in-time pointer is superseded by the current M7-005 closeout pointer above. The [M7-004 acceptance evidence](../evidence/M7-004-acceptance-20261101.md), [evidence inventory](../evidence/M7-004-evidence-inventory-20261101.json), and four delivery documents remain the M7-04 evidence; their results are unchanged.
 
 ## Historical PR #15 corrective continuation — PM6C-F01 (completed)
 

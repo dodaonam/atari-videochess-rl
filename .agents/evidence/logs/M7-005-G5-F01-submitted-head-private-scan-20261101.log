@@ -1,0 +1,12 @@
+command: /usr/bin/python3 .agents/evidence/logs/M7-005-private-content-scan-20261101.py
+source_revision: 0f9cc3942018cd12e82d1643d9b61eb475363c83
+working_tree: final re-review documentation follow-up present
+started_at_utc: 2026-11-01T10:27:01+00:00
+finished_at_utc: 2026-11-01T10:27:01+00:00
+exit_code: 0
+
+source_revision=0f9cc3942018cd12e82d1643d9b61eb475363c83
+added_tracked_lines=12992
+untracked_text_and_task_logs=52
+concrete_path_or_credential_matches=[]
+restricted_payload_suffixes=[]

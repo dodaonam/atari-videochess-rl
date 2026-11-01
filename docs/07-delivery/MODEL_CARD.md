@@ -1,6 +1,6 @@
 # Model Card — Atari VideoChess RL
 
-**Status:** Research artifacts; no champion model selected; public distribution not authorized
+**Status:** Research artifacts; no champion model selected; public distribution not authorized. See [the owner release disposition](RELEASE_DISPOSITION.md).
 
 **Governance:** G4 approved with scientific limitations; G5 not approved
 

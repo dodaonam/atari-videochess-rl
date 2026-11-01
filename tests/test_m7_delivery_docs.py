@@ -172,7 +172,7 @@ class M7DeliveryDocumentationTests(unittest.TestCase):
             "no public",
         ):
             self.assertIn(required.lower(), all_docs.lower())
-        self.assertIn("M7-005 is pending", self.texts["HANDOVER.md"])
+        self.assertIn("M7-005 is complete at the engineering level", self.texts["HANDOVER.md"])
         self.assertIn("undefined", self.texts["FINAL_REPORT.md"].lower())
 
     def test_delivery_docs_do_not_contain_machine_specific_private_paths(self) -> None:

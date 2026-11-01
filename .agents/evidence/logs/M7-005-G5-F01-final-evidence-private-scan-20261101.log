@@ -1,0 +1,12 @@
+command: /usr/bin/python3 .agents/evidence/logs/M7-005-private-content-scan-20261101.py
+source_revision: d1cb5b087d196c588696d1cf8e7905536debfb52
+working_tree: final verification-result addendum pending commit
+started_at_utc: 2026-11-01T10:29:59+00:00
+finished_at_utc: 2026-11-01T10:29:59+00:00
+exit_code: 0
+
+source_revision=d1cb5b087d196c588696d1cf8e7905536debfb52
+added_tracked_lines=13156
+untracked_text_and_task_logs=55
+concrete_path_or_credential_matches=[]
+restricted_payload_suffixes=[]

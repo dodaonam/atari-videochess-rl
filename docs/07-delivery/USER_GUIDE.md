@@ -124,4 +124,4 @@ The official campaign runner is scripts/run_m7_campaign.py. It can execute or re
 
 ## Privacy
 
-Do not commit or externally upload ROMs, checkpoints, raw RGB, raw traces, datasets, credentials, or private artifact paths. Do not bypass access controls. Public model/data/ROM release is not authorized. M7-005 has not started.
+Do not commit or externally upload ROMs, checkpoints, raw RGB, raw traces, datasets, credentials, or private artifact paths. Do not bypass access controls. Public model/data/ROM release is not authorized. M7-005 recorded the owner's no-release disposition; see [the release inventory](RELEASE_DISPOSITION.md). G5 remains pending Independent PM review.
