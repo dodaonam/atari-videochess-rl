@@ -292,6 +292,17 @@
       "source_revision": "e23e8f3cc64ec2797697bc4116f215907b3d9c31",
       "status": "PASS with expected ARTIFACT_MANIFEST_REQUIRED warning only"
     },
+    "final_submitted_candidate_clean_clone_focused_tests": {
+      "failures": 0,
+      "log_path": ".agents/evidence/logs/M7-004-exact-head-clean-clone-focused-tests-20261101.log",
+      "source_revision": "fb39917cd1fb7c87e6c5bbd62497a1e2aaa6b62e",
+      "tests_passed": 24
+    },
+    "final_submitted_candidate_clean_clone_preflight": {
+      "log_path": ".agents/evidence/logs/M7-004-exact-head-clean-clone-preflight-20261101.log",
+      "source_revision": "fb39917cd1fb7c87e6c5bbd62497a1e2aaa6b62e",
+      "status": "PASS with expected ARTIFACT_MANIFEST_REQUIRED warning only"
+    },
     "focused_suite_pre_final_state": {
       "failures": 0,
       "log_path": ".agents/evidence/logs/M7-004-focused-tests-20261101.log",
