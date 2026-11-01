@@ -326,6 +326,17 @@
       "raw_artifacts_copied": false,
       "source_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
       "status": "PASS with expected ARTIFACT_MANIFEST_REQUIRED warning"
+    },
+    "privacy_corrected_clean_clone_focused_tests": {
+      "failures": 0,
+      "log_path": ".agents/evidence/logs/M7-004-model-design-clean-clone-focused-tests-20261101.log",
+      "source_revision": "c6f69b6096aa066dcca68c1246a2c488c839f9be",
+      "tests_passed": 24
+    },
+    "privacy_corrected_clean_clone_preflight": {
+      "log_path": ".agents/evidence/logs/M7-004-model-design-clean-clone-preflight-20261101.log",
+      "source_revision": "c6f69b6096aa066dcca68c1246a2c488c839f9be",
+      "status": "PASS with expected ARTIFACT_MANIFEST_REQUIRED warning only"
     }
   }
 }

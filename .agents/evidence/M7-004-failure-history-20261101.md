@@ -52,6 +52,8 @@ After the canonical M7-004 completion state was committed at source revision a80
 
 After the evidence records were linked at source revision e23e8f3cc64ec2797697bc4116f215907b3d9c31, repository preflight and the 24-test focused suite passed again; the only preflight warning remains the expected artifact-manifest requirement.
 
+The dated M4 model-design status paragraph contained an old owner-local absolute checkpoint path. That existing reference was replaced with an owner-local artifact description and the same accepted checkpoint hash. The privacy-corrected candidate at c6f69b6096aa066dcca68c1246a2c488c839f9be passed clean-clone preflight and all 24 focused tests. The historical M4 report and checkpoint identity were not changed.
+
 ## 7. Verification boundary
 
 The incorrect-path and interpreter failures are diagnostic failures, not frozen experiment results. The successful checks used accepted identities, did not repair or regenerate historical artifacts, and did not add campaign attempts. M7-004 focused/full-suite and clean-clone outcomes are recorded separately in the M7-004 acceptance evidence.
