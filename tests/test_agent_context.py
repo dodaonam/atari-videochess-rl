@@ -1319,14 +1319,13 @@ class AgentContextRecoveryTests(unittest.TestCase):
         self.assertIsNone(state["engineering"]["active_milestone"])
         self.assertEqual(state["governance"]["approved_gates"], approved_gates_before)
 
-    def test_m6_pm_acceptance_preserves_g4_hold_after_later_m7_authorization(self) -> None:
+    def test_m6_pm_acceptance_is_historical_and_g4_is_now_approved_for_m7_evaluation(self) -> None:
         state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
         backlog = json.loads((REPO / ".agents/tasks/BACKLOG.yaml").read_text(encoding="utf-8"))
-        self.assertEqual(state["governance"]["current_gate"], "G3")
+        self.assertEqual(state["governance"]["current_gate"], "G4")
         self.assertEqual(state["governance"]["gate_status"], "approved")
-        self.assertIn("G3", state["governance"]["approved_gates"])
-        self.assertEqual(state["governance"]["next_governance_gate"], "G4")
-        self.assertNotIn("G4", state["governance"]["approved_gates"])
+        self.assertEqual(state["governance"]["approved_gates"], ["G0", "G1", "G2", "G3", "G4"])
+        self.assertEqual(state["governance"]["next_governance_gate"], "G5")
         self.assertEqual(state["engineering"]["next_milestone"], "M7")
         self.assertEqual(state["engineering"]["active_milestone"], "M7")
         self.assertTrue(state["engineering"]["start_authorized"])
@@ -1346,11 +1345,12 @@ class AgentContextRecoveryTests(unittest.TestCase):
         report = agent_preflight.build_report(REPO)
         self.assertTrue(report["ok"], report["errors"])
 
-    def test_completed_m7_phase_one_can_wait_at_g4_without_starting_phase_two(self) -> None:
+    def test_completed_m7_phase_one_records_g4_and_holds_phase_two_for_pr_integration(self) -> None:
         state = json.loads((REPO / ".agents/state/PROJECT_STATE.yaml").read_text(encoding="utf-8"))
         backlog = json.loads((REPO / ".agents/tasks/BACKLOG.yaml").read_text(encoding="utf-8"))
         tasks = {task["id"]: task for task in backlog["tasks"]}
-        self.assertNotIn("G4", state["governance"]["approved_gates"])
+        self.assertIn("G4", state["governance"]["approved_gates"])
+        self.assertNotIn("G5", state["governance"]["approved_gates"])
         self.assertEqual(state["engineering"]["next_milestone_status"], "in_progress")
         self.assertTrue(state["engineering"]["start_authorized"])
         self.assertIsNone(state["task_refs"]["active_task_id"])
@@ -1358,6 +1358,9 @@ class AgentContextRecoveryTests(unittest.TestCase):
         self.assertTrue(all(tasks[task_id]["status"] == "done" for task_id in ("M7-001", "M7-002", "M7-003")))
         self.assertEqual(tasks["M7-004"]["status"], "pending")
         self.assertEqual(tasks["M7-004"]["requires_user_gate_approval"], "G4")
+        self.assertIn("governance-record PR", tasks["M7-004"]["next_action"])
+        self.assertIsNone(tasks["M7-005"]["requires_user_gate_approval"])
+        self.assertIn("Project Owner release authorization", tasks["M7-005"]["next_action"])
         report = agent_preflight.build_report(REPO)
         self.assertTrue(report["ok"], report["errors"])
 
