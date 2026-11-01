@@ -186,8 +186,8 @@
     "M7-001": "done",
     "M7-002": "done",
     "M7-003": "done",
-    "M7-004": "in progress while delivery PR is under review",
-    "M7-005": "pending; not started; no release authorization"
+    "M7-004": "done; engineering evidence complete; Independent PM review pending",
+    "M7-005": "pending; not started"
   },
   "integrity_and_privacy": {
     "failure_history": ".agents/evidence/M7-004-failure-history-20261101.md",
@@ -250,5 +250,44 @@
     "base_revision": "d7332b91128d3daf919421db2e71a9f2ee4b48ec",
     "owner_authorization_id": "M7-AUTH-20261031-OPTION-B",
     "task_id": "M7-004"
+  },
+  "verification": {
+    "clean_clone_full_suite": {
+      "exit_code": 1,
+      "failure": "Stockfish UCI readiness executable absent; Git snapshot test passed",
+      "failures": 1,
+      "log_path": ".agents/evidence/logs/M7-004-clean-clone-full-suite-20261101.log",
+      "skipped": 3,
+      "source_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+      "tests_run": 505
+    },
+    "clean_clone_suite_excluding_one_environment_blocked_test": {
+      "errors": 0,
+      "excluded_test": "test_m0_smoke.M0EnvironmentSmokeTests.test_stockfish_answers_uci_readiness_without_searching",
+      "failures": 0,
+      "log_path": ".agents/evidence/logs/M7-004-clean-clone-suite-excluding-stockfish-20261101.log",
+      "skipped": 3,
+      "source_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+      "tests_run": 504
+    },
+    "focused_suite_pre_final_state": {
+      "failures": 0,
+      "log_path": ".agents/evidence/logs/M7-004-focused-tests-20261101.log",
+      "note": "pre-final canonical M7-004 state; final state-specific focused suite will be recorded after committed transition",
+      "source_revision": "d7332b91128d3daf919421db2e71a9f2ee4b48ec",
+      "tests_passed": 24
+    },
+    "historical_worktree_full_suite": {
+      "failures": 2,
+      "log_path": ".agents/evidence/logs/M7-004-full-suite-20261101.log",
+      "skipped": 3,
+      "source_revision": "d7332b91128d3daf919421db2e71a9f2ee4b48ec",
+      "tests_run": 503
+    },
+    "preflight_clean_clone": {
+      "raw_artifacts_copied": false,
+      "source_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+      "status": "PASS with expected ARTIFACT_MANIFEST_REQUIRED warning"
+    }
   }
 }

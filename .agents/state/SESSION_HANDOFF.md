@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-d7332b91-20261101T042446113420Z -->
+<!-- checkpoint-id: cp-2e34299c-20261101T043741262603Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -16,9 +16,9 @@ This file is a pointer, not a status snapshot. Do not infer current phase, task 
 
 For the preparation-only assessment, M7 work breakdown, and evaluation contract, follow the [Pre-M7 readiness plan](../plans/PRE-M7-readiness.md), [M7 engineering plan](../plans/M07-evaluation-delivery.md), [M7 evaluation protocol](../../docs/04-research/M7_EVALUATION_PROTOCOL.md), and [Pre-M7 verification evidence](../evidence/PRE-M7-readiness-20261031.md). These are independent-review materials, not authorization; live gate, task, and M7 authorization remain in `PROJECT_STATE.yaml` and `BACKLOG.yaml`.
 
-## Current canonical pointer — M7-004 delivery work underway (2026-11-01)
+## Current canonical pointer — M7-004 package ready for Independent PM review (2026-11-01)
 
-`PROJECT_STATE.yaml` and `BACKLOG.yaml` are authoritative. PR #18 is merged into `initial-idea` at `d7332b91128d3daf919421db2e71a9f2ee4b48ec`; the Independent PM's bounded G4 decision is recorded in [G4 PM acceptance](../evidence/G4-PM-acceptance-20261101.md), with the source comment linked there. For M7-004, follow the active backlog task, [M7 engineering plan](../plans/M07-evaluation-delivery.md), [M7 protocol](../../docs/04-research/M7_EVALUATION_PROTOCOL.md), [acceptance criterion M7-04](../../docs/06-quality/ACCEPTANCE_CRITERIA.md), and the accepted Phase I evidence. M7-005 remains pending G5 and no release/publication authorization exists.
+`PROJECT_STATE.yaml` and `BACKLOG.yaml` are authoritative. PR #18 is merged into `initial-idea` at `d7332b91128d3daf919421db2e71a9f2ee4b48ec`; the Independent PM's bounded G4 decision is recorded in [G4 PM acceptance](../evidence/G4-PM-acceptance-20261101.md), with the source comment linked there. M7-004 engineering is complete; see [M7-004 acceptance evidence](../evidence/M7-004-acceptance-20261101.md), [evidence inventory](../evidence/M7-004-evidence-inventory-20261101.json), and the four delivery documents under docs/07-delivery/. Independent PM review of the delivery PR is the next action. M7-005 remains pending and unstarted; G5 is not approved and no release/publication authorization exists.
 
 ## Historical PR #15 corrective continuation — PM6C-F01 (completed)
 

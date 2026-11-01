@@ -6,14 +6,14 @@
 
 **M7-004 base revision:** d7332b91128d3daf919421db2e71a9f2ee4b48ec (PR #18 merge)
 
-**Current status:** M7-004 delivery package prepared for Independent PM review; G5 remains NOT APPROVED.
+**Current status:** M7-004 engineering package complete and prepared for Independent PM review; G5 remains NOT APPROVED.
 
 
 ## Project overview and governance
 
 The project built a legal-action-conditioned supervised behavior model (M4), trained custom Double DQN policies in the M2 chess simulator (M5), integrated frozen policies with ALE RGB and cursor control (M6), then ran and analyzed the frozen Option B ALE comparison (M7 Phase I). The evidence does not establish strong chess play, Atari RL superiority, equivalence, broad generalization, Elo, or satisfaction of academic requirement O-02.
 
-The canonical status is in .agents/state/PROJECT_STATE.yaml and .agents/tasks/BACKLOG.yaml. At the M7-004 base, M7 is in progress; M7-001/002/003 are done; M7-004 is in progress; M7-005 is pending. G0–G4 are approved in canonical state; G4 is specifically APPROVED WITH SCIENTIFIC LIMITATIONS for M7-01 through M7-03. G5 is NOT APPROVED. The original owner authorization M7-AUTH-20261031-OPTION-B remains the authorization record; it does not authorize release.
+The canonical status is in .agents/state/PROJECT_STATE.yaml and .agents/tasks/BACKLOG.yaml. At this delivery handover, M7-001 through M7-004 are done as engineering tasks; M7-005 is pending and unstarted. G0–G4 are approved in canonical state; G4 is specifically APPROVED WITH SCIENTIFIC LIMITATIONS for M7-01 through M7-03. G5 is NOT APPROVED. The original owner authorization M7-AUTH-20261031-OPTION-B remains unchanged; it does not authorize release.
 
 Independent PM source: [G4 acceptance record](../../.agents/evidence/G4-PM-acceptance-20261101.md), [source decision comment on PR #17](https://github.com/dodaonam/atari-videochess-rl/pull/17#issuecomment-6552570969), and [PR #17 merge](https://github.com/dodaonam/atari-videochess-rl/pull/17) at 2bca79001ed94324b725dce2dfdc485e3a51ad3e. PR #18 integrated that decision and canonical closeout at d7332b91128d3daf919421db2e71a9f2ee4b48ec.
 
@@ -59,7 +59,7 @@ The canonical backlog records M0 through M6 and M7-001/002/003 engineering tasks
 - **M5:** six Double DQN simulator runs and 1,500-row evaluation; three paired training seeds; RSK-014 remains.
 - **M6:** separate v1 and v2 ALE records. V2 had 11 terminal losses and nine incomplete attempts; PM6-F06 remains an immutable metadata erratum.
 - **M7-001/002/003:** accepted Option B schedule, raw-derived analysis, and formal Elo non-reportability. G4 acceptance is bounded and does not validate strong gameplay.
-- **M7-004:** this PR's final report, model card, user guide, and handover are engineering deliverables for M7-04. The accompanying acceptance record identifies exact verification and source revision.
+- **M7-004:** engineering deliverables for M7-04 are complete and mapped in the [acceptance record](../../.agents/evidence/M7-004-acceptance-20261101.md). Independent PM review remains pending.
 
 ## M7 result summary and limitations
 

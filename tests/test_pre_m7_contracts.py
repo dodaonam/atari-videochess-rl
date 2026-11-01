@@ -51,7 +51,7 @@ class PreM7ContractTests(unittest.TestCase):
             with self.subTest(task=task_id):
                 self.assertEqual(self.tasks[task_id]["acceptance_criteria_ids"], criteria)
 
-    def test_phase_one_accepted_m7_004_active_and_m7_005_pending_for_g5(self) -> None:
+    def test_m7_004_complete_m7_005_pending_and_g5_unapproved(self) -> None:
         m7_ids = [f"M7-{number:03d}" for number in range(1, 6)]
         for task_id in m7_ids:
             task = self.tasks[task_id]
@@ -63,7 +63,7 @@ class PreM7ContractTests(unittest.TestCase):
                 self.assertEqual(task["next_action"], "")
         for task_id in ("M7-001", "M7-002", "M7-003"):
             self.assertEqual(self.tasks[task_id]["status"], "done")
-        self.assertEqual(self.tasks["M7-004"]["status"], "in_progress")
+        self.assertEqual(self.tasks["M7-004"]["status"], "done")
         self.assertEqual(self.tasks["M7-005"]["status"], "pending")
         self.assertEqual(self.tasks["M7-001"]["depends_on"], ["M4-001", "M5-001", "M6-001", "M2-001", "M3-001"])
         self.assertEqual(self.tasks["M7-002"]["depends_on"], ["M7-001"])
@@ -72,6 +72,10 @@ class PreM7ContractTests(unittest.TestCase):
         self.assertEqual(self.tasks["M7-005"]["depends_on"], ["M7-004"])
         self.assertTrue(all(self.tasks[f"M7-{n:03d}"]["requires_user_gate_approval"] is None for n in (1, 2, 3)))
         self.assertEqual(self.tasks["M7-004"]["requires_user_gate_approval"], "G4")
+        self.assertTrue(any(
+            item.get("path") == ".agents/evidence/M7-004-acceptance-20261101.md"
+            for item in self.tasks["M7-004"]["evidence"]
+        ))
         # G5 owns M7-05 acceptance; making G5 a prerequisite to start its own
         # deliverable would create a circular gate dependency.
         self.assertIsNone(self.tasks["M7-005"]["requires_user_gate_approval"])
@@ -79,12 +83,13 @@ class PreM7ContractTests(unittest.TestCase):
         engineering = self.state["engineering"]
         self.assertEqual(engineering["next_milestone"], "M7")
         self.assertEqual(engineering["active_milestone"], "M7")
-        self.assertEqual(engineering["next_milestone_status"], "in_progress")
-        self.assertTrue(engineering["start_authorized"])
+        self.assertEqual(engineering["next_milestone_status"], "pending_user_approval")
+        self.assertFalse(engineering["start_authorized"])
+        self.assertIn("M7-005", engineering["hold_reason"])
         self.assertEqual(engineering["start_authorization_record"]["authorization_id"], "M7-AUTH-20261031-OPTION-B")
         self.assertEqual(engineering["start_authorization_record"]["task_id"], "M7-001")
         self.assertEqual(engineering["start_authorization_record"]["evidence_path"], ".agents/evidence/M7-001-authorization-20261031.md")
-        self.assertEqual(self.state["task_refs"], {"active_task_id": "M7-004", "next_task_id": "M7-004"})
+        self.assertEqual(self.state["task_refs"], {"active_task_id": None, "next_task_id": "M7-005"})
         self.assertEqual(self.state["governance"]["approved_gates"], ["G0", "G1", "G2", "G3", "G4"])
         self.assertEqual(self.state["governance"]["current_gate"], "G4")
         self.assertEqual(self.state["governance"]["gate_status"], "approved")

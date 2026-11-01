@@ -4,7 +4,7 @@
 
 ## Current status
 
-G0–G4 are approved; G4 is limited to M7-01–M7-03 and retains the qualifications in `.agents/evidence/G4-PM-acceptance-20261101.md`. G5 remains unapproved. PR #18 merged the G4 governance record into `initial-idea` at `d7332b91128d3daf919421db2e71a9f2ee4b48ec`. M0-001 through M6-001 and M7-001 through M7-003 are complete; M7-004 is in progress and M7-005 remains pending G5. No release or publication is authorized. M6 v1/v2 remain distinct and immutable, including PM6-F06. There are no active technical blockers. O-02–O-08 and accepted residual RSK-014 retain their existing scope and status.
+G0–G4 are approved; G4 is limited to M7-01–M7-03 and retains the qualifications in `.agents/evidence/G4-PM-acceptance-20261101.md`. G5 remains unapproved. PR #18 merged the G4 governance record into `initial-idea` at `d7332b91128d3daf919421db2e71a9f2ee4b48ec`. M0-001 through M6-001 and M7-001 through M7-004 are complete as engineering tasks; the M7-004 delivery PR awaits Independent PM review. M7-005 remains pending and unstarted pending separate owner instruction and G5 review. No release or publication is authorized. M6 v1/v2 remain distinct and immutable, including PM6-F06. There are no active technical blockers. O-02–O-08 and accepted residual RSK-014 retain their existing scope and status.
 
 ## Record format
 

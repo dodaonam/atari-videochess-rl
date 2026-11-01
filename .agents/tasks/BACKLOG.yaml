@@ -5591,8 +5591,8 @@
       "id": "M7-004",
       "title": "Prepare evidence-linked delivery documents",
       "milestone": "M7",
-      "status": "in_progress",
-      "next_action": "Create and cross-check the evidence-linked final report, model card, user guide, and handover; validate documented commands, source identities, claims, links, privacy boundaries, and clean-clone behavior. Do not change frozen evidence, run new experiments, or start M7-005.",
+      "status": "done",
+      "next_action": "",
       "depends_on": [
         "M7-003"
       ],
@@ -5601,7 +5601,138 @@
         "M7-04"
       ],
       "blocker_ids": [],
-      "evidence": [],
+      "evidence": [
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M7-004-acceptance-20261101.md",
+          "detail": "M7-04 engineering completion mapping, scientific boundaries, verification summary, and Independent PM review request.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T04:33:12Z",
+            "exit_code": null,
+            "git_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "docs/07-delivery/FINAL_REPORT.md",
+          "detail": "Final research report with separate M3–M7 tracks, raw-derived M7 comparisons, censoring, and limitations.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T04:33:12Z",
+            "exit_code": null,
+            "git_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "docs/07-delivery/MODEL_CARD.md",
+          "detail": "M4 behavior model and six M5 checkpoint identities, provenance, intended use, limitations, and distribution restriction.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T04:33:12Z",
+            "exit_code": null,
+            "git_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "docs/07-delivery/USER_GUIDE.md",
+          "detail": "Actual command contracts, reproduction levels, private-artifact prerequisites, troubleshooting, and privacy.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T04:33:12Z",
+            "exit_code": null,
+            "git_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": "docs/07-delivery/HANDOVER.md",
+          "detail": "Canonical source map, evidence/artifact inventory, open requirements, owners, and gate boundaries.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T04:33:12Z",
+            "exit_code": null,
+            "git_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M7-004-evidence-inventory-20261101.json",
+          "detail": "Claim/source map, committed evidence hashes, private manifest identities, and run verification outcomes.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T04:33:12Z",
+            "exit_code": null,
+            "git_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/M7-004-failure-history-20261101.md",
+          "detail": "Preserved command/test failures and remediations, including the environment-blocked Stockfish check.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T04:33:12Z",
+            "exit_code": null,
+            "git_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "file",
+          "path": ".agents/evidence/logs/M7-004-clean-clone-full-suite-20261101.log",
+          "detail": "Unfiltered clean-clone suite: 505 tests, one missing-Stockfish executable failure, three skips; Git snapshot test passed.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": null,
+            "recorded_at_utc": "2026-11-01T04:33:12Z",
+            "exit_code": null,
+            "git_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+            "log_path": null
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONPATH=. <project-python> -m unittest discover -s tests -v",
+          "result": "RESULT: 505 tests; one Stockfish UCI readiness failure because the executable was unavailable; 3 skipped.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-11-01T04:25:17.360241Z",
+            "recorded_at_utc": "2026-11-01T04:34:27Z",
+            "exit_code": 1,
+            "git_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+            "log_path": ".agents/evidence/logs/M7-004-clean-clone-full-suite-20261101.log"
+          }
+        },
+        {
+          "kind": "command",
+          "command": "PYTHONPATH=. <project-python> - (runner source follows)",
+          "result": "RESULT: executed 504 tests; 3 skipped; 0 failures; 0 errors; exactly the unavailable Stockfish readiness test was excluded.",
+          "provenance": {
+            "status": "verified",
+            "executed_at_utc": "2026-11-01T04:28:26.894327Z",
+            "recorded_at_utc": "2026-11-01T04:34:27Z",
+            "exit_code": 0,
+            "git_revision": "2e34299c3994a8e3658c7a570a29fda02dcdd71d",
+            "log_path": ".agents/evidence/logs/M7-004-clean-clone-suite-excluding-stockfish-20261101.log"
+          }
+        }
+      ],
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
     },
     {
@@ -5609,7 +5740,7 @@
       "title": "Record release and publication disposition",
       "milestone": "M7",
       "status": "pending",
-      "next_action": "Wait for M7-004. This G5-owned task requires independent G5 acceptance; record NO RELEASE / NO PUBLICATION unless separate direct Project Owner release authorization is received, which is not currently authorized.",
+      "next_action": "Do not start M7-005 under the M7-004 work order. It is G5-owned acceptance work. Await separate direct Project Owner instruction and Independent PM G5 decision. No public model, dataset, ROM, or private artifact release/publication is currently authorized.",
       "depends_on": [
         "M7-004"
       ],
@@ -5622,5 +5753,5 @@
       "plan_ref": ".agents/plans/M07-evaluation-delivery.md"
     }
   ],
-  "updated_at_utc": "2026-11-01T03:58:01Z"
+  "updated_at_utc": "2026-11-01T04:37:30Z"
 }

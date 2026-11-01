@@ -41,6 +41,13 @@ This record preserves documented failures encountered while preparing delivery e
 - **Failure B:** the M0 smoke test could not find a Stockfish executable on PATH. A read-only search of the expected system binary directories found none. No package was installed and Stockfish was not run. This check remains environment-blocked unless an existing authorized executable is supplied.
 - **Remediation:** run the suite in a clean clone, then run all available tests while explicitly excluding only the Stockfish readiness test if the executable remains unavailable. Preserve the original full-suite failure record and report the exclusion.
 
-## 6. Verification boundary
+## 6. Clean-clone full-suite result and isolated environment check
+
+- **Observed:** a clean clone at 2e34299c3994a8e3658c7a570a29fda02dcdd71d passed canonical preflight; the full suite ran 505 tests with one failure and three skips. The only failure was Stockfish UCI readiness because no executable was available. The dirty-worktree Git snapshot failure did not recur.
+- **Evidence:** [clean-clone full-suite log](logs/M7-004-clean-clone-full-suite-20261101.log), exit code 1.
+- **Remediation/verification:** reran all discovered tests in the same clean clone while excluding exactly the unavailable Stockfish readiness test. Result: 504 executed, three existing skips, zero failures/errors. The excluded test ID and complete filter source are in [the filtered-suite log](logs/M7-004-clean-clone-suite-excluding-stockfish-20261101.log).
+- **Boundary:** this is an explicitly qualified suite result, not a claim that all repository tests passed. No Stockfish binary was installed or invoked.
+
+## 7. Verification boundary
 
 The incorrect-path and interpreter failures are diagnostic failures, not frozen experiment results. The successful checks used accepted identities, did not repair or regenerate historical artifacts, and did not add campaign attempts. M7-004 focused/full-suite and clean-clone outcomes are recorded separately in the M7-004 acceptance evidence.
