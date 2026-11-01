@@ -50,3 +50,5 @@ This task adds a decision record, an inventory, acceptance evidence, tests, and 
 ## Scope of future review
 
 No item in this inventory is automatically cleared by G5 acceptance. A future release proposal must identify each exact payload, establish ownership and third-party rights, inspect privacy and embedded metadata, verify hashes and provenance, review scientific claims and intended use, specify access/distribution terms, and receive a new direct Project Owner authorization before any release action.
+
+The correction and structured regression checks for the M3 generation identities are documented in the [G5-F01 remediation evidence](../../.agents/evidence/M7-005-G5-F01-remediation-20261101.md). This provenance correction changes no artifact bytes or distribution permission.

@@ -1,0 +1,18 @@
+command: git diff --cached --check
+source_revision: 0d3ee8221698f52bf2c7658657e505900ab5485d
+working_tree: G5-F01 docs and logs staged before checkpoint
+started_at_utc: 2026-11-01T10:18:55+00:00
+finished_at_utc: 2026-11-01T10:18:55+00:00
+exit_code: 2
+
+log_normalization: trailing spaces in captured diff lines were stripped after preserving the recorded exit code and whitespace finding.
+.agents/evidence/M7-005-G5-F01-remediation-20261101.md:3: trailing whitespace.
++**Finding:** G5-F01 — mixed historical and accepted-final M3 artifact identities
+.agents/evidence/M7-005-G5-F01-remediation-20261101.md:4: trailing whitespace.
++**Review request:** [Independent PM comment on PR #20](https://github.com/dodaonam/atari-videochess-rl/pull/20#issuecomment-6554269031)
+.agents/evidence/M7-005-G5-F01-remediation-20261101.md:5: trailing whitespace.
++**Original reviewed PR HEAD:** `f3ef2976f446594dca6e4b6d5d219734cc33f966`
+.agents/evidence/M7-005-G5-F01-remediation-20261101.md:6: trailing whitespace.
++**PR:** [#20](https://github.com/dodaonam/atari-videochess-rl/pull/20), targeting `initial-idea`
+.agents/evidence/M7-005-G5-F01-remediation-20261101.md:7: trailing whitespace.
++**Owner release decision:** **NO RELEASE / NO PUBLICATION AUTHORIZED**
