@@ -22,7 +22,7 @@ def main():
     for threads in (1,2,4):
         for batch in (32,64):
             c={**config_default(),'threads':threads,'batch_size':batch}
-            learner,m4,report=execute(c,path,identity,directory/f't{threads}-b{batch}',stop_at=3000)
+            learner,m4,report=execute(c,path,identity,directory/f't{threads}-b{batch}',stop_at=4000)
             samples=[r for r in report['resources'] if r['valid_decisions']>=1100]
             first,last=samples[0],samples[-1]
             seconds=last['cumulative_wall_seconds']-first['cumulative_wall_seconds']
@@ -44,7 +44,7 @@ def main():
                 for f in feature_rows:
                     _,source=choose_action(learner,m4,f,c);sources[source]+=1
                 action_times[str(t)]=dict(ms=(time.perf_counter()-tick)*1000/len(feature_rows),sources=dict(sources))
-            result=dict(batch_size=batch,threads=threads,actual_intraop_threads=torch.get_num_threads(),actual_interop_threads=torch.get_num_interop_threads(),postwarmup_valid_decisions=decisions,postwarmup_seconds=seconds,postwarmup_decisions_per_hour=rate,total_seconds=report['wall_seconds'],total_decisions=3000,optimizer_updates=report['optimizer_updates'],real_replay_rows=len(learner.replay),replay_sample_ms=replay_ms,optimizer_update_median_ms=statistics.median(update_times)*1000,optimizer_samples_per_second=batch/statistics.mean(update_times),action_selection=action_times,checkpoint_serialization_seconds=report['checkpoint_serialization_seconds'],resources=usage(),projected_250k_hours=250000/rate)
+            result=dict(batch_size=batch,threads=threads,actual_intraop_threads=torch.get_num_threads(),actual_interop_threads=torch.get_num_interop_threads(),postwarmup_valid_decisions=decisions,postwarmup_seconds=seconds,postwarmup_decisions_per_hour=rate,total_seconds=report['wall_seconds'],total_decisions=4000,optimizer_updates=report['optimizer_updates'],real_replay_rows=len(learner.replay),replay_sample_ms=replay_ms,optimizer_update_median_ms=statistics.median(update_times)*1000,optimizer_samples_per_second=batch/statistics.mean(update_times),action_selection=action_times,checkpoint_serialization_seconds=report['checkpoint_serialization_seconds'],resources=usage(),projected_250k_hours=250000/rate)
             results.append(result);write(directory/'results.json',results)
             print(json.dumps(result),flush=True)
             features.cache_clear()

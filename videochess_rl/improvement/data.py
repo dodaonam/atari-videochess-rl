@@ -95,7 +95,7 @@ def verify_release(path):
     return examples, manifest
 
 
-def build():
+def build(output=None):
     started = time.monotonic()
     config = json.loads((ROOT/'configs/improvement/dataset.json').read_text())
     source = json.loads((ROOT/config['source_manifest']).read_text())
@@ -113,7 +113,9 @@ def build():
     excluded = {g['normalized_game_sha256'] for g in historical_games}
     hist_rows = read_rows(history/'positions.jsonl')
     historical_exposure = {p['board_position_signature'] for p in hist_rows if p['split'] in ('train','validation')}
-    directory = ARTIFACTS/'dataset-v3'
+    directory = Path(output) if output is not None else ARTIFACTS/'dataset-v3'
+    if not directory.resolve().is_relative_to(ARTIFACTS.resolve()):
+        raise ValueError('dataset output must remain in the ignored improvement namespace')
     directory.mkdir(parents=True, exist_ok=False)
     cache = directory/'accepted-source.jsonl'
     grouper = BottomKGroups(seed=config['selection_seed'],max_games=config['max_games'],source_id=source['source_id'],archive_sha256=source['archive_sha256'],member_name=source['member_name'])
@@ -171,4 +173,7 @@ def build():
 
 
 if __name__ == '__main__':
-    build()
+    import argparse
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output',type=Path,default=ARTIFACTS/'dataset-v3')
+    build(parser.parse_args().output)
