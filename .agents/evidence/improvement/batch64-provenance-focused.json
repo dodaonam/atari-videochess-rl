@@ -15,6 +15,7 @@
   "exit_code": 0,
   "git_revision": "e9435088a9824f362cfce31c9e94342041ed8d9b",
   "log_path": ".agents/evidence/improvement/batch64-provenance-focused.log",
+  "log_sanitization": "Replaced absolute repository-root occurrences with <repo>; command semantics and test output retained.",
   "log_sha256": "9ca582f8955932c967b873462a6538675172ab255ced08a67b92bee0fa365c5d",
   "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/batch64-provenance-focused/manifest.json",
   "source_manifest_sha256": "ab9b210febf7dd5fdf844f7a52457eb4ab9360a6ee4257b7d47f6481bc23fbab",

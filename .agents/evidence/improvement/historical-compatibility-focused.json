@@ -18,6 +18,7 @@
   "exit_code": 0,
   "git_revision": "377e0fe99dce4689e6fa3f3e25d92a93d3c292a4",
   "log_path": ".agents/evidence/improvement/historical-compatibility-focused.log",
+  "log_sanitization": "Replaced absolute repository-root occurrences with <repo>; command semantics and test output retained.",
   "log_sha256": "9245b0ee3891e2664ad834e66a46e89cea2cc9b05936a70dda04d78bb6998218",
   "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/historical-compatibility-focused/manifest.json",
   "source_manifest_sha256": "e58a5c64b81dd8303d39fc611bbfec9f4920ba6fddbb5ef27327d522b574e6e6",

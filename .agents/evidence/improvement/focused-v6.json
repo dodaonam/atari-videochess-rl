@@ -14,6 +14,7 @@
   "exit_code": 0,
   "git_revision": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
   "log_path": ".agents/evidence/improvement/focused-v6.log",
+  "log_sanitization": "Replaced absolute repository-root occurrences with <repo>; command semantics and test output retained.",
   "log_sha256": "54c6a521e60b7195c233de6f87b799fa6f2c199417b2dd3cb76f9c1c2d669d60",
   "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/focused-v6/manifest.json",
   "source_manifest_sha256": "36e461b4c26f12d3ba7a11330e1659e50ff69928994f1f2bcde25de33a99266d",

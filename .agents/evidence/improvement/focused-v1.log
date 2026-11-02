@@ -1,0 +1,35 @@
+test_config_rejects_unhonored_values (tests.test_improvement.ImprovementTests.test_config_rejects_unhonored_values) ... ERROR
+test_fixed_splits_independent_of_order (tests.test_improvement.ImprovementTests.test_fixed_splits_independent_of_order) ... ok
+test_microbatch_expert_normalization_and_fresh_optimizer (tests.test_improvement.ImprovementTests.test_microbatch_expert_normalization_and_fresh_optimizer) ... FAIL
+test_overlap_and_historical_exposure (tests.test_improvement.ImprovementTests.test_overlap_and_historical_exposure) ... ok
+test_recovery_journal_fork_keeps_only_prefix (tests.test_improvement.ImprovementTests.test_recovery_journal_fork_keeps_only_prefix) ... ok
+test_schedules_and_opponent_recovery (tests.test_improvement.ImprovementTests.test_schedules_and_opponent_recovery) ... ok
+test_selection_uses_development_and_b_guard (tests.test_improvement.ImprovementTests.test_selection_uses_development_and_b_guard) ... ok
+test_snapshot_boundaries_and_nonresume (tests.test_improvement.ImprovementTests.test_snapshot_boundaries_and_nonresume) ... ok
+test_warm_head_target_frozen_and_rng (tests.test_improvement.ImprovementTests.test_warm_head_target_frozen_and_rng) ... ok
+
+======================================================================
+ERROR: test_config_rejects_unhonored_values (tests.test_improvement.ImprovementTests.test_config_rejects_unhonored_values)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/tests/test_improvement.py", line 45, in test_config_rejects_unhonored_values
+    self.assertEqual(validate_config(config_default())['training_seed'],20261103)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/videochess_rl/improvement/m5.py", line 44, in validate_config
+    if isinstance(v,(int,float)) and not isinstance(v,bool) and (not math.isfinite(v) or v<0):raise ValueError(k)
+                                                                                              ^^^^^^^^^^^^^^^^^^^
+ValueError: reward_loss
+
+======================================================================
+FAIL: test_microbatch_expert_normalization_and_fresh_optimizer (tests.test_improvement.ImprovementTests.test_microbatch_expert_normalization_and_fresh_optimizer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/tests/test_improvement.py", line 105, in test_microbatch_expert_normalization_and_fresh_optimizer
+    for a,b in zip(model.parameters(),other.parameters()):self.assertTrue(torch.allclose(a,b,atol=3e-6,rtol=1e-4))
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 9 tests in 2.746s
+
+FAILED (failures=1, errors=1)

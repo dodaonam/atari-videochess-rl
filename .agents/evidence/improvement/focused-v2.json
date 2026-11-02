@@ -14,7 +14,8 @@
   "exit_code": 1,
   "git_revision": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
   "log_path": ".agents/evidence/improvement/focused-v2.log",
-  "log_sha256": "ecc7a8c9ae9d4e2afdf3138ec594a94daca92b4635cf53dfdc4be131f4a49109",
+  "log_sanitization": "Replaced absolute repository-root occurrences with <repo>; command semantics and test output retained.",
+  "log_sha256": "88e7beaa7fd490d30096a6da9ab4452d54903d3799b5031eee7a8a1a7ec2455a",
   "started_at_utc": "2026-11-02T18:20:15.072626+00:00",
   "wall_seconds": 5.814113090000319
 }

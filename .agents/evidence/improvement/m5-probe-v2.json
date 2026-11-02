@@ -16,6 +16,7 @@
   "exit_code": 0,
   "git_revision": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
   "log_path": ".agents/evidence/improvement/m5-probe-v2.log",
+  "log_sanitization": "Replaced absolute repository-root occurrences with <repo>; command semantics and test output retained.",
   "log_sha256": "d40207558f2ea248553d77db4552e333dd218572d2400234c18e449157cce761",
   "started_at_utc": "2026-11-02T18:19:24.801695+00:00",
   "wall_seconds": 73.8816432900021

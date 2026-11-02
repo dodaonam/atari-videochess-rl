@@ -1,0 +1,49 @@
+test_config_rejects_unhonored_values (tests.test_improvement.ImprovementTests.test_config_rejects_unhonored_values) ... ok
+test_fixed_splits_independent_of_order (tests.test_improvement.ImprovementTests.test_fixed_splits_independent_of_order) ... ok
+test_microbatch_expert_normalization_and_fresh_optimizer (tests.test_improvement.ImprovementTests.test_microbatch_expert_normalization_and_fresh_optimizer) ... ok
+test_overlap_and_historical_exposure (tests.test_improvement.ImprovementTests.test_overlap_and_historical_exposure) ... ok
+test_recovery_journal_fork_keeps_only_prefix (tests.test_improvement.ImprovementTests.test_recovery_journal_fork_keeps_only_prefix) ... ok
+test_schedules_and_opponent_recovery (tests.test_improvement.ImprovementTests.test_schedules_and_opponent_recovery) ... ok
+test_selection_uses_development_and_b_guard (tests.test_improvement.ImprovementTests.test_selection_uses_development_and_b_guard) ... ok
+test_snapshot_boundaries_and_nonresume (tests.test_improvement.ImprovementTests.test_snapshot_boundaries_and_nonresume) ... ok
+test_warm_head_target_frozen_and_rng (tests.test_improvement.ImprovementTests.test_warm_head_target_frozen_and_rng) ... ok
+test_m5_replay (unittest.loader._FailedTest.test_m5_replay) ... ERROR
+test_m5_checkpoint (unittest.loader._FailedTest.test_m5_checkpoint) ... ERROR
+test_actual_target_calculator_matches_retained_oracles (tests.test_m5_targets.TargetTests.test_actual_target_calculator_matches_retained_oracles) ... ok
+test_online_selection_and_semantic_mismatch (tests.test_m5_targets.TargetTests.test_online_selection_and_semantic_mismatch) ... ok
+test_campaign_budget_counts_only_the_uncommitted_active_run (tests.test_m5_training.TrainingTests.test_campaign_budget_counts_only_the_uncommitted_active_run) ... ok
+test_decision_cap_mid_episode_keeps_real_transitions_without_synthetic_flags (tests.test_m5_training.TrainingTests.test_decision_cap_mid_episode_keeps_real_transitions_without_synthetic_flags) ... ok
+test_epsilon_schedule_and_legal_exploration (tests.test_m5_training.TrainingTests.test_epsilon_schedule_and_legal_exploration) ... ok
+test_real_batch_update_changes_online_then_syncs (tests.test_m5_training.TrainingTests.test_real_batch_update_changes_online_then_syncs) ... ok
+test_target_initialization_equals_online (tests.test_m5_training.TrainingTests.test_target_initialization_equals_online) ... ok
+
+======================================================================
+ERROR: test_m5_replay (unittest.loader._FailedTest.test_m5_replay)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m5_replay
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/tests/test_m5_replay.py", line 3, in <module>
+    from test_m5_transition import make_transition
+ModuleNotFoundError: No module named 'test_m5_transition'
+
+
+======================================================================
+ERROR: test_m5_checkpoint (unittest.loader._FailedTest.test_m5_checkpoint)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m5_checkpoint
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/tests/test_m5_checkpoint.py", line 8, in <module>
+    from test_m5_transition import make_transition
+ModuleNotFoundError: No module named 'test_m5_transition'
+
+
+----------------------------------------------------------------------
+Ran 18 tests in 2.845s
+
+FAILED (errors=2)

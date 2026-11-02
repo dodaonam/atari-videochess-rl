@@ -1,0 +1,8 @@
+test_m7_001_through_m7_005_engineering_done_and_g5_f02_resolved (tests.test_agent_context.AgentContextRecoveryTests.test_m7_001_through_m7_005_engineering_done_and_g5_f02_resolved) ... ok
+test_clean_clone_recovers_current_committed_state_without_local_artifacts (tests.test_agent_context.AgentContextRecoveryTests.test_clean_clone_recovers_current_committed_state_without_local_artifacts) ... ok
+test_project_context_can_be_recovered_without_chat_history (tests.test_agent_context.AgentContextRecoveryTests.test_project_context_can_be_recovered_without_chat_history) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 43.073s
+
+OK

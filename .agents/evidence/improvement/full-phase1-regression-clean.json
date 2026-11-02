@@ -1,0 +1,23 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "end_git_revision": "964c241080b37951a6b10eb3d891ef227562f1c2",
+  "ended_at_utc": "2026-11-02T21:11:12.366404+00:00",
+  "exit_code": 1,
+  "git_revision": "964c241080b37951a6b10eb3d891ef227562f1c2",
+  "log_path": ".agents/evidence/improvement/full-phase1-regression-clean.log",
+  "log_sanitization": "Replaced absolute repository-root occurrences with <repo>; command semantics and test output retained.",
+  "log_sha256": "0bbc94bf2204528375b95821cedb766e0b47db3e5ffaf677ec83db974c7ef3b4",
+  "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/full-phase1-regression-clean/manifest.json",
+  "source_manifest_sha256": "b4e7ba411484d7e25ffcf40fb1034a14bde60d6a7af2c551f473a18ab653c26a",
+  "source_worktree_dirty": false,
+  "started_at_utc": "2026-11-02T21:08:29.390017+00:00",
+  "wall_seconds": 162.97638996299793
+}

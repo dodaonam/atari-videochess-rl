@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "<repo>/videochess_rl/improvement/m5.py", line 220, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "<repo>/videochess_rl/improvement/m5.py", line 215, in main
+    c=validate_config(json.loads(args.config.read_text()))
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/videochess_rl/improvement/m5.py", line 44, in validate_config
+    if isinstance(v,(int,float)) and not isinstance(v,bool) and (not math.isfinite(v) or v<0):raise ValueError(k)
+                                                                                              ^^^^^^^^^^^^^^^^^^^
+ValueError: reward_loss

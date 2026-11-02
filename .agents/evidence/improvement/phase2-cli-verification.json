@@ -18,20 +18,21 @@
     "valid_counters": true
   },
   "code_sha256": "cf329438880a82b7b39b05b8f1f3bc1af21e262edb4143e1035e494f891a5705",
+  "command_sanitization": "Absolute project-root prefixes replaced with <repo>; exact argv and outputs remain in the private ignored cli-verification-v2/commands.json.",
   "commands": [
     {
       "command": [
-        "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python",
+        "<repo>/.venv/bin/python",
         "-m",
         "videochess_rl.improvement.m5",
         "--config",
-        "/home/dodaonam/Projects/atari-videochess-rl/configs/improvement/m5-phase2.json",
+        "<repo>/configs/improvement/m5-phase2.json",
         "--checkpoint",
-        "/home/dodaonam/Projects/atari-videochess-rl/artifacts/improvement/videochess-improvement-20261103-v1/m4-a/epoch-22.pt",
+        "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a/epoch-22.pt",
         "--checkpoint-sha256",
         "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
         "--output",
-        "/home/dodaonam/Projects/atari-videochess-rl/artifacts/improvement/videochess-improvement-20261103-v1/cli-verification-v2/attempt-0000",
+        "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/cli-verification-v2/attempt-0000",
         "--probe-decisions",
         "4500"
       ],
@@ -43,17 +44,17 @@
     },
     {
       "command": [
-        "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python",
+        "<repo>/.venv/bin/python",
         "-m",
         "videochess_rl.improvement.m5",
         "--config",
-        "/home/dodaonam/Projects/atari-videochess-rl/configs/improvement/m5-phase2.json",
+        "<repo>/configs/improvement/m5-phase2.json",
         "--checkpoint",
-        "/home/dodaonam/Projects/atari-videochess-rl/artifacts/improvement/videochess-improvement-20261103-v1/m4-a/epoch-22.pt",
+        "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a/epoch-22.pt",
         "--checkpoint-sha256",
         "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
         "--output",
-        "/home/dodaonam/Projects/atari-videochess-rl/artifacts/improvement/videochess-improvement-20261103-v1/cli-verification-v2/attempt-0001",
+        "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/cli-verification-v2/attempt-0001",
         "--probe-decisions",
         "4800",
         "--resume",

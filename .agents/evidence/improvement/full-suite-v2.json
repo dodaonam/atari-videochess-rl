@@ -13,6 +13,7 @@
   "exit_code": 0,
   "git_revision": "09cc1d6348236c5b6f5d11425360c00a8c6ddb32",
   "log_path": ".agents/evidence/improvement/full-suite-v2.log",
+  "log_sanitization": "Replaced absolute repository-root occurrences with <repo>; command semantics and test output retained.",
   "log_sha256": "f6fc5491176f7246946bdc2b80bba6980e0546fa23f9e50bf2a6c55abab6f9a1",
   "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/full-suite-v2/manifest.json",
   "source_manifest_sha256": "e12d5ff5b0bf7d804731f1a4530d906a65ed140606a14a5ed4b5f082d8b01a8d",

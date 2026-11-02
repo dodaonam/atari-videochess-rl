@@ -1,0 +1,35 @@
+test_improvement (unittest.loader._FailedTest.test_improvement) ... ERROR
+test_capacity_sampling_and_rng_recovery (test_m5_replay.ReplayTests.test_capacity_sampling_and_rng_recovery) ... ok
+test_journal_hash_chain_and_prefix_integrity (test_m5_replay.ReplayTests.test_journal_hash_chain_and_prefix_integrity) ... ok
+test_journal_tail_restore_hashes_full_prefix_but_reconstructs_only_capacity (test_m5_replay.ReplayTests.test_journal_tail_restore_hashes_full_prefix_but_reconstructs_only_capacity) ... ok
+test_checkpoint_refuses_live_episode (test_m5_checkpoint.CheckpointTests.test_checkpoint_refuses_live_episode) ... ok
+test_episode_boundary_checkpoint_roundtrip_and_corruption (test_m5_checkpoint.CheckpointTests.test_episode_boundary_checkpoint_roundtrip_and_corruption) ... ok
+test_actual_target_calculator_matches_retained_oracles (test_m5_targets.TargetTests.test_actual_target_calculator_matches_retained_oracles) ... ok
+test_online_selection_and_semantic_mismatch (test_m5_targets.TargetTests.test_online_selection_and_semantic_mismatch) ... ok
+test_campaign_budget_counts_only_the_uncommitted_active_run (test_m5_training.TrainingTests.test_campaign_budget_counts_only_the_uncommitted_active_run) ... ok
+test_decision_cap_mid_episode_keeps_real_transitions_without_synthetic_flags (test_m5_training.TrainingTests.test_decision_cap_mid_episode_keeps_real_transitions_without_synthetic_flags) ... ok
+test_epsilon_schedule_and_legal_exploration (test_m5_training.TrainingTests.test_epsilon_schedule_and_legal_exploration) ... ok
+test_real_batch_update_changes_online_then_syncs (test_m5_training.TrainingTests.test_real_batch_update_changes_online_then_syncs) ... ok
+test_target_initialization_equals_online (test_m5_training.TrainingTests.test_target_initialization_equals_online) ... ok
+
+======================================================================
+ERROR: test_improvement (unittest.loader._FailedTest.test_improvement)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_improvement
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/tests/test_improvement.py", line 20, in <module>
+    from videochess_rl.improvement.m5 import config_default, validate_config, guidance_at, choose_action, domain_seed, random_opponent_probability, opponent_for, copy_journal_prefix
+  File "<repo>/videochess_rl/improvement/m5.py", line 26, in <module>
+    from .learner import ImprovementLearner
+  File "<repo>/videochess_rl/improvement/learner.py", line 7, in <module>
+    from videochess_rl.model.dataset import _bounded_index_batches
+ImportError: cannot import name '_bounded_index_batches' from 'videochess_rl.model.dataset' (<repo>/videochess_rl/model/dataset.py)
+
+
+----------------------------------------------------------------------
+Ran 13 tests in 2.202s
+
+FAILED (errors=1)

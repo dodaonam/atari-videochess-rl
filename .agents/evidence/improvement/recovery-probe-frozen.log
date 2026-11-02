@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "<repo>/videochess_rl/improvement/recovery_probe.py", line 38, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "<repo>/videochess_rl/improvement/recovery_probe.py", line 23, in main
+    root=ARTIFACTS/'recovery-probe';root.mkdir(exist_ok=False)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1313, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '<repo>/artifacts/improvement/videochess-improvement-20261103-v1/recovery-probe'

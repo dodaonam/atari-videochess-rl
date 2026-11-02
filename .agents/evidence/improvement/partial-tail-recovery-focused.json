@@ -15,6 +15,7 @@
   "exit_code": 0,
   "git_revision": "6d7fb4f74efd4b87494e8c5339a253f937dc06a1",
   "log_path": ".agents/evidence/improvement/partial-tail-recovery-focused.log",
+  "log_sanitization": "Replaced absolute repository-root occurrences with <repo>; command semantics and test output retained.",
   "log_sha256": "0d0a4c2d22c185ffafad42be34fbd72d87f58468e3ca4ca4a3995e549445a7a7",
   "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/partial-tail-recovery-focused/manifest.json",
   "source_manifest_sha256": "e122ed00391547ac11ffbc6ee1f9f7d7231e03ac202f4d422bd5c2c1fbfa7e91",

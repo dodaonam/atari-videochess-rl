@@ -1,0 +1,37 @@
+Agent context preflight: PASS
+Governance: G5 (approved); approved: G0, G1, G2, G3, G4, G5
+Next engineering milestone: M7 — complete
+Tasks: done=20, in_progress=0, pending=0, blocked=0, cancelled=0
+Completed task IDs: G1-001, G1-002, G1-003, G1-004, G1-005, G1-006, G1-007, G1-008, M0-001, M1-001, M2-001, M3-001, M4-001, M5-001, M6-001, M7-001, M7-002, M7-003, M7-004, M7-005
+In progress task IDs: none
+Pending task IDs: none
+Blocked task IDs: none
+Active blockers: none recorded
+Open confirmations:
+  O-02: Whether full-game performance on actual ALE is a hard submission requirement or a research target with an accepted fallback.
+  O-03: Future course checkpoints and any date changes. The owner confirmed the presentation date is Tuesday, 2026-11-03.
+  O-04: Actual Colab entitlement/quota, GPU availability, cloud storage, and whether paid compute is allowed. The owner selected local CPU for M3; no external compute/storage is used in this mission.
+  O-05: ALE/ROM runtime behavior, RAM mapping, game modes, difficulty behavior, and official evaluation settings.
+  O-06: Public redistribution rights and any new source/use beyond the scoped May 2022 archive. For M3, the owner authorized bounded internal academic use of the exact Lichess Elite May 2022 package with local retention and no redistribution; its third-party package license remains unstated/unverified.
+  O-07: Broader Stockfish roles: benchmark opponent, offline engine evaluation, and instructor-specific limits outside the M3 teacher-label scope.
+  O-08: Opponent pool and rating method for any Elo claim.
+Relevant decisions: docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md, docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md, docs/02-management/decisions/ADR-0003-pretraining-model-interface.md, docs/02-management/decisions/ADR-0004-m7-option-b-execution-authorization.md
+Acceptance criteria recognized: 51
+Last verified Git: feature/videochess-performance-improvement-20261103 @ 7415d821acf11dd3e07e4990c2f5539cfdf31916
+Live Git: feature/videochess-performance-improvement-20261103 @ 2d390fe7df862e998960e8fdc4cdef5f93f2bd5c
+Roadmap source: exact match; 19 sections; SHA-256 fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf
+Git recovery: portable HEAD matches, but local tracked or state changes remain.
+Workspace Git status: differs from checkpoint
+Portable tracked baseline: matches
+Portable Git index: matches checkpoint
+Hashed ordinary-file snapshot: differs
+Content hashes: 1354 ordinary files verified by SHA-256.
+Not content-verified by this hash map: PROJECT_STATE self-reference, chat history/credential-like paths, temp files, symlinks, and the excluded directories listed below.
+Excluded directories: .agents/state/checkpoint-history, .git, .venv, artifacts, scripts/__pycache__, tests/__pycache__, videochess_rl/__pycache__, videochess_rl/data/__pycache__, videochess_rl/improvement/__pycache__, videochess_rl/m6/__pycache__, videochess_rl/m7/__pycache__, videochess_rl/model/__pycache__, videochess_rl/rl/__pycache__
+Artifact directories requiring independent manifests: artifacts
+Last verified dirty paths (32): A  .agents/evidence/improvement/atari-smoke.json; A  .agents/evidence/improvement/dataset-build-v2.json; A  .agents/evidence/improvement/existing-demo-smoke.json; A  .agents/evidence/improvement/focused-v1.json; A  .agents/evidence/improvement/focused-v2.json; A  .agents/evidence/improvement/focused-v3.json; A  .agents/evidence/improvement/focused-v4.json; A  .agents/evidence/improvement/focused-v5.json; A  .agents/evidence/improvement/focused-v6.json; A  .agents/evidence/improvement/live-atari-smoke.json; A  .agents/evidence/improvement/m5-initial-probe.json; A  .agents/evidence/improvement/m5-probe-v2.json; A  configs/improvement/dataset.json; A  configs/improvement/m5.json; A  configs/improvement/requirements.txt; A  docs/improvement/PHASE1_HANDOFF.md; A  tests/test_improvement.py; A  videochess_rl/improvement/__init__.py; A  videochess_rl/improvement/benchmark.py; A  videochess_rl/improvement/common.py; A  videochess_rl/improvement/data.py; A  videochess_rl/improvement/demo.py; A  videochess_rl/improvement/existing_demo.py; A  videochess_rl/improvement/learner.py; A  videochess_rl/improvement/live.py; A  videochess_rl/improvement/m4.py; A  videochess_rl/improvement/m5.py; A  videochess_rl/improvement/recovery_probe.py; A  videochess_rl/improvement/snapshot.py; M  videochess_rl/rl/replay.py; MM .agents/state/PROJECT_STATE.yaml; MM .agents/state/SESSION_HANDOFF.md
+New/changed dirty paths since checkpoint:  M videochess_rl/improvement/common.py; ?? .agents/evidence/improvement/full-suite-v1.json
+Dirty paths no longer present since checkpoint: A  .agents/evidence/improvement/atari-smoke.json; A  .agents/evidence/improvement/dataset-build-v2.json; A  .agents/evidence/improvement/existing-demo-smoke.json; A  .agents/evidence/improvement/focused-v1.json; A  .agents/evidence/improvement/focused-v2.json; A  .agents/evidence/improvement/focused-v3.json; A  .agents/evidence/improvement/focused-v4.json; A  .agents/evidence/improvement/focused-v5.json; A  .agents/evidence/improvement/focused-v6.json; A  .agents/evidence/improvement/live-atari-smoke.json; A  .agents/evidence/improvement/m5-initial-probe.json; A  .agents/evidence/improvement/m5-probe-v2.json; A  configs/improvement/dataset.json; A  configs/improvement/m5.json; A  configs/improvement/requirements.txt; A  docs/improvement/PHASE1_HANDOFF.md; A  tests/test_improvement.py; A  videochess_rl/improvement/__init__.py; A  videochess_rl/improvement/benchmark.py; A  videochess_rl/improvement/common.py; A  videochess_rl/improvement/data.py; A  videochess_rl/improvement/demo.py; A  videochess_rl/improvement/existing_demo.py; A  videochess_rl/improvement/learner.py; A  videochess_rl/improvement/live.py; A  videochess_rl/improvement/m4.py; A  videochess_rl/improvement/m5.py; A  videochess_rl/improvement/recovery_probe.py; A  videochess_rl/improvement/snapshot.py; M  videochess_rl/rl/replay.py
+Next user action: No pending M0-M7 engineering or governance tasks. G5 was independently approved with limitations at PR #21 comment 6558975009; G5-F02 is resolved. The Project Owner accepts current research results as final. Future release/publication is a separate owner-controlled decision and requires explicit scope-specific authorization and rights/privacy review; no affirmative restricted-artifact release permission is established.
+WARNING WORKTREE_CONTENT_DRIFT [.]: Tracked worktree changes exist after the portable baseline checkpoint:  M videochess_rl/improvement/common.py.
+WARNING ARTIFACT_MANIFEST_REQUIRED [.]: Artifact/data directories are excluded from content hashing and require independent manifest verification: artifacts.

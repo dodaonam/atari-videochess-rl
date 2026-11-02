@@ -1,0 +1,69 @@
+expert labels 100
+expert labels 200
+expert labels 300
+expert labels 400
+expert labels 500
+expert labels 600
+expert labels 700
+expert labels 800
+expert labels 900
+expert labels 1000
+expert labels 1100
+expert labels 1200
+expert labels 1300
+expert labels 1400
+expert labels 1500
+expert labels 1600
+expert labels 1700
+expert labels 1800
+expert labels 1900
+expert labels 2000
+expert labels 2100
+expert labels 2200
+expert labels 2300
+expert labels 2400
+expert labels 2500
+expert labels 2600
+expert labels 2700
+expert labels 2800
+expert labels 2900
+expert labels 3000
+expert labels 3100
+expert labels 3200
+expert labels 3300
+expert labels 3400
+expert labels 3500
+expert labels 3600
+expert labels 3700
+expert labels 3800
+expert labels 3900
+expert labels 4000
+expert labels 4100
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 1, "train_loss": 2.383831136905858, "validation": {"examples": 8965, "nll": 2.3732759091685223, "top1": 0.3128834355828221, "top3": 0.5533742331288344}, "wall_seconds": 108.6283934790008, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25091796992, "free_disk_bytes": 34537058304}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 2, "train_loss": 2.3333766872721506, "validation": {"examples": 8965, "nll": 2.34697248328018, "top1": 0.316899051868377, "top3": 0.5626324595649749}, "wall_seconds": 108.69019431400011, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 24927952896, "free_disk_bytes": 34532708352}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 3, "train_loss": 2.2990123904438544, "validation": {"examples": 8965, "nll": 2.322596794336918, "top1": 0.32437255995538206, "top3": 0.5726715002788623}, "wall_seconds": 109.22906741299812, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25084964864, "free_disk_bytes": 34530590720}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 4, "train_loss": 2.2702960194700843, "validation": {"examples": 8965, "nll": 2.318751697678574, "top1": 0.32481873954266594, "top3": 0.5784718349135527}, "wall_seconds": 108.54254971800037, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25075879936, "free_disk_bytes": 34529026048}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 5, "train_loss": 2.2476112184269588, "validation": {"examples": 8965, "nll": 2.2948084314775015, "top1": 0.32916899051868376, "top3": 0.5791411042944785}, "wall_seconds": 109.59956022299957, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25088503808, "free_disk_bytes": 34526875648}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 6, "train_loss": 2.227151476350942, "validation": {"examples": 8965, "nll": 2.2848830881028355, "top1": 0.3316229782487451, "top3": 0.5776910206358059}, "wall_seconds": 108.79635832299755, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25091809280, "free_disk_bytes": 34529284096}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 7, "train_loss": 2.2095812316128085, "validation": {"examples": 8965, "nll": 2.2692290002383535, "top1": 0.33452314556609036, "top3": 0.5870607919687675}, "wall_seconds": 108.5363234189972, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25087873024, "free_disk_bytes": 34527379456}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 8, "train_loss": 2.1940700761357643, "validation": {"examples": 8965, "nll": 2.2621509975384417, "top1": 0.3373117679866146, "top3": 0.5920803123257111}, "wall_seconds": 108.38385322500108, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25073479680, "free_disk_bytes": 34525347840}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 9, "train_loss": 2.1778559402415625, "validation": {"examples": 8965, "nll": 2.253030069035255, "top1": 0.3350808700501952, "top3": 0.5940881204684886}, "wall_seconds": 107.8588283800018, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25091567616, "free_disk_bytes": 34523508736}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 10, "train_loss": 2.163041667432315, "validation": {"examples": 8965, "nll": 2.2476455075210255, "top1": 0.33976575571667594, "top3": 0.5965421081985499}, "wall_seconds": 108.5801559979991, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25079939072, "free_disk_bytes": 34521677824}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 11, "train_loss": 2.1509350882835356, "validation": {"examples": 8965, "nll": 2.2393393802164123, "top1": 0.339542665923034, "top3": 0.6008923591745677}, "wall_seconds": 108.27044806200138, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25083035648, "free_disk_bytes": 34519859200}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 12, "train_loss": 2.1391324195746293, "validation": {"examples": 8965, "nll": 2.236569067332177, "top1": 0.3406581148912437, "top3": 0.6021193530395984}, "wall_seconds": 109.06646325300244, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 24857260032, "free_disk_bytes": 34515075072}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 13, "train_loss": 2.1270618879406675, "validation": {"examples": 8965, "nll": 2.2306284686937987, "top1": 0.3403234802007808, "top3": 0.600111544896821}, "wall_seconds": 109.4152962449989, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25104568320, "free_disk_bytes": 34512711680}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 14, "train_loss": 2.1169045812504033, "validation": {"examples": 8965, "nll": 2.226960582062976, "top1": 0.3416620189626325, "top3": 0.6027886224205242}, "wall_seconds": 119.85937097699934, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 24797454336, "free_disk_bytes": 34507784192}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 15, "train_loss": 2.108193071140482, "validation": {"examples": 8965, "nll": 2.2245814281406178, "top1": 0.3442275515895148, "top3": 0.6025655326268823}, "wall_seconds": 113.96595225599958, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25093570560, "free_disk_bytes": 34505867264}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 16, "train_loss": 2.098061671930248, "validation": {"examples": 8965, "nll": 2.228279796713102, "top1": 0.3427774679308422, "top3": 0.6007808142777468}, "wall_seconds": 108.81926833400212, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25093005312, "free_disk_bytes": 34504118272}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 17, "train_loss": 2.0885537140251897, "validation": {"examples": 8965, "nll": 2.215764341019281, "top1": 0.34511991076408255, "top3": 0.6013385387618516}, "wall_seconds": 109.19043661999967, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25083092992, "free_disk_bytes": 34500587520}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 18, "train_loss": 2.0797041023683827, "validation": {"examples": 8965, "nll": 2.2187626696670115, "top1": 0.3477969882877858, "top3": 0.6079196876742889}, "wall_seconds": 109.48378746299932, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25087545344, "free_disk_bytes": 34498015232}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 19, "train_loss": 2.0712456739536402, "validation": {"examples": 8965, "nll": 2.217025778005061, "top1": 0.3467930842163971, "top3": 0.6047964305633017}, "wall_seconds": 108.73262178699952, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25088851968, "free_disk_bytes": 34497974272}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 20, "train_loss": 2.0612027921971423, "validation": {"examples": 8965, "nll": 2.2115280499221623, "top1": 0.3426659230340212, "top3": 0.6105967651979922}, "wall_seconds": 110.5660586740014, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25056043008, "free_disk_bytes": 34494631936}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 21, "train_loss": 2.055071791162467, "validation": {"examples": 8965, "nll": 2.210236118654931, "top1": 0.34322364751812606, "top3": 0.6082543223647519}, "wall_seconds": 109.24734048699975, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25085911040, "free_disk_bytes": 34493046784}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 22, "train_loss": 2.046211548467029, "validation": {"examples": 8965, "nll": 2.208633544334671, "top1": 0.34400446179587285, "top3": 0.6070273284997212}, "wall_seconds": 110.63690794800277, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 24875208704, "free_disk_bytes": 34491682816}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 23, "train_loss": 2.0394054235969867, "validation": {"examples": 8965, "nll": 2.209676653462552, "top1": 0.3475738984941439, "top3": 0.6070273284997212}, "wall_seconds": 108.62837648499772, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25071595520, "free_disk_bytes": 34489831424}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 24, "train_loss": 2.0312439275963063, "validation": {"examples": 8965, "nll": 2.212438893783578, "top1": 0.34478527607361964, "top3": 0.6071388733965422}, "wall_seconds": 108.96468441199977, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25083088896, "free_disk_bytes": 34489458688}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a", "epoch": 25, "train_loss": 2.023278901401717, "validation": {"examples": 8965, "nll": 2.2175449207516538, "top1": 0.3466815393195761, "top3": 0.6094813162297825}, "wall_seconds": 108.10286981899844, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25082068992, "free_disk_bytes": 34489118720}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-b", "epoch": 1, "train_loss": 2.1792194914872582, "validation": {"examples": 8965, "nll": 2.2036480825438023, "top1": 0.3475738984941439, "top3": 0.6127161182375906}, "wall_seconds": 253.9766568160012, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25067671552, "free_disk_bytes": 34488279040}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-b", "epoch": 2, "train_loss": 2.1586568143433498, "validation": {"examples": 8965, "nll": 2.217012442095746, "top1": 0.347239263803681, "top3": 0.607808142777468}, "wall_seconds": 253.75894722299927, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25060347904, "free_disk_bytes": 34486206464}}
+{"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-b", "epoch": 3, "train_loss": 2.145313778766116, "validation": {"examples": 8965, "nll": 2.214150376646996, "top1": 0.34712771890686, "top3": 0.6071388733965422}, "wall_seconds": 255.5457174510011, "resources": {"peak_rss_bytes": 1490857984, "available_ram_bytes": 25058660352, "free_disk_bytes": 34484953088}}
