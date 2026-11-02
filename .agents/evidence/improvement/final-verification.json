@@ -16662,7 +16662,7 @@
   "branch": "feature/videochess-performance-improvement-20261103",
   "clean_checkout_verification": "Nested clean-clone state recovery and preflight passed inside the full suite; a detached clean worktree of the final pushed HEAD is verified after push.",
   "external_artifacts_uploaded": false,
-  "final_docs_and_state_commit_pending": true,
+  "final_docs_and_state_commit_pending": false,
   "full_suite": {
     "command": [
       ".venv/bin/python",
@@ -16680,6 +16680,7 @@
     "started_at_utc": "2026-11-02T21:12:15.791456+00:00",
     "summary": "545 tests passed; 4 skipped"
   },
+  "interpretation": "M4/M5 runtime sources and the 545-test full suite were verified at source head 5a9021a. Later commits finalize docs/state/evidence and sanitize retained logs; no runtime source, config, dataset, model, or measured result changed after the tested head.",
   "merge_performed": false,
   "official_run_started": false,
   "phase2_cli": {
@@ -16716,6 +16717,11 @@
   },
   "recorded_at_utc": "2026-11-02T21:15:10.822254+00:00",
   "repository": "https://github.com/dodaonam/atari-videochess-rl",
+  "source_and_full_suite_tested_head": "5a9021aab3af8cffe438663bca0dfb1dd113ba72",
+  "subsequent_evidence_commits": [
+    "5014258c91beefab31fbd58a0114a906ba1f026a",
+    "dc543fa"
+  ],
   "targeted_context_checks": {
     "all_three_recovery_checks_passed": true,
     "exit_code": 0,
