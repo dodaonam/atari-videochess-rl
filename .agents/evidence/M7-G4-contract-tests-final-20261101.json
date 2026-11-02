@@ -1,0 +1,12 @@
+{
+  "command": "PYTHONDONTWRITEBYTECODE=1 <existing project Python 3.12.3 venv>/bin/python -m unittest tests.test_pre_m7_contracts -v",
+  "exit_code": 0,
+  "finished_at_utc": "2026-10-31T20:30:01Z",
+  "log_bytes": 1772,
+  "log_path": ".agents/evidence/logs/M7-G4-contract-tests-final-20261101-sanitized.log",
+  "log_sha256": "66a86da7ce35529a04a5f17c44fb719fac81bbb32b421524553adf4821d2e9bf",
+  "result": "PASS: 8 Pre-M7/M7 governance contract tests.",
+  "source_git_revision": "cbf4b27d4c9eb65108ee17c3138cf020c8c8ade9",
+  "started_at_utc": "2026-10-31T20:30:01Z",
+  "test_count": 8
+}

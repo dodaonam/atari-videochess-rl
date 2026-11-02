@@ -1,0 +1,20 @@
+{
+  "command": "PATH=<project-local-stockfish-dir>:$PATH VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<private-m5-root> VIDEOCHESS_M5_M6_POLICY_CHECKPOINT=<selected-warm-checkpoint> PYTHONDONTWRITEBYTECODE=1 /usr/bin/time -v <project-python> -m unittest discover -s tests -v",
+  "executed_at_utc": null,
+  "execution_environment": "local CPU; Python 3.12.3, Gymnasium 1.4.0, ALE-Py 0.11.2, PyTorch 2.14.1+cpu, python-chess 1.11.2; project-local Stockfish UCI readiness binary available on PATH",
+  "exit_code": 0,
+  "failed": 0,
+  "git_revision": "e6d444e475e447e9f37951f16585bf496f804c9d",
+  "log_path": ".agents/evidence/logs/M6-baseline-full-suite-e6d444e-final.log",
+  "log_sanitization": "Local workspace and external private artifact paths replaced with role labels; execution result and measurements unchanged.",
+  "log_sha256": "29afefd69e7585789f88761aee238ab913d02333f35cfe5783dca0245572df86",
+  "maximum_resident_set_kib": 360232,
+  "passed": 388,
+  "recorded_at_utc": "2026-10-30T14:52:56Z",
+  "skipped": 0,
+  "test_count": 388,
+  "timestamp_status": "Execution start time was not captured; this is a retained baseline log, not a fully provenance-verified execution record.",
+  "unittest_elapsed_seconds": 147.556,
+  "wall_elapsed_seconds": 149.81,
+  "working_tree_note": "Before M6 source implementation; canonical M6-001 activation and direct-authorization context regression are present as working-tree changes."
+}

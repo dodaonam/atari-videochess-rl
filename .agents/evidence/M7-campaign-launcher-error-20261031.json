@@ -1,0 +1,23 @@
+{
+  "ale_actions": 0,
+  "ale_resets": 0,
+  "child_command_exit_code": 127,
+  "failure_stage": "shell could not resolve .venv/bin/python in the isolated M7 worktree; the campaign runner was never invoked",
+  "finished_at_utc": "2026-10-31T16:56:36Z",
+  "official_run_directory_created": false,
+  "official_runner_started": false,
+  "official_schedule_denominator_unchanged": true,
+  "outer_script_exit_code": 0,
+  "raw_local_log_path": "owner-local: artifacts/m7-option-b/campaign-console.log",
+  "raw_local_log_sha256": "36424a9cbd62cc6bed905e34f8c9140e01f1a9b439649edeaf3da642d84dc0a9",
+  "remediation": "retry the unchanged campaign command using the existing approved virtual-environment interpreter by absolute path; install no dependency",
+  "retry_budget_note": "No M7 per-cell or ALE process-start retry was consumed because the runner and campaign ledger did not start; this was command-launch setup before any schedule cell existed.",
+  "root_cause": "the approved CPU virtual environment exists in the original repository root, not in the isolated M7 worktree",
+  "run_manifest_created": false,
+  "sanitized_log_path": ".agents/evidence/logs/M7-campaign-launcher-error-20261031-sanitized.log",
+  "sanitized_log_sha256": "be13372382187f69d4c55a5a95dab4abb5a26420f934592a62e436655cd08510",
+  "scheduled_cells_started": 0,
+  "schema": "videochess-m7-prerun-launcher-diagnostic/1.0",
+  "source_git_revision": "58a604f2bd4bcd9113a047ee709a80ee97bd02a6",
+  "started_at_utc": "2026-10-31T16:56:36Z"
+}

@@ -1,0 +1,7 @@
+{
+  "files": 5,
+  "m7_reset_observed_cells": 90,
+  "m7_scheduled_cells": 90,
+  "manifest_filesha256": "78f4f08e8aa0ec877f942a181d36653d6e25bf76b791e9c12308390d23315d73",
+  "output_dir": ".agents/evidence/M7-analysis-20261101"
+}

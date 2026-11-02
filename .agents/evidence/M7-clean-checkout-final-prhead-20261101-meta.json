@@ -1,0 +1,16 @@
+{
+  "execution_timestamp_not_recorded": true,
+  "exit_code": 0,
+  "git_snapshot_matches": true,
+  "git_snapshot_mode": "portable_commit_transition",
+  "output_bytes": 145478,
+  "output_sha256": "e0bb610ba4f75223a3d03e9402d7e0f7449d4ceb95c226d388ba4847b7a49cd1",
+  "portable_baseline_matches": true,
+  "repo_content_matches": true,
+  "result": "PASS: fresh no-local clone preflight; portable baseline and repository content match; zero errors; one expected ARTIFACT_MANIFEST_REQUIRED warning.",
+  "schema": "videochess-m7-clean-checkout/1.0",
+  "source_git_revision": "e6e9edc8385f4305719a0234f896d032bb21d4fa",
+  "warning_codes": [
+    "ARTIFACT_MANIFEST_REQUIRED"
+  ]
+}

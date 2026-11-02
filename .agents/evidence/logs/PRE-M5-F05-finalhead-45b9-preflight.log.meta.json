@@ -1,0 +1,15 @@
+{
+  "check": "preflight",
+  "command": "python3 scripts/agent_preflight.py",
+  "end_utc": "2026-10-28T09:25:31Z",
+  "environment": "Fresh clean GitHub clone at exact pushed revision; existing project environment; no dependencies installed.",
+  "exit_code": 0,
+  "log_path": ".agents/evidence/logs/PRE-M5-F05-finalhead-45b9-preflight.log",
+  "log_sha256": "de0f8dab6576a90228a8e6bdc7eaa15ad82f6135df35e55095efcb6b2adb0564",
+  "result": "PASS",
+  "revision": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83",
+  "start_utc": "2026-10-28T09:25:30Z",
+  "warning_codes": [
+    "ARTIFACT_MANIFEST_REQUIRED"
+  ]
+}

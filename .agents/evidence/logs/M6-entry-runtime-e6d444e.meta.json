@@ -1,0 +1,13 @@
+{
+  "command": "existing Python environment: construct ALE/VideoChess-v5 with mode=4, difficulty=0, rgb, frameskip=4, repeat_action_probability=0.25; call runtime_info(); no reset or step",
+  "executed_at_utc": "2026-10-30T14:41:17Z",
+  "completed_at_utc": "2026-10-30T14:41:17Z",
+  "execution_environment": "local CPU; Python 3.12.3, Gymnasium 1.4.0, ALE-Py 0.11.2, PyTorch 2.14.1+cpu, python-chess 1.11.2",
+  "git_revision": "e6d444e475e447e9f37951f16585bf496f804c9d",
+  "exit_code": 0,
+  "result": "PASS",
+  "log_path": ".agents/evidence/logs/M6-entry-runtime-e6d444e.json",
+  "log_sha256": "4fd0ba83a23d9a1d10deca4f0b2046991797e046d460c9c5d6625cc5c7773515",
+  "rom_sha256": "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7",
+  "profile": "ALE v5 default evaluation profile; construction/runtime inspection only, no gameplay"
+}

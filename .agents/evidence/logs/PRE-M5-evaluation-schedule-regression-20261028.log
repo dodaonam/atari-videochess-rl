@@ -1,0 +1,15 @@
+revision=b8bb37910e06fd6d68e5adf384592bf525761e8e
+start_utc=2026-10-28T04:35:38.670773875Z
+end_utc=2026-10-28T04:35:38.726749551Z
+command=PYTHONPATH=. <pinned-venv-python> -m unittest tests.test_m5_contract_fixtures -v
+exit_code=0
+
+--- output ---
+test_online_target_disagreement_uses_online_action_in_target_value (tests.test_m5_contract_fixtures.M5DoubleDqnFixtureTests.test_online_target_disagreement_uses_online_action_in_target_value) ... ok
+test_proposed_evaluation_schedule_matches_config_and_protocol (tests.test_m5_contract_fixtures.M5DoubleDqnFixtureTests.test_proposed_evaluation_schedule_matches_config_and_protocol) ... ok
+test_terminal_and_valid_truncation_masks_are_distinct (tests.test_m5_contract_fixtures.M5DoubleDqnFixtureTests.test_terminal_and_valid_truncation_masks_are_distinct) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+OK

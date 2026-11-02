@@ -1,0 +1,7 @@
+Command: /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.model.cli run --release-dir /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6 --artifact-root /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4 --run-id m4-behavior-20261027-r2
+Started: 2026-10-27T13:33:05.861961Z
+Ended: 2026-10-27T13:37:52.900009Z
+Captured CLI summary:
+{"artifact_directory": "/home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r2", "artifact_file_count": 3, "elapsed_seconds_including_prior_release_verification": 398.2888843159999, "peak_rss_bytes": 606011392, "run_id": "m4-behavior-20261027-r2", "source_revision": "4562dddd80d302bdbb49e1191c97bd71ac7e9938", "status": "sanity_gate_failed"}
+Result: FAIL: fixed 128-example gate exhausted 500 updates; cross-entropy 0.02195480 passed but legal top-1 was 126/128 (98.4375%), below the required 127/128. The run stopped before full training. CLI exit code 2.
+Exit code: 2

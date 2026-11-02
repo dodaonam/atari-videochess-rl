@@ -1,0 +1,6 @@
+Sanitized verification-failure summary.
+
+Command: `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=. python3 -m unittest tests.test_g5_final_closeout tests.test_m7_release_disposition tests.test_m7_delivery_docs tests.test_pre_m7_contracts tests.test_agent_context -v`
+Execution: 2026-11-01T13:13:01Z, worktree based on PR #21 parent HEAD `3119e425f0e7041817ddb87e5ba363fe47f1ea1a`.
+Result: 91 tests run; one failure; process exit 1. `test_clean_clone_recovers_current_committed_state_without_local_artifacts` created its clean clone from committed HEAD and correctly found that the three C2 logs linked by the staged remediation report were not yet in HEAD. The reported paths were the final C2 preflight, focused-suite, and full-suite logs.
+Cause: verification was run before the log additions had been committed. The C3 GitHub CI independently found the same `LINK_BROKEN` packaging defect. The sanitized logs are now staged for the next commit; a fresh clean-clone rerun is required after that commit. No scientific, implementation, or private-artifact test failed.

@@ -1,0 +1,27 @@
+{
+  "command": "python -m unittest discover -s tests -v (existing runtime PATH; private M5 paths provided through environment variables)",
+  "completed_at_utc": "2026-10-30T13:47:01Z",
+  "counts": {
+    "duration_seconds": 173.042,
+    "failed": 0,
+    "passed": 388,
+    "skipped": 0,
+    "tests": 388
+  },
+  "environment": {
+    "dependency_lock_sha256": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+    "execution": "existing local CPU environment; no new packages installed",
+    "git_head": "ec5b43188b48953e1c92c6375b3b12255ecb87dc",
+    "runtime_versions": {
+      "ale_py": "0.11.2",
+      "gymnasium": "1.4.0",
+      "python": "3.12.3",
+      "python_chess": "1.11.2",
+      "torch": "2.14.1+cpu"
+    }
+  },
+  "exit_code": 0,
+  "log_sha256": "6b391209bdbbfb671605ba153e4c878ca097a4a80fcc222fe4501d582938aa24",
+  "result": "PASS",
+  "sanitized_log_path": ".agents/evidence/logs/PRE-M6-full-suite-ec5b431.log"
+}

@@ -1,0 +1,40 @@
+started_at_utc=2026-10-28T03:49:28Z
+revision=906178775d48e98e64c709673bfe73177dd15c02
+release_path=/home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6
+
+files_before:
+75034de9d1dee2c48f56ecb1e7b54e11ae4c261fe9a95579ef69b0e93c00b304  /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6/config.json
+526fc9966d4521dee92fc4bb7e011d9a59fce1dc703810a0ed3d6edbb2e154c7  /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6/games.jsonl
+be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12  /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6/manifest.json
+5f4c968a8885548565496b7652a6b060adc8778cfeaffb58dd4b7b8b18b9a2ae  /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6/manifest.sha256
+9db9676ecb64cc111e4310c83374348132ad4413cb0de7c1fe1878b89c89500d  /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6/positions.jsonl
+fce94dc0c721fb84b45ccb812667b712030f4f327901d1a7ee19b4392524a42e  /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6/rejections.jsonl
+f2ff571ce81a47b1191f7b57c2f2d16c48ebde6b334aeb6e82d7b173dc2b2935  /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6/source_manifest.json
+dbbcc00bdb5989fd8827c8e7beec3b4eea41f0bae3649ad9ffa2373b0d128193  /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6/split.json
+3d0a217e94a826f38d54b402c921f145592c92760d39901c8b2cc2339dad68bd  /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6/stats.json
+
+verifier_output:
+{
+  "games": 1000,
+  "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+  "output_bytes": 39994522,
+  "outputs_verified": 7,
+  "positions": 19268,
+  "rejections": 182,
+  "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890"
+}
+
+files_after:
+75034de9d1dee2c48f56ecb1e7b54e11ae4c261fe9a95579ef69b0e93c00b304  /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6/config.json
+526fc9966d4521dee92fc4bb7e011d9a59fce1dc703810a0ed3d6edbb2e154c7  /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6/games.jsonl
+be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12  /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6/manifest.json
+5f4c968a8885548565496b7652a6b060adc8778cfeaffb58dd4b7b8b18b9a2ae  /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6/manifest.sha256
+9db9676ecb64cc111e4310c83374348132ad4413cb0de7c1fe1878b89c89500d  /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6/positions.jsonl
+fce94dc0c721fb84b45ccb812667b712030f4f327901d1a7ee19b4392524a42e  /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6/rejections.jsonl
+f2ff571ce81a47b1191f7b57c2f2d16c48ebde6b334aeb6e82d7b173dc2b2935  /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6/source_manifest.json
+dbbcc00bdb5989fd8827c8e7beec3b4eea41f0bae3649ad9ffa2373b0d128193  /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6/split.json
+3d0a217e94a826f38d54b402c921f145592c92760d39901c8b2cc2339dad68bd  /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6/stats.json
+
+release_verifier_exit=0
+file_hashes_unchanged=true
+ended_at_utc=2026-10-28T03:51:20Z

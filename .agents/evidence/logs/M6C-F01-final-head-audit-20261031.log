@@ -1,0 +1,13 @@
+command: PYTHONDONTWRITEBYTECODE=1 /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/audit_m6_closeout_provenance.py
+result: PASS: final full-scope audit; 4 committed file identities, 29 verified command/test logs, 8 machine-report logs, 2 historical diagnostics, 0 errors.
+Exit code: 0
+execution_environment: final clean detached checkout at source HEAD; Python 3.12.3 project environment; local CPU
+git_head: 2283153b089c8339456b5abee9acc195f59bd4e3
+git_tree: 2cc2a727e408bd0bb7fd55a3caa8d2c23802522c
+started_at_utc: 2026-10-31T09:06:59.348511+00:00
+completed_at_utc: 2026-10-31T09:06:59.596999+00:00
+wall_elapsed_seconds: 0.248
+
+--- output ---
+M6 closeout provenance audit: PASS
+Verified file entries: 4; command logs: 29; machine report logs: 8

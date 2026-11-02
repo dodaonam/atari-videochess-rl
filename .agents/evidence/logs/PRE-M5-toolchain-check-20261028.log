@@ -1,0 +1,30 @@
+check: direct dependency/lock consistency
+start_utc: 2026-10-28T03:59:50.476573+00:00
+end_utc: 2026-10-28T03:59:50.567288+00:00
+revision: 906178775d48e98e64c709673bfe73177dd15c02
+command: /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -c import importlib.metadata as md, platform, sys, tomllib
+from pathlib import Path
+project=tomllib.loads(Path("pyproject.toml").read_text())["project"]
+lock=tomllib.loads(Path("uv.lock").read_text())
+assert sys.version_info >= (3,12),sys.version
+expected={"ale-py":"0.11.2","chess":"1.11.2","gymnasium":"1.4.0","torch":"2.14.1+cpu"}
+for name, version in expected.items():
+ actual=md.version(name)
+ assert actual==version,(name,actual,version)
+ entries=[p for p in lock["package"] if p["name"]==name]
+ assert any(p["version"]==version for p in entries),(name,version,[p["version"] for p in entries])
+ print(f"{name}: installed={actual} locked={version}")
+print(f"Python: {platform.python_version()} platform={platform.platform()}")
+print("Direct locked runtime dependency versions match the existing Linux CPU project environment; no packages were installed.")
+uv_available: False
+exit_code: 0
+
+--- stdout ---
+ale-py: installed=0.11.2 locked=0.11.2
+chess: installed=1.11.2 locked=1.11.2
+gymnasium: installed=1.4.0 locked=1.4.0
+torch: installed=2.14.1+cpu locked=2.14.1+cpu
+Python: 3.12.3 platform=Linux-7.0.0-38-generic-x86_64-with-glibc2.39
+Direct locked runtime dependency versions match the existing Linux CPU project environment; no packages were installed.
+
+--- stderr ---

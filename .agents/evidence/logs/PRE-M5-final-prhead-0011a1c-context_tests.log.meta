@@ -1,0 +1,9 @@
+check=context_tests
+revision=0011a1c07e047cedf9394d70b2413cea74ba1437
+start_utc=2026-10-28T05:19:16.081629Z
+end_utc=2026-10-28T05:21:01.810018Z
+exit_code=0
+test_count=79
+duration_seconds=105.594
+command=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_agent_context tests.test_checkpoint_history -v
+environment=Fresh clean GitHub clone; existing project Python 3.12.3 venv where applicable; no dependencies installed.

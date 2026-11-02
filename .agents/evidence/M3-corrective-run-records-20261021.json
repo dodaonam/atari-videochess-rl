@@ -1,0 +1,132 @@
+{
+  "artifact_revision": "fbdd14d6bed487e5b1388034048eccdbe952ab48",
+  "local_artifacts_root": "artifacts/m3 (ignored; source archive, game/position JSONL, and teacher JSONL are not tracked)",
+  "runs": [
+    {
+      "child_peak_rss_mib": 340.75,
+      "child_system_cpu_seconds": 1.188,
+      "child_user_cpu_seconds": 3649.998,
+      "command_summary": "<PINNED_HOST_ENV>/.venv/bin/python -m videochess_rl.data build --archive artifacts/m3/source/lichess_elite_2022-05.zip --source-manifest artifacts/m3/source/source-manifest.json --config configs/data/m3-training-support.toml --output artifacts/m3/training-support/release-corrected-20261021-r4 --run-id m3-training-support-corrective-20261021-r4 --confirm-write",
+      "disk_free_before_bytes": 40830156800,
+      "elapsed_seconds": 3658.404,
+      "exit_code": 0,
+      "finished_at_utc": "2026-10-21T00:15:14.195870Z",
+      "git_revision": "fbdd14d6bed487e5b1388034048eccdbe952ab48",
+      "kind": "source_build",
+      "original_log_sha256": "ef4d58979bc3eb8bb687036b793c8f2e594f2d0b09115068d64165fbdcc8d809",
+      "output_path": "artifacts/m3/training-support/release-corrected-20261021-r4",
+      "release_path": "",
+      "result": "PASS",
+      "run_id": "m3-training-support-corrective-20261021-r4",
+      "sanitized_log": "logs/M3-corrective-build-r4-20261021.log",
+      "started_at_utc": "2026-10-20T23:14:15.794219Z"
+    },
+    {
+      "child_peak_rss_mib": 340.83,
+      "child_system_cpu_seconds": 1.126,
+      "child_user_cpu_seconds": 3538.228,
+      "command_summary": "<PINNED_HOST_ENV>/.venv/bin/python -m videochess_rl.data build --archive artifacts/m3/source/lichess_elite_2022-05.zip --source-manifest artifacts/m3/source/source-manifest.json --config configs/data/m3-training-support.toml --output artifacts/m3/training-support/release-corrected-20261021-r5 --run-id m3-training-support-corrective-20261021-r5 --confirm-write",
+      "disk_free_before_bytes": 40918843392,
+      "elapsed_seconds": 3544.77,
+      "exit_code": 0,
+      "finished_at_utc": "2026-10-21T01:17:00.456263Z",
+      "git_revision": "fbdd14d6bed487e5b1388034048eccdbe952ab48",
+      "kind": "independent_repeat",
+      "original_log_sha256": "6bdca2cbe38b2e5b3a8a614fdcc07259c807afbe3dc04a8cc5f85b80414756ad",
+      "output_path": "artifacts/m3/training-support/release-corrected-20261021-r5",
+      "release_path": "",
+      "result": "PASS",
+      "run_id": "m3-training-support-corrective-20261021-r5",
+      "sanitized_log": "logs/M3-corrective-build-r5-20261021.log",
+      "started_at_utc": "2026-10-21T00:17:55.688247Z"
+    },
+    {
+      "command_summary": "<PINNED_HOST_ENV>/.venv/bin/python -m videochess_rl.data verify --release artifacts/m3/training-support/release-corrected-20261021-r4 --source-manifest artifacts/m3/source/source-manifest.json --archive artifacts/m3/source/lichess_elite_2022-05.zip",
+      "elapsed_seconds": 112.752,
+      "exit_code": 0,
+      "finished_at_utc": "2026-10-21T00:17:15.843593Z",
+      "git_revision": "fbdd14d6bed487e5b1388034048eccdbe952ab48",
+      "kind": "release_source_verification",
+      "original_log_sha256": "1742cd79f1b8b4b530475d3dcd05547232df00dae380943f72a8e4a656ff3af0",
+      "output_path": "",
+      "release_path": "",
+      "result": "PASS",
+      "sanitized_log": "logs/M3-corrective-release-verify-r4-20261021.log",
+      "started_at_utc": "2026-10-21T00:15:23.094982Z"
+    },
+    {
+      "child_peak_rss_mib": 318.98,
+      "child_system_cpu_seconds": 0.503,
+      "child_user_cpu_seconds": 114.167,
+      "command_summary": "<PINNED_HOST_ENV>/.venv/bin/python -m videochess_rl.data teacher --release artifacts/m3/training-support/release-corrected-20261021-r4 --output artifacts/m3/teacher-training-support/teacher-corrective-20261021-r2 --engine <PINNED_HOST_ENV>/.venv/share/stockfish/stockfish --engine-sha256 0f83d24cc46d2c66c60f16001af5444873bc112b7d028594513426894c12da19 --license <PINNED_HOST_ENV>/.venv/share/stockfish/Copying.txt --license-sha256 3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986 --max-positions 128 --seed 20261025 --nodes 5000 --multipv 3 --threads 1 --hash-mib 64 --timeout-seconds 30 --max-wall-seconds 1800 --max-output-bytes 67108864 --confirm-write",
+      "disk_free_before_bytes": 40839237632,
+      "elapsed_seconds": 114.557,
+      "exit_code": 0,
+      "finished_at_utc": "2026-10-21T02:10:33.765431Z",
+      "git_revision": "fbdd14d6bed487e5b1388034048eccdbe952ab48",
+      "kind": "real_stockfish_teacher",
+      "original_log_sha256": "b784da3e56b7f2176698d282f5c82ebc37ef6f8e7ef144eeebabdae44de18dd8",
+      "output_path": "artifacts/m3/teacher-training-support/teacher-corrective-20261021-r2",
+      "release_path": "artifacts/m3/training-support/release-corrected-20261021-r4",
+      "result": "PASS",
+      "run_id": "teacher-corrective-20261021-r2",
+      "sanitized_log": "logs/M3-corrective-teacher-r2-20261021.log",
+      "started_at_utc": "2026-10-21T02:08:39.210818Z"
+    },
+    {
+      "command_summary": "<PINNED_HOST_ENV>/.venv/bin/python -m videochess_rl.data verify --release artifacts/m3/training-support/release-corrected-20261021-r4 --source-manifest artifacts/m3/source/source-manifest.json --archive artifacts/m3/source/lichess_elite_2022-05.zip --teacher-run artifacts/m3/teacher-training-support/teacher-corrective-20261021-r2",
+      "elapsed_seconds": 223.937,
+      "exit_code": 0,
+      "finished_at_utc": "2026-10-21T02:14:32.650714Z",
+      "git_revision": "fbdd14d6bed487e5b1388034048eccdbe952ab48",
+      "kind": "teacher_release_verification",
+      "original_log_sha256": "ceca3e0c42f326adbdc74210001e73cd1b5b968b33828ff47ae90a7da2811c1a",
+      "output_path": "",
+      "release_path": "",
+      "result": "PASS",
+      "sanitized_log": "logs/M3-corrective-teacher-verify-r2-20261021.log",
+      "started_at_utc": "2026-10-21T02:10:48.715863Z"
+    }
+  ],
+  "sanitized_logs": [
+    {
+      "bytes": 3439,
+      "path": ".agents/evidence/logs/M3-corrective-build-r4-20261021.log",
+      "sha256": "a1911d44a20d61dc069809bed092bbda18d6a77e7e5791927596360358fdfddc",
+      "source_log_path_local": "artifacts/m3/logs/corrective-build-r4-20261021.log"
+    },
+    {
+      "bytes": 3439,
+      "path": ".agents/evidence/logs/M3-corrective-build-r5-20261021.log",
+      "sha256": "346e328d7b4265ecbb9278c60d1978cfb73bb21390a894605cc0340d8d76a105",
+      "source_log_path_local": "artifacts/m3/logs/corrective-build-r5-20261021.log"
+    },
+    {
+      "bytes": 577,
+      "path": ".agents/evidence/logs/M3-corrective-release-verify-r4-20261021.log",
+      "sha256": "1742cd79f1b8b4b530475d3dcd05547232df00dae380943f72a8e4a656ff3af0",
+      "source_log_path_local": "artifacts/m3/logs/corrective-release-verify-r4-20261021.log"
+    },
+    {
+      "bytes": 12027,
+      "path": ".agents/evidence/logs/M3-corrective-teacher-r2-20261021.log",
+      "sha256": "b784da3e56b7f2176698d282f5c82ebc37ef6f8e7ef144eeebabdae44de18dd8",
+      "source_log_path_local": "artifacts/m3/logs/teacher-corrective-r2-20261021.log"
+    },
+    {
+      "bytes": 1040,
+      "path": ".agents/evidence/logs/M3-corrective-teacher-verify-r2-20261021.log",
+      "sha256": "ceca3e0c42f326adbdc74210001e73cd1b5b968b33828ff47ae90a7da2811c1a",
+      "source_log_path_local": "artifacts/m3/logs/teacher-verify-r2-20261021.log"
+    }
+  ],
+  "schema": "videochess-m3-corrective-run-record/1.0",
+  "source": {
+    "archive_bytes": 97163552,
+    "archive_sha256": "ad374c8fd9fb2fe5f03c1297aa1d47cbbce5caedf6e6e2d387ee816930afdb11",
+    "crc32": "eaf7e457",
+    "member": "lichess_elite_2022-05.pgn",
+    "member_bytes": 326476031,
+    "member_sha256": "0f88f18836be7e321aa1e0211b618e78d4e92065c126c45c95a6a55c1500a8e6"
+  }
+}

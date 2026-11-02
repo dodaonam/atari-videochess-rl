@@ -1,0 +1,21 @@
+source_revision=fa7683822c436f3e9d6c3455a24cd1f4a6cbb463
+candidate_tree=fc33fc660ec2d87fcbc3606c9531550feb1f9d61
+python=3.12.3
+started_at_utc=2026-10-31T14:31:27Z
+finished_at_utc=2026-10-31T14:31:27Z
+exit_code=0
+command=PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.test_pre_m7_contracts -v
+
+test_all_new_local_markdown_links_resolve (tests.test_pre_m7_contracts.PreM7ContractTests.test_all_new_local_markdown_links_resolve) ... ok
+test_canonical_state_and_backlog_are_json_yaml_and_dependency_valid (tests.test_pre_m7_contracts.PreM7ContractTests.test_canonical_state_and_backlog_are_json_yaml_and_dependency_valid) ... ok
+test_g4_g5_criterion_mapping_matches_canonical_acceptance (tests.test_pre_m7_contracts.PreM7ContractTests.test_g4_g5_criterion_mapping_matches_canonical_acceptance) ... ok
+test_m7_tasks_are_pending_and_require_separate_authorization (tests.test_pre_m7_contracts.PreM7ContractTests.test_m7_tasks_are_pending_and_require_separate_authorization) ... ok
+test_private_assets_remain_local_and_sanitized_reports_are_portable (tests.test_pre_m7_contracts.PreM7ContractTests.test_private_assets_remain_local_and_sanitized_reports_are_portable) ... ok
+test_protocol_rejects_pseudoreplication_unsupported_strength_and_elo_claims (tests.test_pre_m7_contracts.PreM7ContractTests.test_protocol_rejects_pseudoreplication_unsupported_strength_and_elo_claims) ... ok
+test_read_only_input_audits_bind_frozen_identities_and_provenance (tests.test_pre_m7_contracts.PreM7ContractTests.test_read_only_input_audits_bind_frozen_identities_and_provenance) ... ok
+test_tracks_protocols_terminal_states_and_historical_provenance_stay_distinct (tests.test_pre_m7_contracts.PreM7ContractTests.test_tracks_protocols_terminal_states_and_historical_provenance_stay_distinct) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.012s
+
+OK

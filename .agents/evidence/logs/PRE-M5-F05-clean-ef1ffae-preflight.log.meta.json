@@ -1,0 +1,12 @@
+{
+  "check": "preflight",
+  "command": "python3 scripts/agent_preflight.py --json",
+  "end_utc": "2026-10-28T09:11:41Z",
+  "environment": "Clean clone of committed candidate; Python 3.12.3 existing pinned CPU venv; no package changes.",
+  "exit_code": 0,
+  "log_path": ".agents/evidence/logs/PRE-M5-F05-clean-ef1ffae-preflight.log",
+  "log_sha256": "d6ef89821d5ee929c7a6bee4757fac9fb471b07b38311fc239ab958d46489b7e",
+  "result": "PASS",
+  "revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3",
+  "start_utc": "2026-10-28T09:11:41Z"
+}

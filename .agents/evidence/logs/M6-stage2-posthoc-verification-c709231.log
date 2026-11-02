@@ -1,0 +1,20 @@
+Command: python -c <sanitized Stage 2 trace, chain, and artifact-manifest reanalysis using videochess_rl.m6.campaign.summarize_run>
+Exit code: 0
+Git revision: c709231295441a297fd28d4e1455fe5ef351fe15
+
+--- Verification output ---
+m6-stage2-debug-development-debug-2a6936e9b681 ledger=f12133ea60b0932820b1b5827c2ccb305416b3b3831417134b725522ceee4cac attempts=5
+  m4-behavior-only-seed-20261024 attempted=10 verified=10 replies=10 board_desync=0 cursor_displacements=0 frames=24891 wall_seconds=145.872
+  m5-scratch-seed-20261104-post-rl attempted=10 verified=10 replies=10 board_desync=0 cursor_displacements=0 frames=40882 wall_seconds=243.738
+  m5-warm-seed-20261104-post-rl attempted=10 verified=10 replies=10 board_desync=0 cursor_displacements=0 frames=28868 wall_seconds=164.517
+  random-legal attempted=7 verified=6 replies=6 board_desync=0 cursor_displacements=0 frames=10593 wall_seconds=63.221
+  simple-material-heuristic attempted=5 verified=4 replies=4 board_desync=0 cursor_displacements=0 frames=7352 wall_seconds=44.245
+m6-stage2-debug-development-debug-b393b5180b45 ledger=ec1583b68a6daafcfe10c8a0e1eadf6274972098611336472fa265155e803865 attempts=5
+  m4-behavior-only-seed-20261024 attempted=10 verified=10 replies=10 board_desync=0 cursor_displacements=0 frames=24891 wall_seconds=128.455
+  m5-scratch-seed-20261104-post-rl attempted=10 verified=10 replies=10 board_desync=0 cursor_displacements=0 frames=40882 wall_seconds=215.662
+  m5-warm-seed-20261104-post-rl attempted=10 verified=10 replies=10 board_desync=0 cursor_displacements=0 frames=28868 wall_seconds=147.154
+  random-legal attempted=7 verified=6 replies=6 board_desync=0 cursor_displacements=0 frames=10659 wall_seconds=53.993
+  simple-material-heuristic attempted=5 verified=4 replies=4 board_desync=0 cursor_displacements=0 frames=7418 wall_seconds=35.902
+m6-stage2-default-ale-v5-default-b393b5180b45 ledger=f1645e99585e59e9b11a7aa6c8fe1d5f9f8a223c7f64cad3defec9d92789c165 attempts=2
+  m5-scratch-seed-20261104-post-rl attempted=1 verified=1 replies=1 board_desync=0 cursor_displacements=4 frames=1676 wall_seconds=2.726
+  m5-warm-seed-20261104-post-rl attempted=1 verified=1 replies=1 board_desync=0 cursor_displacements=4 frames=1748 wall_seconds=2.764

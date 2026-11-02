@@ -1,0 +1,4 @@
+$ gh pr view 11 --json number,url,state,baseRefName,headRefName,headRefOid,statusCheckRollup
+{"baseRefName":"initial-idea","headRefName":"feature/m5-double-dqn","headRefOid":"81fc1fe269ffafb6006c3b32d96e38fbb91eb5a3","number":11,"state":"OPEN","statusCheckRollup":[{"__typename":"CheckRun","completedAt":"2026-10-29T22:21:26Z","conclusion":"FAILURE","detailsUrl":"https://github.com/dodaonam/atari-videochess-rl/actions/runs/40965205214/job/123767819270","name":"context","startedAt":"2026-10-29T22:21:17Z","status":"COMPLETED","workflowName":"Repository preflight"}],"url":"https://github.com/dodaonam/atari-videochess-rl/pull/11"}
+PR #11 is OPEN against initial-idea at head 81fc1fe269ffafb6006c3b32d96e38fbb91eb5a3; repository preflight check is QUEUED.
+Exit code: 0

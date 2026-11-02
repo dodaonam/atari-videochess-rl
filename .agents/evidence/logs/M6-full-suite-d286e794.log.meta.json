@@ -1,0 +1,24 @@
+{
+  "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<verified-private-m5-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<verified-private-m4-root> PATH=<project-local-stockfish-dir>:$PATH <project-python> -m unittest discover -s tests -v",
+  "completed_at_utc": "2026-10-30T15:28:47Z",
+  "configuration_identity": {
+    "m4_root_manifest_sha256": "f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921",
+    "m5_root_manifest_sha256": "a201a254671ad59ae1fecb402abf994d5bf523097f1c3010b5c7fa237ae6dd4c",
+    "m6_config_sha256": "73fe6eea0933a74af9214fe0e46cd4d62848e8e7f81add2d66e51e8b5ed99ba3"
+  },
+  "executed_at_utc": "2026-10-30T15:26:06Z",
+  "execution_environment": "Local CPU; Python 3.12.3, Gymnasium 1.4.0, ALE-Py 0.11.2, PyTorch 2.14.1+cpu, python-chess 1.11.2; pinned Stockfish sf_19 used only for existing UCI-readiness test.",
+  "exit_code": 1,
+  "fail_count": 1,
+  "git_revision": "d286e794b9cfb2bb5dbee0f88c6b74c946daf6ff",
+  "log_path": ".agents/evidence/logs/M6-full-suite-d286e794.log",
+  "log_sanitization": "Local project and private artifact paths replaced with role labels; test output and results unchanged.",
+  "log_sha256": "3ecad385a2fd810955beadb4957dfdcf65506c1e0cb768d49932127c0d04126b",
+  "maximum_resident_set_kib": 368144,
+  "pass_count": 418,
+  "pass_count_method": "unittest summary total minus explicit failures and skips; ALE/Stockfish diagnostics split two successful verbose lines.",
+  "skip_count": 0,
+  "test_count": 419,
+  "unittest_elapsed_seconds": 159.442,
+  "wall_elapsed_seconds": 161.376
+}

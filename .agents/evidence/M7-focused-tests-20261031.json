@@ -1,0 +1,12 @@
+{
+  "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m unittest tests.test_m7_protocol tests.test_m7_analysis tests.test_m7_policies tests.test_m7_campaign tests.test_pre_m7_contracts -v",
+  "exit_code": 1,
+  "finished_at_utc": "2026-10-31T16:37:06Z",
+  "log_bytes": 15615,
+  "log_path": ".agents/evidence/logs/M7-focused-tests-20261031.log",
+  "log_sha256": "508053af4130f258c2052fef36e36cb23ebece8640115709895df45d8963a9db",
+  "result": "failed",
+  "schema": "videochess-command-evidence/1.0",
+  "source_git_revision": "257fff94c64bc584797e0d191920a57befcae62c",
+  "started_at_utc": "2026-10-31T16:37:03Z"
+}

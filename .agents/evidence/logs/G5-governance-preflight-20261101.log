@@ -1,0 +1,41 @@
+Started UTC: 2026-11-01T11:05:18Z
+Tested revision: 0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b plus governance closeout working tree.
+Command: python3 scripts/agent_preflight.py
+Agent context preflight: PASS
+Governance: G5 (approved); approved: G0, G1, G2, G3, G4, G5
+Next engineering milestone: M7 — complete
+Tasks: done=20, in_progress=0, pending=0, blocked=0, cancelled=0
+Completed task IDs: G1-001, G1-002, G1-003, G1-004, G1-005, G1-006, G1-007, G1-008, M0-001, M1-001, M2-001, M3-001, M4-001, M5-001, M6-001, M7-001, M7-002, M7-003, M7-004, M7-005
+In progress task IDs: none
+Pending task IDs: none
+Blocked task IDs: none
+Active blockers: none recorded
+Open confirmations:
+  O-02: Whether full-game performance on actual ALE is a hard submission requirement or a research target with an accepted fallback.
+  O-03: Future course checkpoints and any date changes. The owner confirmed the presentation date is Tuesday, 2026-11-03.
+  O-04: Actual Colab entitlement/quota, GPU availability, cloud storage, and whether paid compute is allowed. The owner selected local CPU for M3; no external compute/storage is used in this mission.
+  O-05: ALE/ROM runtime behavior, RAM mapping, game modes, difficulty behavior, and official evaluation settings.
+  O-06: Public redistribution rights and any new source/use beyond the scoped May 2022 archive. For M3, the owner authorized bounded internal academic use of the exact Lichess Elite May 2022 package with local retention and no redistribution; its third-party package license remains unstated/unverified.
+  O-07: Broader Stockfish roles: benchmark opponent, offline engine evaluation, and instructor-specific limits outside the M3 teacher-label scope.
+  O-08: Opponent pool and rating method for any Elo claim.
+Relevant decisions: docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md, docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md, docs/02-management/decisions/ADR-0003-pretraining-model-interface.md, docs/02-management/decisions/ADR-0004-m7-option-b-execution-authorization.md
+Acceptance criteria recognized: 51
+Last verified Git: feature/g5-governance-closeout @ 0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b
+Live Git: feature/g5-governance-closeout @ 0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b
+Roadmap source: exact match; 19 sections; SHA-256 fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf
+Git recovery: portable HEAD matches, but local tracked or state changes remain.
+Workspace Git status: matches checkpoint
+Portable tracked baseline: matches
+Portable Git index: matches checkpoint
+Hashed ordinary-file snapshot: differs
+Content hashes: 1160 ordinary files verified by SHA-256.
+Not content-verified by this hash map: PROJECT_STATE self-reference, chat history/credential-like paths, temp files, symlinks, and the excluded directories listed below.
+Excluded directories: .agents/state/checkpoint-history, artifacts, scripts/__pycache__
+Artifact directories requiring independent manifests: artifacts
+Last verified dirty paths (17):  M .agents/evidence/M7-005-acceptance-20261101.md;  M .agents/evidence/M7-005-owner-no-release-decision-20261101.md;  M .agents/evidence/M7-G5-review-handover-20261101.md;  M .agents/state/BLOCKERS.md;  M .agents/state/PROJECT_STATE.yaml;  M .agents/state/SESSION_HANDOFF.md;  M .agents/tasks/BACKLOG.yaml;  M docs/02-management/PR_REVIEW_AND_INTEGRATION.md;  M docs/07-delivery/HANDOVER.md;  M tests/test_agent_context.py;  M tests/test_m7_delivery_docs.py;  M tests/test_m7_release_disposition.py;  M tests/test_pre_m7_contracts.py; ?? .agents/evidence/G5-PM-acceptance-20261101.json; ?? .agents/evidence/G5-PM-acceptance-20261101.md; ?? .agents/evidence/G5-PR20-integration-authorization-20261101.md; ?? .agents/evidence/G5-governance-closeout-handover-20261101.md
+Next user action: Independent PM: review the separate G5 governance-closeout PR for canonical state integration. G5 was approved with limitations by the PM and PR #20 is integrated. No new engineering milestone is authorized. NO RELEASE / NO PUBLICATION AUTHORIZED.
+WARNING WORKTREE_CONTENT_DRIFT [.]: Tracked worktree changes exist after the portable baseline checkpoint:  M .agents/evidence/M7-005-acceptance-20261101.md;  M .agents/evidence/M7-005-owner-no-release-decision-20261101.md;  M .agents/evidence/M7-G5-review-handover-20261101.md;  M .agents/state/BLOCKERS.md;  M .agents/tasks/BACKLOG.yaml;  M docs/02-management/PR_REVIEW_AND_INTEGRATION.md;  M docs/07-delivery/HANDOVER.md;  M tests/test_agent_context.py;  M tests/test_m7_delivery_docs.py;  M tests/test_m7_release_disposition.py; ….
+WARNING WORKTREE_CONTENT_DRIFT [.]: newly hashed workspace files: .agents/evidence/logs/G5-governance-focused-tests-checkpoint-rerun-20261101.log, .agents/evidence/logs/G5-governance-full-suite-filtered-20261101.log, .agents/evidence/logs/G5-governance-full-suite-unfiltered-20261101.log, .agents/evidence/logs/G5-governance-preflight-20261101.log; workspace content changed: .agents/evidence/logs/G5-governance-focused-tests-20261101.log. Inspect before checkpointing.
+WARNING ARTIFACT_MANIFEST_REQUIRED [.]: Artifact/data directories are excluded from content hashing and require independent manifest verification: artifacts.
+Exit code: 0
+Finished UTC: 2026-11-01T11:05:21Z

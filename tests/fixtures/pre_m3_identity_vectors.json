@@ -1,0 +1,220 @@
+{
+  "contract": "videochess-identities/1.0",
+  "canonical_json": {
+    "encoding": "UTF-8",
+    "sort_keys": true,
+    "separators": [
+      ",",
+      ":"
+    ],
+    "ensure_ascii": false,
+    "trailing_newline": false,
+    "hash": "SHA-256"
+  },
+  "expected_sha256": {
+    "start_board_signature": "33d21536dfead2eec311cdecd8bc0676c3e2346412de6e3baecbab6b71383443",
+    "start_replay_state": "17da8056ad515783991827d276a191bd51c38652c5337882373817c1afbc865c",
+    "e2e4_e7e5_normalized_game": "9b09e48f0862876cbe20bc678bad7fe52607f5e09f4e56646fa25b5884500e87",
+    "src_v1_game_a_ply_1_sample": "bc5d63012a650198a009b31f2d7ffff1afd88400d78e7974eca06c8b2629c1aa",
+    "synthetic_position_1_e2e4_candidate": "48e6e3e68e5344f47c0ec794e5495141489e64858d65bc5c373a993f677021de",
+    "source_id": "879308a8e8bc7b0ec8ab96e16d1948ebc4551a9494703752f0400c8d015841d5",
+    "source_game_id": "8940af26637b1703991f3fb9927433149fa0cb870d7f22a26ab74aa996f1bce4",
+    "fallback_game_id": "c5b984cbbc1e02098f1e79264c2f5ed5808a0fddd9c8342ed647e493cbc5c775",
+    "game_sample_id": "8287fa8ff613dc807fc5bb9a4ac3d0ccfe1176bcc5b4d1388fc58d78461eb9a5",
+    "ply_sample_id": "3cacb199f0dd84c8f0070e3f15f44952d63aa3259c44dd825e262623b3081083",
+    "config_sha256": "18318ce8feb2d2a20832ada099fd5f4687016cff99160abc3e25d3c698d5b3e1",
+    "sample_set_sha256": "1d587b2b1e93048d65e8df41008fa8b8c3c9115d81aba932a318eb827a6c7c2c",
+    "teacher_run_id": "3d28f3b84fc09a6bf514e651d26c0ace125a7f897159f6434f9a63dead6da223",
+    "split_manifest_sha256": "ed1da2f1e4634106bb775c5518254bed61f60e0cf702360ed66575216ecf793a",
+    "release_id": "6f33efb34d4549cec68cfaf1fc5b77a6be2e4646a701e3cae541d446b8e57bd9"
+  },
+  "chess": {
+    "halfmove_clock": {
+      "fen_0": "4k3/8/8/8/8/8/8/R3K3 w - - 0 1",
+      "fen_150": "4k3/8/8/8/8/8/8/R3K3 w - - 150 76",
+      "same_board_signature": true,
+      "different_replay_state": true,
+      "fen_0_game_over": false,
+      "fen_150_game_over": true
+    },
+    "repetition": {
+      "moves_uci": [
+        "g1f3",
+        "g8f6",
+        "f3g1",
+        "f6g8",
+        "g1f3",
+        "g8f6",
+        "f3g1",
+        "f6g8",
+        "g1f3",
+        "g8f6",
+        "f3g1",
+        "f6g8",
+        "g1f3",
+        "g8f6",
+        "f3g1",
+        "f6g8"
+      ],
+      "same_board_signature_as_start": true,
+      "different_replay_state_from_start": true,
+      "automatic_game_over": true
+    },
+    "castling": {
+      "fen_with_rights": "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1",
+      "fen_without_rights": "r3k2r/8/8/8/8/8/8/R3K2R w - - 0 1",
+      "different_board_signatures": true
+    },
+    "en_passant": {
+      "fen_legal_ep": "4k3/8/8/3pP3/8/8/8/4K3 w - d6 0 2",
+      "fen_no_ep": "4k3/8/8/3pP3/8/8/8/4K3 w - - 0 2",
+      "legal_ep_move": "e5d6",
+      "different_board_signatures": true,
+      "fen_phantom_ep": "4k3/8/8/4P3/8/8/8/4K3 w - d6 0 2",
+      "phantom_ep_equals_no_legal_ep_signature": true
+    },
+    "transposition": {
+      "moves_a": [
+        "g1f3",
+        "d7d5",
+        "g2g3",
+        "g8f6"
+      ],
+      "moves_b": [
+        "g2g3",
+        "d7d5",
+        "g1f3",
+        "g8f6"
+      ],
+      "same_board_signature": true,
+      "different_replay_state": true
+    },
+    "duplicate_game_headers": {
+      "moves_uci": [
+        "e2e4",
+        "e7e5"
+      ],
+      "headers_a": {
+        "Event": "Synthetic A",
+        "White": "Player A"
+      },
+      "headers_b": {
+        "Event": "Synthetic B",
+        "White": "Player B"
+      },
+      "source_game_refs": [
+        "source-ref-a",
+        "source-ref-b"
+      ],
+      "same_normalized_game": true,
+      "different_source_game_ids": true
+    },
+    "promotion": {
+      "fen": "7k/P7/8/8/8/8/8/7K w - - 0 1",
+      "legal_promotion_uci": [
+        "a7a8b",
+        "a7a8n",
+        "a7a8q",
+        "a7a8r"
+      ]
+    }
+  },
+  "split": {
+    "seed": 42,
+    "train_group_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "validation_group_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "train_group_assignment": "train",
+    "validation_group_assignment": "validation",
+    "start_board_signature_owner": "train",
+    "candidate_sample_id": "synthetic-position-1",
+    "candidate_split": "validation",
+    "candidate_rows": [
+      "e2e4",
+      "d2d4",
+      "g1f3"
+    ],
+    "holdout_collapse": {
+      "pre_purge_validation_positions": 4,
+      "post_purge_validation_positions": 1,
+      "min_holdout_positions": 2,
+      "minimum_retention_fraction": 0.5,
+      "expected_release_valid": false
+    }
+  },
+  "hash_examples": {
+    "source": {
+      "publisher_key": "lichess",
+      "canonical_source_url": "https://database.lichess.org/",
+      "collection_key": "standard-rated-2022-05"
+    },
+    "config": {
+      "seed": 42,
+      "schema_version": "videochess-dataset/1.0",
+      "max_games": 200,
+      "max_positions": 10000,
+      "max_teacher_positions": 1000,
+      "max_output_bytes": 2147483648,
+      "teacher_enabled": false
+    },
+    "sample_ids": [
+      "sample-b",
+      "sample-a",
+      "sample-a"
+    ],
+    "teacher": {
+      "dataset_release_id": "release-pre-m3-example",
+      "teacher_config_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "engine_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "code_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "engine_license_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    },
+    "split_manifest": {
+      "split_seed": 42,
+      "game_group_assignments": [
+        [
+          "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "validation"
+        ],
+        [
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "train"
+        ]
+      ],
+      "board_signature_owners": [
+        [
+          "board-start",
+          "train"
+        ]
+      ],
+      "purged_sample_partitions": [
+        [
+          "sample-v",
+          "validation",
+          "train"
+        ]
+      ]
+    },
+    "release": {
+      "source_archive_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "schema_versions": [
+        "videochess-game/1.0",
+        "videochess-position/1.0"
+      ],
+      "config_sha256": "18318ce8feb2d2a20832ada099fd5f4687016cff99160abc3e25d3c698d5b3e1",
+      "code_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "split_assignment_sha256": "ed1da2f1e4634106bb775c5518254bed61f60e0cf702360ed66575216ecf793a",
+      "outputs": [
+        [
+          "positions.jsonl",
+          2,
+          "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        ],
+        [
+          "games.jsonl",
+          1,
+          "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        ]
+      ]
+    }
+  }
+}

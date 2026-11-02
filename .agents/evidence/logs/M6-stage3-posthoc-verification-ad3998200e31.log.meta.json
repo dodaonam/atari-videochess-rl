@@ -1,0 +1,22 @@
+{
+  "artifact_file_count": 4540,
+  "attempt_count": 35,
+  "command": "Verify Stage 3 run hash chain, rederive summaries from raw traces, and verify the complete run artifact manifest with videochess_rl.m6.campaign.summarize_run",
+  "completed_at_utc": "2026-10-30T17:29:33Z",
+  "configuration_identity": {
+    "m6_config_sha256": "05aedeb30efb8b6b97667c44f9d606b58d4da8ae20800d4ef143e629420cebac",
+    "run_id": "m6-stage3-ad3998200e31-c5ff389dc4fe",
+    "run_manifest_sha256": "17491f1a82eacffda9189179cc63b2ebff422136d07925de1fb39a2bcff897e8"
+  },
+  "executed_at_utc": "2026-10-30T17:28:45Z",
+  "execution_environment": "Local CPU; Python 3.12.3; post-run offline verification; no ALE gameplay or policy inference.",
+  "exit_code": 0,
+  "git_revision": "ad3998200e31e77b292ffc1138d02354f188bf5f",
+  "ledger_event_count": 839785,
+  "log_path": ".agents/evidence/logs/M6-stage3-posthoc-verification-ad3998200e31.log",
+  "log_sha256": "1705a4776cd0b05001f8eb5a6988c972f03a1aeb1d26f38e8794f6fe13af0708",
+  "maximum_resident_set_kib": 4808248,
+  "result": "PASS: 35 retained Stage 3 attempts, raw trace and artifact hashes verified.",
+  "verified_trace_count": 35,
+  "wall_elapsed_seconds": 47.331
+}

@@ -1,0 +1,13 @@
+Pre-M4 full repository unittest run
+Revision: 234e550c58e92c7ac3cc5560c03176df57add471
+Started UTC: 2026-10-22T15:27:05Z
+Finished UTC: 2026-10-22T15:28:27.251Z
+Command: /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v
+Output was redirected to /tmp/PRE-M4-full-234e550.log 2>&1.
+Exit code: 1
+Result: 237 tests ran in 81.775 seconds; 236 passed and one failed.
+The only failure was tests.test_m0_smoke.M0EnvironmentSmokeTests.test_stockfish_answers_uci_readiness_without_searching: the clean environment has no Stockfish executable on PATH. No binary was installed or substituted.
+The exact-commit clean-clone recovery test passed: test_agent_context.AgentContextRecoveryTests.test_clean_clone_recovers_current_committed_state_without_local_artifacts.
+Pre-M4 contract tests: 10 passed, including automatic fivefold-repetition and seventy-five-move terminal cases. M2 simulator tests: 37 passed. M3 data tests: 32 passed. The three RSK-010 checkpoint compaction/no-op/size-guard tests passed.
+The M3 synthetic teacher test emits expected malformed-PV parser diagnostics while verifying its negative case; that test passed.
+SHA-256 of the unmodified raw captured output: b79952aaca2d5e73fd5e37c1b95170a5317b2566fc193c3139dab28a0464a977

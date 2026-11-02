@@ -1,0 +1,40 @@
+Agent context preflight: PASS
+Governance: G2 (approved); approved: G0, G1, G2
+Next engineering milestone: M3 — in_progress
+Active task: M3-001 — Build and verify the expert dataset
+Active task next action: Codex: complete the authorized final M3 closure checks NEW-01 through NEW-04 and E-01, regenerate only artifacts invalidated by the frozen code identity, and then return PR #3 open/unmerged for independent PM acceptance. Keep G3 unapproved; do not begin M4–M7.
+Next task: M3-001 (in_progress) — Build and verify the expert dataset
+Next task dependencies: M2-001
+Next task acceptance criteria: M3-01, M3-02, M3-03, M3-04
+Tasks: done=11, in_progress=1, pending=0, blocked=0, cancelled=0
+Completed task IDs: G1-001, G1-002, G1-003, G1-004, G1-005, G1-006, G1-007, G1-008, M0-001, M1-001, M2-001
+In progress task IDs: M3-001
+Pending task IDs: none
+Blocked task IDs: none
+Active blockers: none recorded
+Open confirmations:
+  O-01: Assignment/instructor rules for ALE observation extraction/action wrappers, custom PyTorch RL, and offline engine evaluation. The owner explicitly authorized Stockfish only for bounded offline training/teacher labeling in this M3 project scope.
+  O-02: Whether full-game performance on actual ALE is a hard submission requirement or a research target with an accepted fallback.
+  O-03: Future course checkpoints and any date changes. The owner confirmed the presentation date is Tuesday, 2026-11-03.
+  O-04: Actual Colab entitlement/quota, GPU availability, cloud storage, and whether paid compute is allowed. The owner selected local CPU for M3; no external compute/storage is used in this mission.
+  O-05: ALE/ROM runtime behavior, RAM mapping, game modes, difficulty behavior, and official evaluation settings.
+  O-06: Public redistribution rights and any new source/use beyond the scoped May 2022 archive. For M3, the owner authorized bounded internal academic use of the exact Lichess Elite May 2022 package with local retention and no redistribution; its third-party package license remains unstated/unverified.
+  O-07: Broader Stockfish roles: benchmark opponent, offline engine evaluation, and instructor-specific limits outside the M3 teacher-label scope.
+  O-08: Opponent pool and rating method for any Elo claim.
+Relevant decisions: docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md, docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md
+Acceptance criteria recognized: 51
+Last verified Git: feature/m3-expert-dataset @ 147eeb8381851de665ecb37ed237ef1dfb1595bb
+Live Git: feature/m3-expert-dataset @ 40cd4e88bcaf987033a27f5f73995c5f44f21fb5
+Roadmap source: exact match; 19 sections; SHA-256 fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf
+Git recovery: expected commit/checkout transition; portable tracked-file manifest matches.
+Workspace Git status: differs from checkpoint
+Portable tracked baseline: matches
+Portable Git index: matches checkpoint
+Hashed ordinary-file snapshot: matches
+Content hashes: 217 ordinary files verified by SHA-256.
+Not content-verified by this hash map: PROJECT_STATE self-reference, chat history/credential-like paths, temp files, symlinks, and the excluded directories listed below.
+Excluded directories: artifacts, tests/__pycache__, videochess_rl/__pycache__, videochess_rl/data/__pycache__
+Artifact directories requiring independent manifests: artifacts
+Last verified dirty paths (0): none
+Next user action: Independently review M3 PR #3 (https://github.com/dodaonam/atari-videochess-rl/pull/3) against M3-01 through M3-04; leave it open and unmerged until acceptance. G3 remains unapproved. Do not start M4–M7 without separate authorization.
+WARNING ARTIFACT_MANIFEST_REQUIRED [.]: Artifact/data directories are excluded from content hashing and require independent manifest verification: artifacts.

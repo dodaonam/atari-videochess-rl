@@ -1,0 +1,12 @@
+command: /usr/bin/python3 .agents/evidence/logs/M7-005-private-content-scan-20261101.py
+source_revision: 545c95589b078f5249951d3d869b4eb42fb0f96a
+working_tree: final G5-F01 documentation/evidence follow-up pending commit
+started_at_utc: 2026-11-01T10:24:11+00:00
+finished_at_utc: 2026-11-01T10:24:11+00:00
+exit_code: 0
+
+source_revision=545c95589b078f5249951d3d869b4eb42fb0f96a
+added_tracked_lines=12828
+untracked_text_and_task_logs=49
+concrete_path_or_credential_matches=[]
+restricted_payload_suffixes=[]

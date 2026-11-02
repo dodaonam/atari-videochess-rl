@@ -1,0 +1,83 @@
+--- recovered/replay.py
++++ current/replay.py
+@@ -92,7 +92,7 @@
+         self.path = Path(path)
+         self.path.parent.mkdir(parents=True, exist_ok=True)
+         if self.path.exists():
+-            if verify_existing: self.verify()
++            if verify_existing: self.verify(retain_last=0)
+             with self.path.open("rb") as stream:
+                 stream.seek(max(0, self.path.stat().st_size - 8192))
+                 tail = stream.read().splitlines()
+@@ -119,26 +119,52 @@
+         self.chain_sha256 = record["chain_sha256"]
+         return {"record_count": self.record_count, "chain_sha256": self.chain_sha256, "file_bytes": self.path.stat().st_size}
+␠
+-    def verify(self, *, record_count: int | None = None, chain_sha256: str | None = None) -> tuple[Transition, ...]:
+-        rows: list[Transition] = []
++    def verify(self, *, record_count: int | None = None, chain_sha256: str | None = None,
++               retain_last: int | None = None) -> tuple[Transition, ...]:
++        """Verify a journal prefix, optionally reconstructing only its replay tail.
++
++        Hash-chain verification always covers every requested record. During
++        checkpoint recovery, records older than the replay capacity are no
++        longer part of the learner's state, so rebuilding their chess boards
++        is unnecessary. ``retain_last`` keeps the full integrity check while
++        materializing only the newest bounded replay window.
++        """
++        if retain_last is not None and (type(retain_last) is not int or retain_last < 0):
++            raise ValueError("retain_last must be a nonnegative integer or None")
++        rows: list[Transition] | deque[bytes]
++        if retain_last is None:
++            rows = []
++        else:
++            rows = deque(maxlen=retain_last)
+         previous = "0" * 64
+-        raw_lines = self.path.read_bytes().splitlines()
+-        if record_count is not None and not 0 <= record_count <= len(raw_lines):
+-            raise ValueError("journal prefix count exceeds available records")
+-        stop = len(raw_lines) if record_count is None else record_count
+-        for index, raw in enumerate(raw_lines[:stop]):
+-            record = json.loads(raw)
+-            if record.get("schema") != JOURNAL_SCHEMA or record.get("previous") != previous:
+-                raise ValueError(f"replay journal chain mismatch at record {index}")
+-            payload = {key: record[key] for key in ("schema", "previous", "transition")}
+-            expected = hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()).hexdigest()
+-            if record.get("chain_sha256") != expected:
+-                raise ValueError(f"replay journal digest mismatch at record {index}")
+-            row = Transition.from_json(record["transition"])
+-            rows.append(row)
+-            previous = expected
++        processed = 0
++        with self.path.open("rb") as stream:
++            for index, raw_line in enumerate(stream):
++                if record_count is not None and index >= record_count:
++                    break
++                raw = raw_line.rstrip(b"\r\n")
++                record = json.loads(raw)
++                if not isinstance(record, dict) or record.get("schema") != JOURNAL_SCHEMA or record.get("previous") != previous:
++                    raise ValueError(f"replay journal chain mismatch at record {index}")
++                transition = record.get("transition")
++                if not isinstance(transition, dict) or transition.get("schema") != TRANSITION_SCHEMA:
++                    raise ValueError(f"replay journal transition schema mismatch at record {index}")
++                payload = {key: record[key] for key in ("schema", "previous", "transition")}
++                expected = hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()).hexdigest()
++                if record.get("chain_sha256") != expected:
++                    raise ValueError(f"replay journal digest mismatch at record {index}")
++                if retain_last is None:
++                    rows.append(Transition.from_json(transition))
++                elif retain_last:
++                    # Keep raw bytes, not full history-bearing Transition objects,
++                    # until the pinned prefix has passed its chain check.
++                    rows.append(raw)
++                previous = expected
++                processed += 1
++        if record_count is not None and processed != record_count:
++            raise ValueError("replay journal prefix count exceeds available records")
+         if chain_sha256 is not None and previous != chain_sha256:
+             raise ValueError("replay journal checkpoint head mismatch")
+-        if record_count is None and stop != len(raw_lines):
+-            raise ValueError("replay journal contains an incomplete trailing record")
++        if retain_last is not None and retain_last:
++            rows = [Transition.from_json(json.loads(raw)["transition"]) for raw in rows]
+         return tuple(rows)

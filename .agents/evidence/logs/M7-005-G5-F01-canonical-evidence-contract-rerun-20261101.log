@@ -1,0 +1,26 @@
+command: PROJECT_VENV_PYTHON -m unittest tests.test_agent_context.AgentContextRecoveryTests.test_direct_m3_authorization_is_preserved_across_milestone_completion tests.test_agent_context.AgentContextRecoveryTests.test_m6_pm_acceptance_is_historical_and_g4_is_now_approved_for_m7_evaluation tests.test_agent_context.AgentContextRecoveryTests.test_m7_001_through_m7_005_engineering_done_and_g5_remains_unapproved tests.test_agent_context.AgentContextRecoveryTests.test_preflight_discovers_every_documented_acceptance_criterion tests.test_agent_context.AgentContextRecoveryTests.test_project_context_can_be_recovered_without_chat_history -v
+interpreter: Python 3.12.3; existing project virtualenv (host path redacted)
+source_revision: 0d3ee8221698f52bf2c7658657e505900ab5485d
+working_tree: M7-005 remediation documentation present
+started_at_utc: 2026-11-01T10:16:56+00:00
+finished_at_utc: 2026-11-01T10:17:10+00:00
+exit_code: 1
+
+test_direct_m3_authorization_is_preserved_across_milestone_completion (tests.test_agent_context.AgentContextRecoveryTests.test_direct_m3_authorization_is_preserved_across_milestone_completion) ... ok
+test_m6_pm_acceptance_is_historical_and_g4_is_now_approved_for_m7_evaluation (tests.test_agent_context.AgentContextRecoveryTests.test_m6_pm_acceptance_is_historical_and_g4_is_now_approved_for_m7_evaluation) ... ok
+test_m7_001_through_m7_005_engineering_done_and_g5_remains_unapproved (tests.test_agent_context.AgentContextRecoveryTests.test_m7_001_through_m7_005_engineering_done_and_g5_remains_unapproved) ... ok
+test_preflight_discovers_every_documented_acceptance_criterion (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_discovers_every_documented_acceptance_criterion) ... ok
+test_project_context_can_be_recovered_without_chat_history (tests.test_agent_context.AgentContextRecoveryTests.test_project_context_can_be_recovered_without_chat_history) ... FAIL
+
+======================================================================
+FAIL: test_project_context_can_be_recovered_without_chat_history (tests.test_agent_context.AgentContextRecoveryTests.test_project_context_can_be_recovered_without_chat_history)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>/tests/test_agent_context.py", line 1764, in test_project_context_can_be_recovered_without_chat_history
+    self.assertTrue(summary["git_snapshot_matches"])
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 5 tests in 13.308s
+
+FAILED (failures=1)

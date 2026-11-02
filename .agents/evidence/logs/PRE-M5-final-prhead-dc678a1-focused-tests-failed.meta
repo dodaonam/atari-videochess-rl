@@ -1,0 +1,9 @@
+check=focused_tests_diagnostic_not_counted
+revision=dc678a115424d6718e37845c6d2fc1710a7d6644
+start_utc=2026-10-28T05:09:50.307126Z
+end_utc=2026-10-28T05:10:26.041219Z
+exit_code=1
+test_count=127
+failing_test=tests.test_m3_data.M3ContractTests.test_synthetic_end_to_end_release_is_reconstructible_and_hashed
+reason=One-second max_elapsed test allowance expired during source parsing (1.068s) before the intended statistics-stage delay. This run is preserved and not counted.
+log=.agents/evidence/logs/PRE-M5-final-prhead-dc678a1-focused-tests-failed.log

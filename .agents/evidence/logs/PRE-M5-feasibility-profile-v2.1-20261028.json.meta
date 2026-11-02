@@ -1,0 +1,13 @@
+check=cpu_feasibility_profile
+revision=d4fe2ad3fa3936faecddcdba0e976e16cdeabd42
+start_utc=2026-10-28T06:59:32.645163+00:00
+end_utc=2026-10-28T07:03:46.623530+00:00
+duration_seconds=252.624909
+exit_code=0
+command=PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/profile_m5_feasibility_v2.py --checkpoint /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4/pretrained-behavior-only.pt --release /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6 --max-seconds 840.0 > /tmp/PRE-M5-feasibility-profile-v2.1-final.json 2> /tmp/PRE-M5-feasibility-profile-v2.1-final.stderr
+environment=Existing pinned Python 3.12.3 CPU venv; PyTorch 2.14.1+cpu; NumPy 2.5.4; python-chess 1.11.2; Linux x86_64; CPU only; no dependency changes.
+result=videochess-pre-m5-feasibility-profile/2.1; final representative workload profile; result JSON written to the stated temporary path and copied byte-for-byte here.
+peak_rss_bytes=637243392
+output_sha256=fa863eacaf4afaeed69bcde554e5935bc3690c4a544f8634e92ce02591a96b4f
+stderr=empty; source stderr file SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+timestamp_provenance=For v2 profiles, UTC start/end are the captured stderr/result-file creation/modification timestamps; internal measured duration is preserved separately in the JSON. The mini-profile also records its own start and monotonic elapsed duration.

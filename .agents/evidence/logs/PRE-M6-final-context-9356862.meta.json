@@ -1,0 +1,21 @@
+{
+  "command": "python -m unittest discover -s tests -p test_agent_context.py -v",
+  "completed_at_utc": "2026-10-30T13:49:12Z",
+  "counts": {
+    "duration_seconds": 42.275,
+    "failed": 0,
+    "passed": 53,
+    "skipped": 0,
+    "tests": 53
+  },
+  "environment": {
+    "dependency_lock_sha256": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+    "git_head": "9356862d17ff4c43dccdda0333525655b1b34cc3",
+    "platform": "Linux x86_64; existing local CPU environment",
+    "python": "3.12.3"
+  },
+  "exit_code": 0,
+  "log_sha256": "967a3f9d8e08acd1d50b59f7c4ec5f564be32e976d729ba6b9ad9efe61fcba11",
+  "result": "PASS",
+  "sanitized_log_path": ".agents/evidence/logs/PRE-M6-final-context-9356862.log"
+}

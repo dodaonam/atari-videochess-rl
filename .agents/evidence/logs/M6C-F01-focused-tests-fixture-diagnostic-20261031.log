@@ -1,0 +1,371 @@
+command: PYTHONDONTWRITEBYTECODE=1 /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_agent_context tests.test_checkpoint_history tests.test_m6_campaign tests.test_m6_v2_raw_audit -v
+result: FAIL: focused regression suite; see output.
+Exit code: 1
+execution_environment: clean detached worktree; local CPU; pre-existing project virtual environment; Python 3.12.3
+git_head: 29b3dcdfcdd21a454e4faa3778336249e76b92e6
+git_tree: b729877949aaa0dcbbc8bb4ddeb13813e210dc2a
+started_at_utc: 2026-10-31T08:35:51.806407+00:00
+completed_at_utc: 2026-10-31T08:36:47.268771+00:00
+wall_elapsed_seconds: 55.462
+unittest_seconds: 20.821
+
+--- unittest output ---
+test_blocked_task_must_reference_an_active_blocker (tests.test_agent_context.AgentContextRecoveryTests.test_blocked_task_must_reference_an_active_blocker) ... ok
+test_checkpoint_compacts_serialization_without_changing_history (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_compacts_serialization_without_changing_history) ... ok
+test_checkpoint_is_consistent_after_one_run_from_clean_worktree (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_is_consistent_after_one_run_from_clean_worktree) ... ok
+test_checkpoint_repairs_stale_handoff_pointer (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_repairs_stale_handoff_pointer) ... ok
+test_checkpoint_rolls_back_provisional_files_after_final_size_guard_failure (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_rolls_back_provisional_files_after_final_size_guard_failure) ... ok
+test_checkpoint_rolls_back_provisional_files_after_final_snapshot_failure (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_rolls_back_provisional_files_after_final_snapshot_failure) ... ok
+test_checkpoint_size_limit_fails_before_state_or_workspace_mutation (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_size_limit_fails_before_state_or_workspace_mutation) ... ok
+test_clean_clone_recovers_current_committed_state_without_local_artifacts (tests.test_agent_context.AgentContextRecoveryTests.test_clean_clone_recovers_current_committed_state_without_local_artifacts) ... FAIL
+test_clean_clone_recovers_g2_and_future_milestone_transitions (tests.test_agent_context.AgentContextRecoveryTests.test_clean_clone_recovers_g2_and_future_milestone_transitions) ... ok
+test_completed_task_must_have_empty_next_action (tests.test_agent_context.AgentContextRecoveryTests.test_completed_task_must_have_empty_next_action) ... ok
+test_completed_task_requires_existing_evidence (tests.test_agent_context.AgentContextRecoveryTests.test_completed_task_requires_existing_evidence) ... ok
+test_context_ci_runs_m5_fixture_as_a_contract_oracle (tests.test_agent_context.AgentContextRecoveryTests.test_context_ci_runs_m5_fixture_as_a_contract_oracle) ... ok
+test_direct_m3_authorization_is_preserved_across_milestone_completion (tests.test_agent_context.AgentContextRecoveryTests.test_direct_m3_authorization_is_preserved_across_milestone_completion) ... ok
+test_done_task_cannot_rely_only_on_historical_unverified_evidence (tests.test_agent_context.AgentContextRecoveryTests.test_done_task_cannot_rely_only_on_historical_unverified_evidence) ... ok
+test_dry_run_with_partial_recovery_does_not_mutate_files (tests.test_agent_context.AgentContextRecoveryTests.test_dry_run_with_partial_recovery_does_not_mutate_files) ... ok
+test_future_milestone_bullet_criteria_are_valid_task_references (tests.test_agent_context.AgentContextRecoveryTests.test_future_milestone_bullet_criteria_are_valid_task_references) ... ok
+test_g1_cannot_be_ready_with_incomplete_g1_tasks (tests.test_agent_context.AgentContextRecoveryTests.test_g1_cannot_be_ready_with_incomplete_g1_tasks) ... ok
+test_git_ignored_zip_is_still_content_hashed (tests.test_agent_context.AgentContextRecoveryTests.test_git_ignored_zip_is_still_content_hashed) ... ok
+test_historical_baseline_checksum_detects_record_mutation (tests.test_agent_context.AgentContextRecoveryTests.test_historical_baseline_checksum_detects_record_mutation) ... ok
+test_historical_baseline_is_not_recompared_to_current_files (tests.test_agent_context.AgentContextRecoveryTests.test_historical_baseline_is_not_recompared_to_current_files) ... ok
+test_historical_g1_recovery_matches_recorded_baseline (tests.test_agent_context.AgentContextRecoveryTests.test_historical_g1_recovery_matches_recorded_baseline) ... ok
+test_ignored_cache_generation_does_not_create_source_content_drift (tests.test_agent_context.AgentContextRecoveryTests.test_ignored_cache_generation_does_not_create_source_content_drift) ... ok
+test_json_output_is_machine_readable_and_paths_are_portable (tests.test_agent_context.AgentContextRecoveryTests.test_json_output_is_machine_readable_and_paths_are_portable) ... ok
+test_large_files_and_artifact_directories_are_reported_once_and_separately (tests.test_agent_context.AgentContextRecoveryTests.test_large_files_and_artifact_directories_are_reported_once_and_separately) ... ok
+test_m0_cannot_be_authorized_before_g1_approval (tests.test_agent_context.AgentContextRecoveryTests.test_m0_cannot_be_authorized_before_g1_approval) ... ok
+test_m3_authorization_does_not_change_governance_approvals (tests.test_agent_context.AgentContextRecoveryTests.test_m3_authorization_does_not_change_governance_approvals) ... ok
+test_m4_authorization_can_be_ready_without_claiming_implementation_started (tests.test_agent_context.AgentContextRecoveryTests.test_m4_authorization_can_be_ready_without_claiming_implementation_started) ... ok
+test_m5_verified_command_log_must_be_tracked_for_clean_clone (tests.test_agent_context.AgentContextRecoveryTests.test_m5_verified_command_log_must_be_tracked_for_clean_clone) ... ok
+test_m6_closeout_verified_provenance_is_bound_to_committed_files_and_logs (tests.test_agent_context.AgentContextRecoveryTests.test_m6_closeout_verified_provenance_is_bound_to_committed_files_and_logs) ... ok
+test_m6_pm_acceptance_closes_task_without_approving_g4_or_authorizing_m7 (tests.test_agent_context.AgentContextRecoveryTests.test_m6_pm_acceptance_closes_task_without_approving_g4_or_authorizing_m7) ... ok
+test_manual_session_evidence_requires_sanitized_record_and_revision (tests.test_agent_context.AgentContextRecoveryTests.test_manual_session_evidence_requires_sanitized_record_and_revision) ... ok
+test_partial_state_file_is_detected_and_recovered (tests.test_agent_context.AgentContextRecoveryTests.test_partial_state_file_is_detected_and_recovered) ... ok
+test_pr_review_policy_explicitly_separates_codex_and_pm_authority (tests.test_agent_context.AgentContextRecoveryTests.test_pr_review_policy_explicitly_separates_codex_and_pm_authority) ... ok
+test_preflight_detects_content_change_inside_existing_dirty_path (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_detects_content_change_inside_existing_dirty_path) ... ok
+test_preflight_detects_gate_coverage_used_as_its_own_start_prerequisite (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_detects_gate_coverage_used_as_its_own_start_prerequisite) ... ok
+test_preflight_detects_roadmap_source_mismatch (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_detects_roadmap_source_mismatch) ... ok
+test_preflight_discovers_every_documented_acceptance_criterion (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_discovers_every_documented_acceptance_criterion) ... ok
+test_preflight_finds_broken_markdown_link (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_finds_broken_markdown_link) ... ok
+test_preflight_recovers_project_state_without_conversation (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_recovers_project_state_without_conversation) ... ok
+test_preflight_rejects_dependency_cycle (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_rejects_dependency_cycle) ... ok
+test_preflight_rejects_invalid_state_schema (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_rejects_invalid_state_schema) ... ok
+test_preflight_reports_dirty_worktree_and_checkpoint_refreshes_it (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_reports_dirty_worktree_and_checkpoint_refreshes_it) ... ok
+test_preflight_reports_files_it_could_not_hash (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_reports_files_it_could_not_hash) ... ok
+test_preflight_reports_malformed_git_snapshot_without_crashing (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_reports_malformed_git_snapshot_without_crashing) ... ok
+test_preflight_reports_malformed_task_status_without_crashing (tests.test_agent_context.AgentContextRecoveryTests.test_preflight_reports_malformed_task_status_without_crashing) ... ok
+test_project_context_can_be_recovered_without_chat_history (tests.test_agent_context.AgentContextRecoveryTests.test_project_context_can_be_recovered_without_chat_history) ... ok
+test_repeated_checkpoint_does_not_append_unchanged_snapshot (tests.test_agent_context.AgentContextRecoveryTests.test_repeated_checkpoint_does_not_append_unchanged_snapshot) ... ok
+test_staging_checkpoint_control_files_does_not_create_snapshot_drift (tests.test_agent_context.AgentContextRecoveryTests.test_staging_checkpoint_control_files_does_not_create_snapshot_drift) ... ok
+test_start_authorized_boolean_without_direct_record_is_rejected (tests.test_agent_context.AgentContextRecoveryTests.test_start_authorized_boolean_without_direct_record_is_rejected) ... ok
+test_state_blocker_index_must_match_active_blocker_records (tests.test_agent_context.AgentContextRecoveryTests.test_state_blocker_index_must_match_active_blocker_records) ... ok
+test_tracked_content_drift_is_detected_without_a_status_path_change (tests.test_agent_context.AgentContextRecoveryTests.test_tracked_content_drift_is_detected_without_a_status_path_change) ... ok
+test_verified_command_evidence_must_match_retained_log (tests.test_agent_context.AgentContextRecoveryTests.test_verified_command_evidence_must_match_retained_log) ... ok
+test_verified_command_evidence_requires_timestamp_revision_exit_and_log (tests.test_agent_context.AgentContextRecoveryTests.test_verified_command_evidence_requires_timestamp_revision_exit_and_log) ... ok
+test_verified_command_evidence_with_provenance_passes (tests.test_agent_context.AgentContextRecoveryTests.test_verified_command_evidence_with_provenance_passes) ... ok
+test_append_after_migration_is_lossless_and_unchanged_repeat_is_noop (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_append_after_migration_is_lossless_and_unchanged_repeat_is_noop) ... ok
+test_checkpoint_archive_failure_restores_all_canonical_and_archive_files (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_checkpoint_archive_failure_restores_all_canonical_and_archive_files) ... ok
+test_checkpoint_state_write_failure_rolls_back_archive_append (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_checkpoint_state_write_failure_rolls_back_archive_append) ... ok
+test_clean_clone_recovers_migrated_archive_without_local_workspace_state (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_clean_clone_recovers_migrated_archive_without_local_workspace_state) ... ok
+test_duplicate_append_does_not_insert_same_record_twice (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_duplicate_append_does_not_insert_same_record_twice) ... ok
+test_duplicate_legacy_ids_are_rejected_without_mutation (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_duplicate_legacy_ids_are_rejected_without_mutation) ... ok
+test_empty_and_single_inline_histories_preserve_current_checkpoint (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_empty_and_single_inline_histories_preserve_current_checkpoint) ... ok
+test_failure_writing_archive_leaves_legacy_state_unchanged (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_failure_writing_archive_leaves_legacy_state_unchanged) ... ok
+test_failure_writing_canonical_state_rolls_back_new_archive_files (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_failure_writing_canonical_state_rolls_back_new_archive_files) ... ok
+test_interrupted_migration_is_detected_and_can_resume_idempotently (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_interrupted_migration_is_detected_and_can_resume_idempotently) ... ok
+test_invalid_gzip_stream_is_reported_as_archive_corruption (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_invalid_gzip_stream_is_reported_as_archive_corruption) ... ok
+test_malformed_legacy_history_is_rejected_without_mutation (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_malformed_legacy_history_is_rejected_without_mutation) ... ok
+test_manifest_rejects_boolean_schema_versions_and_counts (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_manifest_rejects_boolean_schema_versions_and_counts) ... ok
+test_migration_is_idempotent_and_does_not_duplicate_history (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_migration_is_idempotent_and_does_not_duplicate_history) ... ok
+test_migration_preserves_every_record_and_original_state_byte_exactly (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_migration_preserves_every_record_and_original_state_byte_exactly) ... ok
+test_missing_or_corrupted_archive_is_rejected_but_source_state_can_be_restored (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_missing_or_corrupted_archive_is_rejected_but_source_state_can_be_restored) ... ok
+test_partial_archive_write_after_replace_is_detected_and_resumable (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_partial_archive_write_after_replace_is_detected_and_resumable) ... ok
+test_pending_manifest_append_rolls_forward_only_when_checkpoint_matches (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_pending_manifest_append_rolls_forward_only_when_checkpoint_matches) ... ok
+test_pending_orphan_segment_recovers_from_current_checkpoint (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_pending_orphan_segment_recovers_from_current_checkpoint) ... ok
+test_portable_state_checksum_matches_preflight_for_unicode (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_portable_state_checksum_matches_preflight_for_unicode) ... ok
+test_preview_does_not_mutate_loaded_state (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_preview_does_not_mutate_loaded_state) ... ok
+test_retry_finalizes_migration_after_interrupted_post_switch_checkpoint (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_retry_finalizes_migration_after_interrupted_post_switch_checkpoint) ... ok
+test_segment_boundary_splits_at_sixteen_records (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_segment_boundary_splits_at_sixteen_records) ... ok
+test_segment_byte_tampering_and_manifest_hash_tampering_are_detected (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_segment_byte_tampering_and_manifest_hash_tampering_are_detected) ... ok
+test_stale_handoff_after_migration_is_detected_and_checkpoint_repairs_it (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_stale_handoff_after_migration_is_detected_and_checkpoint_repairs_it) ... ok
+test_unchanged_checkpoint_rejects_corrupt_archive_before_noop (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_unchanged_checkpoint_rejects_corrupt_archive_before_noop) ... ok
+test_unreferenced_archive_backup_is_detected (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_unreferenced_archive_backup_is_detected) ... ok
+test_unreferenced_file_in_valid_archive_is_detected (tests.test_checkpoint_history.CheckpointHistoryArchiveTests.test_unreferenced_file_in_valid_archive_is_detected) ... ok
+test_debug_and_default_profiles_are_separate (tests.test_m6_campaign.M6CampaignPlanTests.test_debug_and_default_profiles_are_separate) ... ok
+test_frozen_stage3_seed_roster_counts_and_paired_order (tests.test_m6_campaign.M6CampaignPlanTests.test_frozen_stage3_seed_roster_counts_and_paired_order) ... ok
+test_global_gameplay_budget_counts_all_stage_attempt_records (tests.test_m6_campaign.M6CampaignPlanTests.test_global_gameplay_budget_counts_all_stage_attempt_records) ... ok
+test_installed_ale_honors_explicit_v2_horizon_without_reset_or_step (tests.test_m6_campaign.M6CampaignPlanTests.test_installed_ale_honors_explicit_v2_horizon_without_reset_or_step) ... A.L.E: Arcade Learning Environment (version 0.11.2+ecc1138)
+[Powered by Stella]
+ok
+test_installed_runtime_matches_committed_dependency_lock (tests.test_m6_campaign.M6CampaignPlanTests.test_installed_runtime_matches_committed_dependency_lock) ... ok
+test_interrupted_after_reset_is_sealed_without_guessing_or_replaying (tests.test_m6_campaign.M6CampaignPlanTests.test_interrupted_after_reset_is_sealed_without_guessing_or_replaying) ... ok
+test_relative_artifact_root_is_normalized_before_trace_paths_are_built (tests.test_m6_campaign.M6CampaignPlanTests.test_relative_artifact_root_is_normalized_before_trace_paths_are_built) ... ok
+test_run_manifest_serializes_schema_specific_campaign_budget_scope (tests.test_m6_campaign.M6CampaignPlanTests.test_run_manifest_serializes_schema_specific_campaign_budget_scope) ... ok
+test_stage3_roster_pins_exact_accepted_checkpoint_identities (tests.test_m6_campaign.M6CampaignPlanTests.test_stage3_roster_pins_exact_accepted_checkpoint_identities) ... ok
+test_stage3_v2_rejects_roster_and_underlying_horizon_drift (tests.test_m6_campaign.M6CampaignPlanTests.test_stage3_v2_rejects_roster_and_underlying_horizon_drift) ... ok
+test_stage3_v2_schedule_is_exactly_paired_and_preordered (tests.test_m6_campaign.M6CampaignPlanTests.test_stage3_v2_schedule_is_exactly_paired_and_preordered) ... ok
+test_v1_and_v2_frame_and_wall_limits_are_versioned_separately (tests.test_m6_campaign.M6CampaignPlanTests.test_v1_and_v2_frame_and_wall_limits_are_versioned_separately) ... ok
+test_v2_campaign_uses_isolated_artifact_namespace_and_its_own_limits (tests.test_m6_campaign.M6CampaignPlanTests.test_v2_campaign_uses_isolated_artifact_namespace_and_its_own_limits) ... ok
+test_v2_gameplay_budget_arithmetic_excludes_separate_diagnostic_root (tests.test_m6_campaign.M6CampaignPlanTests.test_v2_gameplay_budget_arithmetic_excludes_separate_diagnostic_root) ... ok
+test_v2_manifest_scope_rejects_missing_or_conflicting_metadata (tests.test_m6_campaign.M6CampaignPlanTests.test_v2_manifest_scope_rejects_missing_or_conflicting_metadata) ... ok
+test_v2_policy_roster_loader_returns_only_the_two_frozen_m5_policies (tests.test_m6_campaign.M6CampaignPlanTests.test_v2_policy_roster_loader_returns_only_the_two_frozen_m5_policies) ... ok
+test_versioned_stage3_configuration_matches_authorized_limits (tests.test_m6_campaign.M6CampaignPlanTests.test_versioned_stage3_configuration_matches_authorized_limits) ... ok
+test_artifact_root_report_is_portable_and_repository_relative (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_artifact_root_report_is_portable_and_repository_relative) ... ok
+test_external_artifact_root_report_does_not_expose_host_path (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_external_artifact_root_report_does_not_expose_host_path) ... ok
+test_frozen_schedule_reconstructs_predeclared_order (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_frozen_schedule_reconstructs_predeclared_order) ... ok
+test_latency_summary_uses_ordered_raw_observations (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_latency_summary_uses_ordered_raw_observations) ... ok
+test_ledger_chain_verifies_and_detects_payload_mutation (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_ledger_chain_verifies_and_detects_payload_mutation) ... ok
+test_outcome_classification_requires_finite_reward_and_ale_flags (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_outcome_classification_requires_finite_reward_and_ale_flags) ... ok
+test_safe_relative_path_rejects_traversal_and_absolute_paths (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_safe_relative_path_rejects_traversal_and_absolute_paths) ... ok
+test_trace_chain_verifies_and_detects_trace_mutation (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_trace_chain_verifies_and_detects_trace_mutation) ... ok
+test_tree_manifest_rejects_unlisted_files_and_symlinks (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_tree_manifest_rejects_unlisted_files_and_symlinks) ... ok
+test_tree_manifest_verifies_content_and_rejects_tampering (tests.test_m6_v2_raw_audit.M6V2RawAuditTests.test_tree_manifest_verifies_content_and_rejects_tampering) ... ok
+
+======================================================================
+FAIL: test_clean_clone_recovers_current_committed_state_without_local_artifacts (tests.test_agent_context.AgentContextRecoveryTests.test_clean_clone_recovers_current_committed_state_without_local_artifacts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/atari-m6c-clean-verify/tests/test_agent_context.py", line 815, in test_clean_clone_recovers_current_committed_state_without_local_artifacts
+    self.assertEqual(clone_tests.returncode, 0, clone_tests.stdout + clone_tests.stderr)
+AssertionError: 1 != 0 : test_blocked_task_must_reference_an_active_blocker (test_agent_context.AgentContextRecoveryTests.test_blocked_task_must_reference_an_active_blocker) ... ok
+test_checkpoint_compacts_serialization_without_changing_history (test_agent_context.AgentContextRecoveryTests.test_checkpoint_compacts_serialization_without_changing_history) ... ok
+test_checkpoint_is_consistent_after_one_run_from_clean_worktree (test_agent_context.AgentContextRecoveryTests.test_checkpoint_is_consistent_after_one_run_from_clean_worktree) ... ok
+test_checkpoint_repairs_stale_handoff_pointer (test_agent_context.AgentContextRecoveryTests.test_checkpoint_repairs_stale_handoff_pointer) ... ok
+test_checkpoint_rolls_back_provisional_files_after_final_size_guard_failure (test_agent_context.AgentContextRecoveryTests.test_checkpoint_rolls_back_provisional_files_after_final_size_guard_failure) ... ok
+test_checkpoint_rolls_back_provisional_files_after_final_snapshot_failure (test_agent_context.AgentContextRecoveryTests.test_checkpoint_rolls_back_provisional_files_after_final_snapshot_failure) ... ok
+test_checkpoint_size_limit_fails_before_state_or_workspace_mutation (test_agent_context.AgentContextRecoveryTests.test_checkpoint_size_limit_fails_before_state_or_workspace_mutation) ... ok
+test_clean_clone_recovers_current_committed_state_without_local_artifacts (test_agent_context.AgentContextRecoveryTests.test_clean_clone_recovers_current_committed_state_without_local_artifacts) ... skipped 'avoid recursive clean-clone test invocation'
+test_clean_clone_recovers_g2_and_future_milestone_transitions (test_agent_context.AgentContextRecoveryTests.test_clean_clone_recovers_g2_and_future_milestone_transitions) ... skipped 'avoid nested milestone transition fixture'
+test_completed_task_must_have_empty_next_action (test_agent_context.AgentContextRecoveryTests.test_completed_task_must_have_empty_next_action) ... ok
+test_completed_task_requires_existing_evidence (test_agent_context.AgentContextRecoveryTests.test_completed_task_requires_existing_evidence) ... ok
+test_context_ci_runs_m5_fixture_as_a_contract_oracle (test_agent_context.AgentContextRecoveryTests.test_context_ci_runs_m5_fixture_as_a_contract_oracle) ... ok
+test_direct_m3_authorization_is_preserved_across_milestone_completion (test_agent_context.AgentContextRecoveryTests.test_direct_m3_authorization_is_preserved_across_milestone_completion) ... ok
+test_done_task_cannot_rely_only_on_historical_unverified_evidence (test_agent_context.AgentContextRecoveryTests.test_done_task_cannot_rely_only_on_historical_unverified_evidence) ... ok
+test_dry_run_with_partial_recovery_does_not_mutate_files (test_agent_context.AgentContextRecoveryTests.test_dry_run_with_partial_recovery_does_not_mutate_files) ... ok
+test_future_milestone_bullet_criteria_are_valid_task_references (test_agent_context.AgentContextRecoveryTests.test_future_milestone_bullet_criteria_are_valid_task_references) ... ok
+test_g1_cannot_be_ready_with_incomplete_g1_tasks (test_agent_context.AgentContextRecoveryTests.test_g1_cannot_be_ready_with_incomplete_g1_tasks) ... ok
+test_git_ignored_zip_is_still_content_hashed (test_agent_context.AgentContextRecoveryTests.test_git_ignored_zip_is_still_content_hashed) ... ok
+test_historical_baseline_checksum_detects_record_mutation (test_agent_context.AgentContextRecoveryTests.test_historical_baseline_checksum_detects_record_mutation) ... ok
+test_historical_baseline_is_not_recompared_to_current_files (test_agent_context.AgentContextRecoveryTests.test_historical_baseline_is_not_recompared_to_current_files) ... ok
+test_historical_g1_recovery_matches_recorded_baseline (test_agent_context.AgentContextRecoveryTests.test_historical_g1_recovery_matches_recorded_baseline) ... skipped 'avoid nested historical recovery fixture'
+test_ignored_cache_generation_does_not_create_source_content_drift (test_agent_context.AgentContextRecoveryTests.test_ignored_cache_generation_does_not_create_source_content_drift) ... ok
+test_json_output_is_machine_readable_and_paths_are_portable (test_agent_context.AgentContextRecoveryTests.test_json_output_is_machine_readable_and_paths_are_portable) ... ok
+test_large_files_and_artifact_directories_are_reported_once_and_separately (test_agent_context.AgentContextRecoveryTests.test_large_files_and_artifact_directories_are_reported_once_and_separately) ... ok
+test_m0_cannot_be_authorized_before_g1_approval (test_agent_context.AgentContextRecoveryTests.test_m0_cannot_be_authorized_before_g1_approval) ... ok
+test_m3_authorization_does_not_change_governance_approvals (test_agent_context.AgentContextRecoveryTests.test_m3_authorization_does_not_change_governance_approvals) ... ok
+test_m4_authorization_can_be_ready_without_claiming_implementation_started (test_agent_context.AgentContextRecoveryTests.test_m4_authorization_can_be_ready_without_claiming_implementation_started) ... ok
+test_m5_verified_command_log_must_be_tracked_for_clean_clone (test_agent_context.AgentContextRecoveryTests.test_m5_verified_command_log_must_be_tracked_for_clean_clone) ... ok
+test_m6_closeout_verified_provenance_is_bound_to_committed_files_and_logs (test_agent_context.AgentContextRecoveryTests.test_m6_closeout_verified_provenance_is_bound_to_committed_files_and_logs) ... FAIL
+test_m6_pm_acceptance_closes_task_without_approving_g4_or_authorizing_m7 (test_agent_context.AgentContextRecoveryTests.test_m6_pm_acceptance_closes_task_without_approving_g4_or_authorizing_m7) ... ok
+test_manual_session_evidence_requires_sanitized_record_and_revision (test_agent_context.AgentContextRecoveryTests.test_manual_session_evidence_requires_sanitized_record_and_revision) ... ok
+test_partial_state_file_is_detected_and_recovered (test_agent_context.AgentContextRecoveryTests.test_partial_state_file_is_detected_and_recovered) ... ok
+test_pr_review_policy_explicitly_separates_codex_and_pm_authority (test_agent_context.AgentContextRecoveryTests.test_pr_review_policy_explicitly_separates_codex_and_pm_authority) ... ok
+test_preflight_detects_content_change_inside_existing_dirty_path (test_agent_context.AgentContextRecoveryTests.test_preflight_detects_content_change_inside_existing_dirty_path) ... ok
+test_preflight_detects_gate_coverage_used_as_its_own_start_prerequisite (test_agent_context.AgentContextRecoveryTests.test_preflight_detects_gate_coverage_used_as_its_own_start_prerequisite) ... ok
+test_preflight_detects_roadmap_source_mismatch (test_agent_context.AgentContextRecoveryTests.test_preflight_detects_roadmap_source_mismatch) ... ok
+test_preflight_discovers_every_documented_acceptance_criterion (test_agent_context.AgentContextRecoveryTests.test_preflight_discovers_every_documented_acceptance_criterion) ... ok
+test_preflight_finds_broken_markdown_link (test_agent_context.AgentContextRecoveryTests.test_preflight_finds_broken_markdown_link) ... ok
+test_preflight_recovers_project_state_without_conversation (test_agent_context.AgentContextRecoveryTests.test_preflight_recovers_project_state_without_conversation) ... ok
+test_preflight_rejects_dependency_cycle (test_agent_context.AgentContextRecoveryTests.test_preflight_rejects_dependency_cycle) ... ok
+test_preflight_rejects_invalid_state_schema (test_agent_context.AgentContextRecoveryTests.test_preflight_rejects_invalid_state_schema) ... ok
+test_preflight_reports_dirty_worktree_and_checkpoint_refreshes_it (test_agent_context.AgentContextRecoveryTests.test_preflight_reports_dirty_worktree_and_checkpoint_refreshes_it) ... ok
+test_preflight_reports_files_it_could_not_hash (test_agent_context.AgentContextRecoveryTests.test_preflight_reports_files_it_could_not_hash) ... ok
+test_preflight_reports_malformed_git_snapshot_without_crashing (test_agent_context.AgentContextRecoveryTests.test_preflight_reports_malformed_git_snapshot_without_crashing) ... ok
+test_preflight_reports_malformed_task_status_without_crashing (test_agent_context.AgentContextRecoveryTests.test_preflight_reports_malformed_task_status_without_crashing) ... ok
+test_project_context_can_be_recovered_without_chat_history (test_agent_context.AgentContextRecoveryTests.test_project_context_can_be_recovered_without_chat_history) ... ok
+test_repeated_checkpoint_does_not_append_unchanged_snapshot (test_agent_context.AgentContextRecoveryTests.test_repeated_checkpoint_does_not_append_unchanged_snapshot) ... ok
+test_staging_checkpoint_control_files_does_not_create_snapshot_drift (test_agent_context.AgentContextRecoveryTests.test_staging_checkpoint_control_files_does_not_create_snapshot_drift) ... ok
+test_start_authorized_boolean_without_direct_record_is_rejected (test_agent_context.AgentContextRecoveryTests.test_start_authorized_boolean_without_direct_record_is_rejected) ... ok
+test_state_blocker_index_must_match_active_blocker_records (test_agent_context.AgentContextRecoveryTests.test_state_blocker_index_must_match_active_blocker_records) ... ok
+test_tracked_content_drift_is_detected_without_a_status_path_change (test_agent_context.AgentContextRecoveryTests.test_tracked_content_drift_is_detected_without_a_status_path_change) ... ok
+test_verified_command_evidence_must_match_retained_log (test_agent_context.AgentContextRecoveryTests.test_verified_command_evidence_must_match_retained_log) ... ok
+test_verified_command_evidence_requires_timestamp_revision_exit_and_log (test_agent_context.AgentContextRecoveryTests.test_verified_command_evidence_requires_timestamp_revision_exit_and_log) ... ok
+test_verified_command_evidence_with_provenance_passes (test_agent_context.AgentContextRecoveryTests.test_verified_command_evidence_with_provenance_passes) ... ok
+
+======================================================================
+FAIL: test_m6_closeout_verified_provenance_is_bound_to_committed_files_and_logs (test_agent_context.AgentContextRecoveryTests.test_m6_closeout_verified_provenance_is_bound_to_committed_files_and_logs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/tmp9mntc4kx/clean-clone/tests/test_agent_context.py", line 1352, in test_m6_closeout_verified_provenance_is_bound_to_committed_files_and_logs
+    self.assertTrue(result["ok"], json.dumps(result, indent=2, ensure_ascii=False))
+AssertionError: False is not true : {
+  "schema": "videochess-m6-closeout-provenance-audit/1.0",
+  "audit_source_head": "b6cfb14e3734c0cd63f77d16a54d7b79c69fcb33",
+  "audit_source_tree": "b729877949aaa0dcbbc8bb4ddeb13813e210dc2a",
+  "file_evidence": [],
+  "command_log_evidence": [
+    {
+      "path": ".agents/evidence/logs/M6-postmerge-clean-checkout-preflight-20261031.log",
+      "provenance_status": "invalid",
+      "execution_status": "PASS",
+      "git_revision": "3e675f8f95527df335e54e405c92517cd436b5b1",
+      "log_sha256": "93b315562afe6309ab12e6160559b32aa38b84e56b12b28758a7252be3040ae2",
+      "executed_at_utc": "2026-10-31T08:08:22Z",
+      "exit_code": 0
+    },
+    {
+      "path": ".agents/evidence/logs/M6-postmerge-identity-verification-20261031.log",
+      "provenance_status": "invalid",
+      "execution_status": "PASS",
+      "git_revision": "509f9f83f9249208fd5adba572efed2d2f0f82ff",
+      "log_sha256": "703c7ec0fba4bebf6bf11cc3b0925adaa5cf5f939a5def51d45d89fa678d1bb0",
+      "executed_at_utc": "2026-10-31T07:40:17Z",
+      "exit_code": 0
+    },
+    {
+      "path": ".agents/evidence/logs/M6-postmerge-lock-check-20261031.log",
+      "provenance_status": "invalid",
+      "execution_status": "PASS",
+      "git_revision": "509f9f83f9249208fd5adba572efed2d2f0f82ff",
+      "log_sha256": "079bb4dd58e4c7b88823a6836640915bf508ca2828f6af7be2e48fdacc208968",
+      "executed_at_utc": "2026-10-31T07:43:26Z",
+      "exit_code": 0
+    },
+    {
+      "path": ".agents/evidence/logs/M6-postmerge-final-focused-20261031.log",
+      "provenance_status": "invalid",
+      "execution_status": "FAIL",
+      "git_revision": "5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f",
+      "log_sha256": "595151aee2cf02bbf3f088c94a2ef7e876cb31889755af17ec1a91b46e43863f",
+      "executed_at_utc": "2026-10-31T07:56:23Z",
+      "exit_code": 1
+    },
+    {
+      "path": ".agents/evidence/logs/M6-postmerge-final-focused-correct-env-20261031.log",
+      "provenance_status": "invalid",
+      "execution_status": "PASS",
+      "git_revision": "5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f",
+      "log_sha256": "e349fbd4b3e84f9dd0c3ea578989ee224fd3492735a19dc7eb3ff000807486a5",
+      "executed_at_utc": "2026-10-31T08:00:17Z",
+      "exit_code": 0
+    },
+    {
+      "path": ".agents/evidence/logs/M6-postmerge-final-full-suite-20261031.log",
+      "provenance_status": "invalid",
+      "execution_status": "PASS",
+      "git_revision": "5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f",
+      "log_sha256": "02e4b7a914247b5c57b7043eada7eb971bc7e93271b638176cf225a89bea6df3",
+      "executed_at_utc": "2026-10-31T08:01:25Z",
+      "exit_code": 0
+    },
+    {
+      "path": ".agents/evidence/logs/M6-postmerge-clean-checkout-focused-20261031.log",
+      "provenance_status": "invalid",
+      "execution_status": "PASS",
+      "git_revision": "3e675f8f95527df335e54e405c92517cd436b5b1",
+      "log_sha256": "94e4bd1f938c94ddfbedaa76df67e6788732eb34d397d374b4c5e7183f497a2a",
+      "executed_at_utc": "2026-10-31T08:08:28Z",
+      "exit_code": 0
+    },
+    {
+      "path": ".agents/evidence/logs/M6-postmerge-clean-checkout-full-suite-20261031.log",
+      "provenance_status": "invalid",
+      "execution_status": "PASS",
+      "git_revision": "3e675f8f95527df335e54e405c92517cd436b5b1",
+      "log_sha256": "87097019792e56ab565a105828085c3e4146ea590048c73cd2f330894340509f",
+      "executed_at_utc": "2026-10-31T08:09:29Z",
+      "exit_code": 0
+    }
+  ],
+  "historical_diagnostics": [
+    {
+      "path": ".agents/evidence/logs/M6-postmerge-focused-5d4cfd9.log",
+      "status": "historical_unverified",
+      "historical_git_revision": "5d4cfd93a3895e5a4c2d68eb485379c25639f403"
+    },
+    {
+      "path": ".agents/evidence/logs/M6-postmerge-full-suite-20261031.log",
+      "status": "historical_unverified",
+      "historical_git_revision": "5d4cfd93a3895e5a4c2d68eb485379c25639f403"
+    }
+  ],
+  "machine_report_checks": [
+    {
+      "name": "merge_and_pm_identity",
+      "log_path": ".agents/evidence/logs/M6-postmerge-identity-verification-20261031.log",
+      "log_sha256": "703c7ec0fba4bebf6bf11cc3b0925adaa5cf5f939a5def51d45d89fa678d1bb0",
+      "status": "PASS"
+    },
+    {
+      "name": "dependency_lock",
+      "log_path": ".agents/evidence/logs/M6-postmerge-lock-check-20261031.log",
+      "log_sha256": "079bb4dd58e4c7b88823a6836640915bf508ca2828f6af7be2e48fdacc208968",
+      "status": "PASS"
+    },
+    {
+      "name": "focused_regressions_final",
+      "log_path": ".agents/evidence/logs/M6-postmerge-final-focused-correct-env-20261031.log",
+      "log_sha256": "e349fbd4b3e84f9dd0c3ea578989ee224fd3492735a19dc7eb3ff000807486a5",
+      "status": "PASS"
+    },
+    {
+      "name": "full_repository_suite_final",
+      "log_path": ".agents/evidence/logs/M6-postmerge-final-full-suite-20261031.log",
+      "log_sha256": "02e4b7a914247b5c57b7043eada7eb971bc7e93271b638176cf225a89bea6df3",
+      "status": "PASS"
+    },
+    {
+      "name": "canonical_preflight_after_evidence_alignment",
+      "log_path": ".agents/evidence/logs/M6-postmerge-final-preflight-closeout-20261031.log",
+      "log_sha256": "708b7bb9293d16930fdb009ef993d3bb4822bf92ab90c657a5b0c4a52b8caf06",
+      "status": "PASS"
+    },
+    {
+      "name": "clean_checkout_preflight_final_revision",
+      "log_path": ".agents/evidence/logs/M6-postmerge-clean-checkout-preflight-20261031.log",
+      "log_sha256": "93b315562afe6309ab12e6160559b32aa38b84e56b12b28758a7252be3040ae2",
+      "status": "PASS"
+    },
+    {
+      "name": "clean_checkout_focused_final_revision",
+      "log_path": ".agents/evidence/logs/M6-postmerge-clean-checkout-focused-20261031.log",
+      "log_sha256": "94e4bd1f938c94ddfbedaa76df67e6788732eb34d397d374b4c5e7183f497a2a",
+      "status": "PASS"
+    },
+    {
+      "name": "clean_checkout_full_suite_final_revision",
+      "log_path": ".agents/evidence/logs/M6-postmerge-clean-checkout-full-suite-20261031.log",
+      "log_sha256": "87097019792e56ab565a105828085c3e4146ea590048c73cd2f330894340509f",
+      "status": "PASS"
+    }
+  ],
+  "errors": [
+    ".agents/evidence/M6-PR-handover-20261031.md: git_revision 94635ad871fd0853fc0c5b1024d8963ced864300 does not resolve",
+    ".agents/evidence/M6-PR-handover-20261031.md: file is absent from commit 94635ad871fd0853fc0c5b1024d8963ced864300",
+    ".agents/evidence/M6-001-PM-acceptance-20261031.md: git_revision 94635ad871fd0853fc0c5b1024d8963ced864300 does not resolve",
+    ".agents/evidence/M6-001-PM-acceptance-20261031.md: file is absent from commit 94635ad871fd0853fc0c5b1024d8963ced864300",
+    ".agents/evidence/M6-post-merge-verification-20261031.md: git_revision 94635ad871fd0853fc0c5b1024d8963ced864300 does not resolve",
+    ".agents/evidence/M6-post-merge-verification-20261031.md: file is absent from commit 94635ad871fd0853fc0c5b1024d8963ced864300",
+    ".agents/evidence/M6-post-merge-verification-20261031.json: git_revision 94635ad871fd0853fc0c5b1024d8963ced864300 does not resolve",
+    ".agents/evidence/M6-post-merge-verification-20261031.json: file is absent from commit 94635ad871fd0853fc0c5b1024d8963ced864300",
+    ".agents/evidence/logs/M6-postmerge-clean-checkout-preflight-20261031.log: recorded git_revision does not resolve",
+    ".agents/evidence/logs/M6-postmerge-identity-verification-20261031.log: recorded git_revision does not resolve",
+    ".agents/evidence/logs/M6-postmerge-lock-check-20261031.log: recorded git_revision does not resolve",
+    ".agents/evidence/logs/M6-postmerge-final-focused-20261031.log: recorded git_revision does not resolve",
+    ".agents/evidence/logs/M6-postmerge-final-focused-correct-env-20261031.log: recorded git_revision does not resolve",
+    ".agents/evidence/logs/M6-postmerge-final-full-suite-20261031.log: recorded git_revision does not resolve",
+    ".agents/evidence/logs/M6-postmerge-clean-checkout-focused-20261031.log: recorded git_revision does not resolve",
+    ".agents/evidence/logs/M6-postmerge-clean-checkout-full-suite-20261031.log: recorded git_revision does not resolve",
+    "machine report focused_regressions_final has unresolved git_head_at_execution: 5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f",
+    "machine report focused_regressions_final has unresolved tested_commit: 4ab7d3a8ea8b9f718b790c03c27e9fe3dba95c08",
+    "machine report full_repository_suite_final has unresolved git_head_at_execution: 5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f",
+    "machine report full_repository_suite_final has unresolved tested_commit: 4ab7d3a8ea8b9f718b790c03c27e9fe3dba95c08",
+    "machine report canonical_preflight_after_evidence_alignment has unresolved git_head_at_execution: 4ab7d3a8ea8b9f718b790c03c27e9fe3dba95c08",
+    "machine report clean_checkout_preflight_final_revision has unresolved revision: 3e675f8f95527df335e54e405c92517cd436b5b1",
+    "machine report clean_checkout_focused_final_revision has unresolved revision: 3e675f8f95527df335e54e405c92517cd436b5b1",
+    "machine report clean_checkout_full_suite_final_revision has unresolved revision: 3e675f8f95527df335e54e405c92517cd436b5b1"
+  ],
+  "ok": false
+}
+
+----------------------------------------------------------------------
+Ran 54 tests in 20.821s
+
+FAILED (failures=1, skipped=3)
+
+
+----------------------------------------------------------------------
+Ran 109 tests in 53.683s
+
+FAILED (failures=1)

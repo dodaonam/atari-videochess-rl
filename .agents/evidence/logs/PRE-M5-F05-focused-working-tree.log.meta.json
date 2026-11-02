@@ -1,0 +1,15 @@
+{
+  "check": "f05_focused_seed_m2_contract_tests",
+  "command": "PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m5_seeding tests.test_m5_contract_fixtures tests.test_m2_simulator -v",
+  "duration_seconds": 0.328,
+  "end_utc": "2026-10-28T08:53:43Z",
+  "environment": "Existing pinned project Python 3.12.3 CPU virtual environment; no dependency changes.",
+  "exit_code": 0,
+  "log_path": ".agents/evidence/logs/PRE-M5-F05-focused-working-tree.log",
+  "log_sha256": "e85554004468675aab43942628e29103d58c1313d9352ed60195d46ab79a4dfc",
+  "result": "PASS_FOCUSED_WORKING_TREE",
+  "source_revision": "638825b9fa14dd3fe20fba102a994a71e9c794dd",
+  "start_utc": "2026-10-28T08:53:42Z",
+  "test_count": 54,
+  "working_tree_dirty": true
+}

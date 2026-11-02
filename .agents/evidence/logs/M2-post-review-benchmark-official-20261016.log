@@ -1,0 +1,105 @@
+started_at_utc=2026-10-16T15:51:15Z
+git_revision=b3fc8105a5dbf543267a77be77f6a8c6c76ab8e2
+command=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.benchmark --seeds 20261016 20261017 --max-decisions 400 --output artifacts/m2/post-review-hardening-b3-official-20261016.json
+{
+  "configuration": {
+    "agent_color_coverage": [
+      "white",
+      "black"
+    ],
+    "base_seeds": [
+      20261016,
+      20261017
+    ],
+    "max_agent_decisions": 400,
+    "pairings": [
+      {
+        "agent": "random_legal",
+        "opponent": "simple_material_heuristic"
+      },
+      {
+        "agent": "simple_material_heuristic",
+        "opponent": "random_legal"
+      }
+    ],
+    "seed_derivation": {
+      "agent_policy": "base_seed * 2027 + agent_policy_index * 17 + color_index",
+      "episode": "base_seed * 1009 + agent_policy_index * 2 + color_index"
+    },
+    "starting_position": "standard initial chess position"
+  },
+  "output_path": "artifacts/m2/post-review-hardening-b3-official-20261016.json",
+  "run_id": "m2-baseline-20261016T155117Z",
+  "runtime": {
+    "cpu_count": 8,
+    "git_revision": "b3fc8105a5dbf543267a77be77f6a8c6c76ab8e2",
+    "git_worktree_dirty": true,
+    "machine": "x86_64",
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+    "python": "3.12.3",
+    "python_chess": "1.11.2"
+  },
+  "summary": {
+    "by_agent_policy": {
+      "random_legal": {
+        "by_agent_color": {
+          "black": {
+            "draws": 1,
+            "games": 2,
+            "losses": 1,
+            "wins": 0
+          },
+          "white": {
+            "draws": 1,
+            "games": 2,
+            "losses": 1,
+            "wins": 0
+          }
+        },
+        "completed_games": 4,
+        "completed_mean_decisions": 90.5,
+        "draws": 2,
+        "external_failures": 0,
+        "games": 4,
+        "interruptions": 0,
+        "losses": 2,
+        "truncated_games": 0,
+        "wins": 0
+      },
+      "simple_material_heuristic": {
+        "by_agent_color": {
+          "black": {
+            "draws": 0,
+            "games": 2,
+            "losses": 0,
+            "wins": 2
+          },
+          "white": {
+            "draws": 1,
+            "games": 2,
+            "losses": 0,
+            "wins": 1
+          }
+        },
+        "completed_games": 4,
+        "completed_mean_decisions": 51.0,
+        "draws": 1,
+        "external_failures": 0,
+        "games": 4,
+        "interruptions": 0,
+        "losses": 0,
+        "truncated_games": 0,
+        "wins": 3
+      }
+    },
+    "completed_games": 8,
+    "external_failures": 0,
+    "games": 8,
+    "interruptions": 0,
+    "truncated_games": 0
+  }
+}
+exit_code=0
+Command: /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.benchmark --seeds 20261016 20261017 --max-decisions 400 --output artifacts/m2/post-review-hardening-b3-official-20261016.json
+Result: PASS: 8/8 completed; zero truncations, failures, or interruptions (regenerated on b3fc810).
+Exit code: 0

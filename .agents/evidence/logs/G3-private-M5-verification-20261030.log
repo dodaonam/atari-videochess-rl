@@ -1,0 +1,194 @@
+
+Command: python3 scripts/m5_artifact_manifests.py --verify
+{
+  "status": "verified",
+  "artifact_manifest": "artifacts/m5/artifact-manifest.json",
+  "run_manifests": 7,
+  "total_bytes": 6544747450
+}
+Exit code: 0
+
+Command: python3 scripts/verify_m5_campaign_evidence.py
+{
+  "schema": "videochess-m5-private-campaign-verification/1.0",
+  "training": {
+    "runs": [
+      {
+        "run_id": "m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__warm__attempt-0001",
+        "arm": "warm",
+        "training_seed": 20261104,
+        "decisions": 50000,
+        "updates": 12245,
+        "syncs": 24,
+        "episodes": 389,
+        "source_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+        "replay_records": 50000,
+        "replay_chain_sha256": "fd5fcad7d26b2649863ea1358d42c5e218148fb428789bcb75dbee9905058584",
+        "final_snapshot_sha256": "0b2405017a8e1d539851f0cd278883d3fd23936fb5c2f7962c813590a6fd1767"
+      },
+      {
+        "run_id": "m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__scratch__attempt-0000",
+        "arm": "scratch",
+        "training_seed": 20261104,
+        "decisions": 50000,
+        "updates": 12245,
+        "syncs": 24,
+        "episodes": 379,
+        "source_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+        "replay_records": 50000,
+        "replay_chain_sha256": "e744dc2b7396b8320f8b5200301688bf9aa01a95a37b2236b6cc79c9dcccbbeb",
+        "final_snapshot_sha256": "3749b0c0b6ae44d3ad5d6bf0863b60937a59fbe881e0bdf4932bdce6033ca400"
+      },
+      {
+        "run_id": "m5-75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c__warm__attempt-0000",
+        "arm": "warm",
+        "training_seed": 20261105,
+        "decisions": 50000,
+        "updates": 12245,
+        "syncs": 24,
+        "episodes": 435,
+        "source_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+        "replay_records": 50000,
+        "replay_chain_sha256": "2bd17edb40449ce659ba43c265ed03c5c2b22da6adfb1d6c42d910a9b07c18f6",
+        "final_snapshot_sha256": "e864d8351cb03b7e671e7a061226711b2d33b23bbaca97e899c09f1d2eb59670"
+      },
+      {
+        "run_id": "m5-75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c__scratch__attempt-0000",
+        "arm": "scratch",
+        "training_seed": 20261105,
+        "decisions": 50000,
+        "updates": 12245,
+        "syncs": 24,
+        "episodes": 413,
+        "source_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+        "replay_records": 50000,
+        "replay_chain_sha256": "355e584fd320cecbeb3b392c2b05200fc6d797d9ba60b1a97104420c415c0a63",
+        "final_snapshot_sha256": "e63ab18289135e411fb4c00a025d2985446475e5b70881ca7e9190559c20b3f8"
+      },
+      {
+        "run_id": "m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__warm__attempt-0000",
+        "arm": "warm",
+        "training_seed": 20261106,
+        "decisions": 50000,
+        "updates": 12245,
+        "syncs": 24,
+        "episodes": 551,
+        "source_sha256": "cdcc1fdc0ca0b324e49cfb8b0ff571496a554e9892dfb3620d6454a65ee16da0",
+        "replay_records": 50000,
+        "replay_chain_sha256": "19c452f7bed2761c22ec548bf8087ea453bf987637a490ef46eeb629d06474d5",
+        "final_snapshot_sha256": "c037adc652a00ea131366c5f15ac78811a223459312f9bac5f676f267cf36bcd"
+      },
+      {
+        "run_id": "m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__scratch__attempt-0000",
+        "arm": "scratch",
+        "training_seed": 20261106,
+        "decisions": 50000,
+        "updates": 12245,
+        "syncs": 24,
+        "episodes": 408,
+        "source_sha256": "cdcc1fdc0ca0b324e49cfb8b0ff571496a554e9892dfb3620d6454a65ee16da0",
+        "replay_records": 50000,
+        "replay_chain_sha256": "a7ef5b08009068e8083a48366cafd02266c37741264014a81b3d41d0e5215590",
+        "final_snapshot_sha256": "94838bc8c3547a5b8ce9e1d8c1dde66b86163defb868b18be6185895acf9663c"
+      }
+    ],
+    "valid_decisions": 300000,
+    "replay_records": 300000,
+    "optimizer_updates": 73470,
+    "target_syncs": 144,
+    "run_physical_seconds": 74838.98149248901,
+    "profile_recovery_setup_seconds": 3060.2994649429993,
+    "campaign_seconds": 77899.28095743201
+  },
+  "evaluation": {
+    "policies": 15,
+    "rows": 1500,
+    "unique_scenarios": 1500,
+    "terminal_games": 1494,
+    "truncated_games": 6,
+    "event_journal_records": 3385,
+    "evaluation_seconds": 1983.450523835003
+  },
+  "read_only": true
+}
+Exit code: 0
+
+Command: python3 scripts/verify_m5_source_identity.py
+{
+  "schema": "videochess-m5-source-reconciliation/1.0",
+  "evaluation_identity": {
+    "source_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+    "recorded_source_sha256": "ccb7d76be64c55ae4c4519da3a5647a5a2da86924a00d9490a7e807cc7497848",
+    "verified_direct_file_matches": 39,
+    "verified_reconstructed_file_matches": [
+      {
+        "path": "videochess_rl/rl/evaluate.py",
+        "recorded_sha256": "694415d51bdc316648c30124d3d4df36b970484c2ce3bb04cdc0ae7a615652c8",
+        "head_sha256": "00eaa86c9da75606bab3f108ec00906f86db89b7407224e859913c7467f4e4d9",
+        "recorded_size_bytes": 14853,
+        "head_size_bytes": 17009,
+        "reconstruction": "post-evaluation helper appended after official evaluation"
+      },
+      {
+        "path": "videochess_rl/rl/training.py",
+        "recorded_sha256": "eca25d8b692ce77e07a3be4736eabbb71ed629d69717259de258905fa72fe90a",
+        "head_sha256": "053e95db5357a8b68215e9ff00feda53000783ca327efe7596f694cb0a010af6",
+        "recorded_size_bytes": 12356,
+        "head_size_bytes": 12355,
+        "reconstruction": "one terminal LF removed during later whitespace cleanup"
+      },
+      {
+        "path": "videochess_rl/rl/transition.py",
+        "recorded_sha256": "df60fee8bf908e8d96901937dfc120d7e5a8f8e06a0119040e61356014aa645d",
+        "head_sha256": "c10821bc0b74d30acf66d582e9e9ed7148149469bb56213b25373c730ab3e09d",
+        "recorded_size_bytes": 13950,
+        "head_size_bytes": 13949,
+        "reconstruction": "one terminal LF removed during later whitespace cleanup"
+      }
+    ],
+    "reconstructed_aggregate_sha256": "ccb7d76be64c55ae4c4519da3a5647a5a2da86924a00d9490a7e807cc7497848",
+    "result": "exact match"
+  },
+  "training_identity": {
+    "run_hash_group_sizes": {
+      "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00": 4,
+      "cdcc1fdc0ca0b324e49cfb8b0ff571496a554e9892dfb3620d6454a65ee16da0": 2
+    },
+    "distinct_source_hashes": [
+      "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+      "cdcc1fdc0ca0b324e49cfb8b0ff571496a554e9892dfb3620d6454a65ee16da0"
+    ],
+    "checkpoint_interval": [
+      "cp-08f98f9d-20261029T043013180672Z",
+      "cp-08f98f9d-20261029T143803674896Z"
+    ],
+    "changed_python_paths_in_interval": [
+      {
+        "path": "videochess_rl/rl/checkpoint.py",
+        "before_sha256": "19ab713b5a1450c2e4506d9d761768317e0b48fb96a3cb0083965d6a037bc410",
+        "after_sha256": "924a95e6accb04c727e2858dbcd6cbda84b970750decc27fd09621bdc61821aa"
+      },
+      {
+        "path": "videochess_rl/rl/cli.py",
+        "before_sha256": "795ca9865da80bf982480b25d97367c846255e167d9c64320a73030106c2efe3",
+        "after_sha256": "3f966fffa3a31ed9330004448ca84bc86a4fd6446764d3184e248cff978b60b7"
+      },
+      {
+        "path": "videochess_rl/rl/replay.py",
+        "before_sha256": "5ae4d3d928c524539bcf6b29f4102f09b246d5703b66539f2fad4aa7e2aaa278",
+        "after_sha256": "21845b0755809d07d480da821c2e809540a0ca4b8e1eddc5785ebdec5cf59b7f"
+      }
+    ],
+    "sha256_file_blob_availability_in_local_git_object_database": {
+      "19ab713b5a1450c2e4506d9d761768317e0b48fb96a3cb0083965d6a037bc410": "dbf36fe962e070061b96b263e7a9501f3add7e5d",
+      "21845b0755809d07d480da821c2e809540a0ca4b8e1eddc5785ebdec5cf59b7f": "355f8f0868152815debce129cc327d8bcecef970",
+      "3f966fffa3a31ed9330004448ca84bc86a4fd6446764d3184e248cff978b60b7": null,
+      "5ae4d3d928c524539bcf6b29f4102f09b246d5703b66539f2fad4aa7e2aaa278": "6677bc6ec75fca9541a8a52e377dea2539645a2f",
+      "795ca9865da80bf982480b25d97367c846255e167d9c64320a73030106c2efe3": null,
+      "924a95e6accb04c727e2858dbcd6cbda84b970750decc27fd09621bdc61821aa": "bc1494666d3234c82ff82f2fb8ee851d9558c24b"
+    },
+    "all_changed_snapshot_contents_recovered": false,
+    "interpretation": "File hash changes are observed. Only versions with a found Git blob can be read and diffed; absent blobs and source backups are not reconstructed."
+  }
+}
+Exit code: 0

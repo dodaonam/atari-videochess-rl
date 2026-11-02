@@ -1,0 +1,21 @@
+Diagnostic full-suite run using direct Python (the documented uv runner was not used, so the project venv bin path was absent)
+{'git_revision': 'b446f517b28d474f64b7a0f26af6e100731cd138', 'started_at_utc': '2026-10-23T14:31:22Z', 'finished_at_utc': '2026-10-23T14:33:51Z', 'command': '/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests', 'python': '3.12.3', 'python_chess': '1.11.2', 'exit_code': 1, 'test_count': 269, 'runtime_seconds': 147.397, 'failure_count': 1, 'error_count': 0, 'stockfish_path': None}
+
+..................................................................................................FA.L.E: Arcade Learning Environment (version 0.11.2+ecc1138)
+[Powered by Stella]
+................................................................................................................................................Exception parsing pv from info: 'depth 1 seldepth 1 multipv 1 score cp 32 nodes 95 wdl 500 400 100 pv a1a1', position at root: rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR b KQkq - 0 1
+Exception parsing pv from info: 'depth 1 seldepth 1 multipv 2 score cp 32 nodes 95 wdl 500 400 100 pv a1a1', position at root: rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR b KQkq - 0 1
+Exception parsing pv from info: 'depth 1 seldepth 1 multipv 3 score cp 32 nodes 95 wdl 500 400 100 pv a1a1', position at root: rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR b KQkq - 0 1
+..........................
+======================================================================
+FAIL: test_stockfish_answers_uci_readiness_without_searching (test_m0_smoke.M0EnvironmentSmokeTests.test_stockfish_answers_uci_readiness_without_searching)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/atari-pre-m4-closure/tests/test_m0_smoke.py", line 57, in test_stockfish_answers_uci_readiness_without_searching
+    self.assertIsNotNone(executable, "Stockfish must be available in the project environment PATH.")
+AssertionError: unexpectedly None : Stockfish must be available in the project environment PATH.
+
+----------------------------------------------------------------------
+Ran 269 tests in 147.397s
+
+FAILED (failures=1)

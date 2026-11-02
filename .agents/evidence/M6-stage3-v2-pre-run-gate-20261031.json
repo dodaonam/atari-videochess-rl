@@ -1,0 +1,77 @@
+{
+  "ale_runtime": {
+    "available_difficulties": [
+      0
+    ],
+    "available_modes": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "effective_instance_frame_ceiling": 500000,
+    "profile": {
+      "action_count": 10,
+      "action_set": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "difficulty": 0,
+      "frameskip": 4,
+      "max_num_frames_per_episode": 500000,
+      "mode": 4,
+      "obs_type": "rgb",
+      "observation_shape": [
+        210,
+        160,
+        3
+      ],
+      "repeat_action_probability": 0.25
+    },
+    "registered_default_frame_ceiling": 108000,
+    "reset_or_step_performed": false,
+    "rom_sha256": "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7"
+  },
+  "config_sha256": "663651050db80ab027b452241c7d39837ec7986927c0aefc7c7be631f459a49b",
+  "dependency_lock_sha256": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+  "finished_at_utc": "2026-10-31T02:13:53+00:00",
+  "free_bytes_before_run": 50708008960,
+  "git_head": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+  "git_tree": "4d6ed616971c8f5606a0a7250fe68fa2eea40949",
+  "installed_versions": {
+    "ale-py": "0.11.2",
+    "chess": "1.11.2",
+    "gymnasium": "1.4.0",
+    "torch": "2.14.1+cpu"
+  },
+  "m5_root_manifest_sha256": "a201a254671ad59ae1fecb402abf994d5bf523097f1c3010b5c7fa237ae6dd4c",
+  "official_reset_count_before_gate": 0,
+  "policy_ids": [
+    "m5-scratch-seed-20261104-post-rl",
+    "m5-warm-seed-20261104-post-rl"
+  ],
+  "pre_run_gate": "PASS",
+  "schedule_count": 20,
+  "schedule_sha256": "be4e6548e6fd3e3db4605e6b55fbe860848dccb2df87d8a7122145bdabe22ffc",
+  "started_at_utc": "2026-10-31T02:13:15+00:00",
+  "v1_integrity": {
+    "bytes": 616539017,
+    "files": 4540,
+    "ledger_events": 839785,
+    "ledger_head_sha256": "cea5840f0ff10124d6dc85eb315b614aad092abe19c7af9d396cd32f5636b138",
+    "ledger_sha256": "c8ad5b26c28bb8f934a8541c4b69846afedd3ad4a3eb8c302ac835b20fdf27d3",
+    "manifest_sha256": "22ac6ec7e0f4a48f52b2452654d4adecaf111f38ea37f5d9517f173c838716d7",
+    "run_id": "m6-stage3-ad3998200e31-c5ff389dc4fe",
+    "run_manifest_sha256": "17491f1a82eacffda9189179cc63b2ebff422136d07925de1fb39a2bcff897e8"
+  },
+  "worktree_clean": true
+}

@@ -1,0 +1,8 @@
+check=preflight
+revision=0011a1c07e047cedf9394d70b2413cea74ba1437
+start_utc=2026-10-28T05:19:14.579001Z
+end_utc=2026-10-28T05:19:15.340188Z
+exit_code=0
+command=python3 scripts/agent_preflight.py --json
+environment=Fresh clean GitHub clone; existing project Python 3.12.3 venv where applicable; no dependencies installed.
+note=Preflight output sanitized to status/errors/warnings and canonical summary.

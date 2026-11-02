@@ -1,0 +1,12 @@
+2026-11-01T13:26:49Z
+source_revision=2b7e71ffa57708e1fee6de0fb4ec1ecf3742c811
+source_revision=2b7e71ffa57708e1fee6de0fb4ec1ecf3742c811
+added_tracked_lines=12578
+untracked_text_and_task_logs=56
+concrete_path_or_credential_matches=[]
+restricted_payload_suffixes=[]
+checkpoint_segments_scanned=29
+sensitive_checkpoint_matches=[]
+result=PASS
+text_scan_exit=0
+checkpoint_scan_exit=0

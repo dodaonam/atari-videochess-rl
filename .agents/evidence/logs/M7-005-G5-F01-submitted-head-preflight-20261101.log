@@ -1,0 +1,45 @@
+command: PROJECT_VENV_PYTHON scripts/agent_preflight.py
+interpreter: Python 3.12.3; existing project virtualenv (host path redacted)
+source_revision: 0f9cc3942018cd12e82d1643d9b61eb475363c83
+environment: clean remote clone; repository-only; no private artifacts copied
+imported_package: <CLEAN_CLONE>/videochess_rl
+stockfish: unavailable
+started_at_utc: 2026-11-01T10:25:10+00:00
+finished_at_utc: 2026-11-01T10:25:13+00:00
+exit_code: 0
+
+Agent context preflight: PASS
+Governance: G5 (ready_for_user_review); approved: G0, G1, G2, G3, G4
+Next engineering milestone: M7 — complete
+Tasks: done=20, in_progress=0, pending=0, blocked=0, cancelled=0
+Completed task IDs: G1-001, G1-002, G1-003, G1-004, G1-005, G1-006, G1-007, G1-008, M0-001, M1-001, M2-001, M3-001, M4-001, M5-001, M6-001, M7-001, M7-002, M7-003, M7-004, M7-005
+In progress task IDs: none
+Pending task IDs: none
+Blocked task IDs: none
+Active blockers: none recorded
+Open confirmations:
+  O-02: Whether full-game performance on actual ALE is a hard submission requirement or a research target with an accepted fallback.
+  O-03: Future course checkpoints and any date changes. The owner confirmed the presentation date is Tuesday, 2026-11-03.
+  O-04: Actual Colab entitlement/quota, GPU availability, cloud storage, and whether paid compute is allowed. The owner selected local CPU for M3; no external compute/storage is used in this mission.
+  O-05: ALE/ROM runtime behavior, RAM mapping, game modes, difficulty behavior, and official evaluation settings.
+  O-06: Public redistribution rights and any new source/use beyond the scoped May 2022 archive. For M3, the owner authorized bounded internal academic use of the exact Lichess Elite May 2022 package with local retention and no redistribution; its third-party package license remains unstated/unverified.
+  O-07: Broader Stockfish roles: benchmark opponent, offline engine evaluation, and instructor-specific limits outside the M3 teacher-label scope.
+  O-08: Opponent pool and rating method for any Elo claim.
+Relevant decisions: docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md, docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md, docs/02-management/decisions/ADR-0003-pretraining-model-interface.md, docs/02-management/decisions/ADR-0004-m7-option-b-execution-authorization.md
+Acceptance criteria recognized: 51
+Last verified Git: feature/m7-005-no-release-closeout @ 545c95589b078f5249951d3d869b4eb42fb0f96a
+Live Git: feature/m7-005-no-release-closeout @ 0f9cc3942018cd12e82d1643d9b61eb475363c83
+Roadmap source: exact match; 19 sections; SHA-256 fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf
+Git recovery: expected commit/checkout transition; portable tracked-file manifest matches.
+Workspace Git status: differs from checkpoint
+Portable tracked baseline: matches
+Portable Git index: matches checkpoint
+Hashed ordinary-file snapshot: matches
+Content hashes: 1141 ordinary files verified by SHA-256.
+Not content-verified by this hash map: PROJECT_STATE self-reference, chat history/credential-like paths, temp files, symlinks, and the excluded directories listed below.
+Excluded directories: .agents/state/checkpoint-history, .git, artifacts, scripts/__pycache__, videochess_rl/__pycache__
+Artifact directories requiring independent manifests: artifacts
+Last verified dirty paths (0): none
+Dirty paths no longer present since checkpoint: A  .agents/evidence/logs/M7-005-G5-F01-finalhead-focused-contracts-20261101.log; A  .agents/evidence/logs/M7-005-G5-F01-finalhead-preflight-20261101.log; A  .agents/evidence/logs/M7-005-G5-F01-finalhead-private-scan-20261101.log; M  .agents/evidence/M7-005-G5-F01-remediation-20261101.md; M  .agents/evidence/M7-005-acceptance-20261101.md; M  .agents/evidence/M7-G5-review-handover-20261101.md
+Next user action: Independent PM: re-review the amended M7-005 PR #20 and its exact current HEAD, including G5-F01 provenance remediation; decide G5. G5 remains not approved. NO RELEASE / NO PUBLICATION AUTHORIZED.
+WARNING ARTIFACT_MANIFEST_REQUIRED [.]: Artifact/data directories are excluded from content hashing and require independent manifest verification: artifacts.

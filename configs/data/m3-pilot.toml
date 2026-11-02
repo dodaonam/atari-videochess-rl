@@ -1,0 +1,25 @@
+[dataset]
+schema_version = "videochess-dataset/1.0"
+sampling_mode = "source_window"
+seed = 20261020
+sampling_seed = 20261020
+split_seed = 20261021
+max_games = 200
+max_input_games_seen = 200
+max_positions = 10000
+max_positions_per_game = 50
+min_holdout_positions = 25
+min_holdout_retention_basis_points = 5000
+max_archive_bytes = 157286400
+max_member_bytes = 536870912
+max_total_decompressed_bytes = 536870912
+max_compression_ratio = 200
+max_output_bytes = 2147483648
+max_elapsed_seconds = 3600
+max_workers = 1
+memory_mib = 1024
+max_game_bytes = 8388608
+max_header_bytes = 262144
+max_header_value_bytes = 65536
+max_comment_bytes = 1048576
+batch_size = 25

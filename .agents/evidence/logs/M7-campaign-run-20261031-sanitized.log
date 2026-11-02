@@ -1,0 +1,110 @@
+Script started on 2026-10-31 23:57:11+07:00 [COMMAND="PYTHONDONTWRITEBYTECODE=1 <approved project Python venv>/bin/python scripts/run_m7_campaign.py --config configs/m7/m7-option-b-1.0.0.json --m4-artifact-root <owner-local accepted M4 r4 root> --m5-artifact-root <owner-local accepted M5 root> --artifact-parent artifacts/m7-option-b" <not executed on terminal>]
+A.L.E: Arcade Learning Environment (version 0.11.2+ecc1138)
+[Powered by Stella]
+M7 cell 01/90: m5-warm-seed-20261104-post-rl seed=20261201 status=reset wall=167.019
+M7 cell 02/90: m5-warm-seed-20261105-post-rl seed=20261201 status=reset wall=76.297
+M7 cell 03/90: m5-warm-seed-20261106-post-rl seed=20261201 status=reset wall=142.729
+M7 cell 04/90: m5-scratch-seed-20261104-post-rl seed=20261201 status=reset wall=207.304
+M7 cell 05/90: m5-scratch-seed-20261105-post-rl seed=20261201 status=reset wall=51.493
+M7 cell 06/90: m5-scratch-seed-20261106-post-rl seed=20261201 status=reset wall=108.931
+M7 cell 07/90: m4-behavior-only-seed-20261024 seed=20261201 status=reset wall=184.719
+M7 cell 08/90: random-legal seed=20261201 status=reset wall=109.04
+M7 cell 09/90: simple-heuristic seed=20261201 status=reset wall=106.562
+M7 cell 10/90: m5-scratch-seed-20261105-post-rl seed=20261202 status=reset wall=97.475
+M7 cell 11/90: m5-scratch-seed-20261104-post-rl seed=20261202 status=reset wall=196.398
+M7 cell 12/90: m5-warm-seed-20261106-post-rl seed=20261202 status=reset wall=101.776
+M7 cell 13/90: m5-warm-seed-20261105-post-rl seed=20261202 status=reset wall=69.034
+M7 cell 14/90: m5-warm-seed-20261104-post-rl seed=20261202 status=reset wall=176.23
+M7 cell 15/90: simple-heuristic seed=20261202 status=reset wall=36.124
+M7 cell 16/90: random-legal seed=20261202 status=reset wall=45.257
+M7 cell 17/90: m4-behavior-only-seed-20261024 seed=20261202 status=reset wall=149.817
+M7 cell 18/90: m5-scratch-seed-20261106-post-rl seed=20261202 status=reset wall=42.326
+M7 cell 19/90: simple-heuristic seed=20261203 status=reset wall=25.68
+M7 cell 20/90: m5-warm-seed-20261104-post-rl seed=20261203 status=reset wall=98.827
+M7 cell 21/90: m5-warm-seed-20261105-post-rl seed=20261203 status=reset wall=76.825
+M7 cell 22/90: m5-warm-seed-20261106-post-rl seed=20261203 status=reset wall=165.2
+M7 cell 23/90: m5-scratch-seed-20261104-post-rl seed=20261203 status=reset wall=195.599
+M7 cell 24/90: m5-scratch-seed-20261105-post-rl seed=20261203 status=reset wall=93.375
+M7 cell 25/90: m5-scratch-seed-20261106-post-rl seed=20261203 status=reset wall=37.105
+M7 cell 26/90: m4-behavior-only-seed-20261024 seed=20261203 status=reset wall=180.15
+M7 cell 27/90: random-legal seed=20261203 status=reset wall=120.919
+M7 cell 28/90: m5-scratch-seed-20261104-post-rl seed=20261204 status=reset wall=198.673
+M7 cell 29/90: m5-warm-seed-20261106-post-rl seed=20261204 status=reset wall=155.22
+M7 cell 30/90: m5-warm-seed-20261105-post-rl seed=20261204 status=reset wall=36.773
+M7 cell 31/90: m5-warm-seed-20261104-post-rl seed=20261204 status=reset wall=126.297
+M7 cell 32/90: simple-heuristic seed=20261204 status=reset wall=135.122
+M7 cell 33/90: random-legal seed=20261204 status=reset wall=185.145
+M7 cell 34/90: m4-behavior-only-seed-20261024 seed=20261204 status=reset wall=101.08
+M7 cell 35/90: m5-scratch-seed-20261106-post-rl seed=20261204 status=reset wall=44.535
+M7 cell 36/90: m5-scratch-seed-20261105-post-rl seed=20261204 status=reset wall=91.342
+M7 cell 37/90: random-legal seed=20261205 status=reset wall=11.555
+M7 cell 38/90: simple-heuristic seed=20261205 status=reset wall=113.601
+M7 cell 39/90: m5-warm-seed-20261104-post-rl seed=20261205 status=reset wall=124.803
+M7 cell 40/90: m5-warm-seed-20261105-post-rl seed=20261205 status=reset wall=70.043
+M7 cell 41/90: m5-warm-seed-20261106-post-rl seed=20261205 status=reset wall=249.542
+M7 cell 42/90: m5-scratch-seed-20261104-post-rl seed=20261205 status=reset wall=199.238
+M7 cell 43/90: m5-scratch-seed-20261105-post-rl seed=20261205 status=reset wall=103.22
+M7 cell 44/90: m5-scratch-seed-20261106-post-rl seed=20261205 status=reset wall=36.744
+M7 cell 45/90: m4-behavior-only-seed-20261024 seed=20261205 status=reset wall=100.791
+M7 cell 46/90: m5-warm-seed-20261106-post-rl seed=20261206 status=reset wall=222.342
+M7 cell 47/90: m5-warm-seed-20261105-post-rl seed=20261206 status=reset wall=69.18
+M7 cell 48/90: m5-warm-seed-20261104-post-rl seed=20261206 status=reset wall=131.762
+M7 cell 49/90: simple-heuristic seed=20261206 status=reset wall=81.484
+M7 cell 50/90: random-legal seed=20261206 status=reset wall=102.037
+M7 cell 51/90: m4-behavior-only-seed-20261024 seed=20261206 status=reset wall=170.878
+M7 cell 52/90: m5-scratch-seed-20261106-post-rl seed=20261206 status=reset wall=61.711
+M7 cell 53/90: m5-scratch-seed-20261105-post-rl seed=20261206 status=reset wall=71.679
+M7 cell 54/90: m5-scratch-seed-20261104-post-rl seed=20261206 status=reset wall=98.078
+M7 cell 55/90: m4-behavior-only-seed-20261024 seed=20261207 status=reset wall=84.965
+M7 cell 56/90: random-legal seed=20261207 status=reset wall=142.202
+M7 cell 57/90: simple-heuristic seed=20261207 status=reset wall=87.095
+M7 cell 58/90: m5-warm-seed-20261104-post-rl seed=20261207 status=reset wall=61.512
+M7 cell 59/90: m5-warm-seed-20261105-post-rl seed=20261207 status=reset wall=71.438
+M7 cell 60/90: m5-warm-seed-20261106-post-rl seed=20261207 status=reset wall=88.635
+M7 cell 61/90: m5-scratch-seed-20261104-post-rl seed=20261207 status=reset wall=196.575
+M7 cell 62/90: m5-scratch-seed-20261105-post-rl seed=20261207 status=reset wall=94.307
+M7 cell 63/90: m5-scratch-seed-20261106-post-rl seed=20261207 status=reset wall=68.922
+M7 cell 64/90: m5-warm-seed-20261105-post-rl seed=20261208 status=reset wall=68.23
+M7 cell 65/90: m5-warm-seed-20261104-post-rl seed=20261208 status=reset wall=92.828
+M7 cell 66/90: simple-heuristic seed=20261208 status=reset wall=69.942
+M7 cell 67/90: random-legal seed=20261208 status=reset wall=285.394
+M7 cell 68/90: m4-behavior-only-seed-20261024 seed=20261208 status=reset wall=103.937
+M7 cell 69/90: m5-scratch-seed-20261106-post-rl seed=20261208 status=reset wall=60.635
+M7 cell 70/90: m5-scratch-seed-20261105-post-rl seed=20261208 status=reset wall=54.359
+M7 cell 71/90: m5-scratch-seed-20261104-post-rl seed=20261208 status=reset wall=200.89
+M7 cell 72/90: m5-warm-seed-20261106-post-rl seed=20261208 status=reset wall=148.662
+M7 cell 73/90: m5-scratch-seed-20261106-post-rl seed=20261209 status=reset wall=36.667
+M7 cell 74/90: m4-behavior-only-seed-20261024 seed=20261209 status=reset wall=83.678
+M7 cell 75/90: random-legal seed=20261209 status=reset wall=173.055
+M7 cell 76/90: simple-heuristic seed=20261209 status=reset wall=31.54
+M7 cell 77/90: m5-warm-seed-20261104-post-rl seed=20261209 status=reset wall=118.146
+M7 cell 78/90: m5-warm-seed-20261105-post-rl seed=20261209 status=reset wall=99.549
+M7 cell 79/90: m5-warm-seed-20261106-post-rl seed=20261209 status=reset wall=259.38
+M7 cell 80/90: m5-scratch-seed-20261104-post-rl seed=20261209 status=reset wall=202.468
+M7 cell 81/90: m5-scratch-seed-20261105-post-rl seed=20261209 status=reset wall=70.283
+M7 cell 82/90: m5-warm-seed-20261104-post-rl seed=20261210 status=reset wall=171.554
+M7 cell 83/90: simple-heuristic seed=20261210 status=reset wall=101.981
+M7 cell 84/90: random-legal seed=20261210 status=reset wall=61.81
+M7 cell 85/90: m4-behavior-only-seed-20261024 seed=20261210 status=reset wall=200.988
+M7 cell 86/90: m5-scratch-seed-20261106-post-rl seed=20261210 status=reset wall=64.675
+M7 cell 87/90: m5-scratch-seed-20261105-post-rl seed=20261210 status=reset wall=78.146
+M7 cell 88/90: m5-scratch-seed-20261104-post-rl seed=20261210 status=reset wall=204.513
+M7 cell 89/90: m5-warm-seed-20261106-post-rl seed=20261210 status=reset wall=174.567
+M7 cell 90/90: m5-warm-seed-20261105-post-rl seed=20261210 status=reset wall=69.536
+{
+  "artifact_bytes": 2459601127,
+  "artifact_files": 16192,
+  "not_started": 0,
+  "reset_observed": 90,
+  "resource_stop_reason": null,
+  "run_dir": "artifacts/m7-option-b/m7-option-b-20261031-v1-8387b289432f",
+  "run_id": "m7-option-b-20261031-v1-8387b289432f",
+  "scheduled": 90,
+  "started": 90
+}
+
+Script done on 2026-11-01 02:54:00+07:00 [COMMAND_EXIT_CODE="0"]
+
+Command: PYTHONDONTWRITEBYTECODE=1 <approved project Python venv>/bin/python scripts/run_m7_campaign.py --config configs/m7/m7-option-b-1.0.0.json --m4-artifact-root <owner-local accepted M4 r4 root> --m5-artifact-root <owner-local accepted M5 root> --artifact-parent artifacts/m7-option-b
+Result: PASS: 90 scheduled cells started and reset-observed; run resource stop none.
+Exit code: 0

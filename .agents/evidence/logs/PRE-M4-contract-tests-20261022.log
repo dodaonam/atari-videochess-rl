@@ -1,0 +1,25 @@
+Pre-M4 synthetic chess contract tests
+Executed at UTC: 2026-10-22T15:39:53+00:00
+Git revision: 5e71f75e1ef8de10eb2247190224189d38a7eb9b
+Exit code: 0
+Environment: existing project Python 3.12 venv; python-chess 1.11.2
+Command: <project-venv-python> -m unittest discover -s tests -p test_pre_m4_contracts.py -v
+
+
+
+stderr:
+test_all_promotion_pieces_are_distinct_legal_candidates (test_pre_m4_contracts.PreM4ChessContractTests.test_all_promotion_pieces_are_distinct_legal_candidates) ... ok
+test_automatic_repetition_and_seventy_five_move_terminals_have_no_candidates (test_pre_m4_contracts.PreM4ChessContractTests.test_automatic_repetition_and_seventy_five_move_terminals_have_no_candidates) ... ok
+test_black_to_move_uses_mover_oriented_square_features (test_pre_m4_contracts.PreM4ChessContractTests.test_black_to_move_uses_mover_oriented_square_features) ... ok
+test_candidate_order_and_identity_match_m2_and_m3_contracts (test_pre_m4_contracts.PreM4ChessContractTests.test_candidate_order_and_identity_match_m2_and_m3_contracts) ... ok
+test_castling_captures_and_check_flags_come_from_the_authoritative_board (test_pre_m4_contracts.PreM4ChessContractTests.test_castling_captures_and_check_flags_come_from_the_authoritative_board) ... ok
+test_fen_does_not_replace_history_for_repetition_sensitive_state (test_pre_m4_contracts.PreM4ChessContractTests.test_fen_does_not_replace_history_for_repetition_sensitive_state) ... ok
+test_legal_en_passant_survives_normalization_and_has_stable_identity (test_pre_m4_contracts.PreM4ChessContractTests.test_legal_en_passant_survives_normalization_and_has_stable_identity) ... ok
+test_model_fen_normalizes_unavailable_en_passant_target (test_pre_m4_contracts.PreM4ChessContractTests.test_model_fen_normalizes_unavailable_en_passant_target) ... ok
+test_pinned_en_passant_is_not_encoded_as_a_legal_capture (test_pre_m4_contracts.PreM4ChessContractTests.test_pinned_en_passant_is_not_encoded_as_a_legal_capture) ... ok
+test_terminal_mate_and_stalemate_have_empty_candidate_sets (test_pre_m4_contracts.PreM4ChessContractTests.test_terminal_mate_and_stalemate_have_empty_candidate_sets) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.005s
+
+OK

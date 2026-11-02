@@ -1,0 +1,21 @@
+Command: PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.rl.cli train-all > /tmp/M5-train-campaign-attempt1.log 2>&1
+Executed at UTC (result-log mtime): 2026-10-28T13:29:40.685400Z
+Exit code: 1
+Result: FAILED during pre-run initialization before creating attempt 0001: immutable pre-RL snapshot metadata carried the prior source hash and was rejected by strict equality. No additional decision, run attempt, snapshot, or checkpoint was created; the fix permits only the exact recovery-compatible source hash when all other metadata and tensors match.
+
+Captured command output follows:
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/dodaonam/Projects/atari-videochess-rl-m5/videochess_rl/rl/cli.py", line 874, in <module>
+    if __name__=="__main__": raise SystemExit(main())
+                                              ^^^^^^
+  File "/home/dodaonam/Projects/atari-videochess-rl-m5/videochess_rl/rl/cli.py", line 870, in main
+    report=train_campaign(); print(json.dumps(report,indent=2)); return 0 if report["completed_runs"]==6 else 2
+           ^^^^^^^^^^^^^^^^
+  File "/home/dodaonam/Projects/atari-videochess-rl-m5/videochess_rl/rl/cli.py", line 464, in train_campaign
+    for seed in train["paired_seeds"]: init.append(_save_initialization_pair(seed,m4_model,m4_meta,transfer))
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dodaonam/Projects/atari-videochess-rl-m5/videochess_rl/rl/cli.py", line 213, in _save_initialization_pair
+    raise ValueError("existing pre-RL snapshot differs from its deterministic initialization")
+ValueError: existing pre-RL snapshot differs from its deterministic initialization

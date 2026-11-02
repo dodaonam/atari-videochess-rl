@@ -1,0 +1,19 @@
+Command: /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.data.cli verify --release /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6
+Revision: d8e52d160f4637da9522c491a4c6a7eace577f95
+Started UTC: 2026-10-27T15:23:45.069150Z
+Ended UTC: 2026-10-27T15:25:35.170404Z
+Duration seconds: 110.101231
+Exit code: 0
+Unchanged: True
+stdout:
+{
+  "games": 1000,
+  "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+  "output_bytes": 39994522,
+  "outputs_verified": 7,
+  "positions": 19268,
+  "rejections": 182,
+  "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890"
+}
+
+stderr:

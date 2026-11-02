@@ -1,0 +1,30 @@
+check: engine_free M4-to-M5 transfer with explicit pinned interpreter
+revision: 83301abf6b85441d4fa63eab1376127066c4cdb1
+start_utc: 2026-10-28T04:06:48.049236+00:00
+end_utc: 2026-10-28T04:06:49.590043+00:00
+command: PATH=/usr/bin:/bin PYTHONPATH=<clean-clone> /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/verify_m5_transfer.py /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4/pretrained-behavior-only.pt
+exit_code: 0
+
+--- stdout ---
+{
+  "artifact_files_verified": 19,
+  "behavior_head_excluded": true,
+  "both_actions_legal": true,
+  "checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+  "chess_engine_imported": false,
+  "ddqn_training_performed": false,
+  "fresh_q_head_seed": 20261028,
+  "input_schema": "videochess-model-input/1.0",
+  "m4_behavior_move_uci": "g1f3",
+  "model_schema": "videochess-behavior-scorer/1.0",
+  "parameter_count": 121897,
+  "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+  "schema": "videochess-m4-to-m5-transfer-verification/1.0",
+  "shared_representation_equal": true,
+  "source_artifacts_unchanged": true,
+  "stockfish_path": null,
+  "target_initialized_from_transferred_online": true,
+  "untrained_q_scorer_move_uci": "a2a4"
+}
+
+--- stderr ---

@@ -1,0 +1,17 @@
+command: /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/m5_artifact_manifests.py --verify
+execution_environment: existing repository venv, Python 3.12.3
+repository: dodaonam/atari-videochess-rl-m5
+git_head: c9df9db36c6146a34ef301052a206fe8a3512ffc
+started_at_utc: 2026-10-31T04:54:01.359084Z
+completed_at_utc: 2026-10-31T04:54:31.051049Z
+exit_code: 0
+
+stdout:
+{
+  "status": "verified",
+  "artifact_manifest": "artifacts/m5/artifact-manifest.json",
+  "run_manifests": 7,
+  "total_bytes": 6544747450
+}
+
+stderr:

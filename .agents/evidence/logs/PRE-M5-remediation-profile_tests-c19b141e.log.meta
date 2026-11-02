@@ -1,0 +1,11 @@
+check=profile_tests
+revision=c19b141e3d2bc1440fd1a9afb89c12cfd1704d95
+start_utc=2026-10-28T07:19:04.160538+00:00
+end_utc=2026-10-28T07:19:11.112345+00:00
+duration_seconds=6.951807
+exit_code=0
+test_count=3
+command=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m5_profile -v
+environment=Existing local pinned Python 3.12.3 CPU virtual environment where applicable; no package installation.
+result=PASS
+log_path=.agents/evidence/logs/PRE-M5-remediation-profile_tests-c19b141e.log

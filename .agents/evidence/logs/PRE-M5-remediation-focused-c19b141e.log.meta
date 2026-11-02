@@ -1,0 +1,11 @@
+check=focused
+revision=c19b141e3d2bc1440fd1a9afb89c12cfd1704d95
+start_utc=2026-10-28T07:23:45.582540+00:00
+end_utc=2026-10-28T07:24:53.499191+00:00
+duration_seconds=67.916651
+exit_code=0
+test_count=132
+command=env PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m4_model tests.test_m4_data tests.test_m4_training tests.test_m4_checkpoint tests.test_pre_m4_contracts tests.test_m2_simulator tests.test_m3_data tests.test_m5_contract_fixtures tests.test_m5_profile -v
+environment=Existing local pinned Python 3.12.3 CPU virtual environment where applicable; no package installation.
+result=PASS
+log_path=.agents/evidence/logs/PRE-M5-remediation-focused-c19b141e.log

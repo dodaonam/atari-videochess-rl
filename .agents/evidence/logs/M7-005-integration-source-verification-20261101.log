@@ -1,0 +1,15 @@
+started_at_utc=2026-11-01T05:11:29Z
+source_revision=0f45fa06c235658da48d3d41a9091c06580bfe27
+remote_integration=0f45fa06c235658da48d3d41a9091c06580bfe27
+merge=0f45fa06c235658da48d3d41a9091c06580bfe27
+parents=d7332b91128d3daf919421db2e71a9f2ee4b48ec 05a94ef096da9bc0467970e0ea8ec1dc88d953e3
+subject=Merge PR #19: M7-004 evidence-linked research delivery
+{"baseRefName":"initial-idea","headRefOid":"5907ab6a79494a367aed011919d36ac80f5d3164","isDraft":false,"mergeCommit":"2bca79001ed94324b725dce2dfdc485e3a51ad3e","mergedAt":"2026-11-01T02:55:07Z","number":17,"state":"MERGED"}
+{"first_lines":"## Independent PM review — G4 decision (2026-11-01)  **Decision: APPROVE G4 for the bounded M7 Option B evaluation evidence (M7-01 through M7-03), with explicit scientific limitations.** Reviewed PR #17 at HEAD `5907ab6a79494a367aed011919d36ac80f5d3164` against `docs/06-quality/ACCEPTANCE_CRITERIA.md`, the frozen protocol, campaign/analysis reports, the evidence and test provenance, and the relevant application/test implementation. This is an **independent PM gate decision**, not executor self-approval or a claim of improved chess performance. ","html_url":"https://github.com/dodaonam/atari-videochess-rl/pull/17#issuecomment-6552570969","id":6552570969,"user":"dodaonam"}
+{"baseRefName":"initial-idea","headRefOid":"2ff6e3f53056a6c3ce5807698acf42655270c1d8","isDraft":false,"mergeCommit":"d7332b91128d3daf919421db2e71a9f2ee4b48ec","mergedAt":"2026-11-01T03:38:11Z","number":18,"state":"MERGED"}
+{"baseRefName":"initial-idea","headRefOid":"05a94ef096da9bc0467970e0ea8ec1dc88d953e3","isDraft":false,"mergeCommit":"0f45fa06c235658da48d3d41a9091c06580bfe27","mergedAt":"2026-11-01T04:49:53Z","number":19,"state":"MERGED"}
+{"first_lines":"## Independent PM review — M7-004 / M7-04 (2026-11-01)  **Disposition: ACCEPT the M7-004 engineering delivery evidence for M7-04, with an explicit environment-verification qualification, and APPROVE PR #19 for merge at HEAD `05a94ef096da9bc0467970e0ea8ec1dc88d953e3`.** This is **NOT G5 approval** or any release/publication authorization.  ### Reviewed scope and findings","html_url":"https://github.com/dodaonam/atari-videochess-rl/pull/19#issuecomment-6553580590","id":6553580590,"user":"dodaonam"}
+four_M7-004_docs_present=PASS
+PR19_merge_ancestor=PASS
+finished_at_utc=2026-11-01T05:11:32Z
+exit_code=0

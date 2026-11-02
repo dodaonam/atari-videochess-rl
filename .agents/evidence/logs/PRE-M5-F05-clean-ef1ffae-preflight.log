@@ -1,0 +1,20 @@
+command=python3 scripts/agent_preflight.py --json
+revision=ef1ffae65a7e08579e7ae00502a11de59c3efea3
+start_utc=2026-10-28T09:11:41Z
+end_utc=2026-10-28T09:11:41Z
+exit_code=0
+{
+  "ok": true,
+  "errors": [],
+  "warning_codes": [
+    "ARTIFACT_MANIFEST_REQUIRED"
+  ],
+  "next_milestone": "M5",
+  "next_milestone_status": "pending_user_approval",
+  "start_authorized": false,
+  "active_task_id": null,
+  "next_task_id": "M5-001",
+  "next_task_status": "pending",
+  "git_snapshot_matches": true,
+  "workspace_snapshot_matches": false
+}

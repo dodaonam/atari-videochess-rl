@@ -1,0 +1,326 @@
+{
+  "command": [
+    "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python",
+    "/tmp/atari-m4-work/scripts/diagnose_m4_gate_conflicts.py",
+    "--gate-run",
+    "/home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r2",
+    "--release-dir",
+    "/home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+    "--output",
+    ".agents/evidence/logs/M4-02-sanity-gate-diagnostic-20261027.json"
+  ],
+  "dataset": {
+    "file_inventory": {
+      "config.json": {
+        "sha256": "75034de9d1dee2c48f56ecb1e7b54e11ae4c261fe9a95579ef69b0e93c00b304",
+        "size_bytes": 1465
+      },
+      "games.jsonl": {
+        "sha256": "526fc9966d4521dee92fc4bb7e011d9a59fce1dc703810a0ed3d6edbb2e154c7",
+        "size_bytes": 2764193
+      },
+      "manifest.json": {
+        "sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+        "size_bytes": 1976
+      },
+      "manifest.sha256": {
+        "sha256": "5f4c968a8885548565496b7652a6b060adc8778cfeaffb58dd4b7b8b18b9a2ae",
+        "size_bytes": 80
+      },
+      "positions.jsonl": {
+        "sha256": "9db9676ecb64cc111e4310c83374348132ad4413cb0de7c1fe1878b89c89500d",
+        "size_bytes": 31992257
+      },
+      "rejections.jsonl": {
+        "sha256": "fce94dc0c721fb84b45ccb812667b712030f4f327901d1a7ee19b4392524a42e",
+        "size_bytes": 66744
+      },
+      "source_manifest.json": {
+        "sha256": "f2ff571ce81a47b1191f7b57c2f2d16c48ebde6b334aeb6e82d7b173dc2b2935",
+        "size_bytes": 5060
+      },
+      "split.json": {
+        "sha256": "dbbcc00bdb5989fd8827c8e7beec3b4eea41f0bae3649ad9ffa2373b0d128193",
+        "size_bytes": 2473768
+      },
+      "stats.json": {
+        "sha256": "3d0a217e94a826f38d54b402c921f145592c92760d39901c8b2cc2339dad68bd",
+        "size_bytes": 2691035
+      }
+    },
+    "game_counts": {
+      "test": 103,
+      "train": 795,
+      "validation": 102
+    },
+    "loader_total_seconds": 134.7097908680007,
+    "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+    "position_counts": {
+      "test": 2057,
+      "train": 15196,
+      "validation": 2015
+    },
+    "post_load_release_files_unchanged": true,
+    "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+    "release_path": "/home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+    "replay_tensorization_seconds": 23.705668127000536,
+    "split_assignment_sha256": "84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e",
+    "verification_seconds": 110.7023913940011
+  },
+  "diagnostic_git_revision": "e5e42f703bfd3386c94de17b607aa5102b60201f",
+  "diagnostic_worktree_dirty_at_start": false,
+  "duration_seconds": 134.85390617700068,
+  "ended_at_utc": "2026-10-27T13:46:24.317399Z",
+  "environment": {
+    "numpy": "2.5.4",
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "python_chess": "1.11.2",
+    "python_executable": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python",
+    "stockfish_on_path": null,
+    "torch": "2.14.1+cpu"
+  },
+  "fixed_sample": {
+    "conflicting_identical_input_groups": [
+      {
+        "distinct_target_count": 2,
+        "model_input_sha256": "1b30fcb96d85e9533f789e8a8e07d7111faddf60cc71b40aff17f4e0e5ff0da3",
+        "sample_count": 2,
+        "samples": [
+          {
+            "history_length": 1,
+            "history_moves_sha256": "675d110bc7a0f05c1958d7d9680dccfe0e61f2154f345bfb79f79ed19ff506ff",
+            "legal_candidate_count": 20,
+            "played_move_uci": "c7c6",
+            "ply_index": 1,
+            "sample_id": "008d0d9e411e3db4b5f012c35685a2b93d276bb56d3626c2636420bf7c3743dc"
+          },
+          {
+            "history_length": 1,
+            "history_moves_sha256": "675d110bc7a0f05c1958d7d9680dccfe0e61f2154f345bfb79f79ed19ff506ff",
+            "legal_candidate_count": 20,
+            "played_move_uci": "e7e5",
+            "ply_index": 1,
+            "sample_id": "013c134d9852e3ab32f80fdb8e011d603f3dd5b9306d478a3d79570bca62fbec"
+          }
+        ],
+        "targets": {
+          "c7c6": 1,
+          "e7e5": 1
+        }
+      },
+      {
+        "distinct_target_count": 2,
+        "model_input_sha256": "e82e9da38607b337f5597e2fa444bf7ca86905f8b26dd84f58e6bd70b75a4a37",
+        "sample_count": 2,
+        "samples": [
+          {
+            "history_length": 2,
+            "history_moves_sha256": "e906508f211992954139cc491cadd574f8a1454492cd90c4066c16c929040d12",
+            "legal_candidate_count": 28,
+            "played_move_uci": "c1g5",
+            "ply_index": 2,
+            "sample_id": "00caca2ae4c70b8d55286ae750415a2e660c8464e1b4eaaf0bd78dc963f89349"
+          },
+          {
+            "history_length": 2,
+            "history_moves_sha256": "e906508f211992954139cc491cadd574f8a1454492cd90c4066c16c929040d12",
+            "legal_candidate_count": 28,
+            "played_move_uci": "c2c4",
+            "ply_index": 2,
+            "sample_id": "016746307b00a2f651c0266d57b88f8b0b4d3bc8f8b07825801d3a1b5d02f055"
+          }
+        ],
+        "targets": {
+          "c1g5": 1,
+          "c2c4": 1
+        }
+      }
+    ],
+    "count": 128,
+    "group_count_with_conflicting_targets": 2,
+    "lexically_smallest_training_ids": [
+      "0011a90b3f54b6a3901c2cf9f065784f8992770a6501ddad7d499110bedf02b5",
+      "001223d989bbbac904a7dca76289cd59b7630fba06f60b34ed0513c6d9c30be1",
+      "0012eecb54213269c70299e011e0b708ec1006b631ef08541581af69f2e9e625",
+      "00184c9a34cc13607ffd6b7da402ddfa7804f1aa8f2869a8fbfed6817af3e393",
+      "001e70b86cc040f329ca849a1b240ddc429e2c6446a6b53714bf9b27641a1f6c",
+      "001ef95d59c05c9e14144bd3fd29ba95076c591e5f790695eda91a7d7a6ab15e",
+      "00223d46f9e74eab253ae8d743e65cfec1ea0ab018cdf9c063e25e863d17ac79",
+      "0026b8578980c2afec542eaf428cc982420b7e7b80a2e2cffa90a0c7f3b834d4",
+      "0026dc35e744ed08f9017d5b2c639e6655bec0aab366d932aa69af40b0a67d7a",
+      "002a7e46504adb8c33e7c850c0ae8ece7a0514382fea2e30865ba546410a1723",
+      "003d2891f7e50057272c6a311bf056efd84f58f6703280c0cbb9d4ccb5c46605",
+      "003d55bedc705d9f59d9803ad8a268742ee2cf7f58aae517db1b4ccca24d682f",
+      "0040211dcb48d31d0cc20824972e8f220346ee67e0908bb5e228907c8c64fdc6",
+      "00411b6e9717b958b75f4e5dd708af7d7c09da7c0eee9ee4036ee6190d4396a4",
+      "00473f687745d1d9300d31b10e0f12bd4ddee20eb533ac5de7039214d3a72080",
+      "0063478e9fdf953b7c89d6a15be88435b78fff699d8fcb3ff23430c8d4eaa796",
+      "0063dad773224e3880686081fddc3dcf8aaf4795b2af47aae6286057464131eb",
+      "006c84658de9caf2c08e9796a4f4f791db99e432d63913022b4c7dc3ae48e2f3",
+      "0075524dfb7e315762d9f276382665259dbf4a90b3a8b74c5d3490d9ef54db12",
+      "007567481ea50b7af704b7625ea1c5c996db43d0ba0d8911042a06053865d2a3",
+      "0076c0d39c6c05d27366b86af7c2f9d47dc52e726ad68c21f7d82e9dfe9da400",
+      "00896a80027a107c23436ca0e115dee24cbaad7609a4cee3b289f7c160b7c753",
+      "008d0d9e411e3db4b5f012c35685a2b93d276bb56d3626c2636420bf7c3743dc",
+      "0091e3219435daba778ccd8a1de0726268455c106d9838253df53278a8acef86",
+      "00937c1d0cc3e8c73e7f5e47914b877c463925adc76d74195fe51eb5f20db720",
+      "00964ce6b17a860819f015457c3c4c6bcaaa09c4ff023509509de5e4bcbab003",
+      "00993234806ce04e6125d85c892e59c2de1aa1219dff6ef56ec48e29b0b6727e",
+      "00a3bcb5f381a893092548f7fe2872ae5f471f83548abe4e9990134400ccd7e0",
+      "00abc7077f8511a6f4752e73c299fd58c296507f8eb7fd2e21beb75fca650be1",
+      "00b698f9607dd4911aa88bcdc212df9cc700d3b58bc3cbf4db8d7f52ca434fe4",
+      "00b7ba1cb6748094a706ee52d8affa5d2f613a93a26515117ce7efe843f84d3d",
+      "00c65e4c9d6e5e598aaa5336276b3a0a4bfe04bb905227d723dbabd7c6a212fd",
+      "00caca2ae4c70b8d55286ae750415a2e660c8464e1b4eaaf0bd78dc963f89349",
+      "00cfe78474e349a300ef81e480da9f21f1a4e7f804e0d4c521a469e0d07343d3",
+      "00d8187fe45e9d2d5afeb8ce7737932666d20e54a1351ceeb397792a36485ecb",
+      "00df8b8e8e72decf70b97dc75980fd964dad6d625e2559c309f3cb7bc1e8eff4",
+      "00e1e6238bbd5110ecb26567c5e8c159b5606840e6665c99e16a8eedef43248e",
+      "00e6485619a572182edfbcfcef432bd540307c4c61a359309976c48cb2559203",
+      "0107a9b20e3e8c23fb5b3b0aa0083ff0acda92d4e9517dc1b288f04e4700ab16",
+      "010ba6038ac1e1a683fe1f4921e7c18c4928540ddc6f00381f446e7368e5c2d6",
+      "010e572773f0a3df46f9ac80e02b5b20364ffde7dd0f6fb8e28325c0366fb482",
+      "011410e77eb193fe6e8057009bf63c23b9b33447db1b5f9b0d5e814798c23e97",
+      "011cf4c8026b0adbec5bcd213320d29ca52c910738fd83ed9fd73d4bb06a1aaf",
+      "0123094c29a528c87a88965d326a7a0d96267de39baa1189d3aa426f05635f3c",
+      "0128aeaeeaba33981d63c5c3ad693a434c85848adee2656eb3401fca9d2393d8",
+      "0129ea37eac72fd2f79f61b288f667571a1ed141fe2a768e60b0dcee4e277e3e",
+      "012b7e2568c82216ac95f630e5eb37d26304dfc618c1c3e0df8ed5f6d1c07fcf",
+      "012e6dcf80b3551e2a921cb92e2a25e190befb14d0f116704ad8f72d0caa0fdc",
+      "013033be09c6481337eb97db85563ac4e1176c4f7035114650612cd10c91de8f",
+      "013b6f3d91385cde6cb0f737cd5cc14eb012752984368b1c74dcee6e8f5986d2",
+      "013c134d9852e3ab32f80fdb8e011d603f3dd5b9306d478a3d79570bca62fbec",
+      "013f1c4a7abbf2b0a7f946ed6b3d15a33446b01499d9c9f1c6b7ea2c312b4c05",
+      "013fc5cfb3c525077fa556fc706de8e7047edc286dadd875778627d83233e897",
+      "0142941bec64ffabd33c2afd014347eedde79119361da38ed54578338f2261c6",
+      "0147dbece524ddacb405571cc806c76cc1c7b4c0022977ee9a84b2eafb2fee23",
+      "014ccc2b6db036f200d3f049916d3a361d4b8e5b20bd9397fbe0c0623f92eef3",
+      "014fc5968289961d9a4b32546db573308893f5e28e20c335c4f4f3799a2556a7",
+      "015676fb5855f633a7d5d6de2cf3504bd68951d429247c1cf4bb4a47552130f4",
+      "015783dc45c60bf48e29809fbaa888529e44b03265ad6155a8d50b7e68eb73c2",
+      "0160570809e7edce1b63fc5b0c01318a900adc0fd22fa1637285ce59967ce491",
+      "0163851216ad39b8ac9a136cf0b003facd8a3b524af19bb2d2a7a30e8655aadd",
+      "0164728de1a6062bc4b59fed9dca1317de121f743842daa866c58733e4324d40",
+      "016746307b00a2f651c0266d57b88f8b0b4d3bc8f8b07825801d3a1b5d02f055",
+      "0170761bcf5c49270d9fb73242f80400a766ff718a43dafd3a51063e00640cbc",
+      "0173eb3ddc2d7a781c11bb5c8e00d6f1d83c18f911b115ef49ea1b26e8160656",
+      "01744e1dbe7bdf2ca2e2dfeee3eccb9deaa40133679042a4a69332ba0a023c4d",
+      "01764e676ccbbb8b76a75337f0d22fa9d3a9271a43d10110cb0a4658d0458292",
+      "017d13264b116ac2bd35f75de351cb14f707a3c1b055115f2e5d6635712d2475",
+      "0184b488a2481ab46f4a54d559f5297d4c32862021208276e283b5c11e199c3b",
+      "018505897adce955f7c28588752ec598b1c95b29851c0504ff13b09727fc2160",
+      "01911bc27c3b2cf56158e9d66b71dda540481bf39d78f6620672cdc499a4dbfe",
+      "01918cd7b4c05dd774161d95699837b16566b622d16d8ffe270b3358d05f75b4",
+      "0193a80d9015e09aada0a687d7dc0c23b234f8f5bc94a8ea2d462ffaf9a696e5",
+      "019f102be4d8235826911c74492cf4e699f4eb3c8a4221ced76e35810699e21d",
+      "01a1e41fc4dcf56be5589b013fe99f7523445343d051ecd9dc4dd1961af35233",
+      "01b286a6596d5a81c9dc1c030e75659a6b465ff385fc35bf191df8bf3bf8149f",
+      "01b553ddc162557517871e40939161bcf6c71ebbbe614024d07ea8ec4bf5ac3a",
+      "01b7008ed23188e17d9fdce4f74010e70fccff198dc3a34d89a0be47671f4402",
+      "01bbd6e1be3be90a6973725ec00a706d7f95ba4c4e0d68c3db64927f654211c5",
+      "01be7ac02d6f2ca99d59f6b5729d732605a56db418db303ebce5e9a6372d3104",
+      "01bebd35bae95ec4cc4aadfd90ce49a215b5bdcbf907b318c42865512803ca85",
+      "01c3c7a443c97b221f4bed2dc39521f180ef478fa6e0aad27fa8f625bc914248",
+      "01c76f41c2e7fd11fcdd014cad89fc8fd759c68aaf9f16addbcb95b59c639359",
+      "01c7da62fef689ceab441124af8c14f8305628cc78a1e02b480a005a93bfc3b9",
+      "01c8b9013213cd178b837f098d46daf33951e94318a9f10c8d61f082159d4131",
+      "01d04cd0a2f4bd4911a109e19071f258fc75fecddd952a16a58d28ea7a7f6f8a",
+      "01d2bec06ccf23e33739b8bd3a89aad3d954dd94d8881d11651319785ac797fe",
+      "01d9cf5dd8cdaa193d00b476bc788f4451a2a9f97a4daa707b365959b39f727f",
+      "01de596c3652d2e830019a14ef6d5d81910f73e228b3b2fa6de1521bf6920d5a",
+      "01e937c726f5e6b172fe806a7dd1d967b8a3d0195f4e984e7fc0cc99b5a9cfaf",
+      "01f039d377320629dceb11f4b594baa1a62ea347e881880f8065eb6b60726536",
+      "01f5727a59067cd5481d8f12ef4744598a1f9b83afd88879e33e23b7f698cb01",
+      "01f8246567f8c11f89d6f2a197d0871f5c6b52f4c787b838dd1e60cdbe236287",
+      "01fb415fb7822032fd7b16f07c952d2d189c6503bf32b2960c0125cdef2a7494",
+      "020397e0a61c643205e6106dc11c1607c7563e61d521689c81de36460880c124",
+      "02073e94cc0db07314e45127b08b523190c126bba4b877b208b99505295af44d",
+      "0207c5d574fbf913cab5538f1d8cb7860a15efd534a3d84730b220322739bd48",
+      "020a251b0c8fbbfc1fb4fd8d38d6320f6bf20a5791c4c32638852e2cd764bf1e",
+      "020b7cd08799e65a342aaf3adfb097df97e1b70a0c1c43060f2f52dbe6a770cb",
+      "020ca9c96a0c8b58964e47fe74ec827d0cc383e8376529bbc67c8b972d79a78d",
+      "020d5d67fc794110440fefe61a2fb43a5295421bb61005b93d8cc7de2bbf7bdf",
+      "020d81360352de802a2f2f2a27854925746061c4da49b404df09e7b7517a5863",
+      "0213943e328af3ab803f43c3571fad65256a5328de74975e14aadefe2ee59196",
+      "021659505177c7dedb4569bb76bbfd4b2cf5c860f00eeef94b29afb3e81c5323",
+      "0218aff6fbc66fd1584d459a69f7efce31cf810927c38f85e88e70fd27067be9",
+      "021b724a6bb5a84b9b2d2311db97ae5995cb2a3e43fac6a621d344ddbd1195b7",
+      "021dae9efe0420dd7ad5720145b29fe3fac4123bb8fb5fac71208a49dad5e9c3",
+      "02216fb9248d2135500cd148c0655fb00caba1469d8155c0292520c19710dc42",
+      "022e09be41dde7b0f7229be35fdfed786221542b64f1c0735ab0225b1cea9272",
+      "022ec10b0709546f61fe6863adabdf96b27f5b2139bb3f64777084c0102ca8aa",
+      "022edf220f93a0513e19f15d5010628b0e4c5b21323e7c68ea6d7cdb331bb2d1",
+      "022ee97f1f976cd5e775e159a0ca96559860c637fc0c4e70be90c28d698630a3",
+      "022fe075b8989138498652e8e20dacf7bfa85244360aff71f07382d8024cc2ea",
+      "023c09db406a234e738ae5cfd2682ab4cf53e3d71bb72aa9dade772b18f54ccb",
+      "0240f1cb9ff939af23f956ea35fa9de1b27b033ce53edfffb13dcbd85e7241da",
+      "024537891ce264d90fc7c16925648c663c5c7d39042c286c8d0086f1361b70f8",
+      "024670e3abf78b1549100ec42f1ed3353fab22e3d61a3c91dab8ef057e3d3c37",
+      "0247d0928cdd36bbc8324b229eee36134ea324ba017a2e7a62d97980d68377af",
+      "024e9ac769e50b81b2e8d2fb79ec17b22a6849f31f7c07645566aa40e160e651",
+      "024f995c40de98dbb909562f69562db7327653e2819ce61a62d9abfb1aeb9acc",
+      "0251a6c38d93113c20d21aaaaf7e9b8bb83a178be817318dc87b0de23ed3f0b4",
+      "02561034c22564b01716f141f1b479aef4100226dda2ca754dae56de59de41f4",
+      "02565ebe1679d7933ea5cb868ce9871ca864d1651860650dc5d548c05138e8f6",
+      "025e7e567dfd9f9d82f8d357c5f92b96eb440c542935c8b26eed94108c7552ed",
+      "0260c2829e94584e7e874cd51976e832277811dab2ab428705dfdf4366713940",
+      "0263e9c4ab9b61e71da2729e7735ead58ed4b93210c15ab556f5dd9d818eb703",
+      "0264e2d551696b24aa5b4488e2b296dcc234ebaaceb4e2bf31d36a456eeb6901",
+      "026638d4a32ebb430109da53b0909333172bcd1476791ee485b6c2963b485336"
+    ],
+    "maximum_deterministic_top1_accuracy": 0.984375,
+    "maximum_deterministic_top1_correct_count": 126,
+    "minimum_error_count_from_input_collisions": 2,
+    "recorded_gate_top1_accuracy": 0.984375,
+    "required_correct_count": 127,
+    "required_top1_accuracy": 0.99,
+    "same_ids_as_failed_gate": true
+  },
+  "model_contract": {
+    "identity_fields": [
+      "board_planes",
+      "state_scalars",
+      "history_moves",
+      "candidate_squares",
+      "candidate_promotion",
+      "candidate_flags",
+      "candidate_uci"
+    ],
+    "input_schema": "videochess-model-input/1.0",
+    "model_schema": "videochess-behavior-scorer/1.0",
+    "target_excluded_from_identity": true
+  },
+  "resource_measurements": {
+    "peak_rss_bytes": 465395712
+  },
+  "result": "The fixed 128-sample gate contains identical complete model inputs with contradictory played_move_uci labels; a deterministic legal top-1 policy cannot reach 99% on this sample set.",
+  "schema": "videochess-m4-sanity-input-conflict-diagnostic/1.0",
+  "scope": "read-only data/feature diagnosis; no model training or data mutation performed",
+  "source_run": {
+    "artifact_directory": "/home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r2",
+    "gate_duration_seconds": 151.249590110001,
+    "gate_final_metrics": {
+      "cross_entropy": 0.02195480228497465,
+      "elapsed_seconds": 151.24949985400053,
+      "legal_top1_accuracy": 0.984375,
+      "mrr": 0.9921875,
+      "top3_accuracy": 1.0,
+      "updates": 500
+    },
+    "gate_seed": 20261022,
+    "gate_status": "FAIL",
+    "gate_thresholds": {
+      "cross_entropy_max": 0.05,
+      "legal_top1_accuracy_min": 0.99,
+      "max_updates": 500
+    },
+    "gate_updates": 500,
+    "run_id": "m4-behavior-20261027-r2",
+    "selected_sample_id_sha256": "cc7c30b0fb6c676ad4bf8b8e9b535af2c8a14a9b302949ac2c375defe4541634",
+    "source_revision": "4562dddd80d302bdbb49e1191c97bd71ac7e9938",
+    "source_worktree_dirty": false
+  },
+  "started_at_utc": "2026-10-27T13:44:09.463494Z",
+  "status": "structural_conflict_blocks_threshold"
+}

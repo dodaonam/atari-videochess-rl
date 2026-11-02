@@ -1,0 +1,9 @@
+check=isolated_synthetic_m3_timing_diagnostic_not_counted
+revision=dc678a115424d6718e37845c6d2fc1710a7d6644
+working_tree_modified=true
+exit_code=1
+test_count=1
+duration_seconds=62.874
+command=PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m3_data.M3ContractTests.test_synthetic_end_to_end_release_is_reconstructible_and_hashed -v
+reason=Under the one-second synthetic teacher budget, the wall deadline expired before UCI startup rather than reaching the expected no-success exception; valid early stop was made phase-aware and remained bounded.
+log=.agents/evidence/logs/PRE-M5-m3-timing-diagnostic-dc678a1-isolated-failed.log

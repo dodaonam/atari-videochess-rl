@@ -1,0 +1,6 @@
+command=git status --porcelain=v1
+revision=ef1ffae65a7e08579e7ae00502a11de59c3efea3
+start_utc=2026-10-28T09:11:42Z
+end_utc=2026-10-28T09:11:42Z
+exit_code=0
+clean=true

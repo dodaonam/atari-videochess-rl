@@ -1,0 +1,38 @@
+command: /usr/bin/python3 -m unittest tests.test_m7_release_disposition.M7ReleaseDispositionTests.test_accepted_final_m3_dataset_identity_pair_matches_closure tests.test_m7_release_disposition.M7ReleaseDispositionTests.test_historical_corrective_dataset_and_teacher_are_separate_from_final tests.test_m7_release_disposition.M7ReleaseDispositionTests.test_final_m3_teacher_is_bound_to_final_dataset_in_closure_and_inventory -v
+source_revision: f3ef2976f446594dca6e4b6d5d219734cc33f966
+started_at_utc: 2026-11-01T09:55:53+00:00
+finished_at_utc: 2026-11-01T09:55:53+00:00
+exit_code: 1
+
+test_accepted_final_m3_dataset_identity_pair_matches_closure (tests.test_m7_release_disposition.M7ReleaseDispositionTests.test_accepted_final_m3_dataset_identity_pair_matches_closure) ... FAIL
+test_historical_corrective_dataset_and_teacher_are_separate_from_final (tests.test_m7_release_disposition.M7ReleaseDispositionTests.test_historical_corrective_dataset_and_teacher_are_separate_from_final) ... FAIL
+test_final_m3_teacher_is_bound_to_final_dataset_in_closure_and_inventory (tests.test_m7_release_disposition.M7ReleaseDispositionTests.test_final_m3_teacher_is_bound_to_final_dataset_in_closure_and_inventory) ... FAIL
+
+======================================================================
+FAIL: test_accepted_final_m3_dataset_identity_pair_matches_closure (tests.test_m7_release_disposition.M7ReleaseDispositionTests.test_accepted_final_m3_dataset_identity_pair_matches_closure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>/tests/test_m7_release_disposition.py", line 118, in test_accepted_final_m3_dataset_identity_pair_matches_closure
+    self.assertIn(final_release_id, identity)
+AssertionError: 'f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890' not found in 'Internal release ID `7b51ec3761ad28aa7a2882691b3c314d35115ab339769251ff2556e706a5b1d9`; manifest SHA-256 `be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12`'
+
+======================================================================
+FAIL: test_historical_corrective_dataset_and_teacher_are_separate_from_final (tests.test_m7_release_disposition.M7ReleaseDispositionTests.test_historical_corrective_dataset_and_teacher_are_separate_from_final)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>/tests/test_m7_release_disposition.py", line 150, in test_historical_corrective_dataset_and_teacher_are_separate_from_final
+    self.assertEqual(len(dataset_rows), 1, "historical corrective dataset needs a separate row")
+AssertionError: 0 != 1 : historical corrective dataset needs a separate row
+
+======================================================================
+FAIL: test_final_m3_teacher_is_bound_to_final_dataset_in_closure_and_inventory (tests.test_m7_release_disposition.M7ReleaseDispositionTests.test_final_m3_teacher_is_bound_to_final_dataset_in_closure_and_inventory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>/tests/test_m7_release_disposition.py", line 199, in test_final_m3_teacher_is_bound_to_final_dataset_in_closure_and_inventory
+    self.assertEqual(len(rows), 1, "inventory must identify the accepted final teacher separately")
+AssertionError: 0 != 1 : inventory must identify the accepted final teacher separately
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.006s
+
+FAILED (failures=3)

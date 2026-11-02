@@ -1,0 +1,22 @@
+START_UTC=2026-10-21T15:48:04.121672638Z
+COMMAND=python -m videochess_rl.data verify --release artifacts/m3/training-support/release-final-closure-r6 --source-manifest artifacts/m3/source/source-manifest.json --archive artifacts/m3/source/lichess_elite_2022-05.zip
+{
+  "games": 1000,
+  "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+  "output_bytes": 39994522,
+  "outputs_verified": 7,
+  "positions": 19268,
+  "rejections": 182,
+  "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+  "source_archive": {
+    "bytes": 97163552,
+    "sha256": "ad374c8fd9fb2fe5f03c1297aa1d47cbbce5caedf6e6e2d387ee816930afdb11"
+  },
+  "source_member": {
+    "bytes": 326476031,
+    "crc_verified": true,
+    "sha256": "0f88f18836be7e321aa1e0211b618e78d4e92065c126c45c95a6a55c1500a8e6"
+  }
+}
+END_UTC=2026-10-21T15:49:59.796475438Z
+EXIT_CODE=0

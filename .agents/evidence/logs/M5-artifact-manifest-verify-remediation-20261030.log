@@ -1,0 +1,10 @@
+Executed at UTC: 2026-10-30T04:54:06Z
+$ python3 scripts/m5_artifact_manifests.py --verify
+{
+  "status": "verified",
+  "artifact_manifest": "artifacts/m5/artifact-manifest.json",
+  "run_manifests": 7,
+  "total_bytes": 6544747450
+}
+Result: PASS: verified artifacts/m5/artifact-manifest.json and 7 run manifests; total private M5 artifacts 6,544,747,450 bytes.
+Exit code: 0

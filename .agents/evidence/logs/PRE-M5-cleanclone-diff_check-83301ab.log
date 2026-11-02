@@ -1,0 +1,11 @@
+check: diff_check
+revision: 83301abf6b85441d4fa63eab1376127066c4cdb1
+start_utc: 2026-10-28T04:06:26.122501+00:00
+end_utc: 2026-10-28T04:06:26.125456+00:00
+command: git diff --check
+exit_code: 0
+worktree_before: clean
+
+--- stdout ---
+
+--- stderr ---

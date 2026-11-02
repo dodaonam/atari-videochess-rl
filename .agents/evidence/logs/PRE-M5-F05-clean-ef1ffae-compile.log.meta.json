@@ -1,0 +1,12 @@
+{
+  "check": "compile",
+  "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m compileall -q videochess_rl scripts tests",
+  "end_utc": "2026-10-28T09:11:42Z",
+  "environment": "Clean clone of committed candidate; Python 3.12.3 existing pinned CPU venv; no package changes.",
+  "exit_code": 0,
+  "log_path": ".agents/evidence/logs/PRE-M5-F05-clean-ef1ffae-compile.log",
+  "log_sha256": "416d19a58f66d7809a8e1024e974dfce6138737bd119c83abab6ec84ad02b3c9",
+  "result": "PASS",
+  "revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3",
+  "start_utc": "2026-10-28T09:11:42Z"
+}

@@ -1,0 +1,187 @@
+command: PYTHONDONTWRITEBYTECODE=1 python3 scripts/audit_m6_closeout_provenance.py --json
+result: PASS: M6 closeout provenance audit; 4 committed file identities, 8 command/test logs, and 8 machine-report logs checked; 2 prior diagnostics explicitly retained as historical_unverified.
+Exit code: 0
+execution_environment: clean detached worktree at corrective source commit; Python 3.12.3
+git_head: fc34f34d850e2830cbc0d9a14d331a197d6ae062
+git_tree: c933d33a0da149f81b1557a677411a601990e1d3
+started_at_utc: 2026-10-31T08:37:31.404872+00:00
+completed_at_utc: 2026-10-31T08:37:31.532479+00:00
+
+--- machine-readable audit result ---
+{
+  "schema": "videochess-m6-closeout-provenance-audit/1.0",
+  "audit_source_head": "fc34f34d850e2830cbc0d9a14d331a197d6ae062",
+  "audit_source_tree": "c933d33a0da149f81b1557a677411a601990e1d3",
+  "file_evidence": [
+    {
+      "path": ".agents/evidence/M6-PR-handover-20261031.md",
+      "status": "PASS",
+      "git_revision": "94635ad871fd0853fc0c5b1024d8963ced864300",
+      "sha256": "f9dfe3aeb3e4658eaf9896d077c93b68c5412db0e97cb10cfde2115543f80670",
+      "recorded_at_utc": "2026-10-31T08:30:39Z",
+      "prior_revision_note": "Read-only byte identity was verified in commit 94635ad871fd0853fc0c5b1024d8963ced864300 at 2026-10-31T08:30:39Z; committed blob and current file SHA-256 are f9dfe3aeb3e4658eaf9896d077c93b68c5412db0e97cb10cfde2115543f80670. The prior recorded revision 0eddd06932de06d4651f7e6dc4c99e54db719ddd did not contain this file (or did not resolve), so this replaces that unsupported file-provenance claim without changing the file or its historical meaning."
+    },
+    {
+      "path": ".agents/evidence/M6-001-PM-acceptance-20261031.md",
+      "status": "PASS",
+      "git_revision": "94635ad871fd0853fc0c5b1024d8963ced864300",
+      "sha256": "f890126a6259e5c19e5314ca2376cf310afc52e4d256e8597c98df762bf38f6d",
+      "recorded_at_utc": "2026-10-31T08:30:39Z",
+      "prior_revision_note": "Read-only byte identity was verified in commit 94635ad871fd0853fc0c5b1024d8963ced864300 at 2026-10-31T08:30:39Z; committed blob and current file SHA-256 are f890126a6259e5c19e5314ca2376cf310afc52e4d256e8597c98df762bf38f6d. The prior recorded revision 509f9f83f9249208fd5adba572efed2d2f0f82ff did not contain this file (or did not resolve), so this replaces that unsupported file-provenance claim without changing the file or its historical meaning."
+    },
+    {
+      "path": ".agents/evidence/M6-post-merge-verification-20261031.md",
+      "status": "PASS",
+      "git_revision": "94635ad871fd0853fc0c5b1024d8963ced864300",
+      "sha256": "e7b5b9c0238802879e23728753c556f011508ba621fb5b5324d4a93d90be5d6f",
+      "recorded_at_utc": "2026-10-31T08:30:39Z",
+      "prior_revision_note": "Read-only byte identity was verified in commit 94635ad871fd0853fc0c5b1024d8963ced864300 at 2026-10-31T08:30:39Z; committed blob and current file SHA-256 are e7b5b9c0238802879e23728753c556f011508ba621fb5b5324d4a93d90be5d6f. The prior recorded revision 509f9f83f9249208fd5adba572efed2d2f0f82ff did not contain this file (or did not resolve), so this replaces that unsupported file-provenance claim without changing the file or its historical meaning."
+    },
+    {
+      "path": ".agents/evidence/M6-post-merge-verification-20261031.json",
+      "status": "PASS",
+      "git_revision": "94635ad871fd0853fc0c5b1024d8963ced864300",
+      "sha256": "46c2c41a14b6f33c3c55c7bddac6dea32bdd1b45887b1498e9f6857ed61d2ea4",
+      "recorded_at_utc": "2026-10-31T08:30:39Z",
+      "prior_revision_note": "Read-only byte identity was verified in commit 94635ad871fd0853fc0c5b1024d8963ced864300 at 2026-10-31T08:30:39Z; committed blob and current file SHA-256 are 46c2c41a14b6f33c3c55c7bddac6dea32bdd1b45887b1498e9f6857ed61d2ea4. The prior recorded revision 5d4cfd93a3895e5a4c2d68eb485379c25639f403 did not contain this file (or did not resolve), so this replaces that unsupported file-provenance claim without changing the file or its historical meaning."
+    }
+  ],
+  "command_log_evidence": [
+    {
+      "path": ".agents/evidence/logs/M6-postmerge-clean-checkout-preflight-20261031.log",
+      "provenance_status": "verified",
+      "execution_status": "PASS",
+      "git_revision": "3e675f8f95527df335e54e405c92517cd436b5b1",
+      "log_sha256": "93b315562afe6309ab12e6160559b32aa38b84e56b12b28758a7252be3040ae2",
+      "executed_at_utc": "2026-10-31T08:08:22Z",
+      "exit_code": 0
+    },
+    {
+      "path": ".agents/evidence/logs/M6-postmerge-identity-verification-20261031.log",
+      "provenance_status": "verified",
+      "execution_status": "PASS",
+      "git_revision": "509f9f83f9249208fd5adba572efed2d2f0f82ff",
+      "log_sha256": "703c7ec0fba4bebf6bf11cc3b0925adaa5cf5f939a5def51d45d89fa678d1bb0",
+      "executed_at_utc": "2026-10-31T07:40:17Z",
+      "exit_code": 0
+    },
+    {
+      "path": ".agents/evidence/logs/M6-postmerge-lock-check-20261031.log",
+      "provenance_status": "verified",
+      "execution_status": "PASS",
+      "git_revision": "509f9f83f9249208fd5adba572efed2d2f0f82ff",
+      "log_sha256": "079bb4dd58e4c7b88823a6836640915bf508ca2828f6af7be2e48fdacc208968",
+      "executed_at_utc": "2026-10-31T07:43:26Z",
+      "exit_code": 0
+    },
+    {
+      "path": ".agents/evidence/logs/M6-postmerge-final-focused-20261031.log",
+      "provenance_status": "verified",
+      "execution_status": "FAIL",
+      "git_revision": "5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f",
+      "log_sha256": "595151aee2cf02bbf3f088c94a2ef7e876cb31889755af17ec1a91b46e43863f",
+      "executed_at_utc": "2026-10-31T07:56:23Z",
+      "exit_code": 1
+    },
+    {
+      "path": ".agents/evidence/logs/M6-postmerge-final-focused-correct-env-20261031.log",
+      "provenance_status": "verified",
+      "execution_status": "PASS",
+      "git_revision": "5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f",
+      "log_sha256": "e349fbd4b3e84f9dd0c3ea578989ee224fd3492735a19dc7eb3ff000807486a5",
+      "executed_at_utc": "2026-10-31T08:00:17Z",
+      "exit_code": 0
+    },
+    {
+      "path": ".agents/evidence/logs/M6-postmerge-final-full-suite-20261031.log",
+      "provenance_status": "verified",
+      "execution_status": "PASS",
+      "git_revision": "5d4cfd98e2c1a0b28db7b8d2111f62109ae8960f",
+      "log_sha256": "02e4b7a914247b5c57b7043eada7eb971bc7e93271b638176cf225a89bea6df3",
+      "executed_at_utc": "2026-10-31T08:01:25Z",
+      "exit_code": 0
+    },
+    {
+      "path": ".agents/evidence/logs/M6-postmerge-clean-checkout-focused-20261031.log",
+      "provenance_status": "verified",
+      "execution_status": "PASS",
+      "git_revision": "3e675f8f95527df335e54e405c92517cd436b5b1",
+      "log_sha256": "94e4bd1f938c94ddfbedaa76df67e6788732eb34d397d374b4c5e7183f497a2a",
+      "executed_at_utc": "2026-10-31T08:08:28Z",
+      "exit_code": 0
+    },
+    {
+      "path": ".agents/evidence/logs/M6-postmerge-clean-checkout-full-suite-20261031.log",
+      "provenance_status": "verified",
+      "execution_status": "PASS",
+      "git_revision": "3e675f8f95527df335e54e405c92517cd436b5b1",
+      "log_sha256": "87097019792e56ab565a105828085c3e4146ea590048c73cd2f330894340509f",
+      "executed_at_utc": "2026-10-31T08:09:29Z",
+      "exit_code": 0
+    }
+  ],
+  "historical_diagnostics": [
+    {
+      "path": ".agents/evidence/logs/M6-postmerge-focused-5d4cfd9.log",
+      "status": "historical_unverified",
+      "historical_git_revision": "5d4cfd93a3895e5a4c2d68eb485379c25639f403"
+    },
+    {
+      "path": ".agents/evidence/logs/M6-postmerge-full-suite-20261031.log",
+      "status": "historical_unverified",
+      "historical_git_revision": "5d4cfd93a3895e5a4c2d68eb485379c25639f403"
+    }
+  ],
+  "machine_report_checks": [
+    {
+      "name": "merge_and_pm_identity",
+      "log_path": ".agents/evidence/logs/M6-postmerge-identity-verification-20261031.log",
+      "log_sha256": "703c7ec0fba4bebf6bf11cc3b0925adaa5cf5f939a5def51d45d89fa678d1bb0",
+      "status": "PASS"
+    },
+    {
+      "name": "dependency_lock",
+      "log_path": ".agents/evidence/logs/M6-postmerge-lock-check-20261031.log",
+      "log_sha256": "079bb4dd58e4c7b88823a6836640915bf508ca2828f6af7be2e48fdacc208968",
+      "status": "PASS"
+    },
+    {
+      "name": "focused_regressions_final",
+      "log_path": ".agents/evidence/logs/M6-postmerge-final-focused-correct-env-20261031.log",
+      "log_sha256": "e349fbd4b3e84f9dd0c3ea578989ee224fd3492735a19dc7eb3ff000807486a5",
+      "status": "PASS"
+    },
+    {
+      "name": "full_repository_suite_final",
+      "log_path": ".agents/evidence/logs/M6-postmerge-final-full-suite-20261031.log",
+      "log_sha256": "02e4b7a914247b5c57b7043eada7eb971bc7e93271b638176cf225a89bea6df3",
+      "status": "PASS"
+    },
+    {
+      "name": "canonical_preflight_after_evidence_alignment",
+      "log_path": ".agents/evidence/logs/M6-postmerge-final-preflight-closeout-20261031.log",
+      "log_sha256": "708b7bb9293d16930fdb009ef993d3bb4822bf92ab90c657a5b0c4a52b8caf06",
+      "status": "PASS"
+    },
+    {
+      "name": "clean_checkout_preflight_final_revision",
+      "log_path": ".agents/evidence/logs/M6-postmerge-clean-checkout-preflight-20261031.log",
+      "log_sha256": "93b315562afe6309ab12e6160559b32aa38b84e56b12b28758a7252be3040ae2",
+      "status": "PASS"
+    },
+    {
+      "name": "clean_checkout_focused_final_revision",
+      "log_path": ".agents/evidence/logs/M6-postmerge-clean-checkout-focused-20261031.log",
+      "log_sha256": "94e4bd1f938c94ddfbedaa76df67e6788732eb34d397d374b4c5e7183f497a2a",
+      "status": "PASS"
+    },
+    {
+      "name": "clean_checkout_full_suite_final_revision",
+      "log_path": ".agents/evidence/logs/M6-postmerge-clean-checkout-full-suite-20261031.log",
+      "log_sha256": "87097019792e56ab565a105828085c3e4146ea590048c73cd2f330894340509f",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "ok": true
+}

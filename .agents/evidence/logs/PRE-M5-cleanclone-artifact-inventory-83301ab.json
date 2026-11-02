@@ -1,0 +1,58 @@
+{
+  "m3_after": {
+    "config.json": "75034de9d1dee2c48f56ecb1e7b54e11ae4c261fe9a95579ef69b0e93c00b304",
+    "games.jsonl": "526fc9966d4521dee92fc4bb7e011d9a59fce1dc703810a0ed3d6edbb2e154c7",
+    "manifest.json": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+    "manifest.sha256": "5f4c968a8885548565496b7652a6b060adc8778cfeaffb58dd4b7b8b18b9a2ae",
+    "positions.jsonl": "9db9676ecb64cc111e4310c83374348132ad4413cb0de7c1fe1878b89c89500d",
+    "rejections.jsonl": "fce94dc0c721fb84b45ccb812667b712030f4f327901d1a7ee19b4392524a42e",
+    "source_manifest.json": "f2ff571ce81a47b1191f7b57c2f2d16c48ebde6b334aeb6e82d7b173dc2b2935",
+    "split.json": "dbbcc00bdb5989fd8827c8e7beec3b4eea41f0bae3649ad9ffa2373b0d128193",
+    "stats.json": "3d0a217e94a826f38d54b402c921f145592c92760d39901c8b2cc2339dad68bd"
+  },
+  "m3_before": {
+    "config.json": "75034de9d1dee2c48f56ecb1e7b54e11ae4c261fe9a95579ef69b0e93c00b304",
+    "games.jsonl": "526fc9966d4521dee92fc4bb7e011d9a59fce1dc703810a0ed3d6edbb2e154c7",
+    "manifest.json": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+    "manifest.sha256": "5f4c968a8885548565496b7652a6b060adc8778cfeaffb58dd4b7b8b18b9a2ae",
+    "positions.jsonl": "9db9676ecb64cc111e4310c83374348132ad4413cb0de7c1fe1878b89c89500d",
+    "rejections.jsonl": "fce94dc0c721fb84b45ccb812667b712030f4f327901d1a7ee19b4392524a42e",
+    "source_manifest.json": "f2ff571ce81a47b1191f7b57c2f2d16c48ebde6b334aeb6e82d7b173dc2b2935",
+    "split.json": "dbbcc00bdb5989fd8827c8e7beec3b4eea41f0bae3649ad9ffa2373b0d128193",
+    "stats.json": "3d0a217e94a826f38d54b402c921f145592c92760d39901c8b2cc2339dad68bd"
+  },
+  "m4_after": {
+    "artifact_manifest.json": "f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921",
+    "engine_free_inference.json": "6fc09d03e2dbbeb991cd00d52523da2ca078ba2bb0b61343c482b13dadca1018",
+    "events.jsonl": "43f7822b130dd7c2eb698dfe7061c829f0c12acf0cc51ad672534483b43c1f93",
+    "pretrained-behavior-only.pt": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+    "pretrained-behavior-only.pt.manifest.json": "cc0af4694e45fc23acb740c652dd9a62e1bcaf7851815d179693d09539f0f606",
+    "run_manifest.json": "531f591e28ebdc257ab43945118793accd9e131ba636341ee90e3fc6ff545abe",
+    "sanity_gate.json": "ef169dea94d0407783aabcb446802e77c61d19b064a5f37b4e00fbb8b3a4c338",
+    "sanity_selection.json": "1ab7aa5b893f901ea84da13b3cb6ccfab49a910e088d405593b6a896ad5f21c5",
+    "seed-20261022.json": "9040f96c61ed4134ab7fe6a3e7bc2c47c6be7d6c1898162bee54bcc72486ec46",
+    "seed-20261023.json": "005bfc4dfc0ac6fa67e6309ad860495d3a47794bbad6e5f51e8a47a44c9a6941",
+    "seed-20261024.json": "037be7ce6f7e190509c34ff277547af2281ad3f0096967c16dcaa1354578fa9c",
+    "selected_checkpoint.json": "322d6f0d3d650b333914d6d937d26e8ad0cd3603eb66056e39cc1c842cc7e155",
+    "simulator_evaluation.json": "ecb3fc298a5b330026cc1836957064ecc6a68c5a52e8ce8c11b25d833a1f7be8",
+    "test_evaluation.json": "b02bb6e9cba124315754a14a9750569beac0ac6c6884cd3a26438918ae7ac59a"
+  },
+  "m4_before": {
+    "artifact_manifest.json": "f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921",
+    "engine_free_inference.json": "6fc09d03e2dbbeb991cd00d52523da2ca078ba2bb0b61343c482b13dadca1018",
+    "events.jsonl": "43f7822b130dd7c2eb698dfe7061c829f0c12acf0cc51ad672534483b43c1f93",
+    "pretrained-behavior-only.pt": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+    "pretrained-behavior-only.pt.manifest.json": "cc0af4694e45fc23acb740c652dd9a62e1bcaf7851815d179693d09539f0f606",
+    "run_manifest.json": "531f591e28ebdc257ab43945118793accd9e131ba636341ee90e3fc6ff545abe",
+    "sanity_gate.json": "ef169dea94d0407783aabcb446802e77c61d19b064a5f37b4e00fbb8b3a4c338",
+    "sanity_selection.json": "1ab7aa5b893f901ea84da13b3cb6ccfab49a910e088d405593b6a896ad5f21c5",
+    "seed-20261022.json": "9040f96c61ed4134ab7fe6a3e7bc2c47c6be7d6c1898162bee54bcc72486ec46",
+    "seed-20261023.json": "005bfc4dfc0ac6fa67e6309ad860495d3a47794bbad6e5f51e8a47a44c9a6941",
+    "seed-20261024.json": "037be7ce6f7e190509c34ff277547af2281ad3f0096967c16dcaa1354578fa9c",
+    "selected_checkpoint.json": "322d6f0d3d650b333914d6d937d26e8ad0cd3603eb66056e39cc1c842cc7e155",
+    "simulator_evaluation.json": "ecb3fc298a5b330026cc1836957064ecc6a68c5a52e8ce8c11b25d833a1f7be8",
+    "test_evaluation.json": "b02bb6e9cba124315754a14a9750569beac0ac6c6884cd3a26438918ae7ac59a"
+  },
+  "revision": "83301abf6b85441d4fa63eab1376127066c4cdb1",
+  "unchanged": true
+}

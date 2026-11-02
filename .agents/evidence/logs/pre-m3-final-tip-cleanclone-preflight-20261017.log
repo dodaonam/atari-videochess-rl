@@ -1,0 +1,40 @@
+Agent context preflight: PASS
+Governance: G2 (approved); approved: G0, G1, G2
+Next engineering milestone: M3 — not started (pending user approval)
+Next task: M3-001 (pending) — Build and verify the expert dataset
+Next task action: Await independent Pre-M3 PR review, G3 approval, and separate explicit M3 authorization. Resolve source/assignment/engine/storage decisions as applicable before any source acquisition or processing.
+Next task dependencies: M2-001
+Next task acceptance criteria: M3-01, M3-02, M3-03, M3-04
+Tasks: done=11, in_progress=0, pending=1, blocked=0, cancelled=0
+Completed task IDs: G1-001, G1-002, G1-003, G1-004, G1-005, G1-006, G1-007, G1-008, M0-001, M1-001, M2-001
+In progress task IDs: none
+Pending task IDs: M3-001
+Blocked task IDs: none
+Active blockers: none recorded
+Open confirmations:
+  O-01: Assignment/instructor rules for ALE observation extraction, action wrappers, custom PyTorch RL, Stockfish training use, and any engine use in offline evaluation.
+  O-02: Whether full-game performance on actual ALE is a hard submission requirement or a research target with an accepted fallback.
+  O-03: Whether the approximate three-week estimate is still the project deadline.
+  O-04: Actual Colab entitlement/quota, GPU availability, storage, and whether paid compute is allowed.
+  O-05: ALE/ROM runtime behavior, RAM mapping, game modes, difficulty behavior, and official evaluation settings.
+  O-06: PGN/tactical data sources, licenses, permitted use, and expected scale.
+  O-07: Stockfish version/search limits and whether it may be a benchmark opponent or offline evaluator.
+  O-08: Opponent pool and rating method for any Elo claim.
+Relevant decisions: docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md, docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md
+Acceptance criteria recognized: 51
+Last verified Git: feature/pre-m3-readiness @ c158ee6efdea44c5cf7da01f902f2e865d3db9ec
+Live Git: feature/pre-m3-readiness @ 843a0bc728370ff9bc8e7a21884c7e05b82eb7c1
+Roadmap source: exact match; 19 sections; SHA-256 fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf
+Git recovery: expected commit/checkout transition; portable tracked-file manifest matches.
+Workspace Git status: differs from checkpoint
+Portable tracked baseline: matches
+Portable Git index: matches checkpoint
+Hashed ordinary-file snapshot: matches
+Content hashes: 159 ordinary files verified by SHA-256.
+Not content-verified by this hash map: PROJECT_STATE self-reference, chat history/credential-like paths, temp files, symlinks, and the excluded directories listed below.
+Excluded directories: .git, artifacts
+Artifact directories requiring independent manifests: artifacts
+Last verified dirty paths (0): none
+Dirty paths no longer present since checkpoint: A  .agents/evidence/logs/pre-m3-cleanclone-preflight-20261017.log; A  .agents/evidence/logs/pre-m3-cleanclone-tests-20261017.log; M  .agents/evidence/PRE-M3-readiness-20261017.md; M  .agents/evidence/logs/pre-m3-workflow-static-20261017.log; M  docs/02-management/RISK_REGISTER.md; M  docs/05-operations/REPRODUCIBILITY.md
+Next user action: Independently review Pre-M3 PR #2 (https://github.com/dodaonam/atari-videochess-rl/pull/2) against initial-idea and decide the owner/instructor questions in docs/04-research/DECISION_REGISTER.md. G3 approval and explicit M3 authorization are separate prerequisites; keep M3 not started and do not acquire data before authorization.
+WARNING ARTIFACT_MANIFEST_REQUIRED [.]: Artifact/data directories are excluded from content hashing and require independent manifest verification: artifacts.

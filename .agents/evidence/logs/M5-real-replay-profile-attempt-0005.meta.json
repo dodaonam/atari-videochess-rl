@@ -1,0 +1,15 @@
+{
+  "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.rl.cli profile --threads 1,2,4",
+  "recorded_at_utc": "2026-10-28T13:00:50.777435+00:00",
+  "exit_code": 0,
+  "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+  "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+  "code_source_sha256": "e2cb7a957b21e43f4b6499a5364c89de4dbf3ce0889f4cffa7307808fa2e8419",
+  "report_path": "artifacts/m5/feasibility/profile-attempt-0005/real-replay-feasibility.json",
+  "report_sha256": "33331a9b8694226c0483aa223d027fe1c252300472b93cb7a76d5d853d324f9f",
+  "log_path": ".agents/evidence/logs/M5-real-replay-profile-attempt-0005.log",
+  "log_sha256": "c7fed31748ffaab466a51313d33f037c68375c33aeb510063b27634b4e6c21b8",
+  "result": "PASS: final actual-replay gate, 10,452.6s/run upper-95 estimate; six-run training campaign including all profile attempts projects to 63,115.4s, below the 216,000s cap.",
+  "exact_shell_start_timestamp_persisted": false,
+  "executed_at_utc": "2026-10-28T13:00:50.851293Z"
+}

@@ -1,0 +1,223 @@
+{
+  "verification_id": "PRE-M4-final-verification-20261023",
+  "baseline_integration_sha": "d9f0872c120fb2408343859c938257e3962f2e09",
+  "verification_revision": "b446f517b28d474f64b7a0f26af6e100731cd138",
+  "environment": "Linux worktree; pinned project Python environment",
+  "results": [
+    {
+      "name": "diagnostic_direct_python_full_suite",
+      "revision": "b446f517b28d474f64b7a0f26af6e100731cd138",
+      "started_at_utc": "2026-10-23T14:31:22Z",
+      "finished_at_utc": "2026-10-23T14:33:51Z",
+      "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests",
+      "environment": {
+        "python": "3.12.3",
+        "python_chess": "1.11.2",
+        "stockfish_executable_in_path": false
+      },
+      "exit_code": 1,
+      "tests": 269,
+      "passed": 268,
+      "failed": 1,
+      "errors": 0,
+      "duration_seconds": 147.397,
+      "failure": "test_stockfish_answers_uci_readiness_without_searching: Stockfish executable absent from PATH; existing M0 environment smoke-test prerequisite, not a Pre-M4 failure.",
+      "log_path": ".agents/evidence/logs/PRE-M4-final-verification-20261023.log",
+      "scope": "Diagnostic attempt only; superseded for overall suite status by full_unit_test_suite_configured_uv.",
+      "cause": "The direct interpreter invocation did not add the configured project .venv/bin directory to PATH; the existing Stockfish binary therefore was not discoverable by the test. The documented uv invocation below corrected the environment without installing or changing anything."
+    },
+    {
+      "name": "archive_verify",
+      "revision": "b446f517b28d474f64b7a0f26af6e100731cd138",
+      "started_at_utc": "2026-10-23T14:33:58Z",
+      "finished_at_utc": "2026-10-23T14:33:58Z",
+      "command": "python3 scripts/migrate_checkpoint_history.py verify",
+      "exit_code": 0,
+      "result": {
+        "first_id": "cp-c410173e-20261014T154924847559Z",
+        "last_id": "cp-d9f0872c-20261023T142139711265Z",
+        "logical_sha256": "9f64c77c854181cb976369aa9f4f86f33976f5cde8b26a22f928b6d36542e8af",
+        "record_count": 150,
+        "status": "verified",
+        "storage": "archive"
+      }
+    },
+    {
+      "name": "preflight",
+      "revision": "b446f517b28d474f64b7a0f26af6e100731cd138",
+      "started_at_utc": "2026-10-23T14:33:58Z",
+      "finished_at_utc": "2026-10-23T14:33:59Z",
+      "command": "python3 scripts/agent_preflight.py --json",
+      "exit_code": 0,
+      "result": {
+        "ok": true,
+        "errors": [],
+        "warning_codes": [
+          "ARTIFACT_MANIFEST_REQUIRED"
+        ],
+        "checkpoint_id": "cp-d9f0872c-20261023T142757631977Z",
+        "engineering_start_authorized": false,
+        "checkpoint_history_count": 150
+      }
+    },
+    {
+      "name": "clean_clone_pr_head",
+      "revision": "037cf3c0ae5726b9ef5652abc1589e928cdc97d4",
+      "branch": "feature/pre-m4-final-closure",
+      "started_at_utc": "2026-10-23T14:37:17Z",
+      "finished_at_utc": "2026-10-23T14:38:03Z",
+      "commands": [
+        {
+          "command": "git clone --single-branch --branch feature/pre-m4-final-closure https://github.com/dodaonam/atari-videochess-rl.git <temporary-clean-clone>",
+          "exit_code": 0
+        },
+        {
+          "command": "python3 scripts/migrate_checkpoint_history.py verify",
+          "exit_code": 0,
+          "result": "151 ordered archived records verified; logical SHA-256 a0fe2643223f2ada835de4ad85da44b034fed6e392ee3d3f881addb8b1996c2e"
+        },
+        {
+          "command": "python3 scripts/agent_preflight.py --json",
+          "exit_code": 0,
+          "result": "ok=true; no errors; expected ARTIFACT_MANIFEST_REQUIRED warning only; start_authorized=false; portable snapshot matches"
+        },
+        {
+          "command": "python3 -m unittest discover -s tests -p test_agent_context.py",
+          "exit_code": 0,
+          "tests": 47,
+          "passed": 47,
+          "runtime_seconds": 40.525
+        }
+      ],
+      "log_path": ".agents/evidence/logs/PRE-M4-pr6-clean-clone-20261023.log"
+    },
+    {
+      "name": "github_pr_check",
+      "revision": "037cf3c0ae5726b9ef5652abc1589e928cdc97d4",
+      "pull_request": 6,
+      "run_id": 39971111953,
+      "workflow": "Repository preflight",
+      "created_at_utc": "2026-10-23T14:36:44Z",
+      "completed_at_utc": "2026-10-23T14:37:24Z",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/39971111953",
+      "scope": "Repository context/preflight workflow; not the full Python unittest suite."
+    },
+    {
+      "name": "stockfish_configured_environment",
+      "revision": "16cea814e623021cccce8ff05ac698c3c0d6afc9",
+      "started_at_utc": "2026-10-23T14:44:32Z",
+      "finished_at_utc": "2026-10-23T14:44:32Z",
+      "uv_version": "0.9.26",
+      "symlink": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/stockfish -> ../share/stockfish/stockfish",
+      "binary_sha256": "0f83d24cc46d2c66c60f16001af5444873bc112b7d028594513426894c12da19",
+      "license_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "configured_path": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/stockfish",
+      "matches_pinned_m0_evidence": true,
+      "engine_search_performed": false,
+      "log_path": ".agents/evidence/logs/PRE-M4-stockfish-env-20261023.log"
+    },
+    {
+      "name": "full_unit_test_suite_configured_uv",
+      "revision": "16cea814e623021cccce8ff05ac698c3c0d6afc9",
+      "started_at_utc": "2026-10-23T14:42:36Z",
+      "finished_at_utc": "2026-10-23T14:44:14Z",
+      "command": "/home/dodaonam/.local/bin/uv run --locked --no-sync --project /home/dodaonam/Projects/atari-videochess-rl python -m unittest discover -s tests",
+      "environment": {
+        "uv": "0.9.26",
+        "python": "3.12.3",
+        "python_chess": "1.11.2",
+        "stockfish_path": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/stockfish",
+        "stockfish_sha256": "0f83d24cc46d2c66c60f16001af5444873bc112b7d028594513426894c12da19"
+      },
+      "exit_code": 0,
+      "tests": 269,
+      "passed": 269,
+      "failed": 0,
+      "errors": 0,
+      "duration_seconds": 97.042,
+      "log_path": ".agents/evidence/logs/PRE-M4-full-suite-uv-20261023.log",
+      "scope": "Full Python unittest suite at exact then-current PR head. The M0 Stockfish smoke test performed only UCI readiness/ping."
+    },
+    {
+      "name": "final_clean_clone_pr_head",
+      "revision": "16cea814e623021cccce8ff05ac698c3c0d6afc9",
+      "branch": "feature/pre-m4-final-closure",
+      "started_at_utc": "2026-10-23T14:39:44Z",
+      "finished_at_utc": "2026-10-23T14:41:07Z",
+      "commands": [
+        {
+          "command": "git clone --single-branch --branch feature/pre-m4-final-closure https://github.com/dodaonam/atari-videochess-rl.git <temporary-clean-clone>",
+          "started_at_utc": "2026-10-23T14:39:44Z",
+          "finished_at_utc": "2026-10-23T14:39:47Z",
+          "exit_code": 0,
+          "head_matches_expected": true
+        },
+        {
+          "command": "python3 scripts/migrate_checkpoint_history.py verify",
+          "started_at_utc": "2026-10-23T14:40:38Z",
+          "finished_at_utc": "2026-10-23T14:40:38Z",
+          "exit_code": 0,
+          "records": 152,
+          "logical_sha256": "1b556f7d131d6870f9505dd5b3d403a1d2eec5769650dcf819f9702de32b3de5"
+        },
+        {
+          "command": "python3 scripts/agent_preflight.py --json",
+          "started_at_utc": "2026-10-23T14:40:38Z",
+          "finished_at_utc": "2026-10-23T14:40:39Z",
+          "exit_code": 0,
+          "ok": true,
+          "errors": [],
+          "warning_codes": [
+            "ARTIFACT_MANIFEST_REQUIRED"
+          ],
+          "git_snapshot_matches": true,
+          "start_authorized": false
+        },
+        {
+          "command": "python3 -m unittest discover -s tests -p test_agent_context.py",
+          "started_at_utc": "2026-10-23T14:40:39Z",
+          "finished_at_utc": "2026-10-23T14:41:07Z",
+          "exit_code": 0,
+          "tests": 47,
+          "passed": 47,
+          "runtime_seconds": 28.667
+        }
+      ],
+      "log_path": ".agents/evidence/logs/PRE-M4-pr6-final-clean-clone-20261023.log"
+    },
+    {
+      "name": "github_final_pr_check",
+      "revision": "16cea814e623021cccce8ff05ac698c3c0d6afc9",
+      "pull_request": 6,
+      "run_id": 39971527886,
+      "workflow": "Repository preflight",
+      "created_at_utc": "2026-10-23T14:39:42Z",
+      "completed_at_utc": "2026-10-23T14:40:22Z",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/39971527886",
+      "scope": "Repository context/preflight workflow only; not the full Python unittest suite."
+    }
+  ],
+  "other_evidence": [
+    {
+      "name": "m3_release_read_only_verification",
+      "revision": "d9f0872c120fb2408343859c938257e3962f2e09",
+      "evidence_path": ".agents/evidence/M3-release-local-verification-20261023.json",
+      "result": "PASS; exact accepted release ID and all nine file identities/counts recorded."
+    },
+    {
+      "name": "integrated_clean_clone",
+      "revision": "d9f0872c120fb2408343859c938257e3962f2e09",
+      "evidence_path": ".agents/evidence/logs/RSK010-integrated-clean-clone-20261023.log",
+      "result": "Archive verification and preflight exit 0; no errors, expected artifact-manifest warning only."
+    }
+  ],
+  "limitations": [
+    "A diagnostic direct-Python full-suite invocation at b446f517 omitted the configured venv bin directory from PATH and failed only the UCI-readiness smoke test. This was corrected by the documented locked uv invocation, which passed all 269 tests on 16cea814.",
+    "GitHub Actions runs the repository context/preflight workflow only; the full Python suite was run locally using the configured locked environment.",
+    "M4-001 remains inactive until authoritative external O-01 course-policy evidence is recorded and the direct conditional authorization is activated in canonical state/backlog."
+  ]
+}

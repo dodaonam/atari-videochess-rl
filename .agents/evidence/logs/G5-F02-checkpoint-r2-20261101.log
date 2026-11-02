@@ -1,0 +1,7 @@
+2026-11-01T12:51:51Z
+python3 scripts/agent_checkpoint.py
+Checkpoint written: cp-fc51b724-20261101T125156066119Z.
+Git snapshot captured 40 dirty path entries.
+Post-checkpoint preflight: PASS
+WARNING ARTIFACT_MANIFEST_REQUIRED [.]: Artifact/data directories are excluded from content hashing and require independent manifest verification: artifacts.
+Exit code: 0

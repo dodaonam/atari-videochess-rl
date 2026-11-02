@@ -1,0 +1,12 @@
+{
+  "command": "python3 scripts/m5_artifact_manifests.py --verify --root <private-m5-root>",
+  "executed_at_utc": "2026-10-30T14:40:15Z",
+  "completed_at_utc": "2026-10-30T14:40:51Z",
+  "execution_environment": "local CPU; existing Python 3.12.3 environment",
+  "git_revision": "e6d444e475e447e9f37951f16585bf496f804c9d",
+  "config_identity": "root manifest a201a254671ad59ae1fecb402abf994d5bf523097f1c3010b5c7fa237ae6dd4c",
+  "exit_code": 0,
+  "result": "PASS",
+  "log_path": ".agents/evidence/logs/M6-entry-m5-artifacts-e6d444e.log",
+  "log_sha256": "428df8b98a05e4b374eb8f243c8923889ee92bf0a6c03fe8d2ea4fcd81d73926"
+}

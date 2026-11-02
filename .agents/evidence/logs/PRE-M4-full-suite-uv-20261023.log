@@ -1,0 +1,13 @@
+Pre-M4 full suite using the repository-configured uv environment
+{'revision': '16cea814e623021cccce8ff05ac698c3c0d6afc9', 'started_at_utc': '2026-10-23T14:42:36Z', 'finished_at_utc': '2026-10-23T14:44:14Z', 'command': '/home/dodaonam/.local/bin/uv run --locked --no-sync --project /home/dodaonam/Projects/atari-videochess-rl python -m unittest discover -s tests', 'exit_code': 0, 'test_count': 269, 'runtime_seconds': 97.042, 'failures': 0, 'errors': 0, 'python': '3.12.3', 'python_chess': '1.11.2', 'stockfish_path': '/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/stockfish'}
+
+...................................................................................................A.L.E: Arcade Learning Environment (version 0.11.2+ecc1138)
+[Powered by Stella]
+................................................................................................................................................Exception parsing pv from info: 'depth 1 seldepth 1 multipv 1 score cp 32 nodes 95 wdl 500 400 100 pv a1a1', position at root: rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR b KQkq - 0 1
+Exception parsing pv from info: 'depth 1 seldepth 1 multipv 2 score cp 32 nodes 95 wdl 500 400 100 pv a1a1', position at root: rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR b KQkq - 0 1
+Exception parsing pv from info: 'depth 1 seldepth 1 multipv 3 score cp 32 nodes 95 wdl 500 400 100 pv a1a1', position at root: rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR b KQkq - 0 1
+..........................
+----------------------------------------------------------------------
+Ran 269 tests in 97.042s
+
+OK

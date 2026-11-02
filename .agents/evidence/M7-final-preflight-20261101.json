@@ -1,0 +1,12 @@
+{
+  "command": "python3 scripts/agent_preflight.py",
+  "exit_code": 0,
+  "finished_at_utc": "2026-10-31T20:25:12Z",
+  "log_bytes": 4139,
+  "log_path": ".agents/evidence/logs/M7-final-preflight-20261101-sanitized.log",
+  "log_sha256": "7323fbe1d8069454ca276d85ea06188f07adc256232af5d22dc2316fe8c99969",
+  "result": "PASS: preflight passed; expected ARTIFACT_MANIFEST_REQUIRED warning only.",
+  "schema": "videochess-command-evidence/1.0",
+  "source_git_revision": "cbf4b27d4c9eb65108ee17c3138cf020c8c8ade9",
+  "started_at_utc": "2026-10-31T20:25:11Z"
+}

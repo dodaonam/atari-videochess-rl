@@ -1,0 +1,4 @@
+START_UTC=2026-10-21T15:45:09.290967332Z
+COMMAND=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m compileall -q videochess_rl tests
+END_UTC=2026-10-21T15:45:09.333543675Z
+EXIT_CODE=0

@@ -1,0 +1,25 @@
+def _latest_verified_resume(pair_id: str,arm: str,seed: int) -> tuple[Path|None,dict[str,Any]|None]:
+    expected={"experiment_id":EXPERIMENT_ID,"pair_id":pair_id,"arm":arm,"training_seed":seed,
+              "config_sha256":config_hash()}
+    compatible_code_hashes=RECOVERY_COMPATIBLE_CODE_SHA256 | {source_hash()}
+    candidates=[]; checkpoint_paths=[]; errors=[]
+    for _,directory in _attempt_dirs(pair_id,arm):
+        for path in directory.glob("*__resume-v2.pt"):
+            checkpoint_paths.append(path)
+            try:
+                bundle=load_training_checkpoint_bundle(path,verify_journal=True)
+                if bundle.get("identity",{}).get("code_sha256") not in compatible_code_hashes:
+                    raise ValueError("checkpoint code identity is not current or explicitly recovery-compatible")
+                if any(bundle.get("identity",{}).get(k)!=v for k,v in expected.items()):
+                    raise ValueError("checkpoint identity is incompatible with this paired run")
+                counters=bundle.get("counters",{})
+                candidates.append((int(counters.get("completed_episodes",-1)),int(counters.get("valid_decisions",-1)),path,bundle))
+            except Exception as exc:
+                # Keep trying earlier verified recovery points; if none remain the
+                # caller stops with this incompatibility instead of silently restarting.
+                errors.append(f"{path.name}: {type(exc).__name__}: {exc}")
+    if not candidates and checkpoint_paths:
+        raise ValueError("no valid compatible M5 recovery checkpoint remains: "+"; ".join(errors))
+    if not candidates: return None,None
+    _,_,path,bundle=max(candidates,key=lambda x:(x[0],x[1]))
+    return path,bundle

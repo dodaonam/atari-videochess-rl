@@ -1,0 +1,14 @@
+{
+  "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/verify_m7_inputs.py --config configs/m7/m7-option-b-1.0.0.json --m4-root <owner-local accepted M4 r4 root> --m5-root <owner-local accepted M5 root> --m6-v1-root <owner-local M6 v1 root> --m6-v2-root <owner-local M6 v2 root>",
+  "exit_code": 0,
+  "finished_at_utc": "2026-10-31T16:49:56Z",
+  "result": "passed",
+  "sanitized_stdout_path": ".agents/evidence/M7-inputs-final-prereg-20261031.json",
+  "sanitized_stdout_sha256": "cdc5eff3a45eeadb936f923c8a6b9519bf4716c5226fe86a698272cefa212979",
+  "schema": "videochess-command-evidence/1.0",
+  "source_git_revision": "257fff94c64bc584797e0d191920a57befcae62c",
+  "started_at_utc": "2026-10-31T16:48:36Z",
+  "stderr_log_path": null,
+  "stderr_sha256": null,
+  "working_tree_dirty": true
+}

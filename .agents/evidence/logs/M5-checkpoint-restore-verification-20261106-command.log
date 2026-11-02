@@ -1,0 +1,83 @@
+Command: env PYTHONDONTWRITEBYTECODE=1 /usr/bin/time -v -o .agents/evidence/logs/M5-checkpoint-restore-verification-20261106.log.time /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/verify_m5_episode_checkpoint.py --training-seed 20261106 --arm scratch > .agents/evidence/logs/M5-checkpoint-restore-verification-20261106.log 2>&1
+Exit code: 0
+Result: PASS
+
+Verifier JSON output:
+{
+  "arm": "scratch",
+  "checkpoint_code_sha256": "cdcc1fdc0ca0b324e49cfb8b0ff571496a554e9892dfb3620d6454a65ee16da0",
+  "checkpoint_path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/runs/m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__scratch__attempt-0000/m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__scratch__attempt-0000__scratch__seed-20261106__attempt-0000__episodes-00408__decisions-049833__resume-v2.pt",
+  "checkpoint_sha256": "38f8667ad424f407e12c69dd481684ee885b2f49f5a2cdf46ab0a880c6bd6e26",
+  "completed_episodes": 408,
+  "configuration_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+  "counters": {
+    "completed_episodes": 408,
+    "invalid_transitions": 0,
+    "optimizer_updates": 12203,
+    "target_syncs": 24,
+    "transitions": 49833,
+    "valid_decisions": 49833
+  },
+  "current_source_sha256": "cdcc1fdc0ca0b324e49cfb8b0ff571496a554e9892dfb3620d6454a65ee16da0",
+  "initialization_snapshot_sha256": "aeac1571bea9ce89af11dc1d668687d985984b49b3724fca310a9ed89e262120",
+  "journal_prefix": {
+    "chain_sha256": "d69a79219029ef48adf645a2f3aef67f8561b3ba0067fc35f2eeeb8c96d68aec",
+    "file_bytes": 204750303,
+    "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/runs/m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__scratch__attempt-0000/replay.journal.jsonl",
+    "record_count": 49833
+  },
+  "optimizer_updates": 12203,
+  "pair_id": "89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870",
+  "replay_identity": {
+    "capacity": 16384,
+    "evicted_count": 33449,
+    "inserted_count": 49833,
+    "rows": 16384,
+    "transition_ids_sha256": "e1d1cb5b1214979671393cd87574cd3b9b00f6e9df0b045d1bca658998e1d604"
+  },
+  "replay_rows": 16384,
+  "restoration_checks": {
+    "counters": "exact_match",
+    "exploration_rng": "exact_match",
+    "online_network": "exact_tensor_match",
+    "optimizer": "exact_state_match",
+    "python_numpy_torch_rng": "exact_match",
+    "replay": "verified_full_journal_chain_and_exact_bounded_tail",
+    "replay_rng": "exact_match",
+    "target_network": "exact_tensor_match"
+  },
+  "result": "PASS",
+  "target_syncs": 24,
+  "training_seed": 20261106,
+  "transitions": 49833,
+  "valid_decisions": 49833,
+  "verification_elapsed_seconds": 202.82820630300193,
+  "verification_peak_rss_bytes": 779337728
+}
+
+/usr/bin/time resource summary:
+	Command being timed: "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/verify_m5_episode_checkpoint.py --training-seed 20261106 --arm scratch"
+	User time (seconds): 204.13
+	System time (seconds): 0.72
+	Percent of CPU this job got: 100%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 3:24.53
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 761072
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 177492
+	Voluntary context switches: 25
+	Involuntary context switches: 8019
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 16
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+
+Recorded result: PASS: 49,833-transition checkpoint restoration exact for online/target/optimizer/replay/counters/all RNG states; full journal prefix plus suffix verified through 50,000. 202.83s verifier elapsed; peak RSS 779,337,728 bytes.

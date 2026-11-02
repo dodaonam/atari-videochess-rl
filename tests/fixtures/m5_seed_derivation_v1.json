@@ -1,0 +1,65 @@
+{
+  "schema": "videochess-m5-seed-derivation-fixture/1.0",
+  "derivation_schema": "videochess-m5-seed-derivation/1.0",
+  "encoding": {
+    "pair_prefix_hex": "766964656f63686573732d6d352d706169722d69642f763100",
+    "pair_fields": "U32BE(experiment_id_ascii_length) || experiment_id_ascii || U64BE(training_seed)",
+    "seed_prefix_hex": "766964656f63686573732d6d352d736565642f763100",
+    "seed_fields": "U64BE(master_seed) || pair_id_raw_32_bytes || U32BE(domain_ascii_length) || domain_ascii || U64BE(index)",
+    "seed_output": "(domain_code << 60) | (first_8_digest_bytes_big_endian AND 0x0fffffffffffffff)"
+  },
+  "vectors": [
+    {
+      "experiment_id": "m5-double-dqn-paired-v1",
+      "training_seed": 20261104,
+      "episode_index": 0,
+      "pair_id": "e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7",
+      "run_ids": {
+        "warm_attempt_0": "m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__warm__attempt-0000",
+        "scratch_attempt_0": "m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__scratch__attempt-0000"
+      },
+      "schedule": {
+        "schema": "videochess-m5-seed-derivation/1.0",
+        "pair_id": "e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7",
+        "episode_seed": 507584142371577541,
+        "opponent_rng_seed": 1685438692111368955,
+        "exploration_rng_seed": 2551252172356960622,
+        "replay_sampling_rng_seed": 3564570699115872212,
+        "q_head_initialization_seed": 4825773992545406404,
+        "scratch_representation_initialization_seed": 5834543713424262299
+      }
+    },
+    {
+      "experiment_id": "m5-double-dqn-paired-v1",
+      "training_seed": 20261104,
+      "episode_index": 7,
+      "pair_id": "e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7",
+      "schedule": {
+        "schema": "videochess-m5-seed-derivation/1.0",
+        "pair_id": "e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7",
+        "episode_seed": 391550264247267361,
+        "opponent_rng_seed": 2101739260092962218,
+        "exploration_rng_seed": 2551252172356960622,
+        "replay_sampling_rng_seed": 3564570699115872212,
+        "q_head_initialization_seed": 4825773992545406404,
+        "scratch_representation_initialization_seed": 5834543713424262299
+      }
+    },
+    {
+      "experiment_id": "m5-double-dqn-paired-v1",
+      "training_seed": 20261105,
+      "episode_index": 0,
+      "pair_id": "75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c",
+      "schedule": {
+        "schema": "videochess-m5-seed-derivation/1.0",
+        "pair_id": "75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c",
+        "episode_seed": 537103242733471502,
+        "opponent_rng_seed": 1505436698921498268,
+        "exploration_rng_seed": 3397047140139325534,
+        "replay_sampling_rng_seed": 4398252927567546093,
+        "q_head_initialization_seed": 4665396390876585013,
+        "scratch_representation_initialization_seed": 5879470669285708764
+      }
+    }
+  ]
+}

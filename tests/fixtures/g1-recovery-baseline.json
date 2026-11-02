@@ -1,0 +1,38 @@
+{
+  "source_revision": "9449b3f3508c55e1a34893a49c2670498310f78f",
+  "governance": {
+    "current_gate": "G1",
+    "gate_status": "approved",
+    "approved_gates": [
+      "G0",
+      "G1"
+    ]
+  },
+  "engineering": {
+    "next_milestone": "M0",
+    "next_milestone_status": "pending_user_approval",
+    "start_authorized": false,
+    "active_milestone": null
+  },
+  "task_refs": {
+    "next_task_id": "M0-001"
+  },
+  "tasks": {
+    "M0-001": {
+      "status": "pending",
+      "depends_on": [
+        "G1-008"
+      ]
+    }
+  },
+  "open_approval_ids": [
+    "O-01",
+    "O-02",
+    "O-03",
+    "O-04",
+    "O-05",
+    "O-06",
+    "O-07",
+    "O-08"
+  ]
+}

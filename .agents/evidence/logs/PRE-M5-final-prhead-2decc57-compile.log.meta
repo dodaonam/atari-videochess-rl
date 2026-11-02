@@ -1,0 +1,8 @@
+check=compile
+revision=2decc57591d13d0dd5f918c0fb770034730bf5af
+start_utc=2026-10-28T05:33:55.383866Z
+end_utc=2026-10-28T05:33:55.787463Z
+duration_seconds=0.404
+exit_code=0
+command=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m compileall -q videochess_rl scripts tests
+environment=Existing pinned Python 3.12.3 CPU virtual environment; no dependencies installed; PYTHONPATH=.; external M3/M4 artifacts read-only.

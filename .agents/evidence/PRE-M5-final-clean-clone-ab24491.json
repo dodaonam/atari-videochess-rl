@@ -1,0 +1,131 @@
+{
+  "schema": "pre-m5-clean-clone-verification/1.0",
+  "tested_revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
+  "clone_path": "/tmp/atari-pre-m5-final-pr-10-ab24491",
+  "working_tree_clean": true,
+  "records": [
+    {
+      "name": "preflight",
+      "revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
+      "command": "python3 scripts/agent_preflight.py --json",
+      "start_utc": "2026-10-28T04:56:47.821752Z",
+      "end_utc": "2026-10-28T04:56:48.635928Z",
+      "exit_code": 0,
+      "log": ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-preflight.log"
+    },
+    {
+      "name": "archive",
+      "revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
+      "command": "python3 scripts/migrate_checkpoint_history.py verify",
+      "start_utc": "2026-10-28T04:56:48.636123Z",
+      "end_utc": "2026-10-28T04:56:49.143337Z",
+      "exit_code": 0,
+      "log": ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-archive.log"
+    },
+    {
+      "name": "compile",
+      "revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
+      "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m compileall -q videochess_rl scripts tests",
+      "start_utc": "2026-10-28T04:56:49.143510Z",
+      "end_utc": "2026-10-28T04:56:49.535063Z",
+      "exit_code": 0,
+      "log": ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-compile.log"
+    },
+    {
+      "name": "context_tests",
+      "revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
+      "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_agent_context tests.test_checkpoint_history -v",
+      "start_utc": "2026-10-28T04:56:49.535202Z",
+      "end_utc": "2026-10-28T04:58:39.700009Z",
+      "exit_code": 0,
+      "log": ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-context_tests.log"
+    },
+    {
+      "name": "focused_tests",
+      "revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
+      "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_m4_model tests.test_m4_data tests.test_m4_training tests.test_m4_checkpoint tests.test_pre_m4_contracts tests.test_m2_simulator tests.test_m3_data tests.test_m5_contract_fixtures -v",
+      "start_utc": "2026-10-28T04:58:39.700757Z",
+      "end_utc": "2026-10-28T04:59:50.129436Z",
+      "exit_code": 0,
+      "log": ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-focused_tests.log"
+    },
+    {
+      "name": "m4_bundle",
+      "revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
+      "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.model.cli verify-artifacts /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4",
+      "start_utc": "2026-10-28T04:59:50.129630Z",
+      "end_utc": "2026-10-28T04:59:51.704891Z",
+      "exit_code": 0,
+      "log": ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-m4_bundle.log"
+    },
+    {
+      "name": "transfer_engine_free",
+      "revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
+      "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/verify_m5_transfer.py /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4/pretrained-behavior-only.pt",
+      "start_utc": "2026-10-28T04:59:51.705057Z",
+      "end_utc": "2026-10-28T04:59:53.280216Z",
+      "exit_code": 0,
+      "log": ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-transfer_engine_free.log"
+    },
+    {
+      "name": "diff_check",
+      "revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
+      "command": "git diff --check",
+      "start_utc": "2026-10-28T04:59:53.280382Z",
+      "end_utc": "2026-10-28T04:59:53.282976Z",
+      "exit_code": 0,
+      "log": ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-diff_check.log"
+    },
+    {
+      "name": "clean_status",
+      "revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
+      "command": "git status --short --branch",
+      "start_utc": "2026-10-28T04:59:53.283079Z",
+      "end_utc": "2026-10-28T04:59:53.286615Z",
+      "exit_code": 0,
+      "log": ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-clean_status.log"
+    },
+    {
+      "name": "m3_release_immutable",
+      "revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
+      "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.data.cli verify --release /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+      "start_utc": "2026-10-28T04:59:53.286747Z",
+      "end_utc": "2026-10-28T05:02:49.380980Z",
+      "exit_code": 0,
+      "file_count_before": 9,
+      "file_count_after": 9,
+      "unchanged": true,
+      "log": ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-m3-release-immutable.log"
+    },
+    {
+      "name": "full_tests",
+      "revision": "ab244916f4a06a2f8abc79383e4fe63186da98bf",
+      "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/share/stockfish:$PATH PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+      "completed_at_utc": "2026-10-28T04:55:24.634652Z",
+      "duration_seconds": 205.421,
+      "test_count": 319,
+      "passed": 319,
+      "exit_code": 0,
+      "log": ".agents/evidence/logs/PRE-M5-final-prhead-ab24491-full-tests.log",
+      "clean_clone": true
+    }
+  ],
+  "historical_failed_attempt": {
+    "revision": "e102bd0476b46cc339dee221f769919637d9e8a2",
+    "command": "PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+    "start_utc": "2026-10-28T04:37:48.122061964Z",
+    "end_utc": "2026-10-28T04:39:35.154382343Z",
+    "exit_code": 1,
+    "test_count": 319,
+    "passed_before_error": 318,
+    "failing_test": "tests.test_m3_data.M3ContractTests.test_synthetic_end_to_end_release_is_reconstructible_and_hashed",
+    "cause": "The test used a 4-second command budget covering release verification and fake-engine startup, then expected to reach an injected 4.1-second finalization delay. Under full-suite load it exhausted the setup budget before producing a successful row. The test-only correction preserves the overrun condition with a 12-second budget and 12.1-second injected delay.",
+    "log": ".agents/evidence/logs/PRE-M5-final-prhead-e102-full-tests-failed.log",
+    "metadata_log": ".agents/evidence/logs/PRE-M5-final-prhead-e102-full-tests-failed.meta"
+  },
+  "toolchain": {
+    "uv_available": false,
+    "python": "3.12.3",
+    "environment": "existing pinned local .venv; no dependency installation"
+  }
+}

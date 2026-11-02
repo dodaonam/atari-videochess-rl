@@ -1,0 +1,13 @@
+2026-11-01T13:21:28Z
+source_revision=5654cc1f80c0ff4f8d04b43ac9d5ab24fa4edce2
+python3 .agents/evidence/logs/M7-005-private-content-scan-20261101.py
+source_revision=5654cc1f80c0ff4f8d04b43ac9d5ab24fa4edce2
+added_tracked_lines=12411
+untracked_text_and_task_logs=56
+concrete_path_or_credential_matches=[]
+restricted_payload_suffixes=[]
+checkpoint_segments_scanned=28
+sensitive_checkpoint_matches=[]
+result=PASS
+text_scan_exit=0
+checkpoint_scan_exit=0

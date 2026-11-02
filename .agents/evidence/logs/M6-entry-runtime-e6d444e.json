@@ -1,0 +1,53 @@
+A.L.E: Arcade Learning Environment (version 0.11.2+ecc1138)
+[Powered by Stella]
+{
+  "action_meanings": [
+    "NOOP",
+    "FIRE",
+    "UP",
+    "RIGHT",
+    "LEFT",
+    "DOWN",
+    "UPRIGHT",
+    "UPLEFT",
+    "DOWNRIGHT",
+    "DOWNLEFT"
+  ],
+  "action_space": "Discrete(10)",
+  "ale_py": "0.11.2",
+  "available_difficulties": [
+    0
+  ],
+  "available_modes": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "config": {
+    "difficulty": 0,
+    "env_id": "ALE/VideoChess-v5",
+    "frameskip": 4,
+    "mode": 4,
+    "obs_type": "rgb",
+    "repeat_action_probability": 0.25
+  },
+  "gymnasium": "1.4.0",
+  "machine": "x86_64",
+  "observation_space": "Box(0, 255, (210, 160, 3), uint8)",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "ram_observation_shape": [
+    128
+  ],
+  "registered_defaults": {
+    "frameskip": 4,
+    "full_action_space": false,
+    "game": "video_chess",
+    "max_num_frames_per_episode": 108000,
+    "repeat_action_probability": 0.25
+  },
+  "rom_name": "video_chess.bin",
+  "rom_sha256": "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7"
+}

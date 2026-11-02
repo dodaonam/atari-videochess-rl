@@ -1,0 +1,94 @@
+{
+  "command": "PYTHONPATH=/tmp/atari-m4-work /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.data.cli verify --release /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+  "duration_seconds": 110.10123087700049,
+  "ended_at_utc": "2026-10-27T15:25:35.170404Z",
+  "exit_code": 0,
+  "files_after": {
+    "config.json": {
+      "sha256": "75034de9d1dee2c48f56ecb1e7b54e11ae4c261fe9a95579ef69b0e93c00b304",
+      "size_bytes": 1465
+    },
+    "games.jsonl": {
+      "sha256": "526fc9966d4521dee92fc4bb7e011d9a59fce1dc703810a0ed3d6edbb2e154c7",
+      "size_bytes": 2764193
+    },
+    "manifest.json": {
+      "sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+      "size_bytes": 1976
+    },
+    "manifest.sha256": {
+      "sha256": "5f4c968a8885548565496b7652a6b060adc8778cfeaffb58dd4b7b8b18b9a2ae",
+      "size_bytes": 80
+    },
+    "positions.jsonl": {
+      "sha256": "9db9676ecb64cc111e4310c83374348132ad4413cb0de7c1fe1878b89c89500d",
+      "size_bytes": 31992257
+    },
+    "rejections.jsonl": {
+      "sha256": "fce94dc0c721fb84b45ccb812667b712030f4f327901d1a7ee19b4392524a42e",
+      "size_bytes": 66744
+    },
+    "source_manifest.json": {
+      "sha256": "f2ff571ce81a47b1191f7b57c2f2d16c48ebde6b334aeb6e82d7b173dc2b2935",
+      "size_bytes": 5060
+    },
+    "split.json": {
+      "sha256": "dbbcc00bdb5989fd8827c8e7beec3b4eea41f0bae3649ad9ffa2373b0d128193",
+      "size_bytes": 2473768
+    },
+    "stats.json": {
+      "sha256": "3d0a217e94a826f38d54b402c921f145592c92760d39901c8b2cc2339dad68bd",
+      "size_bytes": 2691035
+    }
+  },
+  "files_before": {
+    "config.json": {
+      "sha256": "75034de9d1dee2c48f56ecb1e7b54e11ae4c261fe9a95579ef69b0e93c00b304",
+      "size_bytes": 1465
+    },
+    "games.jsonl": {
+      "sha256": "526fc9966d4521dee92fc4bb7e011d9a59fce1dc703810a0ed3d6edbb2e154c7",
+      "size_bytes": 2764193
+    },
+    "manifest.json": {
+      "sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+      "size_bytes": 1976
+    },
+    "manifest.sha256": {
+      "sha256": "5f4c968a8885548565496b7652a6b060adc8778cfeaffb58dd4b7b8b18b9a2ae",
+      "size_bytes": 80
+    },
+    "positions.jsonl": {
+      "sha256": "9db9676ecb64cc111e4310c83374348132ad4413cb0de7c1fe1878b89c89500d",
+      "size_bytes": 31992257
+    },
+    "rejections.jsonl": {
+      "sha256": "fce94dc0c721fb84b45ccb812667b712030f4f327901d1a7ee19b4392524a42e",
+      "size_bytes": 66744
+    },
+    "source_manifest.json": {
+      "sha256": "f2ff571ce81a47b1191f7b57c2f2d16c48ebde6b334aeb6e82d7b173dc2b2935",
+      "size_bytes": 5060
+    },
+    "split.json": {
+      "sha256": "dbbcc00bdb5989fd8827c8e7beec3b4eea41f0bae3649ad9ffa2373b0d128193",
+      "size_bytes": 2473768
+    },
+    "stats.json": {
+      "sha256": "3d0a217e94a826f38d54b402c921f145592c92760d39901c8b2cc2339dad68bd",
+      "size_bytes": 2691035
+    }
+  },
+  "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+  "release_path": "/home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+  "revision": "d8e52d160f4637da9522c491a4c6a7eace577f95",
+  "schema": "videochess-m4-release-verification/1.0",
+  "split_assignment_sha256": "84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e",
+  "started_at_utc": "2026-10-27T15:23:45.069150Z",
+  "stderr": "",
+  "stdout": "{\n  \"games\": 1000,\n  \"manifest_sha256\": \"be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12\",\n  \"output_bytes\": 39994522,\n  \"outputs_verified\": 7,\n  \"positions\": 19268,\n  \"rejections\": 182,\n  \"release_id\": \"f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890\"\n}",
+  "unchanged": true
+}

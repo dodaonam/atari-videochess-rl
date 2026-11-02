@@ -1,0 +1,26 @@
+Pre-M4 final pre-PR verification and remote check
+Verified branch: feature/pre-m4-readiness
+Verified revision: ec5a248801dd2fde1e1fe3eff511c7103823119c
+Pull request: https://github.com/dodaonam/atari-videochess-rl/pull/4 (open, base initial-idea, no auto-merge)
+
+Full local suite
+Command: /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v
+Started UTC: 2026-10-22T15:30:53Z
+Finished UTC: 2026-10-22T15:32:15.742Z
+Exit code: 1; 237 tests in 81.783 seconds; 236 passed, one failed.
+Only failure: test_m0_smoke.M0EnvironmentSmokeTests.test_stockfish_answers_uci_readiness_without_searching, because Stockfish is absent from this clean environment. No binary/dependency was installed or substituted.
+The exact-commit clean-clone recovery test passed. Pre-M4 (10), M2 simulator (37), M3 data (32), and checkpoint-risk regression tests passed.
+Raw captured output SHA-256: b0786c21a881c991c4d8616995820a71980029db24710a5813330975a38117f7
+
+Canonical preflight
+Command: python3 scripts/agent_preflight.py --json
+Timestamp UTC: 2026-10-22T15:32:23Z; exit code: 0; no errors; only ARTIFACT_MANIFEST_REQUIRED warning.
+Portable commit transition and content/state checks matched. State reported G2 approved, G3 unapproved, M4 pending_user_approval, M4-001 pending, active milestone/task null, start_authorized false.
+Raw JSON SHA-256: 6e5d045a9b105e2b2ef6cfa92d788165602218f297c8a2af073ca2940ab4fba7
+
+Remote PR workflow
+GitHub Actions run 39805987282, triggered by pull_request on the exact same revision, completed 2026-10-22T15:34:17Z with conclusion success. Its `context` job passed canonical preflight and standard-library context/review-bundle tests in 32 seconds.
+Run: https://github.com/dodaonam/atari-videochess-rl/actions/runs/39805987282
+
+RSK-010 final pre-PR checkpoint
+Checkpoint: cp-234e550c-20261022T153039784914Z; wall time 0.825 s; PROJECT_STATE.yaml 3,612,566 bytes; 134 checkpoint_history array entries; prior history preserved. Post-checkpoint preflight passed with the expected artifact-manifest warning. The 4 MiB guard is a bounded fail-safe, not an archival migration.

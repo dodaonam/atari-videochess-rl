@@ -1,0 +1,58 @@
+{
+  "format": "JSON",
+  "schema_version": 1,
+  "finding": {
+    "id": "G5-F02",
+    "title": "Unsupported attribution of an explicit owner no-release decision",
+    "latest_pm_source": "https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6558975009",
+    "reviewed_pr21_head": "57555b4c9da588b0122fffbc01f61b8cb13075a8",
+    "engineering_status": "provenance_corrected_and_independently_accepted",
+    "pm_disposition": "resolved_by_fresh_independent_pm_review"
+  },
+  "historical_pm_decision": {
+    "source": "https://github.com/dodaonam/atari-videochess-rl/pull/20#issuecomment-6556836388",
+    "original_decision": "G5 APPROVED WITH SCIENTIFIC, ENVIRONMENT-VERIFICATION, AND NO-RELEASE LIMITATIONS",
+    "current_interpretation": "historical decision preserved; unsupported M7-05 owner-prohibition premise remains superseded; later independent PM decision on PR #21 approves corrected M7-05/G5 evidence; M7-04 and G5-F01 acceptance remain intact"
+  },
+  "owner_release_authorization": {
+    "affirmative_authorization_for_restricted_artifacts": "not_established",
+    "explicit_blanket_owner_prohibition": "unverified",
+    "release_or_publication_performed_by_this_remediation": false,
+    "interpretation": "absence of affirmative authorization is not publication permission and is not an attributed owner prohibition"
+  },
+  "owner_final_research_scope_decision": {
+    "status": "recorded_from_direct_user_instruction_in_current_execution_context",
+    "evidence_path": ".agents/evidence/PROJECT-OWNER-final-research-scope-decision-20261101.md",
+    "meaning": "currently accepted research results are final; no additional training, evaluation campaign, or new research milestone is authorized",
+    "publication_authorized_by_this_decision": false,
+    "separate_external_permalink_or_signature": null,
+    "exact_issuance_timestamp": null
+  },
+  "current_governance": {
+    "g4": "approved_with_scientific_limitations",
+    "g5": "approved_with_scientific_environment_and_distribution_authorization_limitations",
+    "m7_04": "accepted; not reopened by G5-F02",
+    "m7_05": "engineering_complete_and_accepted_with_limitations",
+    "g5_f01": "resolved_and_preserved",
+    "release_permission": "not_established"
+  },
+  "final_pm_decision": {
+    "source": "https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6558975009",
+    "reviewed_pr21_head": "57555b4c9da588b0122fffbc01f61b8cb13075a8",
+    "pr21_merge_commit": "6495bda01daae557a084e8863d2148e08be6cca7",
+    "m7_05": "accepted_with_limitations",
+    "g5_f02": "resolved",
+    "g5": "approved_with_limitations",
+    "publication_or_release_authorized": false,
+    "research_results_final": true
+  },
+  "supersedes_for_current_status": [
+    ".agents/evidence/M7-005-authorization-20261101.md",
+    ".agents/evidence/M7-005-owner-no-release-decision-20261101.md",
+    ".agents/evidence/M7-005-acceptance-20261101.md",
+    ".agents/evidence/G5-PM-acceptance-20261101.md",
+    ".agents/evidence/G5-PM-acceptance-20261101.json",
+    "docs/07-delivery/RELEASE_DISPOSITION.md"
+  ],
+  "erratum_path": ".agents/evidence/G5-F02-provenance-erratum-20261101.md"
+}

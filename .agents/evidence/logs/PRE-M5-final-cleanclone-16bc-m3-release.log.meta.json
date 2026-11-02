@@ -1,0 +1,16 @@
+{
+  "check": "m3_release_verification",
+  "revision": "16bc420d90e2a0eec910208ebce5686c9717600d",
+  "start_utc": null,
+  "end_utc": "2026-10-28T07:43:52.624309+00:00",
+  "duration_seconds": null,
+  "exit_code": 0,
+  "test_count": null,
+  "test_runner_duration_seconds": null,
+  "command": "env PYTHONPATH=/home/dodaonam/Projects/atari-videochess-rl-m3:/tmp/atari-pre-m5-final-head-16bc PATH=/usr/bin:/bin /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.data verify --release /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+  "environment": "Python 3.12.3 pinned local venv; read-only accepted external M3 release verifier.",
+  "timestamp_note": "Completion time is the captured log file mtime; this unwrapped invocation did not separately capture its start time.",
+  "log_path": ".agents/evidence/logs/PRE-M5-final-cleanclone-16bc-m3-release.log",
+  "log_sha256": "ed976eb7387e7106ff5c7ef01712be17a4be5737e5a99a6df92e4e2ff9dd0fc5",
+  "result": "PASS"
+}

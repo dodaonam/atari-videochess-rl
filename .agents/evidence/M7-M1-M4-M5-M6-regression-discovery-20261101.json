@@ -1,0 +1,14 @@
+{
+  "command": "PYTHONDONTWRITEBYTECODE=1 <existing project Python 3.12.3 venv>/bin/python -m unittest discover -s tests -p 'test_m[1456]*.py' -v",
+  "exit_code": 0,
+  "finished_at_utc": "2026-10-31T20:09:26Z",
+  "log_bytes": 38382,
+  "log_path": ".agents/evidence/logs/M7-M1-M4-M5-M6-regression-discovery-20261101.log",
+  "log_sha256": "117efa04d469f3f2daa31c6326e72c501088b57fe5cc8737b03a9d04ea514cdf",
+  "result": "passed",
+  "schema": "videochess-command-evidence/1.0",
+  "source_git_revision": "fe2cc4cc5e477841ffbc9368235eb9c5675f2f74",
+  "started_at_utc": "2026-10-31T20:08:45Z",
+  "test_count": 230,
+  "working_tree_dirty": true
+}

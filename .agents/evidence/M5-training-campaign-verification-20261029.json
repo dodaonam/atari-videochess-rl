@@ -1,0 +1,303 @@
+{
+  "all_final_snapshots_non_resumable": true,
+  "all_runs_exact_decision_and_update_budget": true,
+  "campaign_summary_path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/training-campaign.json",
+  "campaign_summary_sha256": "84bc7a0bad904f9718236e2cf4e9d4e415ff9ed1001b7f394f5440af9f2771ce",
+  "completed_runs": 6,
+  "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+  "configuration_path": "configs/rl/m5-double-dqn-v1.json",
+  "planned_runs": 6,
+  "runs": [
+    {
+      "arm": "warm",
+      "attempt_elapsed_seconds": 13682.539280316001,
+      "attempt_id": "attempt-0001",
+      "code_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+      "completed_episodes": 389,
+      "completion": "complete",
+      "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+      "cumulative_run_physical_seconds": 13702.770076937,
+      "epsilon_final": 0.05,
+      "mid_episode_cap": {
+        "episode_index": 389,
+        "last_committed_transition_id": "d96f4748bf16890c95c455d417395d75b831d8b18ed4a6b82322670ffb775cad",
+        "reason": "exact_50000_decision_cap_reached_mid_episode",
+        "reward": null,
+        "schema": "videochess-m5-incomplete-episode/1.0",
+        "simulator_reset": false,
+        "terminated": null,
+        "truncated": null,
+        "valid_decisions": 50000
+      },
+      "optimizer_updates": 12245,
+      "pair_id": "e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7",
+      "peak_process_rss_bytes": 932016128,
+      "post_rl_snapshot": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/runs/m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__warm__attempt-0001/m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__warm__attempt-0001__warm__seed-20261104__attempt-0001__stage-post_rl__decisions-050000__eval-snapshot-v2.pt",
+        "resumable": false,
+        "sha256": "0b2405017a8e1d539851f0cd278883d3fd23936fb5c2f7962c813590a6fd1767",
+        "sidecar_sha256": "0b2405017a8e1d539851f0cd278883d3fd23936fb5c2f7962c813590a6fd1767",
+        "size_bytes": 511653
+      },
+      "pre_rl_snapshot": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/runs/m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__warm__attempt-0000/m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__warm__attempt-0000__warm__seed-20261104__attempt-0000__stage-pre_rl__decisions-000000__eval-snapshot-v2.pt",
+        "resumable": false,
+        "sha256": "248f81b55145ff2afcbb83c206913c6636c45e007e897b5872722bb9c09e0366",
+        "sidecar_sha256": "248f81b55145ff2afcbb83c206913c6636c45e007e897b5872722bb9c09e0366",
+        "size_bytes": 511744
+      },
+      "replay_journal": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/runs/m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__warm__attempt-0001/replay.journal.jsonl",
+        "records": 50000,
+        "size_bytes": 207501185
+      },
+      "run_id": "m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__warm__attempt-0001",
+      "target_syncs": 24,
+      "training_seed": 20261104,
+      "valid_decisions": 50000
+    },
+    {
+      "arm": "scratch",
+      "attempt_elapsed_seconds": 14115.154090619999,
+      "attempt_id": "attempt-0000",
+      "code_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+      "completed_episodes": 379,
+      "completion": "complete",
+      "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+      "cumulative_run_physical_seconds": 14118.802761068004,
+      "epsilon_final": 0.05,
+      "mid_episode_cap": {
+        "episode_index": 379,
+        "last_committed_transition_id": "aec2f10ae6c570e948fd649346576e8b2cb7bf8f66624c94137fc6877bf2896d",
+        "reason": "exact_50000_decision_cap_reached_mid_episode",
+        "reward": null,
+        "schema": "videochess-m5-incomplete-episode/1.0",
+        "simulator_reset": false,
+        "terminated": null,
+        "truncated": null,
+        "valid_decisions": 50000
+      },
+      "optimizer_updates": 12245,
+      "pair_id": "e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7",
+      "peak_process_rss_bytes": 947097600,
+      "post_rl_snapshot": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/runs/m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__scratch__attempt-0000/m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__scratch__attempt-0000__scratch__seed-20261104__attempt-0000__stage-post_rl__decisions-050000__eval-snapshot-v2.pt",
+        "resumable": false,
+        "sha256": "3749b0c0b6ae44d3ad5d6bf0863b60937a59fbe881e0bdf4932bdce6033ca400",
+        "sidecar_sha256": "3749b0c0b6ae44d3ad5d6bf0863b60937a59fbe881e0bdf4932bdce6033ca400",
+        "size_bytes": 511875
+      },
+      "pre_rl_snapshot": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/runs/m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__scratch__attempt-0000/m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__scratch__attempt-0000__scratch__seed-20261104__attempt-0000__stage-pre_rl__decisions-000000__eval-snapshot-v2.pt",
+        "resumable": false,
+        "sha256": "ca6d85193f31e2d9ec90a8402361fd099825f3e78eda82c726863d71fcd86b4c",
+        "sidecar_sha256": "ca6d85193f31e2d9ec90a8402361fd099825f3e78eda82c726863d71fcd86b4c",
+        "size_bytes": 511966
+      },
+      "replay_journal": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/runs/m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__scratch__attempt-0000/replay.journal.jsonl",
+        "records": 50000,
+        "size_bytes": 210713798
+      },
+      "run_id": "m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__scratch__attempt-0000",
+      "target_syncs": 24,
+      "training_seed": 20261104,
+      "valid_decisions": 50000
+    },
+    {
+      "arm": "warm",
+      "attempt_elapsed_seconds": 12069.720413825002,
+      "attempt_id": "attempt-0000",
+      "code_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+      "completed_episodes": 435,
+      "completion": "complete",
+      "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+      "cumulative_run_physical_seconds": 12075.140149432002,
+      "epsilon_final": 0.05,
+      "mid_episode_cap": {
+        "episode_index": 435,
+        "last_committed_transition_id": "e3e03f8a30271a41d0aede6d3f2cf55f196c3182b90340df90bd253f4b16cea3",
+        "reason": "exact_50000_decision_cap_reached_mid_episode",
+        "reward": null,
+        "schema": "videochess-m5-incomplete-episode/1.0",
+        "simulator_reset": false,
+        "terminated": null,
+        "truncated": null,
+        "valid_decisions": 50000
+      },
+      "optimizer_updates": 12245,
+      "pair_id": "75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c",
+      "peak_process_rss_bytes": 961261568,
+      "post_rl_snapshot": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/runs/m5-75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c__warm__attempt-0000/m5-75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c__warm__attempt-0000__warm__seed-20261105__attempt-0000__stage-post_rl__decisions-050000__eval-snapshot-v2.pt",
+        "resumable": false,
+        "sha256": "e864d8351cb03b7e671e7a061226711b2d33b23bbaca97e899c09f1d2eb59670",
+        "sidecar_sha256": "e864d8351cb03b7e671e7a061226711b2d33b23bbaca97e899c09f1d2eb59670",
+        "size_bytes": 511653
+      },
+      "pre_rl_snapshot": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/runs/m5-75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c__warm__attempt-0000/m5-75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c__warm__attempt-0000__warm__seed-20261105__attempt-0000__stage-pre_rl__decisions-000000__eval-snapshot-v2.pt",
+        "resumable": false,
+        "sha256": "4a7117dd4b28ca0468955d9e82ab636182fb386505f688e4b095e5bf4ec0b3d2",
+        "sidecar_sha256": "4a7117dd4b28ca0468955d9e82ab636182fb386505f688e4b095e5bf4ec0b3d2",
+        "size_bytes": 511744
+      },
+      "replay_journal": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/runs/m5-75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c__warm__attempt-0000/replay.journal.jsonl",
+        "records": 50000,
+        "size_bytes": 196043005
+      },
+      "run_id": "m5-75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c__warm__attempt-0000",
+      "target_syncs": 24,
+      "training_seed": 20261105,
+      "valid_decisions": 50000
+    },
+    {
+      "arm": "scratch",
+      "attempt_elapsed_seconds": 12031.234600602002,
+      "attempt_id": "attempt-0000",
+      "code_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+      "completed_episodes": 413,
+      "completion": "complete",
+      "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+      "cumulative_run_physical_seconds": 12055.169503837998,
+      "epsilon_final": 0.05,
+      "mid_episode_cap": {
+        "episode_index": 413,
+        "last_committed_transition_id": "fc3258bd66f804d8eea6bc90543f79eefcdf2197b4ecaef8297e74a553d6fd52",
+        "reason": "exact_50000_decision_cap_reached_mid_episode",
+        "reward": null,
+        "schema": "videochess-m5-incomplete-episode/1.0",
+        "simulator_reset": false,
+        "terminated": null,
+        "truncated": null,
+        "valid_decisions": 50000
+      },
+      "optimizer_updates": 12245,
+      "pair_id": "75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c",
+      "peak_process_rss_bytes": 961261568,
+      "post_rl_snapshot": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/runs/m5-75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c__scratch__attempt-0000/m5-75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c__scratch__attempt-0000__scratch__seed-20261105__attempt-0000__stage-post_rl__decisions-050000__eval-snapshot-v2.pt",
+        "resumable": false,
+        "sha256": "e63ab18289135e411fb4c00a025d2985446475e5b70881ca7e9190559c20b3f8",
+        "sidecar_sha256": "e63ab18289135e411fb4c00a025d2985446475e5b70881ca7e9190559c20b3f8",
+        "size_bytes": 511875
+      },
+      "pre_rl_snapshot": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/runs/m5-75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c__scratch__attempt-0000/m5-75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c__scratch__attempt-0000__scratch__seed-20261105__attempt-0000__stage-pre_rl__decisions-000000__eval-snapshot-v2.pt",
+        "resumable": false,
+        "sha256": "f3cec828492640ba82983065e2cec6043714f7b9d374d04ce5422ab7ca2fb7a7",
+        "sidecar_sha256": "f3cec828492640ba82983065e2cec6043714f7b9d374d04ce5422ab7ca2fb7a7",
+        "size_bytes": 511966
+      },
+      "replay_journal": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/runs/m5-75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c__scratch__attempt-0000/replay.journal.jsonl",
+        "records": 50000,
+        "size_bytes": 196356008
+      },
+      "run_id": "m5-75b4300109faf28e59770a022ee13435ab4c92c6ab19750a83ad79ed9bbc581c__scratch__attempt-0000",
+      "target_syncs": 24,
+      "training_seed": 20261105,
+      "valid_decisions": 50000
+    },
+    {
+      "arm": "warm",
+      "attempt_elapsed_seconds": 9220.750548940001,
+      "attempt_id": "attempt-0000",
+      "code_sha256": "cdcc1fdc0ca0b324e49cfb8b0ff571496a554e9892dfb3620d6454a65ee16da0",
+      "completed_episodes": 551,
+      "completion": "complete",
+      "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+      "cumulative_run_physical_seconds": 9237.468440834,
+      "epsilon_final": 0.05,
+      "mid_episode_cap": {
+        "episode_index": 551,
+        "last_committed_transition_id": "605990c0694e43aa7528a09bb471a823748467a3f3be05e3e736188c76b2f7eb",
+        "reason": "exact_50000_decision_cap_reached_mid_episode",
+        "reward": null,
+        "schema": "videochess-m5-incomplete-episode/1.0",
+        "simulator_reset": false,
+        "terminated": null,
+        "truncated": null,
+        "valid_decisions": 50000
+      },
+      "optimizer_updates": 12245,
+      "pair_id": "89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870",
+      "peak_process_rss_bytes": 833622016,
+      "post_rl_snapshot": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/runs/m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__warm__attempt-0000/m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__warm__attempt-0000__warm__seed-20261106__attempt-0000__stage-post_rl__decisions-050000__eval-snapshot-v2.pt",
+        "resumable": false,
+        "sha256": "c037adc652a00ea131366c5f15ac78811a223459312f9bac5f676f267cf36bcd",
+        "sidecar_sha256": "c037adc652a00ea131366c5f15ac78811a223459312f9bac5f676f267cf36bcd",
+        "size_bytes": 511653
+      },
+      "pre_rl_snapshot": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/runs/m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__warm__attempt-0000/m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__warm__attempt-0000__warm__seed-20261106__attempt-0000__stage-pre_rl__decisions-000000__eval-snapshot-v2.pt",
+        "resumable": false,
+        "sha256": "4791f07e8295ea083629c72f9ae4685d2309c3fe738fe7c499b9e499a967ca75",
+        "sidecar_sha256": "4791f07e8295ea083629c72f9ae4685d2309c3fe738fe7c499b9e499a967ca75",
+        "size_bytes": 511744
+      },
+      "replay_journal": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/runs/m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__warm__attempt-0000/replay.journal.jsonl",
+        "records": 50000,
+        "size_bytes": 174491001
+      },
+      "run_id": "m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__warm__attempt-0000",
+      "target_syncs": 24,
+      "training_seed": 20261106,
+      "valid_decisions": 50000
+    },
+    {
+      "arm": "scratch",
+      "attempt_elapsed_seconds": 13645.020649488999,
+      "attempt_id": "attempt-0000",
+      "code_sha256": "cdcc1fdc0ca0b324e49cfb8b0ff571496a554e9892dfb3620d6454a65ee16da0",
+      "completed_episodes": 408,
+      "completion": "complete",
+      "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+      "cumulative_run_physical_seconds": 13649.630560380001,
+      "epsilon_final": 0.05,
+      "mid_episode_cap": {
+        "episode_index": 408,
+        "last_committed_transition_id": "2203a13d8fff0458a4ab7da5751e67451b6ccb2d1fab225f7d0af3cb94d0eddd",
+        "reason": "exact_50000_decision_cap_reached_mid_episode",
+        "reward": null,
+        "schema": "videochess-m5-incomplete-episode/1.0",
+        "simulator_reset": false,
+        "terminated": null,
+        "truncated": null,
+        "valid_decisions": 50000
+      },
+      "optimizer_updates": 12245,
+      "pair_id": "89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870",
+      "peak_process_rss_bytes": 929718272,
+      "post_rl_snapshot": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/runs/m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__scratch__attempt-0000/m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__scratch__attempt-0000__scratch__seed-20261106__attempt-0000__stage-post_rl__decisions-050000__eval-snapshot-v2.pt",
+        "resumable": false,
+        "sha256": "94838bc8c3547a5b8ce9e1d8c1dde66b86163defb868b18be6185895acf9663c",
+        "sidecar_sha256": "94838bc8c3547a5b8ce9e1d8c1dde66b86163defb868b18be6185895acf9663c",
+        "size_bytes": 511875
+      },
+      "pre_rl_snapshot": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/runs/m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__scratch__attempt-0000/m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__scratch__attempt-0000__scratch__seed-20261106__attempt-0000__stage-pre_rl__decisions-000000__eval-snapshot-v2.pt",
+        "resumable": false,
+        "sha256": "aeac1571bea9ce89af11dc1d668687d985984b49b3724fca310a9ed89e262120",
+        "sidecar_sha256": "aeac1571bea9ce89af11dc1d668687d985984b49b3724fca310a9ed89e262120",
+        "size_bytes": 511966
+      },
+      "replay_journal": {
+        "path": "/home/dodaonam/Projects/atari-videochess-rl-m5/artifacts/m5/runs/m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__scratch__attempt-0000/replay.journal.jsonl",
+        "records": 50000,
+        "size_bytes": 205431062
+      },
+      "run_id": "m5-89235d5a197920cce40c4a52a034f68e27a6ecc3e5eb2ab0bef80b037ffef870__scratch__attempt-0000",
+      "target_syncs": 24,
+      "training_seed": 20261106,
+      "valid_decisions": 50000
+    }
+  ],
+  "schema": "videochess-m5-training-campaign-verification/1.0",
+  "total_valid_decisions": 300000,
+  "verified_at_utc": "2026-10-29T21:15:57Z"
+}

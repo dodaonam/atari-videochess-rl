@@ -1,0 +1,139 @@
+{
+  "verification_id": "M3-release-local-verification-20261027",
+  "verification_started_at_utc": "2026-10-27T10:36:31Z",
+  "verification_completed_at_utc": "2026-10-27T10:38:23Z",
+  "duration_seconds": 112.014,
+  "git_revision": "a41d6f14014727570f55dfa2d015d4ad80250445",
+  "worktree": "feature/pre-m4-final-closure; documentation/governance working changes; verifier source paths unchanged from HEAD",
+  "artifact_location": "/home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+  "access": "read-only; nine file sizes and SHA-256 values inventoried before and after; release bytes unchanged",
+  "command": [
+    "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python",
+    "-m",
+    "videochess_rl.data.cli",
+    "verify",
+    "--release",
+    "/home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6"
+  ],
+  "environment": {
+    "python": "Python 3.12.3",
+    "pythonpath": "/tmp/atari-pre-m4-work",
+    "python_chess": "1.11.2"
+  },
+  "verifier_exit_code": 0,
+  "verifier_stdout": "{\n  \"games\": 1000,\n  \"manifest_sha256\": \"be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12\",\n  \"output_bytes\": 39994522,\n  \"outputs_verified\": 7,\n  \"positions\": 19268,\n  \"rejections\": 182,\n  \"release_id\": \"f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890\"\n}\n",
+  "verifier_result": {
+    "games": 1000,
+    "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+    "output_bytes": 39994522,
+    "outputs_verified": 7,
+    "positions": 19268,
+    "rejections": 182,
+    "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890"
+  },
+  "expected_identity": {
+    "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+    "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+    "split_assignment_sha256": "84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e"
+  },
+  "manifest_identity_matches": true,
+  "split_identity_matches": true,
+  "release_counts": {
+    "selected_games": 1000,
+    "positions_before_purge": 20000,
+    "positions_retained": 19268,
+    "purged_positions": 732,
+    "rejection_records": 182,
+    "train": 15196,
+    "validation": 2015,
+    "test": 2057
+  },
+  "structural_recheck": {
+    "game_ids_unique": true,
+    "sample_ids_unique": true,
+    "played_move_in_legal_candidates": true,
+    "invalid_target_count": 0,
+    "game_count": 1000,
+    "position_count": 19268,
+    "rejection_count": 182,
+    "retained_positions_by_split": {
+      "train": 15196,
+      "validation": 2015,
+      "test": 2057
+    },
+    "split_assignment_sha256": "84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e",
+    "cross_split_board_signatures_after_purge": 0,
+    "purged_positions": 732
+  },
+  "files": [
+    {
+      "path": "config.json",
+      "bytes": 1465,
+      "sha256": "75034de9d1dee2c48f56ecb1e7b54e11ae4c261fe9a95579ef69b0e93c00b304",
+      "unchanged_after": true,
+      "matches_20261023_evidence": true
+    },
+    {
+      "path": "games.jsonl",
+      "bytes": 2764193,
+      "sha256": "526fc9966d4521dee92fc4bb7e011d9a59fce1dc703810a0ed3d6edbb2e154c7",
+      "unchanged_after": true,
+      "matches_20261023_evidence": true
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 1976,
+      "sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+      "unchanged_after": true,
+      "matches_20261023_evidence": true
+    },
+    {
+      "path": "manifest.sha256",
+      "bytes": 80,
+      "sha256": "5f4c968a8885548565496b7652a6b060adc8778cfeaffb58dd4b7b8b18b9a2ae",
+      "unchanged_after": true,
+      "matches_20261023_evidence": true
+    },
+    {
+      "path": "positions.jsonl",
+      "bytes": 31992257,
+      "sha256": "9db9676ecb64cc111e4310c83374348132ad4413cb0de7c1fe1878b89c89500d",
+      "unchanged_after": true,
+      "matches_20261023_evidence": true
+    },
+    {
+      "path": "rejections.jsonl",
+      "bytes": 66744,
+      "sha256": "fce94dc0c721fb84b45ccb812667b712030f4f327901d1a7ee19b4392524a42e",
+      "unchanged_after": true,
+      "matches_20261023_evidence": true
+    },
+    {
+      "path": "source_manifest.json",
+      "bytes": 5060,
+      "sha256": "f2ff571ce81a47b1191f7b57c2f2d16c48ebde6b334aeb6e82d7b173dc2b2935",
+      "unchanged_after": true,
+      "matches_20261023_evidence": true
+    },
+    {
+      "path": "split.json",
+      "bytes": 2473768,
+      "sha256": "dbbcc00bdb5989fd8827c8e7beec3b4eea41f0bae3649ad9ffa2373b0d128193",
+      "unchanged_after": true,
+      "matches_20261023_evidence": true
+    },
+    {
+      "path": "stats.json",
+      "bytes": 2691035,
+      "sha256": "3d0a217e94a826f38d54b402c921f145592c92760d39901c8b2cc2339dad68bd",
+      "unchanged_after": true,
+      "matches_20261023_evidence": true
+    }
+  ],
+  "all_file_hashes_match_prior_evidence": true,
+  "limitations": [
+    "M3 release verifier and supplementary semantic scan do not implement or run an M4 tensor loader/model.",
+    "No source archive or raw/derived data was copied, modified, committed, or uploaded.",
+    "The third-party curated package license remains unstated; the local/internal no-redistribution boundary remains unchanged."
+  ]
+}

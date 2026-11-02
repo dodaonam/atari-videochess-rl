@@ -1,0 +1,11 @@
+Command (local executable path sanitized): uv lock --check --offline
+Started UTC: 2026-10-16T19:37:51.510581906Z
+Finished UTC: 2026-10-16T19:37:51.684582933Z
+Exit code: 0
+Git HEAD: bd84973436ab6d71ccb927cb16f16f357041399e
+Tool: uv 0.9.26; CPython 3.12.3
+Result: lock resolves 18 packages offline; no dependency installation or lock change
+
+----- uv output -----
+Using CPython 3.12.3 interpreter at: /usr/bin/python3.12
+Resolved 18 packages in 4ms

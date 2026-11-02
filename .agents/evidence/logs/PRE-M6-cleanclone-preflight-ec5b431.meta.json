@@ -1,0 +1,31 @@
+{
+  "command": "python3 scripts/agent_preflight.py --json (detached clean checkout at ec5b431)",
+  "completed_at_utc": "2026-10-30T13:44:35Z",
+  "counts": {
+    "current_gate": "G3",
+    "errors": 0,
+    "git_snapshot_matches": true,
+    "next_milestone": "M6",
+    "start_authorized": false,
+    "warning_codes": [
+      "ARTIFACT_MANIFEST_REQUIRED"
+    ],
+    "warnings": 1
+  },
+  "environment": {
+    "dependency_lock_sha256": "60b55b57bd89c08274b470ea5c525f60037e893194e5815feeeaccf98b23df1a",
+    "execution": "existing local CPU environment; no new packages installed",
+    "git_head": "ec5b43188b48953e1c92c6375b3b12255ecb87dc",
+    "runtime_versions": {
+      "ale_py": "0.11.2",
+      "gymnasium": "1.4.0",
+      "python": "3.12.3",
+      "python_chess": "1.11.2",
+      "torch": "2.14.1+cpu"
+    }
+  },
+  "exit_code": 0,
+  "log_sha256": "f592a83a4334cd65c711444750b1e2783144a5fd20b81eb1b3e07ebfd191a55e",
+  "result": "PASS",
+  "sanitized_log_path": ".agents/evidence/logs/PRE-M6-cleanclone-preflight-ec5b431.json"
+}

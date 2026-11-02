@@ -1,0 +1,8 @@
+check=archive
+revision=2decc57591d13d0dd5f918c0fb770034730bf5af
+start_utc=2026-10-28T05:33:54.951025Z
+end_utc=2026-10-28T05:33:55.383664Z
+duration_seconds=0.433
+exit_code=0
+command=python3 scripts/migrate_checkpoint_history.py verify
+environment=Fresh clean GitHub clone; no dependency installation.

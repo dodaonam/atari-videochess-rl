@@ -1,0 +1,12 @@
+{
+  "check": "preflight",
+  "command": "python3 scripts/agent_preflight.py",
+  "end_utc": "2026-10-28T09:29:02Z",
+  "environment": "Fresh clean clone at exact commit; no errors; expected ARTIFACT_MANIFEST_REQUIRED warning only.",
+  "exit_code": 0,
+  "log_path": ".agents/evidence/logs/PRE-M5-F05-finalhead-14427-preflight.log",
+  "log_sha256": "c8183b026c0c16d4631b309f195854a9ff0a2d73d65c5820d9d72e84a2b8d60e",
+  "result": "PASS",
+  "revision": "14427e21bde9a9c24c74255e61928e0a5e5cd5da",
+  "start_utc": "2026-10-28T09:29:01Z"
+}

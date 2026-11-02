@@ -1,0 +1,6 @@
+command=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -c import json; import pathlib; [json.load(open(p)) for p in ["configs/rl/m5-double-dqn-v1.json","tests/fixtures/m5_checkpoint_boundaries.json","tests/fixtures/m5_seed_derivation_v1.json",".agents/evidence/PRE-M5-remediation-20261028.json"]]; print("JSON parse: PASS")
+revision=ef1ffae65a7e08579e7ae00502a11de59c3efea3
+start_utc=2026-10-28T09:11:42Z
+end_utc=2026-10-28T09:11:42Z
+exit_code=0
+JSON parse: PASS

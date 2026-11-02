@@ -1,0 +1,9 @@
+check=full_tests
+revision=2decc57591d13d0dd5f918c0fb770034730bf5af
+start_utc=2026-10-28T05:36:53.220777Z
+end_utc=2026-10-28T05:40:24.850501Z
+duration_seconds=211.63
+exit_code=0
+test_count=319
+command=PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/share/stockfish:$PATH PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v
+environment=Existing pinned Python 3.12.3 CPU virtual environment; no dependencies installed; PYTHONPATH=.; external M3/M4 artifacts read-only.; Stockfish executable on PATH only for the configured UCI readiness smoke test.

@@ -1,0 +1,14 @@
+{
+  "check": "archive",
+  "command": "python3 scripts/migrate_checkpoint_history.py verify",
+  "end_utc": "2026-10-28T09:25:31Z",
+  "environment": "Fresh clean GitHub clone at exact pushed revision; existing project environment; no dependencies installed.",
+  "exit_code": 0,
+  "log_path": ".agents/evidence/logs/PRE-M5-F05-finalhead-45b9-archive.log",
+  "log_sha256": "b875912527c1f662603673bafba5044e2fd5e37d06147dfb4ce0620d0812b757",
+  "logical_sha256": "bb234c1c171280f258a69ed9cffc1a2ca1b3f1a4192eff1e796427fa53374f11",
+  "record_count": 208,
+  "result": "PASS",
+  "revision": "45b9a1065e6f460c6c44a1164ec5b09ac4dc1b83",
+  "start_utc": "2026-10-28T09:25:30Z"
+}

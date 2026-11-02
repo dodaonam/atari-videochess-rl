@@ -1,0 +1,19 @@
+[M4] source_revision=fa7683822c436f3e9d6c3455a24cd1f4a6cbb463
+[M4] started_at_utc=2026-10-31T14:21:51Z
+[M4] finished_at_utc=2026-10-31T14:21:52Z
+[M4] exit_code=0
+[M4] verification_disposition=PASS; 19 manifest-listed artifacts and the selected checkpoint hash verified.
+[M4] command=python -m videochess_rl.model.cli verify-artifacts <accepted-m4-r4-root>
+[M4] sanitized_output={"artifact_directory": "<accepted-m4-r4-root>", "artifact_files_verified": 19, "checkpoint": {"checkpoint_file": "pretrained-behavior-only.pt", "checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4", "checkpoint_size_bytes": 1520046, "input_schema": "videochess-model-input/1.0", "metadata_sha256": "63615d8d0ed27900fdf86d3f3084ca95cd562f9ec2f9a7e94bca4b0f6301e0c8", "model_schema": "videochess-behavior-scorer/1.0", "parameter_count": 121897, "schema": "videochess-m4-checkpoint/1.0"}, "run_status": "completed"}
+[M5] source_revision=fa7683822c436f3e9d6c3455a24cd1f4a6cbb463
+[M5] started_at_utc=2026-10-31T14:21:52Z
+[M5] finished_at_utc=2026-10-31T14:22:22Z
+[M5] exit_code=0
+[M5] verification_disposition=PASS; seven manifests and 6,544,747,450 bytes verified.
+[M5] command=python3 scripts/m5_artifact_manifests.py --root <accepted-m5-root> --verify
+[M5] sanitized_output={
+  "status": "verified",
+  "artifact_manifest": "<accepted-m5-root>/artifact-manifest.json",
+  "run_manifests": 7,
+  "total_bytes": 6544747450
+}

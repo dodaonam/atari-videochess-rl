@@ -1,0 +1,13 @@
+Command: python3 scripts/m5_artifact_manifests.py --root <accepted-m5-root> --verify
+Started at UTC: 2026-10-31T16:04:45Z
+Finished at UTC: 2026-10-31T16:05:20Z
+Source revision: 257fff94c64bc584797e0d191920a57befcae62c
+Result: PASS — M5 accepted root and run manifest verification
+Exit code: 0
+Sanitized output:
+{
+  "status": "verified",
+  "artifact_manifest": "<accepted-m5-root>/artifact-manifest.json",
+  "run_manifests": 7,
+  "total_bytes": 6544747450
+}

@@ -1,0 +1,8 @@
+check=transfer_engine_free
+revision=2decc57591d13d0dd5f918c0fb770034730bf5af
+start_utc=2026-10-28T05:40:26.726290Z
+end_utc=2026-10-28T05:40:28.461382Z
+duration_seconds=1.735
+exit_code=0
+command=PATH=/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/verify_m5_transfer.py /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4/pretrained-behavior-only.pt
+environment=Stockfish unavailable on PATH; separate process; existing pinned Python 3.12.3 CPU environment.

@@ -1,0 +1,7 @@
+source_revision=fa7683822c436f3e9d6c3455a24cd1f4a6cbb463
+started_at_utc=2026-10-31T14:18:14Z
+finished_at_utc=2026-10-31T14:19:11Z
+exit_code=0
+command=python3 scripts/audit_m6_v2_artifacts.py --root <local-preserved-v2-root> --v1-root <local-preserved-v1-root>
+disposition=PASS_WITH_IMMUTABLE_PM6_F06_ERRATUM_REQUIRED
+stdout_sha256=467788cdc5ec5b291bd0d7aa66c987f9beac14c2b51395b1101f0963fadd5197

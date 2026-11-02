@@ -1,0 +1,16 @@
+{
+  "check": "m4_transfer_engine_free",
+  "revision": "16bc420d90e2a0eec910208ebce5686c9717600d",
+  "start_utc": null,
+  "end_utc": "2026-10-28T07:43:52.626272+00:00",
+  "duration_seconds": null,
+  "exit_code": 0,
+  "test_count": null,
+  "test_runner_duration_seconds": null,
+  "command": "env PYTHONPATH=. PATH=/usr/bin:/bin /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/verify_m5_transfer.py /home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4/pretrained-behavior-only.pt",
+  "environment": "Python 3.12.3 pinned local venv; PATH excludes Stockfish; read-only accepted M4 bundle.",
+  "timestamp_note": "Completion time is the captured log file mtime; this unwrapped invocation did not separately capture its start time.",
+  "log_path": ".agents/evidence/logs/PRE-M5-final-cleanclone-16bc-transfer-engine-free.log",
+  "log_sha256": "2dbb330dc6d93d25dc69da2f987f0bea1dfaae3ca6cc0f789d8f107d98e492e5",
+  "result": "PASS"
+}

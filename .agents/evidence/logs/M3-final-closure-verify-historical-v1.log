@@ -1,0 +1,9 @@
+{
+  "games": 1000,
+  "manifest_sha256": "574bcc52c3b6ad91c64c283a8f93ab05eb5a7e07ca138fa5d3e2da26edb09ada",
+  "output_bytes": 39868538,
+  "outputs_verified": 7,
+  "positions": 19268,
+  "rejections": 182,
+  "release_id": "9e3944e1e35ca0d774e479a49d9b93eb769d14e52ffec4bc6f886bd4695b8991"
+}

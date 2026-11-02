@@ -1,0 +1,72 @@
+$ cd /tmp/m5-ci-repro-575dce-20261030 && python3 scripts/agent_preflight.py
+Agent context preflight: FAIL
+Governance: G2 (approved); approved: G0, G1, G2
+Next engineering milestone: M5 — in_progress
+Active task: M5-001 — Implement and verify the paired Double DQN simulator experiment
+Active task next action: Independent PM review of open PR #11; engineering work is delivered. Do not merge, self-approve, approve G3, or start M6.
+Next task: M5-001 (in_progress) — Implement and verify the paired Double DQN simulator experiment
+Next task dependencies: M2-001, M3-001, M4-001
+Next task acceptance criteria: M5-01, M5-02, M5-03, M5-04, M5-05
+Tasks: done=13, in_progress=1, pending=0, blocked=0, cancelled=0
+Completed task IDs: G1-001, G1-002, G1-003, G1-004, G1-005, G1-006, G1-007, G1-008, M0-001, M1-001, M2-001, M3-001, M4-001
+In progress task IDs: M5-001
+Pending task IDs: none
+Blocked task IDs: none
+Active blockers: none recorded
+Open confirmations:
+  O-02: Whether full-game performance on actual ALE is a hard submission requirement or a research target with an accepted fallback.
+  O-03: Future course checkpoints and any date changes. The owner confirmed the presentation date is Tuesday, 2026-11-03.
+  O-04: Actual Colab entitlement/quota, GPU availability, cloud storage, and whether paid compute is allowed. The owner selected local CPU for M3; no external compute/storage is used in this mission.
+  O-05: ALE/ROM runtime behavior, RAM mapping, game modes, difficulty behavior, and official evaluation settings.
+  O-06: Public redistribution rights and any new source/use beyond the scoped May 2022 archive. For M3, the owner authorized bounded internal academic use of the exact Lichess Elite May 2022 package with local retention and no redistribution; its third-party package license remains unstated/unverified.
+  O-07: Broader Stockfish roles: benchmark opponent, offline engine evaluation, and instructor-specific limits outside the M3 teacher-label scope.
+  O-08: Opponent pool and rating method for any Elo claim.
+Relevant decisions: docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md, docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md, docs/02-management/decisions/ADR-0003-pretraining-model-interface.md
+Acceptance criteria recognized: 51
+Last verified Git: feature/m5-double-dqn @ 81fc1fe269ffafb6006c3b32d96e38fbb91eb5a3
+Live Git: feature/m5-double-dqn @ 575dce5978567417d2915d5dd36a47873293b607
+Roadmap source: exact match; 19 sections; SHA-256 fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf
+Git recovery: unexplained branch/HEAD transition; inspect portable baseline warnings.
+Workspace Git status: differs from checkpoint
+Portable tracked baseline: not yet committed or differs
+Portable Git index: differs from checkpoint
+Hashed ordinary-file snapshot: differs
+Content hashes: 653 ordinary files verified by SHA-256.
+Not content-verified by this hash map: PROJECT_STATE self-reference, chat history/credential-like paths, temp files, symlinks, and the excluded directories listed below.
+Excluded directories: .agents/state/checkpoint-history, .git, artifacts, scripts/__pycache__
+Artifact directories requiring independent manifests: artifacts
+Last verified dirty paths (3):  M .agents/state/PROJECT_STATE.yaml;  M .agents/state/SESSION_HANDOFF.md;  M .agents/tasks/BACKLOG.yaml
+Dirty paths no longer present since checkpoint:  M .agents/tasks/BACKLOG.yaml
+Next user action: Independent PM review of the complete M5 feature PR; G3 remains unapproved and the PR author must not merge or self-approve.
+WARNING PORTABLE_BASELINE_DRIFT [.]: tracked objects changed: .agents/tasks/BACKLOG.yaml. The Git transition is not explained by the recorded tracked-file manifest.
+WARNING ARTIFACT_MANIFEST_REQUIRED [.]: Artifact/data directories are excluded from content hashing and require independent manifest verification: artifacts.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+ERROR TASK_EVIDENCE_PROVENANCE [.agents/tasks/BACKLOG.yaml:tasks[13]]: Verified command/test evidence requires an existing repository-relative log_path.
+Reproduced 28 TASK_EVIDENCE_PROVENANCE errors at tasks[13].
+Exit code: 1

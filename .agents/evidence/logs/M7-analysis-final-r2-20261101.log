@@ -1,0 +1,11 @@
+{
+  "files": 5,
+  "m7_reset_observed_cells": 90,
+  "m7_scheduled_cells": 90,
+  "manifest_filesha256": "af084e1cd99a6541c19cad2a1dfa163129a3cb873c393ec3669711e5d7b4ffa1",
+  "output_dir": ".agents/evidence/M7-analysis-final-r2-20261101"
+}
+
+Command: PYTHONDONTWRITEBYTECODE=1 <existing project Python 3.12.3 venv>/bin/python scripts/analyze_m7_campaign.py --config configs/m7/m7-option-b-1.0.0.json --m7-run-dir <owner-local M7 run directory> --m4-root <owner-local accepted M4 r4 root> --m5-root <owner-local accepted M5 root> --m6-v1-root <owner-local M6 v1 root> --m6-v2-root <owner-local M6 v2 root> --output-dir .agents/evidence/M7-analysis-final-r2-20261101
+Result: PASS: final raw-derived M4/M5/M6 v1/v2/M7 analysis; schedule and summary reconcile.
+Exit code: 0

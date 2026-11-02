@@ -1,0 +1,839 @@
+started_at_utc=2026-11-01T05:22:01Z
+source_revision=0f45fa06c235658da48d3d41a9091c06580bfe27
+command: <existing project Python 3.12.3 venv>/bin/python -B .agents/evidence/logs/M7-005-exclude-stockfish-test-runner-20261101.py
+test_blocked_task_must_reference_an_active_blocker (test_agent_context.AgentContextRecoveryTests.test_blocked_task_must_reference_an_active_blocker) ... ok
+test_checkpoint_compacts_serialization_without_changing_history (test_agent_context.AgentContextRecoveryTests.test_checkpoint_compacts_serialization_without_changing_history) ... ok
+test_checkpoint_is_consistent_after_one_run_from_clean_worktree (test_agent_context.AgentContextRecoveryTests.test_checkpoint_is_consistent_after_one_run_from_clean_worktree) ... ok
+test_checkpoint_repairs_stale_handoff_pointer (test_agent_context.AgentContextRecoveryTests.test_checkpoint_repairs_stale_handoff_pointer) ... ok
+test_checkpoint_rolls_back_provisional_files_after_final_size_guard_failure (test_agent_context.AgentContextRecoveryTests.test_checkpoint_rolls_back_provisional_files_after_final_size_guard_failure) ... ok
+test_checkpoint_rolls_back_provisional_files_after_final_snapshot_failure (test_agent_context.AgentContextRecoveryTests.test_checkpoint_rolls_back_provisional_files_after_final_snapshot_failure) ... ok
+test_checkpoint_size_limit_fails_before_state_or_workspace_mutation (test_agent_context.AgentContextRecoveryTests.test_checkpoint_size_limit_fails_before_state_or_workspace_mutation) ... ok
+test_clean_clone_recovers_current_committed_state_without_local_artifacts (test_agent_context.AgentContextRecoveryTests.test_clean_clone_recovers_current_committed_state_without_local_artifacts) ... ok
+test_clean_clone_recovers_g2_and_future_milestone_transitions (test_agent_context.AgentContextRecoveryTests.test_clean_clone_recovers_g2_and_future_milestone_transitions) ... ok
+test_completed_task_must_have_empty_next_action (test_agent_context.AgentContextRecoveryTests.test_completed_task_must_have_empty_next_action) ... ok
+test_completed_task_requires_existing_evidence (test_agent_context.AgentContextRecoveryTests.test_completed_task_requires_existing_evidence) ... ok
+test_context_ci_runs_m5_fixture_as_a_contract_oracle (test_agent_context.AgentContextRecoveryTests.test_context_ci_runs_m5_fixture_as_a_contract_oracle) ... ok
+test_direct_m3_authorization_is_preserved_across_milestone_completion (test_agent_context.AgentContextRecoveryTests.test_direct_m3_authorization_is_preserved_across_milestone_completion) ... ok
+test_done_task_cannot_rely_only_on_historical_unverified_evidence (test_agent_context.AgentContextRecoveryTests.test_done_task_cannot_rely_only_on_historical_unverified_evidence) ... ok
+test_dry_run_with_partial_recovery_does_not_mutate_files (test_agent_context.AgentContextRecoveryTests.test_dry_run_with_partial_recovery_does_not_mutate_files) ... ok
+test_future_milestone_bullet_criteria_are_valid_task_references (test_agent_context.AgentContextRecoveryTests.test_future_milestone_bullet_criteria_are_valid_task_references) ... ok
+test_g1_cannot_be_ready_with_incomplete_g1_tasks (test_agent_context.AgentContextRecoveryTests.test_g1_cannot_be_ready_with_incomplete_g1_tasks) ... ok
+test_git_ignored_zip_is_still_content_hashed (test_agent_context.AgentContextRecoveryTests.test_git_ignored_zip_is_still_content_hashed) ... ok
+test_historical_baseline_checksum_detects_record_mutation (test_agent_context.AgentContextRecoveryTests.test_historical_baseline_checksum_detects_record_mutation) ... ok
+test_historical_baseline_is_not_recompared_to_current_files (test_agent_context.AgentContextRecoveryTests.test_historical_baseline_is_not_recompared_to_current_files) ... ok
+test_historical_g1_recovery_matches_recorded_baseline (test_agent_context.AgentContextRecoveryTests.test_historical_g1_recovery_matches_recorded_baseline) ... ok
+test_ignored_cache_generation_does_not_create_source_content_drift (test_agent_context.AgentContextRecoveryTests.test_ignored_cache_generation_does_not_create_source_content_drift) ... ok
+test_json_output_is_machine_readable_and_paths_are_portable (test_agent_context.AgentContextRecoveryTests.test_json_output_is_machine_readable_and_paths_are_portable) ... ok
+test_large_files_and_artifact_directories_are_reported_once_and_separately (test_agent_context.AgentContextRecoveryTests.test_large_files_and_artifact_directories_are_reported_once_and_separately) ... ok
+test_m0_cannot_be_authorized_before_g1_approval (test_agent_context.AgentContextRecoveryTests.test_m0_cannot_be_authorized_before_g1_approval) ... ok
+test_m3_authorization_does_not_change_governance_approvals (test_agent_context.AgentContextRecoveryTests.test_m3_authorization_does_not_change_governance_approvals) ... ok
+test_m4_authorization_can_be_ready_without_claiming_implementation_started (test_agent_context.AgentContextRecoveryTests.test_m4_authorization_can_be_ready_without_claiming_implementation_started) ... ok
+test_m5_verified_command_log_must_be_tracked_for_clean_clone (test_agent_context.AgentContextRecoveryTests.test_m5_verified_command_log_must_be_tracked_for_clean_clone) ... ok
+test_m6_closeout_provenance_rejects_existing_but_uncommitted_log (test_agent_context.AgentContextRecoveryTests.test_m6_closeout_provenance_rejects_existing_but_uncommitted_log) ... ok
+test_m6_closeout_verified_provenance_is_bound_to_committed_files_and_logs (test_agent_context.AgentContextRecoveryTests.test_m6_closeout_verified_provenance_is_bound_to_committed_files_and_logs) ... ok
+test_m6_pm_acceptance_is_historical_and_g4_is_now_approved_for_m7_evaluation (test_agent_context.AgentContextRecoveryTests.test_m6_pm_acceptance_is_historical_and_g4_is_now_approved_for_m7_evaluation) ... ok
+test_m7_001_through_m7_005_engineering_done_and_g5_remains_unapproved (test_agent_context.AgentContextRecoveryTests.test_m7_001_through_m7_005_engineering_done_and_g5_remains_unapproved) ... ok
+test_manual_session_evidence_requires_sanitized_record_and_revision (test_agent_context.AgentContextRecoveryTests.test_manual_session_evidence_requires_sanitized_record_and_revision) ... ok
+test_partial_state_file_is_detected_and_recovered (test_agent_context.AgentContextRecoveryTests.test_partial_state_file_is_detected_and_recovered) ... ok
+test_pr_review_policy_explicitly_separates_codex_and_pm_authority (test_agent_context.AgentContextRecoveryTests.test_pr_review_policy_explicitly_separates_codex_and_pm_authority) ... ok
+test_preflight_detects_content_change_inside_existing_dirty_path (test_agent_context.AgentContextRecoveryTests.test_preflight_detects_content_change_inside_existing_dirty_path) ... ok
+test_preflight_detects_gate_coverage_used_as_its_own_start_prerequisite (test_agent_context.AgentContextRecoveryTests.test_preflight_detects_gate_coverage_used_as_its_own_start_prerequisite) ... ok
+test_preflight_detects_roadmap_source_mismatch (test_agent_context.AgentContextRecoveryTests.test_preflight_detects_roadmap_source_mismatch) ... ok
+test_preflight_discovers_every_documented_acceptance_criterion (test_agent_context.AgentContextRecoveryTests.test_preflight_discovers_every_documented_acceptance_criterion) ... ok
+test_preflight_finds_broken_markdown_link (test_agent_context.AgentContextRecoveryTests.test_preflight_finds_broken_markdown_link) ... ok
+test_preflight_recovers_project_state_without_conversation (test_agent_context.AgentContextRecoveryTests.test_preflight_recovers_project_state_without_conversation) ... ok
+test_preflight_rejects_dependency_cycle (test_agent_context.AgentContextRecoveryTests.test_preflight_rejects_dependency_cycle) ... ok
+test_preflight_rejects_invalid_state_schema (test_agent_context.AgentContextRecoveryTests.test_preflight_rejects_invalid_state_schema) ... ok
+test_preflight_reports_dirty_worktree_and_checkpoint_refreshes_it (test_agent_context.AgentContextRecoveryTests.test_preflight_reports_dirty_worktree_and_checkpoint_refreshes_it) ... ok
+test_preflight_reports_files_it_could_not_hash (test_agent_context.AgentContextRecoveryTests.test_preflight_reports_files_it_could_not_hash) ... ok
+test_preflight_reports_malformed_git_snapshot_without_crashing (test_agent_context.AgentContextRecoveryTests.test_preflight_reports_malformed_git_snapshot_without_crashing) ... ok
+test_preflight_reports_malformed_task_status_without_crashing (test_agent_context.AgentContextRecoveryTests.test_preflight_reports_malformed_task_status_without_crashing) ... ok
+test_project_context_can_be_recovered_without_chat_history (test_agent_context.AgentContextRecoveryTests.test_project_context_can_be_recovered_without_chat_history) ... FAIL
+test_repeated_checkpoint_does_not_append_unchanged_snapshot (test_agent_context.AgentContextRecoveryTests.test_repeated_checkpoint_does_not_append_unchanged_snapshot) ... ok
+test_staging_checkpoint_control_files_does_not_create_snapshot_drift (test_agent_context.AgentContextRecoveryTests.test_staging_checkpoint_control_files_does_not_create_snapshot_drift) ... ok
+test_start_authorized_boolean_without_direct_record_is_rejected (test_agent_context.AgentContextRecoveryTests.test_start_authorized_boolean_without_direct_record_is_rejected) ... ok
+test_state_blocker_index_must_match_active_blocker_records (test_agent_context.AgentContextRecoveryTests.test_state_blocker_index_must_match_active_blocker_records) ... ok
+test_tracked_content_drift_is_detected_without_a_status_path_change (test_agent_context.AgentContextRecoveryTests.test_tracked_content_drift_is_detected_without_a_status_path_change) ... ok
+test_verified_command_evidence_must_match_retained_log (test_agent_context.AgentContextRecoveryTests.test_verified_command_evidence_must_match_retained_log) ... ok
+test_verified_command_evidence_requires_timestamp_revision_exit_and_log (test_agent_context.AgentContextRecoveryTests.test_verified_command_evidence_requires_timestamp_revision_exit_and_log) ... ok
+test_verified_command_evidence_with_provenance_passes (test_agent_context.AgentContextRecoveryTests.test_verified_command_evidence_with_provenance_passes) ... ok
+test_append_after_migration_is_lossless_and_unchanged_repeat_is_noop (test_checkpoint_history.CheckpointHistoryArchiveTests.test_append_after_migration_is_lossless_and_unchanged_repeat_is_noop) ... ok
+test_checkpoint_archive_failure_restores_all_canonical_and_archive_files (test_checkpoint_history.CheckpointHistoryArchiveTests.test_checkpoint_archive_failure_restores_all_canonical_and_archive_files) ... ok
+test_checkpoint_state_write_failure_rolls_back_archive_append (test_checkpoint_history.CheckpointHistoryArchiveTests.test_checkpoint_state_write_failure_rolls_back_archive_append) ... ok
+test_clean_clone_recovers_migrated_archive_without_local_workspace_state (test_checkpoint_history.CheckpointHistoryArchiveTests.test_clean_clone_recovers_migrated_archive_without_local_workspace_state) ... ok
+test_duplicate_append_does_not_insert_same_record_twice (test_checkpoint_history.CheckpointHistoryArchiveTests.test_duplicate_append_does_not_insert_same_record_twice) ... ok
+test_duplicate_legacy_ids_are_rejected_without_mutation (test_checkpoint_history.CheckpointHistoryArchiveTests.test_duplicate_legacy_ids_are_rejected_without_mutation) ... ok
+test_empty_and_single_inline_histories_preserve_current_checkpoint (test_checkpoint_history.CheckpointHistoryArchiveTests.test_empty_and_single_inline_histories_preserve_current_checkpoint) ... ok
+test_failure_writing_archive_leaves_legacy_state_unchanged (test_checkpoint_history.CheckpointHistoryArchiveTests.test_failure_writing_archive_leaves_legacy_state_unchanged) ... ok
+test_failure_writing_canonical_state_rolls_back_new_archive_files (test_checkpoint_history.CheckpointHistoryArchiveTests.test_failure_writing_canonical_state_rolls_back_new_archive_files) ... ok
+test_interrupted_migration_is_detected_and_can_resume_idempotently (test_checkpoint_history.CheckpointHistoryArchiveTests.test_interrupted_migration_is_detected_and_can_resume_idempotently) ... ok
+test_invalid_gzip_stream_is_reported_as_archive_corruption (test_checkpoint_history.CheckpointHistoryArchiveTests.test_invalid_gzip_stream_is_reported_as_archive_corruption) ... ok
+test_malformed_legacy_history_is_rejected_without_mutation (test_checkpoint_history.CheckpointHistoryArchiveTests.test_malformed_legacy_history_is_rejected_without_mutation) ... ok
+test_manifest_rejects_boolean_schema_versions_and_counts (test_checkpoint_history.CheckpointHistoryArchiveTests.test_manifest_rejects_boolean_schema_versions_and_counts) ... ok
+test_migration_is_idempotent_and_does_not_duplicate_history (test_checkpoint_history.CheckpointHistoryArchiveTests.test_migration_is_idempotent_and_does_not_duplicate_history) ... ok
+test_migration_preserves_every_record_and_original_state_byte_exactly (test_checkpoint_history.CheckpointHistoryArchiveTests.test_migration_preserves_every_record_and_original_state_byte_exactly) ... ok
+test_missing_or_corrupted_archive_is_rejected_but_source_state_can_be_restored (test_checkpoint_history.CheckpointHistoryArchiveTests.test_missing_or_corrupted_archive_is_rejected_but_source_state_can_be_restored) ... ok
+test_partial_archive_write_after_replace_is_detected_and_resumable (test_checkpoint_history.CheckpointHistoryArchiveTests.test_partial_archive_write_after_replace_is_detected_and_resumable) ... ok
+test_pending_manifest_append_rolls_forward_only_when_checkpoint_matches (test_checkpoint_history.CheckpointHistoryArchiveTests.test_pending_manifest_append_rolls_forward_only_when_checkpoint_matches) ... ok
+test_pending_orphan_segment_recovers_from_current_checkpoint (test_checkpoint_history.CheckpointHistoryArchiveTests.test_pending_orphan_segment_recovers_from_current_checkpoint) ... ok
+test_portable_state_checksum_matches_preflight_for_unicode (test_checkpoint_history.CheckpointHistoryArchiveTests.test_portable_state_checksum_matches_preflight_for_unicode) ... ok
+test_preview_does_not_mutate_loaded_state (test_checkpoint_history.CheckpointHistoryArchiveTests.test_preview_does_not_mutate_loaded_state) ... ok
+test_retry_finalizes_migration_after_interrupted_post_switch_checkpoint (test_checkpoint_history.CheckpointHistoryArchiveTests.test_retry_finalizes_migration_after_interrupted_post_switch_checkpoint) ... ok
+test_segment_boundary_splits_at_sixteen_records (test_checkpoint_history.CheckpointHistoryArchiveTests.test_segment_boundary_splits_at_sixteen_records) ... ok
+test_segment_byte_tampering_and_manifest_hash_tampering_are_detected (test_checkpoint_history.CheckpointHistoryArchiveTests.test_segment_byte_tampering_and_manifest_hash_tampering_are_detected) ... ok
+test_stale_handoff_after_migration_is_detected_and_checkpoint_repairs_it (test_checkpoint_history.CheckpointHistoryArchiveTests.test_stale_handoff_after_migration_is_detected_and_checkpoint_repairs_it) ... ok
+test_unchanged_checkpoint_rejects_corrupt_archive_before_noop (test_checkpoint_history.CheckpointHistoryArchiveTests.test_unchanged_checkpoint_rejects_corrupt_archive_before_noop) ... ok
+test_unreferenced_archive_backup_is_detected (test_checkpoint_history.CheckpointHistoryArchiveTests.test_unreferenced_archive_backup_is_detected) ... ok
+test_unreferenced_file_in_valid_archive_is_detected (test_checkpoint_history.CheckpointHistoryArchiveTests.test_unreferenced_file_in_valid_archive_is_detected) ... ok
+test_arbitrary_task_scope_resolves_dependencies_and_records_current_gate (test_export_review_bundle.ExportReviewBundleTests.test_arbitrary_task_scope_resolves_dependencies_and_records_current_gate) ... ok
+test_archive_name_collision_does_not_overwrite_existing_file (test_export_review_bundle.ExportReviewBundleTests.test_archive_name_collision_does_not_overwrite_existing_file) ... ok
+test_artifact_reference_is_omitted_by_default_and_included_only_with_opt_in (test_export_review_bundle.ExportReviewBundleTests.test_artifact_reference_is_omitted_by_default_and_included_only_with_opt_in) ... ok
+test_clean_working_tree_is_exported_from_worktree (test_export_review_bundle.ExportReviewBundleTests.test_clean_working_tree_is_exported_from_worktree) ... ok
+test_committed_mode_reads_only_requested_commit (test_export_review_bundle.ExportReviewBundleTests.test_committed_mode_reads_only_requested_commit) ... ok
+test_export_does_not_change_state_index_or_tracked_working_files (test_export_review_bundle.ExportReviewBundleTests.test_export_does_not_change_state_index_or_tracked_working_files) ... ok
+test_external_symlink_is_rejected_without_reading_target (test_export_review_bundle.ExportReviewBundleTests.test_external_symlink_is_rejected_without_reading_target) ... ok
+test_ignored_files_are_excluded (test_export_review_bundle.ExportReviewBundleTests.test_ignored_files_are_excluded) ... ok
+test_ignored_private_file_is_excluded_and_candidate_secret_stops_export (test_export_review_bundle.ExportReviewBundleTests.test_ignored_private_file_is_excluded_and_candidate_secret_stops_export) ... ok
+test_manifest_hashes_crc_and_required_coverage_are_consistent (test_export_review_bundle.ExportReviewBundleTests.test_manifest_hashes_crc_and_required_coverage_are_consistent) ... ok
+test_missing_required_context_fails_without_archive (test_export_review_bundle.ExportReviewBundleTests.test_missing_required_context_fails_without_archive) ... ok
+test_missing_task_evidence_is_reported_as_a_limitation (test_export_review_bundle.ExportReviewBundleTests.test_missing_task_evidence_is_reported_as_a_limitation) ... ok
+test_repeated_export_does_not_include_prior_archives (test_export_review_bundle.ExportReviewBundleTests.test_repeated_export_does_not_include_prior_archives) ... ok
+test_short_credential_assignment_is_reported_without_value (test_export_review_bundle.ExportReviewBundleTests.test_short_credential_assignment_is_reported_without_value) ... ok
+test_staged_uses_index_for_staged_content_and_head_for_unchanged (test_export_review_bundle.ExportReviewBundleTests.test_staged_uses_index_for_staged_content_and_head_for_unchanged) ... ok
+test_unrelated_untracked_user_file_is_not_included (test_export_review_bundle.ExportReviewBundleTests.test_unrelated_untracked_user_file_is_not_included) ... ok
+test_unsafe_git_path_is_rejected (test_export_review_bundle.ExportReviewBundleTests.test_unsafe_git_path_is_rejected) ... ok
+test_windows_drive_path_is_rejected (test_export_review_bundle.ExportReviewBundleTests.test_windows_drive_path_is_rejected) ... ok
+test_working_tree_uses_dirty_and_relevant_untracked_files (test_export_review_bundle.ExportReviewBundleTests.test_working_tree_uses_dirty_and_relevant_untracked_files) ... ok
+test_ale_bundles_videochess_rom_under_snake_case_name (test_m0_smoke.M0EnvironmentSmokeTests.test_ale_bundles_videochess_rom_under_snake_case_name) ... ok
+test_ale_registers_videochess_v5 (test_m0_smoke.M0EnvironmentSmokeTests.test_ale_registers_videochess_v5) ... ok
+test_python_chess_generates_a_legal_opening_move (test_m0_smoke.M0EnvironmentSmokeTests.test_python_chess_generates_a_legal_opening_move) ... ok
+test_pytorch_runs_a_cpu_tensor_operation (test_m0_smoke.M0EnvironmentSmokeTests.test_pytorch_runs_a_cpu_tensor_operation) ... ok
+test_videochess_environment_constructs_without_reset (test_m0_smoke.M0EnvironmentSmokeTests.test_videochess_environment_constructs_without_reset) ... A.L.E: Arcade Learning Environment (version 0.11.2+ecc1138)
+[Powered by Stella]
+ok
+test_m1_ale_integration (unittest.loader._FailedTest.test_m1_ale_integration) ... ERROR
+test_m1_control (unittest.loader._FailedTest.test_m1_control) ... ERROR
+test_m1_environment (unittest.loader._FailedTest.test_m1_environment) ... ERROR
+test_m1_episode (unittest.loader._FailedTest.test_m1_episode) ... ERROR
+test_m1_shadow (unittest.loader._FailedTest.test_m1_shadow) ... ERROR
+test_m1_terminal_cli (unittest.loader._FailedTest.test_m1_terminal_cli) ... ERROR
+test_m1_vision (unittest.loader._FailedTest.test_m1_vision) ... ERROR
+test_m2_baselines (unittest.loader._FailedTest.test_m2_baselines) ... ERROR
+test_m2_benchmark (unittest.loader._FailedTest.test_m2_benchmark) ... ERROR
+test_m2_simulator (unittest.loader._FailedTest.test_m2_simulator) ... ERROR
+test_m3_data (unittest.loader._FailedTest.test_m3_data) ... ERROR
+test_m4_checkpoint (unittest.loader._FailedTest.test_m4_checkpoint) ... ERROR
+test_m4_data (unittest.loader._FailedTest.test_m4_data) ... ERROR
+test_m4_model (unittest.loader._FailedTest.test_m4_model) ... ERROR
+test_m4_training (unittest.loader._FailedTest.test_m4_training) ... ERROR
+test_m5_artifact_manifest_paths (unittest.loader._FailedTest.test_m5_artifact_manifest_paths) ... ERROR
+test_incomplete_files_cannot_be_called_a_complete_campaign (test_m5_artifact_manifests.M5ArtifactManifestTests.test_incomplete_files_cannot_be_called_a_complete_campaign) ... ok
+test_manifest_verification_detects_mutated_content (test_m5_artifact_manifests.M5ArtifactManifestTests.test_manifest_verification_detects_mutated_content) ... ok
+test_partial_inventory_is_explicit_and_verifiable (test_m5_artifact_manifests.M5ArtifactManifestTests.test_partial_inventory_is_explicit_and_verifiable) ... ok
+test_m5_checkpoint (unittest.loader._FailedTest.test_m5_checkpoint) ... ERROR
+test_m5_contract_fixtures (unittest.loader._FailedTest.test_m5_contract_fixtures) ... ERROR
+test_m5_evaluation (unittest.loader._FailedTest.test_m5_evaluation) ... ERROR
+test_m5_initialization (unittest.loader._FailedTest.test_m5_initialization) ... ERROR
+test_m5_profile (unittest.loader._FailedTest.test_m5_profile) ... ERROR
+test_m5_recovered_source (unittest.loader._FailedTest.test_m5_recovered_source) ... ERROR
+test_m5_replay (unittest.loader._FailedTest.test_m5_replay) ... ERROR
+test_m5_seeding (unittest.loader._FailedTest.test_m5_seeding) ... ERROR
+test_m5_source_snapshot (unittest.loader._FailedTest.test_m5_source_snapshot) ... ERROR
+test_m5_targets (unittest.loader._FailedTest.test_m5_targets) ... ERROR
+test_m5_training (unittest.loader._FailedTest.test_m5_training) ... ERROR
+test_m5_transition (unittest.loader._FailedTest.test_m5_transition) ... ERROR
+test_m6_adapter (unittest.loader._FailedTest.test_m6_adapter) ... ERROR
+test_m6_campaign (unittest.loader._FailedTest.test_m6_campaign) ... ERROR
+test_m6_ledger (unittest.loader._FailedTest.test_m6_ledger) ... ERROR
+test_m6_private_policy_roster (unittest.loader._FailedTest.test_m6_private_policy_roster) ... ERROR
+test_m6_v2_raw_audit (unittest.loader._FailedTest.test_m6_v2_raw_audit) ... ERROR
+test_m7_analysis (unittest.loader._FailedTest.test_m7_analysis) ... ERROR
+test_m7_analysis_integration (unittest.loader._FailedTest.test_m7_analysis_integration) ... ERROR
+test_m7_artifact_manifest_cli (unittest.loader._FailedTest.test_m7_artifact_manifest_cli) ... ERROR
+test_m7_campaign (unittest.loader._FailedTest.test_m7_campaign) ... ERROR
+test_all_delivery_documents_exist_and_have_substantive_content (test_m7_delivery_docs.M7DeliveryDocumentationTests.test_all_delivery_documents_exist_and_have_substantive_content) ... ok
+test_all_m7_rl_baseline_paired_rows_are_present (test_m7_delivery_docs.M7DeliveryDocumentationTests.test_all_m7_rl_baseline_paired_rows_are_present) ... ok
+test_checkpoint_hashes_and_frozen_run_identity_are_traceable (test_m7_delivery_docs.M7DeliveryDocumentationTests.test_checkpoint_hashes_and_frozen_run_identity_are_traceable) ... ok
+test_delivery_docs_do_not_contain_machine_specific_private_paths (test_m7_delivery_docs.M7DeliveryDocumentationTests.test_delivery_docs_do_not_contain_machine_specific_private_paths) ... ok
+test_evidence_inventory_source_hashes_and_analysis_manifest_are_valid (test_m7_delivery_docs.M7DeliveryDocumentationTests.test_evidence_inventory_source_hashes_and_analysis_manifest_are_valid) ... ok
+test_governance_and_scientific_limits_are_explicit (test_m7_delivery_docs.M7DeliveryDocumentationTests.test_governance_and_scientific_limits_are_explicit) ... ok
+test_local_markdown_links_resolve_inside_repository (test_m7_delivery_docs.M7DeliveryDocumentationTests.test_local_markdown_links_resolve_inside_repository) ... ok
+test_m7_report_totals_match_machine_readable_raw_derived_analysis (test_m7_delivery_docs.M7DeliveryDocumentationTests.test_m7_report_totals_match_machine_readable_raw_derived_analysis) ... ok
+test_m7_policies (unittest.loader._FailedTest.test_m7_policies) ... ERROR
+test_m7_protocol (unittest.loader._FailedTest.test_m7_protocol) ... ERROR
+test_delivery_documents_and_governance_records_have_no_machine_paths (test_m7_release_disposition.M7ReleaseDispositionTests.test_delivery_documents_and_governance_records_have_no_machine_paths) ... ok
+test_g5_handover_preserves_accepted_scientific_boundaries (test_m7_release_disposition.M7ReleaseDispositionTests.test_g5_handover_preserves_accepted_scientific_boundaries) ... ok
+test_inventory_covers_restricted_artifact_classes_and_rights (test_m7_release_disposition.M7ReleaseDispositionTests.test_inventory_covers_restricted_artifact_classes_and_rights) ... ok
+test_owner_authorization_and_no_release_are_distinct_from_pm_approval (test_m7_release_disposition.M7ReleaseDispositionTests.test_owner_authorization_and_no_release_are_distinct_from_pm_approval) ... ok
+test_m7_report (unittest.loader._FailedTest.test_m7_report) ... ERROR
+test_candidate_identity_is_bound_to_parent_sample_and_uci (test_pre_m3_contracts.PreM3ContractTests.test_candidate_identity_is_bound_to_parent_sample_and_uci) ... ok
+test_canonical_identity_hash_reference_vectors (test_pre_m3_contracts.PreM3ContractTests.test_canonical_identity_hash_reference_vectors) ... ok
+test_castling_and_en_passant_semantics_are_in_board_signature (test_pre_m3_contracts.PreM3ContractTests.test_castling_and_en_passant_semantics_are_in_board_signature) ... ok
+test_clock_and_repetition_context_are_not_lost_in_state_identity (test_pre_m3_contracts.PreM3ContractTests.test_clock_and_repetition_context_are_not_lost_in_state_identity) ... ok
+test_promotion_uci_identity_preserves_all_underpromotions (test_pre_m3_contracts.PreM3ContractTests.test_promotion_uci_identity_preserves_all_underpromotions) ... ok
+test_source_config_teacher_split_and_release_hash_vectors (test_pre_m3_contracts.PreM3ContractTests.test_source_config_teacher_split_and_release_hash_vectors) ... ok
+test_split_vectors_keep_candidate_rows_together_and_detect_holdout_collapse (test_pre_m3_contracts.PreM3ContractTests.test_split_vectors_keep_candidate_rows_together_and_detect_holdout_collapse) ... ok
+test_transposition_and_header_duplicates_have_distinct_identity_layers (test_pre_m3_contracts.PreM3ContractTests.test_transposition_and_header_duplicates_have_distinct_identity_layers) ... ok
+test_pre_m4_contracts (unittest.loader._FailedTest.test_pre_m4_contracts) ... ERROR
+test_pre_m6_policy_compatibility (unittest.loader._FailedTest.test_pre_m6_policy_compatibility) ... ERROR
+test_all_new_local_markdown_links_resolve (test_pre_m7_contracts.PreM7ContractTests.test_all_new_local_markdown_links_resolve) ... ok
+test_canonical_state_and_backlog_are_json_yaml_and_dependency_valid (test_pre_m7_contracts.PreM7ContractTests.test_canonical_state_and_backlog_are_json_yaml_and_dependency_valid) ... ok
+test_g4_g5_criterion_mapping_matches_canonical_acceptance (test_pre_m7_contracts.PreM7ContractTests.test_g4_g5_criterion_mapping_matches_canonical_acceptance) ... ok
+test_m7_engineering_complete_g5_unapproved_and_no_release (test_pre_m7_contracts.PreM7ContractTests.test_m7_engineering_complete_g5_unapproved_and_no_release) ... ok
+test_private_assets_remain_local_and_sanitized_reports_are_portable (test_pre_m7_contracts.PreM7ContractTests.test_private_assets_remain_local_and_sanitized_reports_are_portable) ... ok
+test_protocol_rejects_pseudoreplication_unsupported_strength_and_elo_claims (test_pre_m7_contracts.PreM7ContractTests.test_protocol_rejects_pseudoreplication_unsupported_strength_and_elo_claims) ... ok
+test_read_only_input_audits_bind_frozen_identities_and_provenance (test_pre_m7_contracts.PreM7ContractTests.test_read_only_input_audits_bind_frozen_identities_and_provenance) ... ok
+test_tracks_protocols_terminal_states_and_historical_provenance_stay_distinct (test_pre_m7_contracts.PreM7ContractTests.test_tracks_protocols_terminal_states_and_historical_provenance_stay_distinct) ... ok
+
+======================================================================
+ERROR: test_m1_ale_integration (unittest.loader._FailedTest.test_m1_ale_integration)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m1_ale_integration
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m1_ale_integration.py", line 11, in <module>
+    from videochess_rl.demo import run_closed_loop
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m1_control (unittest.loader._FailedTest.test_m1_control)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m1_control
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m1_control.py", line 9, in <module>
+    from videochess_rl.controller import ControllerTiming, plan_cursor_route, plan_move
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m1_environment (unittest.loader._FailedTest.test_m1_environment)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m1_environment
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m1_environment.py", line 7, in <module>
+    from videochess_rl.environment import ALEConfig, VideoChessEnv
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m1_episode (unittest.loader._FailedTest.test_m1_episode)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m1_episode
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m1_episode.py", line 14, in <module>
+    from tests.test_m1_vision import BACKGROUND, BLUE, GOLD, paint, start_frame
+ModuleNotFoundError: No module named 'tests'
+
+
+======================================================================
+ERROR: test_m1_shadow (unittest.loader._FailedTest.test_m1_shadow)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m1_shadow
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m1_shadow.py", line 9, in <module>
+    from tests.test_m1_vision import after_c7c5, after_e2e3, start_frame
+ModuleNotFoundError: No module named 'tests'
+
+
+======================================================================
+ERROR: test_m1_terminal_cli (unittest.loader._FailedTest.test_m1_terminal_cli)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m1_terminal_cli
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m1_terminal_cli.py", line 7, in <module>
+    from scripts.run_m1_terminal_experiment import validate_output_paths
+ModuleNotFoundError: No module named 'scripts'
+
+
+======================================================================
+ERROR: test_m1_vision (unittest.loader._FailedTest.test_m1_vision)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m1_vision
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m1_vision.py", line 10, in <module>
+    from videochess_rl.vision import BoardEvidenceSet, BoardObservation, BoardWindow, VideoChessVision
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m2_baselines (unittest.loader._FailedTest.test_m2_baselines)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m2_baselines
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m2_baselines.py", line 10, in <module>
+    from videochess_rl.baselines import RandomLegalAgent, SimpleHeuristicAgent
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m2_benchmark (unittest.loader._FailedTest.test_m2_benchmark)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m2_benchmark
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m2_benchmark.py", line 13, in <module>
+    from videochess_rl.benchmark import _play_game, run_baseline_benchmark
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m2_simulator (unittest.loader._FailedTest.test_m2_simulator)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m2_simulator
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m2_simulator.py", line 11, in <module>
+    from videochess_rl.simulator import (
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m3_data (unittest.loader._FailedTest.test_m3_data)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m3_data
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m3_data.py", line 23, in <module>
+    import videochess_rl.data.teacher as teacher_module
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m4_checkpoint (unittest.loader._FailedTest.test_m4_checkpoint)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m4_checkpoint
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m4_checkpoint.py", line 15, in <module>
+    from videochess_rl.model.checkpoint import (
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m4_data (unittest.loader._FailedTest.test_m4_data)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m4_data
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m4_data.py", line 10, in <module>
+    from videochess_rl.data.contracts import (
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m4_model (unittest.loader._FailedTest.test_m4_model)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m4_model
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m4_model.py", line 8, in <module>
+    from videochess_rl.model.dataset import collate_examples, model_inputs
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m4_training (unittest.loader._FailedTest.test_m4_training)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m4_training
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m4_training.py", line 18, in <module>
+    from videochess_rl.model.features import encode_board
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m5_artifact_manifest_paths (unittest.loader._FailedTest.test_m5_artifact_manifest_paths)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m5_artifact_manifest_paths
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m5_artifact_manifest_paths.py", line 6, in <module>
+    from scripts.m5_artifact_manifests import display_artifact_path
+ModuleNotFoundError: No module named 'scripts'
+
+
+======================================================================
+ERROR: test_m5_checkpoint (unittest.loader._FailedTest.test_m5_checkpoint)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m5_checkpoint
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m5_checkpoint.py", line 8, in <module>
+    from test_m5_transition import make_transition
+  File "<repo>/tests/test_m5_transition.py", line 4, in <module>
+    from videochess_rl.baselines import RandomLegalAgent
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m5_contract_fixtures (unittest.loader._FailedTest.test_m5_contract_fixtures)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m5_contract_fixtures
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m5_contract_fixtures.py", line 10, in <module>
+    from videochess_rl.m5_seeding import EXPERIMENT_ID, paired_seed_schedule
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m5_evaluation (unittest.loader._FailedTest.test_m5_evaluation)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m5_evaluation
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m5_evaluation.py", line 6, in <module>
+    from videochess_rl.rl.evaluate import (planned_scenarios, evaluate_policy, QPolicy, summarize_games,
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m5_initialization (unittest.loader._FailedTest.test_m5_initialization)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m5_initialization
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m5_initialization.py", line 7, in <module>
+    from videochess_rl.model.checkpoint import load_checkpoint, verify_artifact_manifest
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m5_profile (unittest.loader._FailedTest.test_m5_profile)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m5_profile
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m5_profile.py", line 10, in <module>
+    from scripts.profile_m5_feasibility_v2 import (
+ModuleNotFoundError: No module named 'scripts'
+
+
+======================================================================
+ERROR: test_m5_recovered_source (unittest.loader._FailedTest.test_m5_recovered_source)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m5_recovered_source
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m5_recovered_source.py", line 17, in <module>
+    from test_m5_transition import make_transition
+  File "<repo>/tests/test_m5_transition.py", line 4, in <module>
+    from videochess_rl.baselines import RandomLegalAgent
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m5_replay (unittest.loader._FailedTest.test_m5_replay)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m5_replay
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m5_replay.py", line 3, in <module>
+    from test_m5_transition import make_transition
+  File "<repo>/tests/test_m5_transition.py", line 4, in <module>
+    from videochess_rl.baselines import RandomLegalAgent
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m5_seeding (unittest.loader._FailedTest.test_m5_seeding)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m5_seeding
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m5_seeding.py", line 12, in <module>
+    from videochess_rl.m5_seeding import (
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m5_source_snapshot (unittest.loader._FailedTest.test_m5_source_snapshot)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m5_source_snapshot
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m5_source_snapshot.py", line 11, in <module>
+    from videochess_rl import source_snapshot
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m5_targets (unittest.loader._FailedTest.test_m5_targets)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m5_targets
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m5_targets.py", line 4, in <module>
+    from videochess_rl.rl.targets import double_dqn_target
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m5_training (unittest.loader._FailedTest.test_m5_training)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m5_training
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m5_training.py", line 5, in <module>
+    from videochess_rl.baselines import RandomLegalAgent
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m5_transition (unittest.loader._FailedTest.test_m5_transition)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m5_transition
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m5_transition.py", line 4, in <module>
+    from videochess_rl.baselines import RandomLegalAgent
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m6_adapter (unittest.loader._FailedTest.test_m6_adapter)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m6_adapter
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m6_adapter.py", line 18, in <module>
+    from tests.test_m1_vision import BACKGROUND, BLUE, GOLD, start_frame
+ModuleNotFoundError: No module named 'tests'
+
+
+======================================================================
+ERROR: test_m6_campaign (unittest.loader._FailedTest.test_m6_campaign)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m6_campaign
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m6_campaign.py", line 13, in <module>
+    from videochess_rl.environment import ALEConfig, VideoChessEnv
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m6_ledger (unittest.loader._FailedTest.test_m6_ledger)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m6_ledger
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m6_ledger.py", line 10, in <module>
+    from videochess_rl.m6.ledger import (
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m6_private_policy_roster (unittest.loader._FailedTest.test_m6_private_policy_roster)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m6_private_policy_roster
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m6_private_policy_roster.py", line 11, in <module>
+    from tests.test_m6_adapter import _context
+ModuleNotFoundError: No module named 'tests'
+
+
+======================================================================
+ERROR: test_m6_v2_raw_audit (unittest.loader._FailedTest.test_m6_v2_raw_audit)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m6_v2_raw_audit
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m6_v2_raw_audit.py", line 11, in <module>
+    from scripts.audit_m6_v2_artifacts import (
+ModuleNotFoundError: No module named 'scripts'
+
+
+======================================================================
+ERROR: test_m7_analysis (unittest.loader._FailedTest.test_m7_analysis)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m7_analysis
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m7_analysis.py", line 5, in <module>
+    from videochess_rl.m7.analysis import (
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m7_analysis_integration (unittest.loader._FailedTest.test_m7_analysis_integration)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m7_analysis_integration
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m7_analysis_integration.py", line 8, in <module>
+    from videochess_rl.m6.campaign import _slug
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m7_artifact_manifest_cli (unittest.loader._FailedTest.test_m7_artifact_manifest_cli)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m7_artifact_manifest_cli
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m7_artifact_manifest_cli.py", line 11, in <module>
+    from scripts.verify_m7_artifact_manifest import main
+ModuleNotFoundError: No module named 'scripts'
+
+
+======================================================================
+ERROR: test_m7_campaign (unittest.loader._FailedTest.test_m7_campaign)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m7_campaign
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m7_campaign.py", line 9, in <module>
+    from videochess_rl.m6.ledger import HashChainLedger, write_json_atomic
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m7_policies (unittest.loader._FailedTest.test_m7_policies)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m7_policies
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m7_policies.py", line 9, in <module>
+    from videochess_rl.m7.policies import FrozenPolicyError, _manifest_entries
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m7_protocol (unittest.loader._FailedTest.test_m7_protocol)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m7_protocol
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m7_protocol.py", line 8, in <module>
+    from videochess_rl.m7.protocol import (
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_m7_report (unittest.loader._FailedTest.test_m7_report)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_m7_report
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_m7_report.py", line 5, in <module>
+    from scripts.analyze_m7_campaign import _track_table, m7_seed_grid_svg, outcome_svg
+ModuleNotFoundError: No module named 'scripts'
+
+
+======================================================================
+ERROR: test_pre_m4_contracts (unittest.loader._FailedTest.test_pre_m4_contracts)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_pre_m4_contracts
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_pre_m4_contracts.py", line 9, in <module>
+    from videochess_rl.action_contract import canonical_model_fen, legal_action_candidates
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+ERROR: test_pre_m6_policy_compatibility (unittest.loader._FailedTest.test_pre_m6_policy_compatibility)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_pre_m6_policy_compatibility
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "<repo>/tests/test_pre_m6_policy_compatibility.py", line 16, in <module>
+    from videochess_rl.baselines import SimpleHeuristicAgent
+ModuleNotFoundError: No module named 'videochess_rl'
+
+
+======================================================================
+FAIL: test_project_context_can_be_recovered_without_chat_history (test_agent_context.AgentContextRecoveryTests.test_project_context_can_be_recovered_without_chat_history)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/tests/test_agent_context.py", line 1764, in test_project_context_can_be_recovered_without_chat_history
+    self.assertTrue(summary["git_snapshot_matches"])
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 181 tests in 67.463s
+
+FAILED (failures=1, errors=42)
+Excluded exactly one unavailable test: test_m0_smoke.M0EnvironmentSmokeTests.test_stockfish_answers_uci_readiness_without_searching
+Selected tests: 181
+Exit code: 1
+finished_at_utc=2026-11-01T05:23:11Z

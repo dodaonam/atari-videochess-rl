@@ -1,0 +1,7 @@
+Command: PATH=/usr/bin:/bin PYTHONPATH=/tmp/atari-m4-work /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python - [inline verification script recorded in the execution log]
+Completed at UTC: 2026-10-27T16:30:43Z
+Result: PASS: 40 games completed; Stockfish unavailable; chess.engine not loaded.
+Exit code: 0
+
+Captured script output follows:
+{"elapsed_seconds": 12.219823896997696, "engine_module_loaded": false, "games": 40, "record": "/home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-simulator-engine-free-20261027.json", "record_sha256": "861b30ecb4819a238764f9a0374920d14c5ceb98824089d2cf3c5fa29f9f1ab9", "result": "PASS", "stockfish_available": false}

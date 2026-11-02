@@ -1,0 +1,12 @@
+{
+  "check": "static",
+  "command": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -c import json; import pathlib; [json.load(open(p)) for p in [\"configs/rl/m5-double-dqn-v1.json\",\"tests/fixtures/m5_checkpoint_boundaries.json\",\"tests/fixtures/m5_seed_derivation_v1.json\",\".agents/evidence/PRE-M5-remediation-20261028.json\"]]; print(\"JSON parse: PASS\")",
+  "end_utc": "2026-10-28T09:11:42Z",
+  "environment": "Clean clone of committed candidate; Python 3.12.3 existing pinned CPU venv; no package changes.",
+  "exit_code": 0,
+  "log_path": ".agents/evidence/logs/PRE-M5-F05-clean-ef1ffae-static.log",
+  "log_sha256": "51eb9f598e6120498836922146642ccd49615070226d6602c826b5c62eebb651",
+  "result": "PASS",
+  "revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3",
+  "start_utc": "2026-10-28T09:11:42Z"
+}

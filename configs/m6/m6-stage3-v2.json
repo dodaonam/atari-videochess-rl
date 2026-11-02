@@ -1,0 +1,103 @@
+{
+  "schema": "videochess-m6-stage3-config/2.0",
+  "protocol_id": "M6-Stage3-v2-extended-horizon-frozen-m5",
+  "title": "M6 Stage 3 v2 — Extended-Horizon Frozen M5 Evaluation",
+  "profile_id": "ale-v5-extended-horizon",
+  "environment": "ALE/VideoChess-v5",
+  "rom_sha256": "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7",
+  "m5_root_artifact_manifest_sha256": "a201a254671ad59ae1fecb402abf994d5bf523097f1c3010b5c7fa237ae6dd4c",
+  "agent_color": "white",
+  "mode": 4,
+  "difficulty": 0,
+  "observation_type": "rgb",
+  "frameskip": 4,
+  "repeat_action_probability": 0.25,
+  "ale_horizon": {
+    "registered_default_max_num_frames_per_episode": 108000,
+    "max_num_frames_per_episode": 500000,
+    "runner_maximum_post_reset_action_frames": 432000,
+    "frame_counter_reset_offset_expected": 4
+  },
+  "controller_timing": {
+    "direction_hold_frames": 33,
+    "source_fire_press_frames": 1,
+    "target_fire_press_frames": 16,
+    "release_frames": 1,
+    "observation_window_frames": 66,
+    "target_fire_settle_windows": 3
+  },
+  "episode_limits": {
+    "maximum_player_moves": 200,
+    "maximum_opponent_wait_frames": 40000,
+    "maximum_ale_frames": 432000,
+    "maximum_wall_seconds": 1800
+  },
+  "campaign_limits": {
+    "maximum_game_attempts": 20,
+    "maximum_gameplay_wall_seconds": 43200,
+    "gameplay_wall_budget_scope": "Stage 3 v2 only; excludes historical v1 and completed M6 diagnostics",
+    "maximum_artifact_bytes": 8589934592,
+    "artifact_metadata_reserve_bytes": 134217728,
+    "minimum_free_bytes_before_campaign": 12884901888,
+    "maximum_process_rss_bytes": 6442450944,
+    "serialized_ale_processes": 1,
+    "maximum_pre_action_process_start_retries": 1,
+    "retry_scope": "one global retry only for process-start failure before any ALE action; no reset attempt replacement"
+  },
+  "paired_m5_seeds": [
+    20261130,
+    20261131,
+    20261132,
+    20261133,
+    20261134,
+    20261135,
+    20261136,
+    20261137,
+    20261138,
+    20261139
+  ],
+  "schedule_order": {
+    "paired_policy_order": "warm first for even ALE seeds; scratch first for odd ALE seeds",
+    "same_seed_use": "extended-horizon re-evaluation of the v1 paired seeds; not independent held-out evidence",
+    "intermediate_outcome_selection": "none"
+  },
+  "policy_roster": [
+    {
+      "policy_id": "m5-warm-seed-20261104-post-rl",
+      "arm": "warm",
+      "training_seed": 20261104,
+      "snapshot_stage": "post_rl",
+      "valid_decisions": 50000,
+      "checkpoint_sha256": "0b2405017a8e1d539851f0cd278883d3fd23936fb5c2f7962c813590a6fd1767",
+      "sidecar_sha256": "80d8689e4b349576c5708bb4dce3451e5a8c64d81470cd6f4273a4746844b682",
+      "attempts": 10
+    },
+    {
+      "policy_id": "m5-scratch-seed-20261104-post-rl",
+      "arm": "scratch",
+      "training_seed": 20261104,
+      "snapshot_stage": "post_rl",
+      "valid_decisions": 50000,
+      "checkpoint_sha256": "3749b0c0b6ae44d3ad5d6bf0863b60937a59fbe881e0bdf4932bdce6033ca400",
+      "sidecar_sha256": "1c15e5bc4ba2437df113671dc316accbdfe6d8b59069ed29ed187daebf4fff1e",
+      "attempts": 10
+    }
+  ],
+  "outcome_semantics": {
+    "ale_reward_perspective": "white",
+    "positive_finite_terminal_reward": "white_win",
+    "negative_finite_terminal_reward": "white_loss",
+    "zero_terminal_reward": "terminal_unknown",
+    "unsupported_or_nonfinite_reward": "terminal_unknown",
+    "incomplete_or_runner_truncated_is_draw": false,
+    "shadow_board_alone_can_establish_result": false
+  },
+  "scientific_interpretation": {
+    "relationship_to_v1": "separately versioned extended-horizon follow-on; never pool v1 and v2 as one unchanged protocol",
+    "seed_interpretation": "same paired ALE seeds are re-evaluated under a changed horizon and are not independent held-out evidence",
+    "primary_endpoint": "RGB-verified initiated player moves divided by all initiated player moves",
+    "interval_qualification": "Wilson interval is descriptive; moves within a game are correlated, so the interval alone is not an independent-reliability guarantee",
+    "strength_comparison": "exploratory only; no Elo or superiority claim",
+    "incomplete_game_accounting": "incomplete, truncated, and terminal-unknown attempts are not draws"
+  }
+}

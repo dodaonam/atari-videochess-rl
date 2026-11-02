@@ -1,0 +1,868 @@
+{
+  "evaluation_schedule_feasibility": {
+    "aggregate_average_seconds_per_game": 18,
+    "aggregate_cap_seconds": 10800,
+    "combined_inference_plus_simulator_step_p95_seconds": 0.020047631987836212,
+    "conservative_400_decision_p95_projection_seconds": 4811.431677080691,
+    "games_per_snapshot": 40,
+    "observed_one_snapshot_40_game_seconds": 16.02984519599704,
+    "p95_projection_is_within_aggregate_cap": true,
+    "per_snapshot_cap_seconds": 1200,
+    "per_snapshot_conservative_projection_seconds": 320.7621118053794,
+    "per_snapshot_p95_projection_within_20_minutes": true,
+    "planned_games": 600,
+    "policy_snapshots": 15,
+    "projection_caveat": "M4 behavior inference is a same-architecture cost proxy; policy trajectory/game length varies, p95 extrapolation is not a hard guarantee, and all future 15 schedules share one cumulative three-hour cap.",
+    "simple_projection_15_snapshots_seconds": 240.4476779399556,
+    "simple_projection_is_within_aggregate_cap": true,
+    "sum_of_snapshot_caps_seconds": 18000
+  },
+  "limitations": [
+    "No M5 learner, replay training, or DDQN policy was implemented or trained.",
+    "The 801-ply tensor stress repeats valid categorical token values but is not a semantically valid chess history.",
+    "Replay bytes measure compact synthetic JSON records and Python bytes/list overhead, not a future replay implementation's heap or allocator fragmentation.",
+    "The 801-ply replay shape is an upper-bound tensor/history stress with sampled candidate sets; it is not a complete legal-state replay dataset.",
+    "The variable-history shape stress spreads 32 synthetic history lengths uniformly from zero to 801 plies; it is a workload bracket, not an observed M5 replay-length distribution or legal chess history.",
+    "The 45-minute run projection is bracketed using a real M3 batch update, a synthetic variable-history update, and the all-801-ply bound; the true M5 replay workload must be measured before relying on a projection.",
+    "The 40-game workload uses the frozen M4 behavior scorer only for timing; outcomes are deliberately not summarized as a new performance result.",
+    "The 400-decision p95 schedule estimate is conservative arithmetic from a finite sample, not an execution-time guarantee.",
+    "Training convergence, policy quality, paired trajectory equivalence, and ALE performance were not measured."
+  ],
+  "logical_cpu_count": 8,
+  "m3_release": {
+    "counts": {
+      "test": 2057,
+      "train": 15196,
+      "validation": 2015
+    },
+    "files_unchanged_after_profile": true,
+    "game_counts": {
+      "test": 103,
+      "train": 795,
+      "validation": 102
+    },
+    "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+    "nine_file_inventory_sha256": "1d7841b80c16ff01516f5c28dcd4d141026441286ffac451c0b01878831a3d8b",
+    "path": "/home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+    "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+    "replay_seconds": 24.596041233991855,
+    "sampled_id_sha256": "eacde3ba951e0eb7655b891b98234a0c918f690bd596769abde14ff23b6a3c01",
+    "sampled_train_ids": [
+      "003d55bedc705d9f59d9803ad8a268742ee2cf7f58aae517db1b4ccca24d682f",
+      "00df8b8e8e72decf70b97dc75980fd964dad6d625e2559c309f3cb7bc1e8eff4",
+      "0309b05037a0b7585092430240533ff6fefd1c5234ed6b0b01ca6a3fba898d38",
+      "054bd057350c26c7d15478f54cdc4c41d14b5db0218c341e23d42165bb09e600",
+      "0865de0ecb0c6f458753b3480e27f62a85f1d60332141fce00ff74192b00f459",
+      "0ced0ebff74c5735b3120286d8aeb7ab7817a03797a3663c9ad70a7411f41aad",
+      "12bb883b71ad404c0b072aac2d22c3e0cb9fb7cb8400da38614eac23ac510186",
+      "1535e173c273e7cd078a042ee8205d7a5ca5672d7577dde38cbe0827a56af6dd",
+      "160b67eea61e9aa04cedb5efae99954105220d23e83bce5179a55e5ad658eda3",
+      "24e4e8ebe07b93c4e87f4a1705b43a23fa5b2d1ae1daac4deabfcaad437bbd06",
+      "290fdf844e7882ae1339d6377fd348abc7ad755c27f91e19e71683b9c8efb803",
+      "36a0fee986318e8caf3539e15328d7ddfcf09c0023642ae048bd57f0ef60e5da",
+      "42867a9a52e986f7b18829d9eb836917a47132af4af2890280c774b6c2dbb633",
+      "4dfe9cf4ad596f8e244c4aad7881205914e73e37df17ed8f3a4c42651fd04f10",
+      "514b95370def36736233623abe7d419304e5353e8755192862d4f39e6ecc8208",
+      "52ec67e0d564d4a027ed5532fc08def59625a95a5345b7af8dc934007d01ccc8",
+      "58382efc2e97ff74d32fea4a756d0d1f660e999dc8e50eb4280bc3374788c610",
+      "775ab312c2b52933b1ce1c5a2ae0b2f6f9bea15e3f59e3f623dcf80ecac83a8e",
+      "8616cca29ef44a97254bb535241977078b02c570236ed6401c187c121a39a008",
+      "8c60260a1a340b0d2457719d78c36c791e5ee649d4524a5df120655d605e7dca",
+      "8dc03e740f726bff8f723bde125e6ae9a7c2dbf45f9b4cb59568a4ff95c3f900",
+      "90a1ed6f9dc351fa9ca2aa1ca6201033899cecc2e3f5589ad8e3e1898435da68",
+      "9115e8e0b26411d857b2ea0dfffdbacc6262c4fdb6bd2639e5131fd959b5d507",
+      "92290df54eb496198f76f98602d9f125186abe325c5e8adb7222873ffd2571b5",
+      "ac39e1320d2173c102999186b4ea13c2234123515f809241794875ac48834ded",
+      "c1812bc0beaf182be9b6e1072d5e403b8cc7ac0cccdc11a250da0b5413201a23",
+      "c1a96573c7d649cc1116c623512b1105f8220ae439b2a43d3a661d89f2500542",
+      "c950aaa5fd07ca7bd513280357bd73f4fb650ab15c333020312576eb643b195c",
+      "cf53f768b90673c4773346f0cc60cb9389137b179f196873f34858efae8a995f",
+      "d006b75b00d1211c903cf1565d7abede0aeade3edf50385a640b25e53baf93c7",
+      "d680e3548bf997b04ac20eb97fcd5e4c2653958f579101b020fabf638ab77726",
+      "e6da78c8d5330ba670be2d0c6ed42323b251ff1b5bf34253085aa9fb584af68d"
+    ],
+    "split_assignment_sha256": "84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e",
+    "total_load_seconds": 141.36247455100238,
+    "train_history_plies": {
+      "max": 278,
+      "p50": 42,
+      "p95": 112
+    },
+    "train_legal_candidate_count": {
+      "max": 64,
+      "p50": 32,
+      "p95": 46
+    },
+    "verification_seconds": 116.46358503001102
+  },
+  "m4_checkpoint": {
+    "behavior_head_excluded_from_q": true,
+    "bundle_files_verified": 19,
+    "bundle_manifest_inventory_sha256": "162c9ef2ad7fdc4fa24d417cc566954ab10a3534c4462c5a9c33cfd066bc6e79",
+    "bundle_metadata": {
+      "checkpoint_created_at_utc": "2026-10-27T16:20:19.752078Z",
+      "checkpoint_role": "pretrained_behavior_only",
+      "command": [
+        "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python",
+        "-m",
+        "videochess_rl.model.cli",
+        "run",
+        "--release-dir",
+        "/home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+        "--artifact-root",
+        "/home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4",
+        "--run-id",
+        "m4-behavior-20261027-r4"
+      ],
+      "dataset_release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+      "early_stopping_state_at_checkpoint": {
+        "best_epoch": 11,
+        "best_validation_nll": 2.4127401237590953,
+        "maximum_epochs": 20,
+        "no_improvement_epochs": 0,
+        "patience": 4
+      },
+      "input_schema": "videochess-model-input/1.0",
+      "label_semantics": "played_move_uci from recorded PGN history; behavior cloning only",
+      "model_config": {
+        "board_channels": 13,
+        "board_state_dim": 128,
+        "candidate_dim": 64,
+        "candidate_local_dim": 64,
+        "candidate_symbolic_dim": 32,
+        "conv_widths": [
+          32,
+          64
+        ],
+        "history_embedding_dims": [
+          16,
+          16,
+          8,
+          4
+        ],
+        "history_hidden_dim": 64,
+        "history_project_dim": 64,
+        "input_schema": "videochess-model-input/1.0",
+        "metadata_dim": 16,
+        "model_schema": "videochess-behavior-scorer/1.0",
+        "output_dim": 1,
+        "promotion_embedding_dim": 8,
+        "scorer_hidden_dim": 128,
+        "square_embedding_dim": 16
+      },
+      "model_schema": "videochess-behavior-scorer/1.0",
+      "parameter_count": 121897,
+      "parameter_output_semantics": "uncalibrated behavior preference logit; not a Q-value or reward",
+      "release_manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+      "run_id": "m4-behavior-20261027-r4",
+      "runtime_environment": {
+        "device": "cpu",
+        "logical_cpu_count": 8,
+        "machine": "x86_64",
+        "numpy": "2.5.4",
+        "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+        "processor": "x86_64",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "python_chess": "1.11.2",
+        "python_executable": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python",
+        "stockfish_executable_on_path": "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/stockfish",
+        "torch": "2.14.1+cpu",
+        "torch_interop_threads": 1,
+        "torch_intraop_threads": 1
+      },
+      "seed": 20261024,
+      "selected_epoch_for_seed": 11,
+      "selection_metric": "validation_nll_only",
+      "source_revision": "7b3c9074a2d932fec6d7732ee08e99b9de10a135",
+      "source_worktree_dirty": false,
+      "split_assignment_sha256": "84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e",
+      "split_counts": {
+        "test": 2057,
+        "train": 15196,
+        "validation": 2015
+      },
+      "stockfish_used_for_training_or_inference": false,
+      "teacher_scores_or_targets_used": false,
+      "training_config": {
+        "batch_size": 64,
+        "device": "cpu",
+        "early_stopping_patience": 4,
+        "gradient_clip_norm": 1.0,
+        "learning_rate": 0.0003,
+        "max_aggregate_seconds": 10800,
+        "max_seconds_per_seed": 2299,
+        "maximum_epochs": 20,
+        "optimizer": "AdamW",
+        "seeds": [
+          20261022,
+          20261023,
+          20261024
+        ],
+        "weight_decay": 0.0001
+      },
+      "validation_record": {
+        "candidate_evaluations": 58715,
+        "candidate_evaluations_per_second": 58337.61142476373,
+        "duration_seconds": 1.0064690440012782,
+        "examples": 2015,
+        "examples_per_second": 2002.048659131379,
+        "mrr": 0.46444858254768345,
+        "nll": 2.4127401237590953,
+        "split": "validation",
+        "top1_accuracy": 0.29578163771712157,
+        "top3_accuracy": 0.5449131513647643,
+        "top5_accuracy": 0.6615384615384615,
+        "uniform_legal_baseline": {
+          "mrr": 0.1799059388078195,
+          "nll": 3.196280559617872,
+          "top1_accuracy": 0.06571190115594318,
+          "top3_accuracy": 0.17083297393929345,
+          "top5_accuracy": 0.2525049152089959
+        }
+      }
+    },
+    "bundle_unchanged_after_profile": true,
+    "file_size_bytes": 1520046,
+    "online_plus_target_state_tensor_bytes": 975176,
+    "online_state_tensor_bytes": 487588,
+    "path": "/home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4/pretrained-behavior-only.pt",
+    "sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+    "target_copied_after_initialization": true,
+    "trainable_parameter_count": 121897
+  },
+  "m4_policy_workload_only": {
+    "agent_decisions_per_second_including_policy_inference": 121.66085688763755,
+    "game_decisions": {
+      "max": 210,
+      "p50": 38.0,
+      "p95": 144,
+      "total": 1944
+    },
+    "games": [
+      {
+        "agent_color": "white",
+        "decisions": 26,
+        "elapsed_seconds": 0.11810462900029961,
+        "opponent": "random_legal",
+        "seed": 20261130,
+        "stop_kind": "terminal",
+        "stop_reason": "checkmate"
+      },
+      {
+        "agent_color": "black",
+        "decisions": 50,
+        "elapsed_seconds": 0.28207714499149006,
+        "opponent": "random_legal",
+        "seed": 20261130,
+        "stop_kind": "terminal",
+        "stop_reason": "stalemate"
+      },
+      {
+        "agent_color": "white",
+        "decisions": 30,
+        "elapsed_seconds": 0.15428509798948653,
+        "opponent": "simple_heuristic",
+        "seed": 20261130,
+        "stop_kind": "terminal",
+        "stop_reason": "checkmate"
+      },
+      {
+        "agent_color": "black",
+        "decisions": 67,
+        "elapsed_seconds": 0.4748135440022452,
+        "opponent": "simple_heuristic",
+        "seed": 20261130,
+        "stop_kind": "terminal",
+        "stop_reason": "fivefold_repetition"
+      },
+      {
+        "agent_color": "white",
+        "decisions": 31,
+        "elapsed_seconds": 0.14376581100805197,
+        "opponent": "random_legal",
+        "seed": 20261131,
+        "stop_kind": "terminal",
+        "stop_reason": "checkmate"
+      },
+      {
+        "agent_color": "black",
+        "decisions": 50,
+        "elapsed_seconds": 0.2863062910037115,
+        "opponent": "random_legal",
+        "seed": 20261131,
+        "stop_kind": "terminal",
+        "stop_reason": "fivefold_repetition"
+      },
+      {
+        "agent_color": "white",
+        "decisions": 31,
+        "elapsed_seconds": 0.16057230500155129,
+        "opponent": "simple_heuristic",
+        "seed": 20261131,
+        "stop_kind": "terminal",
+        "stop_reason": "checkmate"
+      },
+      {
+        "agent_color": "black",
+        "decisions": 69,
+        "elapsed_seconds": 0.49421508799423464,
+        "opponent": "simple_heuristic",
+        "seed": 20261131,
+        "stop_kind": "terminal",
+        "stop_reason": "fivefold_repetition"
+      },
+      {
+        "agent_color": "white",
+        "decisions": 34,
+        "elapsed_seconds": 0.15417787600017618,
+        "opponent": "random_legal",
+        "seed": 20261132,
+        "stop_kind": "terminal",
+        "stop_reason": "checkmate"
+      },
+      {
+        "agent_color": "black",
+        "decisions": 18,
+        "elapsed_seconds": 0.06813977399724536,
+        "opponent": "random_legal",
+        "seed": 20261132,
+        "stop_kind": "terminal",
+        "stop_reason": "checkmate"
+      },
+      {
+        "agent_color": "white",
+        "decisions": 85,
+        "elapsed_seconds": 0.640694670000812,
+        "opponent": "simple_heuristic",
+        "seed": 20261132,
+        "stop_kind": "terminal",
+        "stop_reason": "checkmate"
+      },
+      {
+        "agent_color": "black",
+        "decisions": 35,
+        "elapsed_seconds": 0.1957064499874832,
+        "opponent": "simple_heuristic",
+        "seed": 20261132,
+        "stop_kind": "terminal",
+        "stop_reason": "checkmate"
+      },
+      {
+        "agent_color": "white",
+        "decisions": 20,
+        "elapsed_seconds": 0.07414783901185729,
+        "opponent": "random_legal",
+        "seed": 20261133,
+        "stop_kind": "terminal",
+        "stop_reason": "checkmate"
+      },
+      {
+        "agent_color": "black",
+        "decisions": 24,
+        "elapsed_seconds": 0.09586166900407989,
+        "opponent": "random_legal",
+        "seed": 20261133,
+        "stop_kind": "terminal",
+        "stop_reason": "checkmate"
+      },
+      {
+        "agent_color": "white",
+        "decisions": 36,
+        "elapsed_seconds": 0.1922744559997227,
+        "opponent": "simple_heuristic",
+        "seed": 20261133,
+        "stop_kind": "terminal",
+        "stop_reason": "checkmate"
+      },
+      {
+        "agent_color": "black",
+        "decisions": 210,
+        "elapsed_seconds": 3.7647622180084,
+        "opponent": "simple_heuristic",
+        "seed": 20261133,
+        "stop_kind": "terminal",
+        "stop_reason": "fivefold_repetition"
+      },
+      {
+        "agent_color": "white",
+        "decisions": 30,
+        "elapsed_seconds": 0.23457182101265062,
+        "opponent": "random_legal",
+        "seed": 20261134,
+        "stop_kind": "terminal",
+        "stop_reason": "checkmate"
+      },
+      {
+        "agent_color": "black",
+        "decisions": 44,
+        "elapsed_seconds": 0.46459729100752156,
+        "opponent": "random_legal",
+        "seed": 20261134,
+        "stop_kind": "terminal",
+        "stop_reason": "checkmate"
+      },
+      {
+        "agent_color": "white",
+        "decisions": 37,
+        "elapsed_seconds": 0.28714746299374383,
+        "opponent": "simple_heuristic",
+        "seed": 20261134,
+        "stop_kind": "terminal",
+        "stop_reason": "checkmate"
+      },
+      {
+        "agent_color": "black",
+        "decisions": 52,
+        "elapsed_seconds": 0.37145261699333787,
+        "opponent": "simple_heuristic",
+        "seed": 20261134,
+        "stop_kind": "terminal",
+        "stop_reason": "insufficient_material"
+      },
+      {
+        "agent_color": "white",
+        "decisions": 48,
+        "elapsed_seconds": 0.2851530640036799,
+        "opponent": "random_legal",
+        "seed": 20261135,
+        "stop_kind": "terminal",
+        "stop_reason": "stalemate"
+      },
+      {
+        "agent_color": "black",
+        "decisions": 12,
+        "elapsed_seconds": 0.04646309699455742,
+        "opponent": "random_legal",
+        "seed": 20261135,
+        "stop_kind": "terminal",
+        "stop_reason": "checkmate"
+      },
+      {
+        "agent_color": "white",
+        "decisions": 144,
+        "elapsed_seconds": 1.8391727039997932,
+        "opponent": "simple_heuristic",
+        "seed": 20261135,
+        "stop_kind": "terminal",
+        "stop_reason": "fivefold_repetition"
+      },
+      {
+        "agent_color": "black",
+        "decisions": 51,
+        "elapsed_seconds": 0.3113200119987596,
+        "opponent": "simple_heuristic",
+        "seed": 20261135,
+        "stop_kind": "terminal",
+        "stop_reason": "fivefold_repetition"
+      },
+      {
+        "agent_color": "white",
+        "decisions": 12,
+        "elapsed_seconds": 0.042382626998005435,
+        "opponent": "random_legal",
+        "seed": 20261136,
+        "stop_kind": "terminal",
+        "stop_reason": "checkmate"
+      },
+      {
+        "agent_color": "black",
+        "decisions": 15,
+        "elapsed_seconds": 0.05416858599346597,
+        "opponent": "random_legal",
+        "seed": 20261136,
+        "stop_kind": "terminal",
+        "stop_reason": "checkmate"
+      },
+      {
+        "agent_color": "white",
+        "decisions": 52,
+        "elapsed_seconds": 0.312389037993853,
+        "opponent": "simple_heuristic",
+        "seed": 20261136,
+        "stop_kind": "terminal",
+        "stop_reason": "fivefold_repetition"
+      },
+      {
+        "agent_color": "black",
+        "decisions": 149,
+        "elapsed_seconds": 1.6670433590043103,
+        "opponent": "simple_heuristic",
+        "seed": 20261136,
+        "stop_kind": "terminal",
+        "stop_reason": "fivefold_repetition"
+      },
+      {
+        "agent_color": "white",
+        "decisions": 39,
+        "elapsed_seconds": 0.19056946600903757,
+        "opponent": "random_legal",
+        "seed": 20261137,
+        "stop_kind": "terminal",
+        "stop_reason": "fivefold_repetition"
+      },
+      {
+        "agent_color": "black",
+        "decisions": 17,
+        "elapsed_seconds": 0.06482165100169368,
+        "opponent": "random_legal",
+        "seed": 20261137,
+        "stop_kind": "terminal",
+        "stop_reason": "checkmate"
+      },
+      {
+        "agent_color": "white",
+        "decisions": 38,
+        "elapsed_seconds": 0.2147544960025698,
+        "opponent": "simple_heuristic",
+        "seed": 20261137,
+        "stop_kind": "terminal",
+        "stop_reason": "fivefold_repetition"
+      },
+      {
+        "agent_color": "black",
+        "decisions": 87,
+        "elapsed_seconds": 0.720824828997138,
+        "opponent": "simple_heuristic",
+        "seed": 20261137,
+        "stop_kind": "terminal",
+        "stop_reason": "fivefold_repetition"
+      },
+      {
+        "agent_color": "white",
+        "decisions": 31,
+        "elapsed_seconds": 0.12874757799727377,
+        "opponent": "random_legal",
+        "seed": 20261138,
+        "stop_kind": "terminal",
+        "stop_reason": "checkmate"
+      },
+      {
+        "agent_color": "black",
+        "decisions": 38,
+        "elapsed_seconds": 0.1786728699953528,
+        "opponent": "random_legal",
+        "seed": 20261138,
+        "stop_kind": "terminal",
+        "stop_reason": "checkmate"
+      },
+      {
+        "agent_color": "white",
+        "decisions": 47,
+        "elapsed_seconds": 0.26147849299013615,
+        "opponent": "simple_heuristic",
+        "seed": 20261138,
+        "stop_kind": "terminal",
+        "stop_reason": "fivefold_repetition"
+      },
+      {
+        "agent_color": "black",
+        "decisions": 40,
+        "elapsed_seconds": 0.2144929130008677,
+        "opponent": "simple_heuristic",
+        "seed": 20261138,
+        "stop_kind": "terminal",
+        "stop_reason": "checkmate"
+      },
+      {
+        "agent_color": "white",
+        "decisions": 41,
+        "elapsed_seconds": 0.19757048100291286,
+        "opponent": "random_legal",
+        "seed": 20261139,
+        "stop_kind": "terminal",
+        "stop_reason": "fivefold_repetition"
+      },
+      {
+        "agent_color": "black",
+        "decisions": 13,
+        "elapsed_seconds": 0.04379307299677748,
+        "opponent": "random_legal",
+        "seed": 20261139,
+        "stop_kind": "terminal",
+        "stop_reason": "checkmate"
+      },
+      {
+        "agent_color": "white",
+        "decisions": 58,
+        "elapsed_seconds": 0.3545053569978336,
+        "opponent": "simple_heuristic",
+        "seed": 20261139,
+        "stop_kind": "terminal",
+        "stop_reason": "insufficient_material"
+      },
+      {
+        "agent_color": "black",
+        "decisions": 33,
+        "elapsed_seconds": 0.21460438398935366,
+        "opponent": "simple_heuristic",
+        "seed": 20261139,
+        "stop_kind": "terminal",
+        "stop_reason": "checkmate"
+      }
+    ],
+    "history_plies_per_policy_decision": {
+      "max": 419,
+      "p50": 52,
+      "p95": 270
+    },
+    "not_an_m5_or_policy_strength_evaluation": true,
+    "outcomes_intentionally_not_aggregated": true,
+    "per_decision_inference_seconds": {
+      "max": 0.0568535970087396,
+      "p50": 0.005119377994560637,
+      "p95": 0.017525732997455634
+    },
+    "per_decision_simulator_step_seconds": {
+      "max": 0.009688335994724184,
+      "p50": 0.0011483440030133352,
+      "p95": 0.0025218989903805777
+    },
+    "per_game_wall_seconds": {
+      "max": 3.7647622180084,
+      "p50": 0.21460438398935366,
+      "p95": 1.6670433590043103
+    },
+    "policy": "accepted_frozen_m4_behavior_only_workload_probe",
+    "scenario_key": [
+      "seed",
+      "opponent",
+      "agent_color"
+    ],
+    "scenarios_completed": 40,
+    "scenarios_planned": 40,
+    "simulator_steps_per_second": 761.4259291941383,
+    "snapshot_wall_seconds": 16.02984519599704
+  },
+  "max_history_shape_stress": {
+    "batch_size": 32,
+    "online_plus_target_forward_pair_seconds": {
+      "max": 0.18058338400442153,
+      "p50": 0.15671771300549153,
+      "p95": 0.18058338400442153
+    },
+    "padded_history_tokens": 25632,
+    "plies": 801,
+    "synthetic_not_semantic_chess_history": true
+  },
+  "numpy": "2.5.4",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+  "processor": "x86_64",
+  "profile_config": {
+    "device": "cpu",
+    "evaluation_max_agent_decisions_per_game": 400,
+    "evaluation_workload_games": 40,
+    "forward_repeats": 12,
+    "long_history_forward_repeats": 3,
+    "peak_rss_hard_cap_bytes": 2147483648,
+    "profile_max_seconds": 840.0,
+    "real_batch_size": 32,
+    "replay_probe_capacity": 4096,
+    "schema": "videochess-pre-m5-profile-config/2.1",
+    "synthetic_max_history_plies": 801,
+    "threads": {
+      "inter_op": 1,
+      "intra_op": 1
+    }
+  },
+  "profile_config_sha256": "c23d4c0c05884cc92cff573cb794e90f53b539afbd7122e640384ccf5029f179",
+  "python": "3.12.3",
+  "python_chess": "1.11.2",
+  "real_batch32": {
+    "candidate_mask_padding_slots": 1067,
+    "collation_seconds": 0.0003484430053504184,
+    "forward_pair_repeats": 12,
+    "history_plies": {
+      "max": 278,
+      "p50": 38,
+      "p95": 105
+    },
+    "history_plies_by_row": [
+      1,
+      13,
+      119,
+      24,
+      19,
+      4,
+      76,
+      15,
+      27,
+      52,
+      8,
+      38,
+      48,
+      34,
+      91,
+      88,
+      33,
+      18,
+      37,
+      66,
+      57,
+      13,
+      28,
+      278,
+      36,
+      98,
+      58,
+      105,
+      39,
+      45,
+      98,
+      28
+    ],
+    "history_plies_total": 1694,
+    "legal_candidate_count": {
+      "max": 64,
+      "p50": 32,
+      "p95": 46
+    },
+    "legal_candidate_scores_per_second": 51411.97775776877,
+    "online_plus_target_forward_pair_seconds": {
+      "max": 0.041348700993694365,
+      "p50": 0.038181279989657924,
+      "p95": 0.04082391700649168
+    },
+    "selected_rows": 32,
+    "selection_seconds": 0.026548174006165937,
+    "split_counts": {
+      "train": 32
+    }
+  },
+  "replay_like_storage_probe": {
+    "observed_m3_feature_lengths": {
+      "capacity": 4096,
+      "history_plies_per_state": null,
+      "measured_container_and_bytes_object_bytes": 8166424,
+      "persistent_file_written": false,
+      "record_schema": "synthetic_profile_wire_only",
+      "record_wire_bytes": {
+        "max": 6958,
+        "p50": 1656.0
+      },
+      "semantically_valid_transitions_claimed": false,
+      "stored_wire_bytes": 7998208,
+      "tracemalloc_incremental_current_bytes": 8174969,
+      "tracemalloc_incremental_peak_bytes": 8185124,
+      "unique_record_count": 4096
+    },
+    "synthetic_801_ply_upper_shape": {
+      "capacity": 4096,
+      "history_plies_per_state": 801,
+      "measured_container_and_bytes_object_bytes": 79757848,
+      "persistent_file_written": false,
+      "record_schema": "synthetic_profile_wire_only",
+      "record_wire_bytes": {
+        "max": 20192,
+        "p50": 19830.0
+      },
+      "semantically_valid_transitions_claimed": false,
+      "stored_wire_bytes": 79589632,
+      "tracemalloc_incremental_current_bytes": 79841929,
+      "tracemalloc_incremental_peak_bytes": 79903396,
+      "unique_record_count": 4096
+    }
+  },
+  "resource": {
+    "active_profile_cap_seconds": 840.0,
+    "elapsed_seconds": 252.62490897900716,
+    "peak_rss_bytes": 637243392,
+    "rss_cap_bytes": 2147483648
+  },
+  "schema": "videochess-pre-m5-feasibility-profile/2.1",
+  "source_revision": "d4fe2ad3fa3936faecddcdba0e976e16cdeabd42",
+  "source_worktree_clean_at_profile": true,
+  "synthetic_ddqn_computation": {
+    "801_ply_full_td_backward_update_seconds": 3.8727303389896406,
+    "801_ply_gradient_norm_before_clip": 0.3186857998371124,
+    "801_ply_synthetic_huber_loss": 0.3533630967140198,
+    "adamw_update_seconds": 0.13405870700080413,
+    "finite_targets_loss_gradients_and_parameters": true,
+    "gradient_norm_before_clip": 0.3013429641723633,
+    "huber_loss": 0.35179781913757324,
+    "m3_real_batch32_full_td_backward_update_seconds": 0.13405870700080413,
+    "online_next_action_masked_selection": true,
+    "reward_and_bootstrap_shapes": [
+      32
+    ],
+    "target_evaluates_same_batch_candidate_index": true,
+    "trained_policy_claimed": false,
+    "variable_history_full_td_backward_update_seconds": 1.9771368759975303
+  },
+  "temporary_checkpoint_serialization": {
+    "includes_online_target_and_one_adamw_state": true,
+    "persistent_file_written": false,
+    "seconds": 0.005777472004410811,
+    "size_bytes": 1990023
+  },
+  "torch": "2.14.1+cpu",
+  "training_run_feasibility_projection": {
+    "configured_decisions_per_arm_seed": 10000,
+    "configured_updates_per_decisions": 0.25,
+    "estimated_run_seconds_using_801_ply_update_and_p95_decisions": 9390.46541430078,
+    "estimated_run_seconds_using_m3_real_batch32_update_and_p95_decisions": 518.5976315912703,
+    "estimated_run_seconds_using_variable_history_stress_update_and_p95_decisions": 4892.2221266205015,
+    "estimated_updates_after_512_warmup": 2373,
+    "max_average_update_seconds_allowed_by_45_min_after_decisions": 1.0533180278641543,
+    "p95_decision_time_seconds_for_10000": 200.47631987836212,
+    "p95_policy_plus_simulator_seconds_per_decision": 0.020047631987836212,
+    "profiled_801_ply_update_seconds": 3.8727303389896406,
+    "profiled_m3_real_batch32_update_seconds": 0.13405870700080413,
+    "profiled_variable_history_update_seconds": 1.9771368759975303,
+    "projection_caveat": "Projections bracket a real M3 batch, an evenly spread synthetic 0-to-801-ply batch, and an all-801-ply upper stress. The true M5 replay-history distribution is unmeasured; estimates exclude replay sampling/validation overhead and do not guarantee training convergence or fit on another CPU.",
+    "run_wall_cap_seconds": 2700,
+    "six_run_aggregate_cap_seconds": 21600
+  },
+  "variable_history_shape_stress": {
+    "batch_size": 32,
+    "full_td_backward_update_seconds": 1.9771368759975303,
+    "gradient_norm_before_clip": 0.2691607177257538,
+    "history_length_quantiles": {
+      "max": 801,
+      "p50": 413,
+      "p95": 749
+    },
+    "history_lengths": [
+      0,
+      26,
+      52,
+      78,
+      103,
+      129,
+      155,
+      181,
+      207,
+      233,
+      258,
+      284,
+      310,
+      336,
+      362,
+      388,
+      413,
+      439,
+      465,
+      491,
+      517,
+      543,
+      568,
+      594,
+      620,
+      646,
+      672,
+      698,
+      723,
+      749,
+      775,
+      801
+    ],
+    "online_plus_target_forward_pair_seconds": {
+      "max": 0.08022846300445963,
+      "p50": 0.07659338699886575,
+      "p95": 0.08022846300445963
+    },
+    "plies": 801,
+    "synthetic_huber_loss": 0.35118380188941956,
+    "synthetic_not_semantic_chess_history": true,
+    "total_history_tokens": 12816
+  }
+}

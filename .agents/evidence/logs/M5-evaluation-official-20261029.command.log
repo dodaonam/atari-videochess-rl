@@ -1,0 +1,2653 @@
+Command: systemd-inhibit --what=sleep --mode=block --why='Owner-authorized M5 frozen evaluation campaign' env PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH PYTHONDONTWRITEBYTECODE=1 /usr/bin/time -v -o .agents/evidence/logs/M5-evaluation-official-20261029.log.time /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.rl.cli evaluate > .agents/evidence/logs/M5-evaluation-official-20261029.log 2>&1
+Exit code: 0
+Result: PASS: all 15 frozen policy schedules completed 100/100 scenarios (1,500/1,500 games); six valid 400-decision truncations were preserved distinctly, zero unresolved/incomplete scenarios, zero journal diagnostics. CPU-only, 32:54.35 process wall, peak RSS 275,792 KiB.
+
+CLI evaluation report output:
+{
+  "schema": "videochess-m5-evaluation-campaign/1.0",
+  "planned_policies": 15,
+  "policies_with_recorded_schedule": 15,
+  "fully_completed_policy_schedules": 15,
+  "planned_games": 1500,
+  "executed_games": 1500,
+  "unresolved_scenarios": 0,
+  "evaluation_attempt_rows": 1500,
+  "incomplete_attempts": 0,
+  "wall_seconds": 1972.799734201999,
+  "cumulative_campaign_seconds": 1966.450523835003,
+  "per_policy": [
+    {
+      "policy_id": "m4_behavior_only",
+      "games": 100,
+      "planned_games": 100,
+      "schedule_complete": true,
+      "summary": {
+        "game_rows": 100,
+        "incomplete_scenarios": 0,
+        "completed_games": 100,
+        "truncated_games": 0,
+        "wins": 48,
+        "draws": 50,
+        "losses": 2,
+        "score_rate_completed": 0.73,
+        "mean_reward_all_rows": 0.46
+      }
+    },
+    {
+      "policy_id": "warm:20261104:pre_rl",
+      "games": 100,
+      "planned_games": 100,
+      "schedule_complete": true,
+      "summary": {
+        "game_rows": 100,
+        "incomplete_scenarios": 0,
+        "completed_games": 100,
+        "truncated_games": 0,
+        "wins": 2,
+        "draws": 85,
+        "losses": 13,
+        "score_rate_completed": 0.445,
+        "mean_reward_all_rows": -0.11
+      }
+    },
+    {
+      "policy_id": "warm:20261104:post_rl",
+      "games": 100,
+      "planned_games": 100,
+      "schedule_complete": true,
+      "summary": {
+        "game_rows": 100,
+        "incomplete_scenarios": 0,
+        "completed_games": 99,
+        "truncated_games": 1,
+        "wins": 16,
+        "draws": 78,
+        "losses": 5,
+        "score_rate_completed": 0.5555555555555556,
+        "mean_reward_all_rows": 0.11
+      }
+    },
+    {
+      "policy_id": "scratch:20261104:pre_rl",
+      "games": 100,
+      "planned_games": 100,
+      "schedule_complete": true,
+      "summary": {
+        "game_rows": 100,
+        "incomplete_scenarios": 0,
+        "completed_games": 99,
+        "truncated_games": 1,
+        "wins": 0,
+        "draws": 64,
+        "losses": 35,
+        "score_rate_completed": 0.32323232323232326,
+        "mean_reward_all_rows": -0.35
+      }
+    },
+    {
+      "policy_id": "scratch:20261104:post_rl",
+      "games": 100,
+      "planned_games": 100,
+      "schedule_complete": true,
+      "summary": {
+        "game_rows": 100,
+        "incomplete_scenarios": 0,
+        "completed_games": 100,
+        "truncated_games": 0,
+        "wins": 12,
+        "draws": 86,
+        "losses": 2,
+        "score_rate_completed": 0.55,
+        "mean_reward_all_rows": 0.1
+      }
+    },
+    {
+      "policy_id": "warm:20261105:pre_rl",
+      "games": 100,
+      "planned_games": 100,
+      "schedule_complete": true,
+      "summary": {
+        "game_rows": 100,
+        "incomplete_scenarios": 0,
+        "completed_games": 98,
+        "truncated_games": 2,
+        "wins": 3,
+        "draws": 39,
+        "losses": 56,
+        "score_rate_completed": 0.22959183673469388,
+        "mean_reward_all_rows": -0.53
+      }
+    },
+    {
+      "policy_id": "warm:20261105:post_rl",
+      "games": 100,
+      "planned_games": 100,
+      "schedule_complete": true,
+      "summary": {
+        "game_rows": 100,
+        "incomplete_scenarios": 0,
+        "completed_games": 100,
+        "truncated_games": 0,
+        "wins": 19,
+        "draws": 79,
+        "losses": 2,
+        "score_rate_completed": 0.585,
+        "mean_reward_all_rows": 0.17
+      }
+    },
+    {
+      "policy_id": "scratch:20261105:pre_rl",
+      "games": 100,
+      "planned_games": 100,
+      "schedule_complete": true,
+      "summary": {
+        "game_rows": 100,
+        "incomplete_scenarios": 0,
+        "completed_games": 100,
+        "truncated_games": 0,
+        "wins": 0,
+        "draws": 72,
+        "losses": 28,
+        "score_rate_completed": 0.36,
+        "mean_reward_all_rows": -0.28
+      }
+    },
+    {
+      "policy_id": "scratch:20261105:post_rl",
+      "games": 100,
+      "planned_games": 100,
+      "schedule_complete": true,
+      "summary": {
+        "game_rows": 100,
+        "incomplete_scenarios": 0,
+        "completed_games": 100,
+        "truncated_games": 0,
+        "wins": 3,
+        "draws": 91,
+        "losses": 6,
+        "score_rate_completed": 0.485,
+        "mean_reward_all_rows": -0.03
+      }
+    },
+    {
+      "policy_id": "warm:20261106:pre_rl",
+      "games": 100,
+      "planned_games": 100,
+      "schedule_complete": true,
+      "summary": {
+        "game_rows": 100,
+        "incomplete_scenarios": 0,
+        "completed_games": 100,
+        "truncated_games": 0,
+        "wins": 0,
+        "draws": 37,
+        "losses": 63,
+        "score_rate_completed": 0.185,
+        "mean_reward_all_rows": -0.63
+      }
+    },
+    {
+      "policy_id": "warm:20261106:post_rl",
+      "games": 100,
+      "planned_games": 100,
+      "schedule_complete": true,
+      "summary": {
+        "game_rows": 100,
+        "incomplete_scenarios": 0,
+        "completed_games": 100,
+        "truncated_games": 0,
+        "wins": 24,
+        "draws": 74,
+        "losses": 2,
+        "score_rate_completed": 0.61,
+        "mean_reward_all_rows": 0.22
+      }
+    },
+    {
+      "policy_id": "scratch:20261106:pre_rl",
+      "games": 100,
+      "planned_games": 100,
+      "schedule_complete": true,
+      "summary": {
+        "game_rows": 100,
+        "incomplete_scenarios": 0,
+        "completed_games": 99,
+        "truncated_games": 1,
+        "wins": 0,
+        "draws": 66,
+        "losses": 33,
+        "score_rate_completed": 0.3333333333333333,
+        "mean_reward_all_rows": -0.33
+      }
+    },
+    {
+      "policy_id": "scratch:20261106:post_rl",
+      "games": 100,
+      "planned_games": 100,
+      "schedule_complete": true,
+      "summary": {
+        "game_rows": 100,
+        "incomplete_scenarios": 0,
+        "completed_games": 99,
+        "truncated_games": 1,
+        "wins": 8,
+        "draws": 90,
+        "losses": 1,
+        "score_rate_completed": 0.5353535353535354,
+        "mean_reward_all_rows": 0.07
+      }
+    },
+    {
+      "policy_id": "baseline:random_legal",
+      "games": 100,
+      "planned_games": 100,
+      "schedule_complete": true,
+      "summary": {
+        "game_rows": 100,
+        "incomplete_scenarios": 0,
+        "completed_games": 100,
+        "truncated_games": 0,
+        "wins": 3,
+        "draws": 58,
+        "losses": 39,
+        "score_rate_completed": 0.32,
+        "mean_reward_all_rows": -0.36
+      }
+    },
+    {
+      "policy_id": "baseline:simple_heuristic",
+      "games": 100,
+      "planned_games": 100,
+      "schedule_complete": true,
+      "summary": {
+        "game_rows": 100,
+        "incomplete_scenarios": 0,
+        "completed_games": 100,
+        "truncated_games": 0,
+        "wins": 33,
+        "draws": 63,
+        "losses": 4,
+        "score_rate_completed": 0.645,
+        "mean_reward_all_rows": 0.29
+      }
+    }
+  ],
+  "opponent_color_breakdown": [
+    {
+      "policy_id": "m4_behavior_only",
+      "opponent_id": "random_legal",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 14,
+      "draws": 11,
+      "losses": 0,
+      "score_rate_completed": 0.78,
+      "mean_reward_all_rows": 0.56
+    },
+    {
+      "policy_id": "m4_behavior_only",
+      "opponent_id": "random_legal",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 12,
+      "draws": 13,
+      "losses": 0,
+      "score_rate_completed": 0.74,
+      "mean_reward_all_rows": 0.48
+    },
+    {
+      "policy_id": "m4_behavior_only",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 13,
+      "draws": 11,
+      "losses": 1,
+      "score_rate_completed": 0.74,
+      "mean_reward_all_rows": 0.48
+    },
+    {
+      "policy_id": "m4_behavior_only",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 9,
+      "draws": 15,
+      "losses": 1,
+      "score_rate_completed": 0.66,
+      "mean_reward_all_rows": 0.32
+    },
+    {
+      "policy_id": "warm:20261104:pre_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 1,
+      "draws": 23,
+      "losses": 1,
+      "score_rate_completed": 0.5,
+      "mean_reward_all_rows": 0.0
+    },
+    {
+      "policy_id": "warm:20261104:pre_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 1,
+      "draws": 24,
+      "losses": 0,
+      "score_rate_completed": 0.52,
+      "mean_reward_all_rows": 0.04
+    },
+    {
+      "policy_id": "warm:20261104:pre_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 19,
+      "losses": 6,
+      "score_rate_completed": 0.38,
+      "mean_reward_all_rows": -0.24
+    },
+    {
+      "policy_id": "warm:20261104:pre_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 19,
+      "losses": 6,
+      "score_rate_completed": 0.38,
+      "mean_reward_all_rows": -0.24
+    },
+    {
+      "policy_id": "warm:20261104:post_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 24,
+      "truncated_games": 1,
+      "wins": 12,
+      "draws": 12,
+      "losses": 0,
+      "score_rate_completed": 0.75,
+      "mean_reward_all_rows": 0.48
+    },
+    {
+      "policy_id": "warm:20261104:post_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 3,
+      "draws": 22,
+      "losses": 0,
+      "score_rate_completed": 0.56,
+      "mean_reward_all_rows": 0.12
+    },
+    {
+      "policy_id": "warm:20261104:post_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 21,
+      "losses": 4,
+      "score_rate_completed": 0.42,
+      "mean_reward_all_rows": -0.16
+    },
+    {
+      "policy_id": "warm:20261104:post_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 1,
+      "draws": 23,
+      "losses": 1,
+      "score_rate_completed": 0.5,
+      "mean_reward_all_rows": 0.0
+    },
+    {
+      "policy_id": "scratch:20261104:pre_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 22,
+      "losses": 3,
+      "score_rate_completed": 0.44,
+      "mean_reward_all_rows": -0.12
+    },
+    {
+      "policy_id": "scratch:20261104:pre_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 24,
+      "truncated_games": 1,
+      "wins": 0,
+      "draws": 21,
+      "losses": 3,
+      "score_rate_completed": 0.4375,
+      "mean_reward_all_rows": -0.12
+    },
+    {
+      "policy_id": "scratch:20261104:pre_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 12,
+      "losses": 13,
+      "score_rate_completed": 0.24,
+      "mean_reward_all_rows": -0.52
+    },
+    {
+      "policy_id": "scratch:20261104:pre_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 9,
+      "losses": 16,
+      "score_rate_completed": 0.18,
+      "mean_reward_all_rows": -0.64
+    },
+    {
+      "policy_id": "scratch:20261104:post_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 6,
+      "draws": 19,
+      "losses": 0,
+      "score_rate_completed": 0.62,
+      "mean_reward_all_rows": 0.24
+    },
+    {
+      "policy_id": "scratch:20261104:post_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 5,
+      "draws": 20,
+      "losses": 0,
+      "score_rate_completed": 0.6,
+      "mean_reward_all_rows": 0.2
+    },
+    {
+      "policy_id": "scratch:20261104:post_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 24,
+      "losses": 1,
+      "score_rate_completed": 0.48,
+      "mean_reward_all_rows": -0.04
+    },
+    {
+      "policy_id": "scratch:20261104:post_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 1,
+      "draws": 23,
+      "losses": 1,
+      "score_rate_completed": 0.5,
+      "mean_reward_all_rows": 0.0
+    },
+    {
+      "policy_id": "warm:20261105:pre_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 23,
+      "truncated_games": 2,
+      "wins": 2,
+      "draws": 15,
+      "losses": 6,
+      "score_rate_completed": 0.41304347826086957,
+      "mean_reward_all_rows": -0.16
+    },
+    {
+      "policy_id": "warm:20261105:pre_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 1,
+      "draws": 14,
+      "losses": 10,
+      "score_rate_completed": 0.32,
+      "mean_reward_all_rows": -0.36
+    },
+    {
+      "policy_id": "warm:20261105:pre_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 3,
+      "losses": 22,
+      "score_rate_completed": 0.06,
+      "mean_reward_all_rows": -0.88
+    },
+    {
+      "policy_id": "warm:20261105:pre_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 7,
+      "losses": 18,
+      "score_rate_completed": 0.14,
+      "mean_reward_all_rows": -0.72
+    },
+    {
+      "policy_id": "warm:20261105:post_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 3,
+      "draws": 22,
+      "losses": 0,
+      "score_rate_completed": 0.56,
+      "mean_reward_all_rows": 0.12
+    },
+    {
+      "policy_id": "warm:20261105:post_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 11,
+      "draws": 14,
+      "losses": 0,
+      "score_rate_completed": 0.72,
+      "mean_reward_all_rows": 0.44
+    },
+    {
+      "policy_id": "warm:20261105:post_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 25,
+      "losses": 0,
+      "score_rate_completed": 0.5,
+      "mean_reward_all_rows": 0.0
+    },
+    {
+      "policy_id": "warm:20261105:post_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 5,
+      "draws": 18,
+      "losses": 2,
+      "score_rate_completed": 0.56,
+      "mean_reward_all_rows": 0.12
+    },
+    {
+      "policy_id": "scratch:20261105:pre_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 21,
+      "losses": 4,
+      "score_rate_completed": 0.42,
+      "mean_reward_all_rows": -0.16
+    },
+    {
+      "policy_id": "scratch:20261105:pre_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 25,
+      "losses": 0,
+      "score_rate_completed": 0.5,
+      "mean_reward_all_rows": 0.0
+    },
+    {
+      "policy_id": "scratch:20261105:pre_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 13,
+      "losses": 12,
+      "score_rate_completed": 0.26,
+      "mean_reward_all_rows": -0.48
+    },
+    {
+      "policy_id": "scratch:20261105:pre_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 13,
+      "losses": 12,
+      "score_rate_completed": 0.26,
+      "mean_reward_all_rows": -0.48
+    },
+    {
+      "policy_id": "scratch:20261105:post_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 1,
+      "draws": 24,
+      "losses": 0,
+      "score_rate_completed": 0.52,
+      "mean_reward_all_rows": 0.04
+    },
+    {
+      "policy_id": "scratch:20261105:post_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 2,
+      "draws": 23,
+      "losses": 0,
+      "score_rate_completed": 0.54,
+      "mean_reward_all_rows": 0.08
+    },
+    {
+      "policy_id": "scratch:20261105:post_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 22,
+      "losses": 3,
+      "score_rate_completed": 0.44,
+      "mean_reward_all_rows": -0.12
+    },
+    {
+      "policy_id": "scratch:20261105:post_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 22,
+      "losses": 3,
+      "score_rate_completed": 0.44,
+      "mean_reward_all_rows": -0.12
+    },
+    {
+      "policy_id": "warm:20261106:pre_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 14,
+      "losses": 11,
+      "score_rate_completed": 0.28,
+      "mean_reward_all_rows": -0.44
+    },
+    {
+      "policy_id": "warm:20261106:pre_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 18,
+      "losses": 7,
+      "score_rate_completed": 0.36,
+      "mean_reward_all_rows": -0.28
+    },
+    {
+      "policy_id": "warm:20261106:pre_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 2,
+      "losses": 23,
+      "score_rate_completed": 0.04,
+      "mean_reward_all_rows": -0.92
+    },
+    {
+      "policy_id": "warm:20261106:pre_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 3,
+      "losses": 22,
+      "score_rate_completed": 0.06,
+      "mean_reward_all_rows": -0.88
+    },
+    {
+      "policy_id": "warm:20261106:post_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 9,
+      "draws": 16,
+      "losses": 0,
+      "score_rate_completed": 0.68,
+      "mean_reward_all_rows": 0.36
+    },
+    {
+      "policy_id": "warm:20261106:post_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 13,
+      "draws": 12,
+      "losses": 0,
+      "score_rate_completed": 0.76,
+      "mean_reward_all_rows": 0.52
+    },
+    {
+      "policy_id": "warm:20261106:post_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 1,
+      "draws": 24,
+      "losses": 0,
+      "score_rate_completed": 0.52,
+      "mean_reward_all_rows": 0.04
+    },
+    {
+      "policy_id": "warm:20261106:post_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 1,
+      "draws": 22,
+      "losses": 2,
+      "score_rate_completed": 0.48,
+      "mean_reward_all_rows": -0.04
+    },
+    {
+      "policy_id": "scratch:20261106:pre_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 24,
+      "truncated_games": 1,
+      "wins": 0,
+      "draws": 21,
+      "losses": 3,
+      "score_rate_completed": 0.4375,
+      "mean_reward_all_rows": -0.12
+    },
+    {
+      "policy_id": "scratch:20261106:pre_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 20,
+      "losses": 5,
+      "score_rate_completed": 0.4,
+      "mean_reward_all_rows": -0.2
+    },
+    {
+      "policy_id": "scratch:20261106:pre_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 14,
+      "losses": 11,
+      "score_rate_completed": 0.28,
+      "mean_reward_all_rows": -0.44
+    },
+    {
+      "policy_id": "scratch:20261106:pre_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 11,
+      "losses": 14,
+      "score_rate_completed": 0.22,
+      "mean_reward_all_rows": -0.56
+    },
+    {
+      "policy_id": "scratch:20261106:post_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 24,
+      "truncated_games": 1,
+      "wins": 5,
+      "draws": 19,
+      "losses": 0,
+      "score_rate_completed": 0.6041666666666666,
+      "mean_reward_all_rows": 0.2
+    },
+    {
+      "policy_id": "scratch:20261106:post_rl",
+      "opponent_id": "random_legal",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 3,
+      "draws": 22,
+      "losses": 0,
+      "score_rate_completed": 0.56,
+      "mean_reward_all_rows": 0.12
+    },
+    {
+      "policy_id": "scratch:20261106:post_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 24,
+      "losses": 1,
+      "score_rate_completed": 0.48,
+      "mean_reward_all_rows": -0.04
+    },
+    {
+      "policy_id": "scratch:20261106:post_rl",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 25,
+      "losses": 0,
+      "score_rate_completed": 0.5,
+      "mean_reward_all_rows": 0.0
+    },
+    {
+      "policy_id": "baseline:random_legal",
+      "opponent_id": "random_legal",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 2,
+      "draws": 22,
+      "losses": 1,
+      "score_rate_completed": 0.52,
+      "mean_reward_all_rows": 0.04
+    },
+    {
+      "policy_id": "baseline:random_legal",
+      "opponent_id": "random_legal",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 1,
+      "draws": 23,
+      "losses": 1,
+      "score_rate_completed": 0.5,
+      "mean_reward_all_rows": 0.0
+    },
+    {
+      "policy_id": "baseline:random_legal",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 9,
+      "losses": 16,
+      "score_rate_completed": 0.18,
+      "mean_reward_all_rows": -0.64
+    },
+    {
+      "policy_id": "baseline:random_legal",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 4,
+      "losses": 21,
+      "score_rate_completed": 0.08,
+      "mean_reward_all_rows": -0.84
+    },
+    {
+      "policy_id": "baseline:simple_heuristic",
+      "opponent_id": "random_legal",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 15,
+      "draws": 10,
+      "losses": 0,
+      "score_rate_completed": 0.8,
+      "mean_reward_all_rows": 0.6
+    },
+    {
+      "policy_id": "baseline:simple_heuristic",
+      "opponent_id": "random_legal",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 17,
+      "draws": 8,
+      "losses": 0,
+      "score_rate_completed": 0.84,
+      "mean_reward_all_rows": 0.68
+    },
+    {
+      "policy_id": "baseline:simple_heuristic",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "white",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 0,
+      "draws": 24,
+      "losses": 1,
+      "score_rate_completed": 0.48,
+      "mean_reward_all_rows": -0.04
+    },
+    {
+      "policy_id": "baseline:simple_heuristic",
+      "opponent_id": "simple_material_heuristic",
+      "agent_color": "black",
+      "planned_games": 25,
+      "schedule_complete": true,
+      "game_rows": 25,
+      "incomplete_scenarios": 0,
+      "completed_games": 25,
+      "truncated_games": 0,
+      "wins": 1,
+      "draws": 21,
+      "losses": 3,
+      "score_rate_completed": 0.46,
+      "mean_reward_all_rows": -0.08
+    }
+  ],
+  "matched_comparisons": [
+    {
+      "comparison": "warm_vs_scratch_pre_rl",
+      "matched_terminal_pairs": 296,
+      "censored_or_unfinished_pairs": 4,
+      "mean_paired_score_difference_a_minus_b": -0.05574324324324324,
+      "crossed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_grid",
+      "per_training_seed": [
+        {
+          "training_seed": 20261104,
+          "matched_terminal_pairs": 99,
+          "mean_score_difference": 0.11616161616161616
+        },
+        {
+          "training_seed": 20261105,
+          "matched_terminal_pairs": 98,
+          "mean_score_difference": -0.1326530612244898
+        },
+        {
+          "training_seed": 20261106,
+          "matched_terminal_pairs": 99,
+          "mean_score_difference": -0.15151515151515152
+        }
+      ],
+      "pairing_keys": [
+        "training_seed",
+        "stage",
+        "evaluation_seed",
+        "opponent_id",
+        "agent_color"
+      ]
+    },
+    {
+      "comparison": "warm_vs_scratch_post_rl",
+      "matched_terminal_pairs": 298,
+      "censored_or_unfinished_pairs": 2,
+      "mean_paired_score_difference_a_minus_b": 0.06208053691275168,
+      "crossed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_grid",
+      "per_training_seed": [
+        {
+          "training_seed": 20261104,
+          "matched_terminal_pairs": 99,
+          "mean_score_difference": 0.010101010101010102
+        },
+        {
+          "training_seed": 20261105,
+          "matched_terminal_pairs": 100,
+          "mean_score_difference": 0.1
+        },
+        {
+          "training_seed": 20261106,
+          "matched_terminal_pairs": 99,
+          "mean_score_difference": 0.07575757575757576
+        }
+      ],
+      "pairing_keys": [
+        "training_seed",
+        "stage",
+        "evaluation_seed",
+        "opponent_id",
+        "agent_color"
+      ]
+    },
+    {
+      "comparison": "warm_pre_vs_post",
+      "matched_terminal_pairs": 297,
+      "censored_or_unfinished_pairs": 3,
+      "mean_paired_score_difference_a_minus_b": 0.2962962962962963,
+      "crossed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_grid",
+      "per_training_seed": [
+        {
+          "training_seed": 20261104,
+          "matched_terminal_pairs": 99,
+          "mean_score_difference": 0.1111111111111111
+        },
+        {
+          "training_seed": 20261105,
+          "matched_terminal_pairs": 98,
+          "mean_score_difference": 0.3520408163265306
+        },
+        {
+          "training_seed": 20261106,
+          "matched_terminal_pairs": 100,
+          "mean_score_difference": 0.425
+        }
+      ],
+      "pairing_keys": [
+        "training_seed",
+        "stage",
+        "evaluation_seed",
+        "opponent_id",
+        "agent_color"
+      ]
+    },
+    {
+      "comparison": "scratch_pre_vs_post",
+      "matched_terminal_pairs": 297,
+      "censored_or_unfinished_pairs": 3,
+      "mean_paired_score_difference_a_minus_b": 0.18518518518518517,
+      "crossed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_grid",
+      "per_training_seed": [
+        {
+          "training_seed": 20261104,
+          "matched_terminal_pairs": 99,
+          "mean_score_difference": 0.22727272727272727
+        },
+        {
+          "training_seed": 20261105,
+          "matched_terminal_pairs": 100,
+          "mean_score_difference": 0.125
+        },
+        {
+          "training_seed": 20261106,
+          "matched_terminal_pairs": 98,
+          "mean_score_difference": 0.20408163265306123
+        }
+      ],
+      "pairing_keys": [
+        "training_seed",
+        "stage",
+        "evaluation_seed",
+        "opponent_id",
+        "agent_color"
+      ]
+    }
+  ],
+  "fixed_policy_comparisons": [
+    {
+      "comparison": "warm:20261104:pre_rl_vs_m4_behavior_only",
+      "matched_terminal_pairs": 100,
+      "censored_or_unfinished_pairs": 0,
+      "mean_paired_score_difference_a_minus_b": -0.285,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": -0.285,
+        "ci_95_evaluation_seed_cluster": [
+          -0.355,
+          -0.21
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed"
+    },
+    {
+      "comparison": "warm:20261104:pre_rl_vs_baseline:random_legal",
+      "matched_terminal_pairs": 100,
+      "censored_or_unfinished_pairs": 0,
+      "mean_paired_score_difference_a_minus_b": 0.125,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": 0.125,
+        "ci_95_evaluation_seed_cluster": [
+          0.07,
+          0.175
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed"
+    },
+    {
+      "comparison": "warm:20261104:pre_rl_vs_baseline:simple_heuristic",
+      "matched_terminal_pairs": 100,
+      "censored_or_unfinished_pairs": 0,
+      "mean_paired_score_difference_a_minus_b": -0.2,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": -0.2,
+        "ci_95_evaluation_seed_cluster": [
+          -0.245,
+          -0.16
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed"
+    },
+    {
+      "comparison": "warm:20261104:post_rl_vs_m4_behavior_only",
+      "matched_terminal_pairs": 99,
+      "censored_or_unfinished_pairs": 1,
+      "mean_paired_score_difference_a_minus_b": -0.1717171717171717,
+      "evaluation_seed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_set"
+    },
+    {
+      "comparison": "warm:20261104:post_rl_vs_baseline:random_legal",
+      "matched_terminal_pairs": 99,
+      "censored_or_unfinished_pairs": 1,
+      "mean_paired_score_difference_a_minus_b": 0.23737373737373738,
+      "evaluation_seed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_set"
+    },
+    {
+      "comparison": "warm:20261104:post_rl_vs_baseline:simple_heuristic",
+      "matched_terminal_pairs": 99,
+      "censored_or_unfinished_pairs": 1,
+      "mean_paired_score_difference_a_minus_b": -0.09090909090909091,
+      "evaluation_seed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_set"
+    },
+    {
+      "comparison": "warm:20261105:pre_rl_vs_m4_behavior_only",
+      "matched_terminal_pairs": 98,
+      "censored_or_unfinished_pairs": 2,
+      "mean_paired_score_difference_a_minus_b": -0.49489795918367346,
+      "evaluation_seed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_set"
+    },
+    {
+      "comparison": "warm:20261105:pre_rl_vs_baseline:random_legal",
+      "matched_terminal_pairs": 98,
+      "censored_or_unfinished_pairs": 2,
+      "mean_paired_score_difference_a_minus_b": -0.08163265306122448,
+      "evaluation_seed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_set"
+    },
+    {
+      "comparison": "warm:20261105:pre_rl_vs_baseline:simple_heuristic",
+      "matched_terminal_pairs": 98,
+      "censored_or_unfinished_pairs": 2,
+      "mean_paired_score_difference_a_minus_b": -0.41836734693877553,
+      "evaluation_seed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_set"
+    },
+    {
+      "comparison": "warm:20261105:post_rl_vs_m4_behavior_only",
+      "matched_terminal_pairs": 100,
+      "censored_or_unfinished_pairs": 0,
+      "mean_paired_score_difference_a_minus_b": -0.145,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": -0.145,
+        "ci_95_evaluation_seed_cluster": [
+          -0.22,
+          -0.07
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed"
+    },
+    {
+      "comparison": "warm:20261105:post_rl_vs_baseline:random_legal",
+      "matched_terminal_pairs": 100,
+      "censored_or_unfinished_pairs": 0,
+      "mean_paired_score_difference_a_minus_b": 0.265,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": 0.265,
+        "ci_95_evaluation_seed_cluster": [
+          0.205,
+          0.32
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed"
+    },
+    {
+      "comparison": "warm:20261105:post_rl_vs_baseline:simple_heuristic",
+      "matched_terminal_pairs": 100,
+      "censored_or_unfinished_pairs": 0,
+      "mean_paired_score_difference_a_minus_b": -0.06,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": -0.06,
+        "ci_95_evaluation_seed_cluster": [
+          -0.11,
+          -0.015
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed"
+    },
+    {
+      "comparison": "warm:20261106:pre_rl_vs_m4_behavior_only",
+      "matched_terminal_pairs": 100,
+      "censored_or_unfinished_pairs": 0,
+      "mean_paired_score_difference_a_minus_b": -0.545,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": -0.545,
+        "ci_95_evaluation_seed_cluster": [
+          -0.625,
+          -0.46
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed"
+    },
+    {
+      "comparison": "warm:20261106:pre_rl_vs_baseline:random_legal",
+      "matched_terminal_pairs": 100,
+      "censored_or_unfinished_pairs": 0,
+      "mean_paired_score_difference_a_minus_b": -0.135,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": -0.135,
+        "ci_95_evaluation_seed_cluster": [
+          -0.195,
+          -0.075
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed"
+    },
+    {
+      "comparison": "warm:20261106:pre_rl_vs_baseline:simple_heuristic",
+      "matched_terminal_pairs": 100,
+      "censored_or_unfinished_pairs": 0,
+      "mean_paired_score_difference_a_minus_b": -0.46,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": -0.46,
+        "ci_95_evaluation_seed_cluster": [
+          -0.515,
+          -0.4
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed"
+    },
+    {
+      "comparison": "warm:20261106:post_rl_vs_m4_behavior_only",
+      "matched_terminal_pairs": 100,
+      "censored_or_unfinished_pairs": 0,
+      "mean_paired_score_difference_a_minus_b": -0.12,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": -0.12,
+        "ci_95_evaluation_seed_cluster": [
+          -0.195,
+          -0.045
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed"
+    },
+    {
+      "comparison": "warm:20261106:post_rl_vs_baseline:random_legal",
+      "matched_terminal_pairs": 100,
+      "censored_or_unfinished_pairs": 0,
+      "mean_paired_score_difference_a_minus_b": 0.29,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": 0.29,
+        "ci_95_evaluation_seed_cluster": [
+          0.235,
+          0.345
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed"
+    },
+    {
+      "comparison": "warm:20261106:post_rl_vs_baseline:simple_heuristic",
+      "matched_terminal_pairs": 100,
+      "censored_or_unfinished_pairs": 0,
+      "mean_paired_score_difference_a_minus_b": -0.035,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": -0.035,
+        "ci_95_evaluation_seed_cluster": [
+          -0.09,
+          0.02
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed"
+    },
+    {
+      "comparison": "scratch:20261104:pre_rl_vs_m4_behavior_only",
+      "matched_terminal_pairs": 99,
+      "censored_or_unfinished_pairs": 1,
+      "mean_paired_score_difference_a_minus_b": -0.4090909090909091,
+      "evaluation_seed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_set"
+    },
+    {
+      "comparison": "scratch:20261104:pre_rl_vs_baseline:random_legal",
+      "matched_terminal_pairs": 99,
+      "censored_or_unfinished_pairs": 1,
+      "mean_paired_score_difference_a_minus_b": 0.0,
+      "evaluation_seed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_set"
+    },
+    {
+      "comparison": "scratch:20261104:pre_rl_vs_baseline:simple_heuristic",
+      "matched_terminal_pairs": 99,
+      "censored_or_unfinished_pairs": 1,
+      "mean_paired_score_difference_a_minus_b": -0.32323232323232326,
+      "evaluation_seed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_set"
+    },
+    {
+      "comparison": "scratch:20261104:post_rl_vs_m4_behavior_only",
+      "matched_terminal_pairs": 100,
+      "censored_or_unfinished_pairs": 0,
+      "mean_paired_score_difference_a_minus_b": -0.18,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": -0.18,
+        "ci_95_evaluation_seed_cluster": [
+          -0.26,
+          -0.095
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed"
+    },
+    {
+      "comparison": "scratch:20261104:post_rl_vs_baseline:random_legal",
+      "matched_terminal_pairs": 100,
+      "censored_or_unfinished_pairs": 0,
+      "mean_paired_score_difference_a_minus_b": 0.23,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": 0.23,
+        "ci_95_evaluation_seed_cluster": [
+          0.19,
+          0.27
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed"
+    },
+    {
+      "comparison": "scratch:20261104:post_rl_vs_baseline:simple_heuristic",
+      "matched_terminal_pairs": 100,
+      "censored_or_unfinished_pairs": 0,
+      "mean_paired_score_difference_a_minus_b": -0.095,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": -0.095,
+        "ci_95_evaluation_seed_cluster": [
+          -0.145,
+          -0.045
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed"
+    },
+    {
+      "comparison": "scratch:20261105:pre_rl_vs_m4_behavior_only",
+      "matched_terminal_pairs": 100,
+      "censored_or_unfinished_pairs": 0,
+      "mean_paired_score_difference_a_minus_b": -0.37,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": -0.37,
+        "ci_95_evaluation_seed_cluster": [
+          -0.45,
+          -0.29
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed"
+    },
+    {
+      "comparison": "scratch:20261105:pre_rl_vs_baseline:random_legal",
+      "matched_terminal_pairs": 100,
+      "censored_or_unfinished_pairs": 0,
+      "mean_paired_score_difference_a_minus_b": 0.04,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": 0.04,
+        "ci_95_evaluation_seed_cluster": [
+          -0.02,
+          0.1
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed"
+    },
+    {
+      "comparison": "scratch:20261105:pre_rl_vs_baseline:simple_heuristic",
+      "matched_terminal_pairs": 100,
+      "censored_or_unfinished_pairs": 0,
+      "mean_paired_score_difference_a_minus_b": -0.285,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": -0.285,
+        "ci_95_evaluation_seed_cluster": [
+          -0.335,
+          -0.235
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed"
+    },
+    {
+      "comparison": "scratch:20261105:post_rl_vs_m4_behavior_only",
+      "matched_terminal_pairs": 100,
+      "censored_or_unfinished_pairs": 0,
+      "mean_paired_score_difference_a_minus_b": -0.245,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": -0.245,
+        "ci_95_evaluation_seed_cluster": [
+          -0.325,
+          -0.17
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed"
+    },
+    {
+      "comparison": "scratch:20261105:post_rl_vs_baseline:random_legal",
+      "matched_terminal_pairs": 100,
+      "censored_or_unfinished_pairs": 0,
+      "mean_paired_score_difference_a_minus_b": 0.165,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": 0.165,
+        "ci_95_evaluation_seed_cluster": [
+          0.115,
+          0.21
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed"
+    },
+    {
+      "comparison": "scratch:20261105:post_rl_vs_baseline:simple_heuristic",
+      "matched_terminal_pairs": 100,
+      "censored_or_unfinished_pairs": 0,
+      "mean_paired_score_difference_a_minus_b": -0.16,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": -0.16,
+        "ci_95_evaluation_seed_cluster": [
+          -0.215,
+          -0.11
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed"
+    },
+    {
+      "comparison": "scratch:20261106:pre_rl_vs_m4_behavior_only",
+      "matched_terminal_pairs": 99,
+      "censored_or_unfinished_pairs": 1,
+      "mean_paired_score_difference_a_minus_b": -0.398989898989899,
+      "evaluation_seed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_set"
+    },
+    {
+      "comparison": "scratch:20261106:pre_rl_vs_baseline:random_legal",
+      "matched_terminal_pairs": 99,
+      "censored_or_unfinished_pairs": 1,
+      "mean_paired_score_difference_a_minus_b": 0.015151515151515152,
+      "evaluation_seed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_set"
+    },
+    {
+      "comparison": "scratch:20261106:pre_rl_vs_baseline:simple_heuristic",
+      "matched_terminal_pairs": 99,
+      "censored_or_unfinished_pairs": 1,
+      "mean_paired_score_difference_a_minus_b": -0.30808080808080807,
+      "evaluation_seed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_set"
+    },
+    {
+      "comparison": "scratch:20261106:post_rl_vs_m4_behavior_only",
+      "matched_terminal_pairs": 99,
+      "censored_or_unfinished_pairs": 1,
+      "mean_paired_score_difference_a_minus_b": -0.1919191919191919,
+      "evaluation_seed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_set"
+    },
+    {
+      "comparison": "scratch:20261106:post_rl_vs_baseline:random_legal",
+      "matched_terminal_pairs": 99,
+      "censored_or_unfinished_pairs": 1,
+      "mean_paired_score_difference_a_minus_b": 0.21717171717171718,
+      "evaluation_seed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_set"
+    },
+    {
+      "comparison": "scratch:20261106:post_rl_vs_baseline:simple_heuristic",
+      "matched_terminal_pairs": 99,
+      "censored_or_unfinished_pairs": 1,
+      "mean_paired_score_difference_a_minus_b": -0.1111111111111111,
+      "evaluation_seed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_set"
+    }
+  ],
+  "white_black_comparisons": [
+    {
+      "policy_id": "m4_behavior_only",
+      "comparison": "white_agent_minus_black_agent_score",
+      "matched_color_pairs": 50,
+      "planned_color_pairs": 50,
+      "censored_or_unfinished_pairs": 0,
+      "mean_white_minus_black_score": 0.06,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": 0.06,
+        "ci_95_evaluation_seed_cluster": [
+          -0.02,
+          0.13
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed",
+      "opponent_results": {
+        "random_legal": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": 0.04,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": 0.04,
+            "ci_95_evaluation_seed_cluster": [
+              -0.08,
+              0.16
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        },
+        "simple_material_heuristic": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": 0.08,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": 0.08,
+            "ci_95_evaluation_seed_cluster": [
+              -0.04,
+              0.2
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        }
+      },
+      "pairing_keys": [
+        "evaluation_seed",
+        "opponent_id",
+        "agent_color"
+      ]
+    },
+    {
+      "policy_id": "warm:20261104:pre_rl",
+      "comparison": "white_agent_minus_black_agent_score",
+      "matched_color_pairs": 50,
+      "planned_color_pairs": 50,
+      "censored_or_unfinished_pairs": 0,
+      "mean_white_minus_black_score": -0.01,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": -0.01,
+        "ci_95_evaluation_seed_cluster": [
+          -0.07,
+          0.06
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed",
+      "opponent_results": {
+        "random_legal": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": -0.02,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": -0.02,
+            "ci_95_evaluation_seed_cluster": [
+              -0.08,
+              0.04
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        },
+        "simple_material_heuristic": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": 0.0,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": 0.0,
+            "ci_95_evaluation_seed_cluster": [
+              -0.14,
+              0.14
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        }
+      },
+      "pairing_keys": [
+        "evaluation_seed",
+        "opponent_id",
+        "agent_color"
+      ]
+    },
+    {
+      "policy_id": "warm:20261104:post_rl",
+      "comparison": "white_agent_minus_black_agent_score",
+      "matched_color_pairs": 49,
+      "planned_color_pairs": 50,
+      "censored_or_unfinished_pairs": 1,
+      "mean_white_minus_black_score": 0.05102040816326531,
+      "evaluation_seed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_set",
+      "opponent_results": {
+        "random_legal": {
+          "matched_color_pairs": 24,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 1,
+          "mean_white_minus_black_score": 0.1875,
+          "evaluation_seed_cluster_bootstrap": null,
+          "interval_status": "incomplete_or_censored_pair_set"
+        },
+        "simple_material_heuristic": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": -0.08,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": -0.08,
+            "ci_95_evaluation_seed_cluster": [
+              -0.16,
+              -0.02
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        }
+      },
+      "pairing_keys": [
+        "evaluation_seed",
+        "opponent_id",
+        "agent_color"
+      ]
+    },
+    {
+      "policy_id": "scratch:20261104:pre_rl",
+      "comparison": "white_agent_minus_black_agent_score",
+      "matched_color_pairs": 49,
+      "planned_color_pairs": 50,
+      "censored_or_unfinished_pairs": 1,
+      "mean_white_minus_black_score": 0.030612244897959183,
+      "evaluation_seed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_set",
+      "opponent_results": {
+        "random_legal": {
+          "matched_color_pairs": 24,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 1,
+          "mean_white_minus_black_score": 0.0,
+          "evaluation_seed_cluster_bootstrap": null,
+          "interval_status": "incomplete_or_censored_pair_set"
+        },
+        "simple_material_heuristic": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": 0.06,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": 0.06,
+            "ci_95_evaluation_seed_cluster": [
+              -0.08,
+              0.2
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        }
+      },
+      "pairing_keys": [
+        "evaluation_seed",
+        "opponent_id",
+        "agent_color"
+      ]
+    },
+    {
+      "policy_id": "scratch:20261104:post_rl",
+      "comparison": "white_agent_minus_black_agent_score",
+      "matched_color_pairs": 50,
+      "planned_color_pairs": 50,
+      "censored_or_unfinished_pairs": 0,
+      "mean_white_minus_black_score": 0.0,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": 0.0,
+        "ci_95_evaluation_seed_cluster": [
+          -0.07,
+          0.06
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed",
+      "opponent_results": {
+        "random_legal": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": 0.02,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": 0.02,
+            "ci_95_evaluation_seed_cluster": [
+              -0.1,
+              0.14
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        },
+        "simple_material_heuristic": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": -0.02,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": -0.02,
+            "ci_95_evaluation_seed_cluster": [
+              -0.1,
+              0.04
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        }
+      },
+      "pairing_keys": [
+        "evaluation_seed",
+        "opponent_id",
+        "agent_color"
+      ]
+    },
+    {
+      "policy_id": "warm:20261105:pre_rl",
+      "comparison": "white_agent_minus_black_agent_score",
+      "matched_color_pairs": 48,
+      "planned_color_pairs": 50,
+      "censored_or_unfinished_pairs": 2,
+      "mean_white_minus_black_score": 0.010416666666666666,
+      "evaluation_seed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_set",
+      "opponent_results": {
+        "random_legal": {
+          "matched_color_pairs": 23,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 2,
+          "mean_white_minus_black_score": 0.10869565217391304,
+          "evaluation_seed_cluster_bootstrap": null,
+          "interval_status": "incomplete_or_censored_pair_set"
+        },
+        "simple_material_heuristic": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": -0.08,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": -0.08,
+            "ci_95_evaluation_seed_cluster": [
+              -0.18,
+              0.0
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        }
+      },
+      "pairing_keys": [
+        "evaluation_seed",
+        "opponent_id",
+        "agent_color"
+      ]
+    },
+    {
+      "policy_id": "warm:20261105:post_rl",
+      "comparison": "white_agent_minus_black_agent_score",
+      "matched_color_pairs": 50,
+      "planned_color_pairs": 50,
+      "censored_or_unfinished_pairs": 0,
+      "mean_white_minus_black_score": -0.11,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": -0.11,
+        "ci_95_evaluation_seed_cluster": [
+          -0.18,
+          -0.04
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed",
+      "opponent_results": {
+        "random_legal": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": -0.16,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": -0.16,
+            "ci_95_evaluation_seed_cluster": [
+              -0.28,
+              -0.04
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        },
+        "simple_material_heuristic": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": -0.06,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": -0.06,
+            "ci_95_evaluation_seed_cluster": [
+              -0.16,
+              0.04
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        }
+      },
+      "pairing_keys": [
+        "evaluation_seed",
+        "opponent_id",
+        "agent_color"
+      ]
+    },
+    {
+      "policy_id": "scratch:20261105:pre_rl",
+      "comparison": "white_agent_minus_black_agent_score",
+      "matched_color_pairs": 50,
+      "planned_color_pairs": 50,
+      "censored_or_unfinished_pairs": 0,
+      "mean_white_minus_black_score": -0.04,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": -0.04,
+        "ci_95_evaluation_seed_cluster": [
+          -0.11,
+          0.02
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed",
+      "opponent_results": {
+        "random_legal": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": -0.08,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": -0.08,
+            "ci_95_evaluation_seed_cluster": [
+              -0.16,
+              -0.02
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        },
+        "simple_material_heuristic": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": 0.0,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": 0.0,
+            "ci_95_evaluation_seed_cluster": [
+              -0.14,
+              0.14
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        }
+      },
+      "pairing_keys": [
+        "evaluation_seed",
+        "opponent_id",
+        "agent_color"
+      ]
+    },
+    {
+      "policy_id": "scratch:20261105:post_rl",
+      "comparison": "white_agent_minus_black_agent_score",
+      "matched_color_pairs": 50,
+      "planned_color_pairs": 50,
+      "censored_or_unfinished_pairs": 0,
+      "mean_white_minus_black_score": -0.01,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": -0.01,
+        "ci_95_evaluation_seed_cluster": [
+          -0.06,
+          0.04
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed",
+      "opponent_results": {
+        "random_legal": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": -0.02,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": -0.02,
+            "ci_95_evaluation_seed_cluster": [
+              -0.08,
+              0.04
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        },
+        "simple_material_heuristic": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": 0.0,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": 0.0,
+            "ci_95_evaluation_seed_cluster": [
+              -0.08,
+              0.08
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        }
+      },
+      "pairing_keys": [
+        "evaluation_seed",
+        "opponent_id",
+        "agent_color"
+      ]
+    },
+    {
+      "policy_id": "warm:20261106:pre_rl",
+      "comparison": "white_agent_minus_black_agent_score",
+      "matched_color_pairs": 50,
+      "planned_color_pairs": 50,
+      "censored_or_unfinished_pairs": 0,
+      "mean_white_minus_black_score": -0.05,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": -0.05,
+        "ci_95_evaluation_seed_cluster": [
+          -0.12,
+          0.02
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed",
+      "opponent_results": {
+        "random_legal": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": -0.08,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": -0.08,
+            "ci_95_evaluation_seed_cluster": [
+              -0.18,
+              0.02
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        },
+        "simple_material_heuristic": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": -0.02,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": -0.02,
+            "ci_95_evaluation_seed_cluster": [
+              -0.1,
+              0.06
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        }
+      },
+      "pairing_keys": [
+        "evaluation_seed",
+        "opponent_id",
+        "agent_color"
+      ]
+    },
+    {
+      "policy_id": "warm:20261106:post_rl",
+      "comparison": "white_agent_minus_black_agent_score",
+      "matched_color_pairs": 50,
+      "planned_color_pairs": 50,
+      "censored_or_unfinished_pairs": 0,
+      "mean_white_minus_black_score": -0.02,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": -0.02,
+        "ci_95_evaluation_seed_cluster": [
+          -0.1,
+          0.06
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed",
+      "opponent_results": {
+        "random_legal": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": -0.08,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": -0.08,
+            "ci_95_evaluation_seed_cluster": [
+              -0.24,
+              0.08
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        },
+        "simple_material_heuristic": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": 0.04,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": 0.04,
+            "ci_95_evaluation_seed_cluster": [
+              -0.04,
+              0.12
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        }
+      },
+      "pairing_keys": [
+        "evaluation_seed",
+        "opponent_id",
+        "agent_color"
+      ]
+    },
+    {
+      "policy_id": "scratch:20261106:pre_rl",
+      "comparison": "white_agent_minus_black_agent_score",
+      "matched_color_pairs": 49,
+      "planned_color_pairs": 50,
+      "censored_or_unfinished_pairs": 1,
+      "mean_white_minus_black_score": 0.05102040816326531,
+      "evaluation_seed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_set",
+      "opponent_results": {
+        "random_legal": {
+          "matched_color_pairs": 24,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 1,
+          "mean_white_minus_black_score": 0.041666666666666664,
+          "evaluation_seed_cluster_bootstrap": null,
+          "interval_status": "incomplete_or_censored_pair_set"
+        },
+        "simple_material_heuristic": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": 0.06,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": 0.06,
+            "ci_95_evaluation_seed_cluster": [
+              -0.1,
+              0.2
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        }
+      },
+      "pairing_keys": [
+        "evaluation_seed",
+        "opponent_id",
+        "agent_color"
+      ]
+    },
+    {
+      "policy_id": "scratch:20261106:post_rl",
+      "comparison": "white_agent_minus_black_agent_score",
+      "matched_color_pairs": 49,
+      "planned_color_pairs": 50,
+      "censored_or_unfinished_pairs": 1,
+      "mean_white_minus_black_score": 0.01020408163265306,
+      "evaluation_seed_cluster_bootstrap": null,
+      "interval_status": "incomplete_or_censored_pair_set",
+      "opponent_results": {
+        "random_legal": {
+          "matched_color_pairs": 24,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 1,
+          "mean_white_minus_black_score": 0.041666666666666664,
+          "evaluation_seed_cluster_bootstrap": null,
+          "interval_status": "incomplete_or_censored_pair_set"
+        },
+        "simple_material_heuristic": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": -0.02,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": -0.02,
+            "ci_95_evaluation_seed_cluster": [
+              -0.06,
+              0.0
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        }
+      },
+      "pairing_keys": [
+        "evaluation_seed",
+        "opponent_id",
+        "agent_color"
+      ]
+    },
+    {
+      "policy_id": "baseline:random_legal",
+      "comparison": "white_agent_minus_black_agent_score",
+      "matched_color_pairs": 50,
+      "planned_color_pairs": 50,
+      "censored_or_unfinished_pairs": 0,
+      "mean_white_minus_black_score": 0.06,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": 0.06,
+        "ci_95_evaluation_seed_cluster": [
+          0.0,
+          0.12
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed",
+      "opponent_results": {
+        "random_legal": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": 0.02,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": 0.02,
+            "ci_95_evaluation_seed_cluster": [
+              -0.06,
+              0.1
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        },
+        "simple_material_heuristic": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": 0.1,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": 0.1,
+            "ci_95_evaluation_seed_cluster": [
+              0.0,
+              0.22
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        }
+      },
+      "pairing_keys": [
+        "evaluation_seed",
+        "opponent_id",
+        "agent_color"
+      ]
+    },
+    {
+      "policy_id": "baseline:simple_heuristic",
+      "comparison": "white_agent_minus_black_agent_score",
+      "matched_color_pairs": 50,
+      "planned_color_pairs": 50,
+      "censored_or_unfinished_pairs": 0,
+      "mean_white_minus_black_score": -0.01,
+      "evaluation_seed_cluster_bootstrap": {
+        "point_difference": -0.01,
+        "ci_95_evaluation_seed_cluster": [
+          -0.1,
+          0.09
+        ],
+        "iterations": 10000,
+        "evaluation_seed_clusters": 25
+      },
+      "interval_status": "computed",
+      "opponent_results": {
+        "random_legal": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": -0.04,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": -0.04,
+            "ci_95_evaluation_seed_cluster": [
+              -0.2,
+              0.12
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        },
+        "simple_material_heuristic": {
+          "matched_color_pairs": 25,
+          "planned_color_pairs": 25,
+          "censored_or_unfinished_pairs": 0,
+          "mean_white_minus_black_score": 0.02,
+          "evaluation_seed_cluster_bootstrap": {
+            "point_difference": 0.02,
+            "ci_95_evaluation_seed_cluster": [
+              -0.06,
+              0.1
+            ],
+            "iterations": 10000,
+            "evaluation_seed_clusters": 25
+          },
+          "interval_status": "computed"
+        }
+      },
+      "pairing_keys": [
+        "evaluation_seed",
+        "opponent_id",
+        "agent_color"
+      ]
+    }
+  ],
+  "journal_diagnostics": {
+    "m4_behavior_only": [],
+    "warm:20261104:pre_rl": [],
+    "warm:20261104:post_rl": [],
+    "scratch:20261104:pre_rl": [],
+    "scratch:20261104:post_rl": [],
+    "warm:20261105:pre_rl": [],
+    "warm:20261105:post_rl": [],
+    "scratch:20261105:pre_rl": [],
+    "scratch:20261105:post_rl": [],
+    "warm:20261106:pre_rl": [],
+    "warm:20261106:post_rl": [],
+    "scratch:20261106:pre_rl": [],
+    "scratch:20261106:post_rl": [],
+    "baseline:random_legal": [],
+    "baseline:simple_heuristic": []
+  },
+  "raw_rows_are_independent": false,
+  "training_seed_clusters": 3,
+  "evaluation_seed_clusters": 25,
+  "few_training_cluster_caveat": true,
+  "rows_path": "artifacts/m5/evaluation",
+  "metric_source": "python_chess_m2_simulator",
+  "truncated_games": 6,
+  "complete_games": 1494,
+  "schedule_complete": true
+}
+
+Resource timing:
+	Command being timed: "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.rl.cli evaluate"
+	User time (seconds): 6826.51
+	System time (seconds): 3.62
+	Percent of CPU this job got: 345%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 32:54.35
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 275792
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 57931
+	Voluntary context switches: 105916
+	Involuntary context switches: 109876
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 63264
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

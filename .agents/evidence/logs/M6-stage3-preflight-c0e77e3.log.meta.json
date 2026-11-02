@@ -1,0 +1,17 @@
+{
+  "ale_reset_or_action_occurred": false,
+  "corrected_config_sha256": "05aedeb30efb8b6b97667c44f9d606b58d4da8ae20800d4ef143e629420cebac",
+  "execution_timestamp_claimed": false,
+  "log_path": ".agents/evidence/logs/M6-stage3-preflight-c0e77e3.log",
+  "log_sha256": "f3fe2c6415f2c97c4b85f5c7a238d6b3b87c1347e1151da148de9191f2ddbc10",
+  "m4_checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+  "m4_root_manifest_sha256": "f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921",
+  "m4_sidecar_sha256": "cc0af4694e45fc23acb740c652dd9a62e1bcaf7851815d179693d09539f0f606",
+  "observed_command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<verified-private-m5-root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<verified-private-m4-root> <project-python> scripts/run_m6_campaign.py --stage stage3 --artifact-root artifacts/m6",
+  "observed_exit_code": 1,
+  "old_config_sha256": "0d9495ca044f9abeef02d66af01e5d283e4c22b3271ea34f78e49b26b3c317ad",
+  "recorded_at_utc": "2026-10-30T16:37:36Z",
+  "source_revision": "c0e77e318224e722703275548407e458cb2e7712",
+  "stage3_run_directory_created": false,
+  "status": "historical_unverified"
+}

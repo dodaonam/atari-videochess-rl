@@ -1,0 +1,15 @@
+timestamp_utc=2026-11-01T11:46:35Z
+repository=dodaonam/atari-videochess-rl
+base=origin/initial-idea at 0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b
+source_commit_tested=80ee6b0776ee715ef7d3450d81e17c1d8c7925fa; staged changes contain only governance, handover, checkpoint, and verification evidence
+procedure=Inspect staged added text lines in the PR diff; decompress newly added checkpoint-history segments and scan content markers; compare existing absolute-path counts; check restricted payload path classes.
+text_files_scanned=51
+added_text_lines_scanned=4963
+added_lines_with_private_path_or_credential_markers=0
+new_checkpoint_segments_scanned_before_final_checkpoint=13
+new_checkpoint_segments_with_private_path_or_credential_markers=0
+restricted_payload_paths_added=0
+existing absolute-path counts unchanged: PROJECT_STATE 0/0; BACKLOG 139/139; BLOCKERS 1/1 (base/candidate)
+result=PASS. Newly added content contained no matching private filesystem path, credential marker, or restricted payload path. The unfiltered failure log uses <clean-clone-root> in place of its concrete temporary clone path.
+release=No upload, release, publication, deployment, or license change occurred. NO RELEASE / NO PUBLICATION AUTHORIZED.
+limitations=Automated marker scan only; it is not a legal rights determination. Private artifact access and redistribution remain owner-controlled.

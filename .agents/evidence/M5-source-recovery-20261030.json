@@ -1,0 +1,119 @@
+{
+  "schema": "videochess-m5-historical-source-recovery/1.0",
+  "recorded_at_utc": "2026-10-30T06:58:12Z",
+  "transcript": {
+    "path": "/home/dodaonam/Downloads/Pasted text(20261030-060523).txt",
+    "bytes": 3655066,
+    "line_count": 22750,
+    "encoding": "UTF-8",
+    "sha256": "c5d8706cff0f7634620b835d1a8063ac43f8bd8eec277995ed09f3b00a693e8f",
+    "raw_transcript_committed": false,
+    "sensitive_scan": {
+      "github_token": 0,
+      "aws_key": 0,
+      "private_key": 0,
+      "bearer": 0,
+      "password_assignment": 0
+    },
+    "newline_delimiter_count": 22749
+  },
+  "extraction_method": "UTF-8 byte-preserving line extraction with splitlines(keepends=True); one-based inclusive ranges; no newline normalization.",
+  "extractions": [
+    {
+      "path": ".agents/evidence/M5-source-recovered/checkpoint.py",
+      "transcript_line_range": [
+        1647,
+        1873
+      ],
+      "bytes": 12167,
+      "sha256": "19ab713b5a1450c2e4506d9d761768317e0b48fb96a3cb0083965d6a037bc410",
+      "sensitive_pattern_counts": {
+        "github_token": 0,
+        "aws_key": 0,
+        "private_key": 0,
+        "bearer": 0,
+        "password_assignment": 0
+      }
+    },
+    {
+      "path": ".agents/evidence/M5-source-recovered/replay.py",
+      "transcript_line_range": [
+        1874,
+        2017
+      ],
+      "bytes": 6732,
+      "sha256": "5ae4d3d928c524539bcf6b29f4102f09b246d5703b66539f2fad4aa7e2aaa278",
+      "sensitive_pattern_counts": {
+        "github_token": 0,
+        "aws_key": 0,
+        "private_key": 0,
+        "bearer": 0,
+        "password_assignment": 0
+      }
+    }
+  ],
+  "comparisons": {
+    "checkpoint.py": {
+      "earlier_sha256": "19ab713b5a1450c2e4506d9d761768317e0b48fb96a3cb0083965d6a037bc410",
+      "later_sha256": "924a95e6accb04c727e2858dbcd6cbda84b970750decc27fd09621bdc61821aa",
+      "diff_path": ".agents/evidence/M5-source-recovered/checkpoint-to-current.diff"
+    },
+    "replay.py": {
+      "earlier_sha256": "5ae4d3d928c524539bcf6b29f4102f09b246d5703b66539f2fad4aa7e2aaa278",
+      "later_sha256": "21845b0755809d07d480da821c2e809540a0ca4b8e1eddc5785ebdec5cf59b7f",
+      "diff_path": ".agents/evidence/M5-source-recovered/replay-to-current.diff"
+    },
+    "cli.py": {
+      "earlier_full_file_sha256": "795ca9865da80bf982480b25d97367c846255e167d9c64320a73030106c2efe3",
+      "later_full_file_sha256": "3f966fffa3a31ed9330004448ca84bc86a4fd6446764d3184e248cff978b60b7",
+      "full_file_reconstruction": "not recovered; neither complete historical source hash is present in the Git object database",
+      "verified_earlier_excerpt": {
+        "path": ".agents/evidence/M5-source-recovered/cli-resume-earlier.pyfrag",
+        "transcript_line_range": [
+          2759,
+          2783
+        ],
+        "sha256": "d6ae200395420028e5988a1c2d66fc695b0a3136d1b073d2d720d1a9ea7b4f28"
+      },
+      "verified_later_function_fragment": {
+        "path": ".agents/evidence/M5-source-recovered/cli-resume-later-current.pyfrag",
+        "sha256": "f7fe725dec589cb8074a69584e5708edcfa156fd387384b082685d2a035df961",
+        "file_sha256_at_capture": "4eba47430c14deec910ef2d986671c3e7c973448871c847727efc2820ab1db52",
+        "capture_note": "The selector fragment bytes are preserved and unchanged; this file SHA is the source file identity at the time of fragment extraction, not a claim about the current working-tree CLI."
+      },
+      "fragment_diff_path": ".agents/evidence/M5-source-recovered/cli-resume-fragment.diff",
+      "authenticity_note": "The earlier function is an exact transcript source excerpt; the later fragment is reconstructed from transcript patch hunks and compared to current source. Neither is represented as a full-file hash match.",
+      "training_time_patch_events": [
+        {
+          "transcript_lines": [
+            3997,
+            4007
+          ],
+          "change": "Added the earlier 093992... identity to the explicit recovery-compatible code-hash allowlist."
+        },
+        {
+          "transcript_lines": [
+            4152,
+            4181
+          ],
+          "change": "Changed checkpoint candidate validation to newest-first full journal verification with fallback after load, instead of eagerly verifying every candidate."
+        },
+        {
+          "transcript_lines": [
+            4182,
+            4215
+          ],
+          "change": "Final selector uses filename episode/decision counters to order candidate checkpoints before loading and verification."
+        },
+        {
+          "transcript_lines": [
+            5013,
+            5017
+          ],
+          "change": "Imported verify_training_checkpoint used by the new selector."
+        }
+      ]
+    },
+    "diff_display_policy": "Unified-diff artifact renders trailing ASCII spaces as the visible U+2420 SPACE SYMBOL. The recovered source files remain byte-exact and are independently verified against their recorded SHA-256 values."
+  }
+}

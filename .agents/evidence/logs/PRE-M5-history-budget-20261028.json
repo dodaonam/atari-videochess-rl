@@ -1,0 +1,127 @@
+{
+  "artifact": {
+    "bundle_files_verified": 19,
+    "checkpoint_path": "/home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4/pretrained-behavior-only.pt",
+    "checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+    "reference_profile_sha256": "fa863eacaf4afaeed69bcde554e5935bc3690c4a544f8634e92ce02591a96b4f",
+    "reference_profile_source_revision": "d4fe2ad3fa3936faecddcdba0e976e16cdeabd42",
+    "reference_workload_history_plies": {
+      "max": 419,
+      "p50": 52,
+      "p95": 270
+    }
+  },
+  "budget_projection": {
+    "does_not_guarantee_m5_convergence_or_runtime": true,
+    "excludes_replay_sampling_checkpoint_and_validation_overhead": true,
+    "max_average_update_seconds_for_cap": 1.0533180278641543,
+    "median_projection_within_cap": true,
+    "observed_m4_decision_time_projection_seconds": 200.47631987836212,
+    "p95_projection_within_cap": false,
+    "per_run_cap_seconds": 2700,
+    "run_projection_seconds_at_median_update": 2570.9414528259513,
+    "run_projection_seconds_at_p95_update": 3085.416370456453,
+    "updates_per_10000_decision_run": 2373
+  },
+  "elapsed_seconds": 7.473335663002217,
+  "limitations": [
+    "History lengths are synthetic evenly spaced shapes capped at the observed M4 workload maximum; board, candidates, and move histories are not semantically valid chess transitions.",
+    "The M4 workload is a cost proxy, not an M5 policy or replay-history distribution.",
+    "The projection excludes replay sampling, transition validation, checkpoint I/O, and validation overhead.",
+    "No M5 learner, training campaign, or policy-quality result was produced."
+  ],
+  "resource": {
+    "peak_rss_bytes": 388784128,
+    "rss_cap_bytes": 2147483648,
+    "wall_cap_seconds": 60.0
+  },
+  "schema": "videochess-pre-m5-history-budget-profile/1.0",
+  "software": {
+    "device": "cpu",
+    "logical_cpu_count": 8,
+    "numpy": "2.5.4",
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+    "python": "3.12.3",
+    "torch": "2.14.1+cpu",
+    "torch_threads": {
+      "inter_op": 1,
+      "intra_op": 1
+    }
+  },
+  "source_revision": "1c217fc4c038fd6b7dfff7127d44c120beb10db8",
+  "source_worktree_clean": true,
+  "started_at_utc": "2026-10-28T07:06:01.619618+00:00",
+  "workload": {
+    "batch_size": 32,
+    "candidate_slots_per_row": 46,
+    "finite_losses": [
+      8.477560186292976e-06,
+      2.7904594389838167e-05,
+      7.186864240793511e-05,
+      4.9997590394923463e-05,
+      1.1194618309673388e-05
+    ],
+    "gradient_norms_before_clip": [
+      0.010783614590764046,
+      0.019659359008073807,
+      0.031579453498125076,
+      0.026282118633389473,
+      0.012391198426485062
+    ],
+    "history_length_quantiles": {
+      "max": 419,
+      "min": 0,
+      "p50": 209,
+      "p95": 397
+    },
+    "history_lengths": [
+      0,
+      14,
+      27,
+      41,
+      54,
+      68,
+      81,
+      95,
+      108,
+      122,
+      135,
+      149,
+      162,
+      176,
+      189,
+      203,
+      216,
+      230,
+      243,
+      257,
+      270,
+      284,
+      297,
+      311,
+      324,
+      338,
+      351,
+      365,
+      378,
+      392,
+      405,
+      419
+    ],
+    "max_history_plies": 419,
+    "measured_update_seconds": [
+      0.7593830900004832,
+      0.9850506829970982,
+      1.039071971012163,
+      0.9989317880099406,
+      1.259901229001116
+    ],
+    "synthetic_nonsemantic_chess_batch": true,
+    "total_history_tokens": 6704,
+    "trained_policy_claimed": false,
+    "update_median_seconds": 0.9989317880099406,
+    "update_p95_seconds": 1.2157353774033253,
+    "update_repeats_total": 7,
+    "warmup_updates_excluded": 2
+  }
+}

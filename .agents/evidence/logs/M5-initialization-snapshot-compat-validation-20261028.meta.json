@@ -1,0 +1,13 @@
+{
+  "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -c \"import json; from videochess_rl.rl.cli import verify_transfer_inputs,_save_initialization_pair,load_config; model,transfer,meta=verify_transfer_inputs(); print(json.dumps([_save_initialization_pair(seed,model,meta,transfer) for seed in load_config()['training']['paired_seeds']],sort_keys=True))\" > /tmp/M5-initialization-compat-validation.log 2>&1",
+  "executed_at_utc": "2026-10-28T13:32:53.001616Z",
+  "recorded_at_utc": "2026-10-28T13:36:42Z",
+  "exit_code": 0,
+  "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+  "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+  "code_source_sha256": "093992c50e893a7fdd92f2f95faafe28d4f1e73c7351a4a8179a3056c4e63b00",
+  "log_path": ".agents/evidence/logs/M5-initialization-snapshot-compat-validation-20261028.log",
+  "log_sha256": "edc36781ae49bd81d415534414bc1af7be2a5d96d79caadc4e1cce993af177cc",
+  "result": "PASS: reverified accepted M3/M4 inputs and all six immutable decision-0 snapshots; Warm shared weights equal M4, behavior heads excluded, paired Q heads equal, and Scratch representations independent.",
+  "execution_start_timestamp_persisted": false
+}

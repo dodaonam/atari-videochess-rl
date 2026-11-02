@@ -1,0 +1,26 @@
+{
+  "command": "Resolve the Warm checkpoint by its pinned SHA-256 from the verified M5 root manifest; set M4/M5 private artifact roots; run <project-python> -m unittest discover -s tests -v",
+  "completed_at_utc": "2026-10-30T16:41:28Z",
+  "configuration_identity": {
+    "m4_root_manifest_sha256": "f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921",
+    "m5_root_manifest_sha256": "a201a254671ad59ae1fecb402abf994d5bf523097f1c3010b5c7fa237ae6dd4c",
+    "m6_config_sha256": "05aedeb30efb8b6b97667c44f9d606b58d4da8ae20800d4ef143e629420cebac",
+    "selected_checkpoint_manifest_path": "runs/m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__warm__attempt-0001/m5-e072011a58411f4ff26040013ba2e8c71212e6c83acf755337c2d7e1e01378d7__warm__attempt-0001__warm__seed-20261104__attempt-0001__stage-post_rl__decisions-050000__eval-snapshot-v2.pt",
+    "selected_checkpoint_sha256": "0b2405017a8e1d539851f0cd278883d3fd23936fb5c2f7962c813590a6fd1767"
+  },
+  "executed_at_utc": "2026-10-30T16:38:40Z",
+  "execution_environment": "Local CPU; Python 3.12.3, Gymnasium 1.4.0, ALE-Py 0.11.2, PyTorch 2.14.1+cpu, python-chess 1.11.2; pinned Stockfish sf_19 used only by existing UCI-readiness test.",
+  "exit_code": 0,
+  "fail_count": 0,
+  "git_revision": "facb28face189bd5d90e8cbdba49e74d4758e1ab",
+  "log_path": ".agents/evidence/logs/M6-full-suite-facb28f.log",
+  "log_sanitization": "Private paths replaced by role labels; test output and results unchanged.",
+  "log_sha256": "992e14a95c79054823a445b54023f11933facacd129226c072e2c5678491d8b8",
+  "maximum_resident_set_kib": 373020,
+  "pass_count": 423,
+  "result": "PASS: 423 tests, 0 failures, 0 skips; unittest elapsed 165.546 seconds.",
+  "skip_count": 0,
+  "test_count": 423,
+  "unittest_elapsed_seconds": 165.546,
+  "wall_elapsed_seconds": 167.547
+}

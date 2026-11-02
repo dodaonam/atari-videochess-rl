@@ -1,0 +1,20 @@
+G3 post-merge verification on a clean clone
+Commit: e0b434530df51b08595e3896c175f81b4a8f8c64
+Tree: 793c3e9268d188a7673feb0b680554f94b902fd9
+Clone path: /tmp/g3-postmerge-verify-e0b
+
+Command: python3 scripts/agent_preflight.py --json
+Exit code: 0
+Result: ok=true; errors=0; warning ARTIFACT_MANIFEST_REQUIRED only.
+Recorded JSON output: /tmp/G3-postmerge-preflight-e0b.json
+Recorded JSON SHA-256: 8b30cd68088580cb836f6787e9d371827928dec4557031bd30bf08ef97eddf9e
+
+Command: python3 scripts/migrate_checkpoint_history.py verify
+Exit code: 0
+Result: status=verified; storage=archive; record_count=246.
+First checkpoint: cp-c410173e-20261014T154924847559Z
+Last archived checkpoint: cp-35a99f0e-20261030T083246504921Z
+Logical SHA-256: aecc5a44e1ed72f8c161233f4c773d97b14fe39935a8fbd427403eb6fb89b550
+Combined raw preflight/archive transcript SHA-256: 19d67e97d1ee5de185b49a5f657516c1664af81fa01a45764087e4fcdf753f50
+
+Private datasets and M2–M5 binary artifacts are not present in this clean clone and were not treated as verified here.

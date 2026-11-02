@@ -1,0 +1,287 @@
+"""Focused, dependency-free contracts for Pre-M7 history and live M7 governance."""
+
+from __future__ import annotations
+
+import json
+import re
+import sys
+import unittest
+from pathlib import Path
+
+
+REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO / "scripts"))
+import agent_preflight  # noqa: E402
+
+
+def read_json(relative: str) -> dict:
+    return json.loads((REPO / relative).read_text(encoding="utf-8"))
+
+
+class PreM7ContractTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.protocol_path = REPO / "docs/04-research/M7_EVALUATION_PROTOCOL.md"
+        cls.plan_path = REPO / ".agents/plans/M07-evaluation-delivery.md"
+        cls.readiness_path = REPO / ".agents/plans/PRE-M7-readiness.md"
+        cls.readiness_evidence_path = REPO / ".agents/evidence/PRE-M7-readiness-20261031.md"
+        cls.protocol = cls.protocol_path.read_text(encoding="utf-8")
+        cls.plan = cls.plan_path.read_text(encoding="utf-8")
+        cls.readiness = cls.readiness_path.read_text(encoding="utf-8")
+        cls.state = read_json(".agents/state/PROJECT_STATE.yaml")
+        cls.backlog = read_json(".agents/tasks/BACKLOG.yaml")
+        cls.tasks = {task["id"]: task for task in cls.backlog["tasks"]}
+
+    def test_g4_g5_criterion_mapping_matches_canonical_acceptance(self) -> None:
+        self.assertEqual(
+            agent_preflight._load_m7_gate_criteria(REPO),
+            {
+                "G4": {"M7-01", "M7-02", "M7-03"},
+                "G5": {"M7-04", "M7-05"},
+            },
+        )
+        expected = {
+            "M7-001": ["M7-01"],
+            "M7-002": ["M7-02"],
+            "M7-003": ["M7-03"],
+            "M7-004": ["M7-04"],
+            "M7-005": ["M7-05"],
+        }
+        for task_id, criteria in expected.items():
+            with self.subTest(task=task_id):
+                self.assertEqual(self.tasks[task_id]["acceptance_criteria_ids"], criteria)
+
+    def test_m7_engineering_complete_g5_ready_for_review_and_research_closed(self) -> None:
+        m7_ids = [f"M7-{number:03d}" for number in range(1, 6)]
+        for task_id in m7_ids:
+            task = self.tasks[task_id]
+            self.assertEqual(task["milestone"], "M7")
+            self.assertFalse(task["blocker_ids"])
+            if task["status"] in {"pending", "in_progress", "blocked"}:
+                self.assertTrue(task["next_action"].strip())
+            else:
+                self.assertEqual(task["next_action"], "")
+        for task_id in ("M7-001", "M7-002", "M7-003"):
+            self.assertEqual(self.tasks[task_id]["status"], "done")
+        self.assertEqual(self.tasks["M7-004"]["status"], "done")
+        self.assertEqual(self.tasks["M7-005"]["status"], "done")
+        self.assertEqual(self.tasks["M7-001"]["depends_on"], ["M4-001", "M5-001", "M6-001", "M2-001", "M3-001"])
+        self.assertEqual(self.tasks["M7-002"]["depends_on"], ["M7-001"])
+        self.assertEqual(self.tasks["M7-003"]["depends_on"], ["M7-002"])
+        self.assertEqual(self.tasks["M7-004"]["depends_on"], ["M7-003"])
+        self.assertEqual(self.tasks["M7-005"]["depends_on"], ["M7-004"])
+        self.assertTrue(all(self.tasks[f"M7-{n:03d}"]["requires_user_gate_approval"] is None for n in (1, 2, 3)))
+        self.assertEqual(self.tasks["M7-004"]["requires_user_gate_approval"], "G4")
+        self.assertTrue(any(
+            item.get("path") == ".agents/evidence/M7-004-acceptance-20261101.md"
+            for item in self.tasks["M7-004"]["evidence"]
+        ))
+        # G5 owns M7-05 acceptance; making G5 a prerequisite to start its own
+        # deliverable would create a circular gate dependency.
+        self.assertIsNone(self.tasks["M7-005"]["requires_user_gate_approval"])
+        self.assertEqual(self.tasks["M7-005"]["next_action"], "")
+        engineering = self.state["engineering"]
+        self.assertEqual(engineering["next_milestone"], "M7")
+        self.assertIsNone(engineering["active_milestone"])
+        self.assertEqual(engineering["next_milestone_status"], "complete")
+        self.assertFalse(engineering["start_authorized"])
+        self.assertIn("M0-M7 engineering and research scope is complete", engineering["hold_reason"])
+        self.assertEqual(engineering["start_authorization_record"]["authorization_id"], "M7-AUTH-20261031-OPTION-B")
+        self.assertEqual(engineering["start_authorization_record"]["task_id"], "M7-001")
+        self.assertEqual(engineering["start_authorization_record"]["evidence_path"], ".agents/evidence/M7-001-authorization-20261031.md")
+        self.assertEqual(self.state["task_refs"], {"active_task_id": None, "next_task_id": None})
+        self.assertTrue(any(
+            item.get("path") == ".agents/evidence/M7-005-authorization-20261101.md"
+            for item in self.tasks["M7-005"]["evidence"]
+        ))
+        self.assertEqual(self.state["governance"]["approved_gates"], ["G0", "G1", "G2", "G3", "G4", "G5"])
+        self.assertEqual(self.state["governance"]["current_gate"], "G5")
+        self.assertEqual(self.state["governance"]["gate_status"], "approved")
+        self.assertIn("G5", self.state["governance"]["approved_gates"])
+        self.assertIn("G5-F02", self.state["governance"]["next_user_action"])
+        self.assertIn("No pending M0-M7 engineering or governance tasks", self.state["governance"]["next_user_action"])
+        self.assertIsNone(self.state["governance"]["next_governance_gate"])
+        g4 = (REPO / ".agents/evidence/G4-PM-acceptance-20261101.md").read_text(encoding="utf-8")
+        self.assertIn("issuecomment-6552570969", g4)
+        self.assertIn("2bca79001ed94324b725dce2dfdc485e3a51ad3e", g4)
+        self.assertIn("G5 remains **NOT APPROVED**", g4)
+        self.assertIn("NO RELEASE / NO PUBLICATION AUTHORIZED", g4)  # historical G4 review text
+        auth_evidence = (REPO / ".agents/evidence/M7-001-authorization-20261031.md").read_text(encoding="utf-8")
+        self.assertIn("M7-001, M7-002, and M7-003", auth_evidence)
+        self.assertIn("HOLD / NOT APPROVED", auth_evidence)
+        self.assertIn("M7-004 and M7-005 remain gated", auth_evidence)
+        self.assertIn("independent PM has approved G4", auth_evidence)
+        self.assertTrue(any(
+            item.get("path") == ".agents/evidence/M7-005-acceptance-20261101.md"
+            for item in self.tasks["M7-005"]["evidence"]
+        ))
+        release = (REPO / "docs/07-delivery/RELEASE_DISPOSITION.md").read_text(encoding="utf-8")
+        self.assertIn("affirmative authorization", release.lower())
+        self.assertIn("blanket owner prohibition is **unverified**", release)
+        self.assertIn("G5-F02", release)
+        self.assertNotIn("NO RELEASE / NO PUBLICATION AUTHORIZED", release)
+        self.assertIn("O-06", release)
+        self.assertEqual(self.state["governance"]["approved_gates"][-1], "G5")
+        self.assertEqual(self.tasks["M6-001"]["status"], "done")
+
+    def test_g5_status_requires_the_recorded_independent_pm_decision(self) -> None:
+        decision = read_json(".agents/evidence/G5-PM-acceptance-20261101.json")
+        self.assertEqual(decision["decision"], "approved_with_limitations")
+        self.assertEqual(
+            decision["decision_text"],
+            "G5 APPROVED WITH SCIENTIFIC, ENVIRONMENT-VERIFICATION, AND NO-RELEASE LIMITATIONS",
+        )
+        self.assertEqual(decision["authority"]["source_comment_id"], 6556836388)
+        self.assertEqual(
+            decision["authority"]["source_url"],
+            "https://github.com/dodaonam/atari-videochess-rl/pull/20#issuecomment-6556836388",
+        )
+        self.assertEqual(decision["review_target"]["approved_head"], "ec7ab8c0fe097004eb4d37018be898c68f41364b")
+        self.assertEqual(decision["review_target"]["base_sha"], "0f45fa06c235658da48d3d41a9091c06580bfe27")
+        self.assertEqual(decision["integration"]["merge_commit_sha"], "0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b")
+        self.assertEqual(
+            decision["integration"]["parent_shas"],
+            [decision["review_target"]["base_sha"], decision["review_target"]["approved_head"]],
+        )
+        self.assertEqual(decision["accepted_scope"], ["M7-04", "M7-05"])
+        self.assertEqual(decision["finding"], {"id": "G5-F01", "status": "resolved"})
+        self.assertFalse(decision["release_authorization"]["authorized"])
+        self.assertFalse(decision["release_authorization"]["g5_approval_grants_distribution_rights"])
+        self.assertIn("G5", self.state["governance"]["approved_gates"])
+        self.assertEqual(self.state["governance"]["gate_status"], "approved")
+        self.assertFalse(self.state["engineering"]["start_authorized"])
+        self.assertEqual(self.state["engineering"]["next_milestone_status"], "complete")
+        current = read_json(".agents/evidence/G5-F02-provenance-status-20261101.json")
+        self.assertEqual(current["finding"]["id"], "G5-F02")
+        self.assertEqual(current["finding"]["pm_disposition"], "resolved_by_fresh_independent_pm_review")
+        self.assertEqual(current["final_pm_decision"]["source"], "https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6558975009")
+        self.assertEqual(current["final_pm_decision"]["g5"], "approved_with_limitations")
+        self.assertEqual(current["owner_release_authorization"]["explicit_blanket_owner_prohibition"], "unverified")
+        self.assertEqual(current["owner_release_authorization"]["affirmative_authorization_for_restricted_artifacts"], "not_established")
+        self.assertEqual(current["current_governance"]["m7_04"], "accepted; not reopened by G5-F02")
+
+    def test_canonical_state_and_backlog_are_json_yaml_and_dependency_valid(self) -> None:
+        self.assertEqual(self.state["format"], "JSON-compatible YAML 1.2")
+        self.assertEqual(self.backlog["format"], "JSON-compatible YAML 1.2")
+        known = set(self.tasks)
+        for task in self.tasks.values():
+            self.assertTrue(set(task["depends_on"]).issubset(known), task["id"])
+        errors: list[dict[str, str]] = []
+        acceptance_ids = agent_preflight._load_acceptance_ids(REPO, errors)
+        self.assertFalse(errors)
+        self.assertTrue({f"M7-{n:02d}" for n in range(1, 6)}.issubset(acceptance_ids))
+
+    def test_read_only_input_audits_bind_frozen_identities_and_provenance(self) -> None:
+        audit = read_json(".agents/evidence/PRE-M7-input-integrity-20261031.json")
+        self.assertEqual(audit["source_revision"], "fa7683822c436f3e9d6c3455a24cd1f4a6cbb463")
+        checks = {item["name"]: item for item in audit["checks"]}
+        self.assertEqual((checks["M4"]["status"], checks["M4"]["exit_code"]), ("verified", 0))
+        self.assertEqual(checks["M4"]["summary"]["artifact_files_verified"], 19)
+        self.assertEqual(checks["M4"]["summary"]["checkpoint"]["checkpoint_sha256"], "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4")
+        self.assertEqual((checks["M5"]["status"], checks["M5"]["exit_code"]), ("verified", 0))
+        self.assertEqual(checks["M5"]["summary"]["run_manifests"], 7)
+        self.assertEqual(checks["M5"]["summary"]["total_bytes"], 6544747450)
+        m6 = read_json(".agents/evidence/PRE-M7-M6-readonly-audit-20261031.json")
+        self.assertEqual((m6["exit_code"], m6["source_revision"]), (0, "fa7683822c436f3e9d6c3455a24cd1f4a6cbb463"))
+        self.assertEqual(m6["result"]["integrity"]["artifact_manifest"]["sha256"], "bc0068aa2254e4c15165247ee299f48940cca9b7c21f6a288fd13812631ea2b2")
+        self.assertEqual(m6["result"]["reconstructed"]["outcomes"]["ale_terminated_losses"], 11)
+        self.assertEqual(m6["result"]["reconstructed"]["outcomes"]["incomplete"], 9)
+        self.assertEqual(m6["result"]["reconstructed"]["rgb_verified_player_moves"], 385)
+        self.assertEqual(m6["result"]["reconstructed"]["initiated_player_moves"], 405)
+        self.assertTrue(m6["result"]["known_historical_discrepancy"]["finding_id"] == "PM6-F06")
+        self.assertEqual(m6["result"]["disposition"], "PASS_WITH_IMMUTABLE_PM6_F06_ERRATUM_REQUIRED")
+        v1 = m6["result"]["audit"]["v1_integrity_check"]
+        self.assertEqual(v1["current_invocation_exit_code"], 0)
+        self.assertEqual(v1["run_id"], "m6-stage3-ad3998200e31-c5ff389dc4fe")
+        self.assertEqual(v1["artifact_manifest"]["file_count"], 4540)
+        self.assertEqual(v1["finished_attempts"], 35)
+
+    def test_protocol_rejects_pseudoreplication_unsupported_strength_and_elo_claims(self) -> None:
+        text = self.protocol.lower()
+        for required in (
+            "not an independent replication count",
+            "three training-seed pairs",
+            "incomplete attempts are not draws",
+            "no warm-start superiority is established",
+            "no elo value is currently reportable",
+            "never assume a 1500 baseline",
+        ):
+            with self.subTest(required=required):
+                self.assertIn(required, text)
+        forbidden_claims = (
+            "1500 independent training replications",
+            "strong atari chess skill is demonstrated",
+            "v1 and v2 are pooled",
+        )
+        for claim in forbidden_claims:
+            with self.subTest(claim=claim):
+                self.assertNotIn(claim, text)
+
+    def test_tracks_protocols_terminal_states_and_historical_provenance_stay_distinct(self) -> None:
+        text = self.protocol.lower()
+        for item in (
+            "supervised pretraining",
+            "m2 simulator rl",
+            "real ale atari evaluation",
+            "stage 3 v1",
+            "stage 3 v2",
+            "v1 and v2 must never be pooled",
+            "truncated",
+            "incomplete / censored",
+            "rsk-014",
+            "pm6-f06",
+            "not authorized",
+        ):
+            with self.subTest(item=item):
+                self.assertIn(item, text)
+        self.assertIn("11 ale-terminal losses", text)
+        self.assertIn("9 incomplete attempts", text)
+        self.assertIn("incomplete attempts are not draws", text)
+        self.assertIn("the original v2 manifest's", text)
+
+    def test_private_assets_remain_local_and_sanitized_reports_are_portable(self) -> None:
+        tracked = __import__("subprocess").run(
+            ["git", "ls-files", "--", "artifacts"], cwd=REPO, text=True, capture_output=True, check=True
+        ).stdout.splitlines()
+        self.assertFalse(any(path.startswith(("artifacts/m4/", "artifacts/m5/", "artifacts/m6/")) for path in tracked))
+        private_payload_suffixes = {".pt", ".pth", ".ckpt", ".npz", ".pgn", ".png", ".rgb", ".rom"}
+        self.assertFalse(any(Path(path).suffix.lower() in private_payload_suffixes for path in tracked))
+        for relative in (
+            ".agents/evidence/PRE-M7-input-integrity-20261031.json",
+            ".agents/evidence/PRE-M7-M6-readonly-audit-20261031.json",
+            ".agents/evidence/PRE-M7-resource-snapshot-20261031.json",
+        ):
+            content = (REPO / relative).read_text(encoding="utf-8")
+            self.assertNotIn("/home/", content)
+            self.assertNotRegex(content, r"(?i)(?:raw_rgb|rom_bytes|checkpoint_bytes|credential|token)\s*[:=]")
+        self.assertIn("local-only", self.readiness.lower())
+        self.assertIn("do not upload", self.plan.lower())
+
+    def test_all_new_local_markdown_links_resolve(self) -> None:
+        sources = (self.protocol_path, self.plan_path, self.readiness_path, self.readiness_evidence_path)
+        checked = 0
+        for source in sources:
+            text = source.read_text(encoding="utf-8")
+            for target in re.findall(r"\]\(([^)]+)\)", text):
+                if target.startswith(("https://", "http://", "mailto:")):
+                    continue
+                path = target.split("#", 1)[0]
+                if not path:
+                    continue
+                resolved = (source.parent / path).resolve()
+                with self.subTest(source=source.relative_to(REPO), target=target):
+                    self.assertTrue(resolved.is_file(), f"unresolved local link: {target}")
+                    relative = resolved.relative_to(REPO).as_posix()
+                    committed = __import__("subprocess").run(
+                        ["git", "cat-file", "-e", f"HEAD:{relative}"],
+                        cwd=REPO,
+                        text=True,
+                        capture_output=True,
+                    )
+                    self.assertEqual(committed.returncode, 0, f"local link target is not committed in HEAD: {target}")
+                checked += 1
+        self.assertGreaterEqual(checked, 13)
+
+
+if __name__ == "__main__":
+    unittest.main()

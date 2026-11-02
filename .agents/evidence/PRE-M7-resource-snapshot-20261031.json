@@ -1,0 +1,15 @@
+{
+  "host_observations": {
+    "filesystem_available_bytes": 50710388736,
+    "filesystem_path": "mounted root filesystem",
+    "filesystem_total_bytes": 156513894400,
+    "filesystem_used_bytes": 97778454528,
+    "logical_cpus": 8,
+    "memory_available_bytes": 24910135296,
+    "memory_total_bytes": 33492422656
+  },
+  "interpretation": "Current local capacity only; no cloud allocation or experiment was run.",
+  "observed_at_utc": "2026-10-31T14:22:18Z",
+  "schema": "videochess-pre-m7-resource-snapshot/1.0",
+  "source_revision": "fa7683822c436f3e9d6c3455a24cd1f4a6cbb463"
+}

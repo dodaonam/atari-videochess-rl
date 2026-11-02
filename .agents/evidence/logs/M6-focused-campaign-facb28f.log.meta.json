@@ -1,0 +1,21 @@
+{
+  "command": "<project-python> -m unittest discover -s tests -p test_m6_campaign.py -v",
+  "completed_at_utc": "2026-10-30T16:38:27Z",
+  "configuration_identity": {
+    "m6_config_sha256": "05aedeb30efb8b6b97667c44f9d606b58d4da8ae20800d4ef143e629420cebac"
+  },
+  "executed_at_utc": "2026-10-30T16:38:25Z",
+  "execution_environment": "Local CPU; Python 3.12.3, repository virtualenv; focused M6 campaign tests; no ALE gameplay.",
+  "exit_code": 0,
+  "fail_count": 0,
+  "git_revision": "facb28face189bd5d90e8cbdba49e74d4758e1ab",
+  "log_path": ".agents/evidence/logs/M6-focused-campaign-facb28f.log",
+  "log_sha256": "7a4555c1bc9c3e985f5d3ae81afc96f95de6d18217792bcdadec8a6f00d23b50",
+  "maximum_resident_set_kib": 16304,
+  "pass_count": 7,
+  "result": "PASS: 7 tests, 0 failures, 0 skips; unittest elapsed 0.084 seconds.",
+  "skip_count": 0,
+  "test_count": 7,
+  "unittest_elapsed_seconds": 0.084,
+  "wall_elapsed_seconds": 1.656
+}

@@ -1,0 +1,24 @@
+commands:
+  git show -s --format=%H%n%T%n%P 509f9f83f9249208fd5adba572efed2d2f0f82ff
+  git rev-parse e919ee3ad039c9d2de3ebdf6b82704ecd61c0a6f^{tree}
+  git ls-remote origin refs/heads/initial-idea
+  gh pr view 14 --json number,state,isDraft,baseRefName,headRefName,headRefOid,mergeCommit,mergedAt,mergedBy
+  gh api repos/dodaonam/atari-videochess-rl/issues/comments/6539798992
+result: PASS: PR #14 is merged into initial-idea at 509f9f83f9249208fd5adba572efed2d2f0f82ff; parent order is e6d444e475e447e9f37951f16585bf496f804c9d then e919ee3ad039c9d2de3ebdf6b82704ecd61c0a6f; integrated and accepted feature trees both equal 7eb06fd9c0e0b363ca324d203e1debf26f233c08. PM comment 6539798992 independently accepts M6-01–M6-05 and explicitly keeps G4 unapproved/M7 unauthorized; the PM notes they did not rerun private raw audit or the 452-test suite.
+Exit code: 0
+execution_environment: clean Git worktree at the verified merge commit; GitHub API read-only inspection
+started_at_utc: 2026-10-31T07:40:17.938379Z
+completed_at_utc: 2026-10-31T07:40:19.951127Z
+merge_commit: 509f9f83f9249208fd5adba572efed2d2f0f82ff
+integration_tree: 7eb06fd9c0e0b363ca324d203e1debf26f233c08
+accepted_feature_head: e919ee3ad039c9d2de3ebdf6b82704ecd61c0a6f
+accepted_feature_tree: 7eb06fd9c0e0b363ca324d203e1debf26f233c08
+parent_1: e6d444e475e447e9f37951f16585bf496f804c9d
+parent_2: e919ee3ad039c9d2de3ebdf6b82704ecd61c0a6f
+remote_initial_idea: 509f9f83f9249208fd5adba572efed2d2f0f82ff
+pr_state: MERGED
+pr_merged_at_utc: 2026-10-31T05:55:49Z
+pr_merged_by: dodaonam
+pm_comment_url: https://github.com/dodaonam/atari-videochess-rl/pull/14#issuecomment-6539798992
+pm_comment_created_at_utc: 2026-10-31T05:55:40Z
+pm_comment_body_sha256: a31a9d7a27ba09d88b71634eec6d58d43fd4f33c89d553965e0c8e15a5038e86

@@ -1,0 +1,17 @@
+git_revision=71c623cb31cee9b476d679a870aa5765d05e12ef
+environment=clean local clone from committed feature branch
+python=3.12.3
+
+[history_verify]
+command=python3 scripts/migrate_checkpoint_history.py verify
+started_utc=2026-10-22T18:05:26+00:00
+finished_utc=2026-10-22T18:05:26+00:00
+exit_code=0
+{   "first_id": "cp-c410173e-20261014T154924847559Z",   "last_id": "cp-b318f7f6-20261022T175140652216Z",   "logical_sha256": "5e322d43cc168bc1b15f0c16d1f39e61da458a876c84970441e9e80ae79f753d",   "record_count": 143,   "status": "verified",   "storage": "archive" }
+
+[preflight]
+command=python3 scripts/agent_preflight.py --json
+started_utc=2026-10-22T18:05:26+00:00
+finished_utc=2026-10-22T18:05:27+00:00
+exit_code=0
+ok=True errors=0 warnings=['ARTIFACT_MANIFEST_REQUIRED'] git_snapshot_matches=True portable_index_matches=True engineering_start_authorized=False

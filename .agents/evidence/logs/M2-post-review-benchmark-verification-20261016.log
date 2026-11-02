@@ -1,0 +1,11 @@
+started_at_utc=2026-10-16T15:51:38Z
+git_revision=b3fc8105a5dbf543267a77be77f6a8c6c76ab8e2
+command=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python (compare official/repeat records, historical semantics, and replay all UCI histories)
+official_repeat_semantic_match=True
+historical_move_outcome_semantics_match=True (policy config/source/runtime excluded)
+replayed_games=8/8; legal_UCI=True; outcome/WDL/plies/stop_metadata=True
+termination_reasons={"checkmate": 5, "insufficient_material": 3}
+summary={"by_agent_policy": {"random_legal": {"by_agent_color": {"black": {"draws": 1, "games": 2, "losses": 1, "wins": 0}, "white": {"draws": 1, "games": 2, "losses": 1, "wins": 0}}, "completed_games": 4, "completed_mean_decisions": 90.5, "draws": 2, "external_failures": 0, "games": 4, "interruptions": 0, "losses": 2, "truncated_games": 0, "wins": 0}, "simple_material_heuristic": {"by_agent_color": {"black": {"draws": 0, "games": 2, "losses": 0, "wins": 2}, "white": {"draws": 1, "games": 2, "losses": 0, "wins": 1}}, "completed_games": 4, "completed_mean_decisions": 51.0, "draws": 1, "external_failures": 0, "games": 4, "interruptions": 0, "losses": 0, "truncated_games": 0, "wins": 3}}, "completed_games": 8, "external_failures": 0, "games": 8, "interruptions": 0, "truncated_games": 0}
+source_revision=b3fc8105a5dbf543267a77be77f6a8c6c76ab8e2
+git_worktree_dirty=True
+exit_code=0

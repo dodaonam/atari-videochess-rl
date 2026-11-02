@@ -1,0 +1,10 @@
+Stockfish 19 configured-environment verification (no search performed)
+Started/completed UTC: 2026-10-23T14:44:32Z
+Repository setup: docs/05-operations/SETUP.md pins the manually provisioned Stockfish 19 binary and GPL text in the project venv; `uv sync` does not install the engine.
+Command/procedure: hash `/home/dodaonam/Projects/atari-videochess-rl/.venv/share/stockfish/stockfish` and `Copying.txt`; inspect `.venv/bin/stockfish`; run `uv run --locked --no-sync --project /home/dodaonam/Projects/atari-videochess-rl python -c 'import shutil; print(shutil.which("stockfish"))'`.
+uv version: 0.9.26
+Symlink target: ../share/stockfish/stockfish
+Executable SHA-256: 0f83d24cc46d2c66c60f16001af5444873bc112b7d028594513426894c12da19 (matches M0 evidence)
+Copying.txt SHA-256: 3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986 (matches M0 evidence)
+Configured PATH lookup: /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/stockfish
+Result: PASS. No install, download, replacement, analysis, or engine search was performed by this check. The full-suite M0 smoke test uses only UCI readiness/ping.

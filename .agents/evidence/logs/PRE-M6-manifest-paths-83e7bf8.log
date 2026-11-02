@@ -1,0 +1,7 @@
+test_external_artifact_store_is_reported_as_absolute_path (test_m5_artifact_manifest_paths.ArtifactManifestPathTests.test_external_artifact_store_is_reported_as_absolute_path) ... ok
+test_repository_artifact_path_is_relative (test_m5_artifact_manifest_paths.ArtifactManifestPathTests.test_repository_artifact_path_is_relative) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK

@@ -1,0 +1,19 @@
+Command: <project-python> -m unittest discover -s tests -p test_m6_campaign.py -v
+Result: PASS: 7 tests, 0 failures, 0 skips; unittest elapsed 0.084 seconds.
+Exit code: 0
+Git revision: facb28face189bd5d90e8cbdba49e74d4758e1ab
+M6 config SHA-256: 05aedeb30efb8b6b97667c44f9d606b58d4da8ae20800d4ef143e629420cebac
+
+--- Focused campaign tests ---
+test_debug_and_default_profiles_are_separate (test_m6_campaign.M6CampaignPlanTests.test_debug_and_default_profiles_are_separate) ... ok
+test_frozen_stage3_seed_roster_counts_and_paired_order (test_m6_campaign.M6CampaignPlanTests.test_frozen_stage3_seed_roster_counts_and_paired_order) ... ok
+test_global_gameplay_budget_counts_all_stage_attempt_records (test_m6_campaign.M6CampaignPlanTests.test_global_gameplay_budget_counts_all_stage_attempt_records) ... ok
+test_interrupted_after_reset_is_sealed_without_guessing_or_replaying (test_m6_campaign.M6CampaignPlanTests.test_interrupted_after_reset_is_sealed_without_guessing_or_replaying) ... ok
+test_relative_artifact_root_is_normalized_before_trace_paths_are_built (test_m6_campaign.M6CampaignPlanTests.test_relative_artifact_root_is_normalized_before_trace_paths_are_built) ... ok
+test_stage3_roster_pins_exact_accepted_checkpoint_identities (test_m6_campaign.M6CampaignPlanTests.test_stage3_roster_pins_exact_accepted_checkpoint_identities) ... ok
+test_versioned_stage3_configuration_matches_authorized_limits (test_m6_campaign.M6CampaignPlanTests.test_versioned_stage3_configuration_matches_authorized_limits) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.084s
+
+OK

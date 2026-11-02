@@ -1,0 +1,11 @@
+check=full_tests_diagnostic_not_counted
+git_head=ab244916f4a06a2f8abc79383e4fe63186da98bf
+worktree=dirty (test_m3_data.py and checkpoint/state files changed before commit)
+completed_at_utc=2026-10-28T04:50:58.295140Z
+duration_seconds=207.036
+exit_code=1
+test_count=319
+classification=invalid_for_clean-clone_acceptance
+failing_test=tests.test_agent_context.AgentContextRecoveryTests.test_project_context_can_be_recovered_without_chat_history
+cause=The recovery test correctly detected that this development worktree did not match its committed portable snapshot. This run was not counted; the same test and full suite passed in a clean clone at ab244916f4a06a2f8abc79383e4fe63186da98bf.
+command=PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/share/stockfish:$PATH PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v

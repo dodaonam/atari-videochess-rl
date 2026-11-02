@@ -1,0 +1,16 @@
+{
+  "check": "accepted_m3_release_verification_immutable",
+  "command": "PYTHONPATH=/home/dodaonam/Projects/atari-videochess-rl-m3:$PWD PATH=/usr/bin:/bin /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m videochess_rl.data verify --release /home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+  "end_utc": "2026-10-28T09:10:42Z",
+  "environment": "Fresh clean candidate clone plus existing pinned Python 3.12.3 environment; read-only external artifact; no data changes.",
+  "exit_code": 0,
+  "files_before_after_equal": true,
+  "log_path": ".agents/evidence/logs/PRE-M5-F05-clean-ef1ffae-m3-release.log",
+  "log_sha256": "bfb801fbeb817e962863eb0f23d8bb28e3c108de63846222980b5c0c86d0ac28",
+  "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+  "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+  "result": "PASS",
+  "revision": "ef1ffae65a7e08579e7ae00502a11de59c3efea3",
+  "split_sha256": "84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e",
+  "start_utc": "2026-10-28T09:08:50Z"
+}

@@ -1,0 +1,13 @@
+{
+  "command": "PYTHONDONTWRITEBYTECODE=1 PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:$PATH /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python scripts/verify_m5_episode_checkpoint.py --training-seed 20261104 --arm warm > /tmp/M5-checkpoint-restore-validation.log 2>&1",
+  "executed_at_utc": "2026-10-28T13:24:07.172617Z",
+  "recorded_at_utc": "2026-10-28T13:24:38Z",
+  "exit_code": 0,
+  "git_revision": "08f98f9dfc58fbf54e29afabb009020b787f2718",
+  "config_sha256": "84d305084397ad18397dfe395fab58de824fa056729675d0d1cd9ca8bdd06d8d",
+  "code_source_sha256": "4d5b986c3b0ac517215f5cdd26f33a5e155390b26dc8597da50041edb9db0a8e",
+  "log_path": ".agents/evidence/logs/M5-checkpoint-restore-validation-20261028.log",
+  "log_sha256": "4c264ca3c59ec81a84d2b77cd48771ccb728536e3a9489fe91addee80438fb9c",
+  "result": "PASS: the 215-decision Warm-start episode checkpoint, replay journal, optimizer/target/online state, counters, and RNG state verified and restored under the current recovery-compatible source.",
+  "execution_start_timestamp_persisted": false
+}

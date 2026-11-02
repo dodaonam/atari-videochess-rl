@@ -1,0 +1,11 @@
+check=clean_config_json
+revision=c19b141e3d2bc1440fd1a9afb89c12cfd1704d95
+start_utc=2026-10-28T07:29:43.743770+00:00
+end_utc=2026-10-28T07:29:43.785545+00:00
+duration_seconds=0.041775
+exit_code=0
+test_count=not_detected
+command=python3 -m json.tool configs/rl/m5-double-dqn-v1.json
+environment=Existing pinned Python 3.12.3 CPU venv where applicable; no dependency installation.
+result=PASS
+log_path=/tmp/PRE-M5-cleanclone-clean_config_json-c19b141e.log

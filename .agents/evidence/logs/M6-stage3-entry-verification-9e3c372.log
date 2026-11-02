@@ -1,0 +1,124 @@
+Command: Local M6 entry verifier: load frozen policy roster, compare every checkpoint/sidecar identity to configs/m6/m6-stage3-v1.json, and call VideoChessEnv.runtime_info() without reset or step
+Result: PASS: 5 frozen policy identities and ALE v5 runtime assertions match; no ALE reset or gameplay action.
+Exit code: 0
+Git revision: 9e3c3726873c00c96db2c3141bda9678f8d878d3
+M6 config SHA-256: 05aedeb30efb8b6b97667c44f9d606b58d4da8ae20800d4ef143e629420cebac
+
+--- Verification output ---
+{
+  "ale_reset_or_gameplay_performed": false,
+  "artifact_reserve_bytes": 67108864,
+  "config_sha256": "05aedeb30efb8b6b97667c44f9d606b58d4da8ae20800d4ef143e629420cebac",
+  "loaded_policy_identities": {
+    "m4-behavior-only-seed-20261024": [
+      "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+      "cc0af4694e45fc23acb740c652dd9a62e1bcaf7851815d179693d09539f0f606"
+    ],
+    "m5-scratch-seed-20261104-post-rl": [
+      "3749b0c0b6ae44d3ad5d6bf0863b60937a59fbe881e0bdf4932bdce6033ca400",
+      "1c15e5bc4ba2437df113671dc316accbdfe6d8b59069ed29ed187daebf4fff1e"
+    ],
+    "m5-warm-seed-20261104-post-rl": [
+      "0b2405017a8e1d539851f0cd278883d3fd23936fb5c2f7962c813590a6fd1767",
+      "80d8689e4b349576c5708bb4dce3451e5a8c64d81470cd6f4273a4746844b682"
+    ],
+    "random-legal": [
+      null,
+      null
+    ],
+    "simple-material-heuristic": [
+      null,
+      null
+    ]
+  },
+  "m4_root_manifest_sha256": "f00fde1c59325105e0ffd45bb45eb269dfa303416010c9a0b6c6be47bd9a9921",
+  "m5_root_manifest_sha256": "a201a254671ad59ae1fecb402abf994d5bf523097f1c3010b5c7fa237ae6dd4c",
+  "previous_m6_artifact_bytes": 303169375,
+  "previous_m6_gameplay_wall_seconds": 1394.342,
+  "remaining_artifact_bytes_before_reserve": 1844314273,
+  "remaining_gameplay_wall_seconds": 34605.658,
+  "runtime": {
+    "action_meanings": [
+      "NOOP",
+      "FIRE",
+      "UP",
+      "RIGHT",
+      "LEFT",
+      "DOWN",
+      "UPRIGHT",
+      "UPLEFT",
+      "DOWNRIGHT",
+      "DOWNLEFT"
+    ],
+    "action_space": "Discrete(10)",
+    "ale_py": "0.11.2",
+    "available_difficulties": [
+      0
+    ],
+    "available_modes": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "config": {
+      "difficulty": 0,
+      "env_id": "ALE/VideoChess-v5",
+      "frameskip": 4,
+      "mode": 4,
+      "obs_type": "rgb",
+      "repeat_action_probability": 0.25
+    },
+    "gymnasium": "1.4.0",
+    "instance_runtime": {
+      "action_count": 10,
+      "action_set": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "difficulty": 0,
+      "frameskip": 4,
+      "mode": 4,
+      "obs_type": "rgb",
+      "observation_shape": [
+        210,
+        160,
+        3
+      ],
+      "repeat_action_probability": 0.25
+    },
+    "machine": "x86_64",
+    "observation_space": "Box(0, 255, (210, 160, 3), uint8)",
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+    "python": "3.12.3",
+    "ram_observation_shape": [
+      128
+    ],
+    "registered_defaults": {
+      "frameskip": 4,
+      "full_action_space": false,
+      "game": "video_chess",
+      "max_num_frames_per_episode": 108000,
+      "repeat_action_probability": 0.25
+    },
+    "rom_name": "video_chess.bin",
+    "rom_sha256": "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7"
+  },
+  "schedule_sha256": "c5ff389dc4fe5c796cd47281e504afa2f7d37e2b287b0802664d601805290f75",
+  "schedule_slots": 35,
+  "source": {
+    "git_commit": "9e3c3726873c00c96db2c3141bda9678f8d878d3",
+    "git_tree": "41011397ffd42adbb3c62bc007153c45838b11e4",
+    "source_bundle_sha256": "81c9008b9d1e05f02fff68a3d08a5e772c87fadd33ea62b2ca9477dbeace5242"
+  },
+  "stage3_run_directories_before_launch": []
+}

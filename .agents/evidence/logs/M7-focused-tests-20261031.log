@@ -1,0 +1,99 @@
+test_config_freezes_exact_profile_limits_and_analysis_seed (tests.test_m7_protocol.M7ProtocolTests.test_config_freezes_exact_profile_limits_and_analysis_seed) ... ok
+test_config_rejects_seed_or_horizon_mutation_and_refuses_overwrite (tests.test_m7_protocol.M7ProtocolTests.test_config_rejects_seed_or_horizon_mutation_and_refuses_overwrite) ... ok
+test_exact_policy_roster_and_post_rl_mapping (tests.test_m7_protocol.M7ProtocolTests.test_exact_policy_roster_and_post_rl_mapping) ... ok
+test_privacy_and_gate_boundaries_are_explicit (tests.test_m7_protocol.M7ProtocolTests.test_privacy_and_gate_boundaries_are_explicit) ... ok
+test_schedule_is_exact_unique_complete_and_counterbalanced (tests.test_m7_protocol.M7ProtocolTests.test_schedule_is_exact_unique_complete_and_counterbalanced) ... ok
+test_crossed_cluster_bootstrap_is_deterministic_and_cluster_bounded (tests.test_m7_analysis.M7AnalysisTests.test_crossed_cluster_bootstrap_is_deterministic_and_cluster_bounded) ... ok
+test_historical_m6_vocabulary_is_normalized_without_calling_runner_stop_a_draw (tests.test_m7_analysis.M7AnalysisTests.test_historical_m6_vocabulary_is_normalized_without_calling_runner_stop_a_draw) ... ok
+test_m5_pairing_preserves_seed_and_marks_censoring (tests.test_m7_analysis.M7AnalysisTests.test_m5_pairing_preserves_seed_and_marks_censoring) ... ok
+test_m5_truncation_is_not_counted_as_draw (tests.test_m7_analysis.M7AnalysisTests.test_m5_truncation_is_not_counted_as_draw) ... ok
+test_m7_policy_summary_keeps_all_scheduled_categories_and_bounds (tests.test_m7_analysis.M7AnalysisTests.test_m7_policy_summary_keeps_all_scheduled_categories_and_bounds) ... ok
+test_paired_interval_is_withheld_when_terminal_pairing_is_censored (tests.test_m7_analysis.M7AnalysisTests.test_paired_interval_is_withheld_when_terminal_pairing_is_censored) ... ok
+test_terminal_only_score_uses_known_wdl_denominator_and_can_be_null (tests.test_m7_analysis.M7AnalysisTests.test_terminal_only_score_uses_known_wdl_denominator_and_can_be_null) ... ok
+test_terminal_reward_is_white_perspective_and_unknown_is_not_draw (tests.test_m7_analysis.M7AnalysisTests.test_terminal_reward_is_white_perspective_and_unknown_is_not_draw) ... ok
+test_config_roster_paths_are_root_relative_and_not_private_absolute_paths (tests.test_m7_policies.M7PolicyIdentityTests.test_config_roster_paths_are_root_relative_and_not_private_absolute_paths) ... ok
+test_m4_metadata_hash_is_distinct_from_sidecar_file_hash (tests.test_m7_policies.M7PolicyIdentityTests.test_m4_metadata_hash_is_distinct_from_sidecar_file_hash) ... ok
+test_manifest_inventory_rejects_hash_path_and_symlink_tampering (tests.test_m7_policies.M7PolicyIdentityTests.test_manifest_inventory_rejects_hash_path_and_symlink_tampering) ... ok
+test_nine_policy_ids_and_six_checkpoint_hashes_are_unique (tests.test_m7_policies.M7PolicyIdentityTests.test_nine_policy_ids_and_six_checkpoint_hashes_are_unique) ... ok
+test_constructed_ale_matches_rom_profile_and_horizon_without_reset (tests.test_m7_campaign.M7CampaignTests.test_constructed_ale_matches_rom_profile_and_horizon_without_reset) ... A.L.E: Arcade Learning Environment (version 0.11.2+ecc1138)
+[Powered by Stella]
+ok
+test_resume_recovery_streams_and_validates_hash_chained_ledger (tests.test_m7_campaign.M7CampaignTests.test_resume_recovery_streams_and_validates_hash_chained_ledger) ... ok
+test_resume_rejects_duplicate_attempt_and_tampered_ledger (tests.test_m7_campaign.M7CampaignTests.test_resume_rejects_duplicate_attempt_and_tampered_ledger) ... ok
+test_run_identity_binds_source_config_and_schedule (tests.test_m7_campaign.M7CampaignTests.test_run_identity_binds_source_config_and_schedule) ... ok
+test_runtime_resource_stops_enforce_only_authorized_limits (tests.test_m7_campaign.M7CampaignTests.test_runtime_resource_stops_enforce_only_authorized_limits) ... ok
+test_all_new_local_markdown_links_resolve (tests.test_pre_m7_contracts.PreM7ContractTests.test_all_new_local_markdown_links_resolve) ...
+  test_all_new_local_markdown_links_resolve (tests.test_pre_m7_contracts.PreM7ContractTests.test_all_new_local_markdown_links_resolve) (source=PosixPath('docs/04-research/M7_EVALUATION_PROTOCOL.md'), target='../02-management/decisions/ADR-0004-m7-option-b-execution-authorization.md') ... FAIL
+  test_all_new_local_markdown_links_resolve (tests.test_pre_m7_contracts.PreM7ContractTests.test_all_new_local_markdown_links_resolve) (source=PosixPath('docs/04-research/M7_EVALUATION_PROTOCOL.md'), target='../../.agents/evidence/M7-001-authorization-20261031.md') ... FAIL
+  test_all_new_local_markdown_links_resolve (tests.test_pre_m7_contracts.PreM7ContractTests.test_all_new_local_markdown_links_resolve) (source=PosixPath('docs/04-research/M7_EVALUATION_PROTOCOL.md'), target='../../configs/m7/m7-option-b-1.0.0.json') ... FAIL
+  test_all_new_local_markdown_links_resolve (tests.test_pre_m7_contracts.PreM7ContractTests.test_all_new_local_markdown_links_resolve) (source=PosixPath('.agents/plans/M07-evaluation-delivery.md'), target='../../docs/02-management/decisions/ADR-0004-m7-option-b-execution-authorization.md') ... FAIL
+  test_all_new_local_markdown_links_resolve (tests.test_pre_m7_contracts.PreM7ContractTests.test_all_new_local_markdown_links_resolve) (source=PosixPath('.agents/plans/M07-evaluation-delivery.md'), target='../evidence/M7-001-authorization-20261031.md') ... FAIL
+  test_all_new_local_markdown_links_resolve (tests.test_pre_m7_contracts.PreM7ContractTests.test_all_new_local_markdown_links_resolve) (source=PosixPath('.agents/plans/M07-evaluation-delivery.md'), target='../../configs/m7/m7-option-b-1.0.0.json') ... FAIL
+test_canonical_state_and_backlog_are_json_yaml_and_dependency_valid (tests.test_pre_m7_contracts.PreM7ContractTests.test_canonical_state_and_backlog_are_json_yaml_and_dependency_valid) ... ok
+test_g4_g5_criterion_mapping_matches_canonical_acceptance (tests.test_pre_m7_contracts.PreM7ContractTests.test_g4_g5_criterion_mapping_matches_canonical_acceptance) ... ok
+test_phase_one_is_authorized_and_phase_two_remains_g4_gated (tests.test_pre_m7_contracts.PreM7ContractTests.test_phase_one_is_authorized_and_phase_two_remains_g4_gated) ... FAIL
+test_private_assets_remain_local_and_sanitized_reports_are_portable (tests.test_pre_m7_contracts.PreM7ContractTests.test_private_assets_remain_local_and_sanitized_reports_are_portable) ... ok
+test_protocol_rejects_pseudoreplication_unsupported_strength_and_elo_claims (tests.test_pre_m7_contracts.PreM7ContractTests.test_protocol_rejects_pseudoreplication_unsupported_strength_and_elo_claims) ... ok
+test_read_only_input_audits_bind_frozen_identities_and_provenance (tests.test_pre_m7_contracts.PreM7ContractTests.test_read_only_input_audits_bind_frozen_identities_and_provenance) ... ok
+test_tracks_protocols_terminal_states_and_historical_provenance_stay_distinct (tests.test_pre_m7_contracts.PreM7ContractTests.test_tracks_protocols_terminal_states_and_historical_provenance_stay_distinct) ... ok
+
+======================================================================
+FAIL: test_all_new_local_markdown_links_resolve (tests.test_pre_m7_contracts.PreM7ContractTests.test_all_new_local_markdown_links_resolve) (source=PosixPath('docs/04-research/M7_EVALUATION_PROTOCOL.md'), target='../02-management/decisions/ADR-0004-m7-option-b-execution-authorization.md')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/tests/test_pre_m7_contracts.py", line 207, in test_all_new_local_markdown_links_resolve
+    self.assertEqual(committed.returncode, 0, f"local link target is not committed in HEAD: {target}")
+AssertionError: 128 != 0 : local link target is not committed in HEAD: ../02-management/decisions/ADR-0004-m7-option-b-execution-authorization.md
+
+======================================================================
+FAIL: test_all_new_local_markdown_links_resolve (tests.test_pre_m7_contracts.PreM7ContractTests.test_all_new_local_markdown_links_resolve) (source=PosixPath('docs/04-research/M7_EVALUATION_PROTOCOL.md'), target='../../.agents/evidence/M7-001-authorization-20261031.md')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/tests/test_pre_m7_contracts.py", line 207, in test_all_new_local_markdown_links_resolve
+    self.assertEqual(committed.returncode, 0, f"local link target is not committed in HEAD: {target}")
+AssertionError: 128 != 0 : local link target is not committed in HEAD: ../../.agents/evidence/M7-001-authorization-20261031.md
+
+======================================================================
+FAIL: test_all_new_local_markdown_links_resolve (tests.test_pre_m7_contracts.PreM7ContractTests.test_all_new_local_markdown_links_resolve) (source=PosixPath('docs/04-research/M7_EVALUATION_PROTOCOL.md'), target='../../configs/m7/m7-option-b-1.0.0.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/tests/test_pre_m7_contracts.py", line 207, in test_all_new_local_markdown_links_resolve
+    self.assertEqual(committed.returncode, 0, f"local link target is not committed in HEAD: {target}")
+AssertionError: 128 != 0 : local link target is not committed in HEAD: ../../configs/m7/m7-option-b-1.0.0.json
+
+======================================================================
+FAIL: test_all_new_local_markdown_links_resolve (tests.test_pre_m7_contracts.PreM7ContractTests.test_all_new_local_markdown_links_resolve) (source=PosixPath('.agents/plans/M07-evaluation-delivery.md'), target='../../docs/02-management/decisions/ADR-0004-m7-option-b-execution-authorization.md')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/tests/test_pre_m7_contracts.py", line 207, in test_all_new_local_markdown_links_resolve
+    self.assertEqual(committed.returncode, 0, f"local link target is not committed in HEAD: {target}")
+AssertionError: 128 != 0 : local link target is not committed in HEAD: ../../docs/02-management/decisions/ADR-0004-m7-option-b-execution-authorization.md
+
+======================================================================
+FAIL: test_all_new_local_markdown_links_resolve (tests.test_pre_m7_contracts.PreM7ContractTests.test_all_new_local_markdown_links_resolve) (source=PosixPath('.agents/plans/M07-evaluation-delivery.md'), target='../evidence/M7-001-authorization-20261031.md')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/tests/test_pre_m7_contracts.py", line 207, in test_all_new_local_markdown_links_resolve
+    self.assertEqual(committed.returncode, 0, f"local link target is not committed in HEAD: {target}")
+AssertionError: 128 != 0 : local link target is not committed in HEAD: ../evidence/M7-001-authorization-20261031.md
+
+======================================================================
+FAIL: test_all_new_local_markdown_links_resolve (tests.test_pre_m7_contracts.PreM7ContractTests.test_all_new_local_markdown_links_resolve) (source=PosixPath('.agents/plans/M07-evaluation-delivery.md'), target='../../configs/m7/m7-option-b-1.0.0.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/tests/test_pre_m7_contracts.py", line 207, in test_all_new_local_markdown_links_resolve
+    self.assertEqual(committed.returncode, 0, f"local link target is not committed in HEAD: {target}")
+AssertionError: 128 != 0 : local link target is not committed in HEAD: ../../configs/m7/m7-option-b-1.0.0.json
+
+======================================================================
+FAIL: test_phase_one_is_authorized_and_phase_two_remains_g4_gated (tests.test_pre_m7_contracts.PreM7ContractTests.test_phase_one_is_authorized_and_phase_two_remains_g4_gated)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/tests/test_pre_m7_contracts.py", line 86, in test_phase_one_is_authorized_and_phase_two_remains_g4_gated
+    self.assertIn("Do not begin either until the independent PM has approved G4", auth_evidence)
+AssertionError: 'Do not begin either until the independent PM has approved G4' not found in "# M7-001 Direct Owner Authorization — Option B\n\n**Recorded at:** 2026-10-31T16:02:51Z  \n**Authority:** Project owner, direct instruction in this Codex session  \n**Source reference:** “MASTER EXECUTION ORDER — COMPLETE M7 EVALUATION AND DELIVERY,” owner-authorized Option B. The direct instruction contains no external URL, signature, or separately stated issuance timestamp; this record does not invent one.  \n**Authorization ID:** `M7-AUTH-20261031-OPTION-B`  \n**Authorized task:** M7 / M7-001  \n**Integration baseline:** `initial-idea` at `257fff94c64bc584797e0d191920a57befcae62c` (PR #16 merge)\n\n## Decision\n\nThe project owner directly authorizes Phase I of M7 now: M7-001, M7-002, and M7-003. This supersedes the earlier Pre-M7 proposal's requirement to wait for a separate G4 decision before starting this evaluation work. The independent PM's G4 disposition remains **HOLD / NOT APPROVED**; this authorization is not a G4 decision or acceptance.\n\nM7-001 is authorized to reverify accepted M4/M5/M6 inputs and execute one local CPU ALE/VideoChess campaign of exactly 90 scheduled attempts: the six accepted M5 post-RL checkpoints (Warm-start and Scratch for training seeds `20261104`, `20261105`, `20261106`), accepted M4 r4 behavior-only policy, RandomLegal, and SimpleHeuristic, each on the same ten ALE evaluation seeds `20261201`–`20261210`. Use the exact accepted VideoChess ROM and the M6 v2 extended-horizon profile, with one ALE process at a time, no more than 1,800 seconds per attempt, an 8 GiB new-artifact ceiling, and at least 12 GiB free before execution. Freeze the separately versioned configuration and immutable run identity before the first official attempt.\n\nM7-002 is authorized for analysis of the accepted historical evidence and the complete M7-001 record. M7-003 is authorized to conclude Elo is not reported because no calibrated opponent pool/design has been approved. No retraining, fine-tuning, replacement checkpoints, simulator campaign, Stockfish opponent/evaluation, cloud/GPU resource, private artifact transfer, or public distribution is authorized.\n\nM7-004 and M7-005 remain gated. Do not start either until the independent PM has approved G4 and that decision is represented and verified in canonical state. The owner has not authorized release or publication; the required M7-005 disposition is no release unless a later direct owner decision changes that boundary.\n\n## Review and integration boundaries\n\nPR #16 is verified merged into `initial-idea` at the baseline above. Its independent PM review separately recorded G4 as HOLD / NOT APPROVED. M7 engineering completion does not change that disposition. The M7 evaluation package may be committed, pushed on its feature branch, and submitted as an open, non-draft PR for G4 review. It must remain unmerged and may not be self-approved. No commit, push, or publication to `initial-idea`/`main`, no merge, and no release is authorized.\n\n## Canonical status\n\nThis evidence is referenced by `.agents/state/PROJECT_STATE.yaml` and the M7-001 record in `.agents/tasks/BACKLOG.yaml`. Approval of G4/G5, PR integration, and publication remain separate status dimensions.\n"
+
+----------------------------------------------------------------------
+Ran 30 tests in 0.634s
+
+FAILED (failures=7)

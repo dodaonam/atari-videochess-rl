@@ -1,0 +1,125 @@
+{
+  "verification_id": "M3-release-local-verification-20261023",
+  "verification_started_at_utc": "2026-10-23T14:13:05Z",
+  "verification_completed_at_utc": "2026-10-23T14:15:21Z",
+  "git_revision": "d9f0872c120fb2408343859c938257e3962f2e09",
+  "worktree": "feature/pre-m4-final-closure clean worktree based on origin/initial-idea",
+  "artifact_location": "../atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6 (sibling M3 worktree; local path only, not a portable repository dependency)",
+  "access": "read-only; all nine file sizes and SHA-256 values matched before and after verification",
+  "command_template": "PYTHONPATH=<repository-root> <pinned Python 3.12 environment>/bin/python -m videochess_rl.data.cli verify --release \"$M3_RELEASE_PATH\"",
+  "verifier_exit_code": 0,
+  "verifier_result": {
+    "games": 1000,
+    "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+    "output_bytes": 39994522,
+    "outputs_verified": 7,
+    "positions": 19268,
+    "rejections": 182,
+    "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890"
+  },
+  "expected_identity": {
+    "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+    "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+    "split_assignment_sha256": "84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e"
+  },
+  "release_counts": {
+    "selected_games": 1000,
+    "positions_before_purge": 20000,
+    "positions_retained": 19268,
+    "purged_positions": 732,
+    "rejection_records": 182,
+    "split_games": {
+      "test": 103,
+      "train": 795,
+      "validation": 102
+    },
+    "retained_positions_by_split": {
+      "test": 2057,
+      "train": 15196,
+      "validation": 2015
+    }
+  },
+  "structural_recheck": {
+    "game_ids_unique": true,
+    "sample_ids_unique": true,
+    "counts": {
+      "games": 1000,
+      "positions": 19268,
+      "rejections": 182
+    },
+    "target_move_occurs_exactly_once_in_legal_candidates": true,
+    "invalid_target_count": 0,
+    "retained_positions_by_split": {
+      "train": 15196,
+      "validation": 2015,
+      "test": 2057
+    },
+    "cross_split_board_signatures_after_purge": 0
+  },
+  "schemas": {
+    "release": "videochess-release/1.0",
+    "game": "videochess-game/1.0",
+    "position": "videochess-position/1.0",
+    "split": "videochess-split/1.1",
+    "dataset_config": "videochess-dataset/1.0"
+  },
+  "provenance": {
+    "source_decision_id": "M3-SOURCE-ELITE-2022-05-LOCAL-20261020",
+    "source_archive_sha256": "ad374c8fd9fb2fe5f03c1297aa1d47cbbce5caedf6e6e2d387ee816930afdb11",
+    "source_member_sha256": "0f88f18836be7e321aa1e0211b618e78d4e92065c126c45c95a6a55c1500a8e6",
+    "third_party_license_status": "third_party_license_unstated_internal_use_owner_authorized_no_redistribution",
+    "use_boundary": "bounded internal academic research; local retention; no upload or redistribution of archive or bulk derived game records"
+  },
+  "files": [
+    {
+      "path": "config.json",
+      "bytes": 1465,
+      "sha256": "75034de9d1dee2c48f56ecb1e7b54e11ae4c261fe9a95579ef69b0e93c00b304"
+    },
+    {
+      "path": "games.jsonl",
+      "bytes": 2764193,
+      "sha256": "526fc9966d4521dee92fc4bb7e011d9a59fce1dc703810a0ed3d6edbb2e154c7"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 1976,
+      "sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12"
+    },
+    {
+      "path": "manifest.sha256",
+      "bytes": 80,
+      "sha256": "5f4c968a8885548565496b7652a6b060adc8778cfeaffb58dd4b7b8b18b9a2ae"
+    },
+    {
+      "path": "positions.jsonl",
+      "bytes": 31992257,
+      "sha256": "9db9676ecb64cc111e4310c83374348132ad4413cb0de7c1fe1878b89c89500d"
+    },
+    {
+      "path": "rejections.jsonl",
+      "bytes": 66744,
+      "sha256": "fce94dc0c721fb84b45ccb812667b712030f4f327901d1a7ee19b4392524a42e"
+    },
+    {
+      "path": "source_manifest.json",
+      "bytes": 5060,
+      "sha256": "f2ff571ce81a47b1191f7b57c2f2d16c48ebde6b334aeb6e82d7b173dc2b2935"
+    },
+    {
+      "path": "split.json",
+      "bytes": 2473768,
+      "sha256": "dbbcc00bdb5989fd8827c8e7beec3b4eea41f0bae3649ad9ffa2373b0d128193"
+    },
+    {
+      "path": "stats.json",
+      "bytes": 2691035,
+      "sha256": "3d0a217e94a826f38d54b402c921f145592c92760d39901c8b2cc2339dad68bd"
+    }
+  ],
+  "limitations": [
+    "The M3 release verifier covered all release rows and chess contracts; it does not implement or run the future M4 tensor loader/model.",
+    "No source archive or raw/derived data was copied, modified, committed, or uploaded.",
+    "The third-party package license remains unstated; owner authorization remains bounded to local/internal academic use with no redistribution."
+  ]
+}

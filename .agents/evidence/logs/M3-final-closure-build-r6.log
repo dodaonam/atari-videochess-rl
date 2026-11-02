@@ -1,0 +1,92 @@
+{
+  "output_path": "./artifacts/m3/training-support/release-final-closure-r6",
+  "release": {
+    "authorization_id": "M3-001-owner-20261020",
+    "code_revision": "40cd4e88bcaf987033a27f5f73995c5f44f21fb5",
+    "code_tree_sha256": "18defa5183708e68ac4e78d43e4618618b5b6640761b20b677153a614fd5966c",
+    "config_sha256": "c65a489ddafc964383613f1641599f1a1b660a244bcacc4da67b9bd4ed5c9e57",
+    "dirty_code_tree": false,
+    "outputs": [
+      {
+        "bytes": 1465,
+        "path": "config.json",
+        "sha256": "75034de9d1dee2c48f56ecb1e7b54e11ae4c261fe9a95579ef69b0e93c00b304"
+      },
+      {
+        "bytes": 2764193,
+        "path": "games.jsonl",
+        "sha256": "526fc9966d4521dee92fc4bb7e011d9a59fce1dc703810a0ed3d6edbb2e154c7"
+      },
+      {
+        "bytes": 31992257,
+        "path": "positions.jsonl",
+        "sha256": "9db9676ecb64cc111e4310c83374348132ad4413cb0de7c1fe1878b89c89500d"
+      },
+      {
+        "bytes": 66744,
+        "path": "rejections.jsonl",
+        "sha256": "fce94dc0c721fb84b45ccb812667b712030f4f327901d1a7ee19b4392524a42e"
+      },
+      {
+        "bytes": 5060,
+        "path": "source_manifest.json",
+        "sha256": "f2ff571ce81a47b1191f7b57c2f2d16c48ebde6b334aeb6e82d7b173dc2b2935"
+      },
+      {
+        "bytes": 2473768,
+        "path": "split.json",
+        "sha256": "dbbcc00bdb5989fd8827c8e7beec3b4eea41f0bae3649ad9ffa2373b0d128193"
+      },
+      {
+        "bytes": 2691035,
+        "path": "stats.json",
+        "sha256": "3d0a217e94a826f38d54b402c921f145592c92760d39901c8b2cc2339dad68bd"
+      }
+    ],
+    "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+    "schema": "videochess-release/1.0",
+    "schema_versions": [
+      "videochess-game/1.0",
+      "videochess-position/1.0",
+      "videochess-split/1.1"
+    ],
+    "source_archive_sha256": "ad374c8fd9fb2fe5f03c1297aa1d47cbbce5caedf6e6e2d387ee816930afdb11",
+    "source_decision_id": "M3-SOURCE-ELITE-2022-05-LOCAL-20261020",
+    "source_member_sha256": "0f88f18836be7e321aa1e0211b618e78d4e92065c126c45c95a6a55c1500a8e6",
+    "split_assignment_sha256": "84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e"
+  },
+  "run_metrics": {
+    "disk_free_before_bytes": 41001545728,
+    "elapsed_seconds": 4031.313,
+    "estimated_output_bytes": 38577652,
+    "games_accepted_selected": 1000,
+    "games_seen": 355535,
+    "output_bytes": 39994522,
+    "peak_rss_mib": 367.33,
+    "positions_retained": 19268,
+    "positions_selected": 20000,
+    "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+    "run_id": "m3-training-support-final-closure-r6",
+    "schema": "videochess-run-metrics/1.0",
+    "source_archive_bytes": 97163552,
+    "source_member_bytes": 326476031,
+    "verification": {
+      "games": 1000,
+      "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+      "output_bytes": 39994522,
+      "outputs_verified": 7,
+      "positions": 19268,
+      "rejections": 182,
+      "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890"
+    }
+  },
+  "verification": {
+    "games": 1000,
+    "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+    "output_bytes": 39994522,
+    "outputs_verified": 7,
+    "positions": 19268,
+    "rejections": 182,
+    "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890"
+  }
+}

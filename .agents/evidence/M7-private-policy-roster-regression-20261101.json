@@ -1,0 +1,14 @@
+{
+  "command": "VIDEOCHESS_M5_M6_ARTIFACT_ROOT=<owner-local accepted M5 root> VIDEOCHESS_M6_M4_ARTIFACT_ROOT=<owner-local accepted M4 r4 root> PYTHONDONTWRITEBYTECODE=1 <existing project Python 3.12.3 venv>/bin/python -m unittest tests.test_m6_private_policy_roster -v",
+  "exit_code": 0,
+  "finished_at_utc": "2026-10-31T20:09:53Z",
+  "log_bytes": 312,
+  "log_path": ".agents/evidence/logs/M7-private-policy-roster-regression-20261101.log",
+  "log_sha256": "ac2349d0071ab11dd207de8bf9aef8f27bcd6c62a6cf6780bfd4ba6f42305531",
+  "result": "passed",
+  "schema": "videochess-command-evidence/1.0",
+  "source_git_revision": "fe2cc4cc5e477841ffbc9368235eb9c5675f2f74",
+  "started_at_utc": "2026-10-31T20:09:37Z",
+  "test_count": 1,
+  "working_tree_dirty": true
+}

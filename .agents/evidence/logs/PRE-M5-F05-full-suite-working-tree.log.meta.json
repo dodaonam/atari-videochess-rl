@@ -1,0 +1,17 @@
+{
+  "check": "full_unittest_suite_dirty_worktree_diagnostic",
+  "command": "PATH=/home/dodaonam/Projects/atari-videochess-rl/.venv/share/stockfish:/home/dodaonam/Projects/atari-videochess-rl/.venv/bin:/usr/bin:/bin PYTHONPATH=. /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest discover -s tests -v",
+  "end_utc": "2026-10-28T08:58:23Z",
+  "environment": "Existing pinned project Python 3.12.3 CPU virtual environment; configured Stockfish directory only for the existing M0 UCI readiness test; no dependency changes.",
+  "exit_code": 1,
+  "failure": "test_project_context_can_be_recovered_without_chat_history asserted git_snapshot_matches; the snapshot differs while the feature worktree has uncheckpointed changes. No seed, M2, M4, or M5 contract assertion failed. Rerun in a committed clean clone; this attempt is not counted as a suite pass.",
+  "log_path": ".agents/evidence/logs/PRE-M5-F05-full-suite-working-tree.log",
+  "log_sha256": "c29e129efac3eec7c3fce4164640bfa247bed4226582365256721aaaa64fef4f",
+  "result": "FAIL_DIAGNOSTIC_DIRTY_WORKTREE",
+  "source_revision": "638825b9fa14dd3fe20fba102a994a71e9c794dd",
+  "start_utc": "2026-10-28T08:54:47Z",
+  "test_count": 336,
+  "test_runner_duration_seconds": 213.131,
+  "wall_duration_seconds": 216,
+  "working_tree_dirty": true
+}

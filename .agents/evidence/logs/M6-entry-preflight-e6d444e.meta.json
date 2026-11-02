@@ -1,0 +1,12 @@
+{
+  "command": "python3 scripts/agent_preflight.py --json",
+  "executed_at_utc": "2026-10-30T14:40:12Z",
+  "completed_at_utc": "2026-10-30T14:40:13Z",
+  "execution_environment": "local CPU; existing Python 3.12.3 environment",
+  "git_revision": "e6d444e475e447e9f37951f16585bf496f804c9d",
+  "config_identity": null,
+  "exit_code": 0,
+  "result": "PASS",
+  "log_path": ".agents/evidence/logs/M6-entry-preflight-e6d444e.log",
+  "log_sha256": "d5899482394259c2f51321a437d550f2adff7207e12a125fc90db1f5e46860da"
+}

@@ -1,0 +1,16 @@
+{
+  "command": "git clone --no-local --branch feature/m7-option-b <local repository> <fresh temporary directory>; python3 scripts/agent_preflight.py --repo <fresh temporary directory> --json",
+  "exit_code": 0,
+  "git_snapshot_matches": true,
+  "git_snapshot_mode": "portable_commit_transition",
+  "output_sha256": "d1ffb3abfdfb3109135c29ec62c08863ffb00af23be4276e6bb0063316f7aa73",
+  "portable_baseline_matches": true,
+  "recorded_at_utc": "2026-10-31T20:31:58Z",
+  "repo_content_matches": true,
+  "result": "PASS: fresh no-local clone preflight; portable baseline and repository content match; zero errors; one expected ARTIFACT_MANIFEST_REQUIRED warning.",
+  "schema": "videochess-m7-clean-checkout/1.0",
+  "source_git_revision": "28f6e8fd0c5b20089120b22f902789213b0c0818",
+  "warning_codes": [
+    "ARTIFACT_MANIFEST_REQUIRED"
+  ]
+}

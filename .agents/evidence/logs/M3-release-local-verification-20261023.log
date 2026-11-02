@@ -1,0 +1,13 @@
+M3 accepted release local verification (sanitized; contains no dataset rows)
+Started UTC: 2026-10-23T14:13:05Z
+Completed UTC: 2026-10-23T14:15:21Z
+Git revision: d9f0872c120fb2408343859c938257e3962f2e09
+Location label: ../atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6 (sibling M3 worktree; local path only, not a portable repository dependency)
+Command: PYTHONPATH=<repository-root> <pinned Python 3.12 environment>/python -m videochess_rl.data.cli verify --release "$M3_RELEASE_PATH"
+Exit code: 0
+Recorded result: PASS: verifier exit 0; 1,000 games; 19,268 positions; 182 rejections; accepted release ID and manifest SHA match.
+Environment: Python 3.12.3, python-chess 1.11.2
+Verifier output:
+{"games": 1000, "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12", "output_bytes": 39994522, "outputs_verified": 7, "positions": 19268, "rejections": 182, "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890"}
+Read-only check: all nine size/SHA-256 pairs matched before and after verifier.
+Structural recheck: 1,000 unique games; 19,268 unique samples; 182 rejection rows; 0 invalid/duplicate target candidates; 0 cross-split board signatures after purge.

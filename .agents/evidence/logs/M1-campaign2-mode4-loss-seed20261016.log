@@ -1,0 +1,77 @@
+A.L.E: Arcade Learning Environment (version 0.11.2+ecc1138)
+[Powered by Stella]
+{
+  "status": "partial",
+  "trace": "artifacts/m1/m1-04/campaign2-mode4-loss-seed20261016/trace.json",
+  "turns": [
+    {
+      "player_move": {
+        "uci": "f2f3",
+        "verified_from_rgb": false,
+        "frames_to_candidate_rgb": 33,
+        "partial_cursor_masked_candidate": true,
+        "candidate_fen": "rnbqkbnr/pppppppp/8/8/8/5P2/PPPPP1PP/RNBQKBNR b KQkq - 0 1",
+        "diagnostic_ram_only": {
+          "0xE1": 130,
+          "0xE4": 0,
+          "0xEA": 4,
+          "0xEE": 3
+        }
+      },
+      "opponent_reply": {
+        "uci": null,
+        "verified_from_rgb": false
+      },
+      "board_after_fen": null
+    }
+  ],
+  "terminal": {
+    "observed": false,
+    "terminated": false,
+    "ale_terminated": false,
+    "truncated": false,
+    "ale_truncated": false,
+    "ale_reward_total": 0.0,
+    "agent_reward_total": 0.0,
+    "runner_stopped": true,
+    "runner_stop_category": "OPPONENT_RESPONSE_TIMEOUT",
+    "runner_stop_reason": "RGB did not match the current board or one legal Atari reply",
+    "player_moves_attempted": 1,
+    "verified_player_moves": 0,
+    "verified_atari_replies": 0,
+    "white_result_from_reward": null,
+    "last_reward": 0.0,
+    "last_verified_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    "frame_number": 732,
+    "ale_frames": 732,
+    "wall_seconds": 2.046,
+    "env_steps": 728,
+    "environment_steps": 728,
+    "artifact_bytes": 5379,
+    "failed_source_selections": 0,
+    "failed_target_previews": 0,
+    "failed_target_confirmations": 0,
+    "unexpected_directional_displacements": 0,
+    "last_verified_progress": {
+      "side_to_move": "white",
+      "side_to_move_in_check": false,
+      "white_king_attacked": false,
+      "black_king_attacked": false,
+      "material_points": {
+        "white": 39,
+        "black": 39
+      },
+      "material_difference_white_minus_black": 0,
+      "legal_move_count": 20,
+      "checkmate_in_verified_shadow": false,
+      "stalemate_in_verified_shadow": false,
+      "position_repeated_twice": false,
+      "threefold_claim_available": false,
+      "halfmove_clock": 0,
+      "fullmove_number": 1
+    },
+    "stop_reason": "RGB did not match the current board or one legal Atari reply"
+  },
+  "terminal_observation": null,
+  "failure": "RGB did not match the current board or one legal Atari reply"
+}

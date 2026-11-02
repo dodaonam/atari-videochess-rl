@@ -1,0 +1,11 @@
+check=clean_python_compile
+revision=c19b141e3d2bc1440fd1a9afb89c12cfd1704d95
+start_utc=2026-10-28T07:29:43.749044+00:00
+end_utc=2026-10-28T07:29:43.976560+00:00
+duration_seconds=0.227516
+exit_code=0
+test_count=not_detected
+command=python3 -m compileall -q videochess_rl scripts tests
+environment=Existing pinned Python 3.12.3 CPU venv where applicable; no dependency installation.
+result=PASS
+log_path=/tmp/PRE-M5-cleanclone-clean_python_compile-c19b141e.log

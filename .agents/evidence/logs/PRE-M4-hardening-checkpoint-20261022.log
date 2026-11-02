@@ -1,0 +1,19 @@
+revision: 181d6b2e9eb8e49b8cd5cf7aa0401f763d5678f8
+command: /home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python -m unittest tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_rolls_back_provisional_files_after_final_snapshot_failure tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_rolls_back_provisional_files_after_final_size_guard_failure tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_compacts_serialization_without_changing_history tests.test_agent_context.AgentContextRecoveryTests.test_repeated_checkpoint_does_not_append_unchanged_snapshot tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_size_limit_fails_before_state_or_workspace_mutation tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_is_consistent_after_one_run_from_clean_worktree tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_repairs_stale_handoff_pointer -v
+python: 3.12.3
+started_utc: 2026-10-22T16:23:37.152942+00:00
+finished_utc: 2026-10-22T16:23:40.339714+00:00
+exit_code: 0
+
+test_checkpoint_rolls_back_provisional_files_after_final_snapshot_failure (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_rolls_back_provisional_files_after_final_snapshot_failure) ... ok
+test_checkpoint_rolls_back_provisional_files_after_final_size_guard_failure (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_rolls_back_provisional_files_after_final_size_guard_failure) ... ok
+test_checkpoint_compacts_serialization_without_changing_history (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_compacts_serialization_without_changing_history) ... ok
+test_repeated_checkpoint_does_not_append_unchanged_snapshot (tests.test_agent_context.AgentContextRecoveryTests.test_repeated_checkpoint_does_not_append_unchanged_snapshot) ... ok
+test_checkpoint_size_limit_fails_before_state_or_workspace_mutation (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_size_limit_fails_before_state_or_workspace_mutation) ... ok
+test_checkpoint_is_consistent_after_one_run_from_clean_worktree (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_is_consistent_after_one_run_from_clean_worktree) ... ok
+test_checkpoint_repairs_stale_handoff_pointer (tests.test_agent_context.AgentContextRecoveryTests.test_checkpoint_repairs_stale_handoff_pointer) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 3.049s
+
+OK

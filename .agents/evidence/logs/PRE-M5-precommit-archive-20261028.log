@@ -1,0 +1,19 @@
+check: PRE-M5-precommit-archive-20261028.log
+start_utc: 2026-10-28T03:53:16.215750+00:00
+end_utc: 2026-10-28T03:53:16.558562+00:00
+revision: 906178775d48e98e64c709673bfe73177dd15c02
+worktree_dirty: True
+command: python3 scripts/migrate_checkpoint_history.py verify
+exit_code: 0
+
+--- stdout ---
+{
+  "first_id": "cp-c410173e-20261014T154924847559Z",
+  "last_id": "cp-c0a28430-20261027T171455716920Z",
+  "logical_sha256": "377662ce5e8bcceb7e7b22597258bf8dfe086edb01c1ee0aad6788703bc3def1",
+  "record_count": 188,
+  "status": "verified",
+  "storage": "archive"
+}
+
+--- stderr ---

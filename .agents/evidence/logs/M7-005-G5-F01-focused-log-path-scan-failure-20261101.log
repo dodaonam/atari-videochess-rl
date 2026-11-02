@@ -1,0 +1,12 @@
+command: /usr/bin/python3 .agents/evidence/logs/M7-005-private-content-scan-20261101.py
+source_revision: 945900a8a7f6cf178352266ba6d55efa718c838b
+working_tree: focused test log was newly generated; docs and implementation clean
+started_at_utc: 2026-11-01T10:00:55+00:00
+finished_at_utc: 2026-11-01T10:00:55+00:00
+exit_code: 1
+
+source_revision=945900a8a7f6cf178352266ba6d55efa718c838b
+added_tracked_lines=6588
+untracked_text_and_task_logs=34
+concrete_path_or_credential_matches=[('added_tracked_lines', 'concrete_machine_path'), ('.agents/evidence/logs/M7-005-G5-F01-focused-contracts-20261101.log', 'concrete_machine_path')]
+restricted_payload_suffixes=[]

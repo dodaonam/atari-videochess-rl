@@ -1,0 +1,22 @@
+SOURCE_REVISION: d7332b91128d3daf919421db2e71a9f2ee4b48ec
+STARTED_AT_UTC: 2026-11-01T04:00:06Z
+## M3 accepted release manifest
+COMMAND: <project-python> -c import json,hashlib
+from pathlib import Path
+root=Path('<owner-local accepted M3 release root>')
+manifest=Path('.agents/evidence/M3-release-manifest-r6-20261021.json')
+d=json.loads(manifest.read_text())
+print(json.dumps({'release_id':d.get('release_id'),'manifest_sha256':hashlib.sha256(manifest.read_bytes()).hexdigest(),'source_root_present':root.is_dir()},sort_keys=True))
+
+EXIT_CODE: 1
+Traceback (most recent call last):
+  File "<string>", line 5, in <module>
+  File "/usr/lib/python3.12/pathlib.py", line 1029, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '.agents/evidence/M3-release-manifest-r6-20261021.json'
+FINISHED_AT_UTC: 2026-11-01T04:00:06Z
+OVERALL_EXIT_CODE: 1

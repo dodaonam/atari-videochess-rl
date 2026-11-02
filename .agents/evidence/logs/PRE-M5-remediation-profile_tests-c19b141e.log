@@ -1,0 +1,8 @@
+test_hard_bounds_and_history_shape_are_explicit (tests.test_m5_profile.M5FeasibilityProfileTests.test_hard_bounds_and_history_shape_are_explicit) ... ok
+test_observed_range_budget_batch_has_explicit_prefix_lengths (tests.test_m5_profile.M5FeasibilityProfileTests.test_observed_range_budget_batch_has_explicit_prefix_lengths) ... ok
+test_replay_probe_serializes_distinct_bounded_records (tests.test_m5_profile.M5FeasibilityProfileTests.test_replay_probe_serializes_distinct_bounded_records) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 5.324s
+
+OK

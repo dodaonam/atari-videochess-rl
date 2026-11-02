@@ -1,0 +1,256 @@
+{
+    "artifacts": {
+        "m3": {
+            "files_unchanged": true,
+            "manifest_sha256": "be1e1f9316fac01be893774cfe09a313de193fbd1a12ab2d219ff5c041104a12",
+            "path": "/home/dodaonam/Projects/atari-videochess-rl-m3/artifacts/m3/training-support/release-final-closure-r6",
+            "positions": {
+                "test": 2057,
+                "train": 15196,
+                "validation": 2015
+            },
+            "release_id": "f10a679deddf06f3e1e3c39cf58db4e21176629c26c09034a271bf278189e890",
+            "split_sha256": "84efed824e57de45c0058b73818bb7a9d740201ead38e9171308cee43bc0934e"
+        },
+        "m4": {
+            "bundle_files_verified": 19,
+            "files_unchanged": true,
+            "parameter_count": 121897,
+            "path": "/home/dodaonam/Projects/atari-videochess-rl-m4/artifacts/m4/m4-behavior-20261027-r4/pretrained-behavior-only.pt",
+            "sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4"
+        }
+    },
+    "governance": {
+        "auto_merge_request": null,
+        "base_modified": false,
+        "g3_approved": false,
+        "m4_complete": true,
+        "m5_authorized": false,
+        "m5_started": false,
+        "merge_attempted": false,
+        "next_action": "Independent PM review of the updated PR #10.",
+        "pr_draft": false,
+        "pr_mergeable": true,
+        "pr_state_at_inspection": "OPEN",
+        "review_decision": null
+    },
+    "limitations": [
+        "No M5 learner, training, full policy evaluation, ALE experiment, or external compute was started.",
+        "45-minute 10,000-decision CPU training cap is not yet demonstrated feasible; the five-update real-replay probe is required after M5 authorization.",
+        "600-game evaluation feasibility is a finite-sample proxy, not a guarantee.",
+        "M4 artifact availability is local-only and dataset redistribution remains restricted.",
+        "This record is engineering evidence, not PM acceptance, merge approval, M5 authorization, or G3 approval."
+    ],
+    "pm_findings": [
+        {
+            "evidence": [
+                "configs/rl/m5-double-dqn-v1.json",
+                "docs/04-research/M5_EXPERIMENT_PROTOCOL.md",
+                "docs/06-quality/M5_TEST_MATRIX.md",
+                "tests/test_m5_contract_fixtures.py"
+            ],
+            "id": "PM5-F01",
+            "status": "RESOLVED",
+            "summary": "15 policy snapshots, 40 games each, 600 planned; warm/scratch and before/after comparisons and paired analysis retained."
+        },
+        {
+            "evidence": [
+                "docs/03-technical/RL_ALGORITHM.md",
+                "configs/rl/m5-double-dqn-v1.json",
+                "tests/fixtures/m5_checkpoint_boundaries.json",
+                "tests/test_m5_contract_fixtures.py"
+            ],
+            "id": "PM5-F02",
+            "status": "RESOLVED",
+            "summary": "Evaluation snapshots and episode-boundary resumable checkpoints have distinct schemas and boundary semantics; exact decision cap has no synthetic episode outcome."
+        },
+        {
+            "evidence": [
+                ".agents/evidence/logs/PRE-M5-feasibility-profile-v2.1-20261028.json",
+                ".agents/evidence/logs/PRE-M5-history-budget-20261028.json",
+                "docs/04-research/M5_EXPERIMENT_PROTOCOL.md",
+                "configs/rl/m5-double-dqn-v1.json"
+            ],
+            "id": "PM5-F03",
+            "status": "RESOLVED_EVIDENCE_LIMITED",
+            "summary": "Expanded bounded CPU profile; 600-game timing projection fits the cap, while actual replay-history update p95 projects beyond the 45-minute run cap before overhead. A five-update post-authorization replay-sample check blocks paired runs if still over cap."
+        },
+        {
+            "evidence": [
+                "docs/03-technical/RL_ALGORITHM.md",
+                "docs/04-research/M5_EXPERIMENT_PROTOCOL.md",
+                "configs/rl/m5-double-dqn-v1.json"
+            ],
+            "id": "PM5-F04",
+            "status": "RESOLVED",
+            "summary": "Matched protocol/seeds/budgets are guaranteed; independent policies are explicitly allowed to generate different transitions and trajectories."
+        }
+    ],
+    "profiles": [
+        {
+            "duration_seconds": 264.4379867719981,
+            "id": "v2.0-intermediate",
+            "peak_rss_bytes": 636755968,
+            "revision": "2d968c51a4eb88ea4133d4f9ec1a8c1970480504",
+            "schema": "videochess-pre-m5-feasibility-profile/2.0",
+            "sha256": "7e7bf15d221cc72a9e0d883d0ca7a4e0718bd0341afc1d182dd80d2d1f7ec681",
+            "status": "valid_intermediate_superseded_by_v2.1"
+        },
+        {
+            "actual_m3_batch32_update_seconds": 0.13405870700080413,
+            "combined_decision_p95_seconds": 0.020047631987836212,
+            "duration_seconds": 252.62490897900716,
+            "evaluation_aggregate_cap_seconds": 10800,
+            "evaluation_decisions": 1944,
+            "evaluation_games": 40,
+            "evaluation_projection_p95_seconds": 4811.431677080691,
+            "history_plies_p50_p95_max": [
+                52,
+                270,
+                419
+            ],
+            "id": "v2.1-final",
+            "peak_rss_bytes": 637243392,
+            "planned_games": 600,
+            "revision": "d4fe2ad3fa3936faecddcdba0e976e16cdeabd42",
+            "schema": "videochess-pre-m5-feasibility-profile/2.1",
+            "sha256": "fa863eacaf4afaeed69bcde554e5935bc3690c4a544f8634e92ce02591a96b4f",
+            "synthetic_all801_update_seconds": 3.8727303389896406,
+            "synthetic_variable_history_update_seconds": 1.9771368759975303,
+            "training_run_projection_upper801_seconds": 9390.46541430078,
+            "training_run_projection_variable_seconds": 4892.2221266205015
+        },
+        {
+            "duration_seconds": 7.473335663002217,
+            "history_max_plies": 419,
+            "id": "observed-range-update-budget",
+            "measured_updates": 5,
+            "peak_rss_bytes": 388784128,
+            "revision": "1c217fc4c038fd6b7dfff7127d44c120beb10db8",
+            "run_cap_seconds": 2700,
+            "run_projection_median_seconds": 2570.9414528259513,
+            "run_projection_p95_seconds": 3085.416370456453,
+            "schema": "videochess-pre-m5-history-budget-profile/1.0",
+            "sha256": "957ba409c53368fdd6a15b3c397d4adc5132e08533fe26415ee259e5a854edc4",
+            "update_median_seconds": 0.9989317880099406,
+            "update_p95_seconds": 1.2157353774033253
+        }
+    ],
+    "readiness_criteria": [
+        {
+            "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+            "id": "PM5-R01",
+            "limitation": "",
+            "status": "PASS"
+        },
+        {
+            "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+            "id": "PM5-R02",
+            "limitation": "",
+            "status": "PASS"
+        },
+        {
+            "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+            "id": "PM5-R03",
+            "limitation": "",
+            "status": "PASS"
+        },
+        {
+            "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+            "id": "PM5-R04",
+            "limitation": "",
+            "status": "PASS"
+        },
+        {
+            "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+            "id": "PM5-R05",
+            "limitation": "",
+            "status": "PASS"
+        },
+        {
+            "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+            "id": "PM5-R06",
+            "limitation": "",
+            "status": "PASS"
+        },
+        {
+            "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+            "id": "PM5-R07",
+            "limitation": "",
+            "status": "PASS"
+        },
+        {
+            "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+            "id": "PM5-R08",
+            "limitation": "45-minute CPU training cap is marginal and p95 projection exceeds it; actual replay-sampled probe is a future M5-entry stop.",
+            "status": "PASS"
+        },
+        {
+            "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+            "id": "PM5-R09",
+            "limitation": "",
+            "status": "PASS"
+        },
+        {
+            "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+            "id": "PM5-R10",
+            "limitation": "",
+            "status": "PASS"
+        },
+        {
+            "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+            "id": "PM5-R11",
+            "limitation": "",
+            "status": "PASS"
+        },
+        {
+            "evidence_path": ".agents/evidence/PRE-M5-remediation-20261028.md",
+            "id": "PM5-R12",
+            "limitation": "",
+            "status": "NOT_RUN"
+        }
+    ],
+    "report_generated_at_utc": "2026-10-28T07:13:56Z",
+    "repository": {
+        "base_branch": "initial-idea",
+        "base_sha": "906178775d48e98e64c709673bfe73177dd15c02",
+        "baseline_pr_head_at_inspection": "ffd924efe69746c192df56905eac34ccc689f106",
+        "existing_pr": 10,
+        "feature_branch": "feature/pre-m5-readiness",
+        "local_engineering_revision": "1cc043965de57e3ef93477832b47e3baa6d01ffa",
+        "pr_url": "https://github.com/dodaonam/atari-videochess-rl/pull/10",
+        "url": "https://github.com/dodaonam/atari-videochess-rl"
+    },
+    "schema": "videochess-pre-m5-remediation/1.0",
+    "status": "engineering_verification_in_progress",
+    "verification": {
+        "focused_contract_tests": {
+            "environment": "system Python 3.12 stdlib",
+            "exit_code": 0,
+            "tests_run": 5,
+            "verification_note": "Run before commit on the same source/config content; repeat at the committed candidate."
+        },
+        "initial_full_suite_diagnostic": {
+            "cause": "Clean-clone tests ran before new report files were committed and therefore found broken report links.",
+            "exit_code": 1,
+            "failures": 4,
+            "log": ".agents/evidence/logs/PRE-M5-remediation-full-suite-before-evidence-links-1cc04396.log",
+            "revision": "1cc043965de57e3ef93477832b47e3baa6d01ffa",
+            "tests_run": 324
+        },
+        "profile_tests": {
+            "environment": "existing pinned Python 3.12.3 CPU venv",
+            "exit_code": 0,
+            "tests_run": 3,
+            "verification_note": "Run before commit on the same source/config content; repeat at the committed candidate."
+        },
+        "rerun_full_suite_diagnostic": {
+            "cause": "The clean-clone fixture necessarily clones committed HEAD; the remediation report and refreshed checkpoint were not yet part of HEAD.",
+            "exit_code": 1,
+            "failures": 2,
+            "log": ".agents/evidence/logs/PRE-M5-remediation-env-1cc04396.log",
+            "revision": "1cc043965de57e3ef93477832b47e3baa6d01ffa",
+            "tests_run": 324
+        }
+    }
+}

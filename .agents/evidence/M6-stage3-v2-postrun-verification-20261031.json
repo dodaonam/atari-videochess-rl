@@ -1,0 +1,214 @@
+{
+  "config_sha256": "663651050db80ab027b452241c7d39837ec7986927c0aefc7c7be631f459a49b",
+  "finished_at_utc": "2026-10-31T03:15:14+00:00",
+  "git_head": "91f51b14690eba12e9e4fd25a4fc1671801fac0d",
+  "ledger_event_count": 968132,
+  "ledger_head_sha256": "cab519a452728b9b2b388d5517e8e1bc34ec612a0162c338210ee57d36b4480f",
+  "ledger_sha256": "c8364fa194a65c8de6d90bf9165743a411d0a63eba2459f3023821f3d0d838cb",
+  "metrics_by_policy": {
+    "m5-scratch-seed-20261104-post-rl": {
+      "adapter_total_latency_seconds": {
+        "count": 173,
+        "iqr": 0.0031954689766280353,
+        "max": 0.10062633600318804,
+        "mean": 0.010889111143251548,
+        "median": 0.009074929024791345,
+        "p95": 0.01635295278974809
+      },
+      "administrative_budget_censored_final_moves": 0,
+      "ale_frames": 977838,
+      "ale_terminated_games": 7,
+      "ale_truncated": 0,
+      "attempted_games": 10,
+      "attempted_player_moves": 173,
+      "completed_games": 7,
+      "controller_uncertainty_censored_final_moves": 3,
+      "cursor_diagnostics": {
+        "ambiguous_or_unlocated_observations": 2343,
+        "repeated_movement_without_progress": 0,
+        "stable_board_disagreements": 0,
+        "unexpected_displacements_corrected": 714,
+        "unexpected_displacements_unresolved": 0
+      },
+      "decision_latency_seconds": {
+        "count": 166,
+        "iqr": 6.662297274724551,
+        "max": 34.42371542897308,
+        "mean": 9.01570232110724,
+        "median": 7.734187573005329,
+        "p95": 18.325346216261096
+      },
+      "desynchronization_count": 0,
+      "desynchronization_rate_per_attempted_move": 0.0,
+      "draw": 0,
+      "environment_steps": 244453,
+      "incomplete_final_moves_by_category": {
+        "ale_terminal": 7,
+        "ale_truncation": 0,
+        "artifact_cap": 0,
+        "board_desynchronization": 0,
+        "frame_cap": 0,
+        "opponent_response_timeout": 0,
+        "other_interrupted_or_unknown": 0,
+        "source_selection_uncertainty": 1,
+        "target_confirmation_uncertainty": 0,
+        "target_navigation_uncertainty": 2,
+        "wall_clock_cap": 0
+      },
+      "incomplete_fraction": 0.3,
+      "incomplete_games": 3,
+      "input_validation_latency_seconds": {
+        "count": 173,
+        "iqr": 0.0017615819961065426,
+        "max": 0.01934146200073883,
+        "mean": 0.006043049894529664,
+        "median": 0.0054474599892273545,
+        "p95": 0.010154138199868615
+      },
+      "loss": 7,
+      "match_score": 0.0,
+      "match_score_denominator": 7,
+      "move_success_rate": 0.9421965317919075,
+      "move_success_wilson_95": [
+        0.8968790936609141,
+        0.9683026404206407
+      ],
+      "peak_rss_bytes_max": 620105728,
+      "policy_choose_move_latency_seconds": {
+        "count": 173,
+        "iqr": 0.0014126449823379517,
+        "max": 0.08934527900419198,
+        "mean": 0.004416595116382831,
+        "median": 0.0030647459934698418,
+        "p95": 0.005977858416736128
+      },
+      "post_reset_action_frames": 977798,
+      "rgb_verified_player_moves": 163,
+      "runner_truncated": 0,
+      "stop_reasons": {
+        "ALE_TERMINATED": 7,
+        "CONTROLLER_SOURCE_SELECTION_UNCERTAIN": 1,
+        "CONTROLLER_TARGET_NAVIGATION_UNCERTAIN": 2
+      },
+      "terminal_unknown": 0,
+      "unexpected_cursor_displacements": 714,
+      "verified_atari_replies": 163,
+      "wall_seconds": 1755.929,
+      "win": 0
+    },
+    "m5-warm-seed-20261104-post-rl": {
+      "adapter_total_latency_seconds": {
+        "count": 232,
+        "iqr": 0.0034403542449581437,
+        "max": 0.12669091999123339,
+        "mean": 0.011521825004381063,
+        "median": 0.00915328151313588,
+        "p95": 0.02287631570652593
+      },
+      "administrative_budget_censored_final_moves": 0,
+      "ale_frames": 958361,
+      "ale_terminated_games": 4,
+      "ale_truncated": 0,
+      "attempted_games": 10,
+      "attempted_player_moves": 232,
+      "completed_games": 4,
+      "controller_uncertainty_censored_final_moves": 1,
+      "cursor_diagnostics": {
+        "ambiguous_or_unlocated_observations": 3788,
+        "repeated_movement_without_progress": 0,
+        "stable_board_disagreements": 0,
+        "unexpected_displacements_corrected": 1157,
+        "unexpected_displacements_unresolved": 0
+      },
+      "decision_latency_seconds": {
+        "count": 228,
+        "iqr": 3.4115050357504515,
+        "max": 86.31218163698213,
+        "mean": 7.663844252153355,
+        "median": 5.130581009492744,
+        "p95": 16.662102036298144
+      },
+      "desynchronization_count": 0,
+      "desynchronization_rate_per_attempted_move": 0.0,
+      "draw": 0,
+      "environment_steps": 239582,
+      "incomplete_final_moves_by_category": {
+        "ale_terminal": 4,
+        "ale_truncation": 0,
+        "artifact_cap": 0,
+        "board_desynchronization": 0,
+        "frame_cap": 0,
+        "opponent_response_timeout": 5,
+        "other_interrupted_or_unknown": 0,
+        "source_selection_uncertainty": 1,
+        "target_confirmation_uncertainty": 0,
+        "target_navigation_uncertainty": 0,
+        "wall_clock_cap": 0
+      },
+      "incomplete_fraction": 0.6,
+      "incomplete_games": 6,
+      "input_validation_latency_seconds": {
+        "count": 232,
+        "iqr": 0.001666047774051549,
+        "max": 0.0323841710051056,
+        "mean": 0.006773903039457168,
+        "median": 0.005447816496598534,
+        "p95": 0.01203231269828389
+      },
+      "loss": 4,
+      "match_score": 0.0,
+      "match_score_denominator": 4,
+      "move_success_rate": 0.9568965517241379,
+      "move_success_wilson_95": [
+        0.9224877474596159,
+        0.976421210533133
+      ],
+      "peak_rss_bytes_max": 620105728,
+      "policy_choose_move_latency_seconds": {
+        "count": 232,
+        "iqr": 0.0013509652417269535,
+        "max": 0.10905950699816458,
+        "mean": 0.004297145724508325,
+        "median": 0.0032518350053578615,
+        "p95": 0.009864477706287244
+      },
+      "post_reset_action_frames": 958321,
+      "rgb_verified_player_moves": 222,
+      "runner_truncated": 0,
+      "stop_reasons": {
+        "ALE_TERMINATED": 4,
+        "CONTROLLER_SOURCE_SELECTION_UNCERTAIN": 1,
+        "OPPONENT_RESPONSE_TIMEOUT": 5
+      },
+      "terminal_unknown": 0,
+      "unexpected_cursor_displacements": 1157,
+      "verified_atari_replies": 222,
+      "wall_seconds": 1764.04,
+      "win": 0
+    }
+  },
+  "peak_rss_bytes": 620105728,
+  "postrun_verification": "PASS",
+  "process_start_failures": 0,
+  "remaining_free_bytes": 49943470080,
+  "reset_games": 20,
+  "resource_stops": 0,
+  "run_artifact_bytes": 728148524,
+  "run_artifact_file_count": 4159,
+  "run_artifact_manifest_sha256": "bc0068aa2254e4c15165247ee299f48940cca9b7c21f6a288fd13812631ea2b2",
+  "run_id": "m6-stage3-v2-91f51b14690e-d05d42400cfc",
+  "run_manifest_sha256": "e5870bdc4c1aa05108ed58eacc6ec95123ab2b4bc9436d43c9c9640113eabd83",
+  "schedule_sha256": "be4e6548e6fd3e3db4605e6b55fbe860848dccb2df87d8a7122145bdabe22ffc",
+  "scheduled_games": 20,
+  "started_at_utc": "2026-10-31T03:14:38+00:00",
+  "startup_retries": 0,
+  "total_gameplay_wall_seconds": 3519.969,
+  "unexecuted_games": [],
+  "v1_unchanged": {
+    "bytes": 616539017,
+    "files": 4540,
+    "ledger_sha256": "c8ad5b26c28bb8f934a8541c4b69846afedd3ad4a3eb8c302ac835b20fdf27d3",
+    "manifest_sha256": "22ac6ec7e0f4a48f52b2452654d4adecaf111f38ea37f5d9517f173c838716d7",
+    "run_manifest_sha256": "17491f1a82eacffda9189179cc63b2ebff422136d07925de1fb39a2bcff897e8"
+  }
+}

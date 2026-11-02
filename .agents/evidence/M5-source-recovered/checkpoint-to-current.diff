@@ -1,0 +1,112 @@
+--- recovered/checkpoint.py
++++ current/checkpoint.py
+@@ -7,6 +7,8 @@
+ import os
+ import random
+ import tempfile
++from collections import deque
++import copy
+ from pathlib import Path
+ from typing import Any
+␠
+@@ -132,7 +134,7 @@
+         raise ValueError("checkpoint journal pointer differs from sidecar")
+     if verify_journal:
+         ReplayJournal(journal["path"],verify_existing=False).verify(record_count=journal["record_count"],
+-            chain_sha256=journal["chain_sha256"])
++            chain_sha256=journal["chain_sha256"],retain_last=0)
+     if expected_code_sha256 and bundle.get("identity", {}).get("code_sha256") != expected_code_sha256:
+         raise ValueError("checkpoint code revision/hash is incompatible")
+     return manifest
+@@ -146,34 +148,80 @@
+␠
+␠
+ def restore_training_checkpoint(path: str | Path, learner: Any, *, expected_identity: dict[str, Any] | None = None) -> dict[str, Any]:
+-    target = Path(path); verify_training_checkpoint(target,verify_journal=True)
++    target = Path(path)
++    # Validate the immutable bundle and identity before touching the live learner.
++    # The complete journal chain is checked below while retaining only the
++    # capacity-sized suffix that can exist in the bounded replay buffer.
++    verify_training_checkpoint(target,verify_journal=False)
+     bundle = _load_checkpoint_payload(target, map_location=learner.device)
+     if expected_identity:
+         for key, value in expected_identity.items():
+             if bundle["identity"].get(key) != value:
+                 raise ValueError(f"checkpoint identity mismatch for {key}")
++    j = bundle["journal"]
++    rows = ReplayJournal(j["path"],verify_existing=False).verify(
++        record_count=j["record_count"], chain_sha256=j["chain_sha256"], retain_last=learner.replay.capacity)
++    restored = ReplayBuffer(learner.replay.capacity, seed=0)
++    replay_control = bundle["replay_control"]
++    inserted_count = int(replay_control["inserted_count"])
++    evicted_count = int(replay_control["evicted_count"])
++    if (len(rows) != min(inserted_count, restored.capacity)
++            or evicted_count != inserted_count - len(rows)
++            or len({row.transition_id for row in rows}) != len(rows)):
++        raise ValueError("checkpoint replay rows and counters are inconsistent")
++    # The rows have already been fully validated by Transition.from_json after
++    # the journal chain passed. Populate the bounded ring directly to avoid
++    # serializing/revalidating every long history a second time.
++    restored._rows = deque(rows, maxlen=restored.capacity)
++    restored._ids = {row.transition_id for row in rows}
++    restored.inserted_count = inserted_count
++    restored.evicted_count = evicted_count
++    restored.rng.setstate(_nested_tuple(replay_control["rng_state"]))
++    exploration_rng = random.Random()
++    exploration_rng.setstate(_nested_tuple(bundle["exploration_rng_state"]))
++    python_rng = random.Random()
++    python_rng.setstate(_nested_tuple(bundle["python_rng_state"]))
++    numpy_rng = np.random.RandomState()
++    ns = bundle["numpy_rng_state"]
++    numpy_rng.set_state((ns["bit_generator"], np.asarray(ns["keys"], dtype=np.uint32), int(ns["position"]),
++                         int(ns["has_gauss"]), float(ns["cached_gaussian"])))
++    torch_rng = torch.Generator(device="cpu")
++    torch_rng.set_state(bundle["torch_rng_state"].cpu())
++    counters = bundle["counters"]
++    required_counters = ("valid_decisions", "transitions", "optimizer_updates", "completed_episodes", "target_syncs", "invalid_transitions")
++    if any(type(counters.get(key)) is not int or counters[key] < 0 for key in required_counters):
++        raise ValueError("checkpoint training counters are missing or invalid")
++    if counters["valid_decisions"] != counters["transitions"]:
++        raise ValueError("checkpoint decisions and valid transition counters differ")
++    if counters["target_syncs"] != counters["optimizer_updates"] // 500:
++        raise ValueError("checkpoint target synchronization counter is inconsistent")
++    # Check all tensor/optimizer shapes and state mappings on disposable copies
++    # so malformed payloads cannot partially mutate an active learner.
++    online_probe = copy.deepcopy(learner.online)
++    target_probe = copy.deepcopy(learner.target)
++    optimizer_probe = copy.deepcopy(learner.optimizer)
++    online_probe.load_state_dict(bundle["online"], strict=True)
++    target_probe.load_state_dict(bundle["target"], strict=True)
++    optimizer_probe.load_state_dict(bundle["optimizer"])
++
+     learner.online.load_state_dict(bundle["online"], strict=True)
+     learner.target.load_state_dict(bundle["target"], strict=True)
+     learner.optimizer.load_state_dict(bundle["optimizer"])
+-    j = bundle["journal"]
+-    rows = ReplayJournal(j["path"],verify_existing=False).verify(record_count=j["record_count"], chain_sha256=j["chain_sha256"])
+-    restored = ReplayBuffer(learner.replay.capacity, seed=0)
+-    for row in rows[-learner.replay.capacity:]: restored.insert(row)
+-    replay_control = bundle["replay_control"]
+     restored.inserted_count = int(replay_control["inserted_count"])
+-    restored.evicted_count = int(replay_control["evicted_count"])
+-    restored.rng.setstate(_nested_tuple(replay_control["rng_state"]))
+     learner.replay = restored
+-    for key, value in bundle["counters"].items(): setattr(learner, key, int(value))
++    for key, value in counters.items(): setattr(learner, key, int(value))
+     learner.exploration_rng.setstate(_nested_tuple(bundle["exploration_rng_state"]))
+     random.setstate(_nested_tuple(bundle["python_rng_state"]))
+     torch.set_rng_state(bundle["torch_rng_state"].cpu())
+-    ns=bundle["numpy_rng_state"]
+     np.random.set_state((ns["bit_generator"],np.asarray(ns["keys"],dtype=np.uint32),int(ns["position"]),
+                          int(ns["has_gauss"]),float(ns["cached_gaussian"])))
+     if bundle.get("torch_cuda_rng_states") and torch.cuda.is_available():
+         torch.cuda.set_rng_state_all(bundle["torch_cuda_rng_states"])
+-    return {"identity": bundle["identity"], "counters": bundle["counters"], "journal": j}
++    replay_ids = "\n".join(row.transition_id for row in learner.replay.transitions).encode("ascii")
++    return {"identity": bundle["identity"], "counters": bundle["counters"], "journal": j,
++            "restored_replay": {"capacity": learner.replay.capacity, "rows": len(learner.replay),
++                "inserted_count": learner.replay.inserted_count, "evicted_count": learner.replay.evicted_count,
++                "transition_ids_sha256": hashlib.sha256(replay_ids).hexdigest()}}
+␠
+␠
+ def _nested_tuple(value: Any) -> Any:
