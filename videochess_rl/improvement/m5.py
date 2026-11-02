@@ -24,7 +24,7 @@ from videochess_rl.rl.checkpoint import save_training_checkpoint, restore_traini
 from videochess_rl.rl.transition import Transition
 from videochess_rl.m5_seeding import EXPERIMENT_ID as TRANSITION_SEED_DOMAIN, paired_seed_schedule
 from videochess_rl.simulator import ChessSimulator
-from .learner import ImprovementLearner
+from .learner import ImprovementLearner, features as cached_features
 from .m4 import load_source
 from .snapshot import save_snapshot
 from . import SEED, EXPERIMENT_ID
@@ -213,7 +213,7 @@ def _execute(c,checkpoint,checkpoint_sha,out,*,resume=None,stop_at=None,wall_lim
             if elapsed>=c['maximum_cumulative_wall_seconds'] or (wall_limit and time.monotonic()-start>=wall_limit):
                 stopped='wall_guard';break
             before=obs
-            features=encode_board(replay_observation_history(obs.history_uci))
+            features=cached_features(tuple(obs.history_uci))
             uci,source=choose_action(learner,m4,features,c)
             result=sim.step_uci(uci)
             row=Transition.from_step(before,result,run_id=EXPERIMENT_ID,attempt_id=out.name,episode_index=ep,decision_index=learner.valid_decisions,training_seed=SEED,seed_schedule=schedule)

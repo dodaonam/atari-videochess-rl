@@ -95,6 +95,19 @@ class ImprovementTests(unittest.TestCase):
         learner=DoubleDqnLearner(make_warm_scorer(m4,q_head_seed=123),seed=1,config=config_default())
         return learner,m4
 
+    def test_cached_action_inputs_are_identical_to_direct_encoding(self):
+        from videochess_rl.improvement.learner import features
+        from videochess_rl.rl.training import _batch
+        board=chess.Board()
+        for move in ('e2e4','e7e5','g1f3','b8c6'):
+            board.push_uci(move)
+            direct=_batch((encode_board(board),),torch.device('cpu'))
+            cached=_batch((features(tuple(m.uci() for m in board.move_stack)),),torch.device('cpu'))
+            self.assertEqual(direct.keys(),cached.keys())
+            for key,value in direct.items():
+                if isinstance(value,torch.Tensor):self.assertTrue(torch.equal(value,cached[key]),key)
+                else:self.assertEqual(value,cached[key])
+
     def test_warm_head_target_frozen_and_rng(self):
         learner,m4=self.make_pair();f=encode_board(chess.Board());c=config_default()
         original={k:v.clone() for k,v in m4.state_dict().items()}
