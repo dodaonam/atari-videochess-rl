@@ -1,0 +1,14 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "videochess_rl.improvement.data"
+  ],
+  "ended_at_utc": "2026-11-02T18:31:38.458550+00:00",
+  "exit_code": 0,
+  "git_revision": "2d390fe7df862e998960e8fdc4cdef5f93f2bd5c",
+  "log_path": ".agents/evidence/improvement/dataset-build.log",
+  "log_sha256": "9719a68abf90a4ce0c0633286ef8b76ceb3677f6cfe528f104533ec30345854d",
+  "started_at_utc": "2026-11-02T18:15:13.342960+00:00",
+  "wall_seconds": 985.115594551
+}

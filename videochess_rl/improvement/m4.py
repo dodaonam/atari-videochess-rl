@@ -97,10 +97,15 @@ def fit(source,source_sha,examples,lr,wd,epochs,patience,out,expert=None,trial=N
             metadata={**bundle['metadata'],'run_id':EXPERIMENT_ID,'seed':SEED,'checkpoint_role':'improvement_m4',
                 'source_checkpoint_sha256':source_sha,'source_revision':revision(),'checkpoint_created_at_utc':utc(),
                 'selected_epoch_for_seed':epoch,'validation_record':val,'dataset_release_id':examples['manifest']['release_id'],
+                'split_counts':{k:len(examples[k]) for k in ('train','validation','test')},
+                'early_stopping_state_at_checkpoint':dict(best_epoch=epoch,best_validation_nll=val['nll'],no_improvement_epochs=0,patience=patience,maximum_epochs=epochs),
+                'command':__import__('sys').argv,
+                'source_worktree_dirty':bool(__import__('subprocess').check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip()),
+                'runtime_environment':dict(python=__import__('sys').version,torch=torch.__version__,numpy=np.__version__,python_chess=chess.__version__,device='cpu',intraop_threads=torch.get_num_threads(),interop_threads=torch.get_num_interop_threads()),
                 'release_manifest_sha256':sha(ARTIFACTS/'dataset-v3/manifest.json'),
                 'split_assignment_sha256':sha(ARTIFACTS/'dataset-v3/split.json'),
                 'training_config':dict(optimizer='AdamW',learning_rate=lr,weight_decay=wd,maximum_epochs=epochs,early_stopping_patience=patience,seed=SEED,logical_batch=64,physical_batch=32,gradient_clip_norm=1.),
-                'teacher_scores_or_targets_used':bool(expert),'stockfish_used_for_training_or_inference':False,
+                'teacher_scores_or_targets_used':bool(expert),'stockfish_used_for_training_or_inference':bool(expert),'stockfish_process_used_during_training_or_inference':False,
                 'label_semantics':'0.8 human plus 0.2 offline expert legal CE' if expert else 'human PGN move CE',
                 'parameter_output_semantics':'uncalibrated behavior logits; not Q values'}
             best_path=out/f'epoch-{epoch:02d}.pt'
@@ -165,12 +170,23 @@ def expert_labels(examples):
                 ranked.append((-priority,row.sample_id,row))
     ranked.sort(key=lambda x:(x[0],x[1]))
     # Diversity: max two labels per training game, plus deterministic phase strata.
-    chosen=[];per_game=Counter()
+    chosen=[];per_game=Counter();seen=set()
+    def phase(row):
+        return 'opening' if row.ply_index<20 else 'endgame' if row.board_planes[:12].sum()<=12 else 'middlegame'
+    # Expert subset only: retain diverse phases while prioritizing uncertainty,
+    # checks and exchanges within each stratum. No phase quota is applied to M4 data.
+    for stratum,budget in (('middlegame',3000),('opening',500),('endgame',500)):
+        count=0
+        for _,sid,row in ranked:
+            game=rows_by_id[sid]['game_id']
+            if phase(row)==stratum and per_game[game]<2 and sid not in seen:
+                chosen.append(row);per_game[game]+=1;seen.add(sid);count+=1
+            if count>=budget:break
     for _,sid,row in ranked:
+        if len(chosen)>=4000:break
         game=rows_by_id[sid]['game_id']
-        if per_game[game]<2:
-            chosen.append(row);per_game[game]+=1
-        if len(chosen)==4000:break
+        if per_game[game]<2 and sid not in seen:
+            chosen.append(row);per_game[game]+=1;seen.add(sid)
     dev=sorted(examples['validation'],key=lambda x:hashlib.sha256(('expert-dev'+x.sample_id).encode()).hexdigest())[:128]
     def board_for(row):
         p=rows_by_id[row.sample_id];g=games[p['game_id']];b=chess.Board()
@@ -185,7 +201,7 @@ def expert_labels(examples):
             pilot.append(dict(sample_id=row.sample_id,seconds=time.monotonic()-tick,nodes=info.get('nodes'),depth=info.get('depth'),nps=info.get('nps'),legal=info['pv'][0].uci() in row.candidate_uci))
         per_position=sum(p['seconds'] for p in pilot)/len(pilot)
         nodes=min(50000,max(4000,int(10000*1500/((len(chosen)+len(dev))*per_position))))
-        write(directory/'pilot.json',dict(engine=engine.id,threads=1,hash_mib=64,multipv=1,pilot=pilot,selected_fixed_nodes=nodes,estimated_seconds=per_position*(len(chosen)+len(dev))*nodes/10000,engine_sha256=sha((ROOT/'.venv/bin/stockfish').resolve())))
+        write(directory/'pilot.json',dict(training_phase_counts=dict(Counter(phase(row) for row in chosen)),engine=engine.id,threads=1,hash_mib=64,multipv=1,pilot=pilot,selected_fixed_nodes=nodes,estimated_seconds=per_position*(len(chosen)+len(dev))*nodes/10000,engine_sha256=sha((ROOT/'.venv/bin/stockfish').resolve())))
         labels=[];started=time.monotonic()
         for row in [*chosen,*dev]:
             if time.monotonic()-started>1800:raise TimeoutError('labeling 30 minute budget reached')
