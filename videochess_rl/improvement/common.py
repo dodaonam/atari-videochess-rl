@@ -69,9 +69,10 @@ def run_evidence(name, command):
         raise FileExistsError(log)
     start, tick = utc(), time.monotonic()
     start_revision=revision()
+    start_dirty=bool(subprocess.check_output(["git","status","--porcelain"],cwd=ROOT,text=True).strip())
     snapshot=ARTIFACTS/'source-evidence'/name
     files={}
-    for path in sorted([*(ROOT/'videochess_rl').rglob('*.py'),*(ROOT/'configs/improvement').glob('*')]):
+    for path in sorted([*(ROOT/'videochess_rl').rglob('*.py'),*(ROOT/'tests').rglob('*.py'),*(ROOT/'scripts').rglob('*.py'),*(ROOT/'configs/improvement').glob('*')]):
         if not path.is_file():continue
         rel=path.relative_to(ROOT)
         destination=snapshot/rel
@@ -83,7 +84,7 @@ def run_evidence(name, command):
         result = subprocess.run(command, cwd=ROOT, stdout=out, stderr=subprocess.STDOUT)
     record = dict(command=command, started_at_utc=start, ended_at_utc=utc(),
                   wall_seconds=time.monotonic()-tick, exit_code=result.returncode,
-                  git_revision=start_revision, end_git_revision=revision(), source_manifest_path=(snapshot/'manifest.json').relative_to(ROOT).as_posix(), source_manifest_sha256=sha(snapshot/'manifest.json'), log_path=log.relative_to(ROOT).as_posix(),
+                  git_revision=start_revision, source_worktree_dirty=start_dirty, end_git_revision=revision(), source_manifest_path=(snapshot/'manifest.json').relative_to(ROOT).as_posix(), source_manifest_sha256=sha(snapshot/'manifest.json'), log_path=log.relative_to(ROOT).as_posix(),
                   log_sha256=sha(log))
     write(directory / (name + '.json'), record)
     print(json.dumps(record), flush=True)

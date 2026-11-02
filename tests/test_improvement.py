@@ -153,6 +153,28 @@ class ImprovementTests(unittest.TestCase):
         b['simulator_score']=.8;b['validation']['nll']=2
         self.assertEqual(select_candidate([hist,a,b]),a)
 
+    def test_logical_batch_64_matches_reference_gradient_objective(self):
+        from videochess_rl.improvement.learner import ImprovementLearner
+        from videochess_rl.rl.transition import Transition
+        from videochess_rl.m5_seeding import paired_seed_schedule
+        from videochess_rl.baselines import RandomLegalAgent
+        from videochess_rl.simulator import ChessSimulator
+        base,_=self.make_pair()
+        c={**config_default(),'batch_size':64,'replay_capacity':64,'replay_warmup_transitions':64}
+        optimized=ImprovementLearner(copy.deepcopy(base.online),seed=17,config=c)
+        reference=DoubleDqnLearner(copy.deepcopy(base.online),seed=17,config=c)
+        for ep in range(64):
+            schedule=paired_seed_schedule('m5-double-dqn-paired-v1',20261103,ep)
+            sim=ChessSimulator(RandomLegalAgent(),max_decisions=1)
+            obs=sim.reset(seed=int(schedule['episode_seed']),opponent_seed=int(schedule['opponent_rng_seed']),agent_color=chess.WHITE)
+            step=sim.step_uci(obs.legal_moves_uci[0])
+            row=Transition.from_step(obs,step,run_id='batch64-unit',attempt_id='unit',episode_index=ep,decision_index=ep,training_seed=20261103,seed_schedule=schedule)
+            optimized.add_transition(row);reference.add_transition(row)
+        optimized.update();reference.update()
+        for key,value in optimized.online.state_dict().items():
+            self.assertTrue(torch.allclose(value,reference.online.state_dict()[key],atol=3e-6,rtol=1e-4),key)
+        self.assertEqual(optimized.optimizer_updates,1)
+
     def test_optimized_ddqn_matches_reference_and_recovers(self):
         from videochess_rl.improvement.learner import ImprovementLearner
         from videochess_rl.rl.replay import ReplayJournal
