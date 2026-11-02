@@ -1,0 +1,24 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "unittest",
+    "test_improvement",
+    "test_m5_replay",
+    "test_m5_checkpoint",
+    "test_m5_targets",
+    "test_m5_training",
+    "-v"
+  ],
+  "end_git_revision": "e29911c3af2a91a99c6fd0ab1407db721ceb447f",
+  "ended_at_utc": "2026-11-02T19:45:33.141153+00:00",
+  "exit_code": 0,
+  "git_revision": "e29911c3af2a91a99c6fd0ab1407db721ceb447f",
+  "log_path": ".agents/evidence/improvement/fine-tuning-control-focused.log",
+  "log_sha256": "075f0b8a37e440bb2bb56417508fba9746682bec4d1f63a5448338eac3ea7bab",
+  "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/fine-tuning-control-focused/manifest.json",
+  "source_manifest_sha256": "a36970ae01a2742ea69ba2034f115c94023c0f63404611edc9d1ff45641779eb",
+  "source_worktree_dirty": true,
+  "started_at_utc": "2026-11-02T19:45:27.854326+00:00",
+  "wall_seconds": 5.2868271580009605
+}

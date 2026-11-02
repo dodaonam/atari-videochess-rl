@@ -143,6 +143,35 @@ class ImprovementTests(unittest.TestCase):
         for a,b in zip(model.parameters(),other.parameters()):self.assertTrue(torch.allclose(a.grad,b.grad,atol=1e-6,rtol=1e-4))
         self.assertEqual(metrics(model,rows)['examples'],4)
 
+    def test_fine_tuning_early_stopping_and_epoch_cap(self):
+        from unittest.mock import patch
+        from videochess_rl.improvement import m4
+        from videochess_rl.improvement.common import ARTIFACTS
+        ARTIFACTS.mkdir(parents=True,exist_ok=True)
+        row=encode_board(chess.Board(),target_uci='e2e4',split='train')
+        examples={'train':[row],'validation':[replace(row,split='validation')],'test':[replace(row,split='test')],'manifest':{'release_id':'unit'}}
+        for losses,patience,cap,expected,stopped in [([2.,2.1,2.2],2,25,3,True),([3.,2.,1.],5,3,3,False)]:
+            model=BehaviorScorer()
+            with tempfile.TemporaryDirectory(dir=ARTIFACTS) as directory, \
+                 patch.object(m4,'load_source',return_value=(model,{'metadata':{},'optimizer_state':{'unused_sentinel':True}})), \
+                 patch.object(m4,'sha',return_value='0'*64), \
+                 patch.object(m4,'metrics',side_effect=[{'nll':n} for n in losses]), \
+                 patch.object(m4,'train_epoch',return_value=1.) as training, \
+                 patch.object(m4,'save_checkpoint'):
+                result=m4.fit(Path(directory)/'source.pt','0'*64,examples,1e-4,1e-4,cap,patience,Path(directory)/'run')
+                self.assertEqual(training.call_count,expected)
+                self.assertEqual(result['epochs_completed'],expected)
+                self.assertEqual(result['early_stopped'],stopped)
+                optimizer=training.call_args_list[0].args[1]
+                self.assertFalse(optimizer.state)
+                self.assertEqual(optimizer.param_groups[0]['lr'],1e-4)
+
+    def test_fine_tuning_rejects_source_hash_before_load(self):
+        from videochess_rl.improvement.m4 import load_source
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/'model.pt';path.write_bytes(b'not the accepted checkpoint')
+            with self.assertRaisesRegex(ValueError,'SHA-256 mismatch'):load_source(path,'0'*64)
+
     def test_selection_uses_development_and_b_guard(self):
         hist=dict(stage='historical',validation={'nll':3},simulator_score=.7,order=0)
         a=dict(stage='M4-A',validation={'nll':2},simulator_score=.8,order=1)
