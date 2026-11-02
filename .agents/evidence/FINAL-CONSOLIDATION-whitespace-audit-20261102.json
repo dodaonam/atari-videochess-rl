@@ -1,0 +1,40 @@
+{
+  "revision": "46c789377617f9d366b8efedd4c55619b987ed97",
+  "checked_at_utc": "2026-11-02T15:16:54.720101+00:00",
+  "checks": [
+    {
+      "command": [
+        "git",
+        "diff",
+        "origin/main",
+        "HEAD",
+        "--check"
+      ],
+      "exit_code": 2,
+      "output": ".agents/evidence/POST-M2-INTEGRATION-VERIFICATION-20261017.md:48: new blank line at EOF.\n.agents/evidence/logs/M5-github-ci-57c8bce.log:131: trailing whitespace.\n+context\tCheck out repository\t2026-10-30T05:17:23.7852124Z \n.agents/evidence/logs/M5-github-ci-57c8bce.log:135: trailing whitespace.\n+context\tCheck out repository\t2026-10-30T05:17:23.7855889Z \n.agents/evidence/logs/M5-github-ci-57c8bce.log:138: trailing whitespace.\n+context\tCheck out repository\t2026-10-30T05:17:23.7858665Z \n.agents/evidence/logs/M5-github-ci-57c8bce.log:140: trailing whitespace.\n+context\tCheck out repository\t2026-10-30T05:17:23.7859674Z \n.agents/evidence/logs/M5-github-ci-57c8bce.log:142: trailing whitespace.\n+context\tCheck out repository\t2026-10-30T05:17:23.7860592Z \n.agents/evidence/logs/M5-github-ci-57c8bce.log:144: trailing whitespace.\n+context\tCheck out repository\t2026-10-30T05:17:23.7861291Z \n.agents/evidence/logs/M5-github-ci-57c8bce.log:146: trailing whitespace.\n+context\tCheck out repository\t2026-10-30T05:17:23.7863032Z \n.agents/evidence/logs/M5-github-ci-57c8bce.log:311: trailing whitespace.\n+context\tRun standard-library context, bundle, and M5 contract-oracle tests\t2026-10-30T05:17:54.1535400Z \n.agents/evidence/logs/M5-github-ci-57c8bce.log:314: trailing whitespace.\n+context\tRun standard-library context, bundle, and M5 contract-oracle tests\t2026-10-30T05:17:54.1537632Z \n.agents/evidence/logs/M5-train-initial-attempt-failure-20261028.log:31: trailing whitespace.\n+_pickle.UnpicklingError: Weights only load failed. This file can still be loaded, to do so you have two options, \u001b[1mdo those steps only if you trust the source of the checkpoint\u001b[0m. \n.agents/plans/M03-expert-dataset.md:144: new blank line at EOF.\ndocs/04-research/DATASET_SPEC.md:215: new blank line at EOF.\ndocs/04-research/DECISION_REGISTER.md:123: new blank line at EOF.\ndocs/04-research/EXPERIMENT_PROTOCOL.md:85: new blank line at EOF.\ndocs/04-research/STOCKFISH_TEACHER.md:137: new blank line at EOF.\ndocs/05-operations/REPRODUCIBILITY.md:168: new blank line at EOF.\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "origin/main",
+        "origin/initial-idea",
+        "--check"
+      ],
+      "exit_code": 2,
+      "output": ".agents/evidence/POST-M2-INTEGRATION-VERIFICATION-20261017.md:48: new blank line at EOF.\n.agents/evidence/logs/M5-github-ci-57c8bce.log:131: trailing whitespace.\n+context\tCheck out repository\t2026-10-30T05:17:23.7852124Z \n.agents/evidence/logs/M5-github-ci-57c8bce.log:135: trailing whitespace.\n+context\tCheck out repository\t2026-10-30T05:17:23.7855889Z \n.agents/evidence/logs/M5-github-ci-57c8bce.log:138: trailing whitespace.\n+context\tCheck out repository\t2026-10-30T05:17:23.7858665Z \n.agents/evidence/logs/M5-github-ci-57c8bce.log:140: trailing whitespace.\n+context\tCheck out repository\t2026-10-30T05:17:23.7859674Z \n.agents/evidence/logs/M5-github-ci-57c8bce.log:142: trailing whitespace.\n+context\tCheck out repository\t2026-10-30T05:17:23.7860592Z \n.agents/evidence/logs/M5-github-ci-57c8bce.log:144: trailing whitespace.\n+context\tCheck out repository\t2026-10-30T05:17:23.7861291Z \n.agents/evidence/logs/M5-github-ci-57c8bce.log:146: trailing whitespace.\n+context\tCheck out repository\t2026-10-30T05:17:23.7863032Z \n.agents/evidence/logs/M5-github-ci-57c8bce.log:311: trailing whitespace.\n+context\tRun standard-library context, bundle, and M5 contract-oracle tests\t2026-10-30T05:17:54.1535400Z \n.agents/evidence/logs/M5-github-ci-57c8bce.log:314: trailing whitespace.\n+context\tRun standard-library context, bundle, and M5 contract-oracle tests\t2026-10-30T05:17:54.1537632Z \n.agents/evidence/logs/M5-train-initial-attempt-failure-20261028.log:31: trailing whitespace.\n+_pickle.UnpicklingError: Weights only load failed. This file can still be loaded, to do so you have two options, \u001b[1mdo those steps only if you trust the source of the checkpoint\u001b[0m. \n.agents/plans/M03-expert-dataset.md:144: new blank line at EOF.\ndocs/04-research/DATASET_SPEC.md:215: new blank line at EOF.\ndocs/04-research/DECISION_REGISTER.md:120: new blank line at EOF.\ndocs/04-research/EXPERIMENT_PROTOCOL.md:82: new blank line at EOF.\ndocs/04-research/STOCKFISH_TEACHER.md:137: new blank line at EOF.\ndocs/05-operations/REPRODUCIBILITY.md:165: new blank line at EOF.\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "origin/initial-idea",
+        "HEAD",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output": ""
+    }
+  ],
+  "same_historical_notices_after_line_normalization": true
+}

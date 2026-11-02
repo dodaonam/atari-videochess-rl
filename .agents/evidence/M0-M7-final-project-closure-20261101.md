@@ -1,5 +1,7 @@
 # M0–M7 Final Engineering Closure and Independent PM Handover
 
+**Verification denominator erratum (2026-11-02):** Historical 524-case suite summaries below include three skips: **524 executed, 521 passed, 3 skipped, zero failures**. See the [separate count erratum](FINAL-CONSOLIDATION-test-count-erratum-20261102.md); original logs and issued PM decisions are unchanged.
+
 **Recorded:** 2026-11-01
 **Project Owner scope decision:** Existing accepted research results are final; no further research campaigns or milestone are authorized.
 **Engineering disposition:** M0–M7 engineering scope complete; research accepted as final; final governance decision approved and recorded.

@@ -36,3 +36,20 @@ Logs retain actual UTC start/end, revision, command, exit code, environment and 
 The [frozen-content comparison](FINAL-CONSOLIDATION-frozen-integrity-20261102.json) matched Git blob IDs for all 1,275 selected existing runtime/config/log/scientific-evidence/history paths; zero changed. The privacy inventory covers 1,507 tracked files, 267 gzip streams, 59 ZIP members, and 43 binary PNG leaves inside the exact authorized archive; no high-confidence credential match or unexpected opaque payload. It counts 1,000 existing concrete-home-path occurrences in immutable historical evidence, including decompressed content. These historical references are disclosed rather than falsely described as absent. No new concrete personal path was introduced by the documentation corrections. The proposed-history filename inventory found the exact BLK-001 ZIP as the only image/model/ROM/dataset/archive payload candidate; compressed checkpoint history is independently classified as context metadata. Past versions of all Git blob contents and private stores were not exhaustively scanned.
 
 A final technical-doc sweep after this source run corrected four remaining maturity references (C25); it changed no runtime source, test, frozen config or scientific evidence. Final clean-clone verification at the pushed feature HEAD is required and will be reported in the PR's final handover rather than mislabeled as this source run. The independent PM must inspect that exact HEAD and actual CI before deciding integration. This ledger issues no approval.
+
+## Fresh pushed-source clone and final evidence boundary
+
+A separate `git clone --single-branch --branch feature/final-main-consolidation-20261102` from GitHub checked out `46c789377617f9d366b8efedd4c55619b987ed97`, tree `3fc914313016afefd9c907c6c645f7b29fbe3c9e`. Working tree was clean before and after checks. No private inputs or uncommitted source were copied; only the existing Python dependency environment was reused.
+
+| Check | Executed | Passed | Failed | Skipped | Exit | Retained evidence |
+|---|---:|---:|---:|---:|---:|---|
+| Preflight | — | — | — | — | 0 | [Clean-source preflight](logs/FINAL-CONSOLIDATION-clean-source-preflight-20261102.log) |
+| Same focused suite | 124 | 124 | 0 | 0 | 0 | [Clean-source focused](logs/FINAL-CONSOLIDATION-clean-source-focused-20261102.log) |
+| Same unfiltered full suite | 529 | 526 | 0 | 3 | 0 | [Clean-source full](logs/FINAL-CONSOLIDATION-clean-source-full-20261102.log) |
+| Recursive privacy/inventory | — | — | — | — | 0 | [Clean-source privacy](logs/FINAL-CONSOLIDATION-clean-source-privacy-20261102.log) |
+
+The source clone scan covered 1,514 tracked files, 268 gzip streams, 59 ZIP members and 43 authorized PNG leaves. No credential-pattern match or unexpected opaque payload; archive SHA unchanged. Historical concrete-path occurrence count remains 1,000. The same three private-artifact prerequisites were skipped; Stockfish readiness passed.
+
+The final evidence commit retains these logs, the [inherited whitespace comparison](FINAL-CONSOLIDATION-whitespace-audit-20261102.json), this ledger, the audit's C26 classification, and a prominent denominator notice in the closure matrix. No runtime source, tests, configurations, frozen scientific evidence, dependency lock, or backlog changes follow `46c7893…`. The last unfiltered full suite above is specifically bound to that revision; it is not relabeled as a later final-HEAD run. A further clean remote clone must verify final-HEAD preflight/focused tests and actual GitHub CI, with immutable HEAD/tree and results in the final PR handover. No recursive evidence-only commit cycle is required to invent a self-referential test SHA.
+
+`git diff origin/main HEAD --check` returned exit 2 with 17 notices in nine inherited files. The accepted initial-idea baseline emits the identical notices after line-number normalization. `git diff origin/initial-idea HEAD --check` returned exit 0 with none. Historical experiment/test logs are preserved; these inherited formatting notices are a documented non-blocking limitation, not a passing check.
