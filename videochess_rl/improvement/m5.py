@@ -6,6 +6,7 @@ import hashlib
 import json
 import math
 import os
+import platform
 from pathlib import Path
 import random
 import shutil
@@ -13,6 +14,7 @@ import time
 
 import chess
 import torch
+import numpy as np
 from videochess_rl.baselines import RandomLegalAgent, SimpleHeuristicAgent
 from videochess_rl.model.features import encode_board, replay_observation_history
 from videochess_rl.model.training import configure_determinism
@@ -153,7 +155,7 @@ def _execute(c,checkpoint,checkpoint_sha,out,*,resume=None,stop_at=None,wall_lim
     validate_config(c)
     out=Path(out);out.mkdir(parents=True,exist_ok=False)
     learner,m4=make_learner(c,checkpoint,checkpoint_sha)
-    identity=dict(experiment_id=EXPERIMENT_ID,training_seed=SEED,arm='warm',execution_kind='probe' if stop_at is not None else 'official',config_sha256=digest(c),code_sha256=source_identity(),m4_sha256=checkpoint_sha)
+    identity=dict(experiment_id=EXPERIMENT_ID,training_seed=SEED,arm='warm',execution_kind='probe' if stop_at is not None else 'official',config_sha256=digest(c),code_sha256=source_identity(),m4_sha256=checkpoint_sha,runtime=dict(python=platform.python_version(),torch=str(torch.__version__),numpy=str(np.__version__),chess=str(chess.__version__),device=str(learner.device),intraop_threads=torch.get_num_threads(),interop_threads=torch.get_num_interop_threads()))
     previous_wall=0.;sources=Counter();repeated=0;damaged_tail=False
     if resume:
         bundle=load_training_checkpoint_bundle(resume)
