@@ -101,7 +101,7 @@ def fit(source,source_sha,examples,lr,wd,epochs,patience,out,expert=None,trial=N
                 'early_stopping_state_at_checkpoint':dict(best_epoch=epoch,best_validation_nll=val['nll'],no_improvement_epochs=0,patience=patience,maximum_epochs=epochs),
                 'command':__import__('sys').argv,
                 'source_worktree_dirty':bool(__import__('subprocess').check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip()),
-                'runtime_environment':dict(python=__import__('sys').version,torch=torch.__version__,numpy=np.__version__,python_chess=chess.__version__,device='cpu',intraop_threads=torch.get_num_threads(),interop_threads=torch.get_num_interop_threads()),
+                'runtime_environment':dict(python=__import__('sys').version,torch=str(torch.__version__),numpy=np.__version__,python_chess=chess.__version__,device='cpu',intraop_threads=torch.get_num_threads(),interop_threads=torch.get_num_interop_threads()),
                 'release_manifest_sha256':sha(ARTIFACTS/'dataset-v3/manifest.json'),
                 'split_assignment_sha256':sha(ARTIFACTS/'dataset-v3/split.json'),
                 'training_config':dict(optimizer='AdamW',learning_rate=lr,weight_decay=wd,maximum_epochs=epochs,early_stopping_patience=patience,seed=SEED,logical_batch=64,physical_batch=32,gradient_clip_norm=1.),
@@ -243,9 +243,10 @@ def main():
         tick=time.monotonic();games=evaluate_policy(policy,policy_id=stage,seeds=tuple(range(20270101,20270106)),max_wall_seconds=1200.)
         if len(games)!=20 or any(g.get('status')!='completed_game' for g in games):
             raise RuntimeError('incomplete fixed simulator development protocol')
-        score=sum((g['agent_reward']+1)/2 for g in games)/len(games)
+        # Fixed-schedule score: truncations contribute zero, never an invented draw.
+        score=sum((g['agent_reward']+1)/2 for g in games if not g['truncated'])/len(games)
         write(ARTIFACTS/f'{stage}-development-games.json',games)
-        candidates.append(dict(stage=stage,order=order,checkpoint=str(path.relative_to(ROOT)),sha256=identity,validation=val,expert_development=agreement,simulator_score=score,simulator_wall_seconds=time.monotonic()-tick))
+        candidates.append(dict(stage=stage,order=order,checkpoint=str(path.relative_to(ROOT)),sha256=identity,validation=val,expert_development=agreement,simulator_score=score,simulator_truncated_games=sum(g['truncated'] for g in games),simulator_score_definition='(wins + 0.5*true_draws)/20 scheduled games; truncations contribute zero without being labeled losses',simulator_wall_seconds=time.monotonic()-tick))
     selected=select_candidate(candidates)
     write(ARTIFACTS/'m4-selection.json',dict(candidates=candidates,selected=selected,test_metrics_inspected=False,rule='B NLL <= 1.05*A; maximize fixed simulator score; min validation NLL; earlier checkpoint'))
     model,_=load_source(ROOT/selected['checkpoint'],selected['sha256'])

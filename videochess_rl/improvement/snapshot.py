@@ -22,4 +22,5 @@ def save_snapshot(path, model, metadata):
     finally:
         if Path(temp).exists():Path(temp).unlink()
     write(side,dict(schema=SNAPSHOT_SCHEMA,file=path.name,sha256=sha(path),size_bytes=path.stat().st_size,resumable=False))
-    load_evaluation_snapshot(path)
+    with torch.random.fork_rng(devices=[]):
+        load_evaluation_snapshot(path)

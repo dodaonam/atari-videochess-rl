@@ -42,6 +42,7 @@ def validate_config(c):
     for k in fixed:
         if c[k]!=expected[k] or type(c[k]) is not type(expected[k]):raise ValueError(f'unsupported {k}')
     for k,v in c.items():
+        if isinstance(expected[k],(int,float)) and not isinstance(expected[k],bool) and (isinstance(v,bool) or not isinstance(v,(int,float))):raise ValueError(k)
         if isinstance(v,(int,float)) and not isinstance(v,bool) and (not math.isfinite(v) or (v<0 and k!='reward_loss')):raise ValueError(k)
     for k in ('batch_size','replay_capacity','replay_warmup_transitions','agent_decisions','epsilon_decay_decisions','maximum_agent_decisions_per_episode','m4_guidance_end_decision','checkpoint_interval_decisions','snapshot_interval_decisions','threads'):
         if type(c[k]) is not int or c[k]<1:raise ValueError(k)
@@ -123,12 +124,13 @@ def copy_journal_prefix(source,target,count):
         out.flush();os.fsync(out.fileno())
 
 
-def execute(c,checkpoint,checkpoint_sha,out,*,resume=None,stop_at=None,wall_limit=None):
+def _execute(c,checkpoint,checkpoint_sha,out,*,resume=None,stop_at=None,wall_limit=None):
+    start=time.monotonic();start_utc=utc()
     validate_config(c)
     out=Path(out);out.mkdir(parents=True,exist_ok=False)
     learner,m4=make_learner(c,checkpoint,checkpoint_sha)
     identity=dict(experiment_id=EXPERIMENT_ID,training_seed=SEED,arm='warm',config_sha256=digest(c),code_sha256=source_identity(),m4_sha256=checkpoint_sha)
-    start=time.monotonic();previous_wall=0.;sources=Counter();repeated=0
+    previous_wall=0.;sources=Counter();repeated=0
     if resume:
         bundle=load_training_checkpoint_bundle(resume)
         restore_training_checkpoint(resume,learner,expected_identity=identity)
@@ -157,7 +159,7 @@ def execute(c,checkpoint,checkpoint_sha,out,*,resume=None,stop_at=None,wall_limi
         else:
             billed+=(datetime.now(timezone.utc)-datetime.fromisoformat(prior['started_at_utc'])).total_seconds()
     previous_wall=max(previous_wall,billed)
-    write(out/'attempt.json',dict(identity=identity,started_at_utc=utc(),previous_wall_seconds=previous_wall,resume=str(resume) if resume else None))
+    write(out/'attempt.json',dict(identity=identity,started_at_utc=start_utc,previous_wall_seconds=previous_wall,resume=str(resume) if resume else None))
     journal=ReplayJournal(out/'replay.jsonl',verify_existing=False)
     last_checkpoint_decisions=learner.valid_decisions
     limit=c['agent_decisions'] if stop_at is None else min(stop_at,c['agent_decisions'])
@@ -216,6 +218,20 @@ def execute(c,checkpoint,checkpoint_sha,out,*,resume=None,stop_at=None,wall_limi
     return learner,m4,report
 
 
+def execute(c,checkpoint,checkpoint_sha,out,*,resume=None,stop_at=None,wall_limit=None):
+    """One active attempt per private campaign namespace; no source-tree payloads."""
+    import fcntl
+    resolved=Path(out).resolve()
+    if not resolved.is_relative_to(ARTIFACTS.resolve()):
+        raise ValueError('training artifacts must remain in the ignored improvement namespace')
+    out=resolved.relative_to(ROOT)
+    out.parent.mkdir(parents=True,exist_ok=True)
+    with (out.parent/'.execution.lock').open('a') as lock:
+        try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+        except BlockingIOError as exc:raise RuntimeError('another attempt is active in this namespace') from exc
+        return _execute(c,checkpoint,checkpoint_sha,out,resume=resume,stop_at=stop_at,wall_limit=wall_limit)
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--config',type=Path,default=ROOT/'configs/improvement/m5.json')
@@ -228,6 +244,10 @@ def main():
     args=parser.parse_args()
     if not args.phase2_official and (args.probe_decisions is None or not 1<=args.probe_decisions<=5000):parser.error('Phase 1 requires an explicit disposable probe of at most 5000 decisions')
     c=validate_config(json.loads(args.config.read_text()))
+    if args.phase2_official:
+        selected=json.loads((ARTIFACTS/'m4-selection.json').read_text())['selected']
+        if args.checkpoint_sha256!=selected['sha256'] or c['agent_decisions']!=250000:
+            parser.error('official run requires the Phase 1 selected M4 identity and 250000-decision config')
     _,_,result=execute(c,args.checkpoint,args.checkpoint_sha256,args.output,resume=args.resume,stop_at=args.probe_decisions)
     print(json.dumps(result),flush=True)
 

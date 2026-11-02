@@ -57,7 +57,7 @@ class ImprovementTests(unittest.TestCase):
 
     def test_config_rejects_unhonored_values(self):
         self.assertEqual(validate_config(config_default())['training_seed'],20261103)
-        for k,v in [('scratch_training',True),('training_seed',[1,2]),('loss','MSE'),('agent_decisions',250001),('batch_size',16),('gamma',float('nan')),('unbound',1),('threads',1.5)]:
+        for k,v in [('scratch_training',True),('training_seed',[1,2]),('loss','MSE'),('agent_decisions',250001),('batch_size',16),('gamma',float('nan')),('unbound',1),('threads',1.5),('gamma',True),('learning_rate','invalid')]:
             c=config_default();c[k]=v
             with self.assertRaises(ValueError):validate_config(c)
 
@@ -98,7 +98,9 @@ class ImprovementTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             for t in range(0,250001,25000):
                 p=Path(d)/f'{t}.pt'
+                rng=torch.get_rng_state().clone()
                 save_snapshot(p,learner.online,dict(valid_decisions=t,model_config=learner.online.config.as_json()))
+                self.assertTrue(torch.equal(rng,torch.get_rng_state()))
                 model,meta=load_evaluation_snapshot(p)
                 self.assertFalse(meta['resumable'])
                 for k,v in model.state_dict().items():self.assertTrue(torch.equal(v,learner.online.state_dict()[k]))

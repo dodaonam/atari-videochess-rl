@@ -53,8 +53,8 @@ def main():
     # Require measured >5% advantage to change the requested default batch.
     chosen=best64 if best64['postwarmup_decisions_per_hour']>best32['postwarmup_decisions_per_hour']*1.05 else best32
     rates=[x['postwarmup_decisions_per_hour'] for x in results if x['batch_size']==chosen['batch_size']]
-    conservative=min(rates)*.7
-    write(directory/'feasibility.json',dict(selected=chosen,conservative_decisions_per_hour=conservative,conservative_250k_hours=250000/conservative,supports_15_hour_target=conservative>=16667,uncertainty='Disposable short simulator probes; later Q policy, longer histories, replay occupancy, CPU load, and checkpoints may alter throughput. Conservative rate discounts the slowest measured thread condition for selected batch by 30%.',official_run_started=False))
+    conservative=chosen['postwarmup_decisions_per_hour']*.7
+    write(directory/'feasibility.json',dict(selected=chosen,conservative_decisions_per_hour=conservative,conservative_250k_hours=250000/conservative,supports_15_hour_target=conservative>=16667,uncertainty='Disposable short simulator probes; later Q policy, longer histories, replay occupancy, CPU load, and checkpoints may alter throughput. Conservative rate discounts the selected measured hardware condition by 30%; it is a planning estimate, not a bound.',official_run_started=False))
 
 
 if __name__=='__main__':main()
