@@ -90,6 +90,7 @@ class ReplayJournal:
 
     def __init__(self, path: str | Path, *, verify_existing: bool = True) -> None:
         self.path = Path(path)
+        self._append_safe = True
         self.path.parent.mkdir(parents=True, exist_ok=True)
         if self.path.exists():
             if verify_existing: self.verify(retain_last=0)
@@ -100,13 +101,25 @@ class ReplayJournal:
             with self.path.open("rb") as stream:
                 for last in stream:
                     self.record_count += 1
-            self.chain_sha256 = json.loads(last)["chain_sha256"] if last else "0" * 64
+            try:
+                self.chain_sha256 = json.loads(last)["chain_sha256"] if last else "0" * 64
+                if last and not last.endswith(b"\n"):
+                    raise ValueError("incomplete replay journal tail")
+            except (json.JSONDecodeError, KeyError, TypeError, ValueError):
+                if verify_existing:
+                    raise
+                # Recovery verifies the pinned prefix independently. Never
+                # append to this damaged attempt; fork its verified prefix.
+                self.chain_sha256 = "0" * 64
+                self._append_safe = False
         else:
             self.path.touch()
             self.chain_sha256 = "0" * 64
             self.record_count = 0
 
     def append(self, row: Transition) -> dict[str, Any]:
+        if not self._append_safe:
+            raise ValueError("damaged journal tail; fork the verified checkpoint prefix before appending")
         row.validate()
         previous = self.chain_sha256
         payload = {"schema": JOURNAL_SCHEMA, "previous": previous, "transition": row.to_json()}

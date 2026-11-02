@@ -1,0 +1,24 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "unittest",
+    "test_improvement",
+    "test_m5_replay",
+    "test_m5_checkpoint",
+    "test_m5_targets",
+    "test_m5_training",
+    "-v"
+  ],
+  "end_git_revision": "6d7fb4f74efd4b87494e8c5339a253f937dc06a1",
+  "ended_at_utc": "2026-11-02T19:31:21.438008+00:00",
+  "exit_code": 0,
+  "git_revision": "6d7fb4f74efd4b87494e8c5339a253f937dc06a1",
+  "log_path": ".agents/evidence/improvement/partial-tail-recovery-focused.log",
+  "log_sha256": "0d0a4c2d22c185ffafad42be34fbd72d87f58468e3ca4ca4a3995e549445a7a7",
+  "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/partial-tail-recovery-focused/manifest.json",
+  "source_manifest_sha256": "e122ed00391547ac11ffbc6ee1f9f7d7231e03ac202f4d422bd5c2c1fbfa7e91",
+  "source_worktree_dirty": true,
+  "started_at_utc": "2026-11-02T19:31:16.382940+00:00",
+  "wall_seconds": 5.055076503998862
+}

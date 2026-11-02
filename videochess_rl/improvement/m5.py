@@ -18,7 +18,7 @@ from videochess_rl.model.features import encode_board, replay_observation_histor
 from videochess_rl.model.training import configure_determinism
 from videochess_rl.rl.training import DoubleDqnLearner, _batch, epsilon_at
 from videochess_rl.rl.network import make_warm_scorer
-from videochess_rl.rl.replay import ReplayJournal
+from videochess_rl.rl.replay import ReplayJournal, JOURNAL_SCHEMA
 from videochess_rl.rl.checkpoint import save_training_checkpoint, restore_training_checkpoint, load_training_checkpoint_bundle
 from videochess_rl.rl.transition import Transition
 from videochess_rl.m5_seeding import EXPERIMENT_ID as TRANSITION_SEED_DOMAIN, paired_seed_schedule
@@ -129,13 +129,31 @@ def copy_journal_prefix(source,target,count):
         out.flush();os.fsync(out.fileno())
 
 
+def valid_tail_records(path,pinned_count,pinned_hash):
+    """Count only complete hash-chain records after the committed prefix."""
+    previous=pinned_hash;count=0;damaged=False
+    with Path(path).open('rb') as stream:
+        for i,line in enumerate(stream):
+            if i<pinned_count:continue
+            try:
+                if not line.endswith(b'\n'):raise ValueError('partial tail')
+                row=json.loads(line)
+                payload={k:row[k] for k in ('schema','previous','transition')}
+                expected=hashlib.sha256(json.dumps(payload,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
+                if row['schema']!=JOURNAL_SCHEMA or row['previous']!=previous or row['chain_sha256']!=expected:raise ValueError('invalid tail chain')
+            except (ValueError,KeyError,TypeError):
+                damaged=True;break
+            previous=expected;count+=1
+    return count,damaged
+
+
 def _execute(c,checkpoint,checkpoint_sha,out,*,resume=None,stop_at=None,wall_limit=None):
     start=time.monotonic();start_utc=utc()
     validate_config(c)
     out=Path(out);out.mkdir(parents=True,exist_ok=False)
     learner,m4=make_learner(c,checkpoint,checkpoint_sha)
     identity=dict(experiment_id=EXPERIMENT_ID,training_seed=SEED,arm='warm',config_sha256=digest(c),code_sha256=source_identity(),m4_sha256=checkpoint_sha)
-    previous_wall=0.;sources=Counter();repeated=0
+    previous_wall=0.;sources=Counter();repeated=0;damaged_tail=False
     if resume:
         bundle=load_training_checkpoint_bundle(resume)
         restore_training_checkpoint(resume,learner,expected_identity=identity)
@@ -148,7 +166,7 @@ def _execute(c,checkpoint,checkpoint_sha,out,*,resume=None,stop_at=None,wall_lim
             attempt=json.loads((parent/'attempt.json').read_text())
             # Crash interval charged conservatively through recovery, including downtime.
             previous_wall=max(previous_wall,attempt['previous_wall_seconds']+(datetime.now(timezone.utc)-datetime.fromisoformat(attempt['started_at_utc'])).total_seconds())
-        repeated=max(0,sum(1 for _ in Path(bundle['journal']['path']).open('rb'))-bundle['journal']['record_count'])
+        repeated,damaged_tail=valid_tail_records(bundle['journal']['path'],bundle['journal']['record_count'],bundle['journal']['chain_sha256'])
         sources.update(bundle['resource_accounting']['action_sources'])
         copy_journal_prefix(bundle['journal']['path'],out/'replay.jsonl',bundle['journal']['record_count'])
     # Account for every sibling attempt in this execution namespace, including
@@ -218,7 +236,7 @@ def _execute(c,checkpoint,checkpoint_sha,out,*,resume=None,stop_at=None,wall_lim
                 break
         if stopped:break
     elapsed=time.monotonic()-start
-    report=dict(identity=identity,source_revision=revision(),created_at_utc=utc(),valid_decisions=learner.valid_decisions,optimizer_updates=learner.optimizer_updates,target_syncs=learner.target_syncs,completed_episodes=learner.completed_episodes,transitions=learner.transitions,action_sources=dict(sources),wall_seconds=elapsed,cumulative_wall_seconds=previous_wall+elapsed,decisions_per_hour=(learner.valid_decisions-(bundle['counters']['valid_decisions'] if resume else 0))/elapsed*3600,final_episode_incomplete=not last_complete,stopped=stopped,last_checkpoint=str(checkpoint_path) if checkpoint_path else str(resume) if resume else None,last_checkpoint_decisions=last_checkpoint_decisions,repeated_parent_tail_decisions=repeated,uncommitted_tail_decisions=learner.valid_decisions-last_checkpoint_decisions,checkpoint_serialization_seconds=checkpoint_times,resources=resources,episode_records=episode_records)
+    report=dict(identity=identity,source_revision=revision(),created_at_utc=utc(),valid_decisions=learner.valid_decisions,optimizer_updates=learner.optimizer_updates,target_syncs=learner.target_syncs,completed_episodes=learner.completed_episodes,transitions=learner.transitions,action_sources=dict(sources),wall_seconds=elapsed,cumulative_wall_seconds=previous_wall+elapsed,decisions_per_hour=(learner.valid_decisions-(bundle['counters']['valid_decisions'] if resume else 0))/elapsed*3600,final_episode_incomplete=not last_complete,stopped=stopped,last_checkpoint=str(checkpoint_path) if checkpoint_path else str(resume) if resume else None,last_checkpoint_decisions=last_checkpoint_decisions,repeated_parent_tail_decisions=repeated,ignored_damaged_parent_tail=damaged_tail,uncommitted_tail_decisions=learner.valid_decisions-last_checkpoint_decisions,checkpoint_serialization_seconds=checkpoint_times,resources=resources,episode_records=episode_records)
     write(out/'run.json',report)
     return learner,m4,report
 
