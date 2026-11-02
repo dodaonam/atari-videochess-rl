@@ -16719,8 +16719,8 @@
   "repository": "https://github.com/dodaonam/atari-videochess-rl",
   "source_and_full_suite_tested_head": "5a9021aab3af8cffe438663bca0dfb1dd113ba72",
   "subsequent_evidence_commits": [
-    "5014258c91beefab31fbd58a0114a906ba1f026a",
-    "dc543fa"
+    "5014258afb28ffed045e9f285120c0ae6cce4f53",
+    "dc543fa565a7ae68b1ecc50e7df95140385e76e4"
   ],
   "targeted_context_checks": {
     "all_three_recovery_checks_passed": true,
