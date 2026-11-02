@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python",
+    "-m",
+    "videochess_rl.improvement.recovery_probe"
+  ],
+  "end_git_revision": "c744dd6e895ff8a9000fb7bb328fe3e449de1314",
+  "ended_at_utc": "2026-11-02T20:22:39.581291+00:00",
+  "exit_code": 0,
+  "git_revision": "c744dd6e895ff8a9000fb7bb328fe3e449de1314",
+  "log_path": ".agents/evidence/improvement/recovery-probe-frozen-v2.log",
+  "log_sha256": "dc172b23ed58c6a65e78b6deaf6922cb4a6ae0bafd85d2eb632a38df8a3e28d1",
+  "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/recovery-probe-frozen-v2/manifest.json",
+  "source_manifest_sha256": "f1f9bb964bd61bc3deef362f289b62788f4988a5109269937d777a23f89328df",
+  "source_worktree_dirty": false,
+  "started_at_utc": "2026-11-02T20:14:47.227847+00:00",
+  "wall_seconds": 472.3534454449982
+}

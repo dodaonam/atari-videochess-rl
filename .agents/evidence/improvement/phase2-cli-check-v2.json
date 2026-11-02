@@ -1,0 +1,17 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "scripts/improvement/verify_phase2_cli.py"
+  ],
+  "end_git_revision": "c744dd6e895ff8a9000fb7bb328fe3e449de1314",
+  "ended_at_utc": "2026-11-02T21:04:13.673619+00:00",
+  "exit_code": 0,
+  "git_revision": "c744dd6e895ff8a9000fb7bb328fe3e449de1314",
+  "log_path": ".agents/evidence/improvement/phase2-cli-check-v2.log",
+  "log_sha256": "38a77e20268042a9ae296c70b6b5aa5003f45f5a61eb7c520f4a5c072ee32f01",
+  "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/phase2-cli-check-v2/manifest.json",
+  "source_manifest_sha256": "b4e7ba411484d7e25ffcf40fb1034a14bde60d6a7af2c551f473a18ab653c26a",
+  "source_worktree_dirty": true,
+  "started_at_utc": "2026-11-02T20:59:09.787315+00:00",
+  "wall_seconds": 303.88632080800016
+}

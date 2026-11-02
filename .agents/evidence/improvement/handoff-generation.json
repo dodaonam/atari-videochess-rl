@@ -1,0 +1,18 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "videochess_rl.improvement.report"
+  ],
+  "end_git_revision": "c744dd6e895ff8a9000fb7bb328fe3e449de1314",
+  "ended_at_utc": "2026-11-02T20:52:28.159149+00:00",
+  "exit_code": 0,
+  "git_revision": "c744dd6e895ff8a9000fb7bb328fe3e449de1314",
+  "log_path": ".agents/evidence/improvement/handoff-generation.log",
+  "log_sha256": "8ca1d5af40d2c6028cd5ab9d3e2874751185d2345d3c9e15d4409d495c8d427a",
+  "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/handoff-generation/manifest.json",
+  "source_manifest_sha256": "f1f9bb964bd61bc3deef362f289b62788f4988a5109269937d777a23f89328df",
+  "source_worktree_dirty": true,
+  "started_at_utc": "2026-11-02T20:52:16.196467+00:00",
+  "wall_seconds": 11.962681897999573
+}

@@ -1,0 +1,75 @@
+{
+  "checkpoint_decisions": 4026,
+  "checkpoint_sha256": "7163d952500a25df8c4cc236cb78d41f391a3ac2dff6625ae3e479c436ef5bd0",
+  "checkpoint_target_syncs": 1,
+  "checkpoint_updates": 751,
+  "checks": {
+    "cumulative_wall": true,
+    "engine_absent_on_path": true,
+    "fresh_decisions": true,
+    "frozen_code": true,
+    "official_namespace_absent": true,
+    "probe_role": true,
+    "resumed_decisions": true,
+    "runtime_interop": true,
+    "runtime_intraop": true,
+    "selected_m4": true,
+    "target_sync": true,
+    "valid_counters": true
+  },
+  "code_sha256": "cf329438880a82b7b39b05b8f1f3bc1af21e262edb4143e1035e494f891a5705",
+  "commands": [
+    {
+      "command": [
+        "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python",
+        "-m",
+        "videochess_rl.improvement.m5",
+        "--config",
+        "/home/dodaonam/Projects/atari-videochess-rl/configs/improvement/m5-phase2.json",
+        "--checkpoint",
+        "/home/dodaonam/Projects/atari-videochess-rl/artifacts/improvement/videochess-improvement-20261103-v1/m4-a/epoch-22.pt",
+        "--checkpoint-sha256",
+        "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+        "--output",
+        "/home/dodaonam/Projects/atari-videochess-rl/artifacts/improvement/videochess-improvement-20261103-v1/cli-verification-v2/attempt-0000",
+        "--probe-decisions",
+        "4500"
+      ],
+      "ended_at_utc": "2026-11-02T21:02:54.177675+00:00",
+      "exit_code": 0,
+      "private_log_path": "artifacts/improvement/videochess-improvement-20261103-v1/cli-verification-v2/fresh-private-console.log",
+      "private_log_sha256": "c51f7e3cb27ebe0d33318e9971db34c15498391c5afc6b5e1a5103795a6f1c8f",
+      "started_at_utc": "2026-11-02T20:59:11.144942+00:00"
+    },
+    {
+      "command": [
+        "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python",
+        "-m",
+        "videochess_rl.improvement.m5",
+        "--config",
+        "/home/dodaonam/Projects/atari-videochess-rl/configs/improvement/m5-phase2.json",
+        "--checkpoint",
+        "/home/dodaonam/Projects/atari-videochess-rl/artifacts/improvement/videochess-improvement-20261103-v1/m4-a/epoch-22.pt",
+        "--checkpoint-sha256",
+        "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+        "--output",
+        "/home/dodaonam/Projects/atari-videochess-rl/artifacts/improvement/videochess-improvement-20261103-v1/cli-verification-v2/attempt-0001",
+        "--probe-decisions",
+        "4800",
+        "--resume",
+        "artifacts/improvement/videochess-improvement-20261103-v1/cli-verification-v2/attempt-0000/resume-004026.pt"
+      ],
+      "ended_at_utc": "2026-11-02T21:04:13.331528+00:00",
+      "exit_code": 0,
+      "private_log_path": "artifacts/improvement/videochess-improvement-20261103-v1/cli-verification-v2/resume-private-console.log",
+      "private_log_sha256": "74548c78389c76fe5e3059b9684d7cc3e43eba3e12a728cf948d352974ef8cd4",
+      "started_at_utc": "2026-11-02T21:02:54.556284+00:00"
+    }
+  ],
+  "config_sha256": "b488a5081adb17704c36f208216ddb289ebf9f9fa08793810ea72e1ec125eb26",
+  "official_run": false,
+  "passed": true,
+  "repeated_tail_decisions": 474,
+  "selected_m4_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+  "source_revision": "c744dd6e895ff8a9000fb7bb328fe3e449de1314"
+}

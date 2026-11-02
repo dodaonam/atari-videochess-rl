@@ -1,0 +1,21 @@
+{
+  "benchmark_report": "artifacts/improvement/videochess-improvement-20261103-v1/benchmarks/t4-b32/run.json",
+  "benchmark_report_sha256": "d185f58a948eabd979f638c8f2aa36f9e3d58eb58d16231f46b7ff79c32fe3e6",
+  "configured_replay_capacity": 16384,
+  "conservative_projected_250k_artifact_bytes": 2091663026,
+  "current_free_disk_bytes": 34251120640,
+  "limitations": "Resource projections are estimates, not upper bounds. History lengths, episode/opponent distribution, full replay occupancy, allocator behavior, and checkpoint transient buffers may change usage. Guards enforce actual RSS, system RAM and disk headroom.",
+  "maximum_measured_resume_checkpoint_bytes": 2020749,
+  "measured_evaluation_snapshot_bytes": 499290,
+  "no_cloud_compute_or_storage_allocated": true,
+  "observed_action_log_bytes_per_decision": 154.88175,
+  "observed_available_ram_bytes": 25996509184,
+  "observed_journal_bytes_per_decision": 2872.8676923076923,
+  "observed_peak_rss_bytes": 529297408,
+  "projected_250k_artifact_bytes": 1267616801,
+  "projection_formula": "Observed journal and action-log bytes per valid decision *250000 +250 maximum-sized observed resume checkpoints +11 observed-size snapshots. Conservative projection doubles journal/action rates and adds 64 MiB telemetry allowance.",
+  "real_replay_rows": 4000,
+  "recorded_at_utc": "2026-11-02T20:57:16.147122+00:00",
+  "simple_fourfold_occupancy_rss_projection_bytes": 2117189632,
+  "source_revision": "c744dd6e895ff8a9000fb7bb328fe3e449de1314"
+}
