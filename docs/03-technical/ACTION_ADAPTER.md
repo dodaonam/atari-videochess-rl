@@ -1,6 +1,6 @@
 # Atari Chess-Move Action Adapter
 
-**Status:** The M1 move-to-joystick/FIRE adapter and phase-specific RGB checks are implemented. M6 learned-policy integration and broader special-move support are proposed and untested.
+**Status:** The M1 move-to-joystick/FIRE adapter and phase-specific RGB checks are implemented. M6 frozen-policy integration was subsequently implemented and accepted; broader special-move parity remains limited to the recorded evidence. See the [M6 integration contract](M5_ALE_INTEGRATION_CONTRACT.md) and [final handover](../07-delivery/HANDOVER.md).
 
 **Purpose:** Document how a semantic chess move is translated into real Atari actions and what evidence is required before a shadow transition is accepted.
 
@@ -51,7 +51,7 @@ Earlier controlled observations showed that very short target FIRE holds often f
 
 The learned policy must provide a semantic legal chess move from an ALE-derived, validated state. The adapter accepts that move only when it remains legal in the current validated state, runs the observed control phases, and returns one of: fully RGB-verified transition, genuine ALE terminated/truncated result, or a typed uncertain/desynchronized stop with the last verified board and input phase. It must not advance state from model output, simulator state or diagnostic RAM.
 
-This proposed contract calls the M1 controller; it does not add the M6 policy interface or change current code.
+This paragraph preserves the original M1-era proposed boundary. The subsequent M6 adapter implements frozen-policy integration through the M1 controller; see the M6 integration contract.
 
 ## References
 

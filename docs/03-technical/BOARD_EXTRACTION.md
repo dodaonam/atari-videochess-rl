@@ -73,7 +73,7 @@ M1 does not establish that RGB identifies every piece type independently, nor th
 
 ## M6 observation boundary
 
-A future inference adapter may receive a validated chess position, its history/perspective metadata and legal candidates only after the current ALE RGB has been parsed and cross-checked. It must receive uncertainty explicitly and stop if no unique valid state is available. Model scores and simulator boards cannot be used to claim that an Atari action was accepted.
+The M6 inference adapter may receive a validated chess position, its history/perspective metadata and legal candidates only after the current ALE RGB has been parsed and cross-checked. It must receive uncertainty explicitly and stop if no unique valid state is available. Model scores and simulator boards cannot be used to claim that an Atari action was accepted.
 
 ## References
 

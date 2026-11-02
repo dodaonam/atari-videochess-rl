@@ -1,0 +1,24 @@
+{"command": ["python3", "scripts/audit_final_consolidation.py", "--output", "/tmp/consolidation-source-inventory.json"], "completed_at_utc": "2026-11-02T15:10:20.000174+00:00", "environment": "existing Python 3.12.3 project environment; no installs; PYTHONDONTWRITEBYTECODE=1", "exit_code": 0, "source_revision": "2933ae0a5f1d3c604f96ddf42abfb67888f76b3b", "started_at_utc": "2026-11-02T15:10:16.544093+00:00", "working_tree_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}
+{
+  "schema_version": 1,
+  "source_head": "2933ae0a5f1d3c604f96ddf42abfb67888f76b3b",
+  "scope": "tracked worktree bytes, recursive gzip/ZIP members; exact inventory hashes",
+  "files": 1507,
+  "recursive_members": {
+    "zip_entries": 59,
+    "gzip": 267
+  },
+  "high_confidence_credential_matches": [],
+  "unexpected_opaque_payloads": [],
+  "authorized_historical_archive_unchanged": true,
+  "historical_path_counts": {
+    "concrete_home_path_occurrences": 1000
+  },
+  "limitations": [
+    "Pattern scanning is not proof of absence of all secrets or of third-party rights.",
+    "Historical concrete paths remain in accepted immutable evidence.",
+    "Only the exact existing BLK-001 archive has a scoped owner disposition.",
+    "Private artifact stores and past versions of Git blobs are outside this content scan."
+  ],
+  "opaque_leaf_count": 43
+}

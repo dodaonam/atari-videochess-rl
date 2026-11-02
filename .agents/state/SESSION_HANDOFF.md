@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-0ceab36c-20261102T150933646956Z -->
+<!-- checkpoint-id: cp-2933ae0a-20261102T151552317051Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -98,3 +98,7 @@ python3 scripts/agent_preflight.py
 ```
 
 For old partial-write temp files, inspect the preflight warning, then use `python3 scripts/agent_checkpoint.py --recover-partials` and rerun preflight. The checkpoint script does not update task status or claim acceptance; update canonical state/backlog only from evidence.
+
+## Final consolidation review pointer — 2026-11-02
+
+The owner-authorized final housekeeping/integration task is documented in the [consolidation audit](../evidence/FINAL-CONSOLIDATION-audit-20261102.md) and [verification ledger](../evidence/FINAL-CONSOLIDATION-verification-20261102.md). It does not reopen M0–M7 or authorize a campaign/release. Exact final feature HEAD, clean-clone results, and CI belong to its separate main-target PR handover; the executor must leave that PR open and unmerged.

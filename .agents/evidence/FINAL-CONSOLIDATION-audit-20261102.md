@@ -37,6 +37,7 @@ Classifications: **1** incorrect current information; **2** valid historical sna
 | C21 | O-02–O-08, RSK-014, PM6-F06, private raw evidence and source rights | 4 | Requirements, final report, model card and acceptance qualifications | Remain disclosed; no new campaign or false academic/rights closure. |
 | C22 | Strong play / RL or Warm superiority / Elo | 3/4 | Structured final M7 analysis | 90 started/reset-observed, 60 losses, 30 incomplete, zero wins/draws, 9/30 matched terminal cells; no valid paired CI/Elo/superiority claims. |
 | C23 | Context-only CI filter excludes main | 6 | .github/workflows/preflight.yml actual trigger | Added main target; preserves permissions/actions/jobs and no-dependency boundary. Actual remote behavior must be observed, never inferred from local results. |
+| C25 | ACTION_ADAPTER M6 proposed; MDP_SPEC future learner; BOARD_EXTRACTION future adapter; M5_ALE_INTEGRATION_CONTRACT feature-branch/v2 report wording | 1/2 | Integrated M6 code and accepted v1/v2 reports | Corrected current technical maturity and added historical scope notice; algorithm/interfaces/results unchanged. MODEL_DESIGN already has a valid 2026-11-01 supersession notice and remains unchanged. |
 | C24 | Bigger CI, licensing decision, artifact publication or new research | 7 | Direct assignment exclusions and final research disposition | Deferred outside scope; no changes or automatic future work. |
 
 ## CONSOLIDATION-01 — resolved for exact historical archive only

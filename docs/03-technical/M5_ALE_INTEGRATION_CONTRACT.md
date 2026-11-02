@@ -1,6 +1,6 @@
 # Frozen M5 Policy to ALE Integration Contract
 
-**Status:** M6 implementation contract. The adapter and closed-loop runner are implemented in the M6 feature branch. Automated tests and offline checkpoint checks do not pass M6-01 through M6-05; those criteria require the genuine ALE evidence listed in the M6 report.
+**Status:** M6 implementation contract. The adapter and closed-loop runner were integrated in the accepted project baseline; M6 is complete with separate immutable v1/v2 evidence. See [final handover](../07-delivery/HANDOVER.md). Automated tests and offline checkpoint checks do not pass M6-01 through M6-05; those criteria require the genuine ALE evidence listed in the M6 report.
 
 ## Authority and components
 
@@ -94,7 +94,7 @@ These cases define the M6 test surface. The dedicated `tests/test_m6_adapter.py`
 
 `videochess_rl/m6/campaign.py` loads only the pinned CPU snapshots and existing baselines, asserts actual environment construction/reset settings, and writes an append-only attempt ledger plus per-attempt trace/artifact manifests. Interrupted attempts are retained with explicit missing-detail markers; unknown move accounting is not replaced with zero. `videochess_rl/m6/ledger.py` verifies trace/manifest hashes and computes metrics from the retained attempt records.
 
-The current implementation is White-only. It preserves ALE RGB as the observation authority and uses RAM only to verify the numeric mode. No optimizer, replay insertion, Stockfish process, or model-weight update is in the inference path. Actual Stage 1, Stage 2, and v1 Stage 3 results and their limitations are recorded in [M6-001-final-report-20261031.md](../../.agents/evidence/M6-001-final-report-20261031.md); the v2 run receives a separate report.
+The current implementation is White-only. It preserves ALE RGB as the observation authority and uses RAM only to verify the numeric mode. No optimizer, replay insertion, Stockfish process, or model-weight update is in the inference path. Actual Stage 1, Stage 2, and v1 Stage 3 results and their limitations are recorded in [M6-001-final-report-20261031.md](../../.agents/evidence/M6-001-final-report-20261031.md); the v2 run has its [separate accepted report](../../.agents/evidence/M6-001-final-report-v2-20261031.md).
 
 ### Corrective continuation interfaces
 
