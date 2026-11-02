@@ -9,5 +9,6 @@
   "split_seed": 20261103,
   "historical_release": "artifacts/m3/training-support/release-final-closure-r6",
   "source_manifest": "artifacts/m3/source/source-manifest.json",
-  "workers": 4
+  "workers": 4,
+  "coverage_rule": "preserve protected bottom_k core; one lowest-ranked leakage-safe per-game reservoir candidate for any zero-record parent"
 }

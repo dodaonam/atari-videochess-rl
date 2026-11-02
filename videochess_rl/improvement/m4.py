@@ -102,8 +102,8 @@ def fit(source,source_sha,examples,lr,wd,epochs,patience,out,expert=None,trial=N
                 'command':__import__('sys').argv,
                 'source_worktree_dirty':bool(__import__('subprocess').check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip()),
                 'runtime_environment':dict(python=__import__('sys').version,torch=str(torch.__version__),numpy=np.__version__,python_chess=chess.__version__,device='cpu',intraop_threads=torch.get_num_threads(),interop_threads=torch.get_num_interop_threads()),
-                'release_manifest_sha256':sha(ARTIFACTS/'dataset-v3/manifest.json'),
-                'split_assignment_sha256':sha(ARTIFACTS/'dataset-v3/split.json'),
+                'release_manifest_sha256':sha(ARTIFACTS/'dataset-v4/manifest.json'),
+                'split_assignment_sha256':sha(ARTIFACTS/'dataset-v4/split.json'),
                 'training_config':dict(optimizer='AdamW',learning_rate=lr,weight_decay=wd,maximum_epochs=epochs,early_stopping_patience=patience,seed=SEED,logical_batch=64,physical_batch=32,gradient_clip_norm=1.),
                 'teacher_scores_or_targets_used':bool(expert),'stockfish_used_for_training_or_inference':bool(expert),'stockfish_process_used_during_training_or_inference':False,
                 'label_semantics':'0.8 human plus 0.2 offline expert legal CE' if expert else 'human PGN move CE',
@@ -155,8 +155,8 @@ def hpo(examples):
 def expert_labels(examples):
     directory=ARTIFACTS/'expert';directory.mkdir(exist_ok=False)
     model,_=load_source();model.eval()
-    rows_by_id={p['sample_id']:p for p in read_rows(ARTIFACTS/'dataset-v3/positions.jsonl')}
-    games={g['game_id']:g for g in read_rows(ARTIFACTS/'dataset-v3/games.jsonl')}
+    rows_by_id={p['sample_id']:p for p in read_rows(ARTIFACTS/'dataset-v4/positions.jsonl')}
+    games={g['game_id']:g for g in read_rows(ARTIFACTS/'dataset-v4/games.jsonl')}
     ranked=[]
     with torch.inference_mode():
         train=examples['train']
@@ -192,6 +192,7 @@ def expert_labels(examples):
         p=rows_by_id[row.sample_id];g=games[p['game_id']];b=chess.Board()
         for u in g['moves_uci'][:p['ply_index']]:b.push_uci(u)
         return b
+    engine_sha=sha((ROOT/'.venv/bin/stockfish').resolve())
     with chess.engine.SimpleEngine.popen_uci(str(ROOT/'.venv/bin/stockfish')) as engine:
         if engine.id.get('name')!='Stockfish 19':raise ValueError('Stockfish 19 required')
         engine.configure({'Threads':1,'Hash':64})
@@ -201,7 +202,7 @@ def expert_labels(examples):
             pilot.append(dict(sample_id=row.sample_id,seconds=time.monotonic()-tick,nodes=info.get('nodes'),depth=info.get('depth'),nps=info.get('nps'),legal=info['pv'][0].uci() in row.candidate_uci))
         per_position=sum(p['seconds'] for p in pilot)/len(pilot)
         nodes=min(50000,max(4000,int(10000*1500/((len(chosen)+len(dev))*per_position))))
-        write(directory/'pilot.json',dict(training_phase_counts=dict(Counter(phase(row) for row in chosen)),engine=engine.id,threads=1,hash_mib=64,multipv=1,pilot=pilot,selected_fixed_nodes=nodes,estimated_seconds=per_position*(len(chosen)+len(dev))*nodes/10000,engine_sha256=sha((ROOT/'.venv/bin/stockfish').resolve())))
+        write(directory/'pilot.json',dict(training_phase_counts=dict(Counter(phase(row) for row in chosen)),engine=engine.id,threads=1,hash_mib=64,multipv=1,pilot=pilot,selected_fixed_nodes=nodes,estimated_seconds=per_position*(len(chosen)+len(dev))*nodes/10000,engine_sha256=engine_sha))
         labels=[];started=time.monotonic()
         for row in [*chosen,*dev]:
             if time.monotonic()-started>1800:raise TimeoutError('labeling 30 minute budget reached')
@@ -212,10 +213,10 @@ def expert_labels(examples):
             move=info['pv'][0].uci()
             if move not in row.candidate_uci:raise ValueError('expert move outside legal candidate set')
             score=info['score'].pov(b.turn)
-            labels.append(dict(sample_id=row.sample_id,split=row.split,fen=b.fen(en_passant='legal'),side_to_move='white' if b.turn else 'black',engine=engine.id,engine_sha256=sha((ROOT/'.venv/bin/stockfish').resolve()),limit_nodes=nodes,actual_nodes=info.get('nodes'),depth=info.get('depth'),nps=info.get('nps'),move_uci=move,score_cp=None if score.is_mate() else score.score(),score_mate=score.mate() if score.is_mate() else None,score_perspective='side_to_move',wall_seconds=time.monotonic()-tick))
+            labels.append(dict(sample_id=row.sample_id,split=row.split,fen=b.fen(en_passant='legal'),side_to_move='white' if b.turn else 'black',engine=engine.id,engine_sha256=engine_sha,limit_nodes=nodes,actual_nodes=info.get('nodes'),depth=info.get('depth'),nps=info.get('nps'),move_uci=move,score_cp=None if score.is_mate() else score.score(),score_mate=score.mate() if score.is_mate() else None,score_perspective='side_to_move',wall_seconds=time.monotonic()-tick))
             if len(labels)%100==0:print('expert labels',len(labels),flush=True)
     write_rows(directory/'labels.jsonl',labels)
-    write(directory/'manifest.json',dict(labels=len(labels),training=sum(r['split']=='train' for r in labels),development=sum(r['split']=='validation' for r in labels),sha256=sha(directory/'labels.jsonl'),dataset_manifest_sha256=sha(ARTIFACTS/'dataset-v3/manifest.json'),wall_seconds=time.monotonic()-started))
+    write(directory/'manifest.json',dict(labels=len(labels),training=sum(r['split']=='train' for r in labels),development=sum(r['split']=='validation' for r in labels),sha256=sha(directory/'labels.jsonl'),dataset_manifest_sha256=sha(ARTIFACTS/'dataset-v4/manifest.json'),wall_seconds=time.monotonic()-started))
     return labels
 
 
@@ -227,8 +228,15 @@ def select_candidate(candidates):
 
 def main():
     configure_determinism(SEED,threads=1)
-    rows,manifest=verify_release(ARTIFACTS/'dataset-v3');examples={**rows,'manifest':manifest}
-    hp=hpo(examples)
+    rows,manifest=verify_release(ARTIFACTS/'dataset-v4');examples={**rows,'manifest':manifest}
+    # A completed HPO study may be reused only with a verified immutable
+    # input-projection compatibility record for the coverage-completed release.
+    if (ARTIFACTS/'hpo/result.json').exists():
+        compatibility=json.loads((ARTIFACTS/'hpo-final-release-compatibility.json').read_text())
+        if not compatibility.get('all_hpo_inputs_unchanged') or compatibility['final_release_id']!=manifest['release_id']:
+            raise ValueError('completed HPO inputs do not match final release projection')
+        hp=json.loads((ARTIFACTS/'hpo/result.json').read_text())
+    else:hp=hpo(examples)
     labels=expert_labels(examples)
     a=fit(SOURCE,HISTORICAL_M4_SHA256,examples,hp['best_params']['learning_rate'],hp['best_params']['weight_decay'],25,5,ARTIFACTS/'m4-a')
     targets={r['sample_id']:r['move_uci'] for r in labels if r['split']=='train'}

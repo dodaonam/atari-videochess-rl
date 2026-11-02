@@ -39,6 +39,26 @@ class ImprovementTests(unittest.TestCase):
             self.assertEqual([r['source_ordinal'] for r in results],[1,2])
             self.assertEqual(results[0]['normalized_game_sha256'],results[1]['normalized_game_sha256'])
 
+    def test_coverage_completion_preserves_real_choices_and_leakage_guards(self):
+        from videochess_rl.improvement.data import _parse_chunk,complete_game_coverage
+        from videochess_rl.data.sampling import sample_positions
+        source=dict(source_id='a'*64,archive_sha256='b'*64,member_name='test.pgn')
+        games=[]
+        for i,move in enumerate(('e4','d4')):
+            pgn=('[Event "Test"]\n[Result "1-0"]\n\n1. '+move+' 1-0\n').encode()
+            game=_parse_chunk((pgn,source,i))[0][0]
+            game.update(game_id=str(i)*64,split='train',split_id='train')
+            games.append(game)
+        rows=sample_positions([games[0]],source_id=source['source_id'],seed=1,max_positions_per_game=32,max_positions=32,sampling_config_sha256='c'*64)
+        for row in rows:row.update(split='train',split_id='train')
+        result,added=complete_game_coverage(games,rows,source_id=source['source_id'],seed=1,config_sha='c'*64,historical_exposure=set())
+        self.assertEqual(len(result),2);self.assertEqual(len(added),1)
+        self.assertEqual({r['played_move_uci'] for r in result},{'e2e4','d2d4'})
+        self.assertEqual(result,complete_game_coverage(games,rows,source_id=source['source_id'],seed=1,config_sha='c'*64,historical_exposure=set())[0])
+        self.assertTrue(all(r['game_id'] in {g['game_id'] for g in games} for r in result))
+        games[1].update(split='test',split_id='test')
+        with self.assertRaises(ValueError):complete_game_coverage(games,rows,source_id=source['source_id'],seed=1,config_sha='c'*64,historical_exposure=set())
+
     def test_fixed_splits_independent_of_order(self):
         games=[dict(normalized_game_sha256=str(i)) for i in range(5000)]
         a=fixed_splits(games,20261103)

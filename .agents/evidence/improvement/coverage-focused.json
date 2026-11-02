@@ -1,0 +1,23 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "unittest",
+    "test_improvement",
+    "test_m5_replay",
+    "test_m5_checkpoint",
+    "test_m5_targets",
+    "test_m5_training",
+    "-v"
+  ],
+  "end_git_revision": "08a6d89bd64fdf7d090784bff0a3a186f6dd52be",
+  "ended_at_utc": "2026-11-02T19:03:17.025359+00:00",
+  "exit_code": 0,
+  "git_revision": "08a6d89bd64fdf7d090784bff0a3a186f6dd52be",
+  "log_path": ".agents/evidence/improvement/coverage-focused.log",
+  "log_sha256": "289cb5191df691927355cb3f13b707a648b4f98160ee93769a9ca4eafc9b83f1",
+  "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/coverage-focused/manifest.json",
+  "source_manifest_sha256": "80a281fcae0487513d7eca8f58f53315bf142640f1d8d1cbd8910de568167237",
+  "started_at_utc": "2026-11-02T19:03:12.648116+00:00",
+  "wall_seconds": 4.377244196999527
+}

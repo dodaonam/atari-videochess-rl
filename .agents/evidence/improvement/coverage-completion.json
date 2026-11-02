@@ -1,0 +1,17 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "videochess_rl.improvement.coverage"
+  ],
+  "end_git_revision": "08a6d89bd64fdf7d090784bff0a3a186f6dd52be",
+  "ended_at_utc": "2026-11-02T19:01:52.375450+00:00",
+  "exit_code": 0,
+  "git_revision": "08a6d89bd64fdf7d090784bff0a3a186f6dd52be",
+  "log_path": ".agents/evidence/improvement/coverage-completion.log",
+  "log_sha256": "de88c4605a7856b351883fdc0e3849b9d5f2e60d75102574b622475cb15bef25",
+  "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/coverage-completion/manifest.json",
+  "source_manifest_sha256": "f7c23346ada0b601bb6c33694b6f0494fc064406e36d88e2d4722b66a82ce416",
+  "started_at_utc": "2026-11-02T19:01:39.173170+00:00",
+  "wall_seconds": 13.2022820279999
+}

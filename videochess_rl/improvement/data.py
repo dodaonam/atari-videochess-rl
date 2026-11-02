@@ -11,7 +11,7 @@ import zipfile
 import chess
 from videochess_rl.data.pgn import iter_pgn_games
 from videochess_rl.data.sampling import BottomKGroups, sample_positions
-from videochess_rl.data.contracts import digest, board_signature_owner
+from videochess_rl.data.contracts import digest, board_signature_owner, ply_sample_key
 from videochess_rl.model.dataset import _features_from_verified_records, effective_model_input_sha256
 from .common import ARTIFACTS, ROOT, read_rows, write_rows, sha, write, utc, revision
 
@@ -76,6 +76,34 @@ def protect_positions(positions, assignments, historical_exposure, seed):
     return kept, purged, sum(len(x)>1 for x in signatures.values())
 
 
+def complete_game_coverage(games, positions, *, source_id, seed, config_sha,
+                           historical_exposure, max_positions=100000):
+    """Retain the protected bottom-k core, then cover zero-record parents.
+
+    Select one lowest-ranked eligible position from each missing game's original
+    per-game candidate reservoir. Never change an existing split or board owner.
+    """
+    represented={p['game_id'] for p in positions}
+    missing=[g for g in games if g['game_id'] not in represented]
+    if len(positions)+len(missing)>max_positions:
+        raise ValueError('insufficient position budget for complete game coverage')
+    owners={p['board_position_signature']:p['split'] for p in positions}
+    additions=[]
+    for game in sorted(missing,key=lambda g:g['normalized_game_sha256']):
+        candidates=sample_positions([game],source_id=source_id,seed=seed,
+            max_positions_per_game=32,max_positions=32,sampling_config_sha256=config_sha)
+        eligible=[p for p in candidates
+            if owners.get(p['board_position_signature'],game['split'])==game['split']
+            and (game['split']=='train' or p['board_position_signature'] not in historical_exposure)]
+        if not eligible:
+            raise ValueError('selected game has no leakage-safe coverage position: '+game['normalized_game_sha256'])
+        row=min(eligible,key=lambda p:(ply_sample_key(seed,source_id,p['game_id'],p['ply_index']),p['sample_id']))
+        row.update(split=game['split'],split_id=game['split'])
+        owners[row['board_position_signature']]=game['split']
+        additions.append(row)
+    return sorted([*positions,*additions],key=lambda p:p['sample_id']), additions
+
+
 def verify_release(path):
     path = Path(path)
     manifest = json.loads((path/'manifest.json').read_text())
@@ -113,7 +141,7 @@ def build(output=None):
     excluded = {g['normalized_game_sha256'] for g in historical_games}
     hist_rows = read_rows(history/'positions.jsonl')
     historical_exposure = {p['board_position_signature'] for p in hist_rows if p['split'] in ('train','validation')}
-    directory = Path(output) if output is not None else ARTIFACTS/'dataset-v3'
+    directory = Path(output) if output is not None else ARTIFACTS/'dataset-v4'
     if not directory.resolve().is_relative_to(ARTIFACTS.resolve()):
         raise ValueError('dataset output must remain in the ignored improvement namespace')
     directory.mkdir(parents=True, exist_ok=False)
@@ -148,7 +176,11 @@ def build(output=None):
     positions = sample_positions(games,source_id=source['source_id'],seed=config['sampling_seed'],max_positions_per_game=config['max_positions_per_game'],max_positions=config['max_positions'],sampling_config_sha256=digest(config))
     before = len(positions)
     positions,purged,overlap_before = protect_positions(positions,assignments,historical_exposure,config['split_seed'])
-    split_doc = dict(game_group_assignments=sorted([list(x) for x in assignments.items()]),purged_samples=purged)
+    positions,coverage_additions=complete_game_coverage(games,positions,source_id=source['source_id'],seed=config['sampling_seed'],config_sha=digest(config),historical_exposure=historical_exposure,max_positions=config['max_positions'])
+    core_purged=purged
+    restored_ids={p['sample_id'] for p in coverage_additions}
+    purged=[p for p in core_purged if p[0] not in restored_ids]
+    split_doc = dict(core_purged_samples=core_purged,coverage_completion_sample_ids=sorted(p['sample_id'] for p in coverage_additions),game_group_assignments=sorted([list(x) for x in assignments.items()]),purged_samples=purged)
     examples, counts = _features_from_verified_records(games,positions,split_doc)
     phases = defaultdict(Counter)
     effective = defaultdict(set)
@@ -160,7 +192,7 @@ def build(output=None):
             effective[split].add(effective_model_input_sha256(row))
     if not all(examples[s] for s in ('train','validation','test')):
         raise ValueError('empty split after leakage protection')
-    stats = dict(games=len(games),game_counts=counts,position_counts={s:len(v) for s,v in examples.items()},positions_before_purge=before,positions_after_purge=len(positions),purge_reasons=dict(Counter(x[1] for x in purged)),historical_game_overlap=0,historical_holdout_board_overlap=0,cross_split_board_signatures_before=overlap_before,cross_split_board_signatures_after=0,normalized_duplicate_groups=grouper.normalized_duplicate_groups,normalized_duplicate_observations=grouper.normalized_duplicate_observations,conflicting_groups=len(grouper.conflicting_groups),source_ref_conflicts=len(grouper.conflicting_source_refs),duplicate_sample_ids=len(positions)-len({p['sample_id'] for p in positions}),exact_history_target_duplicates=len(positions)-len({(p['history_state_id'],p['played_move_uci']) for p in positions}),distinct_board_signatures=len({p['board_position_signature'] for p in positions}),effective_input_uniqueness={s:len(v) for s,v in effective.items()},phases={s:dict(v) for s,v in phases.items()},accepted_source_games=accepted,rejection_reasons=dict(rejected),historical_excluded_observations=exclusions,source_games_seen=expected_headers)
+    stats = dict(core_purge_reasons=dict(Counter(x[1] for x in core_purged)),positions_after_core_purge=len(positions)-len(coverage_additions),coverage_restored_from_core_purge=sum(x[0] in restored_ids for x in core_purged),maximum_records_per_game=max(Counter(p['game_id'] for p in positions).values()),repeated_fen_observations=len(positions)-len({p['fen'] for p in positions}),repeated_board_signature_observations=len(positions)-len({p['board_position_signature'] for p in positions}),coverage_completion_records=len(coverage_additions),games_with_retained_positions=len({p['game_id'] for p in positions}),games=len(games),game_counts=counts,position_counts={s:len(v) for s,v in examples.items()},positions_before_purge=before,positions_after_purge=len(positions),purge_reasons=dict(Counter(x[1] for x in purged)),historical_game_overlap=0,historical_holdout_board_overlap=0,cross_split_board_signatures_before=overlap_before,cross_split_board_signatures_after=0,normalized_duplicate_groups=grouper.normalized_duplicate_groups,normalized_duplicate_observations=grouper.normalized_duplicate_observations,conflicting_groups=len(grouper.conflicting_groups),source_ref_conflicts=len(grouper.conflicting_source_refs),duplicate_sample_ids=len(positions)-len({p['sample_id'] for p in positions}),exact_history_target_duplicates=len(positions)-len({(p['history_state_id'],p['played_move_uci']) for p in positions}),distinct_board_signatures=len({p['board_position_signature'] for p in positions}),effective_input_uniqueness={s:len(v) for s,v in effective.items()},phases={s:dict(v) for s,v in phases.items()},accepted_source_games=accepted,rejection_reasons=dict(rejected),historical_excluded_observations=exclusions,source_games_seen=expected_headers)
     write_rows(directory/'games.jsonl',games)
     write_rows(directory/'positions.jsonl',positions)
     write(directory/'split.json',split_doc)
@@ -175,5 +207,5 @@ def build(output=None):
 if __name__ == '__main__':
     import argparse
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--output',type=Path,default=ARTIFACTS/'dataset-v3')
+    parser.add_argument('--output',type=Path,default=ARTIFACTS/'dataset-v4')
     build(parser.parse_args().output)

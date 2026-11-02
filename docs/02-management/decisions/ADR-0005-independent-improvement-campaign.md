@@ -37,3 +37,24 @@ repository integration and Phase 2 authorization are distinct.
 The handoff owns the concrete selected artifacts, measured results, feasibility
 projection, reproducibility commands and next-session prerequisites; this ADR
 does not duplicate their evolving identities.
+
+The coverage audit found that the protected global bottom-k core selected 5,000
+games but retained position records for only 4,994. To satisfy actual parent-game
+coverage, preserve that core and complete missing parents using one lowest-ranked
+leakage-safe candidate from their original per-game reservoirs. Keep existing
+retained split ownership, historical holdout protection, the 32-record per-game
+cap and the 100,000-record final cap. The six additions restore four previously
+purged train records whose competing holdout exposure was removed, and add two
+reservoir records beyond the original global cutoff. All 5,000 games are then
+represented; the final release has 94,805 records. This is an explicit deterministic
+coverage rule, not synthetic data or a relaxation of disjointness.
+
+The eight-trial HPO campaign had already finished before this audit. Its fixed
+8,192 training and 8,964 validation inputs are an unchanged projection of the
+coverage-completed release, verified by sample identities, complete histories,
+FENs, legal actions, labels and splits. Retain that measured study and its original
+release provenance; do not relabel it as a rerun on the full 8,965-position final
+validation partition or spend additional HPO trials. Official M4 training and
+selection use the completed release and its full validation partition. The
+interrupted labeling attempt is preserved and does not count as a completed
+expert dataset. No official M4 epoch had started when it was stopped.
