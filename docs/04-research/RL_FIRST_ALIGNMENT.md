@@ -1,5 +1,8 @@
 # RL-First Alignment and M5 Feasibility Contract
 
+**Current disposition (2026-11-02): PROJECT CLOSED WITH DOCUMENTED LIMITATIONS.** M0–M7 engineering is complete and G0–G5 are approved within their recorded scopes. No new research or artifact release is authorized. See [final handover](../07-delivery/HANDOVER.md) and canonical state/backlog. Earlier dated planning/authorization statements below are historical; they do not schedule new work or supersede final closure.
+
+
 **Status:** Project-owner RL-first direction is confirmed and applied in current planning as of 2026-10-27. This research note bounds supporting work; it does not itself authorize M5 or start any milestone. M4-001 has separate direct authorization recorded in canonical state.
 **Owner:** This document assesses whether supporting data and pretraining lead to the course's principal Double DQN objective. Canonical milestone acceptance remains in [ACCEPTANCE_CRITERIA.md](../06-quality/ACCEPTANCE_CRITERIA.md).
 **Related contracts:** [M2 MDP](../03-technical/MDP_SPEC.md), [ADR-0002](../02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md), [DATASET_SPEC.md](DATASET_SPEC.md), [STOCKFISH_TEACHER.md](STOCKFISH_TEACHER.md), [EXPERIMENT_PROTOCOL.md](EXPERIMENT_PROTOCOL.md), and [M03 plan](../../.agents/plans/M03-expert-dataset.md).

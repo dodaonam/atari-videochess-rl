@@ -529,3 +529,8 @@ Findings are append-only historical observations. FND-021 and FND-022 record the
 - **Preserved scope:** M7-04 acceptance and G5-F01 resolution remain intact. Accepted M3–M7 scientific results and limitations are unchanged. G5 is not approved in current canonical state pending fresh PM review of M7-05.
 - **Evidence:** `.agents/evidence/G5-F02-provenance-erratum-20261101.md`; `.agents/evidence/G5-F02-provenance-status-20261101.json`; `.agents/evidence/PROJECT-OWNER-final-research-scope-decision-20261101.md`; `.agents/evidence/M7-005-corrected-disposition-assessment-20261101.md`.
 - **Impact:** Correct the current release inventory, delivery handovers, task evidence, and governance state; preserve earlier records with supersession notices. A fresh Independent PM decision is required before G5 can be marked approved.
+
+
+## G5-F02 final disposition supplement — 2026-11-02 consolidation
+
+The pending-review wording in the original G5-F02 observation above records the pre-decision checkpoint. It was superseded by [PR #21 comment 6558975009](https://github.com/dodaonam/atari-videochess-rl/pull/21#issuecomment-6558975009): G5-F02 resolved, M7-05 accepted with limitations, G5 approved with limitations. PR #22 integrated the canonical final state at `0ceab36c6dcdcbde169d578657d851c0106cf518`. No new scientific result or distribution right follows. See the [final decision](../evidence/G5-PM-final-decision-20261101.md) and [consolidation audit](../evidence/FINAL-CONSOLIDATION-audit-20261102.md).

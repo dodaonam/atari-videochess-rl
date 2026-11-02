@@ -1,5 +1,8 @@
 # ADR-0003: Pretraining Model and State/Action Interface
 
+**Later status supplement (2026-11-02):** The M4-era G3/M5 authorization statements below are historical. M0–M7 are now complete and G0–G5 approved within their scopes; see [final handover](../../07-delivery/HANDOVER.md). The accepted architecture decision is unchanged.
+
+
 - **Status:** Accepted.
 - **Proposed:** 2026-10-22.
 - **Accepted:** 2026-10-23.

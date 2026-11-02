@@ -131,7 +131,7 @@ uv run --locked --no-sync --project . python -m unittest \
 
 The real M4 release verification, revised sanity gate, training, validation-only checkpoint selection, one frozen test evaluation, engine-free reload, profiling, and bounded simulator games run through `python -m videochess_rl.model.cli run`. The exact run, a second 40-game confirmation with Stockfish absent, and their checksums are recorded in the [M4 acceptance report](../../.agents/evidence/M4-final-acceptance-20261027.md). Unit tests cannot substitute for those experiment results. The whole-suite command remains `uv run --locked --no-sync --project . python -m unittest discover -s tests -v`.
 
-## Future project test layers
+## Project test layers
 
 | Layer | Examples | Run when |
 |---|---|---|
@@ -144,11 +144,11 @@ The real M4 release verification, revised sanity gate, training, validation-only
 
 ## Pre-M5 Double DQN readiness fixtures
 
-The versioned fixture in `tests/fixtures/m5_double_dqn_targets.json` supplies exact online/target disagreement, terminal, and valid-truncation target vectors. `tests/test_m5_contract_fixtures.py` validates the arithmetic and fixture shape using only the standard library. It does not test a Q model, replay, Bellman implementation, trainer, or M5 acceptance. Future M5 must apply the fixture to the actual target calculator and run the full matrix in [`M5_TEST_MATRIX.md`](M5_TEST_MATRIX.md).
+The versioned fixture in `tests/fixtures/m5_double_dqn_targets.json` supplies exact online/target disagreement, terminal, and valid-truncation target vectors. `tests/test_m5_contract_fixtures.py` validates the arithmetic and fixture shape using only the standard library. It does not test a Q model, replay, Bellman implementation, trainer, or M5 acceptance. M5 subsequently applied the fixture to its implemented target calculator; the completed verification matrix is recorded in [`M5_TEST_MATRIX.md`](M5_TEST_MATRIX.md).
 
 ## Pull request CI boundary
 
-The bounded workflow in `.github/workflows/preflight.yml` runs on pull requests targeting `initial-idea`. It uses pinned GitHub-maintained actions, read-only repository permissions, Python 3.12, agent preflight, standard-library context/review-bundle tests, and the pure-standard-library M5 Bellman fixture oracle. It installs no project dependencies, downloads no dataset, launches no Stockfish search, allocates no GPU, and runs no ALE gameplay. Its coverage protects governance, links, checkpoint/recovery behavior, review-bundle safety, and one hand-calculated target fixture; it is not a replacement for the locked full suite, PyTorch tests, or M1/M2 integration tests. Checkout fetches full Git history because a recovery fixture reconstructs the recorded G1 baseline revision.
+The bounded workflow in `.github/workflows/preflight.yml` runs on pull requests targeting `initial-idea` or `main`. It uses pinned GitHub-maintained actions, read-only repository permissions, Python 3.12, agent preflight, standard-library context/review-bundle tests, and the pure-standard-library M5 Bellman fixture oracle. It installs no project dependencies, downloads no dataset, launches no Stockfish search, allocates no GPU, and runs no ALE gameplay. Its coverage protects governance, links, checkpoint/recovery behavior, review-bundle safety, and one hand-calculated target fixture; it is not a replacement for the locked full suite, PyTorch tests, or M1/M2 integration tests. Checkout fetches full Git history because a recovery fixture reconstructs the recorded G1 baseline revision.
 
 The workflow does not configure branch protection or a mandatory status check. GitHub Actions execution is limited to the standard public-repository runner. Review actual PR check results; no local run can claim a remote workflow passed. The PR-author/PM/operator roles and non-merging executor boundary are defined in [PR_REVIEW_AND_INTEGRATION.md](../02-management/PR_REVIEW_AND_INTEGRATION.md).
 

@@ -1,5 +1,8 @@
 # Experiment and Evaluation Protocol
 
+**Current disposition (2026-11-02): PROJECT CLOSED WITH DOCUMENTED LIMITATIONS.** M0–M7 engineering is complete and G0–G5 are approved within their recorded scopes. No new research or artifact release is authorized. See [final handover](../07-delivery/HANDOVER.md) and canonical state/backlog. Earlier dated planning/authorization statements below are historical; they do not schedule new work or supersede final closure.
+
+
 **Current status update (2026-10-30):** G3 was approved by the independent PM after PR #11 merged; M6 remains not authorized. This cross-milestone identity guidance does not authorize a milestone or replace the M5 experiment contract.
 
 **Historical status (2026-10-28):** This document provided cross-milestone experiment-identity guidance and did not grant milestone authorization or PM acceptance. M4-01 through M4-04 had passed and M4 was integrated by PR #8/#9; see the [M4 final acceptance](../../.agents/evidence/M4-final-acceptance-20261027.md) and [post-merge verification](../../.agents/evidence/M4-postmerge-delivery-verification-20261027.md). G3 was then unapproved. ADR-0003 owns the accepted M4/M5 architecture. The operative M5 paired baseline, seeds, budgets, and evaluation schedule are in [`M5_EXPERIMENT_PROTOCOL.md`](M5_EXPERIMENT_PROTOCOL.md), which controls over the earlier proposal alternatives below.

@@ -95,7 +95,7 @@ The task-specific `.agents/plans/G1-consistency-hardening.md` and `.agents/evide
 | `docs/06-quality/TEST_STRATEGY.md` | Created in G1. |
 | `.agents/state/BLOCKERS.md` | Created in G1. |
 | `.agents/state/VERIFIED_FINDINGS.md` | Created in G1. |
-| `.agents/plans/M00-bootstrap.md` | Created as a plan only; M0 not started. |
+| `.agents/plans/M00-bootstrap.md` | Created as a plan only at G1; M0 subsequently completed (see canonical state/backlog). |
 | `scripts/agent_preflight.py` | Created and tested in G1. |
 | `scripts/agent_checkpoint.py` | Created and tested in G1. |
 

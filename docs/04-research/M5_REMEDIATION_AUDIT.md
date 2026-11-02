@@ -194,3 +194,7 @@ The original hypothesis that the replay sampler might have changed is not suppor
 The full historical CLI files remain unavailable, so source bytes are not wholly reconstructed and byte-identical execution is not claimed. This residual auditability limitation is disclosed for PM review. The campaign still has only three independent training-seed clusters, and every conclusion remains about the M2 chess simulator, not Atari ALE VideoChess. Additional training is not currently supported as technically necessary and has not been started; any supplemental experiment would require separate PM authorization.
 
 **Historical disposition at audit publication:** Engineering evidence supported review of M5-03/M5-04 with the limitations above; independent PM disposition was pending, G3 was unapproved, and PR #11 was open. The PM later accepted M5 with those limitations, merged PR #11, and approved G3. M6 remains unauthorized and has not started; see the dated post-merge update above.
+
+## Later milestone status supplement — 2026-11-02
+
+The M6-not-started wording above records the post-M5 checkpoint. M6 and M7 subsequently completed; G0–G5 are approved within recorded scopes. See [final handover](../07-delivery/HANDOVER.md). The historical simulator results, provenance limitations, acceptance, and scientific interpretations in this report remain unchanged.

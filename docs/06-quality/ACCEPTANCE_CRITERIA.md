@@ -1,5 +1,8 @@
 # Acceptance Criteria
 
+**Recovery scope:** The G1 recovery checklist below preserves the G1 acceptance scenario, including its then-unstarted M0/M1 expectations. For current recovery, use canonical state/backlog; M0–M7 are complete. These criteria do not reopen completed tasks.
+
+
 **Status:** Canonical gate criteria. Current pass/fail status lives in `.agents/state/PROJECT_STATE.yaml` and `.agents/tasks/BACKLOG.yaml`.<br>
 **Authority:** Project constraints are in [`REQUIREMENTS.md`](../01-foundation/REQUIREMENTS.md); [`ADR-0001`](../02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md) owns the G/M crosswalk; [`EXECUTION_PLAN.md`](../02-management/EXECUTION_PLAN.md) owns milestone order and dependencies.
 

@@ -1,5 +1,8 @@
 # Reproducibility and Artifact Lifecycle
 
+**Current disposition (2026-11-02): PROJECT CLOSED WITH DOCUMENTED LIMITATIONS.** M0–M7 engineering is complete and G0–G5 are approved within their recorded scopes. No new research or artifact release is authorized. See [final handover](../07-delivery/HANDOVER.md) and canonical state/backlog. Earlier dated planning/authorization statements below are historical; they do not schedule new work or supersede final closure.
+
+
 **Status (2026-10-27):** M3 was accepted and merged on 2026-10-21. Its exact source-backed release is outside Git and remains available only in the owner-specified local sibling worktree. M4-001 completed with M4-01 through M4-04 acceptance; the original lexical-128 gate failure is preserved and the dated PM amendment and revised PASS are recorded in the [M4 acceptance report](../../.agents/evidence/M4-final-acceptance-20261027.md). The validation-selected behavior-only checkpoint and immutable run artifacts remain outside Git and are independently hash-verifiable at the documented local artifact path. O-01 is closed for internal execution; no instructor approval is claimed. M5 has not started or been authorized by this M4 mission.
 **Canonical ownership:** [PROJECT_STATE.yaml](../../.agents/state/PROJECT_STATE.yaml) owns current phase and checkpoint; [BACKLOG.yaml](../../.agents/tasks/BACKLOG.yaml) owns task evidence; per-run manifests own experiment config and metrics.
 
@@ -71,7 +74,7 @@ After the 2026-10-21 corrective-evidence checkpoint (`cp-fbdd14d6-20261021T02272
 
 M3 source acquisition must use the exact approved archive/member identity and bounded streaming. The official Lichess database uses `.pgn.zst` files; do not assume the Python environment has a Zstandard decoder. Confirm the selected source's actual format before retrieval and make any pinned dependency/host-tool choice separately. ZIP safety requirements, decompressed limits, and staging behavior are specified in [DATASET_SPEC.md](../04-research/DATASET_SPEC.md).
 
-### Current Pre-M4 checkpoint disposition — 2026-10-22
+### Historical Pre-M4 checkpoint disposition — 2026-10-22
 
 At the verified `initial-idea` baseline `aba04d7b30fa614e2e7e74789dd610a162dd2cf0`, `PROJECT_STATE.yaml` was 3,431,959 bytes with 131 checkpoint-history entries. A historical pre-merge state at `e32e1e63` was 4,205,298 bytes with 129 entries; the post-merge compact JSON-compatible YAML representation measured 3,372,345 bytes with 130 entries, then 3,431,959 bytes with 131 entries. The full state and its history are preserved; formatting compaction explains the size decrease and is not a history migration.
 

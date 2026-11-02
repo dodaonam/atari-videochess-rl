@@ -1,5 +1,8 @@
 # Project Owner and External Decision Register
 
+**Current disposition (2026-11-02): PROJECT CLOSED WITH DOCUMENTED LIMITATIONS.** M0–M7 engineering is complete and G0–G5 are approved within their recorded scopes. No new research or artifact release is authorized. See [final handover](../07-delivery/HANDOVER.md) and canonical state/backlog. Earlier dated planning/authorization statements below are historical; they do not schedule new work or supersede final closure.
+
+
 This register distinguishes project-owner technical decisions from external course policy, third-party rights, and operational availability. Owner decisions do not establish instructor rules or third-party rights. M3 source/teacher scope remains in `.agents/evidence/M3-authorization-20261020.md` and `.agents/evidence/M3-source-decision-20261020.md`; the 2026-10-23 ADR decision and 2026-10-27 O-01 decision are recorded in their dated evidence records.
 
 M3-001 was accepted and merged in PR #3 on 2026-10-21. The exact accepted release is outside Git, available at the owner's specified sibling M3 worktree path, and was independently reverified read-only during Pre-M4 on 2026-10-27; see [the current local verification](../../.agents/evidence/M3-release-local-verification-20261027.md). Its exact identity and local-only/no-redistribution boundary remain unchanged; reverify all nine files before future use.

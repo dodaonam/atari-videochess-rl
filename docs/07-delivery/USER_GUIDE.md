@@ -19,7 +19,7 @@ Clone the repository and select an accepted revision:
 
     git clone https://github.com/dodaonam/atari-videochess-rl.git
     cd atari-videochess-rl
-    git checkout d7332b91128d3daf919421db2e71a9f2ee4b48ec
+    git checkout 0ceab36c6dcdcbde169d578657d851c0106cf518
     git status --short --branch
 
 The integration branch may advance. For current work, inspect its history and canonical state rather than forcing this historical revision.

@@ -4,7 +4,9 @@
 
 ## Current status
 
-G0–G4 are approved; G4 is limited to M7-01–M7-03. G5 is not approved in current canonical state pending fresh Independent PM review of G5-F02/M7-05. The earlier PM G5 decision on PR #20 remains historical; its disputed M7-05 owner-release premise is suspended under the latest PM finding. PR #20 was integrated at `0b9c4c26ee1d0952a5f9e3b7cd405f5bf4e3008b`. M0-001 through M6-001 and M7-001 through M7-005 are complete as engineering tasks. The Project Owner records accepted research results as final; no new research campaign or milestone is authorized. No affirmative authorization to distribute restricted artifacts is established, and the earlier blanket owner-prohibition attribution is unverified. M6 v1/v2 remain distinct and immutable, including PM6-F06. No active technical blocker is recorded; the remaining G5 review is a governance decision, not a technical blocker. O-02–O-08 and accepted residual RSK-014 retain their existing scope and status.
+G0–G5 are approved within their recorded scopes and limitations; M0–M7 engineering is complete. G5-F01 and G5-F02 are resolved by the [final Independent PM decision](../evidence/G5-PM-final-decision-20261101.md). No active technical blocker, pending governance gate, active engineering task, or new research campaign remains. The Project Owner accepts existing research results as final. No affirmative authorization to distribute restricted artifacts is established; the earlier blanket owner-prohibition attribution is unverified. O-02–O-08, RSK-014, and PM6-F06 retain their documented external/residual scope. Historical records below retain their original chronology.
+
+CONSOLIDATION-01 was identified during final housekeeping and resolved by the subsequent direct Project Owner disposition for the exact existing BLK-001 diagnostic archive only. See the [consolidation audit](../evidence/FINAL-CONSOLIDATION-audit-20261102.md). This does not reopen an engineering milestone or grant broader distribution rights.
 
 ## Record format
 

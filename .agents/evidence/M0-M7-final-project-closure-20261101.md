@@ -84,3 +84,7 @@ The path-level diff contains governance state, sanitized documentation/evidence,
 ## Residual future work
 
 No planned Codex engineering task, research campaign, or governance milestone remains in the authorized M0–M7 project scope. Optional future research, instructor clarification, licensing review, or a release proposal would require its own separate decision and authorization. Such possibilities are not active tasks. The current Independent PM decision is recorded in [the G5 final acceptance](G5-PM-final-decision-20261101.md); after integration of the PM-operated canonical closeout, only read-only verification and preservation of records remain.
+
+## Test-count interpretation supplement — 2026-11-02
+
+The historical 524-case unfiltered totals above include three skips: **524 executed, 521 passed, 3 skipped, zero failures**. See the [count erratum](FINAL-CONSOLIDATION-test-count-erratum-20261102.md). Original logs and acceptance decisions remain unchanged.

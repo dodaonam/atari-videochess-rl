@@ -1,5 +1,8 @@
 # Double DQN Algorithm Contract for M5
 
+**Current disposition (2026-11-02): PROJECT CLOSED WITH DOCUMENTED LIMITATIONS.** M0–M7 engineering is complete and G0–G5 are approved within their recorded scopes. No new research or artifact release is authorized. See [final handover](../07-delivery/HANDOVER.md) and canonical state/backlog. Earlier dated planning/authorization statements below are historical; they do not schedule new work or supersede final closure.
+
+
 **Status:** Active M5 implementation specification, contract revision 2.0, 2026-10-28. Direct owner authorization is recorded in `.agents/evidence/M5-001-authorization-20261028.md`; actual run results remain separate evidence. The project owner selected independently implemented PyTorch Double DQN as the principal RL algorithm. The fixed M5 scientific contract is mirrored in config schema 2.0 under ADR-0002/0003 and the accepted M2/M4 interfaces; implementation/test/run evidence is required independently and G3 remains unapproved.
 
 **Scope owner:** This file owns M5 algorithm and transition semantics. The M5 comparison protocol owns arm pairing, evaluation, and run budgets. The M05 plan owns sequencing and acceptance evidence. The M2 simulator remains the source of transition truth.

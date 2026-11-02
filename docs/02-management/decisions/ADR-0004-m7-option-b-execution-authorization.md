@@ -34,3 +34,7 @@ Canonical state records M7 as authorized and M7-001 active. G3 remains approved;
 ## Current-scope supplement — 2026-11-01
 
 The Project Owner has since recorded the accepted research results as final and authorized no further research campaign or new milestone. This closes research execution; it does not authorize publication. The earlier M7-005 blanket no-release attribution referred to by this ADR was later identified as unverified under [G5-F02](../../../.agents/evidence/G5-F02-provenance-erratum-20261101.md); it is not treated as a current owner prohibition. No affirmative authorization to distribute restricted artifacts is established. G5's M7-05 premise requires fresh Independent PM review. The M7-001–003 Option B authorization above remains historical and unchanged.
+
+## Final disposition supplement — 2026-11-02
+
+The context, consequences, and 2026-11-01 supplement above describe earlier checkpoints. G4 and G5 were subsequently approved within their recorded scopes; M7-001–005 are complete, G5-F02 is resolved, and no new campaign is authorized. See the [final G5 PM decision](../../../.agents/evidence/G5-PM-final-decision-20261101.md). The original frozen authorization/configuration and its historical HOLD metadata remain unchanged.

@@ -1,6 +1,6 @@
 # System Architecture
 
-**Status (2026-10-28):** M1/ALE, M2 simulator, M3 data pipeline, and M4 behavior-cloning milestone are implemented and accepted. M4-01 through M4-04 passed; the original fixed M4-02 failure remains preserved as historical evidence. The accepted M3 release and M4 checkpoint are local artifacts outside Git. PRs #8 and #9 are integrated; M4 post-merge clean-clone verification is recorded in the [delivery report](../../.agents/evidence/M4-postmerge-delivery-verification-20261027.md). ADR-0003 is Accepted. M5 algorithm and execution preparation are specified in [RL_ALGORITHM.md](RL_ALGORITHM.md) and the [M05 plan](../../.agents/plans/M05-double-dqn.md); no Double DQN learner or training exists. M5 is not active or authorized, and G3 remains unapproved. Current live authorization belongs to `.agents/state/PROJECT_STATE.yaml`.
+**Current disposition (2026-11-02): PROJECT CLOSED WITH DOCUMENTED LIMITATIONS.** M0–M7 engineering is complete and G0–G5 are approved within their recorded scopes. No new research or artifact release is authorized. See [final handover](../07-delivery/HANDOVER.md) and canonical state/backlog. The implemented layers include simulator Double DQN (`videochess_rl/rl/`), frozen-policy ALE integration (`videochess_rl/m6/`), and comparative evaluation/analysis (`videochess_rl/m7/`). Private artifacts remain outside Git.
 
 **Purpose:** Explain how the verified Atari interface and accepted chess-learning contracts fit together while preserving separate sources of truth.
 
@@ -21,16 +21,16 @@ The shadow board assists legal-transition checking; it does not create an Atari 
 
 M1-01 through M1-06 are accepted and G2 is approved in the [final verification record](../../.agents/evidence/M1-G2-final-verification-20261016.md). The local terminal bundle and ignored raw RGB traces remain separate from ordinary Git contents. The real terminal evidence and limits are documented in [ALE_ENVIRONMENT.md](ALE_ENVIRONMENT.md).
 
-## Milestone implementation and future flow
+## Completed milestone implementation
 
 | Milestone | Component and output | Maturity |
 |---|---|---|
-| M2 | Standard-chess simulator, explicit MDP, stable UCI identities for legal moves, random-legal and heuristic baselines, seeded simulator records. | Implemented and verified under M2-001; G3 remains unapproved. |
+| M2 | Standard-chess simulator, explicit MDP, stable UCI identities for legal moves, random-legal and heuristic baselines, seeded simulator records. | Implemented and accepted under M2-001; G3 was subsequently approved. |
 | M3 | Provenance-aware PGN parsing, bounded Stockfish teacher subset, and leakage-safe train/validation/test release. | Implemented and accepted in M3-001; source package license remains unstated. Artifacts are outside Git; the exact local release was reverified before M4 use and its nine files remained unchanged. Reverify before future use. |
 | M4 | Supervised behavior-cloning baseline from M3 played-move labels; saved pretraining-only checkpoint and evaluation. | M4-01 through M4-04 passed with evidence; the behavior-only checkpoint is retained outside Git. The original fixed gate failure and revised PM-approved gate are both preserved. PR #8 is merged and the actual integration commit passed clean-clone post-merge verification; see the [delivery report](../../.agents/evidence/M4-postmerge-delivery-verification-20261027.md). |
-| M5 | Direct PyTorch Double DQN in the chess simulator with legal-move selection, replay/target networks and separately configured curriculum. | Algorithm/experiment/plan are specified for PM review; no RL training code exists. A separate direct authorization is required. |
-| M6 | Inference adapter that observes real ALE RGB, obtains validated chess state, selects a legal move, calls the existing Atari controller and verifies the resulting real transition. | Proposed; M1 controls exist, learned-agent integration does not. |
-| M7 | Controlled evaluation, comparison, report and handover under approved conditions. | Proposed; no delivery artifacts exist. |
+| M5 | Direct PyTorch Double DQN in the chess simulator with legal-move selection, replay/target networks and separately configured curriculum. | Implemented and accepted: custom Double DQN, six simulator runs, and 1,500 evaluation games; RSK-014 remains. |
+| M6 | Inference adapter that observes real ALE RGB, obtains validated chess state, selects a legal move, calls the existing Atari controller and verifies the resulting real transition. | Implemented and accepted: frozen-policy RGB integration; separate v1/v2 evidence and PM6-F06 erratum. |
+| M7 | Controlled evaluation, comparison, report and handover under approved conditions. | Completed frozen Option B ALE comparison, analysis, scientific delivery, and G5 closeout. |
 
 Engineering order and fixed-file inventory remain owned by [EXECUTION_PLAN.md](../02-management/EXECUTION_PLAN.md). G/M governance mapping remains owned by [ADR-0001](../02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md).
 
