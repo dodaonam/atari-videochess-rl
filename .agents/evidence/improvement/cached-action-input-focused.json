@@ -16,7 +16,7 @@
   "exit_code": 0,
   "git_revision": "160c3ffc640917688db3a65e0503f21007da0fdb",
   "log_path": ".agents/evidence/improvement/cached-action-input-focused.log",
-  "log_sanitization": "Replaced absolute repository-root occurrences with <repo>; command semantics and test output retained.",
+  "log_sanitization": "Repository-root paths replaced by <repo>; trailing whitespace removed; substantive output preserved.",
   "log_sha256": "c6bff9d3209ec16cfb37d1039f450c281030d10816940458725d4634a0982d36",
   "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/cached-action-input-focused/manifest.json",
   "source_manifest_sha256": "13247931f2988960b31f576a7a38cf2e1bfe4c13d1e308fc1a07f1df80704b75",

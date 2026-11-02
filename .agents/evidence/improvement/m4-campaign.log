@@ -30,16 +30,16 @@
 [I 2026-11-03 01:48:02,006] Trial 3 finished with value: 2.4007925586687673 and parameters: {'learning_rate': 8.28155011520409e-05, 'weight_decay': 1.1793541917958406e-05}. Best is trial 1 with value: 2.400505335402244.
 {"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/hpo/trial-4", "epoch": 1, "train_loss": 2.4202016266062856, "validation": {"examples": 8964, "nll": 2.41046883909897, "top1": 0.3038821954484605, "top3": 0.5443998215082553}, "wall_seconds": 16.47745720400053, "resources": {"peak_rss_bytes": 1465290752, "available_ram_bytes": 24782581760, "free_disk_bytes": 35381989376}}
 {"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/hpo/trial-4", "epoch": 2, "train_loss": 2.387737780343741, "validation": {"examples": 8964, "nll": 2.408445673774045, "top1": 0.30767514502454263, "top3": 0.5440651494868363}, "wall_seconds": 16.47274278400073, "resources": {"peak_rss_bytes": 1465290752, "available_ram_bytes": 24554844160, "free_disk_bytes": 35380830208}}
-[I 2026-11-03 01:48:35,281] Trial 4 pruned. 
+[I 2026-11-03 01:48:35,281] Trial 4 pruned.
 {"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/hpo/trial-5", "epoch": 1, "train_loss": 2.4201962295919657, "validation": {"examples": 8964, "nll": 2.4104784581875065, "top1": 0.30399375278893354, "top3": 0.5440651494868363}, "wall_seconds": 15.905492244000925, "resources": {"peak_rss_bytes": 1465290752, "available_ram_bytes": 24708227072, "free_disk_bytes": 35517972480}}
 {"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/hpo/trial-5", "epoch": 2, "train_loss": 2.387710446026176, "validation": {"examples": 8964, "nll": 2.408447954868536, "top1": 0.3077867023650156, "top3": 0.5439535921463632}, "wall_seconds": 16.12901844500084, "resources": {"peak_rss_bytes": 1465290752, "available_ram_bytes": 24712740864, "free_disk_bytes": 35516436480}}
-[I 2026-11-03 01:49:07,619] Trial 5 pruned. 
+[I 2026-11-03 01:49:07,619] Trial 5 pruned.
 {"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/hpo/trial-6", "epoch": 1, "train_loss": 2.420180142391473, "validation": {"examples": 8964, "nll": 2.410513057819385, "top1": 0.3042168674698795, "top3": 0.5441767068273092}, "wall_seconds": 17.181752557000436, "resources": {"peak_rss_bytes": 1465290752, "available_ram_bytes": 24877453312, "free_disk_bytes": 35514572800}}
 {"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/hpo/trial-6", "epoch": 2, "train_loss": 2.3877692339010537, "validation": {"examples": 8964, "nll": 2.4084950731780475, "top1": 0.3075635876840696, "top3": 0.5445113788487282}, "wall_seconds": 15.475813721997838, "resources": {"peak_rss_bytes": 1465290752, "available_ram_bytes": 24841080832, "free_disk_bytes": 35513679872}}
-[I 2026-11-03 01:49:40,597] Trial 6 pruned. 
+[I 2026-11-03 01:49:40,597] Trial 6 pruned.
 {"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/hpo/trial-7", "epoch": 1, "train_loss": 2.420174340251833, "validation": {"examples": 8964, "nll": 2.410535567682378, "top1": 0.3042168674698795, "top3": 0.5441767068273092}, "wall_seconds": 15.041546876000211, "resources": {"peak_rss_bytes": 1465290752, "available_ram_bytes": 24848080896, "free_disk_bytes": 35510751232}}
 {"stage": "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/hpo/trial-7", "epoch": 2, "train_loss": 2.3877301062457263, "validation": {"examples": 8964, "nll": 2.4085524945001633, "top1": 0.30823293172690763, "top3": 0.5443998215082553}, "wall_seconds": 14.886020066998753, "resources": {"peak_rss_bytes": 1465290752, "available_ram_bytes": 24859054080, "free_disk_bytes": 35507453952}}
-[I 2026-11-03 01:50:10,893] Trial 7 pruned. 
+[I 2026-11-03 01:50:10,893] Trial 7 pruned.
 expert labels 100
 expert labels 200
 expert labels 300

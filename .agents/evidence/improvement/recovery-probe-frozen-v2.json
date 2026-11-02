@@ -9,7 +9,7 @@
   "exit_code": 0,
   "git_revision": "c744dd6e895ff8a9000fb7bb328fe3e449de1314",
   "log_path": ".agents/evidence/improvement/recovery-probe-frozen-v2.log",
-  "log_sanitization": "Replaced absolute repository-root occurrences with <repo>; command semantics and test output retained.",
+  "log_sanitization": "Repository-root paths replaced by <repo>; trailing whitespace removed; substantive output preserved.",
   "log_sha256": "dc172b23ed58c6a65e78b6deaf6922cb4a6ae0bafd85d2eb632a38df8a3e28d1",
   "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/recovery-probe-frozen-v2/manifest.json",
   "source_manifest_sha256": "f1f9bb964bd61bc3deef362f289b62788f4988a5109269937d777a23f89328df",

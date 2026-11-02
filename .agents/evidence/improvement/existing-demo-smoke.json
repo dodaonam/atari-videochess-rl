@@ -8,7 +8,7 @@
   "exit_code": 0,
   "git_revision": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
   "log_path": ".agents/evidence/improvement/existing-demo-smoke.log",
-  "log_sanitization": "Replaced absolute repository-root occurrences with <repo>; command semantics and test output retained.",
+  "log_sanitization": "Repository-root paths replaced by <repo>; trailing whitespace removed; substantive output preserved.",
   "log_sha256": "7691f63797247cef052860cfd7a0940002aee78f6b8082b8836277f71167908f",
   "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/existing-demo-smoke/manifest.json",
   "source_manifest_sha256": "f0985dabbbaf0da5cf60c29c792f1f4d143d21010dc304be432cfbad16619eb3",

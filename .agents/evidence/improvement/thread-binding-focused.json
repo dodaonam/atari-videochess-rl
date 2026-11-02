@@ -15,7 +15,7 @@
   "exit_code": 0,
   "git_revision": "0b498f81f8d7b3811ccfdb12d598c0cf6baadcdd",
   "log_path": ".agents/evidence/improvement/thread-binding-focused.log",
-  "log_sanitization": "Replaced absolute repository-root occurrences with <repo>; command semantics and test output retained.",
+  "log_sanitization": "Repository-root paths replaced by <repo>; trailing whitespace removed; substantive output preserved.",
   "log_sha256": "f448d51d0c125163f1769f4d2b429201f92cf56bfa2887e460e025ffd5a74f5c",
   "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/thread-binding-focused/manifest.json",
   "source_manifest_sha256": "628918fe6237e186df3c8203eac7fb3c4f61b4ff05f834836e39b7fe779e3513",

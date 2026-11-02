@@ -15,7 +15,7 @@
   "exit_code": 0,
   "git_revision": "e29911c3af2a91a99c6fd0ab1407db721ceb447f",
   "log_path": ".agents/evidence/improvement/fine-tuning-control-focused.log",
-  "log_sanitization": "Replaced absolute repository-root occurrences with <repo>; command semantics and test output retained.",
+  "log_sanitization": "Repository-root paths replaced by <repo>; trailing whitespace removed; substantive output preserved.",
   "log_sha256": "17f20517ecd56fb0800ba9973432720e554d253df1a4b2509f921ac0a4ac9d7a",
   "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/fine-tuning-control-focused/manifest.json",
   "source_manifest_sha256": "a36970ae01a2742ea69ba2034f115c94023c0f63404611edc9d1ff45641779eb",

@@ -9,7 +9,7 @@
   "exit_code": 0,
   "git_revision": "08a6d89bd64fdf7d090784bff0a3a186f6dd52be",
   "log_path": ".agents/evidence/improvement/m4-after-coverage.log",
-  "log_sanitization": "Replaced absolute repository-root occurrences with <repo>; command semantics and test output retained.",
+  "log_sanitization": "Repository-root paths replaced by <repo>; trailing whitespace removed; substantive output preserved.",
   "log_sha256": "6040cb0384497129d0fea737868f67030c19ec026fa6b4f06bdb08ab80cbbc20",
   "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/m4-after-coverage/manifest.json",
   "source_manifest_sha256": "80a281fcae0487513d7eca8f58f53315bf142640f1d8d1cbd8910de568167237",
