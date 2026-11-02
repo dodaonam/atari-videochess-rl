@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-6d7fb4f7-20261102T193208479633Z -->
+<!-- checkpoint-id: cp-377e0fe9-20261102T194151477976Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -102,3 +102,11 @@ For old partial-write temp files, inspect the preflight warning, then use `pytho
 ## Final consolidation review pointer — 2026-11-02
 
 The owner-authorized final housekeeping/integration task is documented in the [consolidation audit](../evidence/FINAL-CONSOLIDATION-audit-20261102.md) and [verification ledger](../evidence/FINAL-CONSOLIDATION-verification-20261102.md). It does not reopen M0–M7 or authorize a campaign/release. Exact final feature HEAD, clean-clone results, and CI belong to its separate main-target PR handover; the executor must leave that PR open and unmerged.
+
+## Independent improvement campaign recovery pointer
+
+Read `improvement_campaign` in [canonical project state](PROJECT_STATE.yaml)
+and the [Phase 1 handoff](../../docs/improvement/PHASE1_HANDOFF.md). Its direct
+owner authorization and separation from historical M0–M7 are recorded in
+[ADR-0005](../../docs/02-management/decisions/ADR-0005-independent-improvement-campaign.md).
+This is a pointer, not a competing campaign status or Phase 2 authorization.

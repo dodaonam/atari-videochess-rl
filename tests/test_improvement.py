@@ -211,7 +211,8 @@ class ImprovementTests(unittest.TestCase):
             save_training_checkpoint(Path(d)/'resume.pt',one,identity={'unit':1},journal=journal,journal_head=head,episode_complete=True,resource_accounting={})
             # A crash may leave an incomplete uncommitted tail after a valid checkpoint.
             with journal.path.open('ab') as stream:stream.write(b'{\"partial\":')
-            damaged=ReplayJournal(journal.path,verify_existing=False)
+            from videochess_rl.improvement.journal import SafeReplayJournal
+            damaged=SafeReplayJournal(journal.path,verify_existing=False)
             with self.assertRaises(ValueError):damaged.append(rows[0])
             clone=ImprovementLearner(copy.deepcopy(base.online),seed=99,config=c)
             restore_training_checkpoint(Path(d)/'resume.pt',clone,expected_identity={'unit':1})

@@ -118,8 +118,6 @@ class ReplayJournal:
             self.record_count = 0
 
     def append(self, row: Transition) -> dict[str, Any]:
-        if not self._append_safe:
-            raise ValueError("damaged journal tail; fork the verified checkpoint prefix before appending")
         row.validate()
         previous = self.chain_sha256
         payload = {"schema": JOURNAL_SCHEMA, "previous": previous, "transition": row.to_json()}

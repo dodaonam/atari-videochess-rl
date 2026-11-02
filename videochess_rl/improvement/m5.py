@@ -18,7 +18,8 @@ from videochess_rl.model.features import encode_board, replay_observation_histor
 from videochess_rl.model.training import configure_determinism
 from videochess_rl.rl.training import DoubleDqnLearner, _batch, epsilon_at
 from videochess_rl.rl.network import make_warm_scorer
-from videochess_rl.rl.replay import ReplayJournal, JOURNAL_SCHEMA
+from videochess_rl.rl.replay import JOURNAL_SCHEMA
+from .journal import SafeReplayJournal as ReplayJournal
 from videochess_rl.rl.checkpoint import save_training_checkpoint, restore_training_checkpoint, load_training_checkpoint_bundle
 from videochess_rl.rl.transition import Transition
 from videochess_rl.m5_seeding import EXPERIMENT_ID as TRANSITION_SEED_DOMAIN, paired_seed_schedule
