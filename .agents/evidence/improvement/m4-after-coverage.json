@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python",
+    "-m",
+    "videochess_rl.improvement.m4"
+  ],
+  "end_git_revision": "4aa807050ac891f265c8494ab5b7ea350bcabef9",
+  "ended_at_utc": "2026-11-02T20:09:12.247521+00:00",
+  "exit_code": 0,
+  "git_revision": "08a6d89bd64fdf7d090784bff0a3a186f6dd52be",
+  "log_path": ".agents/evidence/improvement/m4-after-coverage.log",
+  "log_sha256": "f6f13f95f20d9524becc1757f5fd2b47ad739f24af50e0d6cc6e549f88fd1579",
+  "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/m4-after-coverage/manifest.json",
+  "source_manifest_sha256": "80a281fcae0487513d7eca8f58f53315bf142640f1d8d1cbd8910de568167237",
+  "started_at_utc": "2026-11-02T19:02:15.328722+00:00",
+  "wall_seconds": 4016.9188008599995
+}
