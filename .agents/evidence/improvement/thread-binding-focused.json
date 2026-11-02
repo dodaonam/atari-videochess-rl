@@ -1,0 +1,23 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "unittest",
+    "test_improvement",
+    "test_m5_replay",
+    "test_m5_checkpoint",
+    "test_m5_targets",
+    "test_m5_training",
+    "-v"
+  ],
+  "end_git_revision": "0b498f81f8d7b3811ccfdb12d598c0cf6baadcdd",
+  "ended_at_utc": "2026-11-02T18:54:42.485319+00:00",
+  "exit_code": 0,
+  "git_revision": "0b498f81f8d7b3811ccfdb12d598c0cf6baadcdd",
+  "log_path": ".agents/evidence/improvement/thread-binding-focused.log",
+  "log_sha256": "f448d51d0c125163f1769f4d2b429201f92cf56bfa2887e460e025ffd5a74f5c",
+  "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/thread-binding-focused/manifest.json",
+  "source_manifest_sha256": "628918fe6237e186df3c8203eac7fb3c4f61b4ff05f834836e39b7fe779e3513",
+  "started_at_utc": "2026-11-02T18:54:38.023428+00:00",
+  "wall_seconds": 4.461893275001785
+}

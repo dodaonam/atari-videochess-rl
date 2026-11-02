@@ -107,7 +107,12 @@ def source_identity():
 
 
 def make_learner(c,path,checkpoint_sha):
-    configure_determinism(SEED,threads=c['threads'])
+    # Vary intra-op workers only; hold the inter-op pool at one in every
+    # benchmark and fresh official process so settings remain comparable.
+    configure_determinism(SEED,threads=1)
+    torch.set_num_threads(c['threads'])
+    if torch.get_num_interop_threads()!=1 or torch.get_num_threads()!=c['threads']:
+        raise RuntimeError('requested CPU thread configuration cannot be honored')
     m4,_=load_source(path,checkpoint_sha);m4.eval().requires_grad_(False)
     online=make_warm_scorer(m4,q_head_seed=domain_seed('q_head'))
     learner=ImprovementLearner(online,seed=domain_seed('replay'),exploration_seed=domain_seed('exploration'),config={**c,'update_interval_decisions':4})
