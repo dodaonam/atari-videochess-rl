@@ -93,12 +93,14 @@ class ReplayJournal:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         if self.path.exists():
             if verify_existing: self.verify(retain_last=0)
+            # Histories can make one record much larger than 8 KiB. Stream
+            # complete lines rather than attempting to decode a truncated tail.
+            last = None
+            self.record_count = 0
             with self.path.open("rb") as stream:
-                stream.seek(max(0, self.path.stat().st_size - 8192))
-                tail = stream.read().splitlines()
-            self.chain_sha256 = json.loads(tail[-1])["chain_sha256"] if tail else "0" * 64
-            with self.path.open("rb") as stream:
-                self.record_count = sum(1 for _ in stream)
+                for last in stream:
+                    self.record_count += 1
+            self.chain_sha256 = json.loads(last)["chain_sha256"] if last else "0" * 64
         else:
             self.path.touch()
             self.chain_sha256 = "0" * 64
