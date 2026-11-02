@@ -1,0 +1,111 @@
+pushed_branch=feature/videochess-performance-improvement-20261103
+remote_head=11a99b58ef36f9557be5a98a81dfbef7fae5b45c
+clean_worktree_head=11a99b58ef36f9557be5a98a81dfbef7fae5b45c
+commands_follow
+
+$ git status --porcelain=v1 --untracked-files=all
+
+$ <repo>/.venv/bin/python scripts/agent_preflight.py
+Agent context preflight: PASS
+Governance: G5 (approved); approved: G0, G1, G2, G3, G4, G5
+Next engineering milestone: M7 — complete
+Tasks: done=20, in_progress=0, pending=0, blocked=0, cancelled=0
+Completed task IDs: G1-001, G1-002, G1-003, G1-004, G1-005, G1-006, G1-007, G1-008, M0-001, M1-001, M2-001, M3-001, M4-001, M5-001, M6-001, M7-001, M7-002, M7-003, M7-004, M7-005
+In progress task IDs: none
+Pending task IDs: none
+Blocked task IDs: none
+Active blockers: none recorded
+Open confirmations:
+  O-02: Whether full-game performance on actual ALE is a hard submission requirement or a research target with an accepted fallback.
+  O-03: Future course checkpoints and any date changes. The owner confirmed the presentation date is Tuesday, 2026-11-03.
+  O-04: Actual Colab entitlement/quota, GPU availability, cloud storage, and whether paid compute is allowed. The owner selected local CPU for M3; no external compute/storage is used in this mission.
+  O-05: ALE/ROM runtime behavior, RAM mapping, game modes, difficulty behavior, and official evaluation settings.
+  O-06: Public redistribution rights and any new source/use beyond the scoped May 2022 archive. For M3, the owner authorized bounded internal academic use of the exact Lichess Elite May 2022 package with local retention and no redistribution; its third-party package license remains unstated/unverified.
+  O-07: Broader Stockfish roles: benchmark opponent, offline engine evaluation, and instructor-specific limits outside the M3 teacher-label scope.
+  O-08: Opponent pool and rating method for any Elo claim.
+Relevant decisions: docs/02-management/decisions/ADR-0001-governance-crosswalk-and-file-priorities.md, docs/02-management/decisions/ADR-0002-chess-mdp-action-and-perspective.md, docs/02-management/decisions/ADR-0003-pretraining-model-interface.md, docs/02-management/decisions/ADR-0004-m7-option-b-execution-authorization.md, docs/02-management/decisions/ADR-0005-independent-improvement-campaign.md
+Acceptance criteria recognized: 51
+Last verified Git: feature/videochess-performance-improvement-20261103 @ f6bf9cd2e448066a37e26560ba3ce949eef54df9
+Live Git: DETACHED @ 11a99b58ef36f9557be5a98a81dfbef7fae5b45c
+Roadmap source: exact match; 19 sections; SHA-256 fc7496b276c72a58a858897e262ff615bb5fea0f5f8a3fe6d1cd24b1397276bf
+Git recovery: expected commit/checkout transition; portable tracked-file manifest matches.
+Workspace Git status: differs from checkpoint
+Portable tracked baseline: matches
+Portable Git index: matches checkpoint
+Hashed ordinary-file snapshot: matches
+Content hashes: 1360 ordinary files verified by SHA-256.
+Not content-verified by this hash map: PROJECT_STATE self-reference, chat history/credential-like paths, temp files, symlinks, and the excluded directories listed below.
+Excluded directories: .agents/evidence/M5-source-recovered/__pycache__, .agents/state/checkpoint-history, artifacts, scripts/__pycache__, tests/__pycache__, videochess_rl/__pycache__, videochess_rl/data/__pycache__, videochess_rl/improvement/__pycache__, videochess_rl/model/__pycache__, videochess_rl/rl/__pycache__
+Artifact directories requiring independent manifests: artifacts
+Last verified dirty paths (0): none
+Next user action: No pending M0-M7 engineering or governance tasks. G5-F02 is resolved by the recorded independent PM acceptance; historical results and approvals remain unchanged. Phase 1 of the separately authorized improvement campaign is complete and ready for Phase 2 review. A separate direct Phase 2 assignment is required before the single official 250,000-decision run. There is no affirmative restricted-artifact release permission. No merge or publication is authorized.
+WARNING ARTIFACT_MANIFEST_REQUIRED [.]: Artifact/data directories are excluded from content hashing and require independent manifest verification: artifacts.
+
+$ <repo>/.venv/bin/python -m unittest test_improvement test_m5_replay test_m5_checkpoint test_m5_targets test_m5_training test_m5_recovered_source test_pre_m7_contracts -v
+{"stage": "<clean-checkout>/artifacts/improvement/videochess-improvement-20261103-v1/tmpqmx41kka/run", "epoch": 1, "train_loss": 1.0, "validation": {"nll": 2.0}, "wall_seconds": 6.668700370937586e-05, "resources": {"peak_rss_bytes": 310476800, "available_ram_bytes": 26053058560, "free_disk_bytes": 34117824512}}
+{"stage": "<clean-checkout>/artifacts/improvement/videochess-improvement-20261103-v1/tmpqmx41kka/run", "epoch": 2, "train_loss": 1.0, "validation": {"nll": 2.1}, "wall_seconds": 5.446599971037358e-05, "resources": {"peak_rss_bytes": 310476800, "available_ram_bytes": 26052464640, "free_disk_bytes": 34117820416}}
+{"stage": "<clean-checkout>/artifacts/improvement/videochess-improvement-20261103-v1/tmpqmx41kka/run", "epoch": 3, "train_loss": 1.0, "validation": {"nll": 2.2}, "wall_seconds": 4.38150018453598e-05, "resources": {"peak_rss_bytes": 310476800, "available_ram_bytes": 26052464640, "free_disk_bytes": 34117820416}}
+{"stage": "<clean-checkout>/artifacts/improvement/videochess-improvement-20261103-v1/tmphv0s7x3d/run", "epoch": 1, "train_loss": 1.0, "validation": {"nll": 3.0}, "wall_seconds": 5.862099351361394e-05, "resources": {"peak_rss_bytes": 312602624, "available_ram_bytes": 26052464640, "free_disk_bytes": 34117824512}}
+{"stage": "<clean-checkout>/artifacts/improvement/videochess-improvement-20261103-v1/tmphv0s7x3d/run", "epoch": 2, "train_loss": 1.0, "validation": {"nll": 2.0}, "wall_seconds": 5.0877999456133693e-05, "resources": {"peak_rss_bytes": 312602624, "available_ram_bytes": 26052464640, "free_disk_bytes": 34117820416}}
+{"stage": "<clean-checkout>/artifacts/improvement/videochess-improvement-20261103-v1/tmphv0s7x3d/run", "epoch": 3, "train_loss": 1.0, "validation": {"nll": 1.0}, "wall_seconds": 3.177399776177481e-05, "resources": {"peak_rss_bytes": 312602624, "available_ram_bytes": 26052464640, "free_disk_bytes": 34117820416}}
+test_cached_action_inputs_are_identical_to_direct_encoding (test_improvement.ImprovementTests.test_cached_action_inputs_are_identical_to_direct_encoding) ... ok
+test_config_rejects_unhonored_values (test_improvement.ImprovementTests.test_config_rejects_unhonored_values) ... ok
+test_coverage_completion_preserves_real_choices_and_leakage_guards (test_improvement.ImprovementTests.test_coverage_completion_preserves_real_choices_and_leakage_guards) ... ok
+test_fine_tuning_early_stopping_and_epoch_cap (test_improvement.ImprovementTests.test_fine_tuning_early_stopping_and_epoch_cap) ... <clean-checkout>/videochess_rl/improvement/common.py:58: ResourceWarning: unclosed file <_io.TextIOWrapper name='/proc/meminfo' mode='r' encoding='UTF-8'>
+  memory={line.split(':')[0]:int(line.split()[1])*1024 for line in open('/proc/meminfo')}
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<clean-checkout>/videochess_rl/improvement/common.py:58: ResourceWarning: unclosed file <_io.TextIOWrapper name='/proc/meminfo' mode='r' encoding='UTF-8'>
+  memory={line.split(':')[0]:int(line.split()[1])*1024 for line in open('/proc/meminfo')}
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<clean-checkout>/videochess_rl/improvement/common.py:58: ResourceWarning: unclosed file <_io.TextIOWrapper name='/proc/meminfo' mode='r' encoding='UTF-8'>
+  memory={line.split(':')[0]:int(line.split()[1])*1024 for line in open('/proc/meminfo')}
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<clean-checkout>/videochess_rl/improvement/common.py:58: ResourceWarning: unclosed file <_io.TextIOWrapper name='/proc/meminfo' mode='r' encoding='UTF-8'>
+  memory={line.split(':')[0]:int(line.split()[1])*1024 for line in open('/proc/meminfo')}
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_fine_tuning_rejects_source_hash_before_load (test_improvement.ImprovementTests.test_fine_tuning_rejects_source_hash_before_load) ... ok
+test_fixed_splits_independent_of_order (test_improvement.ImprovementTests.test_fixed_splits_independent_of_order) ... ok
+test_logical_batch_64_matches_reference_gradient_objective (test_improvement.ImprovementTests.test_logical_batch_64_matches_reference_gradient_objective) ... ok
+test_microbatch_expert_normalization_and_fresh_optimizer (test_improvement.ImprovementTests.test_microbatch_expert_normalization_and_fresh_optimizer) ... ok
+test_optimized_ddqn_matches_reference_and_recovers (test_improvement.ImprovementTests.test_optimized_ddqn_matches_reference_and_recovers) ... ok
+test_overlap_and_historical_exposure (test_improvement.ImprovementTests.test_overlap_and_historical_exposure) ... ok
+test_parallel_parser_preserves_global_source_ordinals (test_improvement.ImprovementTests.test_parallel_parser_preserves_global_source_ordinals) ... ok
+test_recovery_journal_fork_keeps_only_prefix (test_improvement.ImprovementTests.test_recovery_journal_fork_keeps_only_prefix) ... ok
+test_schedules_and_opponent_recovery (test_improvement.ImprovementTests.test_schedules_and_opponent_recovery) ... ok
+test_selection_uses_development_and_b_guard (test_improvement.ImprovementTests.test_selection_uses_development_and_b_guard) ... ok
+test_snapshot_boundaries_and_nonresume (test_improvement.ImprovementTests.test_snapshot_boundaries_and_nonresume) ... ok
+test_warm_head_target_frozen_and_rng (test_improvement.ImprovementTests.test_warm_head_target_frozen_and_rng) ... ok
+test_capacity_sampling_and_rng_recovery (test_m5_replay.ReplayTests.test_capacity_sampling_and_rng_recovery) ... ok
+test_journal_hash_chain_and_prefix_integrity (test_m5_replay.ReplayTests.test_journal_hash_chain_and_prefix_integrity) ... ok
+test_journal_tail_restore_hashes_full_prefix_but_reconstructs_only_capacity (test_m5_replay.ReplayTests.test_journal_tail_restore_hashes_full_prefix_but_reconstructs_only_capacity) ... ok
+test_checkpoint_refuses_live_episode (test_m5_checkpoint.CheckpointTests.test_checkpoint_refuses_live_episode) ... ok
+test_episode_boundary_checkpoint_roundtrip_and_corruption (test_m5_checkpoint.CheckpointTests.test_episode_boundary_checkpoint_roundtrip_and_corruption) ... ok
+test_actual_target_calculator_matches_retained_oracles (test_m5_targets.TargetTests.test_actual_target_calculator_matches_retained_oracles) ... ok
+test_online_selection_and_semantic_mismatch (test_m5_targets.TargetTests.test_online_selection_and_semantic_mismatch) ... ok
+test_campaign_budget_counts_only_the_uncommitted_active_run (test_m5_training.TrainingTests.test_campaign_budget_counts_only_the_uncommitted_active_run) ... ok
+test_decision_cap_mid_episode_keeps_real_transitions_without_synthetic_flags (test_m5_training.TrainingTests.test_decision_cap_mid_episode_keeps_real_transitions_without_synthetic_flags) ... ok
+test_epsilon_schedule_and_legal_exploration (test_m5_training.TrainingTests.test_epsilon_schedule_and_legal_exploration) ... ok
+test_real_batch_update_changes_online_then_syncs (test_m5_training.TrainingTests.test_real_batch_update_changes_online_then_syncs) ... ok
+test_target_initialization_equals_online (test_m5_training.TrainingTests.test_target_initialization_equals_online) ... ok
+test_checkpoint_source_diff_is_confined_to_verification_and_restore (test_m5_recovered_source.M5RecoveredSourceTests.test_checkpoint_source_diff_is_confined_to_verification_and_restore) ... ok
+test_old_and_current_checkpoint_restore_produce_equal_state_and_next_rng_draws (test_m5_recovered_source.M5RecoveredSourceTests.test_old_and_current_checkpoint_restore_produce_equal_state_and_next_rng_draws) ... ok
+test_old_and_current_cli_resume_selection_both_return_none_for_attempt_zero (test_m5_recovered_source.M5RecoveredSourceTests.test_old_and_current_cli_resume_selection_both_return_none_for_attempt_zero) ... ok
+test_old_and_current_cli_select_the_same_latest_well_formed_checkpoint (test_m5_recovered_source.M5RecoveredSourceTests.test_old_and_current_cli_select_the_same_latest_well_formed_checkpoint) ... ok
+test_old_and_current_journal_verification_return_the_same_records_and_tail (test_m5_recovered_source.M5RecoveredSourceTests.test_old_and_current_journal_verification_return_the_same_records_and_tail) ... ok
+test_old_and_current_replay_sampling_preserve_identity_and_rng_state (test_m5_recovered_source.M5RecoveredSourceTests.test_old_and_current_replay_sampling_preserve_identity_and_rng_state) ... ok
+test_replay_buffer_and_append_operations_are_ast_identical (test_m5_recovered_source.M5RecoveredSourceTests.test_replay_buffer_and_append_operations_are_ast_identical) ... ok
+test_all_new_local_markdown_links_resolve (test_pre_m7_contracts.PreM7ContractTests.test_all_new_local_markdown_links_resolve) ... ok
+test_canonical_state_and_backlog_are_json_yaml_and_dependency_valid (test_pre_m7_contracts.PreM7ContractTests.test_canonical_state_and_backlog_are_json_yaml_and_dependency_valid) ... ok
+test_g4_g5_criterion_mapping_matches_canonical_acceptance (test_pre_m7_contracts.PreM7ContractTests.test_g4_g5_criterion_mapping_matches_canonical_acceptance) ... ok
+test_g5_status_requires_the_recorded_independent_pm_decision (test_pre_m7_contracts.PreM7ContractTests.test_g5_status_requires_the_recorded_independent_pm_decision) ... ok
+test_m7_engineering_complete_g5_ready_for_review_and_research_closed (test_pre_m7_contracts.PreM7ContractTests.test_m7_engineering_complete_g5_ready_for_review_and_research_closed) ... ok
+test_private_assets_remain_local_and_sanitized_reports_are_portable (test_pre_m7_contracts.PreM7ContractTests.test_private_assets_remain_local_and_sanitized_reports_are_portable) ... ok
+test_protocol_rejects_pseudoreplication_unsupported_strength_and_elo_claims (test_pre_m7_contracts.PreM7ContractTests.test_protocol_rejects_pseudoreplication_unsupported_strength_and_elo_claims) ... ok
+test_read_only_input_audits_bind_frozen_identities_and_provenance (test_pre_m7_contracts.PreM7ContractTests.test_read_only_input_audits_bind_frozen_identities_and_provenance) ... ok
+test_tracks_protocols_terminal_states_and_historical_provenance_stay_distinct (test_pre_m7_contracts.PreM7ContractTests.test_tracks_protocols_terminal_states_and_historical_provenance_stay_distinct) ... ok
+
+----------------------------------------------------------------------
+Ran 44 tests in 3.394s
+
+OK

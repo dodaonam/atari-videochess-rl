@@ -1,0 +1,56 @@
+{
+  "branch": "feature/videochess-performance-improvement-20261103",
+  "clean_status": true,
+  "clean_worktree_head": "11a99b58ef36f9557be5a98a81dfbef7fae5b45c",
+  "clean_worktree_path": "/tmp/atari-videochess-phase1-clean-11a99b5",
+  "commands": [
+    {
+      "command": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "ended_at_utc": "2026-11-02T21:20:58.785695+00:00",
+      "exit_code": 0,
+      "started_at_utc": "2026-11-02T21:20:58.780110+00:00",
+      "wall_seconds": 0.005577515999902971
+    },
+    {
+      "command": [
+        "<repo>/.venv/bin/python",
+        "scripts/agent_preflight.py"
+      ],
+      "ended_at_utc": "2026-11-02T21:21:01.273767+00:00",
+      "exit_code": 0,
+      "started_at_utc": "2026-11-02T21:20:58.785704+00:00",
+      "wall_seconds": 2.488070738996612
+    },
+    {
+      "command": [
+        "<repo>/.venv/bin/python",
+        "-m",
+        "unittest",
+        "test_improvement",
+        "test_m5_replay",
+        "test_m5_checkpoint",
+        "test_m5_targets",
+        "test_m5_training",
+        "test_m5_recovered_source",
+        "test_pre_m7_contracts",
+        "-v"
+      ],
+      "ended_at_utc": "2026-11-02T21:21:06.332333+00:00",
+      "exit_code": 0,
+      "started_at_utc": "2026-11-02T21:21:01.273779+00:00",
+      "wall_seconds": 5.058562944999721
+    }
+  ],
+  "passed": true,
+  "recorded_at_utc": "2026-11-02T21:21:06.340290+00:00",
+  "remote_head": "11a99b58ef36f9557be5a98a81dfbef7fae5b45c",
+  "remote_url": "https://github.com/dodaonam/atari-videochess-rl.git",
+  "retained_log_path": ".agents/evidence/improvement/final-pushed-clean-checkout.log",
+  "retained_log_sha256": "be2036ccfa52ef014e2a88625512a93685ab9d1f4ea8882be6ff60f81d6b1306",
+  "scope": "Final pushed-source preflight and focused campaign plus adjacent M5/context regression checks. Full 545-test suite passed at the tested source head recorded separately."
+}
