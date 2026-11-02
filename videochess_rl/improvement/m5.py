@@ -153,7 +153,7 @@ def _execute(c,checkpoint,checkpoint_sha,out,*,resume=None,stop_at=None,wall_lim
     validate_config(c)
     out=Path(out);out.mkdir(parents=True,exist_ok=False)
     learner,m4=make_learner(c,checkpoint,checkpoint_sha)
-    identity=dict(experiment_id=EXPERIMENT_ID,training_seed=SEED,arm='warm',config_sha256=digest(c),code_sha256=source_identity(),m4_sha256=checkpoint_sha)
+    identity=dict(experiment_id=EXPERIMENT_ID,training_seed=SEED,arm='warm',execution_kind='probe' if stop_at is not None else 'official',config_sha256=digest(c),code_sha256=source_identity(),m4_sha256=checkpoint_sha)
     previous_wall=0.;sources=Counter();repeated=0;damaged_tail=False
     if resume:
         bundle=load_training_checkpoint_bundle(resume)
@@ -237,7 +237,7 @@ def _execute(c,checkpoint,checkpoint_sha,out,*,resume=None,stop_at=None,wall_lim
                 break
         if stopped:break
     elapsed=time.monotonic()-start
-    report=dict(identity=identity,source_revision=revision(),created_at_utc=utc(),valid_decisions=learner.valid_decisions,optimizer_updates=learner.optimizer_updates,target_syncs=learner.target_syncs,completed_episodes=learner.completed_episodes,transitions=learner.transitions,action_sources=dict(sources),wall_seconds=elapsed,cumulative_wall_seconds=previous_wall+elapsed,decisions_per_hour=(learner.valid_decisions-(bundle['counters']['valid_decisions'] if resume else 0))/elapsed*3600,final_episode_incomplete=not last_complete,stopped=stopped,last_checkpoint=str(checkpoint_path) if checkpoint_path else str(resume) if resume else None,last_checkpoint_decisions=last_checkpoint_decisions,repeated_parent_tail_decisions=repeated,ignored_damaged_parent_tail=damaged_tail,uncommitted_tail_decisions=learner.valid_decisions-last_checkpoint_decisions,checkpoint_serialization_seconds=checkpoint_times,resources=resources,episode_records=episode_records)
+    report=dict(identity=identity,effective_decision_limit=limit,requested_probe_stop_decision=stop_at,source_revision=revision(),created_at_utc=utc(),valid_decisions=learner.valid_decisions,optimizer_updates=learner.optimizer_updates,target_syncs=learner.target_syncs,completed_episodes=learner.completed_episodes,transitions=learner.transitions,action_sources=dict(sources),wall_seconds=elapsed,cumulative_wall_seconds=previous_wall+elapsed,decisions_per_hour=(learner.valid_decisions-(bundle['counters']['valid_decisions'] if resume else 0))/elapsed*3600,final_episode_incomplete=not last_complete,stopped=stopped,last_checkpoint=str(checkpoint_path) if checkpoint_path else str(resume) if resume else None,last_checkpoint_decisions=last_checkpoint_decisions,repeated_parent_tail_decisions=repeated,ignored_damaged_parent_tail=damaged_tail,uncommitted_tail_decisions=learner.valid_decisions-last_checkpoint_decisions,checkpoint_serialization_seconds=checkpoint_times,resources=resources,episode_records=episode_records)
     write(out/'run.json',report)
     return learner,m4,report
 
