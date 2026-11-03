@@ -1,0 +1,82 @@
+{
+  "demos": [
+    {
+      "checkpoint_sha256": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293",
+      "local_artifact_namespace": "artifacts/improvement/videochess-improvement-20261103-v1/live-demo/20261103T100958Z-double-dqn",
+      "opponent_replies_verified": 2,
+      "player_moves_verified": 2,
+      "policy_name": "double_dqn_250000",
+      "policy_type": "double_dqn_q_only",
+      "replay_test": {
+        "after_left": 0,
+        "after_right": 0,
+        "left_moved_backward": false,
+        "right_moved_forward": false,
+        "start_index": 0
+      },
+      "resized_900x560": true,
+      "runner_status": "runner_stopped",
+      "stop_category": "RUNNER_MAX_PLAYER_MOVES",
+      "terminal_observed": false,
+      "trace_saved": true,
+      "verified_atari_turns_displayed": 1,
+      "verified_visible_states": 1
+    },
+    {
+      "checkpoint_sha256": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293",
+      "local_artifact_namespace": "artifacts/improvement/videochess-improvement-20261103-v1/live-demo/20261103T101050Z-double-dqn",
+      "opponent_replies_verified": 2,
+      "player_moves_verified": 2,
+      "policy_name": "double_dqn_250000",
+      "policy_type": "double_dqn_q_only",
+      "replay_test": {
+        "after_left": 1,
+        "after_right": 2,
+        "left_moved_backward": true,
+        "right_moved_forward": true,
+        "start_index": 2
+      },
+      "resized_900x560": true,
+      "runner_status": "runner_stopped",
+      "stop_category": "RUNNER_MAX_PLAYER_MOVES",
+      "terminal_observed": false,
+      "trace_saved": true,
+      "verified_atari_turns_displayed": 2,
+      "verified_visible_states": 3
+    },
+    {
+      "checkpoint_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+      "local_artifact_namespace": "artifacts/improvement/videochess-improvement-20261103-v1/live-demo/20261103T101931Z-m4-a",
+      "opponent_replies_verified": 2,
+      "player_moves_verified": 2,
+      "policy_name": "M4-A_behavior_cloning",
+      "policy_type": "behavior_cloning",
+      "replay_test": {
+        "after_left": 1,
+        "after_right": 2,
+        "left_moved_backward": true,
+        "right_moved_forward": true,
+        "start_index": 2
+      },
+      "resized_900x560": true,
+      "runner_status": "runner_stopped",
+      "stop_category": "RUNNER_MAX_PLAYER_MOVES",
+      "terminal_observed": false,
+      "trace_saved": true,
+      "verified_atari_turns_displayed": 2,
+      "verified_visible_states": 3
+    }
+  ],
+  "entry_point": "videochess_rl.improvement.demo",
+  "environment": "actual ALE/VideoChess-v5 RGB mode 4",
+  "prerecorded_video_required": false,
+  "requirements_demonstrated": [
+    "verified checkpoint loaded",
+    "live ALE RGB frames",
+    "two-sided verified SAN/UCI move history",
+    "resizable 900x560 layout",
+    "left-arrow replay backward",
+    "right-arrow replay forward",
+    "bounded stop and clean Tk exit"
+  ]
+}

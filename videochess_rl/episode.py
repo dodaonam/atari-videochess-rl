@@ -120,6 +120,7 @@ class StopCategory(str, Enum):
     RUNNER_MAX_WALL_CLOCK = "RUNNER_MAX_WALL_CLOCK"
     RUNNER_ARTIFACT_LIMIT = "RUNNER_ARTIFACT_LIMIT"
     RUNNER_RESOURCE_LIMIT = "RUNNER_RESOURCE_LIMIT"
+    RUNNER_USER_CANCEL = "RUNNER_USER_CANCEL"
     CONTROLLER_SOURCE_SELECTION_UNCERTAIN = "CONTROLLER_SOURCE_SELECTION_UNCERTAIN"
     CONTROLLER_TARGET_NAVIGATION_UNCERTAIN = "CONTROLLER_TARGET_NAVIGATION_UNCERTAIN"
     CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN = "CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN"
@@ -432,6 +433,8 @@ def run_episode(
     max_episode_seconds: float = 900.0,
     max_artifact_bytes: int = 250 * 1024 * 1024,
     max_process_rss_bytes: int | None = None,
+    stop_event: object | None = None,
+    progress_callback: Callable[[dict[str, object]], None] | None = None,
     target_fire_press_frames: int = 16,
     artifact_dir: str | None = None,
     env_factory: Callable[[ALEConfig], VideoChessEnv] = VideoChessEnv,
@@ -618,6 +621,9 @@ def run_episode(
         cursor = _unique_cursor(initial_window)
         if cursor is None:
             return mark_blocked("Reset RGB did not show one uniquely locatable cursor")
+        if progress_callback is not None:
+            progress_callback({"event": "reset_verified", "frame_number": reset.frame_number,
+                "fen": shadow.board.fen(en_passant="fen"), "side_to_move": "white", "rgb": reset.rgb})
         if expected_reset_cursor is not None and cursor != expected_reset_cursor:
             return mark_blocked(f"Reset cursor expectation {expected_reset_cursor} disagrees with RGB cursor {cursor}")
         current_window = initial_window
@@ -676,6 +682,9 @@ def run_episode(
             samples: list[ALEFrame] = []
             reward_sum = 0.0
             for _ in range(env_steps):
+                if stop_event is not None and bool(getattr(stop_event, "is_set", lambda: False)()):
+                    set_stop("live session cancelled by the user", StopCategory.RUNNER_USER_CANCEL)
+                    break
                 if time.monotonic() - started_monotonic >= max_episode_seconds:
                     set_stop("per-episode wall-clock budget reached", StopCategory.RUNNER_MAX_WALL_CLOCK)
                     break
@@ -1067,6 +1076,11 @@ def run_episode(
                 if planned_move not in board_before.legal_moves:
                     raise EpisodeStop(f"Policy selector returned an illegal move: {player_move}")
                 turn["player_move"]["uci"] = player_move
+                if progress_callback is not None:
+                    progress_callback({"event": "move_selected", "turn": turn_index,
+                        "uci": player_move, "san": board_before.san(planned_move),
+                        "frame_number": last_frame.frame_number, "fen": board_before.fen(en_passant="fen"),
+                        "rgb": last_frame.rgb})
                 plan = plan_move(current_cursor, player_move, board=board_before, timing=timing)
                 set_turn_state(turn_index, TurnState.PLAYER_MOVE_EXECUTING, f"executing legal move {player_move}")
                 move_source = chess.square_name(planned_move.from_square)
@@ -1508,6 +1522,12 @@ def run_episode(
                 trace["opponent_reply"] = turn["opponent_reply"]
                 trace["final_position"] = {"matches_shadow_board": True, "shadow_fen": shadow.board.fen()}
                 set_turn_state(turn_index, TurnState.OPPONENT_MOVE_COMPLETED, f"RGB confirmed legal Atari move {candidate_reply}")
+                if progress_callback is not None:
+                    progress_callback({"event": "verified_turn", "turn": turn_index,
+                        "player_uci": player_move, "player_san": board_before.san(chess.Move.from_uci(player_move)),
+                        "opponent_uci": candidate_reply, "opponent_san": expected_player_board.san(reply_move),
+                        "frame_number": last_frame.frame_number, "fen": shadow.board.fen(en_passant="fen"),
+                        "rgb": last_frame.rgb})
                 save_frame(f"turn-{turn_index:02d}-verified-board")
                 trace["ram_diagnostics_only"].append(
                     {"stage": f"turn-{turn_index}-verified-board", **env.diagnostic_ram((0xE1, 0xE4, 0xEA, 0xEE))}
@@ -1711,6 +1731,7 @@ def run_episode(
             StopCategory.RUNNER_ARTIFACT_LIMIT,
             StopCategory.RUNNER_MAX_PLAYER_MOVES,
             StopCategory.RUNNER_RESOURCE_LIMIT,
+            StopCategory.RUNNER_USER_CANCEL,
         }:
             trace["status"] = "runner_stopped"
             trace["failure"] = stop_reason
@@ -1720,4 +1741,8 @@ def run_episode(
         else:
             trace["status"] = "partial"
             trace["failure"] = "Episode stopped before a verified move cycle completed"
+        if progress_callback is not None:
+            progress_callback({"event": "episode_finished", "status": trace.get("status"),
+                "terminal": dict(trace["terminal"]), "failure": trace.get("failure"),
+                "frame_number": last_frame.frame_number, "rgb": last_frame.rgb})
     return trace
