@@ -43,12 +43,13 @@ The one official run used a fresh Q head over the shared M4 representation, seed
 | Completed episodes | 3,203 |
 | Wall time | 23,417.4 s (6 h 30 m 17 s) |
 | Effective throughput | 38,433 decisions/hour |
+| Frozen cumulative-time guard | 36,000 s (10 h); used 23,417.4 s |
 | Peak process RSS | 1,100,021,760 bytes |
 | Minimum sampled available RAM | 22,513,188,864 bytes |
 | Minimum sampled free disk | 32,687,590,400 bytes |
 | Action sources | 19,353 M4-guided; 76,194 uniform exploration; 154,453 Q-greedy |
 
-The final decision limit ended in the middle of an episode. The last episode-boundary resumable checkpoint is `resume-249174.pt` (SHA-256 `64b09505cb68a36e34c4f08f26eeaaa259c32ee981bee08e5912766c91b3be27`). The final 826 journal transitions are beyond that checkpoint prefix, but they are present in the verified journal and represented in the final 250,000-decision Q snapshot. No recovery attempt was needed; no transition tail was replayed or discarded as damaged. This checkpoint/snapshot distinction is recorded in the run evidence.
+The final decision limit ended in the middle of an episode. The last episode-boundary resumable checkpoint is `resume-249174.pt` (SHA-256 `64b09505cb68a36e34c4f08f26eeaaa259c32ee981bee08e5912766c91b3be27`). The final 826 journal transitions are beyond that checkpoint prefix, but they are present in the verified journal and represented in the final 250,000-decision Q snapshot. No recovery attempt was needed; no transition tail was replayed or discarded as damaged. Wall, RSS, free-RAM, and free-disk guards all remained within their frozen bounds. This checkpoint/snapshot distinction is recorded in the run evidence.
 
 All eleven scheduled Q-only snapshots from 0 through 250,000 were created, sidecar-verified, loaded, and checked for finite parameters. The 250,000 snapshot SHA-256 is `48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293`.
 

@@ -16,8 +16,12 @@
   "final_episode_incomplete": true,
   "m4_path": "artifacts/improvement/videochess-improvement-20261103-v1/m4-a/epoch-22.pt",
   "m4_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+  "maximum_cumulative_wall_seconds": 36000,
+  "maximum_process_rss_bytes": 12884901888,
   "minimum_available_ram_bytes": 22513188864,
+  "minimum_available_ram_guard_bytes": 2147483648,
   "minimum_free_disk_bytes": 32687570944,
+  "minimum_free_disk_guard_bytes": 5368709120,
   "opponent_episode_outcomes": {
     "random_legal/black": {
       "completed_episodes": 554,
@@ -59,6 +63,7 @@
     "uncommitted_tail_decisions_after_checkpoint": 826
   },
   "requested_valid_decisions": 250000,
+  "resource_guards_passed": true,
   "resource_samples": 2500,
   "schema": "videochess-phase2-training-summary/1",
   "source_digest_sha256": "cf329438880a82b7b39b05b8f1f3bc1af21e262edb4143e1035e494f891a5705",

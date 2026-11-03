@@ -1,0 +1,20 @@
+{
+  "branch": "feature/videochess-performance-improvement-20261103",
+  "checkout_source": "fresh clone of pushed origin feature branch",
+  "focused_tests": {
+    "status": "PASS",
+    "tests.test_phase2_atari_demo": 2,
+    "tests.test_phase2_evaluation": 3
+  },
+  "head": "022227211ad999d38d953db588165274537a4bcb",
+  "preflight": "PASS_WITH_EXPECTED_ARTIFACT_MANIFEST_WARNING",
+  "preflight_warning": "Private artifacts are excluded from ordinary Git hashes and verified with separate artifact checksums/manifests.",
+  "py_compile": "PASS",
+  "repository": "https://github.com/dodaonam/atari-videochess-rl",
+  "schema": "phase2-clean-checkout-verification/1",
+  "started_at_utc": "not captured by wrapper; historical_unverified",
+  "status_entries": [],
+  "tree": "f12e5e42aa37ae3bc2d50f3d27bb7102c62b388e",
+  "verification_observed_at_utc": "2026-11-03T10:45:30Z",
+  "working_tree_clean": true
+}
