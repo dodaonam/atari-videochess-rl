@@ -68,4 +68,4 @@ The full semantic replay audit took 1,977.74 seconds. Its integrity result is re
 
 - PR #24: [Post-closeout VideoChess improvement: single-seed warm DDQN, evaluation and live demo](https://github.com/dodaonam/atari-videochess-rl/pull/24).
 - Created open and non-draft, targeting `main`; not merged and no auto-merge enabled.
-- The repository-preflight check was queued at PR creation. The final check result and updated PR head should be inspected on GitHub before PM review.
+- Repository-preflight check `context` passed on PR head `9786efd0c1fe9f197f71187b155e7f550987cfa1` at 2026-11-03T10:53:42Z; GitHub reports the PR merge state as clean and the PR remains open/unmerged.

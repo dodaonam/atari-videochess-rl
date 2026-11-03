@@ -4,14 +4,14 @@
 
 The authorized Phase 2 work is complete through one official training run, snapshot selection, reserved simulator evaluation, bounded actual-ALE evaluation, two live GUI smoke tests, and implementation. The feature branch must remain unmerged. The final state is awaiting the independent PM's review of one open PR targeting `main`.
 
-PR #24: [Post-closeout VideoChess improvement](https://github.com/dodaonam/atari-videochess-rl/pull/24). It is open, non-draft, targets `main`, and is unmerged. The repository-preflight check was queued when the PR was opened; see the PR for its live result.
+PR #24: [Post-closeout VideoChess improvement](https://github.com/dodaonam/atari-videochess-rl/pull/24). It is open, non-draft, targets `main`, and is unmerged. The current PR head and clean-clone verification are recorded in `.agents/evidence/improvement/phase2-final-verification.json`; check status is also visible on the PR.
 
 | Identity | Value |
 |---|---|
 | Experiment | `videochess-improvement-20261103-v1` |
 | Base `main` | `7415d821acf11dd3e07e4990c2f5539cfdf31916` |
 | Feature branch | `feature/videochess-performance-improvement-20261103` |
-| Phase 2 pushed head/tree | `5b9f93f3092a8e9b97c4061813bbd150bdd1b837` / `03346066361e7a14a3396bee2bea00282604a2c9` |
+| Initial Phase 2 implementation push | `5b9f93f3092a8e9b97c4061813bbd150bdd1b837` / `03346066361e7a14a3396bee2bea00282604a2c9` |
 | Training seed | `20261103` |
 | M4 source SHA-256 | `cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed` |
 | Training config SHA-256 | `2cfe2805edd3e05756fd3ef981a6e4441e3b4ad717649d5647085228e837aabd` |

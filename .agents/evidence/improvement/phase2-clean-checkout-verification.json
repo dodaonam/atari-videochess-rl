@@ -6,7 +6,7 @@
     "tests.test_phase2_atari_demo": 2,
     "tests.test_phase2_evaluation": 3
   },
-  "head": "5b9f93f3092a8e9b97c4061813bbd150bdd1b837",
+  "head": "9786efd0c1fe9f197f71187b155e7f550987cfa1",
   "preflight": "PASS_WITH_EXPECTED_ARTIFACT_MANIFEST_WARNING",
   "preflight_warning": "Private artifacts are excluded from ordinary Git hashes and verified with separate artifact checksums/manifests.",
   "py_compile": "PASS",
@@ -14,7 +14,7 @@
   "schema": "phase2-clean-checkout-verification/1",
   "started_at_utc": "not captured by wrapper; historical_unverified",
   "status_entries": [],
-  "tree": "03346066361e7a14a3396bee2bea00282604a2c9",
-  "verification_observed_at_utc": "2026-11-03T10:48:38Z",
+  "tree": "8d7f91c4f1b8d5ea0d2229a3c7e73b3733c4df37",
+  "verification_observed_at_utc": "2026-11-03T10:53:36Z",
   "working_tree_clean": true
 }
