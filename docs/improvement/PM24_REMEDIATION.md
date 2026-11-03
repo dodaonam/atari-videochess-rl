@@ -125,6 +125,10 @@ documented engineering limitation, not a fabricated terminal result.
   tree `2fa10b2e0af6a64eae6dd44fbb86419e9e114a14`, passed preflight and the
   full repository suite: 556 tests, 552 passed, zero failed, four private
   artifact skips; exit code 0. The clone had no private artifact payloads.
+- The final pushed candidate `50824624871213090536639722d2b921ef96d8a6` also
+  passed a fresh-clone preflight and full suite: 556 tests, 552 passed, zero
+  failed, four private-artifact skips; exit code 0. The later PR-verification
+  record/checkpoint commit contains only evidence and canonical state metadata.
 - The accepted dataset verifier passed for release
   `f2b3b52724958ffa845894681013cdc40915da179bbec3ae011087fe8a8ce0cc` with
   5,000 games and 94,805 positions. The M4-A selection and sidecar hashes

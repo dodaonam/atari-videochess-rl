@@ -113,3 +113,10 @@ zero failures). Dataset release verification, the selected M4-A sidecar, and
 all 4,163 local artifact inventory entries also passed; raw artifacts remain
 private. The clean-clone test and artifact-check logs are retained locally and
 hashed in `phase2-remediation-verification.json`.
+
+The final remediation candidate was also verified from a fresh clone at
+`50824624871213090536639722d2b921ef96d8a6`, tree
+`33e24242b2290d5c7870fc96db84d8d333a52b00`: preflight and the complete
+556-test suite passed with the same four private-artifact skips. The final
+metadata/checkpoint commit after that test did not change Python, tests,
+configuration, or experiment artifacts.
