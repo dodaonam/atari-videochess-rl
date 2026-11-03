@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-46c78937-20261102T152513433976Z -->
+<!-- checkpoint-id: cp-01deb2b2-20261103T130042619007Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -102,3 +102,25 @@ For old partial-write temp files, inspect the preflight warning, then use `pytho
 ## Final consolidation review pointer — 2026-11-02
 
 The owner-authorized final housekeeping/integration task is documented in the [consolidation audit](../evidence/FINAL-CONSOLIDATION-audit-20261102.md) and [verification ledger](../evidence/FINAL-CONSOLIDATION-verification-20261102.md). It does not reopen M0–M7 or authorize a campaign/release. Exact final feature HEAD, clean-clone results, and CI belong to its separate main-target PR handover; the executor must leave that PR open and unmerged.
+
+## Independent improvement campaign recovery pointer
+
+Read `improvement_campaign` in [canonical project state](PROJECT_STATE.yaml)
+and the [Phase 1 handoff](../../docs/improvement/PHASE1_HANDOFF.md). Its direct
+owner authorization and separation from historical M0–M7 are recorded in
+[ADR-0005](../../docs/02-management/decisions/ADR-0005-independent-improvement-campaign.md).
+This is a pointer, not a competing campaign status or Phase 2 authorization.
+
+## Improvement campaign Phase 2 execution pointer — 2026-11-03
+
+The Project Owner directly authorized Phase 2 and the Independent PM accepted the Phase 1 handoff. Current pre-run authorization and config/code identities are in `PROJECT_STATE.yaml`; full local artifact verification and deadline budgeting are in `../../.agents/evidence/improvement/phase2-pre-run-freeze.json`. The feature branch remains the Phase 1 branch. The single official attempt `attempt-0000` started at 2026-11-03T02:55:57.782730Z from revision `76c898ed0dd8a2e8bf0c76cbd8565f83077284e0`; do not start another training campaign. Follow the Phase 2 assignment; preserve private artifacts locally and leave any final consolidation PR open and unmerged.
+
+## PR #24 remediation (2026-11-03)
+
+The PM-requested remediation is complete on the existing feature branch. See
+`docs/improvement/PM24_REMEDIATION.md` for findings, evidence, and the remaining
+owner/PM integration-history decision. The official training run and all
+accepted scientific results are immutable. No merge or history rewrite is
+authorized. Current verification evidence is under
+`.agents/evidence/improvement/phase2-remediation-verification.json`. The remaining
+owner/PM decision is the integration method for the already-published branch history.

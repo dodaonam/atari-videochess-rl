@@ -1,0 +1,6 @@
+{
+  "code_sha256": "cf329438880a82b7b39b05b8f1f3bc1af21e262edb4143e1035e494f891a5705",
+  "reason": "Runtime identity edit overlapped the first disposable recovery attempt. It was interrupted and preserved. The first restart refused an existing attempt directory after its preparation used system Python rather than the project interpreter. No M4 results or official M5 run are affected. Readiness is rerun using the project interpreter from this frozen source.",
+  "recorded_at_utc": "2026-11-02T20:14:38.982865+00:00",
+  "source_revision": "f9a0759c5318741822fb60f6c61b44bb66851e83"
+}

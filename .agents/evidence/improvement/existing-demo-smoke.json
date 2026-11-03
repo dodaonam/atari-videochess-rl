@@ -1,0 +1,17 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "videochess_rl.improvement.existing_demo"
+  ],
+  "ended_at_utc": "2026-11-02T18:26:06.975626+00:00",
+  "exit_code": 0,
+  "git_revision": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+  "log_path": ".agents/evidence/improvement/existing-demo-smoke.log",
+  "log_sanitization": "Absolute repository root represented as ${REPO_ROOT}; owner-local external script path redacted; substantive smoke result preserved.",
+  "log_sha256": "1ce08d8b3bad9af19730ed38d2008dfd1ccc3feda55a4a29cbad34e3ef1288ad",
+  "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/existing-demo-smoke/manifest.json",
+  "source_manifest_sha256": "f0985dabbbaf0da5cf60c29c792f1f4d143d21010dc304be432cfbad16619eb3",
+  "started_at_utc": "2026-11-02T18:25:25.477590+00:00",
+  "wall_seconds": 41.49803347499983
+}

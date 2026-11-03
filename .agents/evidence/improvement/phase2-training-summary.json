@@ -1,0 +1,77 @@
+{
+  "action_source_counts": {
+    "m4_guided": 19353,
+    "q_greedy": 154453,
+    "uniform_exploration": 76194
+  },
+  "actual_valid_decisions": 250000,
+  "arm": "warm",
+  "completed_episodes": 3203,
+  "config_path": "configs/improvement/m5-phase2.json",
+  "config_sha256": "2cfe2805edd3e05756fd3ef981a6e4441e3b4ad717649d5647085228e837aabd",
+  "cumulative_wall_seconds": 23417.393771747993,
+  "decisions_per_hour": 38432.97032848329,
+  "execution_kind": "official",
+  "experiment_id": "videochess-improvement-20261103-v1",
+  "final_episode_incomplete": true,
+  "m4_path": "artifacts/improvement/videochess-improvement-20261103-v1/m4-a/epoch-22.pt",
+  "m4_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+  "maximum_cumulative_wall_seconds": 36000,
+  "maximum_process_rss_bytes": 12884901888,
+  "minimum_available_ram_bytes": 22513188864,
+  "minimum_available_ram_guard_bytes": 2147483648,
+  "minimum_free_disk_bytes": 32687570944,
+  "minimum_free_disk_guard_bytes": 5368709120,
+  "opponent_episode_outcomes": {
+    "random_legal/black": {
+      "completed_episodes": 554,
+      "losses": 1,
+      "true_draws": 181,
+      "wins": 372
+    },
+    "random_legal/white": {
+      "completed_episodes": 583,
+      "losses": 3,
+      "true_draws": 187,
+      "wins": 393
+    },
+    "simple_material_heuristic/black": {
+      "completed_episodes": 1047,
+      "losses": 98,
+      "true_draws": 652,
+      "wins": 297
+    },
+    "simple_material_heuristic/white": {
+      "completed_episodes": 1019,
+      "losses": 96,
+      "true_draws": 617,
+      "wins": 306
+    }
+  },
+  "optimizer_updates": 62245,
+  "peak_artifact_bytes": 1379795581,
+  "peak_journal_bytes": 831922081,
+  "peak_rss_bytes": 1100021760,
+  "recovery": {
+    "attempt_directories": 1,
+    "damaged_parent_tail_ignored": false,
+    "interpretation": "Run reached the authorized decision target mid-episode. The full journal and 250,000-decision Q snapshot include all transitions; resumable checkpoint remains at the last completed episode boundary.",
+    "last_checkpoint_sha256": "64b09505cb68a36e34c4f08f26eeaaa259c32ee981bee08e5912766c91b3be27",
+    "last_episode_boundary_checkpoint_decisions": 249174,
+    "replayed_parent_tail_decisions": 0,
+    "resume_attempts": 0,
+    "uncommitted_tail_decisions_after_checkpoint": 826
+  },
+  "requested_valid_decisions": 250000,
+  "resource_guards_passed": true,
+  "resource_samples": 2500,
+  "schema": "videochess-phase2-training-summary/1",
+  "source_digest_sha256": "cf329438880a82b7b39b05b8f1f3bc1af21e262edb4143e1035e494f891a5705",
+  "source_start_revision": "76c898ed0dd8a2e8bf0c76cbd8565f83077284e0",
+  "source_start_tree": "b5877036a2e954c085e0da386c0bcb596ff21ab3",
+  "status": "completed_target",
+  "target_syncs": 124,
+  "training_seed": 20261103,
+  "transitions": 250000,
+  "wall_seconds": 23417.393771747993
+}

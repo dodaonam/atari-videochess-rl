@@ -1,0 +1,313 @@
+{
+  "atari_summary": {
+    "double-dqn": {
+      "attempts": 3,
+      "categories": {
+        "input_or_policy_control_failure": 3
+      },
+      "seeds": [
+        20261210,
+        20261211,
+        20261212
+      ],
+      "total_wall_seconds": 143.25810217000253,
+      "verified_opponent_moves": 27,
+      "verified_player_moves": 27
+    },
+    "m4-a": {
+      "attempts": 3,
+      "categories": {
+        "incomplete_bounded_attempt": 3
+      },
+      "seeds": [
+        20261210,
+        20261211,
+        20261212
+      ],
+      "total_wall_seconds": 186.52470109898422,
+      "verified_opponent_moves": 36,
+      "verified_player_moves": 36
+    }
+  },
+  "auto_merge_enabled": false,
+  "base_branch": "main",
+  "base_sha": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+  "clean_checkout": {
+    "phase2_focused_tests": "5 passed",
+    "preflight": "PASS_WITH_EXPECTED_ARTIFACT_MANIFEST_WARNING",
+    "tested_head": "a8d0f36acf6288cac1ff64c71ed2843ca402fc5b",
+    "tested_tree": "7399134fa39bd6f8f5d4d7cebf3d5d6a3aee42a8",
+    "working_tree_clean": true
+  },
+  "feature_branch": "feature/videochess-performance-improvement-20261103",
+  "focused_verification": {
+    "all_passed": true,
+    "command_groups": 7
+  },
+  "full_test_suite": {
+    "exit_code": 1,
+    "failed": 1,
+    "failure": "Stockfish readiness test: executable unavailable on PATH",
+    "log_sha256": "3ff6e67fb4ac77f652a41039bce356e45f139193fea9c80e350eaf168716dc7a",
+    "passed": 545,
+    "skipped": 4,
+    "tests_run": 550
+  },
+  "generated_at_utc": "2026-11-03T10:56:22+00:00",
+  "live_demo_smokes": 3,
+  "main_unchanged_sha": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+  "merge_performed": false,
+  "metadata_update_observed_head": "9786efd0c1fe9f197f71187b155e7f550987cfa1",
+  "metadata_update_observed_tree": "8d7f91c4f1b8d5ea0d2229a3c7e73b3733c4df37",
+  "official_training": {
+    "actual_valid_decisions": 250000,
+    "attempt_directories": 1,
+    "experiment_id": "videochess-improvement-20261103-v1",
+    "optimizer_updates": 62245,
+    "status": "completed_target",
+    "target_syncs": 124,
+    "training_seed": 20261103,
+    "wall_seconds": 23417.393771747993
+  },
+  "official_training_completed": true,
+  "preflight": "PASS_WITH_EXPECTED_ARTIFACT_MANIFEST_WARNING",
+  "private_artifacts_published": false,
+  "pull_request": {
+    "auto_merge_enabled": false,
+    "check_name": "context",
+    "check_name_at_recorded_verification": "context",
+    "check_status_at_recorded_verification": "SUCCESS",
+    "check_url_at_recorded_verification": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/41623136627/job/125873654502",
+    "check_workflow": "Repository preflight",
+    "current_merge_state": "CLEAN",
+    "draft": false,
+    "head_branch": "feature/videochess-performance-improvement-20261103",
+    "head_oid_at_creation": "268bcfccc165eaef1fdc2b61b8c1f0a9dad4c3ba",
+    "head_oid_at_recorded_check": "a8d0f36acf6288cac1ff64c71ed2843ca402fc5b",
+    "initial_check_status": "QUEUED",
+    "merge_performed": false,
+    "merge_state_at_creation": "UNSTABLE",
+    "mergeable": "MERGEABLE",
+    "number": 24,
+    "review_decision": "",
+    "state": "OPEN",
+    "target": "main",
+    "url": "https://github.com/dodaonam/atari-videochess-rl/pull/24"
+  },
+  "pushed_head_verified": true,
+  "release_or_deployment": false,
+  "repository": "https://github.com/dodaonam/atari-videochess-rl",
+  "reserved_final_policies": {
+    "M4-A_behavior_cloning": {
+      "agent_decisions": 1505,
+      "draw_rate": 0.225,
+      "incomplete": 0,
+      "incomplete_rate": 0.0,
+      "losses": 0,
+      "mean_decisions_per_observed_game": 37.625,
+      "observed_incomplete": 0,
+      "observed_rows": 40,
+      "opponent_color_strata": {
+        "random_legal/black": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.85,
+          "true_draws": 3,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 7
+        },
+        "random_legal/white": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.95,
+          "true_draws": 1,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 9
+        },
+        "simple_material_heuristic/black": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.9,
+          "true_draws": 2,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 8
+        },
+        "simple_material_heuristic/white": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.85,
+          "true_draws": 3,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 7
+        }
+      },
+      "scheduled_games": 40,
+      "score": 0.8875,
+      "true_draws": 9,
+      "truncations": 0,
+      "unattempted": 0,
+      "win_rate": 0.775,
+      "wins": 31
+    },
+    "historical_M5": {
+      "agent_decisions": 6145,
+      "draw_rate": 0.8,
+      "incomplete": 0,
+      "incomplete_rate": 0.025,
+      "losses": 4,
+      "mean_decisions_per_observed_game": 153.625,
+      "observed_incomplete": 0,
+      "observed_rows": 40,
+      "opponent_color_strata": {
+        "random_legal/black": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.5,
+          "true_draws": 8,
+          "truncations": 1,
+          "unattempted": 0,
+          "wins": 1
+        },
+        "random_legal/white": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.55,
+          "true_draws": 9,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 1
+        },
+        "simple_material_heuristic/black": {
+          "incomplete": 0,
+          "losses": 4,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.35,
+          "true_draws": 5,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 1
+        },
+        "simple_material_heuristic/white": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.5,
+          "true_draws": 10,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 0
+        }
+      },
+      "scheduled_games": 40,
+      "score": 0.475,
+      "true_draws": 32,
+      "truncations": 1,
+      "unattempted": 0,
+      "win_rate": 0.075,
+      "wins": 3
+    },
+    "selected_double_dqn": {
+      "agent_decisions": 1874,
+      "draw_rate": 0.25,
+      "incomplete": 0,
+      "incomplete_rate": 0.0,
+      "losses": 0,
+      "mean_decisions_per_observed_game": 46.85,
+      "observed_incomplete": 0,
+      "observed_rows": 40,
+      "opponent_color_strata": {
+        "random_legal/black": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.8,
+          "true_draws": 4,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 6
+        },
+        "random_legal/white": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.95,
+          "true_draws": 1,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 9
+        },
+        "simple_material_heuristic/black": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.85,
+          "true_draws": 3,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 7
+        },
+        "simple_material_heuristic/white": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.9,
+          "true_draws": 2,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 8
+        }
+      },
+      "scheduled_games": 40,
+      "score": 0.875,
+      "true_draws": 10,
+      "truncations": 0,
+      "unattempted": 0,
+      "win_rate": 0.75,
+      "wins": 30
+    }
+  },
+  "revision_identity": {
+    "frozen_training_code_sha256": "cf329438880a82b7b39b05b8f1f3bc1af21e262edb4143e1035e494f891a5705",
+    "frozen_training_config_sha256": "2cfe2805edd3e05756fd3ef981a6e4441e3b4ad717649d5647085228e837aabd",
+    "identity_note": "The remediation verification record separately binds current tested and pushed revisions; historical training provenance is immutable.",
+    "initial_pm_review_head": "d35520a0301a7c5413c26f1792762b51d58a48df",
+    "official_training_source_commit": "76c898ed0dd8a2e8bf0c76cbd8565f83077284e0",
+    "official_training_source_tree": "b5877036a2e954c085e0da386c0bcb596ff21ab3",
+    "phase2_implementation_commit": "0596698249d74da4dd9184a12975f83efd08bca3"
+  },
+  "schema": "videochess-phase2-final-verification/1",
+  "selected_q_checkpoint": {
+    "decision_count": 250000,
+    "path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-250000.pt",
+    "sha256": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293"
+  },
+  "simulator_selection_score": 0.9083333333333333,
+  "tested_source_head_before_final_metadata_commit": "a8d0f36acf6288cac1ff64c71ed2843ca402fc5b",
+  "tested_source_tree_before_final_metadata_commit": "7399134fa39bd6f8f5d4d7cebf3d5d6a3aee42a8",
+  "verdict": "ready_for_independent_pm_review_with_documented_limitations",
+  "verified_head_before_final_metadata_commit": "a8d0f36acf6288cac1ff64c71ed2843ca402fc5b",
+  "verified_tree_before_final_metadata_commit": "7399134fa39bd6f8f5d4d7cebf3d5d6a3aee42a8",
+  "working_tree_clean_before_final_metadata_update": true
+}

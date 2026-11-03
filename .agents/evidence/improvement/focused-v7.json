@@ -1,0 +1,24 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "unittest",
+    "test_improvement",
+    "test_m5_replay",
+    "test_m5_checkpoint",
+    "test_m5_targets",
+    "test_m5_training",
+    "-v"
+  ],
+  "end_git_revision": "09cc1d6348236c5b6f5d11425360c00a8c6ddb32",
+  "ended_at_utc": "2026-11-02T18:38:32.762061+00:00",
+  "exit_code": 0,
+  "git_revision": "09cc1d6348236c5b6f5d11425360c00a8c6ddb32",
+  "log_path": ".agents/evidence/improvement/focused-v7.log",
+  "log_sanitization": "Repository-root paths replaced by <repo>; trailing whitespace removed; substantive output preserved.",
+  "log_sha256": "afad1110a1641d04d4ba6ef840bcc83155efaaa3f1d7c2ddf899b92c9ab97fcc",
+  "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/focused-v7/manifest.json",
+  "source_manifest_sha256": "dc9d1b915203399325b8ce181fba5dfbf64645f369a1a38577ac2f92ad84cfae",
+  "started_at_utc": "2026-11-02T18:38:28.316965+00:00",
+  "wall_seconds": 4.445096028997796
+}

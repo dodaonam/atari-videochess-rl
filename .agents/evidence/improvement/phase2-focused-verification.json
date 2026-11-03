@@ -1,0 +1,132 @@
+{
+  "all_passed": true,
+  "records": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "-v",
+        "tests.test_agent_context.AgentContextRecoveryTests.test_clean_clone_recovers_current_committed_state_without_local_artifacts",
+        "tests.test_agent_context.AgentContextRecoveryTests.test_project_context_can_be_recovered_without_chat_history",
+        "tests.test_agent_context.AgentContextRecoveryTests.test_m7_001_through_m7_005_engineering_done_and_g5_f02_resolved",
+        "tests.test_g5_final_closeout.G5FinalCloseoutTests.test_current_governance_uses_fresh_independent_pm_approval",
+        "tests.test_m7_release_disposition.M7ReleaseDispositionTests.test_historical_pm_decision_is_preserved_but_m7_05_requires_fresh_review",
+        "tests.test_pre_m7_contracts.PreM7ContractTests.test_m7_engineering_complete_g5_ready_for_review_and_research_closed"
+      ],
+      "ended_at_utc": "2026-11-03T10:43:18.632048+00:00",
+      "exit_code": 0,
+      "git_revision": "66603bc4dc7cf79475445cedcb6b38c4f1082dde",
+      "log_path": ".agents/evidence/improvement/portable_and_governance_tests-final.log",
+      "log_sha256": "a65e56771ec9ec0990cce7dbb7f828c45bea6e2ec3fa2886143b1126df61f44a",
+      "name": "portable_and_governance_tests",
+      "started_at_utc": "2026-11-03T10:42:32.842975+00:00",
+      "wall_seconds": 45.789072077997844
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "-v",
+        "tests.test_phase2_evaluation",
+        "tests.test_phase2_atari_demo"
+      ],
+      "ended_at_utc": "2026-11-03T10:43:20.169838+00:00",
+      "exit_code": 0,
+      "git_revision": "66603bc4dc7cf79475445cedcb6b38c4f1082dde",
+      "log_path": ".agents/evidence/improvement/phase2_focused_tests-final.log",
+      "log_sha256": "4be38af0954686b306c1a2e0e5b34b046c4955cf8ae69ec3cb3d07ad5860a4cd",
+      "name": "phase2_focused_tests",
+      "started_at_utc": "2026-11-03T10:43:18.634220+00:00",
+      "wall_seconds": 1.5356245260045398
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "py_compile",
+        "videochess_rl/episode.py",
+        "videochess_rl/improvement/demo.py",
+        "videochess_rl/improvement/live.py",
+        "videochess_rl/improvement/policies.py",
+        "videochess_rl/improvement/atari_eval.py",
+        "scripts/improvement/phase2_evaluate.py",
+        "tests/test_phase2_evaluation.py",
+        "tests/test_phase2_atari_demo.py"
+      ],
+      "ended_at_utc": "2026-11-03T10:43:20.233405+00:00",
+      "exit_code": 0,
+      "git_revision": "66603bc4dc7cf79475445cedcb6b38c4f1082dde",
+      "log_path": ".agents/evidence/improvement/syntax_compilation-final.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "syntax_compilation",
+      "started_at_utc": "2026-11-03T10:43:20.171889+00:00",
+      "wall_seconds": 0.06152182898949832
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "ended_at_utc": "2026-11-03T10:43:20.238985+00:00",
+      "exit_code": 0,
+      "git_revision": "66603bc4dc7cf79475445cedcb6b38c4f1082dde",
+      "log_path": ".agents/evidence/improvement/whitespace-final.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "whitespace",
+      "started_at_utc": "2026-11-03T10:43:20.235489+00:00",
+      "wall_seconds": 0.0034841390006477013
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "videochess_rl.improvement.m5",
+        "--help"
+      ],
+      "ended_at_utc": "2026-11-03T10:43:21.724597+00:00",
+      "exit_code": 0,
+      "git_revision": "66603bc4dc7cf79475445cedcb6b38c4f1082dde",
+      "log_path": ".agents/evidence/improvement/m5_fresh_process_cli-final.log",
+      "log_sha256": "f3a1407d99664c1bcdb274f14650e9c4ef831a854f6a3bfd3ea58781ed504a50",
+      "name": "m5_fresh_process_cli",
+      "started_at_utc": "2026-11-03T10:43:20.240717+00:00",
+      "wall_seconds": 1.4838993960001972
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "videochess_rl.improvement.demo",
+        "--help"
+      ],
+      "ended_at_utc": "2026-11-03T10:43:23.287973+00:00",
+      "exit_code": 0,
+      "git_revision": "66603bc4dc7cf79475445cedcb6b38c4f1082dde",
+      "log_path": ".agents/evidence/improvement/demo_fresh_process_cli-final.log",
+      "log_sha256": "ae6600afcf2771fce86cddb9e488329120109edab414e8c4413e63c65e187b70",
+      "name": "demo_fresh_process_cli",
+      "started_at_utc": "2026-11-03T10:43:21.726704+00:00",
+      "wall_seconds": 1.5612769599974854
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "videochess_rl.improvement.atari_eval",
+        "--help"
+      ],
+      "ended_at_utc": "2026-11-03T10:43:24.780286+00:00",
+      "exit_code": 0,
+      "git_revision": "66603bc4dc7cf79475445cedcb6b38c4f1082dde",
+      "log_path": ".agents/evidence/improvement/atari_eval_fresh_process_cli-final.log",
+      "log_sha256": "f0044e245b7a6d934c87c6d1b46a0e39daf0c9a6c61f72df601b97956aa00bd5",
+      "name": "atari_eval_fresh_process_cli",
+      "started_at_utc": "2026-11-03T10:43:23.290331+00:00",
+      "wall_seconds": 1.4899589479900897
+    }
+  ],
+  "schema": "phase2-focused-verification/1"
+}

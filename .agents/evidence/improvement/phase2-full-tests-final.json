@@ -1,0 +1,24 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "elapsed_seconds": 180.19560553600604,
+  "ended_at_utc": "2026-11-03T10:34:21.472297+00:00",
+  "exit_code": 1,
+  "git_revision": "17804732a4bd8a11a5e63b17bbc18d8bad242c77",
+  "log_path": ".agents/evidence/improvement/phase2-full-tests-final.log",
+  "log_sha256": "3ff6e67fb4ac77f652a41039bce356e45f139193fea9c80e350eaf168716dc7a",
+  "started_at_utc": "2026-11-03T10:31:21.277370+00:00",
+  "stockfish_executable_available": false,
+  "summary_lines": [
+    "Ran 550 tests in 178.154s",
+    "FAILED (failures=1, skipped=4)"
+  ],
+  "log_sanitization": "Absolute local repository prefix represented by <repo>; test output and failure detail preserved."
+}

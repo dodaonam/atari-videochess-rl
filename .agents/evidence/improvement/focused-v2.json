@@ -1,0 +1,21 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "unittest",
+    "tests.test_improvement",
+    "tests.test_m5_replay",
+    "tests.test_m5_checkpoint",
+    "tests.test_m5_targets",
+    "tests.test_m5_training",
+    "-v"
+  ],
+  "ended_at_utc": "2026-11-02T18:20:20.886744+00:00",
+  "exit_code": 1,
+  "git_revision": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+  "log_path": ".agents/evidence/improvement/focused-v2.log",
+  "log_sanitization": "Repository-root paths replaced by <repo>; trailing whitespace removed; substantive output preserved.",
+  "log_sha256": "88e7beaa7fd490d30096a6da9ab4452d54903d3799b5031eee7a8a1a7ec2455a",
+  "started_at_utc": "2026-11-02T18:20:15.072626+00:00",
+  "wall_seconds": 5.814113090000319
+}

@@ -1,0 +1,23 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "videochess_rl.improvement.m5",
+    "--checkpoint",
+    "artifacts/m4/m4-behavior-20261027-r4/pretrained-behavior-only.pt",
+    "--checkpoint-sha256",
+    "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+    "--output",
+    "artifacts/improvement/videochess-improvement-20261103-v1/probe-initial",
+    "--probe-decisions",
+    "1400"
+  ],
+  "ended_at_utc": "2026-11-02T18:18:34.839716+00:00",
+  "exit_code": 1,
+  "git_revision": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+  "log_path": ".agents/evidence/improvement/m5-initial-probe.log",
+  "log_sanitization": "Repository-root paths replaced by <repo>; trailing whitespace removed; substantive output preserved.",
+  "log_sha256": "9c5a716d4ecacea39feeed402b99e8f07b2e26790fc692fe7c286d2c5892a65c",
+  "started_at_utc": "2026-11-02T18:18:32.321531+00:00",
+  "wall_seconds": 2.518175675999373
+}

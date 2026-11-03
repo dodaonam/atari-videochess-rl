@@ -1,0 +1,19 @@
+{
+  "command": [
+    "${REPO_ROOT}//.venv/bin/python",
+    "-m",
+    "videochess_rl.improvement.recovery_probe"
+  ],
+  "end_git_revision": "6ca7276da775b122c7406fb4824b324a948f89b1",
+  "ended_at_utc": "2026-11-02T20:13:12.327842+00:00",
+  "exit_code": -2,
+  "git_revision": "4aa807050ac891f265c8494ab5b7ea350bcabef9",
+  "log_path": ".agents/evidence/improvement/recovery-probe.log",
+  "log_sanitization": "Repository-root paths replaced by <repo>; trailing whitespace removed; substantive output preserved.",
+  "log_sha256": "e31789c5c55fb00e305b85640587d8d01f286d9b08db0adc7bb42b98f7a21617",
+  "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/recovery-probe/manifest.json",
+  "source_manifest_sha256": "af1c1795ec29da96c328ed851d147af500e00f5d0808cc6782ae850441fbe3fd",
+  "source_worktree_dirty": true,
+  "started_at_utc": "2026-11-02T20:09:12.346219+00:00",
+  "wall_seconds": 239.98162368699923
+}

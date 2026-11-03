@@ -1,0 +1,29 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "<repo>/videochess_rl/improvement/recovery_probe.py", line 38, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "<repo>/videochess_rl/improvement/recovery_probe.py", line 25, in main
+    left,m4,original=execute(c,ROOT/selection['checkpoint'],selection['sha256'],root/'original',stop_at=4300)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/videochess_rl/improvement/m5.py", line 256, in execute
+    try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/videochess_rl/improvement/m5.py", line 222, in _execute
+    # Hash-chain append is durable before in-memory mutation.
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>/videochess_rl/rl/training.py", line 156, in step_decision
+    return self.update()
+           ^^^^^^^^^^^^^
+  File "<repo>/videochess_rl/improvement/learner.py", line 47, in update
+    loss.backward();total+=loss.item()
+    ^^^^^^^^^^^^^^^
+  File "<repo>/.venv/lib/python3.12/site-packages/torch/_tensor.py", line 623, in backward
+    torch.autograd.backward(
+  File "<repo>/.venv/lib/python3.12/site-packages/torch/autograd/__init__.py", line 395, in backward
+    _engine_run_backward(
+  File "<repo>/.venv/lib/python3.12/site-packages/torch/autograd/graph.py", line 1072, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

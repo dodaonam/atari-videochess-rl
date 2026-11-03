@@ -1,0 +1,474 @@
+{
+  "atari_results_used_for_selection": false,
+  "attempts": [
+    {
+      "ale_reward_total": 0.0,
+      "ale_terminated": false,
+      "ale_truncated": false,
+      "attempt_index": 0,
+      "category": "input_or_policy_control_failure",
+      "checkpoint_sha256": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293",
+      "environment": {
+        "ale_py": "0.11.2",
+        "config": {
+          "difficulty": 0,
+          "env_id": "ALE/VideoChess-v5",
+          "frameskip": 1,
+          "max_num_frames_per_episode": null,
+          "mode": 4,
+          "obs_type": "rgb",
+          "repeat_action_probability": 0.0
+        },
+        "gymnasium": "1.4.0",
+        "instance_runtime": {
+          "action_count": 10,
+          "action_set": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "difficulty": 0,
+          "frameskip": 1,
+          "max_num_frames_per_episode": 108000,
+          "mode": 4,
+          "obs_type": "rgb",
+          "observation_shape": [
+            210,
+            160,
+            3
+          ],
+          "repeat_action_probability": 0.0
+        },
+        "python": "3.12.3",
+        "rom_name": "video_chess.bin",
+        "rom_sha256": "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7"
+      },
+      "frame_number": 22070,
+      "incomplete_final_move_category": "target_confirmation_uncertainty",
+      "player_moves_attempted": 10,
+      "policy": "double-dqn",
+      "policy_type": "double_dqn_q_only",
+      "private_trace_sha256": "813e51a293cd0afa479968090f07c17ca7a19154c7ff10879ad104353c9738cc",
+      "reset_verified": true,
+      "runner_stop_category": "CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN",
+      "runner_stop_reason": "Target FIRE did not produce a board transition after bounded passive settling; selected-piece preview remained visible, so no retry was issued",
+      "seed": 20261210,
+      "snapshot_decisions": 250000,
+      "status": "partial",
+      "verified_opponent_moves": 9,
+      "verified_player_moves": 9,
+      "wall_seconds": 47.6502521729999,
+      "white_result_from_reward": null
+    },
+    {
+      "ale_reward_total": 0.0,
+      "ale_terminated": false,
+      "ale_truncated": false,
+      "attempt_index": 1,
+      "category": "input_or_policy_control_failure",
+      "checkpoint_sha256": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293",
+      "environment": {
+        "ale_py": "0.11.2",
+        "config": {
+          "difficulty": 0,
+          "env_id": "ALE/VideoChess-v5",
+          "frameskip": 1,
+          "max_num_frames_per_episode": null,
+          "mode": 4,
+          "obs_type": "rgb",
+          "repeat_action_probability": 0.0
+        },
+        "gymnasium": "1.4.0",
+        "instance_runtime": {
+          "action_count": 10,
+          "action_set": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "difficulty": 0,
+          "frameskip": 1,
+          "max_num_frames_per_episode": 108000,
+          "mode": 4,
+          "obs_type": "rgb",
+          "observation_shape": [
+            210,
+            160,
+            3
+          ],
+          "repeat_action_probability": 0.0
+        },
+        "python": "3.12.3",
+        "rom_name": "video_chess.bin",
+        "rom_sha256": "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7"
+      },
+      "frame_number": 22070,
+      "incomplete_final_move_category": "target_confirmation_uncertainty",
+      "player_moves_attempted": 10,
+      "policy": "double-dqn",
+      "policy_type": "double_dqn_q_only",
+      "private_trace_sha256": "a70c1e1ac9d311a9b2733aaac3006c83c7304cee50aea698d7e786bccd1caadf",
+      "reset_verified": true,
+      "runner_stop_category": "CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN",
+      "runner_stop_reason": "Target FIRE did not produce a board transition after bounded passive settling; selected-piece preview remained visible, so no retry was issued",
+      "seed": 20261211,
+      "snapshot_decisions": 250000,
+      "status": "partial",
+      "verified_opponent_moves": 9,
+      "verified_player_moves": 9,
+      "wall_seconds": 47.948687160998816,
+      "white_result_from_reward": null
+    },
+    {
+      "ale_reward_total": 0.0,
+      "ale_terminated": false,
+      "ale_truncated": false,
+      "attempt_index": 2,
+      "category": "input_or_policy_control_failure",
+      "checkpoint_sha256": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293",
+      "environment": {
+        "ale_py": "0.11.2",
+        "config": {
+          "difficulty": 0,
+          "env_id": "ALE/VideoChess-v5",
+          "frameskip": 1,
+          "max_num_frames_per_episode": null,
+          "mode": 4,
+          "obs_type": "rgb",
+          "repeat_action_probability": 0.0
+        },
+        "gymnasium": "1.4.0",
+        "instance_runtime": {
+          "action_count": 10,
+          "action_set": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "difficulty": 0,
+          "frameskip": 1,
+          "max_num_frames_per_episode": 108000,
+          "mode": 4,
+          "obs_type": "rgb",
+          "observation_shape": [
+            210,
+            160,
+            3
+          ],
+          "repeat_action_probability": 0.0
+        },
+        "python": "3.12.3",
+        "rom_name": "video_chess.bin",
+        "rom_sha256": "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7"
+      },
+      "frame_number": 22070,
+      "incomplete_final_move_category": "target_confirmation_uncertainty",
+      "player_moves_attempted": 10,
+      "policy": "double-dqn",
+      "policy_type": "double_dqn_q_only",
+      "private_trace_sha256": "2ef10284c9fb7e0bfde263a3cf73860f1db3b82307aacf775e94aa12e9989ad6",
+      "reset_verified": true,
+      "runner_stop_category": "CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN",
+      "runner_stop_reason": "Target FIRE did not produce a board transition after bounded passive settling; selected-piece preview remained visible, so no retry was issued",
+      "seed": 20261212,
+      "snapshot_decisions": 250000,
+      "status": "partial",
+      "verified_opponent_moves": 9,
+      "verified_player_moves": 9,
+      "wall_seconds": 47.659162836003816,
+      "white_result_from_reward": null
+    },
+    {
+      "ale_reward_total": 0.0,
+      "ale_terminated": false,
+      "ale_truncated": false,
+      "attempt_index": 3,
+      "category": "incomplete_bounded_attempt",
+      "checkpoint_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+      "environment": {
+        "ale_py": "0.11.2",
+        "config": {
+          "difficulty": 0,
+          "env_id": "ALE/VideoChess-v5",
+          "frameskip": 1,
+          "max_num_frames_per_episode": null,
+          "mode": 4,
+          "obs_type": "rgb",
+          "repeat_action_probability": 0.0
+        },
+        "gymnasium": "1.4.0",
+        "instance_runtime": {
+          "action_count": 10,
+          "action_set": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "difficulty": 0,
+          "frameskip": 1,
+          "max_num_frames_per_episode": 108000,
+          "mode": 4,
+          "obs_type": "rgb",
+          "observation_shape": [
+            210,
+            160,
+            3
+          ],
+          "repeat_action_probability": 0.0
+        },
+        "python": "3.12.3",
+        "rom_name": "video_chess.bin",
+        "rom_sha256": "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7"
+      },
+      "frame_number": 29030,
+      "incomplete_final_move_category": null,
+      "player_moves_attempted": 12,
+      "policy": "m4-a",
+      "policy_type": "behavior_cloning",
+      "private_trace_sha256": "40d7cc77443caadf363f999f9639985816cbdffb10398baaa276f7a6e5796bde",
+      "reset_verified": true,
+      "runner_stop_category": "RUNNER_MAX_PLAYER_MOVES",
+      "runner_stop_reason": "runner stopped after the configured 12 player-move limit",
+      "seed": 20261210,
+      "snapshot_decisions": null,
+      "status": "runner_stopped",
+      "verified_opponent_moves": 12,
+      "verified_player_moves": 12,
+      "wall_seconds": 61.911574240992195,
+      "white_result_from_reward": null
+    },
+    {
+      "ale_reward_total": 0.0,
+      "ale_terminated": false,
+      "ale_truncated": false,
+      "attempt_index": 4,
+      "category": "incomplete_bounded_attempt",
+      "checkpoint_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+      "environment": {
+        "ale_py": "0.11.2",
+        "config": {
+          "difficulty": 0,
+          "env_id": "ALE/VideoChess-v5",
+          "frameskip": 1,
+          "max_num_frames_per_episode": null,
+          "mode": 4,
+          "obs_type": "rgb",
+          "repeat_action_probability": 0.0
+        },
+        "gymnasium": "1.4.0",
+        "instance_runtime": {
+          "action_count": 10,
+          "action_set": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "difficulty": 0,
+          "frameskip": 1,
+          "max_num_frames_per_episode": 108000,
+          "mode": 4,
+          "obs_type": "rgb",
+          "observation_shape": [
+            210,
+            160,
+            3
+          ],
+          "repeat_action_probability": 0.0
+        },
+        "python": "3.12.3",
+        "rom_name": "video_chess.bin",
+        "rom_sha256": "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7"
+      },
+      "frame_number": 29030,
+      "incomplete_final_move_category": null,
+      "player_moves_attempted": 12,
+      "policy": "m4-a",
+      "policy_type": "behavior_cloning",
+      "private_trace_sha256": "91b6ccd77c5ca165061415a0092f0fb66eb08361813e94a97107d0adba77e2f3",
+      "reset_verified": true,
+      "runner_stop_category": "RUNNER_MAX_PLAYER_MOVES",
+      "runner_stop_reason": "runner stopped after the configured 12 player-move limit",
+      "seed": 20261211,
+      "snapshot_decisions": null,
+      "status": "runner_stopped",
+      "verified_opponent_moves": 12,
+      "verified_player_moves": 12,
+      "wall_seconds": 62.67800652599544,
+      "white_result_from_reward": null
+    },
+    {
+      "ale_reward_total": 0.0,
+      "ale_terminated": false,
+      "ale_truncated": false,
+      "attempt_index": 5,
+      "category": "incomplete_bounded_attempt",
+      "checkpoint_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+      "environment": {
+        "ale_py": "0.11.2",
+        "config": {
+          "difficulty": 0,
+          "env_id": "ALE/VideoChess-v5",
+          "frameskip": 1,
+          "max_num_frames_per_episode": null,
+          "mode": 4,
+          "obs_type": "rgb",
+          "repeat_action_probability": 0.0
+        },
+        "gymnasium": "1.4.0",
+        "instance_runtime": {
+          "action_count": 10,
+          "action_set": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "difficulty": 0,
+          "frameskip": 1,
+          "max_num_frames_per_episode": 108000,
+          "mode": 4,
+          "obs_type": "rgb",
+          "observation_shape": [
+            210,
+            160,
+            3
+          ],
+          "repeat_action_probability": 0.0
+        },
+        "python": "3.12.3",
+        "rom_name": "video_chess.bin",
+        "rom_sha256": "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7"
+      },
+      "frame_number": 29030,
+      "incomplete_final_move_category": null,
+      "player_moves_attempted": 12,
+      "policy": "m4-a",
+      "policy_type": "behavior_cloning",
+      "private_trace_sha256": "ba5e8772c61987b15e6851f8d5fd7f224ccf0eecc8cd197bb27fd819f42e3686",
+      "reset_verified": true,
+      "runner_stop_category": "RUNNER_MAX_PLAYER_MOVES",
+      "runner_stop_reason": "runner stopped after the configured 12 player-move limit",
+      "seed": 20261212,
+      "snapshot_decisions": null,
+      "status": "runner_stopped",
+      "verified_opponent_moves": 12,
+      "verified_player_moves": 12,
+      "wall_seconds": 61.935120331996586,
+      "white_result_from_reward": null
+    }
+  ],
+  "initial_adapter_lifecycle_bug": {
+    "corrected_run_path": "artifacts/improvement/videochess-improvement-20261103-v1/official/atari-evaluation-corrected",
+    "correction": "fresh adapter instance per episode; policy/checkpoint and evaluation conditions unchanged",
+    "issue": "M6PolicyAdapter was reused across ALE episode resets; reset frame numbering caused conservative stale-observation rejection. All first-run artifacts are preserved.",
+    "path": "artifacts/improvement/videochess-improvement-20261103-v1/official/atari-evaluation"
+  },
+  "limitations": [
+    "Only White-agent runs are supported by the current Atari episode runner.",
+    "The embedded ALE opponent is uncontrolled; paired seeds do not guarantee identical move sequences after policy divergence.",
+    "Bounded or incomplete attempts are not wins, losses, or draws.",
+    "Historical M5 Atari baseline was not included in this bounded campaign."
+  ],
+  "privacy": {
+    "move_level_sequences_included": false,
+    "private_trace_sha256_retained": true,
+    "public_detail": "per-attempt aggregate counts and outcome metadata only",
+    "raw_rgb_frames_included": false
+  },
+  "run": {
+    "agent_color": "white (runner contract)",
+    "attempt_cap": {
+      "max_player_moves": 12,
+      "max_seconds_per_attempt": 600.0
+    },
+    "ended_at_utc": "2026-11-03T10:18:58.116173+00:00",
+    "environment_mode": 4,
+    "frameskip": 1,
+    "repeat_action_probability": 0.0,
+    "rom_sha256_expected": "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7",
+    "scenario_seeds": [
+      20261210,
+      20261211,
+      20261212
+    ],
+    "started_at_utc": "2026-11-03T10:13:27.603832+00:00"
+  },
+  "schema": "videochess-phase2-atari-aggregate/2",
+  "selected_q_checkpoint": {
+    "path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-250000.pt",
+    "sha256": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293",
+    "training_decisions": 250000
+  },
+  "selection_frozen_before_atari": true,
+  "summary": {
+    "double-dqn": {
+      "attempts": 3,
+      "categories": {
+        "input_or_policy_control_failure": 3
+      },
+      "seeds": [
+        20261210,
+        20261211,
+        20261212
+      ],
+      "total_wall_seconds": 143.25810217000253,
+      "verified_opponent_moves": 27,
+      "verified_player_moves": 27
+    },
+    "m4-a": {
+      "attempts": 3,
+      "categories": {
+        "incomplete_bounded_attempt": 3
+      },
+      "seeds": [
+        20261210,
+        20261211,
+        20261212
+      ],
+      "total_wall_seconds": 186.52470109898422,
+      "verified_opponent_moves": 36,
+      "verified_player_moves": 36
+    }
+  }
+}

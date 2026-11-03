@@ -1,0 +1,55 @@
+{
+  "action_source_log": {
+    "events_aligned_with_transitions": 250000,
+    "path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/actions.jsonl",
+    "sha256": "97faf29c58c4d4b06b33f2a64ad99bdaf7eb3d4c502a37843d604cce7f699204",
+    "size_bytes": 38748911
+  },
+  "experiment_id": "videochess-improvement-20261103-v1",
+  "last_resumable_checkpoint": {
+    "manifest": {
+      "file": "resume-249174.pt",
+      "journal_prefix": {
+        "chain_sha256": "5032f56714eafe94faad01a979850f4ccebe128324ae5821d0c4dd520761d6c3",
+        "file_bytes": 829671096,
+        "record_count": 249174
+      },
+      "schema": "videochess-ddqn-checkpoint/2.0",
+      "sha256": "64b09505cb68a36e34c4f08f26eeaaa259c32ee981bee08e5912766c91b3be27",
+      "size_bytes": 2020749
+    },
+    "path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/resume-249174.pt",
+    "sha256": "64b09505cb68a36e34c4f08f26eeaaa259c32ee981bee08e5912766c91b3be27",
+    "sidecar_sha256": "20ba68ee0c235fb07aec6428c34f8e147ee130f8f47fd7c4366232aec3b620cd"
+  },
+  "m4_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+  "private_datasets_models_replay_rom_rgb_and_raw_traces_committed": false,
+  "replay_journal": {
+    "full_records_semantically_validated": 250000,
+    "hash_chain_head": "38c73b79c27d30679af7434751fa00d646e814a6773c3ee07e7e57b1c8933140",
+    "path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/replay.jsonl",
+    "sequential_decision_indices": true,
+    "sha256": "08f5c0777046c48ac9ea13c22b977dc9efbc15550dc2ad47c01ec12dc928bc84",
+    "size_bytes": 832258418,
+    "unique_transition_ids": 250000
+  },
+  "snapshot_count": 11,
+  "snapshot_hashes": {
+    "0": "77c74a873535ce13374c3d55af8bd2ccdae3ac00b7a30f331a321516f67cfa19",
+    "100000": "97d7e26de21b957500152ac69322b9d3b446df343fc98ccc1c61a669f73fa7b2",
+    "125000": "7eea5d9577b9e809572e80c9e43544e0ca9fa0a6366716b1f53206ee34396a21",
+    "150000": "b9e17efa3b041ac232472af177b517d074afc6bb103d2d95cf3c10ce70b52b85",
+    "175000": "7668a2eace6f9b341c3f8820974978e9151f9bf3a73d94bd32dc5692c8dfd4f6",
+    "200000": "9988797ad82698808a29f041cbccc25fc19edf88718d74e882b0b80cf53ae2aa",
+    "225000": "1430ef7a35a73e013f462f5c70d3b9312033a067cce8649940378bfabc5ba4a4",
+    "25000": "59d994679198bbe5c31d1d683cccb737100f3309a1dfca8cb4a412fb0e9b6868",
+    "250000": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293",
+    "50000": "b0c0f3a46302cf43f502d5a73604428bed27ca6302492b43ad08bb22e518e57b",
+    "75000": "8f8d971e0989e475e1fa596494dd69885fe7edf45eff708f7aaab28991f81726"
+  },
+  "training_run_json": {
+    "path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/run.json",
+    "sha256": "89fdf8c404b32ab2e3a971dc3a41ffb92991ee33adff838e32b447c70696be3a",
+    "size_bytes": 1350151
+  }
+}

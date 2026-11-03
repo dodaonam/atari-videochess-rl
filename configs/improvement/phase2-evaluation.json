@@ -1,0 +1,38 @@
+{
+  "schema": "videochess-improvement-phase2-evaluation/1",
+  "experiment_id": "videochess-improvement-20261103-v1",
+  "training_snapshot_boundaries": [0, 25000, 50000, 75000, 100000, 125000, 150000, 175000, 200000, 225000, 250000],
+  "development": {
+    "stage_1_evaluation_seeds": [20261130, 20261131, 20261132, 20261133, 20261134],
+    "games_per_snapshot": 20,
+    "strata": ["random_legal/white", "random_legal/black", "simple_material_heuristic/white", "simple_material_heuristic/black"],
+    "episode_decision_cap": 400,
+    "policy": "greedy legal Q-only; no epsilon; no M4 guidance; no gradients; no replay insertion; no Stockfish",
+    "total_wall_budget_seconds": 3600,
+    "candidate_stage_wall_budget_seconds": 2400,
+    "extension": {
+      "selection": "The three strongest stage-1 candidates by scheduled-game score, then fewer incomplete episodes, stronger SimpleHeuristic score, then earlier snapshot; tie-breaks follow the campaign selection rule.",
+      "additional_evaluation_seeds": [20261135, 20261136, 20261137, 20261138, 20261139, 20261140, 20261141, 20261142, 20261143, 20261144],
+      "additional_games_per_finalist": 40,
+      "final_games_per_extended_candidate": 60,
+      "shared_scenarios_across_finalists": true,
+      "maximum_extension_wall_budget_seconds": 1200
+    },
+    "selection": [
+      "Maximize (wins + 0.5 * true draws) / scheduled games; incomplete/truncated games add zero and remain in the denominator.",
+      "Tie: fewer incomplete games.",
+      "Tie: higher score against SimpleHeuristic.",
+      "Tie: earlier training snapshot."
+    ],
+    "evaluation_seed_derivation": "videochess_rl.rl.evaluate._scenario_seed with frozen stage seed, opponent, and agent color"
+  },
+  "reserved_final": {
+    "evaluation_seeds": [20261200, 20261201, 20261202, 20261203, 20261204, 20261205, 20261206, 20261207, 20261208, 20261209],
+    "games_per_policy": 40,
+    "strata": ["random_legal/white", "random_legal/black", "simple_material_heuristic/white", "simple_material_heuristic/black"],
+    "episode_decision_cap": 400,
+    "policy_set": "selected Q checkpoint and M4-A; include accepted historical M5 only if the private artifact exists and fits the remaining evaluation budget",
+    "wall_budget_seconds": 3600,
+    "checkpoint_selection_may_use_final_results": false
+  }
+}

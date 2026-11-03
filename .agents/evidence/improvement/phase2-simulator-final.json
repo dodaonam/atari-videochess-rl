@@ -1,0 +1,301 @@
+{
+  "evaluation_seeds": [
+    20261200,
+    20261201,
+    20261202,
+    20261203,
+    20261204,
+    20261205,
+    20261206,
+    20261207,
+    20261208,
+    20261209
+  ],
+  "frozen_selection": {
+    "development_outcomes": {
+      "agent_decisions": 2986,
+      "draw_rate": 0.18333333333333332,
+      "incomplete": 0,
+      "incomplete_rate": 0.0,
+      "losses": 0,
+      "mean_decisions_per_observed_game": 49.766666666666666,
+      "observed_incomplete": 0,
+      "observed_rows": 60,
+      "opponent_color_strata": {
+        "random_legal/black": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 15,
+          "score": 0.9666666666666667,
+          "true_draws": 1,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 14
+        },
+        "random_legal/white": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 15,
+          "score": 0.9333333333333333,
+          "true_draws": 2,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 13
+        },
+        "simple_material_heuristic/black": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 15,
+          "score": 0.9333333333333333,
+          "true_draws": 2,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 13
+        },
+        "simple_material_heuristic/white": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 15,
+          "score": 0.8,
+          "true_draws": 6,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 9
+        }
+      },
+      "scheduled_games": 60,
+      "score": 0.9083333333333333,
+      "true_draws": 11,
+      "truncations": 0,
+      "unattempted": 0,
+      "win_rate": 0.8166666666666667,
+      "wins": 49
+    },
+    "snapshot_path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-250000.pt",
+    "snapshot_sha256": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293",
+    "training_decisions": 250000
+  },
+  "policies": {
+    "M4-A_behavior_cloning": {
+      "agent_decisions": 1505,
+      "draw_rate": 0.225,
+      "incomplete": 0,
+      "incomplete_rate": 0.0,
+      "losses": 0,
+      "mean_decisions_per_observed_game": 37.625,
+      "observed_incomplete": 0,
+      "observed_rows": 40,
+      "opponent_color_strata": {
+        "random_legal/black": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.85,
+          "true_draws": 3,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 7
+        },
+        "random_legal/white": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.95,
+          "true_draws": 1,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 9
+        },
+        "simple_material_heuristic/black": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.9,
+          "true_draws": 2,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 8
+        },
+        "simple_material_heuristic/white": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.85,
+          "true_draws": 3,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 7
+        }
+      },
+      "scheduled_games": 40,
+      "score": 0.8875,
+      "true_draws": 9,
+      "truncations": 0,
+      "unattempted": 0,
+      "win_rate": 0.775,
+      "wins": 31
+    },
+    "historical_M5": {
+      "agent_decisions": 6145,
+      "draw_rate": 0.8,
+      "incomplete": 0,
+      "incomplete_rate": 0.025,
+      "losses": 4,
+      "mean_decisions_per_observed_game": 153.625,
+      "observed_incomplete": 0,
+      "observed_rows": 40,
+      "opponent_color_strata": {
+        "random_legal/black": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.5,
+          "true_draws": 8,
+          "truncations": 1,
+          "unattempted": 0,
+          "wins": 1
+        },
+        "random_legal/white": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.55,
+          "true_draws": 9,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 1
+        },
+        "simple_material_heuristic/black": {
+          "incomplete": 0,
+          "losses": 4,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.35,
+          "true_draws": 5,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 1
+        },
+        "simple_material_heuristic/white": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.5,
+          "true_draws": 10,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 0
+        }
+      },
+      "scheduled_games": 40,
+      "score": 0.475,
+      "true_draws": 32,
+      "truncations": 1,
+      "unattempted": 0,
+      "win_rate": 0.075,
+      "wins": 3
+    },
+    "selected_double_dqn": {
+      "agent_decisions": 1874,
+      "draw_rate": 0.25,
+      "incomplete": 0,
+      "incomplete_rate": 0.0,
+      "losses": 0,
+      "mean_decisions_per_observed_game": 46.85,
+      "observed_incomplete": 0,
+      "observed_rows": 40,
+      "opponent_color_strata": {
+        "random_legal/black": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.8,
+          "true_draws": 4,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 6
+        },
+        "random_legal/white": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.95,
+          "true_draws": 1,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 9
+        },
+        "simple_material_heuristic/black": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.85,
+          "true_draws": 3,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 7
+        },
+        "simple_material_heuristic/white": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.9,
+          "true_draws": 2,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 8
+        }
+      },
+      "scheduled_games": 40,
+      "score": 0.875,
+      "true_draws": 10,
+      "truncations": 0,
+      "unattempted": 0,
+      "win_rate": 0.75,
+      "wins": 30
+    }
+  },
+  "protocol": {
+    "checkpoint_selection_may_use_final_results": false,
+    "episode_decision_cap": 400,
+    "evaluation_seeds": [
+      20261200,
+      20261201,
+      20261202,
+      20261203,
+      20261204,
+      20261205,
+      20261206,
+      20261207,
+      20261208,
+      20261209
+    ],
+    "games_per_policy": 40,
+    "policy_set": "selected Q checkpoint and M4-A; include accepted historical M5 only if the private artifact exists and fits the remaining evaluation budget",
+    "strata": [
+      "random_legal/white",
+      "random_legal/black",
+      "simple_material_heuristic/white",
+      "simple_material_heuristic/black"
+    ],
+    "wall_budget_seconds": 3600
+  },
+  "raw_scenario_rows_local": true,
+  "scheduled_games_per_policy": 40,
+  "selection_may_use_final_results": false
+}

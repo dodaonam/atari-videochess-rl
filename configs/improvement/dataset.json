@@ -1,0 +1,14 @@
+{
+  "experiment_id": "videochess-improvement-20261103-v1",
+  "max_games": 5000,
+  "max_positions": 100000,
+  "max_positions_per_game": 32,
+  "sampling_mode": "bottom_k",
+  "selection_seed": 20261103,
+  "sampling_seed": 20261103,
+  "split_seed": 20261103,
+  "historical_release": "artifacts/m3/training-support/release-final-closure-r6",
+  "source_manifest": "artifacts/m3/source/source-manifest.json",
+  "workers": 4,
+  "coverage_rule": "preserve protected bottom_k core; one lowest-ranked leakage-safe per-game reservoir candidate for any zero-record parent"
+}

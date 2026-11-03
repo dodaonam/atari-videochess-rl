@@ -1,0 +1,28 @@
+test_config_rejects_unhonored_values (test_improvement.ImprovementTests.test_config_rejects_unhonored_values) ... ok
+test_fixed_splits_independent_of_order (test_improvement.ImprovementTests.test_fixed_splits_independent_of_order) ... ok
+test_microbatch_expert_normalization_and_fresh_optimizer (test_improvement.ImprovementTests.test_microbatch_expert_normalization_and_fresh_optimizer) ... ok
+test_optimized_ddqn_matches_reference_and_recovers (test_improvement.ImprovementTests.test_optimized_ddqn_matches_reference_and_recovers) ... ok
+test_overlap_and_historical_exposure (test_improvement.ImprovementTests.test_overlap_and_historical_exposure) ... ok
+test_parallel_parser_preserves_global_source_ordinals (test_improvement.ImprovementTests.test_parallel_parser_preserves_global_source_ordinals) ... ok
+test_recovery_journal_fork_keeps_only_prefix (test_improvement.ImprovementTests.test_recovery_journal_fork_keeps_only_prefix) ... ok
+test_schedules_and_opponent_recovery (test_improvement.ImprovementTests.test_schedules_and_opponent_recovery) ... ok
+test_selection_uses_development_and_b_guard (test_improvement.ImprovementTests.test_selection_uses_development_and_b_guard) ... ok
+test_snapshot_boundaries_and_nonresume (test_improvement.ImprovementTests.test_snapshot_boundaries_and_nonresume) ... ok
+test_warm_head_target_frozen_and_rng (test_improvement.ImprovementTests.test_warm_head_target_frozen_and_rng) ... ok
+test_capacity_sampling_and_rng_recovery (test_m5_replay.ReplayTests.test_capacity_sampling_and_rng_recovery) ... ok
+test_journal_hash_chain_and_prefix_integrity (test_m5_replay.ReplayTests.test_journal_hash_chain_and_prefix_integrity) ... ok
+test_journal_tail_restore_hashes_full_prefix_but_reconstructs_only_capacity (test_m5_replay.ReplayTests.test_journal_tail_restore_hashes_full_prefix_but_reconstructs_only_capacity) ... ok
+test_checkpoint_refuses_live_episode (test_m5_checkpoint.CheckpointTests.test_checkpoint_refuses_live_episode) ... ok
+test_episode_boundary_checkpoint_roundtrip_and_corruption (test_m5_checkpoint.CheckpointTests.test_episode_boundary_checkpoint_roundtrip_and_corruption) ... ok
+test_actual_target_calculator_matches_retained_oracles (test_m5_targets.TargetTests.test_actual_target_calculator_matches_retained_oracles) ... ok
+test_online_selection_and_semantic_mismatch (test_m5_targets.TargetTests.test_online_selection_and_semantic_mismatch) ... ok
+test_campaign_budget_counts_only_the_uncommitted_active_run (test_m5_training.TrainingTests.test_campaign_budget_counts_only_the_uncommitted_active_run) ... ok
+test_decision_cap_mid_episode_keeps_real_transitions_without_synthetic_flags (test_m5_training.TrainingTests.test_decision_cap_mid_episode_keeps_real_transitions_without_synthetic_flags) ... ok
+test_epsilon_schedule_and_legal_exploration (test_m5_training.TrainingTests.test_epsilon_schedule_and_legal_exploration) ... ok
+test_real_batch_update_changes_online_then_syncs (test_m5_training.TrainingTests.test_real_batch_update_changes_online_then_syncs) ... ok
+test_target_initialization_equals_online (test_m5_training.TrainingTests.test_target_initialization_equals_online) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 4.507s
+
+OK

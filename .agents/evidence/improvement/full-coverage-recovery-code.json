@@ -1,0 +1,23 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "end_git_revision": "377e0fe99dce4689e6fa3f3e25d92a93d3c292a4",
+  "ended_at_utc": "2026-11-02T19:37:23.715104+00:00",
+  "exit_code": 1,
+  "git_revision": "377e0fe99dce4689e6fa3f3e25d92a93d3c292a4",
+  "log_path": ".agents/evidence/improvement/full-coverage-recovery-code.log",
+  "log_sanitization": "Repository-root paths replaced by <repo>; trailing whitespace removed; substantive output preserved.",
+  "log_sha256": "542cd1ee78fe4e2cc12c03fdbfd683d0e967cde390c53407c432aaec17a0cf6a",
+  "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/full-coverage-recovery-code/manifest.json",
+  "source_manifest_sha256": "61e9e65b6a30fc011fef5719461ddc5e73765816fe35109f1ff652136d2a636e",
+  "source_worktree_dirty": false,
+  "started_at_utc": "2026-11-02T19:34:26.478003+00:00",
+  "wall_seconds": 177.23710122100238
+}

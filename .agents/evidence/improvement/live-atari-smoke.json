@@ -1,0 +1,15 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "videochess_rl.improvement.demo",
+    "--live"
+  ],
+  "ended_at_utc": "2026-11-02T18:19:53.711642+00:00",
+  "exit_code": 0,
+  "git_revision": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+  "log_path": "artifacts/improvement/videochess-improvement-20261103-v1/private-logs/live-atari-smoke.log",
+  "log_sha256": "e34764966a366e9aa6f02a73647db784e6fca801d9405e31effb1701d8fc9718",
+  "started_at_utc": "2026-11-02T18:19:37.811193+00:00",
+  "wall_seconds": 15.900445778002904
+}

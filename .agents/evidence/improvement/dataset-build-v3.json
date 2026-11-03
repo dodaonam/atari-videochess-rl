@@ -1,0 +1,17 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "videochess_rl.improvement.data"
+  ],
+  "ended_at_utc": "2026-11-02T18:39:26.296603+00:00",
+  "exit_code": 0,
+  "git_revision": "09cc1d6348236c5b6f5d11425360c00a8c6ddb32",
+  "log_path": ".agents/evidence/improvement/dataset-build-v3.log",
+  "log_sanitization": "Repository-root paths replaced by <repo>; trailing whitespace removed; substantive output preserved.",
+  "log_sha256": "d42d26caa8fda0f12a39cf69cb0f113554b7207bb1ba276b495b84672cd7c4ae",
+  "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/dataset-build-v3/manifest.json",
+  "source_manifest_sha256": "5fec7342940d82171896acd4bc9b6d83e3044beb91ede89cb392ac0c33fad3c9",
+  "started_at_utc": "2026-11-02T18:23:49.679559+00:00",
+  "wall_seconds": 936.6170397160022
+}

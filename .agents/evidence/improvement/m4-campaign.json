@@ -1,0 +1,18 @@
+{
+  "command": [
+    "${REPO_ROOT}//.venv/bin/python",
+    "-m",
+    "videochess_rl.improvement.m4"
+  ],
+  "end_git_revision": "08a6d89bd64fdf7d090784bff0a3a186f6dd52be",
+  "ended_at_utc": "2026-11-02T18:58:37.351883+00:00",
+  "exit_code": -2,
+  "git_revision": "e70a2e1ce766232a7193f45965d4711ef3ee3236",
+  "log_path": ".agents/evidence/improvement/m4-campaign.log",
+  "log_sanitization": "Repository-root paths replaced by <repo>; trailing whitespace removed; substantive output preserved.",
+  "log_sha256": "38b97c46d2a7847087a4442d756fece78eba47fd732f76a356799a3f3293acc7",
+  "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/m4-campaign/manifest.json",
+  "source_manifest_sha256": "192882b8fea72b623ef45b82d930d6db550efcd334aca11dc6acec4ff57f4768",
+  "started_at_utc": "2026-11-02T18:40:14.727183+00:00",
+  "wall_seconds": 1102.6247009290018
+}

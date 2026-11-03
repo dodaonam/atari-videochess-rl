@@ -1,0 +1,150 @@
+{
+  "actual": [
+    {
+      "code_sha256": "cf329438880a82b7b39b05b8f1f3bc1af21e262edb4143e1035e494f891a5705",
+      "config_sha256": "2cfe2805edd3e05756fd3ef981a6e4441e3b4ad717649d5647085228e837aabd",
+      "m4_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+      "path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-000000.pt",
+      "q_only": true,
+      "resumable": false,
+      "sha256": "77c74a873535ce13374c3d55af8bd2ccdae3ac00b7a30f331a321516f67cfa19",
+      "sidecar_sha256": "c6a0b16028152f03abc14510e420238ceb0790446530d996f9f5ad38887e3ca6",
+      "training_seed": 20261103,
+      "valid_decisions": 0
+    },
+    {
+      "code_sha256": "cf329438880a82b7b39b05b8f1f3bc1af21e262edb4143e1035e494f891a5705",
+      "config_sha256": "2cfe2805edd3e05756fd3ef981a6e4441e3b4ad717649d5647085228e837aabd",
+      "m4_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+      "path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-025000.pt",
+      "q_only": true,
+      "resumable": false,
+      "sha256": "59d994679198bbe5c31d1d683cccb737100f3309a1dfca8cb4a412fb0e9b6868",
+      "sidecar_sha256": "ea4f74b5ba8eda61a851967014caf92b67b47721d9a1d5c3df7265adf3941413",
+      "training_seed": 20261103,
+      "valid_decisions": 25000
+    },
+    {
+      "code_sha256": "cf329438880a82b7b39b05b8f1f3bc1af21e262edb4143e1035e494f891a5705",
+      "config_sha256": "2cfe2805edd3e05756fd3ef981a6e4441e3b4ad717649d5647085228e837aabd",
+      "m4_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+      "path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-050000.pt",
+      "q_only": true,
+      "resumable": false,
+      "sha256": "b0c0f3a46302cf43f502d5a73604428bed27ca6302492b43ad08bb22e518e57b",
+      "sidecar_sha256": "b72dc070b515a5f72e3e940460c79c2441699fc14d35b4b49cd16cba3ab64e3e",
+      "training_seed": 20261103,
+      "valid_decisions": 50000
+    },
+    {
+      "code_sha256": "cf329438880a82b7b39b05b8f1f3bc1af21e262edb4143e1035e494f891a5705",
+      "config_sha256": "2cfe2805edd3e05756fd3ef981a6e4441e3b4ad717649d5647085228e837aabd",
+      "m4_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+      "path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-075000.pt",
+      "q_only": true,
+      "resumable": false,
+      "sha256": "8f8d971e0989e475e1fa596494dd69885fe7edf45eff708f7aaab28991f81726",
+      "sidecar_sha256": "5caf48c1f80254d61e6052f7d41f76c94cfd171f2b24172488e49455448ae1b1",
+      "training_seed": 20261103,
+      "valid_decisions": 75000
+    },
+    {
+      "code_sha256": "cf329438880a82b7b39b05b8f1f3bc1af21e262edb4143e1035e494f891a5705",
+      "config_sha256": "2cfe2805edd3e05756fd3ef981a6e4441e3b4ad717649d5647085228e837aabd",
+      "m4_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+      "path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-100000.pt",
+      "q_only": true,
+      "resumable": false,
+      "sha256": "97d7e26de21b957500152ac69322b9d3b446df343fc98ccc1c61a669f73fa7b2",
+      "sidecar_sha256": "10231a2c838d62f687ebd3d7a8f05a1edb974180b76e9cd5d6d4861a42951165",
+      "training_seed": 20261103,
+      "valid_decisions": 100000
+    },
+    {
+      "code_sha256": "cf329438880a82b7b39b05b8f1f3bc1af21e262edb4143e1035e494f891a5705",
+      "config_sha256": "2cfe2805edd3e05756fd3ef981a6e4441e3b4ad717649d5647085228e837aabd",
+      "m4_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+      "path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-125000.pt",
+      "q_only": true,
+      "resumable": false,
+      "sha256": "7eea5d9577b9e809572e80c9e43544e0ca9fa0a6366716b1f53206ee34396a21",
+      "sidecar_sha256": "847f10e596d74e5ec360a8c239751edf6a8dec638e0667d6197e911cf798cd29",
+      "training_seed": 20261103,
+      "valid_decisions": 125000
+    },
+    {
+      "code_sha256": "cf329438880a82b7b39b05b8f1f3bc1af21e262edb4143e1035e494f891a5705",
+      "config_sha256": "2cfe2805edd3e05756fd3ef981a6e4441e3b4ad717649d5647085228e837aabd",
+      "m4_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+      "path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-150000.pt",
+      "q_only": true,
+      "resumable": false,
+      "sha256": "b9e17efa3b041ac232472af177b517d074afc6bb103d2d95cf3c10ce70b52b85",
+      "sidecar_sha256": "5f3292cd3f99bc654999a6206d9bf4473c6b83a5727ddbaeb6477ed7aa437e45",
+      "training_seed": 20261103,
+      "valid_decisions": 150000
+    },
+    {
+      "code_sha256": "cf329438880a82b7b39b05b8f1f3bc1af21e262edb4143e1035e494f891a5705",
+      "config_sha256": "2cfe2805edd3e05756fd3ef981a6e4441e3b4ad717649d5647085228e837aabd",
+      "m4_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+      "path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-175000.pt",
+      "q_only": true,
+      "resumable": false,
+      "sha256": "7668a2eace6f9b341c3f8820974978e9151f9bf3a73d94bd32dc5692c8dfd4f6",
+      "sidecar_sha256": "ca1f198185e3be4bc072e7f8a17025aa619774f37c63bc9dc2ac56f2f67870a9",
+      "training_seed": 20261103,
+      "valid_decisions": 175000
+    },
+    {
+      "code_sha256": "cf329438880a82b7b39b05b8f1f3bc1af21e262edb4143e1035e494f891a5705",
+      "config_sha256": "2cfe2805edd3e05756fd3ef981a6e4441e3b4ad717649d5647085228e837aabd",
+      "m4_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+      "path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-200000.pt",
+      "q_only": true,
+      "resumable": false,
+      "sha256": "9988797ad82698808a29f041cbccc25fc19edf88718d74e882b0b80cf53ae2aa",
+      "sidecar_sha256": "1f643251fa8a023bd44e29a70f44af9f0227eda8564bbc349e4237e8bad7bc26",
+      "training_seed": 20261103,
+      "valid_decisions": 200000
+    },
+    {
+      "code_sha256": "cf329438880a82b7b39b05b8f1f3bc1af21e262edb4143e1035e494f891a5705",
+      "config_sha256": "2cfe2805edd3e05756fd3ef981a6e4441e3b4ad717649d5647085228e837aabd",
+      "m4_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+      "path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-225000.pt",
+      "q_only": true,
+      "resumable": false,
+      "sha256": "1430ef7a35a73e013f462f5c70d3b9312033a067cce8649940378bfabc5ba4a4",
+      "sidecar_sha256": "16bc8cfeab416fd10dd7246c4be233e6ee03e50056182b252dcd35ece8ddd384",
+      "training_seed": 20261103,
+      "valid_decisions": 225000
+    },
+    {
+      "code_sha256": "cf329438880a82b7b39b05b8f1f3bc1af21e262edb4143e1035e494f891a5705",
+      "config_sha256": "2cfe2805edd3e05756fd3ef981a6e4441e3b4ad717649d5647085228e837aabd",
+      "m4_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+      "path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-250000.pt",
+      "q_only": true,
+      "resumable": false,
+      "sha256": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293",
+      "sidecar_sha256": "b9b10ef0d1845fd107fc9d07592dd2796d2c7ae8eaddbd7a502507ce465d0c2c",
+      "training_seed": 20261103,
+      "valid_decisions": 250000
+    }
+  ],
+  "all_expected_boundaries_present": true,
+  "schedule": [
+    0,
+    25000,
+    50000,
+    75000,
+    100000,
+    125000,
+    150000,
+    175000,
+    200000,
+    225000,
+    250000
+  ]
+}

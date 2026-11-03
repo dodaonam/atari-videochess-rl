@@ -1,0 +1,2053 @@
+{
+  "candidate_ledger": [
+    {
+      "candidate_decisions": 0,
+      "evaluation_seeds": [
+        20261130,
+        20261131,
+        20261132,
+        20261133,
+        20261134
+      ],
+      "outcomes": {
+        "agent_decisions": 2845,
+        "draw_rate": 0.55,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 9,
+        "mean_decisions_per_observed_game": 142.25,
+        "observed_incomplete": 0,
+        "observed_rows": 20,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.5,
+            "true_draws": 5,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 0
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.5,
+            "true_draws": 5,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 0
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 5,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.0,
+            "true_draws": 0,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 0
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 4,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.1,
+            "true_draws": 1,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 0
+          }
+        },
+        "scheduled_games": 20,
+        "score": 0.275,
+        "true_draws": 11,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.0,
+        "wins": 0
+      },
+      "rows": 20,
+      "snapshot_sha256": "77c74a873535ce13374c3d55af8bd2ccdae3ac00b7a30f331a321516f67cfa19",
+      "stage": "stage-1",
+      "wall_seconds": 43.62427418700827
+    },
+    {
+      "candidate_decisions": 25000,
+      "evaluation_seeds": [
+        20261130,
+        20261131,
+        20261132,
+        20261133,
+        20261134
+      ],
+      "outcomes": {
+        "agent_decisions": 1133,
+        "draw_rate": 0.6,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 1,
+        "mean_decisions_per_observed_game": 56.65,
+        "observed_incomplete": 0,
+        "observed_rows": 20,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.7,
+            "true_draws": 3,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 2
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.8,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 3
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.5,
+            "true_draws": 5,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 0
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 1,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.6,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 2
+          }
+        },
+        "scheduled_games": 20,
+        "score": 0.65,
+        "true_draws": 12,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.35,
+        "wins": 7
+      },
+      "rows": 20,
+      "snapshot_sha256": "59d994679198bbe5c31d1d683cccb737100f3309a1dfca8cb4a412fb0e9b6868",
+      "stage": "stage-1",
+      "wall_seconds": 7.548634942009812
+    },
+    {
+      "candidate_decisions": 50000,
+      "evaluation_seeds": [
+        20261130,
+        20261131,
+        20261132,
+        20261133,
+        20261134
+      ],
+      "outcomes": {
+        "agent_decisions": 1756,
+        "draw_rate": 0.65,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 0,
+        "mean_decisions_per_observed_game": 87.8,
+        "observed_incomplete": 0,
+        "observed_rows": 20,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.7,
+            "true_draws": 3,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 2
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.7,
+            "true_draws": 3,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 2
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.5,
+            "true_draws": 5,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 0
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.8,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 3
+          }
+        },
+        "scheduled_games": 20,
+        "score": 0.675,
+        "true_draws": 13,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.35,
+        "wins": 7
+      },
+      "rows": 20,
+      "snapshot_sha256": "b0c0f3a46302cf43f502d5a73604428bed27ca6302492b43ad08bb22e518e57b",
+      "stage": "stage-1",
+      "wall_seconds": 14.572063366009388
+    },
+    {
+      "candidate_decisions": 75000,
+      "evaluation_seeds": [
+        20261130,
+        20261131,
+        20261132,
+        20261133,
+        20261134
+      ],
+      "outcomes": {
+        "agent_decisions": 1849,
+        "draw_rate": 0.6,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 0,
+        "mean_decisions_per_observed_game": 92.45,
+        "observed_incomplete": 0,
+        "observed_rows": 20,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.8,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 3
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.8,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 3
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.5,
+            "true_draws": 5,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 0
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.7,
+            "true_draws": 3,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 2
+          }
+        },
+        "scheduled_games": 20,
+        "score": 0.7,
+        "true_draws": 12,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.4,
+        "wins": 8
+      },
+      "rows": 20,
+      "snapshot_sha256": "8f8d971e0989e475e1fa596494dd69885fe7edf45eff708f7aaab28991f81726",
+      "stage": "stage-1",
+      "wall_seconds": 18.89595921
+    },
+    {
+      "candidate_decisions": 100000,
+      "evaluation_seeds": [
+        20261130,
+        20261131,
+        20261132,
+        20261133,
+        20261134
+      ],
+      "outcomes": {
+        "agent_decisions": 2400,
+        "draw_rate": 0.7,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 0,
+        "mean_decisions_per_observed_game": 120.0,
+        "observed_incomplete": 0,
+        "observed_rows": 20,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.8,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 3
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.6,
+            "true_draws": 4,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 1
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.6,
+            "true_draws": 4,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 1
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.6,
+            "true_draws": 4,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 1
+          }
+        },
+        "scheduled_games": 20,
+        "score": 0.65,
+        "true_draws": 14,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.3,
+        "wins": 6
+      },
+      "rows": 20,
+      "snapshot_sha256": "97d7e26de21b957500152ac69322b9d3b446df343fc98ccc1c61a669f73fa7b2",
+      "stage": "stage-1",
+      "wall_seconds": 26.042552595987218
+    },
+    {
+      "candidate_decisions": 125000,
+      "evaluation_seeds": [
+        20261130,
+        20261131,
+        20261132,
+        20261133,
+        20261134
+      ],
+      "outcomes": {
+        "agent_decisions": 2925,
+        "draw_rate": 0.65,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 0,
+        "mean_decisions_per_observed_game": 146.25,
+        "observed_incomplete": 0,
+        "observed_rows": 20,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.7,
+            "true_draws": 3,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 2
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.9,
+            "true_draws": 1,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 4
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.6,
+            "true_draws": 4,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 1
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.5,
+            "true_draws": 5,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 0
+          }
+        },
+        "scheduled_games": 20,
+        "score": 0.675,
+        "true_draws": 13,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.35,
+        "wins": 7
+      },
+      "rows": 20,
+      "snapshot_sha256": "7eea5d9577b9e809572e80c9e43544e0ca9fa0a6366716b1f53206ee34396a21",
+      "stage": "stage-1",
+      "wall_seconds": 37.468203504991834
+    },
+    {
+      "candidate_decisions": 150000,
+      "evaluation_seeds": [
+        20261130,
+        20261131,
+        20261132,
+        20261133,
+        20261134
+      ],
+      "outcomes": {
+        "agent_decisions": 2084,
+        "draw_rate": 0.7,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 0,
+        "mean_decisions_per_observed_game": 104.2,
+        "observed_incomplete": 0,
+        "observed_rows": 20,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.7,
+            "true_draws": 3,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 2
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.7,
+            "true_draws": 3,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 2
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.5,
+            "true_draws": 5,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 0
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.7,
+            "true_draws": 3,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 2
+          }
+        },
+        "scheduled_games": 20,
+        "score": 0.65,
+        "true_draws": 14,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.3,
+        "wins": 6
+      },
+      "rows": 20,
+      "snapshot_sha256": "b9e17efa3b041ac232472af177b517d074afc6bb103d2d95cf3c10ce70b52b85",
+      "stage": "stage-1",
+      "wall_seconds": 21.48339255299652
+    },
+    {
+      "candidate_decisions": 175000,
+      "evaluation_seeds": [
+        20261130,
+        20261131,
+        20261132,
+        20261133,
+        20261134
+      ],
+      "outcomes": {
+        "agent_decisions": 1423,
+        "draw_rate": 0.5,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 0,
+        "mean_decisions_per_observed_game": 71.15,
+        "observed_incomplete": 0,
+        "observed_rows": 20,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.7,
+            "true_draws": 3,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 2
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.8,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 3
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.7,
+            "true_draws": 3,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 2
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.8,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 3
+          }
+        },
+        "scheduled_games": 20,
+        "score": 0.75,
+        "true_draws": 10,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.5,
+        "wins": 10
+      },
+      "rows": 20,
+      "snapshot_sha256": "7668a2eace6f9b341c3f8820974978e9151f9bf3a73d94bd32dc5692c8dfd4f6",
+      "stage": "stage-1",
+      "wall_seconds": 11.487516470995615
+    },
+    {
+      "candidate_decisions": 200000,
+      "evaluation_seeds": [
+        20261130,
+        20261131,
+        20261132,
+        20261133,
+        20261134
+      ],
+      "outcomes": {
+        "agent_decisions": 1847,
+        "draw_rate": 0.6,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 0,
+        "mean_decisions_per_observed_game": 92.35,
+        "observed_incomplete": 0,
+        "observed_rows": 20,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.8,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 3
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.8,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 3
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.6,
+            "true_draws": 4,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 1
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.6,
+            "true_draws": 4,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 1
+          }
+        },
+        "scheduled_games": 20,
+        "score": 0.7,
+        "true_draws": 12,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.4,
+        "wins": 8
+      },
+      "rows": 20,
+      "snapshot_sha256": "9988797ad82698808a29f041cbccc25fc19edf88718d74e882b0b80cf53ae2aa",
+      "stage": "stage-1",
+      "wall_seconds": 16.055710160013405
+    },
+    {
+      "candidate_decisions": 225000,
+      "evaluation_seeds": [
+        20261130,
+        20261131,
+        20261132,
+        20261133,
+        20261134
+      ],
+      "outcomes": {
+        "agent_decisions": 1048,
+        "draw_rate": 0.25,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 0,
+        "mean_decisions_per_observed_game": 52.4,
+        "observed_incomplete": 0,
+        "observed_rows": 20,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.9,
+            "true_draws": 1,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 4
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.9,
+            "true_draws": 1,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 4
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.9,
+            "true_draws": 1,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 4
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.8,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 3
+          }
+        },
+        "scheduled_games": 20,
+        "score": 0.875,
+        "true_draws": 5,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.75,
+        "wins": 15
+      },
+      "rows": 20,
+      "snapshot_sha256": "1430ef7a35a73e013f462f5c70d3b9312033a067cce8649940378bfabc5ba4a4",
+      "stage": "stage-1",
+      "wall_seconds": 7.612241709997761
+    },
+    {
+      "candidate_decisions": 250000,
+      "evaluation_seeds": [
+        20261130,
+        20261131,
+        20261132,
+        20261133,
+        20261134
+      ],
+      "outcomes": {
+        "agent_decisions": 929,
+        "draw_rate": 0.25,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 0,
+        "mean_decisions_per_observed_game": 46.45,
+        "observed_incomplete": 0,
+        "observed_rows": 20,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 1.0,
+            "true_draws": 0,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 5
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.9,
+            "true_draws": 1,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 4
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.9,
+            "true_draws": 1,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 4
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.7,
+            "true_draws": 3,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 2
+          }
+        },
+        "scheduled_games": 20,
+        "score": 0.875,
+        "true_draws": 5,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.75,
+        "wins": 15
+      },
+      "rows": 20,
+      "snapshot_sha256": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293",
+      "stage": "stage-1",
+      "wall_seconds": 6.5513826910028
+    },
+    {
+      "candidate_decisions": 175000,
+      "evaluation_seeds": [
+        20261135,
+        20261136,
+        20261137,
+        20261138,
+        20261139,
+        20261140,
+        20261141,
+        20261142,
+        20261143,
+        20261144
+      ],
+      "outcomes": {
+        "agent_decisions": 3085,
+        "draw_rate": 0.375,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 0,
+        "mean_decisions_per_observed_game": 77.125,
+        "observed_incomplete": 0,
+        "observed_rows": 40,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 10,
+            "score": 0.9,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 8
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 10,
+            "score": 0.9,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 8
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 10,
+            "score": 0.65,
+            "true_draws": 7,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 3
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 10,
+            "score": 0.8,
+            "true_draws": 4,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 6
+          }
+        },
+        "scheduled_games": 40,
+        "score": 0.8125,
+        "true_draws": 15,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.625,
+        "wins": 25
+      },
+      "rows": 40,
+      "snapshot_sha256": "7668a2eace6f9b341c3f8820974978e9151f9bf3a73d94bd32dc5692c8dfd4f6",
+      "stage": "extension",
+      "wall_seconds": 28.612449480002397
+    },
+    {
+      "candidate_decisions": 225000,
+      "evaluation_seeds": [
+        20261135,
+        20261136,
+        20261137,
+        20261138,
+        20261139,
+        20261140,
+        20261141,
+        20261142,
+        20261143,
+        20261144
+      ],
+      "outcomes": {
+        "agent_decisions": 1747,
+        "draw_rate": 0.225,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 0,
+        "mean_decisions_per_observed_game": 43.675,
+        "observed_incomplete": 0,
+        "observed_rows": 40,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 10,
+            "score": 0.75,
+            "true_draws": 5,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 5
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 10,
+            "score": 0.9,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 8
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 10,
+            "score": 0.9,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 8
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 10,
+            "score": 1.0,
+            "true_draws": 0,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 10
+          }
+        },
+        "scheduled_games": 40,
+        "score": 0.8875,
+        "true_draws": 9,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.775,
+        "wins": 31
+      },
+      "rows": 40,
+      "snapshot_sha256": "1430ef7a35a73e013f462f5c70d3b9312033a067cce8649940378bfabc5ba4a4",
+      "stage": "extension",
+      "wall_seconds": 10.70962732800399
+    },
+    {
+      "candidate_decisions": 250000,
+      "evaluation_seeds": [
+        20261135,
+        20261136,
+        20261137,
+        20261138,
+        20261139,
+        20261140,
+        20261141,
+        20261142,
+        20261143,
+        20261144
+      ],
+      "outcomes": {
+        "agent_decisions": 2057,
+        "draw_rate": 0.15,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 0,
+        "mean_decisions_per_observed_game": 51.425,
+        "observed_incomplete": 0,
+        "observed_rows": 40,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 10,
+            "score": 0.95,
+            "true_draws": 1,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 9
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 10,
+            "score": 0.95,
+            "true_draws": 1,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 9
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 10,
+            "score": 0.95,
+            "true_draws": 1,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 9
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 10,
+            "score": 0.85,
+            "true_draws": 3,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 7
+          }
+        },
+        "scheduled_games": 40,
+        "score": 0.925,
+        "true_draws": 6,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.85,
+        "wins": 34
+      },
+      "rows": 40,
+      "snapshot_sha256": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293",
+      "stage": "extension",
+      "wall_seconds": 15.307316763006384
+    }
+  ],
+  "final_results_used_for_selection": false,
+  "initial_stage_ranking": [
+    {
+      "incomplete": 0,
+      "losses": 0,
+      "score": 0.875,
+      "training_decisions": 225000,
+      "true_draws": 5,
+      "wins": 15
+    },
+    {
+      "incomplete": 0,
+      "losses": 0,
+      "score": 0.875,
+      "training_decisions": 250000,
+      "true_draws": 5,
+      "wins": 15
+    },
+    {
+      "incomplete": 0,
+      "losses": 0,
+      "score": 0.75,
+      "training_decisions": 175000,
+      "true_draws": 10,
+      "wins": 10
+    },
+    {
+      "incomplete": 0,
+      "losses": 0,
+      "score": 0.7,
+      "training_decisions": 75000,
+      "true_draws": 12,
+      "wins": 8
+    },
+    {
+      "incomplete": 0,
+      "losses": 0,
+      "score": 0.7,
+      "training_decisions": 200000,
+      "true_draws": 12,
+      "wins": 8
+    },
+    {
+      "incomplete": 0,
+      "losses": 0,
+      "score": 0.675,
+      "training_decisions": 50000,
+      "true_draws": 13,
+      "wins": 7
+    },
+    {
+      "incomplete": 0,
+      "losses": 0,
+      "score": 0.675,
+      "training_decisions": 125000,
+      "true_draws": 13,
+      "wins": 7
+    },
+    {
+      "incomplete": 0,
+      "losses": 0,
+      "score": 0.65,
+      "training_decisions": 100000,
+      "true_draws": 14,
+      "wins": 6
+    },
+    {
+      "incomplete": 0,
+      "losses": 0,
+      "score": 0.65,
+      "training_decisions": 150000,
+      "true_draws": 14,
+      "wins": 6
+    },
+    {
+      "incomplete": 0,
+      "losses": 1,
+      "score": 0.65,
+      "training_decisions": 25000,
+      "true_draws": 12,
+      "wins": 7
+    },
+    {
+      "incomplete": 0,
+      "losses": 9,
+      "score": 0.275,
+      "training_decisions": 0,
+      "true_draws": 11,
+      "wins": 0
+    }
+  ],
+  "protocol_path": "configs/improvement/phase2-evaluation.json",
+  "protocol_sha256": "b30750b589a6e272b3ec69b66cef9012d46608118bd595f0094049e6f1ebbba9",
+  "ranking": [
+    {
+      "extended": true,
+      "outcomes": {
+        "agent_decisions": 2986,
+        "draw_rate": 0.18333333333333332,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 0,
+        "mean_decisions_per_observed_game": 49.766666666666666,
+        "observed_incomplete": 0,
+        "observed_rows": 60,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 15,
+            "score": 0.9666666666666667,
+            "true_draws": 1,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 14
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 15,
+            "score": 0.9333333333333333,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 13
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 15,
+            "score": 0.9333333333333333,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 13
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 15,
+            "score": 0.8,
+            "true_draws": 6,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 9
+          }
+        },
+        "scheduled_games": 60,
+        "score": 0.9083333333333333,
+        "true_draws": 11,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.8166666666666667,
+        "wins": 49
+      },
+      "scheduled_games": 60,
+      "snapshot_path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-250000.pt",
+      "snapshot_sha256": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293",
+      "training_decisions": 250000
+    },
+    {
+      "extended": true,
+      "outcomes": {
+        "agent_decisions": 2795,
+        "draw_rate": 0.23333333333333334,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 0,
+        "mean_decisions_per_observed_game": 46.583333333333336,
+        "observed_incomplete": 0,
+        "observed_rows": 60,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 15,
+            "score": 0.8,
+            "true_draws": 6,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 9
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 15,
+            "score": 0.9,
+            "true_draws": 3,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 12
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 15,
+            "score": 0.9,
+            "true_draws": 3,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 12
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 15,
+            "score": 0.9333333333333333,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 13
+          }
+        },
+        "scheduled_games": 60,
+        "score": 0.8833333333333333,
+        "true_draws": 14,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.7666666666666667,
+        "wins": 46
+      },
+      "scheduled_games": 60,
+      "snapshot_path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-225000.pt",
+      "snapshot_sha256": "1430ef7a35a73e013f462f5c70d3b9312033a067cce8649940378bfabc5ba4a4",
+      "training_decisions": 225000
+    },
+    {
+      "extended": true,
+      "outcomes": {
+        "agent_decisions": 4508,
+        "draw_rate": 0.4166666666666667,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 0,
+        "mean_decisions_per_observed_game": 75.13333333333334,
+        "observed_incomplete": 0,
+        "observed_rows": 60,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 15,
+            "score": 0.8333333333333334,
+            "true_draws": 5,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 10
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 15,
+            "score": 0.8666666666666667,
+            "true_draws": 4,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 11
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 15,
+            "score": 0.6666666666666666,
+            "true_draws": 10,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 5
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 15,
+            "score": 0.8,
+            "true_draws": 6,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 9
+          }
+        },
+        "scheduled_games": 60,
+        "score": 0.7916666666666666,
+        "true_draws": 25,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.5833333333333334,
+        "wins": 35
+      },
+      "scheduled_games": 60,
+      "snapshot_path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-175000.pt",
+      "snapshot_sha256": "7668a2eace6f9b341c3f8820974978e9151f9bf3a73d94bd32dc5692c8dfd4f6",
+      "training_decisions": 175000
+    },
+    {
+      "extended": false,
+      "outcomes": {
+        "agent_decisions": 1849,
+        "draw_rate": 0.6,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 0,
+        "mean_decisions_per_observed_game": 92.45,
+        "observed_incomplete": 0,
+        "observed_rows": 20,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.8,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 3
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.8,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 3
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.5,
+            "true_draws": 5,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 0
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.7,
+            "true_draws": 3,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 2
+          }
+        },
+        "scheduled_games": 20,
+        "score": 0.7,
+        "true_draws": 12,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.4,
+        "wins": 8
+      },
+      "scheduled_games": 20,
+      "snapshot_path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-075000.pt",
+      "snapshot_sha256": "8f8d971e0989e475e1fa596494dd69885fe7edf45eff708f7aaab28991f81726",
+      "training_decisions": 75000
+    },
+    {
+      "extended": false,
+      "outcomes": {
+        "agent_decisions": 1847,
+        "draw_rate": 0.6,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 0,
+        "mean_decisions_per_observed_game": 92.35,
+        "observed_incomplete": 0,
+        "observed_rows": 20,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.8,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 3
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.8,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 3
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.6,
+            "true_draws": 4,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 1
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.6,
+            "true_draws": 4,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 1
+          }
+        },
+        "scheduled_games": 20,
+        "score": 0.7,
+        "true_draws": 12,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.4,
+        "wins": 8
+      },
+      "scheduled_games": 20,
+      "snapshot_path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-200000.pt",
+      "snapshot_sha256": "9988797ad82698808a29f041cbccc25fc19edf88718d74e882b0b80cf53ae2aa",
+      "training_decisions": 200000
+    },
+    {
+      "extended": false,
+      "outcomes": {
+        "agent_decisions": 1756,
+        "draw_rate": 0.65,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 0,
+        "mean_decisions_per_observed_game": 87.8,
+        "observed_incomplete": 0,
+        "observed_rows": 20,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.7,
+            "true_draws": 3,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 2
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.7,
+            "true_draws": 3,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 2
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.5,
+            "true_draws": 5,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 0
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.8,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 3
+          }
+        },
+        "scheduled_games": 20,
+        "score": 0.675,
+        "true_draws": 13,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.35,
+        "wins": 7
+      },
+      "scheduled_games": 20,
+      "snapshot_path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-050000.pt",
+      "snapshot_sha256": "b0c0f3a46302cf43f502d5a73604428bed27ca6302492b43ad08bb22e518e57b",
+      "training_decisions": 50000
+    },
+    {
+      "extended": false,
+      "outcomes": {
+        "agent_decisions": 2925,
+        "draw_rate": 0.65,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 0,
+        "mean_decisions_per_observed_game": 146.25,
+        "observed_incomplete": 0,
+        "observed_rows": 20,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.7,
+            "true_draws": 3,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 2
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.9,
+            "true_draws": 1,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 4
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.6,
+            "true_draws": 4,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 1
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.5,
+            "true_draws": 5,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 0
+          }
+        },
+        "scheduled_games": 20,
+        "score": 0.675,
+        "true_draws": 13,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.35,
+        "wins": 7
+      },
+      "scheduled_games": 20,
+      "snapshot_path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-125000.pt",
+      "snapshot_sha256": "7eea5d9577b9e809572e80c9e43544e0ca9fa0a6366716b1f53206ee34396a21",
+      "training_decisions": 125000
+    },
+    {
+      "extended": false,
+      "outcomes": {
+        "agent_decisions": 2400,
+        "draw_rate": 0.7,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 0,
+        "mean_decisions_per_observed_game": 120.0,
+        "observed_incomplete": 0,
+        "observed_rows": 20,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.8,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 3
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.6,
+            "true_draws": 4,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 1
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.6,
+            "true_draws": 4,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 1
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.6,
+            "true_draws": 4,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 1
+          }
+        },
+        "scheduled_games": 20,
+        "score": 0.65,
+        "true_draws": 14,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.3,
+        "wins": 6
+      },
+      "scheduled_games": 20,
+      "snapshot_path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-100000.pt",
+      "snapshot_sha256": "97d7e26de21b957500152ac69322b9d3b446df343fc98ccc1c61a669f73fa7b2",
+      "training_decisions": 100000
+    },
+    {
+      "extended": false,
+      "outcomes": {
+        "agent_decisions": 2084,
+        "draw_rate": 0.7,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 0,
+        "mean_decisions_per_observed_game": 104.2,
+        "observed_incomplete": 0,
+        "observed_rows": 20,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.7,
+            "true_draws": 3,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 2
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.7,
+            "true_draws": 3,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 2
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.5,
+            "true_draws": 5,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 0
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.7,
+            "true_draws": 3,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 2
+          }
+        },
+        "scheduled_games": 20,
+        "score": 0.65,
+        "true_draws": 14,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.3,
+        "wins": 6
+      },
+      "scheduled_games": 20,
+      "snapshot_path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-150000.pt",
+      "snapshot_sha256": "b9e17efa3b041ac232472af177b517d074afc6bb103d2d95cf3c10ce70b52b85",
+      "training_decisions": 150000
+    },
+    {
+      "extended": false,
+      "outcomes": {
+        "agent_decisions": 1133,
+        "draw_rate": 0.6,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 1,
+        "mean_decisions_per_observed_game": 56.65,
+        "observed_incomplete": 0,
+        "observed_rows": 20,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.7,
+            "true_draws": 3,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 2
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.8,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 3
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.5,
+            "true_draws": 5,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 0
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 1,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.6,
+            "true_draws": 2,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 2
+          }
+        },
+        "scheduled_games": 20,
+        "score": 0.65,
+        "true_draws": 12,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.35,
+        "wins": 7
+      },
+      "scheduled_games": 20,
+      "snapshot_path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-025000.pt",
+      "snapshot_sha256": "59d994679198bbe5c31d1d683cccb737100f3309a1dfca8cb4a412fb0e9b6868",
+      "training_decisions": 25000
+    },
+    {
+      "extended": false,
+      "outcomes": {
+        "agent_decisions": 2845,
+        "draw_rate": 0.55,
+        "incomplete": 0,
+        "incomplete_rate": 0.0,
+        "losses": 9,
+        "mean_decisions_per_observed_game": 142.25,
+        "observed_incomplete": 0,
+        "observed_rows": 20,
+        "opponent_color_strata": {
+          "random_legal/black": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.5,
+            "true_draws": 5,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 0
+          },
+          "random_legal/white": {
+            "incomplete": 0,
+            "losses": 0,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.5,
+            "true_draws": 5,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 0
+          },
+          "simple_material_heuristic/black": {
+            "incomplete": 0,
+            "losses": 5,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.0,
+            "true_draws": 0,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 0
+          },
+          "simple_material_heuristic/white": {
+            "incomplete": 0,
+            "losses": 4,
+            "observed_incomplete": 0,
+            "scheduled": 5,
+            "score": 0.1,
+            "true_draws": 1,
+            "truncations": 0,
+            "unattempted": 0,
+            "wins": 0
+          }
+        },
+        "scheduled_games": 20,
+        "score": 0.275,
+        "true_draws": 11,
+        "truncations": 0,
+        "unattempted": 0,
+        "win_rate": 0.0,
+        "wins": 0
+      },
+      "scheduled_games": 20,
+      "snapshot_path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-000000.pt",
+      "snapshot_sha256": "77c74a873535ce13374c3d55af8bd2ccdae3ac00b7a30f331a321516f67cfa19",
+      "training_decisions": 0
+    }
+  ],
+  "selected": {
+    "extended": true,
+    "outcomes": {
+      "agent_decisions": 2986,
+      "draw_rate": 0.18333333333333332,
+      "incomplete": 0,
+      "incomplete_rate": 0.0,
+      "losses": 0,
+      "mean_decisions_per_observed_game": 49.766666666666666,
+      "observed_incomplete": 0,
+      "observed_rows": 60,
+      "opponent_color_strata": {
+        "random_legal/black": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 15,
+          "score": 0.9666666666666667,
+          "true_draws": 1,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 14
+        },
+        "random_legal/white": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 15,
+          "score": 0.9333333333333333,
+          "true_draws": 2,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 13
+        },
+        "simple_material_heuristic/black": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 15,
+          "score": 0.9333333333333333,
+          "true_draws": 2,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 13
+        },
+        "simple_material_heuristic/white": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 15,
+          "score": 0.8,
+          "true_draws": 6,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 9
+        }
+      },
+      "scheduled_games": 60,
+      "score": 0.9083333333333333,
+      "true_draws": 11,
+      "truncations": 0,
+      "unattempted": 0,
+      "win_rate": 0.8166666666666667,
+      "wins": 49
+    },
+    "scheduled_games": 60,
+    "snapshot_path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-250000.pt",
+    "snapshot_sha256": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293",
+    "training_decisions": 250000
+  },
+  "selection_frozen_before_final": true,
+  "snapshots_found": 11,
+  "training_identity": {
+    "arm": "warm",
+    "code_sha256": "cf329438880a82b7b39b05b8f1f3bc1af21e262edb4143e1035e494f891a5705",
+    "config_sha256": "2cfe2805edd3e05756fd3ef981a6e4441e3b4ad717649d5647085228e837aabd",
+    "execution_kind": "official",
+    "experiment_id": "videochess-improvement-20261103-v1",
+    "m4_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+    "runtime": {
+      "chess": "1.11.2",
+      "device": "cpu",
+      "interop_threads": 1,
+      "intraop_threads": 4,
+      "numpy": "2.5.4",
+      "python": "3.12.3",
+      "torch": "2.14.1+cpu"
+    },
+    "training_seed": 20261103
+  },
+  "wall_seconds": 265.9775981589919
+}

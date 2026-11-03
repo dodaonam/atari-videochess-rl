@@ -1,0 +1,1970 @@
+{
+  "artifact_inventory_sha256": "d6b7e311919fefb5de7e1f2d70c0de2de68bc20703a34312e33c2be7b59fa334",
+  "benchmarks": [
+    {
+      "action_selection": {
+        "0": {
+          "ms": 1.0655232499630074,
+          "sources": {
+            "m4_guided": 18,
+            "uniform_exploration": 14
+          }
+        },
+        "200000": {
+          "ms": 2.22541481252847,
+          "sources": {
+            "q_greedy": 32
+          }
+        }
+      },
+      "actual_interop_threads": 1,
+      "actual_intraop_threads": 1,
+      "additional_disposable_optimizer_microtiming_updates": 12,
+      "batch_size": 32,
+      "checkpoint_serialization_seconds": [
+        0.09107952799968189,
+        0.28136403700045776,
+        0.2510973089993058
+      ],
+      "microtiming_schedule_points_not_achieved_training_decisions": [
+        0,
+        200000
+      ],
+      "optimizer_samples_per_second": 215.5375769805089,
+      "optimizer_update_median_ms": 143.8594014998671,
+      "optimizer_updates": 745,
+      "postwarmup_decisions_per_hour": 51673.45760371771,
+      "postwarmup_seconds": 195.07113453299826,
+      "postwarmup_valid_decisions": 2800,
+      "projected_250k_hours": 4.838073773139838,
+      "real_replay_rows": 4000,
+      "replay_sample_ms": 0.03477868500340264,
+      "resources": {
+        "available_ram_bytes": 26064740352,
+        "free_disk_bytes": 34392338432,
+        "peak_rss_bytes": 447893504
+      },
+      "threads": 1,
+      "total_decisions": 4000,
+      "total_seconds": 223.72103589299877
+    },
+    {
+      "action_selection": {
+        "0": {
+          "ms": 0.9491601250601889,
+          "sources": {
+            "m4_guided": 15,
+            "uniform_exploration": 17
+          }
+        },
+        "200000": {
+          "ms": 2.094482125016839,
+          "sources": {
+            "q_greedy": 29,
+            "uniform_exploration": 3
+          }
+        }
+      },
+      "actual_interop_threads": 1,
+      "actual_intraop_threads": 1,
+      "additional_disposable_optimizer_microtiming_updates": 12,
+      "batch_size": 64,
+      "checkpoint_serialization_seconds": [
+        0.09606470099970466,
+        0.20813490899672615,
+        0.20490542400148115
+      ],
+      "microtiming_schedule_points_not_achieved_training_decisions": [
+        0,
+        200000
+      ],
+      "optimizer_samples_per_second": 176.4934671336094,
+      "optimizer_update_median_ms": 353.206104498895,
+      "optimizer_updates": 745,
+      "postwarmup_decisions_per_hour": 32040.778216146624,
+      "postwarmup_seconds": 314.5991003090021,
+      "postwarmup_valid_decisions": 2800,
+      "projected_250k_hours": 7.802557051314535,
+      "real_replay_rows": 4000,
+      "replay_sample_ms": 0.05029336500228965,
+      "resources": {
+        "available_ram_bytes": 25982992384,
+        "free_disk_bytes": 34372431872,
+        "peak_rss_bytes": 512679936
+      },
+      "threads": 1,
+      "total_decisions": 4000,
+      "total_seconds": 349.8892910249997
+    },
+    {
+      "action_selection": {
+        "0": {
+          "ms": 1.1587683750349242,
+          "sources": {
+            "m4_guided": 18,
+            "uniform_exploration": 14
+          }
+        },
+        "200000": {
+          "ms": 2.3736379688443776,
+          "sources": {
+            "q_greedy": 32
+          }
+        }
+      },
+      "actual_interop_threads": 1,
+      "actual_intraop_threads": 2,
+      "additional_disposable_optimizer_microtiming_updates": 12,
+      "batch_size": 32,
+      "checkpoint_serialization_seconds": [
+        0.0976214459988114,
+        0.22170799900050042,
+        0.2565135300028487
+      ],
+      "microtiming_schedule_points_not_achieved_training_decisions": [
+        0,
+        200000
+      ],
+      "optimizer_samples_per_second": 245.26647550398744,
+      "optimizer_update_median_ms": 116.8117795004946,
+      "optimizer_updates": 745,
+      "postwarmup_decisions_per_hour": 56240.071093196675,
+      "postwarmup_seconds": 179.23163687499982,
+      "postwarmup_valid_decisions": 2800,
+      "projected_250k_hours": 4.4452290891617015,
+      "real_replay_rows": 4000,
+      "replay_sample_ms": 0.03525327500028652,
+      "resources": {
+        "available_ram_bytes": 25983541248,
+        "free_disk_bytes": 34353041408,
+        "peak_rss_bytes": 517496832
+      },
+      "threads": 2,
+      "total_decisions": 4000,
+      "total_seconds": 206.2343009920005
+    },
+    {
+      "action_selection": {
+        "0": {
+          "ms": 1.1535289687572003,
+          "sources": {
+            "m4_guided": 15,
+            "uniform_exploration": 17
+          }
+        },
+        "200000": {
+          "ms": 2.1344844375335015,
+          "sources": {
+            "q_greedy": 29,
+            "uniform_exploration": 3
+          }
+        }
+      },
+      "actual_interop_threads": 1,
+      "actual_intraop_threads": 2,
+      "additional_disposable_optimizer_microtiming_updates": 12,
+      "batch_size": 64,
+      "checkpoint_serialization_seconds": [
+        0.09221420399990166,
+        0.2064994669999578,
+        0.250375741001335
+      ],
+      "microtiming_schedule_points_not_achieved_training_decisions": [
+        0,
+        200000
+      ],
+      "optimizer_samples_per_second": 207.38207948692587,
+      "optimizer_update_median_ms": 312.4251404988172,
+      "optimizer_updates": 745,
+      "postwarmup_decisions_per_hour": 36083.46227223801,
+      "postwarmup_seconds": 279.3523505020021,
+      "postwarmup_valid_decisions": 2800,
+      "projected_250k_hours": 6.928381708879019,
+      "real_replay_rows": 4000,
+      "replay_sample_ms": 0.0452785399829736,
+      "resources": {
+        "available_ram_bytes": 25994674176,
+        "free_disk_bytes": 34333011968,
+        "peak_rss_bytes": 524193792
+      },
+      "threads": 2,
+      "total_decisions": 4000,
+      "total_seconds": 312.8620890400016
+    },
+    {
+      "action_selection": {
+        "0": {
+          "ms": 1.1582384374833055,
+          "sources": {
+            "m4_guided": 18,
+            "uniform_exploration": 14
+          }
+        },
+        "200000": {
+          "ms": 2.1903556875031427,
+          "sources": {
+            "q_greedy": 32
+          }
+        }
+      },
+      "actual_interop_threads": 1,
+      "actual_intraop_threads": 4,
+      "additional_disposable_optimizer_microtiming_updates": 12,
+      "batch_size": 32,
+      "checkpoint_serialization_seconds": [
+        0.09763372900124523,
+        0.208545764999144,
+        0.26972517399917706
+      ],
+      "microtiming_schedule_points_not_achieved_training_decisions": [
+        0,
+        200000
+      ],
+      "optimizer_samples_per_second": 271.7301706390607,
+      "optimizer_update_median_ms": 107.78290950111113,
+      "optimizer_updates": 745,
+      "postwarmup_decisions_per_hour": 60432.652263193595,
+      "postwarmup_seconds": 166.79724656300095,
+      "postwarmup_valid_decisions": 2800,
+      "projected_250k_hours": 4.13683647229665,
+      "real_replay_rows": 4000,
+      "replay_sample_ms": 0.04103735998796765,
+      "resources": {
+        "available_ram_bytes": 25996509184,
+        "free_disk_bytes": 34313732096,
+        "peak_rss_bytes": 529297408
+      },
+      "threads": 4,
+      "total_decisions": 4000,
+      "total_seconds": 193.50601877400186
+    },
+    {
+      "action_selection": {
+        "0": {
+          "ms": 1.1641408436844358,
+          "sources": {
+            "m4_guided": 15,
+            "uniform_exploration": 17
+          }
+        },
+        "200000": {
+          "ms": 2.1132035936943794,
+          "sources": {
+            "q_greedy": 29,
+            "uniform_exploration": 3
+          }
+        }
+      },
+      "actual_interop_threads": 1,
+      "actual_intraop_threads": 4,
+      "additional_disposable_optimizer_microtiming_updates": 12,
+      "batch_size": 64,
+      "checkpoint_serialization_seconds": [
+        0.10699447200022405,
+        0.20884122300049057,
+        0.27770894000059343
+      ],
+      "microtiming_schedule_points_not_achieved_training_decisions": [
+        0,
+        200000
+      ],
+      "optimizer_samples_per_second": 235.9957691476206,
+      "optimizer_update_median_ms": 258.8191270006064,
+      "optimizer_updates": 745,
+      "postwarmup_decisions_per_hour": 38713.1370432282,
+      "postwarmup_seconds": 260.37672919000033,
+      "postwarmup_valid_decisions": 2800,
+      "projected_250k_hours": 6.457756180307548,
+      "real_replay_rows": 4000,
+      "replay_sample_ms": 0.04540537000139011,
+      "resources": {
+        "available_ram_bytes": 25983205376,
+        "free_disk_bytes": 34289631232,
+        "peak_rss_bytes": 533659648
+      },
+      "threads": 4,
+      "total_decisions": 4000,
+      "total_seconds": 293.587884012999
+    }
+  ],
+  "created_at_utc": "2026-11-02T20:52:20.428183+00:00",
+  "dataset": {
+    "manifest_sha256": "7e8184c89969b713d79793a4ff9c9a5640e0d85a91371da67e07577054fa5ecf",
+    "release_id": "f2b3b52724958ffa845894681013cdc40915da179bbec3ae011087fe8a8ce0cc",
+    "reproduction": {
+      "coverage_completion": {
+        "all_hpo_inputs_unchanged": true,
+        "final_manifest_sha256": "7e8184c89969b713d79793a4ff9c9a5640e0d85a91371da67e07577054fa5ecf",
+        "final_release_id": "f2b3b52724958ffa845894681013cdc40915da179bbec3ae011087fe8a8ce0cc",
+        "final_validation_count": 8965,
+        "hpo_validation_count": 8964,
+        "parent_manifest_sha256": "f72a0441af966ba6b06d475d9809e3e8f0c850cbe729961f328ecde26afe4151",
+        "parent_release_id": "d8877d3bf09299b4272a1a22bf98b810f3784284f397fbc02b9d1d3679e875cd",
+        "projection": "Existing sample IDs, parent histories, FENs, legal actions, human labels, and splits are identical. Only sampling provenance metadata differs. All eight HPO trials used the same unchanged 8192 train/8964 validation projection. No extra HPO trial is authorized or performed.",
+        "training_subset_count": 8192,
+        "training_subset_sha256": "09c18411e6815ee6dec9854a7d770c5863abc830373f48c00e47dae3964d2e23"
+      },
+      "final_source_ordinals_global": true,
+      "independent_first_position_sha256": "60759e0b868a008fc8d2049e90061311dc67b3416693700d44117dd5eb881960",
+      "position_sha256": "823e3b73e6123d148c29524e18800beff18f6b7d8c4d5cd42187b790391f05e9",
+      "protected_core_position_sha256": "60759e0b868a008fc8d2049e90061311dc67b3416693700d44117dd5eb881960",
+      "same_normalized_game_set": true,
+      "same_sampled_position_bytes": true
+    },
+    "stats": {
+      "accepted_source_games": 355353,
+      "conflicting_groups": 33,
+      "core_purge_reasons": {
+        "cross_split_board_overlap": 4774,
+        "historical_train_validation_exposure": 427
+      },
+      "coverage_completion_records": 6,
+      "coverage_restored_from_core_purge": 4,
+      "cross_split_board_signatures_after": 0,
+      "cross_split_board_signatures_before": 825,
+      "distinct_board_signatures": 90511,
+      "duplicate_sample_ids": 0,
+      "effective_input_uniqueness": {
+        "test": 9181,
+        "train": 73277,
+        "validation": 8939
+      },
+      "exact_history_target_duplicates": 2796,
+      "game_counts": {
+        "test": 500,
+        "train": 4000,
+        "validation": 500
+      },
+      "games": 5000,
+      "games_with_retained_positions": 5000,
+      "historical_excluded_observations": 1000,
+      "historical_game_overlap": 0,
+      "historical_holdout_board_overlap": 0,
+      "maximum_records_per_game": 32,
+      "normalized_duplicate_groups": 134,
+      "normalized_duplicate_observations": 411,
+      "phases": {
+        "test": {
+          "endgame": 1646,
+          "middlegame": 6073,
+          "opening": 1515
+        },
+        "train": {
+          "endgame": 12265,
+          "middlegame": 48447,
+          "opening": 15894
+        },
+        "validation": {
+          "endgame": 1359,
+          "middlegame": 6106,
+          "opening": 1500
+        }
+      },
+      "position_counts": {
+        "test": 9234,
+        "train": 76606,
+        "validation": 8965
+      },
+      "positions_after_core_purge": 94799,
+      "positions_after_purge": 94805,
+      "positions_before_purge": 100000,
+      "purge_reasons": {
+        "cross_split_board_overlap": 4770,
+        "historical_train_validation_exposure": 427
+      },
+      "rejection_reasons": {
+        "empty_game": 182
+      },
+      "repeated_board_signature_observations": 4294,
+      "repeated_fen_observations": 3893,
+      "source_games_seen": 355535,
+      "source_ref_conflicts": 0
+    }
+  },
+  "demo": {
+    "checkpoint_loaded": true,
+    "profile": "historical ALE v5 extended, shortened to two player moves for smoke",
+    "replay_entries": 5,
+    "replay_first": 0,
+    "replay_last": 4,
+    "script_path": "<owner-local external GUI>/atari_videochess_live.py",
+    "script_preserved": true,
+    "script_sha256": "78cf73797abeebeec09a727b125fad6abddb1a701c2a5242d3f974b8dd2d4fdf",
+    "verified_half_moves": 4,
+    "visible_frames": 86,
+    "wall_seconds": 38.77879406499778
+  },
+  "environment": {
+    "ale": "0.11.2",
+    "base_revision": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+    "chess": "1.11.2",
+    "cpu_count": 8,
+    "cpu_model": "model name\t: Intel(R) Xeon(R) CPU E3-1505M v6 @ 3.00GHz",
+    "cuda": false,
+    "disk": {
+      "free": 37046927360,
+      "total": 156513894400,
+      "used": 111441915904
+    },
+    "gymnasium": "1.4.0",
+    "meminfo": [
+      "MemTotal:       32707440 kB",
+      "MemFree:         6233348 kB",
+      "MemAvailable:   23954144 kB"
+    ],
+    "observed_at_utc": "2026-11-02T18:20:18.788275+00:00",
+    "optuna": "5.0.0",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "rom_sha256": "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7",
+    "scipy": "1.18.1",
+    "source_revision": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+    "stockfish_sha256": "0f83d24cc46d2c66c60f16001af5444873bc112b7d028594513426894c12da19",
+    "torch": "2.14.1+cpu"
+  },
+  "experiment_id": "videochess-improvement-20261103-v1",
+  "expert": {
+    "actual_depth_median": 14.0,
+    "actual_nodes_median": 50029.0,
+    "all_scores_side_to_move": true,
+    "dataset_manifest_sha256": "7e8184c89969b713d79793a4ff9c9a5640e0d85a91371da67e07577054fa5ecf",
+    "development": 128,
+    "labels": 4128,
+    "labels_unique_by_sample_id": true,
+    "mate_score_records": 86,
+    "pilot": {
+      "engine": {
+        "author": "the Stockfish developers (see AUTHORS file)",
+        "name": "Stockfish 19"
+      },
+      "engine_sha256": "0f83d24cc46d2c66c60f16001af5444873bc112b7d028594513426894c12da19",
+      "estimated_seconds": 349.7527967109272,
+      "hash_mib": 64,
+      "multipv": 1,
+      "pilot": [
+        {
+          "depth": 12,
+          "legal": true,
+          "nodes": 10012,
+          "nps": 715142,
+          "sample_id": "bf82f007d63c436eec0fd239e34daaaaa51bd2303aa7ea1b7a7a57e79a1477f2",
+          "seconds": 0.026481065000552917
+        },
+        {
+          "depth": 12,
+          "legal": true,
+          "nodes": 10002,
+          "nps": 555666,
+          "sample_id": "0dd6cd1d6334dca587d00b31e7b4800217992814b06e446718192da96fd73df5",
+          "seconds": 0.01818018599806237
+        },
+        {
+          "depth": 8,
+          "legal": true,
+          "nodes": 10001,
+          "nps": 666733,
+          "sample_id": "d911eed6ad958fe7d3f59f0bff864e01e5b45fc5de8b689fdd1e2f6cb874acce",
+          "seconds": 0.015591472998494282
+        },
+        {
+          "depth": 11,
+          "legal": true,
+          "nodes": 10009,
+          "nps": 714928,
+          "sample_id": "b397fa58efa95cc5db6ae36c7ca9a8d8eccff5ced25c890ba6104cc8e7fda7e3",
+          "seconds": 0.015242900000885129
+        },
+        {
+          "depth": 9,
+          "legal": true,
+          "nodes": 10008,
+          "nps": 714857,
+          "sample_id": "980f179be59a98810dc9127333c9e5a3aa609a2074996ec7bd9b10f43a3268fa",
+          "seconds": 0.01546598699860624
+        },
+        {
+          "depth": 13,
+          "legal": true,
+          "nodes": 10003,
+          "nps": 555722,
+          "sample_id": "7c6a79274355663a90bc1a7e081513c9e3aed0218ff1190e9f97c67625c0bc21",
+          "seconds": 0.019167066002410138
+        },
+        {
+          "depth": 15,
+          "legal": true,
+          "nodes": 10002,
+          "nps": 714428,
+          "sample_id": "2c679760b232c1ce4deaf2261e5fb6addfcdd37d1344cf58885ec87625ab7517",
+          "seconds": 0.015539504998741904
+        },
+        {
+          "depth": 9,
+          "legal": true,
+          "nodes": 10007,
+          "nps": 909727,
+          "sample_id": "755d2c057af6d98a355915bb5ffd3ff2173713d0c8f205e77758f261a719451b",
+          "seconds": 0.01253344400174683
+        },
+        {
+          "depth": 9,
+          "legal": true,
+          "nodes": 10010,
+          "nps": 770000,
+          "sample_id": "7fed4ce0e1791aa9a9e3f9b8ee42a4187e04a54b3c2898775d4916511eefa189",
+          "seconds": 0.013853346001269529
+        },
+        {
+          "depth": 13,
+          "legal": true,
+          "nodes": 10008,
+          "nps": 625500,
+          "sample_id": "cb4c80775fb9378b2acc817f1942c9c4fbba6259eab1cd981f4a93f5e36f199a",
+          "seconds": 0.016583284002990695
+        },
+        {
+          "depth": 13,
+          "legal": true,
+          "nodes": 10001,
+          "nps": 526368,
+          "sample_id": "67219d4781c7d43eeb8567e84cdeeadc0dd3596d7c70241e168885d1c504a0f8",
+          "seconds": 0.02040221199786174
+        },
+        {
+          "depth": 11,
+          "legal": true,
+          "nodes": 10001,
+          "nps": 625062,
+          "sample_id": "0c19c5b4d19dfc0bba8b853a6bc49a4a62c77cda5582bc72d0b987a0eba9687d",
+          "seconds": 0.017490287002146943
+        },
+        {
+          "depth": 10,
+          "legal": true,
+          "nodes": 10000,
+          "nps": 588235,
+          "sample_id": "353f46b7499ecf1b6b77be83bb23882b837c8ea30f381de4fbe384ef4365ab08",
+          "seconds": 0.01733336200049962
+        },
+        {
+          "depth": 11,
+          "legal": true,
+          "nodes": 10001,
+          "nps": 769307,
+          "sample_id": "40ec05babd11386de7825d62730ee665e8fa83930a6d79c0cce2c7090e51c147",
+          "seconds": 0.014269438997871475
+        },
+        {
+          "depth": 12,
+          "legal": true,
+          "nodes": 10007,
+          "nps": 588647,
+          "sample_id": "3396d6c4c4b1f8ad5c6479313bc121211c8be150a8128db2b99fefe60ddba39b",
+          "seconds": 0.017062756000086665
+        },
+        {
+          "depth": 10,
+          "legal": true,
+          "nodes": 10009,
+          "nps": 667266,
+          "sample_id": "39d4e607a25ff092b707caba6baf3460de6ec2657ca0ca19f9239c9624f8913c",
+          "seconds": 0.015929886998492293
+        }
+      ],
+      "selected_fixed_nodes": 50000,
+      "threads": 1,
+      "training_phase_counts": {
+        "endgame": 500,
+        "middlegame": 3000,
+        "opening": 500
+      }
+    },
+    "sha256": "fd648bfada1be468d662b2f696639e73c5826ed31a6e7a85f6a4bd49fc9429e0",
+    "training": 4000,
+    "verified_labels": 4128,
+    "wall_seconds": 332.32998857799976
+  },
+  "feasibility": {
+    "conservative_250k_hours": 5.909766388995215,
+    "conservative_decisions_per_hour": 42302.85658423552,
+    "official_run_started": false,
+    "selected": {
+      "action_selection": {
+        "0": {
+          "ms": 1.1582384374833055,
+          "sources": {
+            "m4_guided": 18,
+            "uniform_exploration": 14
+          }
+        },
+        "200000": {
+          "ms": 2.1903556875031427,
+          "sources": {
+            "q_greedy": 32
+          }
+        }
+      },
+      "actual_interop_threads": 1,
+      "actual_intraop_threads": 4,
+      "additional_disposable_optimizer_microtiming_updates": 12,
+      "batch_size": 32,
+      "checkpoint_serialization_seconds": [
+        0.09763372900124523,
+        0.208545764999144,
+        0.26972517399917706
+      ],
+      "microtiming_schedule_points_not_achieved_training_decisions": [
+        0,
+        200000
+      ],
+      "optimizer_samples_per_second": 271.7301706390607,
+      "optimizer_update_median_ms": 107.78290950111113,
+      "optimizer_updates": 745,
+      "postwarmup_decisions_per_hour": 60432.652263193595,
+      "postwarmup_seconds": 166.79724656300095,
+      "postwarmup_valid_decisions": 2800,
+      "projected_250k_hours": 4.13683647229665,
+      "real_replay_rows": 4000,
+      "replay_sample_ms": 0.04103735998796765,
+      "resources": {
+        "available_ram_bytes": 25996509184,
+        "free_disk_bytes": 34313732096,
+        "peak_rss_bytes": 529297408
+      },
+      "threads": 4,
+      "total_decisions": 4000,
+      "total_seconds": 193.50601877400186
+    },
+    "supports_15_hour_target": true,
+    "uncertainty": "Disposable short simulator probes; later Q policy, longer histories, replay occupancy, CPU load, and checkpoints may alter throughput. Conservative rate discounts the selected measured hardware condition by 30%; it is a planning estimate, not a bound."
+  },
+  "final_checked_source_head": "5a9021aab3af8cffe438663bca0dfb1dd113ba72",
+  "final_pushed_clean_checkout": {
+    "branch": "feature/videochess-performance-improvement-20261103",
+    "clean_status": true,
+    "clean_worktree_head": "11a99b58ef36f9557be5a98a81dfbef7fae5b45c",
+    "clean_worktree_path": "<temporary-clean-checkout>",
+    "commands": [
+      {
+        "command": [
+          "git",
+          "status",
+          "--porcelain=v1",
+          "--untracked-files=all"
+        ],
+        "ended_at_utc": "2026-11-02T21:20:58.785695+00:00",
+        "exit_code": 0,
+        "started_at_utc": "2026-11-02T21:20:58.780110+00:00",
+        "wall_seconds": 0.005577515999902971
+      },
+      {
+        "command": [
+          "<repo>/.venv/bin/python",
+          "scripts/agent_preflight.py"
+        ],
+        "ended_at_utc": "2026-11-02T21:21:01.273767+00:00",
+        "exit_code": 0,
+        "started_at_utc": "2026-11-02T21:20:58.785704+00:00",
+        "wall_seconds": 2.488070738996612
+      },
+      {
+        "command": [
+          "<repo>/.venv/bin/python",
+          "-m",
+          "unittest",
+          "test_improvement",
+          "test_m5_replay",
+          "test_m5_checkpoint",
+          "test_m5_targets",
+          "test_m5_training",
+          "test_m5_recovered_source",
+          "test_pre_m7_contracts",
+          "-v"
+        ],
+        "ended_at_utc": "2026-11-02T21:21:06.332333+00:00",
+        "exit_code": 0,
+        "started_at_utc": "2026-11-02T21:21:01.273779+00:00",
+        "wall_seconds": 5.058562944999721
+      }
+    ],
+    "passed": true,
+    "recorded_at_utc": "2026-11-02T21:21:06.340290+00:00",
+    "remote_head": "11a99b58ef36f9557be5a98a81dfbef7fae5b45c",
+    "remote_url": "https://github.com/dodaonam/atari-videochess-rl.git",
+    "retained_log_path": ".agents/evidence/improvement/final-pushed-clean-checkout.log",
+    "retained_log_sha256": "be2036ccfa52ef014e2a88625512a93685ab9d1f4ea8882be6ff60f81d6b1306",
+    "scope": "Final pushed-source preflight and focused campaign plus adjacent M5/context regression checks. Full 545-test suite passed at the tested source head recorded separately."
+  },
+  "final_tested_source_head": "5a9021aab3af8cffe438663bca0dfb1dd113ba72",
+  "final_verification_path": ".agents/evidence/improvement/final-verification.json",
+  "full_regression_latest": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "end_git_revision": "5a9021aab3af8cffe438663bca0dfb1dd113ba72",
+    "ended_at_utc": "2026-11-02T21:15:10.822254+00:00",
+    "exit_code": 0,
+    "git_revision": "5a9021aab3af8cffe438663bca0dfb1dd113ba72",
+    "log_path": ".agents/evidence/improvement/full-phase1-regression-final-clean.log",
+    "log_sanitization": "Repository-root paths replaced by <repo>; trailing whitespace removed; substantive output preserved.",
+    "log_sha256": "6bcc32c23c8be84b22511d537a3c6a908b7381810b4b08e9befb7cd0ab2cc3f2",
+    "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/full-phase1-regression-final-clean/manifest.json",
+    "source_manifest_sha256": "b4e7ba411484d7e25ffcf40fb1034a14bde60d6a7af2c551f473a18ab653c26a",
+    "source_worktree_dirty": true,
+    "started_at_utc": "2026-11-02T21:12:15.791456+00:00",
+    "wall_seconds": 175.0307998370008
+  },
+  "hpo": {
+    "bayesian_proposals": 5,
+    "best_params": {
+      "learning_rate": 0.00015,
+      "weight_decay": 5e-05
+    },
+    "best_value": 2.400505335402244,
+    "n_startup_trials": 3,
+    "sampler": "GPSampler",
+    "subset_count": 8192,
+    "subset_sha256": "09c18411e6815ee6dec9854a7d770c5863abc830373f48c00e47dae3964d2e23",
+    "trial": 1,
+    "wall_seconds": 473.5982945309988
+  },
+  "m4": {
+    "candidates": [
+      {
+        "checkpoint": "artifacts/m4/m4-behavior-20261027-r4/pretrained-behavior-only.pt",
+        "expert_development": {
+          "examples": 128,
+          "nll": 2.4708389043807983,
+          "top1": 0.3203125,
+          "top3": 0.5234375
+        },
+        "order": 0,
+        "sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+        "simulator_score": 0.725,
+        "simulator_score_definition": "(wins + 0.5*true_draws)/20 scheduled games; truncations contribute zero without being labeled losses",
+        "simulator_truncated_games": 0,
+        "simulator_wall_seconds": 8.212432852000347,
+        "stage": "historical",
+        "validation": {
+          "examples": 8965,
+          "nll": 2.430262243395336,
+          "top1": 0.29860568878973787,
+          "top3": 0.543335192414947
+        }
+      },
+      {
+        "checkpoint": "artifacts/improvement/videochess-improvement-20261103-v1/m4-a/epoch-22.pt",
+        "expert_development": {
+          "examples": 128,
+          "nll": 2.406607508659363,
+          "top1": 0.3046875,
+          "top3": 0.5390625
+        },
+        "order": 1,
+        "sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+        "simulator_score": 0.875,
+        "simulator_score_definition": "(wins + 0.5*true_draws)/20 scheduled games; truncations contribute zero without being labeled losses",
+        "simulator_truncated_games": 0,
+        "simulator_wall_seconds": 3.240009765002469,
+        "stage": "M4-A",
+        "validation": {
+          "examples": 8965,
+          "nll": 2.208633544334671,
+          "top1": 0.34400446179587285,
+          "top3": 0.6070273284997212
+        }
+      },
+      {
+        "checkpoint": "artifacts/improvement/videochess-improvement-20261103-v1/m4-b/epoch-01.pt",
+        "expert_development": {
+          "examples": 128,
+          "nll": 2.3985215425491333,
+          "top1": 0.328125,
+          "top3": 0.5625
+        },
+        "order": 2,
+        "sha256": "5def36a4d607fac2ebc887617d17e28e9e766b5d8c0bd66dcbf05aa58b115fc6",
+        "simulator_score": 0.85,
+        "simulator_score_definition": "(wins + 0.5*true_draws)/20 scheduled games; truncations contribute zero without being labeled losses",
+        "simulator_truncated_games": 0,
+        "simulator_wall_seconds": 3.9479990850013564,
+        "stage": "M4-B",
+        "validation": {
+          "examples": 8965,
+          "nll": 2.2036480825438023,
+          "top1": 0.3475738984941439,
+          "top3": 0.6127161182375906
+        }
+      }
+    ],
+    "rule": "B NLL <= 1.05*A; maximize fixed simulator score; min validation NLL; earlier checkpoint",
+    "selected": {
+      "checkpoint": "artifacts/improvement/videochess-improvement-20261103-v1/m4-a/epoch-22.pt",
+      "expert_development": {
+        "examples": 128,
+        "nll": 2.406607508659363,
+        "top1": 0.3046875,
+        "top3": 0.5390625
+      },
+      "order": 1,
+      "sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+      "simulator_score": 0.875,
+      "simulator_score_definition": "(wins + 0.5*true_draws)/20 scheduled games; truncations contribute zero without being labeled losses",
+      "simulator_truncated_games": 0,
+      "simulator_wall_seconds": 3.240009765002469,
+      "stage": "M4-A",
+      "validation": {
+        "examples": 8965,
+        "nll": 2.208633544334671,
+        "top1": 0.34400446179587285,
+        "top3": 0.6070273284997212
+      }
+    },
+    "test_metrics_inspected": false
+  },
+  "m4_a": {
+    "best_checkpoint": "artifacts/improvement/videochess-improvement-20261103-v1/m4-a/epoch-22.pt",
+    "best_validation_nll": 2.208633544334671,
+    "early_stopped": false,
+    "epochs_completed": 25,
+    "optimizer_reinitialized": true,
+    "sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed"
+  },
+  "m4_b": {
+    "best_checkpoint": "artifacts/improvement/videochess-improvement-20261103-v1/m4-b/epoch-01.pt",
+    "best_validation_nll": 2.2036480825438023,
+    "early_stopped": true,
+    "epochs_completed": 3,
+    "optimizer_reinitialized": true,
+    "sha256": "5def36a4d607fac2ebc887617d17e28e9e766b5d8c0bd66dcbf05aa58b115fc6"
+  },
+  "m5_config": {
+    "agent_decisions": 250000,
+    "algorithm": "double_dqn",
+    "batch_size": 32,
+    "checkpoint_interval_decisions": 1000,
+    "epsilon_decay_decisions": 175000,
+    "epsilon_end": 0.05,
+    "epsilon_start": 1.0,
+    "experiment_id": "videochess-improvement-20261103-v1",
+    "gamma": 0.99,
+    "gradient_clip_norm": 1.0,
+    "gradient_updates_per_decision": 0.25,
+    "initialization": "m4_warm_start",
+    "learning_rate": 0.0001,
+    "loss": "Huber",
+    "m4_guidance_end_decision": 75000,
+    "m4_guidance_initial": 0.6,
+    "maximum_agent_decisions_per_episode": 400,
+    "maximum_cumulative_wall_seconds": 72000,
+    "maximum_process_rss_bytes": 12884901888,
+    "minimum_available_ram_bytes": 2147483648,
+    "minimum_free_disk_bytes": 5368709120,
+    "optimizer": "AdamW",
+    "replay_capacity": 16384,
+    "replay_warmup_transitions": 1024,
+    "reward_draw": 0.0,
+    "reward_loss": -1.0,
+    "reward_nonterminal": 0.0,
+    "reward_shaping": false,
+    "reward_win": 1.0,
+    "scratch_training": false,
+    "snapshot_interval_decisions": 25000,
+    "target_sync_interval_gradient_updates": 500,
+    "threads": 4,
+    "training_seed": 20261103,
+    "weight_decay": 0.0001
+  },
+  "merged": false,
+  "multi_seed_training_campaign": false,
+  "official_250k_run_started": false,
+  "phase2_cli_validation": {
+    "checkpoint_decisions": 4026,
+    "checkpoint_sha256": "7163d952500a25df8c4cc236cb78d41f391a3ac2dff6625ae3e479c436ef5bd0",
+    "checkpoint_target_syncs": 1,
+    "checkpoint_updates": 751,
+    "checks": {
+      "cumulative_wall": true,
+      "engine_absent_on_path": true,
+      "fresh_decisions": true,
+      "frozen_code": true,
+      "official_namespace_absent": true,
+      "probe_role": true,
+      "resumed_decisions": true,
+      "runtime_interop": true,
+      "runtime_intraop": true,
+      "selected_m4": true,
+      "target_sync": true,
+      "valid_counters": true
+    },
+    "code_sha256": "cf329438880a82b7b39b05b8f1f3bc1af21e262edb4143e1035e494f891a5705",
+    "command_sanitization": "Absolute project-root prefixes replaced with <repo>; exact argv and outputs remain in the private ignored cli-verification-v2/commands.json.",
+    "commands": [
+      {
+        "command": [
+          "<repo>/.venv/bin/python",
+          "-m",
+          "videochess_rl.improvement.m5",
+          "--config",
+          "<repo>/configs/improvement/m5-phase2.json",
+          "--checkpoint",
+          "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a/epoch-22.pt",
+          "--checkpoint-sha256",
+          "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+          "--output",
+          "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/cli-verification-v2/attempt-0000",
+          "--probe-decisions",
+          "4500"
+        ],
+        "ended_at_utc": "2026-11-02T21:02:54.177675+00:00",
+        "exit_code": 0,
+        "private_log_path": "artifacts/improvement/videochess-improvement-20261103-v1/cli-verification-v2/fresh-private-console.log",
+        "private_log_sha256": "c51f7e3cb27ebe0d33318e9971db34c15498391c5afc6b5e1a5103795a6f1c8f",
+        "started_at_utc": "2026-11-02T20:59:11.144942+00:00"
+      },
+      {
+        "command": [
+          "<repo>/.venv/bin/python",
+          "-m",
+          "videochess_rl.improvement.m5",
+          "--config",
+          "<repo>/configs/improvement/m5-phase2.json",
+          "--checkpoint",
+          "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/m4-a/epoch-22.pt",
+          "--checkpoint-sha256",
+          "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+          "--output",
+          "<repo>/artifacts/improvement/videochess-improvement-20261103-v1/cli-verification-v2/attempt-0001",
+          "--probe-decisions",
+          "4800",
+          "--resume",
+          "artifacts/improvement/videochess-improvement-20261103-v1/cli-verification-v2/attempt-0000/resume-004026.pt"
+        ],
+        "ended_at_utc": "2026-11-02T21:04:13.331528+00:00",
+        "exit_code": 0,
+        "private_log_path": "artifacts/improvement/videochess-improvement-20261103-v1/cli-verification-v2/resume-private-console.log",
+        "private_log_sha256": "74548c78389c76fe5e3059b9684d7cc3e43eba3e12a728cf948d352974ef8cd4",
+        "started_at_utc": "2026-11-02T21:02:54.556284+00:00"
+      }
+    ],
+    "config_sha256": "b488a5081adb17704c36f208216ddb289ebf9f9fa08793810ea72e1ec125eb26",
+    "official_run": false,
+    "passed": true,
+    "repeated_tail_decisions": 474,
+    "selected_m4_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+    "source_revision": "c744dd6e895ff8a9000fb7bb328fe3e449de1314"
+  },
+  "phase2_command": ".venv/bin/python -m videochess_rl.improvement.m5 --config configs/improvement/m5-phase2.json --checkpoint artifacts/improvement/videochess-improvement-20261103-v1/m4-a/epoch-22.pt --checkpoint-sha256 cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed --output artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000 --phase2-official",
+  "recovery": {
+    "checkpoint": "artifacts/improvement/videochess-improvement-20261103-v1/recovery-probe/original/resume-001029.pt",
+    "checkpoint_sha256": "b859612c4118adee0e58822920c1e1cae9d464d5827a4b940484dff77ae198f2",
+    "discarded_tail_decisions": 3271,
+    "new_attempt_ids": "Expected to differ for replayed work; semantic transitions and model/optimizer/RNG states must match.",
+    "official_run": false,
+    "passed": true,
+    "pinned_counters": {
+      "completed_episodes": 17,
+      "invalid_transitions": 0,
+      "optimizer_updates": 2,
+      "target_syncs": 0,
+      "transitions": 1029,
+      "valid_decisions": 1029
+    },
+    "tests": {
+      "action_source_counters": true,
+      "completed_episodes": true,
+      "cumulative_wall": true,
+      "exploration_rng": true,
+      "frozen_m4": true,
+      "online": true,
+      "optimizer": true,
+      "optimizer_updates": true,
+      "replay_rng": true,
+      "semantic_replay": true,
+      "target": true,
+      "target_syncs": true,
+      "transitions": true,
+      "unique_replay_ids": true,
+      "valid_decisions": true
+    }
+  },
+  "reserved_test": {
+    "checkpoint_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+    "metrics": {
+      "examples": 9234,
+      "nll": 2.202227017206626,
+      "top1": 0.34080571799870046,
+      "top3": 0.6045050898852068
+    },
+    "selected_before_test": true
+  },
+  "resource_feasibility": {
+    "benchmark_report": "artifacts/improvement/videochess-improvement-20261103-v1/benchmarks/t4-b32/run.json",
+    "benchmark_report_sha256": "d185f58a948eabd979f638c8f2aa36f9e3d58eb58d16231f46b7ff79c32fe3e6",
+    "configured_replay_capacity": 16384,
+    "conservative_projected_250k_artifact_bytes": 2091663026,
+    "current_free_disk_bytes": 34251120640,
+    "limitations": "Resource projections are estimates, not upper bounds. History lengths, episode/opponent distribution, full replay occupancy, allocator behavior, and checkpoint transient buffers may change usage. Guards enforce actual RSS, system RAM and disk headroom.",
+    "maximum_measured_resume_checkpoint_bytes": 2020749,
+    "measured_evaluation_snapshot_bytes": 499290,
+    "no_cloud_compute_or_storage_allocated": true,
+    "observed_action_log_bytes_per_decision": 154.88175,
+    "observed_available_ram_bytes": 25996509184,
+    "observed_journal_bytes_per_decision": 2872.8676923076923,
+    "observed_peak_rss_bytes": 529297408,
+    "projected_250k_artifact_bytes": 1267616801,
+    "projection_formula": "Observed journal and action-log bytes per valid decision *250000 +250 maximum-sized observed resume checkpoints +11 observed-size snapshots. Conservative projection doubles journal/action rates and adds 64 MiB telemetry allowance.",
+    "real_replay_rows": 4000,
+    "recorded_at_utc": "2026-11-02T20:57:16.147122+00:00",
+    "simple_fourfold_occupancy_rss_projection_bytes": 2117189632,
+    "source_revision": "c744dd6e895ff8a9000fb7bb328fe3e449de1314"
+  },
+  "scratch_comparison": false,
+  "simulator_outcomes": {
+    "M4-A": {
+      "random_legal/black": {
+        "draw": 1,
+        "win": 4
+      },
+      "random_legal/white": {
+        "draw": 1,
+        "win": 4
+      },
+      "simple_material_heuristic/black": {
+        "draw": 3,
+        "win": 2
+      },
+      "simple_material_heuristic/white": {
+        "win": 5
+      }
+    },
+    "M4-B": {
+      "random_legal/black": {
+        "draw": 3,
+        "win": 2
+      },
+      "random_legal/white": {
+        "draw": 2,
+        "win": 3
+      },
+      "simple_material_heuristic/black": {
+        "draw": 1,
+        "win": 4
+      },
+      "simple_material_heuristic/white": {
+        "win": 5
+      }
+    },
+    "historical": {
+      "random_legal/black": {
+        "draw": 3,
+        "win": 2
+      },
+      "random_legal/white": {
+        "draw": 1,
+        "win": 4
+      },
+      "simple_material_heuristic/black": {
+        "draw": 3,
+        "win": 2
+      },
+      "simple_material_heuristic/white": {
+        "draw": 4,
+        "win": 1
+      }
+    }
+  },
+  "source_revision": "c744dd6e895ff8a9000fb7bb328fe3e449de1314",
+  "targeted_final_context_checks": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_agent_context.AgentContextRecoveryTests.test_m7_001_through_m7_005_engineering_done_and_g5_f02_resolved",
+      "tests.test_agent_context.AgentContextRecoveryTests.test_clean_clone_recovers_current_committed_state_without_local_artifacts",
+      "tests.test_agent_context.AgentContextRecoveryTests.test_project_context_can_be_recovered_without_chat_history",
+      "-v"
+    ],
+    "end_git_revision": "5a9021aab3af8cffe438663bca0dfb1dd113ba72",
+    "ended_at_utc": "2026-11-02T21:12:10.615382+00:00",
+    "exit_code": 0,
+    "git_revision": "5a9021aab3af8cffe438663bca0dfb1dd113ba72",
+    "log_path": ".agents/evidence/improvement/final-context-tests.log",
+    "log_sanitization": "Repository-root paths replaced by <repo>; trailing whitespace removed; substantive output preserved.",
+    "log_sha256": "7ad9ca1d5b67e5ec3879414cb33166b2ba49ab4a4ff7909390704b5e9618d80d",
+    "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/final-context-tests/manifest.json",
+    "source_manifest_sha256": "b4e7ba411484d7e25ffcf40fb1034a14bde60d6a7af2c551f473a18ab653c26a",
+    "source_worktree_dirty": true,
+    "started_at_utc": "2026-11-02T21:11:27.382955+00:00",
+    "wall_seconds": 43.232427792001545
+  },
+  "trials": [
+    {
+      "intermediate_values": {
+        "1": 2.4213439776715506,
+        "2": 2.4228041630565773,
+        "3": 2.4053477599438895,
+        "4": 2.408144661115249,
+        "5": 2.4071367106124897,
+        "6": 2.4122417834867913
+      },
+      "number": 0,
+      "params": {
+        "learning_rate": 0.0003,
+        "weight_decay": 0.0001
+      },
+      "state": "COMPLETE",
+      "user_attrs": {
+        "source_checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+        "subset_sha256": "09c18411e6815ee6dec9854a7d770c5863abc830373f48c00e47dae3964d2e23",
+        "training_seed": 20261103
+      },
+      "value": 2.4053477599438895
+    },
+    {
+      "intermediate_values": {
+        "1": 2.4094813379630717,
+        "2": 2.408679047847954,
+        "3": 2.405243864553095,
+        "4": 2.4018391600574356,
+        "5": 2.400505335402244,
+        "6": 2.404706425775326
+      },
+      "number": 1,
+      "params": {
+        "learning_rate": 0.00015,
+        "weight_decay": 5e-05
+      },
+      "state": "COMPLETE",
+      "user_attrs": {
+        "source_checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+        "subset_sha256": "09c18411e6815ee6dec9854a7d770c5863abc830373f48c00e47dae3964d2e23",
+        "training_seed": 20261103
+      },
+      "value": 2.400505335402244
+    },
+    {
+      "intermediate_values": {
+        "1": 2.434677218071641,
+        "2": 2.4336019740047226,
+        "3": 2.4075786747713273,
+        "4": 2.413659270881064,
+        "5": 2.4145451422942,
+        "6": 2.434213195779078
+      },
+      "number": 2,
+      "params": {
+        "learning_rate": 0.0004,
+        "weight_decay": 0.0002
+      },
+      "state": "COMPLETE",
+      "user_attrs": {
+        "source_checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+        "subset_sha256": "09c18411e6815ee6dec9854a7d770c5863abc830373f48c00e47dae3964d2e23",
+        "training_seed": 20261103
+      },
+      "value": 2.4075786747713273
+    },
+    {
+      "intermediate_values": {
+        "1": 2.4108855498257307,
+        "2": 2.40837985976686,
+        "3": 2.4057947620117788,
+        "4": 2.401761486720741,
+        "5": 2.4007925586687673,
+        "6": 2.40235602408847
+      },
+      "number": 3,
+      "params": {
+        "learning_rate": 8.28155011520409e-05,
+        "weight_decay": 1.1793541917958406e-05
+      },
+      "state": "COMPLETE",
+      "user_attrs": {
+        "source_checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+        "subset_sha256": "09c18411e6815ee6dec9854a7d770c5863abc830373f48c00e47dae3964d2e23",
+        "training_seed": 20261103
+      },
+      "value": 2.4007925586687673
+    },
+    {
+      "intermediate_values": {
+        "1": 2.41046883909897,
+        "2": 2.408445673774045
+      },
+      "number": 4,
+      "params": {
+        "learning_rate": 9.296472070616083e-05,
+        "weight_decay": 0.0005
+      },
+      "state": "PRUNED",
+      "user_attrs": {
+        "source_checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+        "subset_sha256": "09c18411e6815ee6dec9854a7d770c5863abc830373f48c00e47dae3964d2e23",
+        "training_seed": 20261103
+      },
+      "value": 2.408445673774045
+    },
+    {
+      "intermediate_values": {
+        "1": 2.4104784581875065,
+        "2": 2.408447954868536
+      },
+      "number": 5,
+      "params": {
+        "learning_rate": 9.298257982473736e-05,
+        "weight_decay": 0.0005
+      },
+      "state": "PRUNED",
+      "user_attrs": {
+        "source_checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+        "subset_sha256": "09c18411e6815ee6dec9854a7d770c5863abc830373f48c00e47dae3964d2e23",
+        "training_seed": 20261103
+      },
+      "value": 2.408447954868536
+    },
+    {
+      "intermediate_values": {
+        "1": 2.410513057819385,
+        "2": 2.4084950731780475
+      },
+      "number": 6,
+      "params": {
+        "learning_rate": 9.299215085341406e-05,
+        "weight_decay": 0.0005
+      },
+      "state": "PRUNED",
+      "user_attrs": {
+        "source_checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+        "subset_sha256": "09c18411e6815ee6dec9854a7d770c5863abc830373f48c00e47dae3964d2e23",
+        "training_seed": 20261103
+      },
+      "value": 2.4084950731780475
+    },
+    {
+      "intermediate_values": {
+        "1": 2.410535567682378,
+        "2": 2.4085524945001633
+      },
+      "number": 7,
+      "params": {
+        "learning_rate": 9.299776713365188e-05,
+        "weight_decay": 0.0005
+      },
+      "state": "PRUNED",
+      "user_attrs": {
+        "source_checkpoint_sha256": "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+        "subset_sha256": "09c18411e6815ee6dec9854a7d770c5863abc830373f48c00e47dae3964d2e23",
+        "training_seed": 20261103
+      },
+      "value": 2.4085524945001633
+    }
+  ],
+  "verdict": "READY_FOR_PHASE_2",
+  "verification_ledger": {
+    "atari-smoke": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "videochess_rl.improvement.demo"
+      ],
+      "ended_at_utc": "2026-11-02T18:15:34.515441+00:00",
+      "exit_code": 0,
+      "git_revision": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+      "log_path": "artifacts/improvement/videochess-improvement-20261103-v1/private-logs/atari-smoke.log",
+      "log_sha256": "9d2d9b39c8829b8cd60d4efb4db99ee99a72ae966aec6d6fd934bbdd4679a466",
+      "started_at_utc": "2026-11-02T18:15:23.637961+00:00",
+      "wall_seconds": 10.87747773999945
+    },
+    "batch64-provenance-focused": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "test_improvement",
+        "test_m5_replay",
+        "test_m5_checkpoint",
+        "test_m5_targets",
+        "test_m5_training",
+        "-v"
+      ],
+      "end_git_revision": "e9435088a9824f362cfce31c9e94342041ed8d9b",
+      "ended_at_utc": "2026-11-02T19:14:00.790924+00:00",
+      "exit_code": 0,
+      "git_revision": "e9435088a9824f362cfce31c9e94342041ed8d9b",
+      "log_path": ".agents/evidence/improvement/batch64-provenance-focused.log",
+      "log_sha256": "9ca582f8955932c967b873462a6538675172ab255ced08a67b92bee0fa365c5d",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/batch64-provenance-focused/manifest.json",
+      "source_manifest_sha256": "ab9b210febf7dd5fdf844f7a52457eb4ab9360a6ee4257b7d47f6481bc23fbab",
+      "source_worktree_dirty": true,
+      "started_at_utc": "2026-11-02T19:13:55.764592+00:00",
+      "wall_seconds": 5.026334296999266
+    },
+    "cached-action-input-focused": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "test_improvement",
+        "test_m5_replay",
+        "test_m5_checkpoint",
+        "test_m5_targets",
+        "test_m5_training",
+        "test_m5_recovered_source",
+        "-v"
+      ],
+      "end_git_revision": "160c3ffc640917688db3a65e0503f21007da0fdb",
+      "ended_at_utc": "2026-11-02T19:48:50.811190+00:00",
+      "exit_code": 0,
+      "git_revision": "160c3ffc640917688db3a65e0503f21007da0fdb",
+      "log_path": ".agents/evidence/improvement/cached-action-input-focused.log",
+      "log_sha256": "0e2909764cd2a27ff272abc71a78a2864df6b2c0aaef4b816b2ef110a9d60b67",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/cached-action-input-focused/manifest.json",
+      "source_manifest_sha256": "13247931f2988960b31f576a7a38cf2e1bfe4c13d1e308fc1a07f1df80704b75",
+      "source_worktree_dirty": true,
+      "started_at_utc": "2026-11-02T19:48:45.199947+00:00",
+      "wall_seconds": 5.611242267998023
+    },
+    "clean-source-preflight": {
+      "command": [
+        "python3",
+        "scripts/agent_preflight.py"
+      ],
+      "end_git_revision": "2d390fe7df862e998960e8fdc4cdef5f93f2bd5c",
+      "ended_at_utc": "2026-11-02T18:31:23.829474+00:00",
+      "exit_code": 0,
+      "git_revision": "2d390fe7df862e998960e8fdc4cdef5f93f2bd5c",
+      "log_path": ".agents/evidence/improvement/clean-source-preflight.log",
+      "log_sha256": "7dd577a6295e64db759e5ca90dfb9b3dc4c0def8cc0bf337014875e82e32e242",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/clean-source-preflight/manifest.json",
+      "source_manifest_sha256": "dfa3a7645ae9c2c764592203105f578f553b46a5761def6d04ea2a3596922622",
+      "started_at_utc": "2026-11-02T18:31:17.830963+00:00",
+      "wall_seconds": 5.998534289003146
+    },
+    "coverage-completion": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "videochess_rl.improvement.coverage"
+      ],
+      "end_git_revision": "08a6d89bd64fdf7d090784bff0a3a186f6dd52be",
+      "ended_at_utc": "2026-11-02T19:01:52.375450+00:00",
+      "exit_code": 0,
+      "git_revision": "08a6d89bd64fdf7d090784bff0a3a186f6dd52be",
+      "log_path": ".agents/evidence/improvement/coverage-completion.log",
+      "log_sha256": "de88c4605a7856b351883fdc0e3849b9d5f2e60d75102574b622475cb15bef25",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/coverage-completion/manifest.json",
+      "source_manifest_sha256": "f7c23346ada0b601bb6c33694b6f0494fc064406e36d88e2d4722b66a82ce416",
+      "started_at_utc": "2026-11-02T19:01:39.173170+00:00",
+      "wall_seconds": 13.2022820279999
+    },
+    "coverage-focused": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "test_improvement",
+        "test_m5_replay",
+        "test_m5_checkpoint",
+        "test_m5_targets",
+        "test_m5_training",
+        "-v"
+      ],
+      "end_git_revision": "08a6d89bd64fdf7d090784bff0a3a186f6dd52be",
+      "ended_at_utc": "2026-11-02T19:03:17.025359+00:00",
+      "exit_code": 0,
+      "git_revision": "08a6d89bd64fdf7d090784bff0a3a186f6dd52be",
+      "log_path": ".agents/evidence/improvement/coverage-focused.log",
+      "log_sha256": "289cb5191df691927355cb3f13b707a648b4f98160ee93769a9ca4eafc9b83f1",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/coverage-focused/manifest.json",
+      "source_manifest_sha256": "80a281fcae0487513d7eca8f58f53315bf142640f1d8d1cbd8910de568167237",
+      "started_at_utc": "2026-11-02T19:03:12.648116+00:00",
+      "wall_seconds": 4.377244196999527
+    },
+    "dataset-build": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "videochess_rl.improvement.data"
+      ],
+      "ended_at_utc": "2026-11-02T18:31:38.458550+00:00",
+      "exit_code": 0,
+      "git_revision": "2d390fe7df862e998960e8fdc4cdef5f93f2bd5c",
+      "log_path": ".agents/evidence/improvement/dataset-build.log",
+      "log_sha256": "9719a68abf90a4ce0c0633286ef8b76ceb3677f6cfe528f104533ec30345854d",
+      "started_at_utc": "2026-11-02T18:15:13.342960+00:00",
+      "wall_seconds": 985.115594551
+    },
+    "dataset-build-v2": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "videochess_rl.improvement.data"
+      ],
+      "ended_at_utc": "2026-11-02T18:23:55.754948+00:00",
+      "exit_code": 1,
+      "git_revision": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+      "log_path": ".agents/evidence/improvement/dataset-build-v2.log",
+      "log_sha256": "0998183cb2c387889a40d317b0cf154b7d695fc4c69b9058ab394244324bda26",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/dataset-build-v2/manifest.json",
+      "source_manifest_sha256": "687739d2e272cffc93522c8e4cddf800fb38b902dd0d1b2245afade0dfd59219",
+      "started_at_utc": "2026-11-02T18:23:34.689818+00:00",
+      "wall_seconds": 21.065125386001455
+    },
+    "dataset-build-v3": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "videochess_rl.improvement.data"
+      ],
+      "ended_at_utc": "2026-11-02T18:39:26.296603+00:00",
+      "exit_code": 0,
+      "git_revision": "09cc1d6348236c5b6f5d11425360c00a8c6ddb32",
+      "log_path": ".agents/evidence/improvement/dataset-build-v3.log",
+      "log_sha256": "d42d26caa8fda0f12a39cf69cb0f113554b7207bb1ba276b495b84672cd7c4ae",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/dataset-build-v3/manifest.json",
+      "source_manifest_sha256": "5fec7342940d82171896acd4bc9b6d83e3044beb91ede89cb392ac0c33fad3c9",
+      "started_at_utc": "2026-11-02T18:23:49.679559+00:00",
+      "wall_seconds": 936.6170397160022
+    },
+    "existing-demo-smoke": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "videochess_rl.improvement.existing_demo"
+      ],
+      "ended_at_utc": "2026-11-02T18:26:06.975626+00:00",
+      "exit_code": 0,
+      "git_revision": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+      "log_path": ".agents/evidence/improvement/existing-demo-smoke.log",
+      "log_sha256": "1ce08d8b3bad9af19730ed38d2008dfd1ccc3feda55a4a29cbad34e3ef1288ad",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/existing-demo-smoke/manifest.json",
+      "source_manifest_sha256": "f0985dabbbaf0da5cf60c29c792f1f4d143d21010dc304be432cfbad16619eb3",
+      "started_at_utc": "2026-11-02T18:25:25.477590+00:00",
+      "wall_seconds": 41.49803347499983
+    },
+    "fine-tuning-control-focused": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "test_improvement",
+        "test_m5_replay",
+        "test_m5_checkpoint",
+        "test_m5_targets",
+        "test_m5_training",
+        "-v"
+      ],
+      "end_git_revision": "e29911c3af2a91a99c6fd0ab1407db721ceb447f",
+      "ended_at_utc": "2026-11-02T19:45:33.141153+00:00",
+      "exit_code": 0,
+      "git_revision": "e29911c3af2a91a99c6fd0ab1407db721ceb447f",
+      "log_path": ".agents/evidence/improvement/fine-tuning-control-focused.log",
+      "log_sha256": "075f0b8a37e440bb2bb56417508fba9746682bec4d1f63a5448338eac3ea7bab",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/fine-tuning-control-focused/manifest.json",
+      "source_manifest_sha256": "a36970ae01a2742ea69ba2034f115c94023c0f63404611edc9d1ff45641779eb",
+      "source_worktree_dirty": true,
+      "started_at_utc": "2026-11-02T19:45:27.854326+00:00",
+      "wall_seconds": 5.2868271580009605
+    },
+    "focused-final-code": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "test_improvement",
+        "test_m5_replay",
+        "test_m5_checkpoint",
+        "test_m5_targets",
+        "test_m5_training",
+        "-v"
+      ],
+      "end_git_revision": "e70a2e1ce766232a7193f45965d4711ef3ee3236",
+      "ended_at_utc": "2026-11-02T18:46:11.603956+00:00",
+      "exit_code": 0,
+      "git_revision": "e70a2e1ce766232a7193f45965d4711ef3ee3236",
+      "log_path": ".agents/evidence/improvement/focused-final-code.log",
+      "log_sha256": "829ef7877a0ac431d2278e02939247f029304d81adc5414c2ae534e6655f001e",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/focused-final-code/manifest.json",
+      "source_manifest_sha256": "1cb7de600b5efa1e8d6805cf03e8c23651a08e617cb13466943b91f2fe516d27",
+      "started_at_utc": "2026-11-02T18:46:06.813355+00:00",
+      "wall_seconds": 4.7905980159994215
+    },
+    "focused-v1": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_improvement",
+        "-v"
+      ],
+      "ended_at_utc": "2026-11-02T18:19:21.697509+00:00",
+      "exit_code": 1,
+      "git_revision": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+      "log_path": ".agents/evidence/improvement/focused-v1.log",
+      "log_sha256": "d8e941723fa06d36d6575c5ad9efb6c860dcfffaeacfef375d1037ddea5c49f8",
+      "started_at_utc": "2026-11-02T18:19:16.226032+00:00",
+      "wall_seconds": 5.4714732940010435
+    },
+    "focused-v2": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "tests.test_improvement",
+        "tests.test_m5_replay",
+        "tests.test_m5_checkpoint",
+        "tests.test_m5_targets",
+        "tests.test_m5_training",
+        "-v"
+      ],
+      "ended_at_utc": "2026-11-02T18:20:20.886744+00:00",
+      "exit_code": 1,
+      "git_revision": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+      "log_path": ".agents/evidence/improvement/focused-v2.log",
+      "log_sha256": "ecc7a8c9ae9d4e2afdf3138ec594a94daca92b4635cf53dfdc4be131f4a49109",
+      "started_at_utc": "2026-11-02T18:20:15.072626+00:00",
+      "wall_seconds": 5.814113090000319
+    },
+    "focused-v3": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "test_improvement",
+        "test_m5_replay",
+        "test_m5_checkpoint",
+        "test_m5_targets",
+        "test_m5_training",
+        "-v"
+      ],
+      "ended_at_utc": "2026-11-02T18:21:05.962797+00:00",
+      "exit_code": 0,
+      "git_revision": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+      "log_path": ".agents/evidence/improvement/focused-v3.log",
+      "log_sha256": "44b68a0e0a7fb6878e990b4df3f0d3b46bd64fa1d152e00eb73452d80675a4e8",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/focused-v3/manifest.json",
+      "source_manifest_sha256": "3afe026a3d86a13d01661dcb29cd0eddce1173be3a79a2233862225c20735644",
+      "started_at_utc": "2026-11-02T18:20:59.404317+00:00",
+      "wall_seconds": 6.558477673999732
+    },
+    "focused-v4": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "test_improvement",
+        "test_m5_replay",
+        "test_m5_checkpoint",
+        "test_m5_targets",
+        "test_m5_training",
+        "-v"
+      ],
+      "ended_at_utc": "2026-11-02T18:22:12.580774+00:00",
+      "exit_code": 1,
+      "git_revision": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+      "log_path": ".agents/evidence/improvement/focused-v4.log",
+      "log_sha256": "e000827d526d13ca9825334062624c1fb3acb76bf9ad56d7e2717a0f8a94c1d8",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/focused-v4/manifest.json",
+      "source_manifest_sha256": "e8277de0e4675b5a47c664edd2a3766a9c094cebc12f0a0f024bae1bd38ed5d2",
+      "started_at_utc": "2026-11-02T18:22:06.243178+00:00",
+      "wall_seconds": 6.33759641999859
+    },
+    "focused-v5": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "test_improvement",
+        "test_m5_replay",
+        "test_m5_checkpoint",
+        "test_m5_targets",
+        "test_m5_training",
+        "-v"
+      ],
+      "ended_at_utc": "2026-11-02T18:22:45.982508+00:00",
+      "exit_code": 0,
+      "git_revision": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+      "log_path": ".agents/evidence/improvement/focused-v5.log",
+      "log_sha256": "3c774695e3dc3b33aefbe1bb5eb4986b4c49b8c0003ea65533246ce4e155da9e",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/focused-v5/manifest.json",
+      "source_manifest_sha256": "e729289dd68242adca9f4ac18a5d8381774a50a15549b9cb29c987bf7b51dcca",
+      "started_at_utc": "2026-11-02T18:22:38.634381+00:00",
+      "wall_seconds": 7.3481249709984695
+    },
+    "focused-v6": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "test_improvement",
+        "test_m5_replay",
+        "test_m5_checkpoint",
+        "test_m5_targets",
+        "test_m5_training",
+        "-v"
+      ],
+      "ended_at_utc": "2026-11-02T18:28:29.792354+00:00",
+      "exit_code": 0,
+      "git_revision": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+      "log_path": ".agents/evidence/improvement/focused-v6.log",
+      "log_sha256": "54c6a521e60b7195c233de6f87b799fa6f2c199417b2dd3cb76f9c1c2d669d60",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/focused-v6/manifest.json",
+      "source_manifest_sha256": "36e461b4c26f12d3ba7a11330e1659e50ff69928994f1f2bcde25de33a99266d",
+      "started_at_utc": "2026-11-02T18:28:22.925067+00:00",
+      "wall_seconds": 6.8672916010000336
+    },
+    "focused-v7": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "test_improvement",
+        "test_m5_replay",
+        "test_m5_checkpoint",
+        "test_m5_targets",
+        "test_m5_training",
+        "-v"
+      ],
+      "end_git_revision": "09cc1d6348236c5b6f5d11425360c00a8c6ddb32",
+      "ended_at_utc": "2026-11-02T18:38:32.762061+00:00",
+      "exit_code": 0,
+      "git_revision": "09cc1d6348236c5b6f5d11425360c00a8c6ddb32",
+      "log_path": ".agents/evidence/improvement/focused-v7.log",
+      "log_sha256": "afad1110a1641d04d4ba6ef840bcc83155efaaa3f1d7c2ddf899b92c9ab97fcc",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/focused-v7/manifest.json",
+      "source_manifest_sha256": "dc9d1b915203399325b8ce181fba5dfbf64645f369a1a38577ac2f92ad84cfae",
+      "started_at_utc": "2026-11-02T18:38:28.316965+00:00",
+      "wall_seconds": 4.445096028997796
+    },
+    "full-coverage-recovery-code": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "end_git_revision": "377e0fe99dce4689e6fa3f3e25d92a93d3c292a4",
+      "ended_at_utc": "2026-11-02T19:37:23.715104+00:00",
+      "exit_code": 1,
+      "git_revision": "377e0fe99dce4689e6fa3f3e25d92a93d3c292a4",
+      "log_path": ".agents/evidence/improvement/full-coverage-recovery-code.log",
+      "log_sha256": "8b38bb4231bd150d1bae4f9cb3c13bbc17b14d6379bc66e2b3429a146c14d4f3",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/full-coverage-recovery-code/manifest.json",
+      "source_manifest_sha256": "61e9e65b6a30fc011fef5719461ddc5e73765816fe35109f1ff652136d2a636e",
+      "source_worktree_dirty": false,
+      "started_at_utc": "2026-11-02T19:34:26.478003+00:00",
+      "wall_seconds": 177.23710122100238
+    },
+    "full-final-code": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "end_git_revision": "0b498f81f8d7b3811ccfdb12d598c0cf6baadcdd",
+      "ended_at_utc": "2026-11-02T18:51:09.418164+00:00",
+      "exit_code": 0,
+      "git_revision": "0b498f81f8d7b3811ccfdb12d598c0cf6baadcdd",
+      "log_path": ".agents/evidence/improvement/full-final-code.log",
+      "log_sha256": "1166ff560659981238b30819e35373611d01197be66cd0e1c1b669961a997e0c",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/full-final-code/manifest.json",
+      "source_manifest_sha256": "1cb7de600b5efa1e8d6805cf03e8c23651a08e617cb13466943b91f2fe516d27",
+      "started_at_utc": "2026-11-02T18:48:03.031191+00:00",
+      "wall_seconds": 186.38697100900026
+    },
+    "full-suite-v1": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "ended_at_utc": "2026-11-02T18:29:51.203878+00:00",
+      "exit_code": 1,
+      "git_revision": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+      "log_path": ".agents/evidence/improvement/full-suite-v1.log",
+      "log_sha256": "9e055f0ed2266c31e5e7c8c077673e0675fff414dead0b40bc9a8b6006631523",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/full-suite-v1/manifest.json",
+      "source_manifest_sha256": "1872c11bc0f443f55d7f691817d0606cba6d704e0027152755f9a28de3863197",
+      "started_at_utc": "2026-11-02T18:25:01.597726+00:00",
+      "wall_seconds": 289.606149266001
+    },
+    "full-suite-v2": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "end_git_revision": "09cc1d6348236c5b6f5d11425360c00a8c6ddb32",
+      "ended_at_utc": "2026-11-02T18:37:34.358189+00:00",
+      "exit_code": 0,
+      "git_revision": "09cc1d6348236c5b6f5d11425360c00a8c6ddb32",
+      "log_path": ".agents/evidence/improvement/full-suite-v2.log",
+      "log_sha256": "f6fc5491176f7246946bdc2b80bba6980e0546fa23f9e50bf2a6c55abab6f9a1",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/full-suite-v2/manifest.json",
+      "source_manifest_sha256": "e12d5ff5b0bf7d804731f1a4530d906a65ed140606a14a5ed4b5f082d8b01a8d",
+      "started_at_utc": "2026-11-02T18:34:18.444937+00:00",
+      "wall_seconds": 195.91324957500183
+    },
+    "historical-compatibility-focused": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "test_improvement",
+        "test_m5_replay",
+        "test_m5_checkpoint",
+        "test_m5_targets",
+        "test_m5_training",
+        "test_m5_recovered_source",
+        "test_g5_final_closeout",
+        "test_pre_m7_contracts",
+        "-v"
+      ],
+      "end_git_revision": "377e0fe99dce4689e6fa3f3e25d92a93d3c292a4",
+      "ended_at_utc": "2026-11-02T19:40:47.220988+00:00",
+      "exit_code": 0,
+      "git_revision": "377e0fe99dce4689e6fa3f3e25d92a93d3c292a4",
+      "log_path": ".agents/evidence/improvement/historical-compatibility-focused.log",
+      "log_sha256": "9245b0ee3891e2664ad834e66a46e89cea2cc9b05936a70dda04d78bb6998218",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/historical-compatibility-focused/manifest.json",
+      "source_manifest_sha256": "e58a5c64b81dd8303d39fc611bbfec9f4920ba6fddbb5ef27327d522b574e6e6",
+      "source_worktree_dirty": true,
+      "started_at_utc": "2026-11-02T19:40:41.632410+00:00",
+      "wall_seconds": 5.588578454000526
+    },
+    "live-atari-smoke": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "videochess_rl.improvement.demo",
+        "--live"
+      ],
+      "ended_at_utc": "2026-11-02T18:19:53.711642+00:00",
+      "exit_code": 0,
+      "git_revision": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+      "log_path": "artifacts/improvement/videochess-improvement-20261103-v1/private-logs/live-atari-smoke.log",
+      "log_sha256": "e34764966a366e9aa6f02a73647db784e6fca801d9405e31effb1701d8fc9718",
+      "started_at_utc": "2026-11-02T18:19:37.811193+00:00",
+      "wall_seconds": 15.900445778002904
+    },
+    "m4-after-coverage": {
+      "command": [
+        "${REPO_ROOT}//.venv/bin/python",
+        "-m",
+        "videochess_rl.improvement.m4"
+      ],
+      "end_git_revision": "4aa807050ac891f265c8494ab5b7ea350bcabef9",
+      "ended_at_utc": "2026-11-02T20:09:12.247521+00:00",
+      "exit_code": 0,
+      "git_revision": "08a6d89bd64fdf7d090784bff0a3a186f6dd52be",
+      "log_path": ".agents/evidence/improvement/m4-after-coverage.log",
+      "log_sha256": "f6f13f95f20d9524becc1757f5fd2b47ad739f24af50e0d6cc6e549f88fd1579",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/m4-after-coverage/manifest.json",
+      "source_manifest_sha256": "80a281fcae0487513d7eca8f58f53315bf142640f1d8d1cbd8910de568167237",
+      "started_at_utc": "2026-11-02T19:02:15.328722+00:00",
+      "wall_seconds": 4016.9188008599995
+    },
+    "m4-campaign": {
+      "command": [
+        "${REPO_ROOT}//.venv/bin/python",
+        "-m",
+        "videochess_rl.improvement.m4"
+      ],
+      "end_git_revision": "08a6d89bd64fdf7d090784bff0a3a186f6dd52be",
+      "ended_at_utc": "2026-11-02T18:58:37.351883+00:00",
+      "exit_code": -2,
+      "git_revision": "e70a2e1ce766232a7193f45965d4711ef3ee3236",
+      "log_path": ".agents/evidence/improvement/m4-campaign.log",
+      "log_sha256": "d6afe63f7f68159bfebefec90487a2b450b741b6bdb5e17dc799773412f25746",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/m4-campaign/manifest.json",
+      "source_manifest_sha256": "192882b8fea72b623ef45b82d930d6db550efcd334aca11dc6acec4ff57f4768",
+      "started_at_utc": "2026-11-02T18:40:14.727183+00:00",
+      "wall_seconds": 1102.6247009290018
+    },
+    "m5-initial-probe": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "videochess_rl.improvement.m5",
+        "--checkpoint",
+        "artifacts/m4/m4-behavior-20261027-r4/pretrained-behavior-only.pt",
+        "--checkpoint-sha256",
+        "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+        "--output",
+        "artifacts/improvement/videochess-improvement-20261103-v1/probe-initial",
+        "--probe-decisions",
+        "1400"
+      ],
+      "ended_at_utc": "2026-11-02T18:18:34.839716+00:00",
+      "exit_code": 1,
+      "git_revision": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+      "log_path": ".agents/evidence/improvement/m5-initial-probe.log",
+      "log_sha256": "ee79f2ab7dc92b28eae386c1cb1631ea73af6cae860c03137c6047bd86cf5047",
+      "started_at_utc": "2026-11-02T18:18:32.321531+00:00",
+      "wall_seconds": 2.518175675999373
+    },
+    "m5-probe-v2": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "videochess_rl.improvement.m5",
+        "--checkpoint",
+        "artifacts/m4/m4-behavior-20261027-r4/pretrained-behavior-only.pt",
+        "--checkpoint-sha256",
+        "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4",
+        "--output",
+        "artifacts/improvement/videochess-improvement-20261103-v1/probe-v2",
+        "--probe-decisions",
+        "1400"
+      ],
+      "ended_at_utc": "2026-11-02T18:20:38.683341+00:00",
+      "exit_code": 0,
+      "git_revision": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+      "log_path": ".agents/evidence/improvement/m5-probe-v2.log",
+      "log_sha256": "d40207558f2ea248553d77db4552e333dd218572d2400234c18e449157cce761",
+      "started_at_utc": "2026-11-02T18:19:24.801695+00:00",
+      "wall_seconds": 73.8816432900021
+    },
+    "partial-tail-recovery-focused": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "test_improvement",
+        "test_m5_replay",
+        "test_m5_checkpoint",
+        "test_m5_targets",
+        "test_m5_training",
+        "-v"
+      ],
+      "end_git_revision": "6d7fb4f74efd4b87494e8c5339a253f937dc06a1",
+      "ended_at_utc": "2026-11-02T19:31:21.438008+00:00",
+      "exit_code": 0,
+      "git_revision": "6d7fb4f74efd4b87494e8c5339a253f937dc06a1",
+      "log_path": ".agents/evidence/improvement/partial-tail-recovery-focused.log",
+      "log_sha256": "0d0a4c2d22c185ffafad42be34fbd72d87f58468e3ca4ca4a3995e549445a7a7",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/partial-tail-recovery-focused/manifest.json",
+      "source_manifest_sha256": "e122ed00391547ac11ffbc6ee1f9f7d7231e03ac202f4d422bd5c2c1fbfa7e91",
+      "source_worktree_dirty": true,
+      "started_at_utc": "2026-11-02T19:31:16.382940+00:00",
+      "wall_seconds": 5.055076503998862
+    },
+    "readiness-benchmarks": {
+      "command": [
+        "${REPO_ROOT}//.venv/bin/python",
+        "-m",
+        "videochess_rl.improvement.benchmark"
+      ],
+      "end_git_revision": "c744dd6e895ff8a9000fb7bb328fe3e449de1314",
+      "ended_at_utc": "2026-11-02T20:49:18.920271+00:00",
+      "exit_code": 0,
+      "git_revision": "c744dd6e895ff8a9000fb7bb328fe3e449de1314",
+      "log_path": ".agents/evidence/improvement/readiness-benchmarks.log",
+      "log_sha256": "e681c6056fa60ccd6c240574b2c6557d090d64b4fd9422e0393f5d47e1b4805f",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/readiness-benchmarks/manifest.json",
+      "source_manifest_sha256": "f1f9bb964bd61bc3deef362f289b62788f4988a5109269937d777a23f89328df",
+      "source_worktree_dirty": true,
+      "started_at_utc": "2026-11-02T20:22:39.682127+00:00",
+      "wall_seconds": 1599.2381453250018
+    },
+    "recovery-probe": {
+      "command": [
+        "${REPO_ROOT}//.venv/bin/python",
+        "-m",
+        "videochess_rl.improvement.recovery_probe"
+      ],
+      "end_git_revision": "6ca7276da775b122c7406fb4824b324a948f89b1",
+      "ended_at_utc": "2026-11-02T20:13:12.327842+00:00",
+      "exit_code": -2,
+      "git_revision": "4aa807050ac891f265c8494ab5b7ea350bcabef9",
+      "log_path": ".agents/evidence/improvement/recovery-probe.log",
+      "log_sha256": "6461f0192a84db935abe56b00573801eb0b0764fe2934dce2333f58d69537a80",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/recovery-probe/manifest.json",
+      "source_manifest_sha256": "af1c1795ec29da96c328ed851d147af500e00f5d0808cc6782ae850441fbe3fd",
+      "source_worktree_dirty": true,
+      "started_at_utc": "2026-11-02T20:09:12.346219+00:00",
+      "wall_seconds": 239.98162368699923
+    },
+    "recovery-probe-frozen": {
+      "command": [
+        "${REPO_ROOT}//.venv/bin/python",
+        "-m",
+        "videochess_rl.improvement.recovery_probe"
+      ],
+      "end_git_revision": "f9a0759c5318741822fb60f6c61b44bb66851e83",
+      "ended_at_utc": "2026-11-02T20:14:11.186827+00:00",
+      "exit_code": 1,
+      "git_revision": "f9a0759c5318741822fb60f6c61b44bb66851e83",
+      "log_path": ".agents/evidence/improvement/recovery-probe-frozen.log",
+      "log_sha256": "347df4b92a12bb2208fb00c9602b9d102aeca69dbe34a12751aa5068c5e8b4f3",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/recovery-probe-frozen/manifest.json",
+      "source_manifest_sha256": "f1f9bb964bd61bc3deef362f289b62788f4988a5109269937d777a23f89328df",
+      "source_worktree_dirty": false,
+      "started_at_utc": "2026-11-02T20:14:09.655736+00:00",
+      "wall_seconds": 1.531093116998818
+    },
+    "recovery-probe-frozen-v2": {
+      "command": [
+        "${REPO_ROOT}//.venv/bin/python",
+        "-m",
+        "videochess_rl.improvement.recovery_probe"
+      ],
+      "end_git_revision": "c744dd6e895ff8a9000fb7bb328fe3e449de1314",
+      "ended_at_utc": "2026-11-02T20:22:39.581291+00:00",
+      "exit_code": 0,
+      "git_revision": "c744dd6e895ff8a9000fb7bb328fe3e449de1314",
+      "log_path": ".agents/evidence/improvement/recovery-probe-frozen-v2.log",
+      "log_sha256": "dc172b23ed58c6a65e78b6deaf6922cb4a6ae0bafd85d2eb632a38df8a3e28d1",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/recovery-probe-frozen-v2/manifest.json",
+      "source_manifest_sha256": "f1f9bb964bd61bc3deef362f289b62788f4988a5109269937d777a23f89328df",
+      "source_worktree_dirty": false,
+      "started_at_utc": "2026-11-02T20:14:47.227847+00:00",
+      "wall_seconds": 472.3534454449982
+    },
+    "thread-binding-focused": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "unittest",
+        "test_improvement",
+        "test_m5_replay",
+        "test_m5_checkpoint",
+        "test_m5_targets",
+        "test_m5_training",
+        "-v"
+      ],
+      "end_git_revision": "0b498f81f8d7b3811ccfdb12d598c0cf6baadcdd",
+      "ended_at_utc": "2026-11-02T18:54:42.485319+00:00",
+      "exit_code": 0,
+      "git_revision": "0b498f81f8d7b3811ccfdb12d598c0cf6baadcdd",
+      "log_path": ".agents/evidence/improvement/thread-binding-focused.log",
+      "log_sha256": "f448d51d0c125163f1769f4d2b429201f92cf56bfa2887e460e025ffd5a74f5c",
+      "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/thread-binding-focused/manifest.json",
+      "source_manifest_sha256": "628918fe6237e186df3c8203eac7fb3c4f61b4ff05f834836e39b7fe779e3513",
+      "started_at_utc": "2026-11-02T18:54:38.023428+00:00",
+      "wall_seconds": 4.461893275001785
+    }
+  },
+  "path_redaction_note": "Tracked evidence replaces absolute repository roots with ${REPO_ROOT}; the optional untracked GUI path is labeled generically. Historical metrics, timestamps, revisions, and payload hashes are preserved."
+}

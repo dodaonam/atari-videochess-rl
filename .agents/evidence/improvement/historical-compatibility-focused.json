@@ -1,0 +1,28 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "unittest",
+    "test_improvement",
+    "test_m5_replay",
+    "test_m5_checkpoint",
+    "test_m5_targets",
+    "test_m5_training",
+    "test_m5_recovered_source",
+    "test_g5_final_closeout",
+    "test_pre_m7_contracts",
+    "-v"
+  ],
+  "end_git_revision": "377e0fe99dce4689e6fa3f3e25d92a93d3c292a4",
+  "ended_at_utc": "2026-11-02T19:40:47.220988+00:00",
+  "exit_code": 0,
+  "git_revision": "377e0fe99dce4689e6fa3f3e25d92a93d3c292a4",
+  "log_path": ".agents/evidence/improvement/historical-compatibility-focused.log",
+  "log_sanitization": "Repository-root paths replaced by <repo>; trailing whitespace removed; substantive output preserved.",
+  "log_sha256": "9245b0ee3891e2664ad834e66a46e89cea2cc9b05936a70dda04d78bb6998218",
+  "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/historical-compatibility-focused/manifest.json",
+  "source_manifest_sha256": "e58a5c64b81dd8303d39fc611bbfec9f4920ba6fddbb5ef27327d522b574e6e6",
+  "source_worktree_dirty": true,
+  "started_at_utc": "2026-11-02T19:40:41.632410+00:00",
+  "wall_seconds": 5.588578454000526
+}
