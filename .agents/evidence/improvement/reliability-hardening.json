@@ -7,6 +7,28 @@
     "official_run_identity_unchanged": true,
     "private_model_dataset_ROM_replay_and_RGB_artifacts_remain_ignored": true
   },
+  "clean_checkout_full_suite": {
+    "checkout": "separate clean Git worktree; no private artifact payloads",
+    "command": "PATH=\"<project-root>/.venv/share/stockfish:$PATH\" <project-root>/.venv/bin/python -m unittest discover -s tests -v",
+    "end_at_local": "2026-11-03T22:32:24.959424470+07:00",
+    "exit_code": 0,
+    "failed": 0,
+    "log_path": "artifacts/improvement/videochess-improvement-20261103-v1/private-logs/reliability-full-suite-clean-checkout-6ab4c01.log",
+    "log_sha256": "ed20abe27b7fe581badaae6abd0b0e2545cf64e0a31b0547602a7f1c7ab472da",
+    "passed": 579,
+    "project_root_resolution": "The temporary clean checkout; the virtual environment and accepted Stockfish binary were reused from the current local repository.",
+    "repository_preflight": "pass",
+    "revision": "6ab4c0129218dc9c8e4eaac50eaf99b6818c85a9",
+    "skipped": 4,
+    "skips": [
+      "accepted local M4 initialization fixture unavailable in the checkout",
+      "private M6 M4/M5 policy roster not configured",
+      "two historical private M5 compatibility tests not configured"
+    ],
+    "start_at_local": "2026-11-03T22:28:37.016134353+07:00",
+    "total": 583,
+    "tree": "96cd5a45a3056dd9f2d9e972f26de524ef528ae0"
+  },
   "controller_diagnosis": {
     "bounded_one_frame_diagnostic": {
       "fix_established": false,
@@ -68,7 +90,7 @@
       }
     ]
   },
-  "created_at_local": "2026-11-03T22:25:33.533793+07:00",
+  "created_at_local": "2026-11-03T22:33:58.453932+07:00",
   "demo_smokes": [
     {
       "checkpoint_sha256": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293",
@@ -261,20 +283,20 @@
     "base": "main",
     "base_commit": "a5515c8b006c65e38c61086883f1c83ba377e62a",
     "context_check": {
-      "completed_at_utc": "2026-11-03T15:24:40Z",
+      "completed_at_utc": "2026-11-03T15:29:39Z",
       "conclusion": "success",
-      "job_id": 126012330074,
-      "run_id": 41663435488,
-      "url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/41663435488/job/126012330074"
+      "job_id": 126014522805,
+      "run_id": 41664058472,
+      "url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/41664058472/job/126014522805"
     },
     "draft": false,
     "head_at_creation": "37ea04c70084335229952130151263725a9f038e",
-    "latest_head_at_last_check": "54aa544dd930233fbb2f2da3d1ed0610ec29d69f",
+    "latest_head_at_last_check": "6ab4c0129218dc9c8e4eaac50eaf99b6818c85a9",
     "merge_authorized": false,
     "number": 25,
     "status": "OPEN",
     "tree_at_creation": "ea751f18ce72804c6694efc5137a43f48ace18a6",
-    "tree_at_last_check": "207f9d07629d4856d6139580ebbecbc4f15d4f07",
+    "tree_at_last_check": "96cd5a45a3056dd9f2d9e972f26de524ef528ae0",
     "url": "https://github.com/dodaonam/atari-videochess-rl/pull/25"
   },
   "remaining_limitations": [

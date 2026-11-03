@@ -109,6 +109,13 @@ focused Atari/demo/evaluation regression command ran 87 tests, all passed. The
 full and focused logs are ignored local artifacts, with relative paths and
 SHA-256 digests recorded in the machine ledger.
 
+A second full run from a separate clean Git worktree at
+`6ab4c0129218dc9c8e4eaac50eaf99b6818c85a9` (tree
+`96cd5a45a3056dd9f2d9e972f26de524ef528ae0`) also passed repository preflight
+and the full suite: 583 tests, 579 passed, zero failed, four private-artifact
+skips, exit code 0. This checkout had no local model/dataset payloads; the same
+four private-artifact tests skipped by design.
+
 One earlier all-suite diagnostic ran before a clean commit and produced a
 context-snapshot failure because the worktree was dirty, plus a test-fixture
 error fixed before the clean run. It is preserved as a failed diagnostic and
