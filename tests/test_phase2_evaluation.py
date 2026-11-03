@@ -22,6 +22,8 @@ class Phase2EvaluationTests(unittest.TestCase):
         self.assertEqual(result["score"], .375)
         self.assertEqual(result["opponent_color_strata"]["simple_material_heuristic/white"]["truncations"], 1)
         self.assertEqual(result["agent_decisions"], 408)
+        partial = outcomes(rows[:2], 4)
+        self.assertEqual((partial["incomplete"], partial["unattempted"]), (2, 2))
 
     def test_selection_rank_order_matches_protocol(self):
         stronger_simple = {"outcomes": {"score": .5, "truncations": 0, "incomplete": 0,

@@ -58,7 +58,9 @@ def outcomes(rows: list[dict], scheduled: int) -> dict:
     losses = sum(r.get("status") == "completed_game" and not r.get("truncated") and r.get("agent_reward") == -1.0 for r in rows)
     draws = sum(r.get("status") == "completed_game" and not r.get("truncated") and r.get("agent_reward") == 0.0 for r in rows)
     trunc = sum(r.get("status") == "completed_game" and r.get("truncated") for r in rows)
-    incomplete = sum(r.get("status") != "completed_game" for r in rows)
+    observed_incomplete = sum(r.get("status") != "completed_game" for r in rows)
+    incomplete = max(0, scheduled - wins - losses - draws - trunc)
+    unattempted = max(0, scheduled - len(rows))
     decisions = sum(int(r.get("agent_decisions") or 0) for r in rows)
     episodes = {}
     for opponent in ("random_legal", "simple_material_heuristic"):
@@ -68,11 +70,15 @@ def outcomes(rows: list[dict], scheduled: int) -> dict:
             d = sum(r.get("status") == "completed_game" and not r.get("truncated") and r.get("agent_reward") == 0.0 for r in subset)
             l = sum(r.get("status") == "completed_game" and not r.get("truncated") and r.get("agent_reward") == -1.0 for r in subset)
             t = sum(r.get("status") == "completed_game" and r.get("truncated") for r in subset)
-            inc = sum(r.get("status") != "completed_game" for r in subset)
+            observed_inc = sum(r.get("status") != "completed_game" for r in subset)
+            inc = max(0, scheduled // 4 - w - d - l - t)
+            unattempted_stratum = max(0, scheduled // 4 - len(subset))
             episodes[f"{opponent}/{color}"] = {"scheduled": scheduled // 4, "wins": w, "losses": l, "true_draws": d, "truncations": t, "incomplete": inc,
+                "observed_incomplete": observed_inc, "unattempted": unattempted_stratum,
                 "score": (w + .5 * d) / (scheduled // 4) if scheduled else None}
     return {"scheduled_games": scheduled, "observed_rows": len(rows), "wins": wins, "losses": losses, "true_draws": draws,
-            "truncations": trunc, "incomplete": incomplete, "score": (wins + .5 * draws) / scheduled if scheduled else None,
+            "truncations": trunc, "incomplete": incomplete, "observed_incomplete": observed_incomplete,
+            "unattempted": unattempted, "score": (wins + .5 * draws) / scheduled if scheduled else None,
             "win_rate": wins / scheduled if scheduled else None, "draw_rate": draws / scheduled if scheduled else None,
             "incomplete_rate": (trunc + incomplete) / scheduled if scheduled else None,
             "agent_decisions": decisions, "mean_decisions_per_observed_game": decisions / len(rows) if rows else None,
@@ -164,6 +170,8 @@ def run_candidates(protocol: dict, official: dict, mode: str) -> dict:
         selected=summaries[0]
         selection={"rule":protocol["development"]["selection"],"selected":selected,
             "ranking":summaries,"initial_stage_ranking":first,"extended_finalists":sorted(finalists_n),
+            "eligible_snapshots":[{"training_decisions":n,"path":path.relative_to(ROOT).as_posix(),"sha256":digest} for n,path,_,_,digest in snapshots],
+            "stage1_not_evaluated":[n for n,path,_,_,digest in snapshots if not rows_by_decision[n]],
             "selection_frozen_before_reserved_final":True,"final_results_used_for_selection":False}
         (destination/"selection.json").write_text(json.dumps(selection,indent=2,sort_keys=True)+"\n")
     else:
