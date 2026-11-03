@@ -1,4 +1,4 @@
-<!-- checkpoint-id: cp-381749cf-20261102T212150738653Z -->
+<!-- checkpoint-id: cp-14a71e26-20261103T025507417763Z -->
 # Session Handoff
 
 This file is a pointer, not a status snapshot. Do not infer current phase, task status, completion, blockers, or Git state from prose here. The checkpoint ID must match `.agents/state/PROJECT_STATE.yaml`.
@@ -110,3 +110,7 @@ and the [Phase 1 handoff](../../docs/improvement/PHASE1_HANDOFF.md). Its direct
 owner authorization and separation from historical M0–M7 are recorded in
 [ADR-0005](../../docs/02-management/decisions/ADR-0005-independent-improvement-campaign.md).
 This is a pointer, not a competing campaign status or Phase 2 authorization.
+
+## Improvement campaign Phase 2 execution pointer — 2026-11-03
+
+The Project Owner directly authorized Phase 2 and the Independent PM accepted the Phase 1 handoff. Current pre-run authorization and config/code identities are in `PROJECT_STATE.yaml`; full local artifact verification and deadline budgeting are in `../../.agents/evidence/improvement/phase2-pre-run-freeze.json`. The feature branch remains the Phase 1 branch. The official run is not started as of this checkpoint. Follow the Phase 2 assignment; preserve private artifacts locally and leave any final consolidation PR open and unmerged.
