@@ -19,6 +19,8 @@
         "success": "SMOKE_PASS (exit 0)"
       }
     },
+    "clean_check_commit": "0e16b056ef1a4814b0e9c0bb619488c64d94bece",
+    "clean_check_tree": "8f26e60540cdebd3eaed69673f092c611b11bbc7",
     "controller_safety": {
       "DEMO_F04_changed": false,
       "blind_FIRE_retry_added": false,
@@ -62,6 +64,46 @@
       "total": 106,
       "worktree_had_task_changes": true
     },
+    "full_suite_checkpoint_diagnostic": {
+      "command": "DISPLAY=:1 PYTHONPATH=. PATH=\"<project-root>/.venv/share/stockfish:$PATH\" <project-root>/.venv/bin/python -m unittest discover -s tests -v",
+      "corrective_commit": "0e16b056ef1a4814b0e9c0bb619488c64d94bece",
+      "end_at_local": "2026-11-03T23:20:08.146560677+07:00",
+      "errors": 0,
+      "exit_code": 1,
+      "failed": 2,
+      "failure_root_cause": "Canonical portable checkpoint was recorded before staging the task changes; the clean clone correctly rejected the checkpoint-to-commit transition.",
+      "passed": 596,
+      "private_log_path": "artifacts/improvement/videochess-improvement-20261103-v1/private-logs/pm25-full-suite-clean-4972ece.log",
+      "private_log_sha256": "68cece5ec0fbfefc7b3ba90f45b31b86bf571390612468b23d010a90822113d0",
+      "revision": "4972eced332e73e45ed5525540f2c43f87010900",
+      "skipped": 4,
+      "start_at_local": "2026-11-03T23:17:29.785708752+07:00",
+      "total": 602,
+      "tree": "af34870ca6707fbb3286b3d5b3f7c93d5b3e8280"
+    },
+    "full_suite_clean_checkout": {
+      "checkout": "separate clean worktree; repository preflight passed; private model/dataset artifacts absent",
+      "command": "DISPLAY=:1 PYTHONPATH=. PATH=\"<project-root>/.venv/share/stockfish:$PATH\" <project-root>/.venv/bin/python -m unittest discover -s tests -v",
+      "end_at_local": "2026-11-03T23:23:59.505372858+07:00",
+      "errors": 0,
+      "exit_code": 0,
+      "failed": 0,
+      "passed": 598,
+      "private_log_path": "artifacts/improvement/videochess-improvement-20261103-v1/private-logs/pm25-full-suite-clean-0e16b05.log",
+      "private_log_sha256": "52effd94d8319921a4af0eb3fa5b8029397bb9d62a71a3d489c65afeb9dbd313",
+      "revision": "0e16b056ef1a4814b0e9c0bb619488c64d94bece",
+      "skipped": 4,
+      "skips": [
+        "accepted local M4 initialization fixture unavailable",
+        "private M6 M4/M5 policy roster not configured",
+        "two historical private M5 compatibility tests not configured"
+      ],
+      "start_at_local": "2026-11-03T23:20:57.087104017+07:00",
+      "stockfish_uci_readiness": "suite passed with existing local Stockfish 19 on PATH; no search or labeling",
+      "total": 602,
+      "tree": "8f26e60540cdebd3eaed69673f092c611b11bbc7"
+    },
+    "implementation_commit": "4972eced332e73e45ed5525540f2c43f87010900",
     "real_ALE_bounded_smokes": [
       {
         "checkpoint_sha256": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293",

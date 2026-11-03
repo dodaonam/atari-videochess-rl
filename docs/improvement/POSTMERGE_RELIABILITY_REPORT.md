@@ -179,3 +179,15 @@ result. These are smoke verifications only. The previously unresolved
 occupied-target FIRE confirmation remains fail-closed: uncertain moves are
 not advanced or retried, and an interruption before the two verified pairs
 must now exit nonzero.
+
+The final PM25-F01 focused suite ran 106 tests successfully, including the
+interactive-compatibility and extra-turn-record regressions. The
+full suite on implementation commit `4972eced332e73e45ed5525540f2c43f87010900`
+initially exposed two clean-clone recovery failures because its portable
+checkpoint had been captured before staging the remediation commit. The
+checkpoint was refreshed at the committed head. A clean checkout at
+`0e16b056ef1a4814b0e9c0bb619488c64d94bece` then passed repository preflight and
+all 602 tests: 598 passed, zero failed, and four private-artifact tests skipped.
+The skips require the accepted private M4 initialization artifact, the M6
+private policy roster, and the two historical private M5 snapshots. The full
+suite log and digest are recorded in the PM25-F01 machine-readable evidence.
