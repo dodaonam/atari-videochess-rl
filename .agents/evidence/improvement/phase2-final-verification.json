@@ -1,0 +1,285 @@
+{
+  "atari_summary": {
+    "double-dqn": {
+      "attempts": 3,
+      "categories": {
+        "input_or_policy_control_failure": 3
+      },
+      "seeds": [
+        20261210,
+        20261211,
+        20261212
+      ],
+      "total_wall_seconds": 143.25810217000253,
+      "verified_opponent_moves": 27,
+      "verified_player_moves": 27
+    },
+    "m4-a": {
+      "attempts": 3,
+      "categories": {
+        "incomplete_bounded_attempt": 3
+      },
+      "seeds": [
+        20261210,
+        20261211,
+        20261212
+      ],
+      "total_wall_seconds": 186.52470109898422,
+      "verified_opponent_moves": 36,
+      "verified_player_moves": 36
+    }
+  },
+  "auto_merge_enabled": false,
+  "base_branch": "main",
+  "base_sha": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+  "clean_checkout": {
+    "head": "5b9f93f3092a8e9b97c4061813bbd150bdd1b837",
+    "phase2_focused_tests": "5 passed",
+    "preflight": "PASS_WITH_EXPECTED_ARTIFACT_MANIFEST_WARNING",
+    "tree": "03346066361e7a14a3396bee2bea00282604a2c9",
+    "working_tree_clean": true
+  },
+  "feature_branch": "feature/videochess-performance-improvement-20261103",
+  "final_head": "5b9f93f3092a8e9b97c4061813bbd150bdd1b837",
+  "final_tree": "03346066361e7a14a3396bee2bea00282604a2c9",
+  "focused_verification": {
+    "all_passed": true,
+    "command_groups": 7
+  },
+  "full_test_suite": {
+    "exit_code": 1,
+    "failed": 1,
+    "failure": "Stockfish readiness test: executable unavailable on PATH",
+    "log_sha256": "d533f1db5d33c2589b4a1e8c196baf054b794a42c4bf2e8504ab5597830bd477",
+    "passed": 545,
+    "skipped": 4,
+    "tests_run": 550
+  },
+  "generated_at_utc": "2026-11-03T10:48:38+00:00",
+  "live_demo_smokes": 3,
+  "main_unchanged_sha": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+  "merge_performed": false,
+  "official_training": {
+    "actual_valid_decisions": 250000,
+    "attempt_directories": 1,
+    "experiment_id": "videochess-improvement-20261103-v1",
+    "optimizer_updates": 62245,
+    "status": "completed_target",
+    "target_syncs": 124,
+    "training_seed": 20261103,
+    "wall_seconds": 23417.393771747993
+  },
+  "official_training_completed": true,
+  "preflight": "PASS_WITH_EXPECTED_ARTIFACT_MANIFEST_WARNING",
+  "private_artifacts_published": false,
+  "pull_request": {
+    "draft": false,
+    "merge_state": "unmerged",
+    "number": null,
+    "state": "not_created_yet",
+    "target": "main",
+    "url": null
+  },
+  "pushed_head_verified": true,
+  "release_or_deployment": false,
+  "repository": "https://github.com/dodaonam/atari-videochess-rl",
+  "reserved_final_policies": {
+    "M4-A_behavior_cloning": {
+      "agent_decisions": 1505,
+      "draw_rate": 0.225,
+      "incomplete": 0,
+      "incomplete_rate": 0.0,
+      "losses": 0,
+      "mean_decisions_per_observed_game": 37.625,
+      "observed_incomplete": 0,
+      "observed_rows": 40,
+      "opponent_color_strata": {
+        "random_legal/black": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.85,
+          "true_draws": 3,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 7
+        },
+        "random_legal/white": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.95,
+          "true_draws": 1,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 9
+        },
+        "simple_material_heuristic/black": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.9,
+          "true_draws": 2,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 8
+        },
+        "simple_material_heuristic/white": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.85,
+          "true_draws": 3,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 7
+        }
+      },
+      "scheduled_games": 40,
+      "score": 0.8875,
+      "true_draws": 9,
+      "truncations": 0,
+      "unattempted": 0,
+      "win_rate": 0.775,
+      "wins": 31
+    },
+    "historical_M5": {
+      "agent_decisions": 6145,
+      "draw_rate": 0.8,
+      "incomplete": 0,
+      "incomplete_rate": 0.025,
+      "losses": 4,
+      "mean_decisions_per_observed_game": 153.625,
+      "observed_incomplete": 0,
+      "observed_rows": 40,
+      "opponent_color_strata": {
+        "random_legal/black": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.5,
+          "true_draws": 8,
+          "truncations": 1,
+          "unattempted": 0,
+          "wins": 1
+        },
+        "random_legal/white": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.55,
+          "true_draws": 9,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 1
+        },
+        "simple_material_heuristic/black": {
+          "incomplete": 0,
+          "losses": 4,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.35,
+          "true_draws": 5,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 1
+        },
+        "simple_material_heuristic/white": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.5,
+          "true_draws": 10,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 0
+        }
+      },
+      "scheduled_games": 40,
+      "score": 0.475,
+      "true_draws": 32,
+      "truncations": 1,
+      "unattempted": 0,
+      "win_rate": 0.075,
+      "wins": 3
+    },
+    "selected_double_dqn": {
+      "agent_decisions": 1874,
+      "draw_rate": 0.25,
+      "incomplete": 0,
+      "incomplete_rate": 0.0,
+      "losses": 0,
+      "mean_decisions_per_observed_game": 46.85,
+      "observed_incomplete": 0,
+      "observed_rows": 40,
+      "opponent_color_strata": {
+        "random_legal/black": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.8,
+          "true_draws": 4,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 6
+        },
+        "random_legal/white": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.95,
+          "true_draws": 1,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 9
+        },
+        "simple_material_heuristic/black": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.85,
+          "true_draws": 3,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 7
+        },
+        "simple_material_heuristic/white": {
+          "incomplete": 0,
+          "losses": 0,
+          "observed_incomplete": 0,
+          "scheduled": 10,
+          "score": 0.9,
+          "true_draws": 2,
+          "truncations": 0,
+          "unattempted": 0,
+          "wins": 8
+        }
+      },
+      "scheduled_games": 40,
+      "score": 0.875,
+      "true_draws": 10,
+      "truncations": 0,
+      "unattempted": 0,
+      "win_rate": 0.75,
+      "wins": 30
+    }
+  },
+  "schema": "videochess-phase2-final-verification/1",
+  "selected_q_checkpoint": {
+    "decision_count": 250000,
+    "path": "artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-250000.pt",
+    "sha256": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293"
+  },
+  "simulator_selection_score": 0.9083333333333333,
+  "working_tree_clean_before_final_metadata_update": true
+}

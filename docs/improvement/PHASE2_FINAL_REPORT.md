@@ -12,6 +12,7 @@ The simulator results do not show an improvement over M4-A in the reserved sampl
 - Repository branch: `feature/videochess-performance-improvement-20261103`
 - Base: `main` at `7415d821acf11dd3e07e4990c2f5539cfdf31916`
 - Phase 1 accepted head: `5a983d9ae8b945b78b84e5f6decd2c92dd49d61e`
+- Phase 2 pushed head/tree before PR creation: `5b9f93f3092a8e9b97c4061813bbd150bdd1b837` / `03346066361e7a14a3396bee2bea00282604a2c9`
 - Official training source revision/tree: `76c898ed0dd8a2e8bf0c76cbd8565f83077284e0` / `b5877036a2e954c085e0da386c0bcb596ff21ab3`
 - Training code digest: `cf329438880a82b7b39b05b8f1f3bc1af21e262edb4143e1035e494f891a5705`
 - Training configuration digest: `2cfe2805edd3e05756fd3ef981a6e4441e3b4ad717649d5647085228e837aabd`

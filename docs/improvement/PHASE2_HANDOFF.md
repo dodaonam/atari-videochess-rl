@@ -9,6 +9,7 @@ The authorized Phase 2 work is complete through one official training run, snaps
 | Experiment | `videochess-improvement-20261103-v1` |
 | Base `main` | `7415d821acf11dd3e07e4990c2f5539cfdf31916` |
 | Feature branch | `feature/videochess-performance-improvement-20261103` |
+| Phase 2 pushed head/tree | `5b9f93f3092a8e9b97c4061813bbd150bdd1b837` / `03346066361e7a14a3396bee2bea00282604a2c9` |
 | Training seed | `20261103` |
 | M4 source SHA-256 | `cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed` |
 | Training config SHA-256 | `2cfe2805edd3e05756fd3ef981a6e4441e3b4ad717649d5647085228e837aabd` |
