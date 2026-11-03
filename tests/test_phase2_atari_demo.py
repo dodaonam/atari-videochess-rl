@@ -1,5 +1,7 @@
 """Outcome categories for bounded real-ALE evaluation and selected-policy loading."""
 import unittest
+from contextlib import redirect_stdout
+from io import StringIO
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from types import SimpleNamespace
@@ -54,12 +56,26 @@ class DemoSeedTests(unittest.TestCase):
         identity = SimpleNamespace(policy_id="M4-A_behavior_cloning", policy_type="behavior_cloning",
                                    training_seed=20261103)
         with TemporaryDirectory() as temp:
-            with patch.object(demo, "ARTIFACTS", Path(temp)), \
-                 patch.object(demo, "load_demo_policy", return_value=(object(), identity)), \
-                 patch.object(demo, "LiveDemoWindow") as viewer:
+            with patch("videochess_rl.improvement.preflight.run_demo_preflight",
+                       return_value={"ok": True, "checks": []}), \
+                 patch.object(demo, "ARTIFACTS", Path(temp)), \
+                 patch("videochess_rl.improvement.policies.load_demo_policy",
+                       return_value=(object(), identity)), \
+                 patch("videochess_rl.improvement.live.LiveDemoWindow") as viewer:
+                viewer.return_value.start.return_value = 0
                 self.assertEqual(demo.main(["--policy", "m4-a", "--seed", "123456"]), 0)
                 self.assertEqual(viewer.call_args.kwargs["demo_seed"], 123456)
                 self.assertEqual(viewer.call_args.kwargs["identity"].training_seed, 20261103)
+                self.assertEqual(viewer.call_args.kwargs["session_limits"]["ale_episode_frame_cap"], None)
+
+    def test_preflight_only_returns_without_constructing_the_gui(self):
+        from videochess_rl.improvement import demo
+        report = {"ok": True, "checks": []}
+        with patch("videochess_rl.improvement.preflight.run_demo_preflight", return_value=report), \
+             patch("videochess_rl.improvement.live.LiveDemoWindow") as viewer, \
+             redirect_stdout(StringIO()):
+            self.assertEqual(demo.main(["--policy", "m4-a", "--reset-seed", "123456", "--preflight-only"]), 0)
+        viewer.assert_not_called()
 
     def test_optional_external_gui_requires_an_explicit_path(self):
         import sys
