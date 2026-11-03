@@ -63,3 +63,9 @@ The full semantic replay audit took 1,977.74 seconds. Its integrity result is re
 - The public evidence files contain aggregate metrics, repository-relative identity paths, and checksums only.
 - The accepted historical M0–M7 results were preserved. No merge, auto-merge, approval, release, deployment, or new training campaign occurred.
 - The exact branch push, final clean-checkout verification, PR URL/state/checks, and final tree identity are recorded in the final machine-readable verification record and PR after it is created.
+
+## Pull request
+
+- PR #24: [Post-closeout VideoChess improvement: single-seed warm DDQN, evaluation and live demo](https://github.com/dodaonam/atari-videochess-rl/pull/24).
+- Created open and non-draft, targeting `main`; not merged and no auto-merge enabled.
+- The repository-preflight check was queued at PR creation. The final check result and updated PR head should be inspected on GitHub before PM review.

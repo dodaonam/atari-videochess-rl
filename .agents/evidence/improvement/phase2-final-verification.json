@@ -55,7 +55,7 @@
     "skipped": 4,
     "tests_run": 550
   },
-  "generated_at_utc": "2026-11-03T10:48:38+00:00",
+  "generated_at_utc": "2026-11-03T10:52:00+00:00",
   "live_demo_smokes": 3,
   "main_unchanged_sha": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
   "merge_performed": false,
@@ -73,12 +73,21 @@
   "preflight": "PASS_WITH_EXPECTED_ARTIFACT_MANIFEST_WARNING",
   "private_artifacts_published": false,
   "pull_request": {
+    "auto_merge_enabled": false,
+    "check_name": "context",
+    "check_workflow": "Repository preflight",
     "draft": false,
-    "merge_state": "unmerged",
-    "number": null,
-    "state": "not_created_yet",
+    "head_branch": "feature/videochess-performance-improvement-20261103",
+    "head_oid_at_creation": "268bcfccc165eaef1fdc2b61b8c1f0a9dad4c3ba",
+    "initial_check_status": "QUEUED",
+    "merge_performed": false,
+    "merge_state_at_creation": "UNSTABLE",
+    "mergeable": "MERGEABLE",
+    "number": 24,
+    "review_decision": "",
+    "state": "OPEN",
     "target": "main",
-    "url": null
+    "url": "https://github.com/dodaonam/atari-videochess-rl/pull/24"
   },
   "pushed_head_verified": true,
   "release_or_deployment": false,
@@ -281,5 +290,6 @@
     "sha256": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293"
   },
   "simulator_selection_score": 0.9083333333333333,
+  "verdict": "ready_for_independent_pm_review_with_documented_limitations",
   "working_tree_clean_before_final_metadata_update": true
 }

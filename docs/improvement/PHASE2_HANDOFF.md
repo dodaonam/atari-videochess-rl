@@ -4,6 +4,8 @@
 
 The authorized Phase 2 work is complete through one official training run, snapshot selection, reserved simulator evaluation, bounded actual-ALE evaluation, two live GUI smoke tests, and implementation. The feature branch must remain unmerged. The final state is awaiting the independent PM's review of one open PR targeting `main`.
 
+PR #24: [Post-closeout VideoChess improvement](https://github.com/dodaonam/atari-videochess-rl/pull/24). It is open, non-draft, targets `main`, and is unmerged. The repository-preflight check was queued when the PR was opened; see the PR for its live result.
+
 | Identity | Value |
 |---|---|
 | Experiment | `videochess-improvement-20261103-v1` |

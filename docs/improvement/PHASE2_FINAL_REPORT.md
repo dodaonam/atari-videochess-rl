@@ -4,6 +4,8 @@
 
 **Engineering execution is complete and ready for independent PM review.** The authorized single warm-start Double DQN run reached 250,000 valid decisions with seed `20261103`; the snapshots and replay journal passed integrity checks; all fixed simulator evaluations and the bounded actual-ALE evaluation ran; and the repository-contained live demo was smoke-tested with both the selected Q checkpoint and M4-A.
 
+Consolidation PR [#24](https://github.com/dodaonam/atari-videochess-rl/pull/24) is open, non-draft, targets `main`, and remains unmerged. Its repository-preflight check was queued at creation.
+
 The simulator results do not show an improvement over M4-A in the reserved sample. The selected Q model did not produce an Atari terminal result in the bounded paired attempts: each of its three attempts stopped on an RGB target-confirmation uncertainty after nine verified player moves and replies. M4-A completed 12 verified turns in each of its three capped attempts, which also did not reach a game terminal. These are separate findings from engineering readiness.
 
 ## Campaign identity and preserved history
