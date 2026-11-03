@@ -117,9 +117,10 @@ The Project Owner directly authorized Phase 2 and the Independent PM accepted th
 
 ## PR #24 remediation (2026-11-03)
 
-The PM-requested remediation is in progress on the existing feature branch. See
+The PM-requested remediation is complete on the existing feature branch. See
 `docs/improvement/PM24_REMEDIATION.md` for findings, evidence, and the remaining
 owner/PM integration-history decision. The official training run and all
 accepted scientific results are immutable. No merge or history rewrite is
 authorized. Current verification evidence is under
-`.agents/evidence/improvement/phase2-remediation-verification.json`.
+`.agents/evidence/improvement/phase2-remediation-verification.json`. The remaining
+owner/PM decision is the integration method for the already-published branch history.

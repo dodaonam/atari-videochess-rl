@@ -62,6 +62,14 @@ default. No credentials or private-key markers were found. The previously
 published feature history still contains some of those original path values;
 the same integration-history decision applies.
 
+The path-bearing records were introduced in reachable feature commits
+`2d390fe7df862e998960e8fdc4cdef5f93f2bd5c`,
+`5014258afb28ffed045e9f285120c0ae6cce4f53`, and
+`964c241080b37951a6b10eb3d891ef227562f1c2`; the sanitizer is in
+`1540653b1d6a57a3ffb9b8c0afe7e4666418ea05`. The Atari move-sequence field was
+introduced separately in `0596698249d74da4dd9184a12975f83efd08bca3` and removed
+at the same sanitizer commit.
+
 A normal merge commit would retain the feature commits in `main` history. A
 squash integration of the sanitized final tree would put only the net sanitized
 tree change into `main`, without importing the intermediate feature commits.
@@ -95,3 +103,23 @@ metadata. The tip is sanitized, and squash integration can keep the unsanitized
 intermediate patch out of `main`, but only the Independent PM/Project Owner may
 decide whether that is sufficient. The Atari target-confirmation behavior is a
 documented engineering limitation, not a fabricated terminal result.
+
+## Verification results
+
+- The accepted Stockfish 19 binary at `.venv/share/stockfish/stockfish` matches
+  the Phase 1 SHA-256 and passed the focused UCI readiness test. No package was
+  installed and no analysis/search was run.
+- Focused remediation suite: 12 tests passed, zero failed, zero skipped. The
+  real-ALE custom-seed smoke displayed the reset seed separately from the
+  model seed and verified two player/opponent turns and replay in both
+  directions.
+- Full repository suite on clean checkpointed commit
+  `ee6668b56fefd1678a9f16897fc83da9d9ce43f9`, tree
+  `462145abefce566d53e893ddab2d2956b718ce2f`: 556 tests, 552 passed, zero
+  failed, four private-artifact tests skipped; exit code 0. The retained log is
+  local at `artifacts/improvement/videochess-improvement-20261103-v1/private-logs/pm24-full-tests-clean-final.log`; its digest and timing are in the machine-readable verification record.
+- Two earlier full-suite attempts are retained as failed diagnostics: one ran
+  with a dirty tree and failed the Git-snapshot context assertion; the next
+  exposed the temporary canonical governance-text regression. That text was
+  restored, checkpointed, and the clean full suite then passed. Neither failed
+  diagnostic is described as a pass.

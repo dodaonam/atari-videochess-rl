@@ -27,8 +27,14 @@
       "version": "Stockfish 19"
     },
     "F03": {
+      "clean_full_suite_commit": "ee6668b56fefd1678a9f16897fc83da9d9ce43f9",
+      "clean_full_suite_tree": "462145abefce566d53e893ddab2d2956b718ce2f",
+      "frozen_training_code_sha256": "cf329438880a82b7b39b05b8f1f3bc1af21e262edb4143e1035e494f891a5705",
+      "frozen_training_config_sha256": "2cfe2805edd3e05756fd3ef981a6e4441e3b4ad717649d5647085228e837aabd",
+      "official_training_source_commit": "76c898ed0dd8a2e8bf0c76cbd8565f83077284e0",
       "old_head_label_repaired": true,
       "prior_head_retained_as": "verified_head_before_final_metadata_commit",
+      "tested_implementation_commit": "1540653b1d6a57a3ffb9b8c0afe7e4666418ea05",
       "training_source_identity_preserved": true
     },
     "F04": {
@@ -63,6 +69,42 @@
       "simulator_evaluation_repeated": false
     }
   },
+  "clean_suite_failure_before_state_correction": {
+    "authoritative_clean_suite": false,
+    "command": "PATH=\"$PWD/.venv/share/stockfish:$PATH\" .venv/bin/python -m unittest discover -s tests -v",
+    "ended_at_utc": "2026-11-03T11:56:09+00:00",
+    "exit_code": 1,
+    "failed": 4,
+    "log_path": "artifacts/improvement/videochess-improvement-20261103-v1/private-logs/pm24-full-tests-clean.log",
+    "log_sha256": "a095cf11fa33fa47e23d6e9d0134505607c0450adaac12810ff39b70f8aea724",
+    "passed": 548,
+    "root_cause": "A remediation edit replaced canonical governance.next_user_action. It broke current M0-M7/G5 status invariants and clean-clone recovery; the value was restored and checkpointed before the passing run.",
+    "skipped": 4,
+    "source_commit": "8dff348bce2ca81df656787f166b55dbfd484c69",
+    "started_at_utc": "2026-11-03T11:53:22+00:00",
+    "tests_run": 556
+  },
+  "final_full_suite": {
+    "command": "PATH=\"$PWD/.venv/share/stockfish:$PATH\" .venv/bin/python -m unittest discover -s tests -v",
+    "ended_at_utc": "2026-11-03T12:00:07+00:00",
+    "exit_code": 0,
+    "failed": 0,
+    "log_path": "artifacts/improvement/videochess-improvement-20261103-v1/private-logs/pm24-full-tests-clean-final.log",
+    "log_sha256": "c077fd6405443bf44eb0efcb43f621563b467cf0c1eebdf448f8287af8d5f4b9",
+    "passed": 552,
+    "skipped": 4,
+    "skipped_tests": [
+      "test_accepted_m4_shared_transfer_and_fresh_paired_q_head (accepted local M4 artifact unavailable in clean clone)",
+      "M6PrivatePolicyRosterTests.setUpClass (private M4/M5 artifact roots not configured)",
+      "test_all_private_post_rl_snapshots_load_and_score_offline_state (private M5 artifact root not configured)",
+      "test_selected_private_snapshot_loads_and_infers_without_mutation (private M5 policy path not configured)"
+    ],
+    "source_commit": "ee6668b56fefd1678a9f16897fc83da9d9ce43f9",
+    "source_tree": "462145abefce566d53e893ddab2d2956b718ce2f",
+    "started_at_utc": "2026-11-03T11:57:07+00:00",
+    "stockfish_19_sha256": "0f83d24cc46d2c66c60f16001af5444873bc112b7d028594513426894c12da19",
+    "tests_run": 556
+  },
   "focused_test_run": {
     "command": "PATH=\"$PWD/.venv/share/stockfish:$PATH\" PYTHONPATH=. .venv/bin/python -m unittest tests.test_phase2_atari_demo tests.test_phase2_evaluation tests.test_m0_smoke.M0EnvironmentSmokeTests.test_stockfish_answers_uci_readiness_without_searching -v",
     "ended_at_utc": "2026-11-03T11:50:04+00:00",
@@ -76,6 +118,37 @@
     "started_at_utc": "2026-11-03T11:50:02+00:00",
     "worktree_contains_remediation_changes": true
   },
+  "full_suite_attempts": [
+    {
+      "exit_code": 1,
+      "failed": 1,
+      "failure": "git_snapshot_matches false because the repository was dirty",
+      "id": "dirty-tree-diagnostic",
+      "log_sha256": "68de5f7c033afa29eb7733a6983e495d5e5300f367d4bbd83806af199cc5e8f6",
+      "passed": 550,
+      "skipped": 4,
+      "tests_run": 555
+    },
+    {
+      "exit_code": 1,
+      "failed": 4,
+      "failure": "temporary canonical governance.next_user_action text replaced historical G5/M0-M7 status",
+      "id": "canonical-state-regression-diagnostic",
+      "log_sha256": "a095cf11fa33fa47e23d6e9d0134505607c0450adaac12810ff39b70f8aea724",
+      "passed": 548,
+      "skipped": 4,
+      "tests_run": 556
+    },
+    {
+      "exit_code": 0,
+      "failed": 0,
+      "id": "clean-final",
+      "log_sha256": "c077fd6405443bf44eb0efcb43f621563b467cf0c1eebdf448f8287af8d5f4b9",
+      "passed": 552,
+      "skipped": 4,
+      "tests_run": 556
+    }
+  ],
   "immutable_experiment": {
     "completed_episodes": 3203,
     "experiment_id": "videochess-improvement-20261103-v1",
@@ -111,22 +184,33 @@
     "log_sha256": "68de5f7c033afa29eb7733a6983e495d5e5300f367d4bbd83806af199cc5e8f6",
     "passed": 550,
     "skipped": 4,
+    "source_commit": "d35520a0301a7c5413c26f1792762b51d58a48df",
     "started_at_utc": "2026-11-03T11:34:19+00:00",
     "tests_run": 555
   },
   "integration_history_decision": {
     "authorized_method": "pending Independent PM/Project Owner decision",
+    "feature_history_exposure": "partial Atari opponent UCI sequences plus absolute workstation path values in prior commits",
     "force_push_performed": false,
+    "historical_path_commits": [
+      "2d390fe7df862e998960e8fdc4cdef5f93f2bd5c",
+      "5014258afb28ffed045e9f285120c0ae6cce4f53",
+      "964c241080b37951a6b10eb3d891ef227562f1c2",
+      "0596698249d74da4dd9184a12975f83efd08bca3"
+    ],
     "merge_performed": false,
+    "normal_merge_commit_retains_history": true,
     "reason": "Earlier reachable PR commits contain partial Atari move sequences and local absolute path values; normal merge commit retains those commits, while squash applies the sanitized net tree without importing intermediate commits into main.",
-    "required": true
+    "required": true,
+    "sanitized_tip": "true",
+    "squash_integration_avoids_importing_intermediate_feature_commits": true
   },
   "preflight": {
     "active_official_training_process": false,
     "agent_preflight": "PASS_WITH_EXPECTED_ARTIFACT_MANIFEST_WARNING",
     "base_main": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
     "branch": "feature/videochess-performance-improvement-20261103",
-    "head": "d35520a0301a7c5413c26f1792762b51d58a48df",
+    "head": "ee6668b56fefd1678a9f16897fc83da9d9ce43f9",
     "initial_worktree": "clean",
     "official_training_complete": true,
     "pr": {
@@ -142,22 +226,55 @@
     "repository": "https://github.com/dodaonam/atari-videochess-rl",
     "resume_required": false,
     "started_local": "2026-11-03T18:19:01+07:00",
-    "tree": "fb6f562340bc08e671242407d1b44d0f704016a2"
+    "tree": "462145abefce566d53e893ddab2d2956b718ce2f"
   },
   "privacy_audit": {
     "absolute_home_paths_in_current_tip": false,
+    "absolute_path_redactions": {
+      "external_owner_gui": "generic placeholder",
+      "old_test_logs": "<repo>",
+      "repository_root": "${REPO_ROOT}"
+    },
     "allowed_compressed_files": "37 canonical checkpoint-history archive segments; manifest-backed state history only",
     "changed_paths_inspected": 176,
+    "changed_paths_inspected_final": 179,
     "credential_patterns_found": 0,
+    "historical_absolute_path_commits": [
+      "2d390fe7df862e998960e8fdc4cdef5f93f2bd5c",
+      "5014258afb28ffed045e9f285120c0ae6cce4f53",
+      "964c241080b37951a6b10eb3d891ef227562f1c2"
+    ],
+    "history_path_values_remain_reachable": true,
     "move_sequence_fields_in_public_atari_json": false,
+    "move_sequences_in_public_evidence": false,
     "restricted_model_rom_rgb_replay_payloads_committed": false
   },
+  "revision_identity": {
+    "clean_full_suite_tested_commit": "ee6668b56fefd1678a9f16897fc83da9d9ce43f9",
+    "clean_full_suite_tested_tree": "462145abefce566d53e893ddab2d2956b718ce2f",
+    "initial_pm_review_head": "d35520a0301a7c5413c26f1792762b51d58a48df",
+    "note": "Official training-source identity and digests remain unchanged; final pushed PR head is recorded after push, distinct from this test revision.",
+    "official_training_source_commit": "76c898ed0dd8a2e8bf0c76cbd8565f83077284e0",
+    "official_training_source_tree": "b5877036a2e954c085e0da386c0bcb596ff21ab3",
+    "remediation_implementation_commit": "1540653b1d6a57a3ffb9b8c0afe7e4666418ea05",
+    "tested_implementation_base_revision": "d35520a0301a7c5413c26f1792762b51d58a48df",
+    "tested_implementation_commit": "1540653b1d6a57a3ffb9b8c0afe7e4666418ea05",
+    "tested_implementation_commit_tree": "d27718c8c5eb52dc2c6c526bcc5660df55b656b9",
+    "tested_implementation_tree": "d27718c8c5eb52dc2c6c526bcc5660df55b656b9",
+    "training_code_sha256": "cf329438880a82b7b39b05b8f1f3bc1af21e262edb4143e1035e494f891a5705",
+    "training_config_sha256": "2cfe2805edd3e05756fd3ef981a6e4441e3b4ad717649d5647085228e837aabd"
+  },
   "schema": "videochess-pm24-remediation-verification/1",
-  "status": "in_progress_full_clean_suite_pending",
+  "status": "complete_with_integration_history_decision_pending",
   "stockfish": {
     "binary_path": ".venv/share/stockfish/stockfish",
     "search_or_labeling_run": false,
     "sha256": "0f83d24cc46d2c66c60f16001af5444873bc112b7d028594513426894c12da19",
+    "uci_identity": {
+      "author": "the Stockfish developers (see AUTHORS file)",
+      "name": "Stockfish 19",
+      "ping": "PASS"
+    },
     "uci_readiness_test": "PASS"
   }
 }
