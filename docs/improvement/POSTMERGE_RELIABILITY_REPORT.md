@@ -191,3 +191,8 @@ all 602 tests: 598 passed, zero failed, and four private-artifact tests skipped.
 The skips require the accepted private M4 initialization artifact, the M6
 private policy roster, and the two historical private M5 snapshots. The full
 suite log and digest are recorded in the PM25-F01 machine-readable evidence.
+
+At the later evidence-only head `64a44551c352f0767cfb78e42d6ff934368ce61f`,
+the repository context-recovery and pre-M7 documentation/privacy contract
+modules also passed: 66 tests, zero failures, zero skips. Python source and test
+files were unchanged from the clean full-suite-tested implementation.

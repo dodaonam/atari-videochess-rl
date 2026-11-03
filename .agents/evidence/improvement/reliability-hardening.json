@@ -49,6 +49,19 @@
       "start_at_local": "2026-11-03T23:13:48.014560265+07:00",
       "total": 104
     },
+    "final_head_context_contract_tests": {
+      "command": "DISPLAY=:1 PYTHONPATH=. .venv/bin/python -m unittest tests.test_agent_context tests.test_pre_m7_contracts -v",
+      "end_at_local": "2026-11-03T23:27:54.503026863+07:00",
+      "exit_code": 0,
+      "failed": 0,
+      "passed": 66,
+      "private_log_path": "artifacts/improvement/videochess-improvement-20261103-v1/private-logs/pm25-context-and-doc-contracts-64a4455.log",
+      "private_log_sha256": "1090d8f4333ef40861191b63bc12169fb1221e334c28f0b48e016c40597e1d71",
+      "revision": "64a44551c352f0767cfb78e42d6ff934368ce61f",
+      "skipped": 0,
+      "start_at_local": "2026-11-03T23:26:46.371497013+07:00",
+      "total": 66
+    },
     "finding": "The prior auto-smoke CLI accepted one displayed verified turn and one Atari reply despite a configured two-player-move smoke; worker completion and saved trace were insufficient evidence of exercise completion.",
     "focused_tests_precommit": {
       "command": "DISPLAY=:1 PYTHONPATH=. .venv/bin/python -m unittest tests.test_demo_reliability tests.test_phase2_atari_demo tests.test_m1_episode tests.test_m1_ale_integration tests.test_m6_adapter tests.test_phase2_evaluation -v",
