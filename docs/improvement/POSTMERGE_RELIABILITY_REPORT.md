@@ -89,6 +89,10 @@ strict checkpoint loader, verified live runner, and path/configuration
 contracts; no external script is required. The demo verification additionally
 checks the 1100×680 resized layout for board/panel overlap and clipped labels
 or move table.
+The minimum supported 980×640 window was also measured with a representative
+long controller warning: the board and 430-pixel sidebar remained separate,
+labels were not clipped, and the move table retained its horizontal columns
+and scrollbar (fewer rows are visible at the minimum height).
 
 ## Verification and known limits
 

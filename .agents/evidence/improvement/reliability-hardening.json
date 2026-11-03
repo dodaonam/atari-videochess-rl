@@ -68,7 +68,7 @@
       }
     ]
   },
-  "created_at_local": "2026-11-03T22:22:39.373847+07:00",
+  "created_at_local": "2026-11-03T22:25:33.533793+07:00",
   "demo_smokes": [
     {
       "checkpoint_sha256": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293",
@@ -79,6 +79,8 @@
         "move_table_clipped": false,
         "side_panel_does_not_overlap_board": true
       },
+      "log_path": "artifacts/improvement/videochess-improvement-20261103-v1/private-logs/reliability-q-smoke-3ff1f84.log",
+      "log_sha256": "bfe90ceb448c7a0a9ed80d24e82a1cc2b9b7b2f7ca7c493c6cd2990379dc85d4",
       "model_training_seed": 20261103,
       "policy": "double_dqn_250000",
       "replay_left_right": true,
@@ -100,6 +102,8 @@
         "move_table_clipped": false,
         "side_panel_does_not_overlap_board": true
       },
+      "log_path": "artifacts/improvement/videochess-improvement-20261103-v1/private-logs/reliability-m4-smoke-3ff1f84.log",
+      "log_sha256": "f87fc416298bae75597a5b9ac536814e9783f06cbdd04593ec70acdf9c065c99",
       "model_training_seed": 20261103,
       "policy": "M4-A_behavior_cloning",
       "replay_left_right": true,
@@ -181,6 +185,19 @@
       "resolution": "bind replay keys to focused board/table widgets and focus the board for smoke; subsequent exact-commit smoke passed"
     }
   ],
+  "minimum_window_layout_check": {
+    "board_panel_overlap": false,
+    "clipped_labels": [],
+    "move_table_horizontal_clip": false,
+    "scenario": "long controller target-confirmation warning and replay state",
+    "size": [
+      980,
+      640
+    ],
+    "source_commit": "3ff1f84e744911ef025bea60513e3f2ef7724962",
+    "vertical_scrollbar_available": true,
+    "visible_rows_at_minimum": "fewer rows fit; history remains scrollable"
+  },
   "pr24_integration": {
     "base_commit": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
     "feature_head_at_merge": "418dd8aee123563d0121f8159f21ea3d16d66e71",
@@ -243,12 +260,21 @@
   "pull_request": {
     "base": "main",
     "base_commit": "a5515c8b006c65e38c61086883f1c83ba377e62a",
+    "context_check": {
+      "completed_at_utc": "2026-11-03T15:24:40Z",
+      "conclusion": "success",
+      "job_id": 126012330074,
+      "run_id": 41663435488,
+      "url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/41663435488/job/126012330074"
+    },
     "draft": false,
     "head_at_creation": "37ea04c70084335229952130151263725a9f038e",
+    "latest_head_at_last_check": "54aa544dd930233fbb2f2da3d1ed0610ec29d69f",
     "merge_authorized": false,
     "number": 25,
     "status": "OPEN",
     "tree_at_creation": "ea751f18ce72804c6694efc5137a43f48ace18a6",
+    "tree_at_last_check": "207f9d07629d4856d6139580ebbecbc4f15d4f07",
     "url": "https://github.com/dodaonam/atari-videochess-rl/pull/25"
   },
   "remaining_limitations": [

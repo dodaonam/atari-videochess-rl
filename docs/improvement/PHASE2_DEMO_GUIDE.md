@@ -95,6 +95,10 @@ private diagnostic trace and frames remain local.
   game, or controller warning is stated without inventing a result.
 - Each session gets an atomically-created unique artifact directory; existing
   session records are never overwritten.
+- The responsive layout was checked at 1100×680 during real-ALE smoke and at
+  the 980×640 minimum with a long controller warning. The sidebar does not
+  cover the board; labels and the move scorecard stay within their pane. The
+  scorecard scrolls vertically when fewer rows fit.
 
 Verified demo smoke commands used by the Phase 2 executor:
 
