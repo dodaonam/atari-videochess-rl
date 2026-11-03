@@ -1,10 +1,16 @@
 """Phase 2 simulator result accounting tests."""
 import unittest
 
-from scripts.improvement.phase2_evaluate import outcomes, rank
+from scripts.improvement.phase2_evaluate import M5_ROOT, OFFICIAL, outcomes, rank
 
 
 class Phase2EvaluationTests(unittest.TestCase):
+    def test_artifact_roots_resolve_from_repository_root(self):
+        self.assertEqual((OFFICIAL.name, OFFICIAL.parent.name, OFFICIAL.parent.parent.name),
+                         ("official", "videochess-improvement-20261103-v1", "improvement"))
+        self.assertEqual(M5_ROOT.name, "m5")
+        self.assertEqual(M5_ROOT.parent.name, "artifacts")
+
     def test_scheduled_denominator_keeps_truncations_and_incompletes_distinct(self):
         rows = [
             {"status": "completed_game", "truncated": False, "agent_reward": 1.0,

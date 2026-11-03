@@ -19,8 +19,8 @@ from videochess_rl.rl.evaluate import QPolicy, evaluate_policy
 EXPERIMENT = "videochess-improvement-20261103-v1"
 M4_SHA = "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed"
 HISTORICAL_M4_SHA = "724ac730f3c5f2d01b48b26eb7670a3c764978a3dd4d6702b3057a99ab1a90a4"
-M5_ROOT = ARTIFACTS / "m5"
-OFFICIAL = ARTIFACTS / "improvement" / EXPERIMENT / "official"
+M5_ROOT = ROOT / "artifacts" / "m5"
+OFFICIAL = ARTIFACTS / "official"
 DEV = OFFICIAL / "simulator-development"
 FINAL = OFFICIAL / "simulator-final"
 
