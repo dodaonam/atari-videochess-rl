@@ -98,6 +98,7 @@ See [PHASE2_DEMO_GUIDE.md](PHASE2_DEMO_GUIDE.md) for exact launch commands and p
 ## Engineering, privacy, and scientific limitations
 
 - Full replay-chain and semantic audit passed for 250,000 transitions; action-source events aligned one-to-one with unique transition identities and sequential decision indexes.
+- Full repository suite ran on revision `17804732a4bd8a11a5e63b17bbc18d8bad242c77`: 550 tests, 545 passed, four private-artifact tests skipped, and one environment-dependent failure because Stockfish is not installed or available on `PATH`. Stockfish is not needed by Phase 2 inference/training, and no engine was installed to mask that test result.
 - The final training configuration and training code digest match the frozen official-start record. Post-training changes added evaluation/demo/reporting only.
 - Simulator metrics evaluate the Python simulator; Atari metrics evaluate actual ALE. They are not interchangeable.
 - There was one training seed and no scratch comparison. No multi-seed inference is justified.
