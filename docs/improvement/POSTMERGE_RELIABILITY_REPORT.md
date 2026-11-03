@@ -1,8 +1,9 @@
 # Post-Merge Atari Demo Reliability Remediation
 
-**Status:** Implemented and undergoing final verification. This is a later
-engineering reliability change against the squash-merged improvement campaign;
-it does not modify or reattribute the completed experiment.
+**Status:** Implementation and local verification complete; awaiting
+Independent PM review of the remediation PR. This is a later engineering
+reliability change against the squash-merged improvement campaign; it does not
+modify or reattribute the completed experiment.
 
 ## Scope and preserved experiment
 
@@ -62,9 +63,24 @@ verified four moves/replies and then stopped on target-confirmation uncertainty
 at a different move. No result was accepted without RGB verification. Its
 private trace is retained locally only.
 
+The three accepted Q traces were also checked individually: each reconstructs
+the attempted move as legal onto an occupied target; each has verified source
+selection and target preview; each issued exactly one 16-frame target FIRE;
+each then records two passive settling observations and a final
+`target_confirmation_uncertain` observation. The attempted move is marked
+unverified, the final shadow position equals the pre-move board, and the prior
+nine player moves plus nine Atari replies remain verified. The traces do not
+identify whether the game ignored the input or the RGB verifier could not
+recognize the transition. Their original checksums are in the private
+diagnostic ledger; no raw move sequence or frame is included in Git.
+
 ## Presentation layout reference
 
 The owner-provided local GUI reference was read without modification. The
+reference file SHA-256 was
+`78cf73797abeebeec09a727b125fad6abddb1a701c2a5242d3f974b8dd2d4fdf`.
+Only its presentation pattern was used; the external file was not copied or
+changed. The
 repository viewer now uses its useful presentation pattern: a reserved
 side-by-side information panel, a White/Black move scorecard, a visible pending
 agent move, scrollable history, explicit replay buttons, and keyboard replay.
@@ -77,12 +93,28 @@ or move table.
 ## Verification and known limits
 
 The machine-readable command/test ledger is
-`.agents/evidence/improvement/reliability-hardening.json`. The final test
-counts and source revision there are updated after the committed clean-source
-verification. Full repository regression includes the existing M1 RGB,
-controller, episode, policy, RL and phase-2 evaluation suites. Private-artifact
-tests may be skipped in a clean checkout and are reported as skips rather than
-passes.
+`.agents/evidence/improvement/reliability-hardening.json`. On clean committed
+source `3ff1f84e744911ef025bea60513e3f2ef7724962` (tree
+`86f4cba8f4aebbe46fa809e946b7919b8bbddc57`), the full repository command ran
+583 tests: 579 passed, zero failed, and four skipped; exit code 0. The skips are
+the accepted local M4 initialization fixture, the private M6 M4/M5 roster, and
+two historical M5 compatibility tests whose private paths are not configured.
+The existing M0 Stockfish UCI readiness test passed with the accepted local
+Stockfish 19 executable on `PATH`; no engine search or labeling was run. The
+focused Atari/demo/evaluation regression command ran 87 tests, all passed. The
+full and focused logs are ignored local artifacts, with relative paths and
+SHA-256 digests recorded in the machine ledger.
+
+One earlier all-suite diagnostic ran before a clean commit and produced a
+context-snapshot failure because the worktree was dirty, plus a test-fixture
+error fixed before the clean run. It is preserved as a failed diagnostic and
+is not counted as a pass. The subsequent full-suite run was on a clean worktree
+at the exact commit above.
+
+Read-only GitHub checks found no branch protection on `main` (the branch
+protection API returned 404) and no repository rulesets. No GitHub settings
+were changed. The remediation PR remains subject to the documented independent
+PM review and authorized-operator integration policy.
 
 The Double DQN controller's occupied-target confirmation issue remains
 unresolved. The accepted actual-ALE campaign observed no terminal win, loss, or
