@@ -69,3 +69,40 @@ The full semantic replay audit took 1,977.74 seconds. Its integrity result is re
 - PR #24: [Post-closeout VideoChess improvement: single-seed warm DDQN, evaluation and live demo](https://github.com/dodaonam/atari-videochess-rl/pull/24).
 - Created open and non-draft, targeting `main`; not merged and no auto-merge enabled.
 - Repository-preflight check `context` passed on PR head `a8d0f36acf6288cac1ff64c71ed2843ca402fc5b` at 2026-11-03T10:55:45Z; GitHub reports the PR merge state as clean and the PR remains open/unmerged.
+
+## Independent PM review remediation
+
+The original full-suite failure was environmental: the UCI readiness test
+searched `PATH` while the already-installed Stockfish 19 executable lived at
+`.venv/share/stockfish/`. The remediation run prepended that existing directory,
+verified the binary SHA-256 against the accepted Phase 1 identity, passed the
+focused UCI test, and reran the complete suite. No package was installed and no
+engine search or labeling was performed. See
+`.agents/evidence/improvement/phase2-remediation-verification.json` for the
+exact command, revision, totals, timestamps, and log digest.
+
+The current tracked Atari aggregate excludes the 63 move-level UCI records and
+private trace paths, while retaining per-attempt seeds, aggregate counts,
+outcomes, stop categories, policy/checkpoint identities, and private trace
+SHA-256 values. The generator now emits only that aggregate schema. The
+sequence-bearing evidence was introduced in commit
+`0596698249d74da4dd9184a12975f83efd08bca3`, which remains reachable from the PR
+branch. No history rewrite was performed. A normal merge commit would include
+that history; squash integration of the sanitized tip would not import those
+intermediate commits into `main`. The owner/PM must decide the integration
+method. The PR remains open and unmerged pending that decision.
+
+The updated head/tree terminology distinguishes the official training source,
+implementation/test revisions, the head at PM review, and the revision at
+which final verification metadata was written. These identities are separate
+in the remediation record; none replaces the frozen training-source or code
+digest.
+
+The three target-confirmation failures were traced to the post-FIRE Atari
+confirmation stage after legal action selection and RGB-verified source/target
+selection. Since no safe fix could be established, the runner still stops
+without retrying. The demo now displays a custom Atari reset seed separately
+from the model training seed. Development checkpoint selection compares only
+the precommitted extended finalists; the existing 250k selection remains
+valid. Full finding evidence and limitations are in
+[`PM24_REMEDIATION.md`](PM24_REMEDIATION.md).

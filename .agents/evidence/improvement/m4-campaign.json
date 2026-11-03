@@ -1,6 +1,6 @@
 {
   "command": [
-    "/home/dodaonam/Projects/atari-videochess-rl/.venv/bin/python",
+    "${REPO_ROOT}//.venv/bin/python",
     "-m",
     "videochess_rl.improvement.m4"
   ],

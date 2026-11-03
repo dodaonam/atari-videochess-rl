@@ -6,6 +6,13 @@ The authorized Phase 2 work is complete through one official training run, snaps
 
 PR #24: [Post-closeout VideoChess improvement](https://github.com/dodaonam/atari-videochess-rl/pull/24). It is open, non-draft, targets `main`, and is unmerged. The current PR head and clean-clone verification are recorded in `.agents/evidence/improvement/phase2-final-verification.json`; check status is also visible on the PR.
 
+The branch now includes [`PM24_REMEDIATION.md`](PM24_REMEDIATION.md). The
+current evidence tip is sanitized, but the original sequence-bearing commit
+remains reachable from the PR history. A squash integration can keep that
+intermediate patch out of `main`; the Independent PM/Project Owner must decide
+and authorize the integration method. The PR must remain open and unmerged
+until that history decision is resolved.
+
 | Identity | Value |
 |---|---|
 | Experiment | `videochess-improvement-20261103-v1` |
@@ -71,6 +78,17 @@ PYTHONPATH=. .venv/bin/python -m videochess_rl.improvement.demo \
 ```
 
 The official training command is preserved in `official/attempt-0000/official-start.json` and this report records that it completed; **do not run it again**. Its target has been met. There is no Phase 2 recovery/resume action required.
+
+The accepted Stockfish 19 executable is already present in this local virtual
+environment and matches the recorded Phase 1 SHA-256. To run the full suite,
+include its directory in the process path:
+
+```bash
+PATH="$PWD/.venv/share/stockfish:$PATH" .venv/bin/python -m unittest discover -s tests -v
+```
+
+This enables only the existing UCI readiness test. No Stockfish search or
+labeling is part of Phase 2.
 
 ## Recovery and artifact interpretation
 

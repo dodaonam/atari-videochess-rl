@@ -61,6 +61,21 @@ def summarize(attempts):
     return by_policy
 
 
+PUBLIC_ATTEMPT_FIELDS = frozenset({
+    "attempt_index", "policy", "policy_type", "checkpoint_sha256", "snapshot_decisions",
+    "seed", "started_at_utc", "ended_at_utc", "environment", "reset_verified", "category",
+    "status", "ale_terminated", "ale_truncated", "ale_reward_total", "white_result_from_reward",
+    "verified_player_moves", "verified_opponent_moves", "player_moves_attempted",
+    "incomplete_final_move_category", "runner_stop_category", "runner_stop_reason", "frame_number",
+    "wall_seconds", "private_trace_sha256",
+})
+
+
+def public_attempt_metadata(attempt: dict) -> dict:
+    """Allow-list aggregate fields; never serialize arbitrary trace-derived keys."""
+    return {key: value for key, value in attempt.items() if key in PUBLIC_ATTEMPT_FIELDS}
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--max-player-moves", type=int, default=12)
@@ -118,10 +133,8 @@ def main(argv=None):
             "runner_stop_category": term.get("runner_stop_category"),
             "runner_stop_reason": term.get("runner_stop_reason"),
             "frame_number": term.get("frame_number"), "wall_seconds": elapsed,
-            "raw_trace": raw_path.relative_to(ROOT).as_posix(), "raw_trace_sha256": sha256(raw_path),
-            "verified_atari_opponent_uci": [t.get("opponent_reply", {}).get("uci") for t in trace.get("turns", [])
-                                             if t.get("opponent_reply", {}).get("verified_from_rgb") is True]}
-        attempts.append(attempt)
+            "private_trace_sha256": sha256(raw_path)}
+        attempts.append(public_attempt_metadata(attempt))
         write(root / "progress.json", {"experiment_id": EXPERIMENT, "selected_q_checkpoint_sha256": checkpoint_sha,
               "selected_q_decisions": chosen["training_decisions"], "completed_attempts": attempts,
               "summary": summarize(attempts)})

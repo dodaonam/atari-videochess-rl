@@ -12,7 +12,10 @@ from .common import ROOT, ARTIFACTS, sha, write
 
 
 def main():
-    path=Path('/home/dodaonam/Downloads/atari_videochess_live.py')
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--script',type=Path,required=True,
+                        help='Path to the optional owner-local GUI script; it is not included in this repository')
+    path=parser.parse_args().script.expanduser()
     if not path.is_file():raise FileNotFoundError('Optional owner GUI absent: '+str(path))
     original=sha(path)
     module=runpy.run_path(str(path),run_name='improvement_existing_demo')

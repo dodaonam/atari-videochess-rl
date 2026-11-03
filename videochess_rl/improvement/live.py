@@ -13,6 +13,13 @@ import numpy as np
 from videochess_rl.environment import ALEConfig, VideoChessEnv
 
 
+def demo_footer_text(demo_seed: int, training_seed: int | None, max_player_moves: int) -> str:
+    """Label the ALE reset RNG independently from the model's training seed."""
+    model_seed = str(training_seed) if training_seed is not None else "not recorded"
+    return (f"Atari reset seed: {demo_seed} • model training seed: {model_seed} "
+            f"• move cap {max_player_moves}")
+
+
 class LiveEnvironment(VideoChessEnv):
     """Publish actual emulator frames to a thread-safe queue, never touching Tk."""
     def __init__(self, config: ALEConfig, *, frame_callback):
@@ -27,7 +34,7 @@ class LiveEnvironment(VideoChessEnv):
 
 class LiveDemoWindow:
     def __init__(self, *, policy_name: str, identity, artifact_dir: Path, max_player_moves: int,
-                 run_worker, auto_smoke: bool = False):
+                 run_worker, demo_seed: int = 20261103, auto_smoke: bool = False):
         self.root = tk.Tk()
         self.root.title("Atari VideoChess — live policy demonstration")
         self.root.geometry("1120x700")
@@ -42,6 +49,7 @@ class LiveDemoWindow:
         self.identity = identity
         self.artifact_dir = artifact_dir
         self.max_player_moves = max_player_moves
+        self.demo_seed = demo_seed
         self.auto_smoke = auto_smoke
         self.frames: list[dict] = []
         self.verified_turns = 0
@@ -103,7 +111,9 @@ class LiveDemoWindow:
         self.forward_button.pack(side=tk.LEFT)
         self.replay_label = ttk.Label(panel, text="Replay is available after the session stops.", wraplength=310)
         self.replay_label.pack(anchor="w", fill=tk.X, pady=4)
-        self.footer = ttk.Label(self.root, text=f"Actual ALE session • seed 20261103 • move cap {self.max_player_moves}",
+        self.footer = ttk.Label(self.root,
+                                text=demo_footer_text(self.demo_seed, self.identity.training_seed,
+                                                      self.max_player_moves),
                                 anchor="w")
         self.footer.pack(fill=tk.X, padx=12, pady=(0, 8))
         self.root.update_idletasks()
@@ -224,6 +234,10 @@ class LiveDemoWindow:
                 write(self.artifact_dir / "demo-verification.json", {
                     "window_created": True, "policy_name": self.policy_name,
                     "policy_type": self.identity.policy_type,
+                    "demo_seed": self.demo_seed,
+                    "model_training_seed": self.identity.training_seed,
+                    "footer_text": demo_footer_text(self.demo_seed, self.identity.training_seed,
+                                                     self.max_player_moves),
                     "checkpoint_sha256": self.identity.checkpoint_sha256,
                     "captured_verified_state_count": len(self.frames),
                     "verified_atari_turns_displayed": self.verified_turns,

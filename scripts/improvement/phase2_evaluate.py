@@ -95,6 +95,14 @@ def rank(summary: dict) -> tuple:
             -int(summary["training_decisions"]))
 
 
+def select_extended_finalist(summaries: list[dict]) -> dict:
+    """Select only among candidates that received the committed extension."""
+    eligible = [summary for summary in summaries if summary.get("extended") is True]
+    if not eligible:
+        raise ValueError("development selection requires at least one extended finalist")
+    return max(eligible, key=rank)
+
+
 def run_candidates(protocol: dict, official: dict, mode: str) -> dict:
     run_started_utc = datetime.now(timezone.utc).isoformat()
     attempt = read_json(OFFICIAL / "attempt-0000" / "attempt.json")
@@ -165,11 +173,15 @@ def run_candidates(protocol: dict, official: dict, mode: str) -> dict:
                 summaries.append({"training_decisions":n,"snapshot_path":path.relative_to(ROOT).as_posix(),"snapshot_sha256":digest,
                     "extended":n in finalists_n,"scheduled_games":len(seeds)*4+(len(ext["additional_evaluation_seeds"])*4 if n in finalists_n else 0),
                     "outcomes":outcomes(rows,len(seeds)*4+(len(ext["additional_evaluation_seeds"])*4 if n in finalists_n else 0))})
-        summaries.sort(key=rank,reverse=True)
-        if not summaries: raise RuntimeError("no development candidate completed any scenario")
-        selected=summaries[0]
+        # Stage-1 scores choose which candidates receive the precommitted
+        # extension. Final selection compares only that matched extended set.
+        eligible_summaries=[x for x in summaries if x["extended"]]
+        eligible_summaries.sort(key=rank,reverse=True)
+        if not eligible_summaries: raise RuntimeError("no extended development finalist has evaluation rows")
+        selected=select_extended_finalist(summaries)
         selection={"rule":protocol["development"]["selection"],"selected":selected,
-            "ranking":summaries,"initial_stage_ranking":first,"extended_finalists":sorted(finalists_n),
+            "ranking":eligible_summaries,"all_candidate_summaries":summaries,
+            "initial_stage_ranking":first,"extended_finalists":sorted(finalists_n),
             "eligible_snapshots":[{"training_decisions":n,"path":path.relative_to(ROOT).as_posix(),"sha256":digest} for n,path,_,_,digest in snapshots],
             "stage1_not_evaluated":[n for n,path,_,_,digest in snapshots if not rows_by_decision[n]],
             "selection_frozen_before_reserved_final":True,"final_results_used_for_selection":False}

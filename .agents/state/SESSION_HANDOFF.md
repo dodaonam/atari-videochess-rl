@@ -114,3 +114,12 @@ This is a pointer, not a competing campaign status or Phase 2 authorization.
 ## Improvement campaign Phase 2 execution pointer — 2026-11-03
 
 The Project Owner directly authorized Phase 2 and the Independent PM accepted the Phase 1 handoff. Current pre-run authorization and config/code identities are in `PROJECT_STATE.yaml`; full local artifact verification and deadline budgeting are in `../../.agents/evidence/improvement/phase2-pre-run-freeze.json`. The feature branch remains the Phase 1 branch. The single official attempt `attempt-0000` started at 2026-11-03T02:55:57.782730Z from revision `76c898ed0dd8a2e8bf0c76cbd8565f83077284e0`; do not start another training campaign. Follow the Phase 2 assignment; preserve private artifacts locally and leave any final consolidation PR open and unmerged.
+
+## PR #24 remediation (2026-11-03)
+
+The PM-requested remediation is in progress on the existing feature branch. See
+`docs/improvement/PM24_REMEDIATION.md` for findings, evidence, and the remaining
+owner/PM integration-history decision. The official training run and all
+accepted scientific results are immutable. No merge or history rewrite is
+authorized. Current verification evidence is under
+`.agents/evidence/improvement/phase2-remediation-verification.json`.

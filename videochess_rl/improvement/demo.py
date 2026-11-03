@@ -60,7 +60,7 @@ def main(argv=None):
 
     window = LiveDemoWindow(policy_name=identity.policy_id, identity=identity,
                             artifact_dir=artifact_dir, max_player_moves=args.max_player_moves,
-                            run_worker=worker, auto_smoke=args.auto_smoke)
+                            run_worker=worker, demo_seed=args.seed, auto_smoke=args.auto_smoke)
     window.start()
     if args.auto_smoke:
         result = __import__("json").loads((artifact_dir / "demo-verification.json").read_text())

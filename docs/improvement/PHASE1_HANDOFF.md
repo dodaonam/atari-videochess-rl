@@ -96,7 +96,7 @@ The fresh-process Phase 2 CLI/recovery check passed with `PATH=/usr/bin:/bin` an
 
 Baseline command: `.venv/bin/python -m videochess_rl.improvement.demo --live`. The historical frozen M4 path verified startup, checkpoint load, RGB recognition, legal choices, cursor execution and two player/opponent cycles. This is a smoke test, not an Atari game result.
 
-The optional owner GUI `/home/dodaonam/Downloads/atari_videochess_live.py` was inspected and preserved. It loaded a historical warm M5 checkpoint, displayed live frames and four verified half-moves, and replayed five snapshots in both directions. Its checksum and shortened smoke profile are in `existing-demo/summary.json`. Launch it locally from repo root with `.venv/bin/python /home/dodaonam/Downloads/atari_videochess_live.py --m5-root artifacts/m5 --policy m5-warm-seed-20261104-post-rl`. It is not part of a clone and currently loads historical M5 identities; Phase 2 must explicitly adapt the new Q snapshot for the final presentation. No prerecorded video is required.
+An optional owner-local GUI outside the repository was inspected and preserved. It loaded a historical warm M5 checkpoint, displayed live frames and four verified half-moves, and replayed five snapshots in both directions. Its checksum and shortened smoke profile are in `existing-demo/summary.json`. It is not part of a clone and is not required; the repository-contained improvement demo is the portable entry point. No prerecorded video is required.
 
 ## Verification and limits
 

@@ -102,7 +102,7 @@ See [PHASE2_DEMO_GUIDE.md](PHASE2_DEMO_GUIDE.md) for exact launch commands and p
 ## Engineering, privacy, and scientific limitations
 
 - Full replay-chain and semantic audit passed for 250,000 transitions; action-source events aligned one-to-one with unique transition identities and sequential decision indexes.
-- Full repository suite ran on revision `17804732a4bd8a11a5e63b17bbc18d8bad242c77`: 550 tests, 545 passed, four private-artifact tests skipped, and one environment-dependent failure because Stockfish is not installed or available on `PATH`. Stockfish is not needed by Phase 2 inference/training, and no engine was installed to mask that test result.
+- The initial full repository suite ran on revision `17804732a4bd8a11a5e63b17bbc18d8bad242c77`: 550 tests, 545 passed, four private-artifact tests skipped, and one environment failure because Stockfish was not on `PATH`. Review remediation found the existing Phase 1 Stockfish 19 binary in the virtual environment and reran the readiness test and full suite successfully; see the remediation verification ledger for exact totals and hashes.
 - The final training configuration and training code digest match the frozen official-start record. Post-training changes added evaluation/demo/reporting only.
 - Simulator metrics evaluate the Python simulator; Atari metrics evaluate actual ALE. They are not interchangeable.
 - There was one training seed and no scratch comparison. No multi-seed inference is justified.
@@ -110,4 +110,16 @@ See [PHASE2_DEMO_GUIDE.md](PHASE2_DEMO_GUIDE.md) for exact launch commands and p
 - The exact academic submission deadline was not supplied to the Phase 2 executor. The run itself used 6.50 hours, under the explicit 10-hour cumulative guard. Deadline feasibility beyond the completed work is therefore not represented as a guaranteed margin.
 - The single official training run, all bounded evaluations, tests, docs, and an open unmerged PR constitute the completion boundary. No later training or HPO campaign was run.
 
-Machine-readable aggregate evidence is under `.agents/evidence/improvement/phase2-*.json`; detailed private traces and models remain under the ignored `artifacts/improvement/videochess-improvement-20261103-v1/` namespace.
+The original Atari aggregate was found to contain 63 individual opponent UCI
+moves. The sanitized current evidence contains aggregate counts, outcomes and
+private-trace SHA-256 values only; the detailed traces remain under the ignored
+`artifacts/improvement/videochess-improvement-20261103-v1/` namespace. The
+intermediate branch commit that first contained the sequence remains reachable
+in the PR history. Integration must account for that history as documented in
+[`PM24_REMEDIATION.md`](PM24_REMEDIATION.md).
+
+The post-campaign PM review also found that development selection ranked
+20-game stage-one candidates alongside 60-game finalists. The evaluator now
+restricts final selection to the three extended finalists. The previously
+selected 250,000-decision snapshot was one of those finalists and remains the
+winner. No training or simulator evaluation was repeated.

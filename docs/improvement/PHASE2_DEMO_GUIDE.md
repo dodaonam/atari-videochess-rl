@@ -10,6 +10,11 @@ This demo runs the actual local ALE VideoChess environment and renders live RGB 
 - A local graphical display with Tk available.
 - Local private model artifacts from the Phase 1/2 artifact namespace.
 
+The default `--seed` is `20261103`. A custom value is displayed as the **Atari
+reset seed**, separately from the model's training seed. A real-ALE smoke with
+`--seed 123456` displayed `Atari reset seed: 123456 • model training seed:
+20261103` while loading the unchanged M4-A checkpoint.
+
 ## Recommended demonstration policy
 
 Use the selected Phase 1 M4-A behavior-cloning checkpoint as the fallback demonstration policy. It completed all 12 configured player turns in each of the three bounded Phase 2 Atari baseline attempts, with every player move and opponent reply verified from RGB. Those attempts were incomplete at the move cap and did not observe a terminal game result.
@@ -17,6 +22,7 @@ Use the selected Phase 1 M4-A behavior-cloning checkpoint as the fallback demons
 ```bash
 PYTHONPATH=. .venv/bin/python -m videochess_rl.improvement.demo \
   --policy m4-a \
+  --seed 20261103 \
   --max-player-moves 24 \
   --max-seconds 900
 ```
@@ -32,6 +38,7 @@ PYTHONPATH=. .venv/bin/python -m videochess_rl.improvement.demo \
   --policy double-dqn \
   --checkpoint artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-250000.pt \
   --checkpoint-sha256 48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293 \
+  --seed 20261103 \
   --max-player-moves 24 \
   --max-seconds 900
 ```
@@ -61,3 +68,10 @@ DISPLAY=:1 PYTHONPATH=. .venv/bin/python -m videochess_rl.improvement.demo \
 `--auto-smoke` is a bounded two-player-move live ALE run. It automatically resizes the window, generates left/right replay key events, verifies two-sided moves and a reply, writes a local `demo-verification.json`, and exits. The actual local traces and captured frames are ignored artifacts and are not part of the PR.
 
 The previous user-owned script in Downloads was not edited or required by the repository demo.
+
+## Review remediation note
+
+The bounded custom-seed smoke also verified two player turns, two opponent
+replies, resizing, replay in both directions, and clean exit. Its detailed
+trace and frames remain private. See
+[`PM24_REMEDIATION.md`](PM24_REMEDIATION.md) for the review finding ledger.

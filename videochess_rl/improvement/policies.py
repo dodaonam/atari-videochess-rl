@@ -15,6 +15,7 @@ from .common import ROOT
 EXPERIMENT = "videochess-improvement-20261103-v1"
 M4_PATH = ROOT / "artifacts/improvement" / EXPERIMENT / "m4-a/epoch-22.pt"
 M4_SHA256 = "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed"
+M4_TRAINING_SEED = 20261103
 OFFICIAL = ROOT / "artifacts/improvement" / EXPERIMENT / "official"
 ATTEMPT = OFFICIAL / "attempt-0000"
 
@@ -35,11 +36,12 @@ def load_demo_policy(name: str, *, checkpoint: str | Path | None = None,
         digest = sha256(path)
         if digest != M4_SHA256 or expected_sha256 not in (None, M4_SHA256):
             raise ValueError("M4-A checkpoint identity mismatch")
-        model, _ = load_checkpoint(path, device="cpu")
+        model, meta = load_checkpoint(path, device="cpu")
         model.eval()
         policy = BehaviorPolicy(model, checkpoint_sha256=digest)
         identity = PolicyIdentity(policy_id="M4-A_behavior_cloning", policy_type="behavior_cloning",
-            checkpoint_sha256=digest, artifact_path=path.as_posix())
+            checkpoint_sha256=digest, training_seed=meta.get("training_seed", M4_TRAINING_SEED),
+            artifact_path=path.as_posix())
     elif name == "double-dqn":
         if checkpoint is None:
             raise ValueError("Double DQN requires an explicit selected snapshot path")
@@ -59,7 +61,7 @@ def load_demo_policy(name: str, *, checkpoint: str | Path | None = None,
         policy = QPolicy(model, policy_id=f"double_dqn_{meta['valid_decisions']}", checkpoint_sha256=digest)
         identity = PolicyIdentity(policy_id=policy.policy_id, policy_type="double_dqn_q_only",
             checkpoint_sha256=digest, snapshot_stage="evaluation_only", valid_decisions=meta["valid_decisions"],
-            artifact_path=path.as_posix())
+            training_seed=meta.get("training_seed"), artifact_path=path.as_posix())
     else:
         raise ValueError("policy must be 'double-dqn' or 'm4-a'")
     adapter = M6PolicyAdapter(policy, identity, rng_seed=seed)
