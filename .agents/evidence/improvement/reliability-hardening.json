@@ -68,7 +68,7 @@
       }
     ]
   },
-  "created_at_local": "2026-11-03T22:18:47.991154+07:00",
+  "created_at_local": "2026-11-03T22:22:39.373847+07:00",
   "demo_smokes": [
     {
       "checkpoint_sha256": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293",
@@ -241,9 +241,15 @@
     "prohibited_payloads_added_to_git": false
   },
   "pull_request": {
+    "base": "main",
+    "base_commit": "a5515c8b006c65e38c61086883f1c83ba377e62a",
+    "draft": false,
+    "head_at_creation": "37ea04c70084335229952130151263725a9f038e",
     "merge_authorized": false,
-    "status": "not_created_yet",
-    "target": "main"
+    "number": 25,
+    "status": "OPEN",
+    "tree_at_creation": "ea751f18ce72804c6694efc5137a43f48ace18a6",
+    "url": "https://github.com/dodaonam/atari-videochess-rl/pull/25"
   },
   "remaining_limitations": [
     "Atari target-FIRE confirmation at an occupied target remains unresolved; runner correctly stops without claiming the move.",
