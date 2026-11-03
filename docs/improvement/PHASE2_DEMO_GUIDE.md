@@ -10,10 +10,31 @@ This demo runs the actual local ALE VideoChess environment and renders live RGB 
 - A local graphical display with Tk available.
 - Local private model artifacts from the Phase 1/2 artifact namespace.
 
-The default `--seed` is `20261103`. A custom value is displayed as the **Atari
-reset seed**, separately from the model's training seed. A real-ALE smoke with
-`--seed 123456` displayed `Atari reset seed: 123456 • model training seed:
-20261103` while loading the unchanged M4-A checkpoint.
+Before launching the GUI, run the preflight. It checks the active Python
+environment, importable runtime packages, ALE/Gymnasium compatibility, exact
+ROM identity, supported action/RGB contract, Tk display, selected checkpoint
+hash and metadata, available RAM/disk, and artifact-directory writability. It
+constructs and closes the environment without resetting or stepping it.
+Stockfish is not required for either demo policy.
+
+```bash
+DISPLAY=:1 PYTHONPATH=. .venv/bin/python -m videochess_rl.improvement.demo \
+  --policy double-dqn \
+  --checkpoint artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-250000.pt \
+  --checkpoint-sha256 48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293 \
+  --reset-seed 123456 --preflight-only
+```
+
+Use `--policy m4-a --reset-seed 123456 --preflight-only` to check the M4-A
+fallback. A failed check prints the observed condition, expectation, and a
+corrective action, then exits nonzero.
+
+The default reset seed is `20261103`. `--seed` remains an alias for
+`--reset-seed`. This seed controls the Atari reset and the policy adapter's
+session RNG; it is never compared with the immutable checkpoint training
+seed. The GUI displays both values separately. Both selected models were
+loaded and smoke-tested using reset seed `123456`; the unchanged model training
+seed shown in the GUI was `20261103`.
 
 ## Recommended demonstration policy
 
@@ -45,14 +66,39 @@ PYTHONPATH=. .venv/bin/python -m videochess_rl.improvement.demo \
 
 The Q policy's three paired evaluation attempts each stopped after nine verified turns because Atari RGB did not confirm target FIRE. The runner stopped without retrying or claiming a move. The live demo can therefore end early with a visible control warning; this was observed and is a known limitation.
 
+The historical target-confirmation issue was not “fixed” by accepting an
+unverified transition or retrying FIRE. An isolated diagnostic with a single
+one-frame target FIRE press reached four RGB-verified player moves, then also
+stopped on target-confirmation uncertainty at a different legal move. This
+does not establish that press duration caused the historical failure. The
+controller remains conservative: the shadow position advances only after RGB
+verification, and an uncertain capture is left pending with no retry. The
+private diagnostic trace and frames remain local.
+
 ## Display and controls
 
 - The left pane shows actual ALE RGB frames.
-- The right pane displays policy family, checkpoint SHA, training decision count where applicable, current verified side-to-move, status, and a scrollable two-sided move history.
+- The fixed-width right pane displays policy family, checkpoint SHA, training decision count where applicable, current verified side-to-move, active session limits, separate terminal/trace status, and a scrollable White/Black move scorecard. This layout follows the owner-provided local presentation reference; that script is not modified or required.
 - SAN and UCI are shown only after the Atari controller and RGB state verifier confirm the move.
 - A selected move remains marked as pending until verified. Unverified opponent responses are never fabricated.
 - After the session stops, **Left** steps backward and **Right** steps forward through the captured reset and RGB-verified board states. Buttons provide the same controls.
-- A runner stop, ALE terminal, incomplete game, or control warning is stated in the status area.
+- Session lifecycle status, primary stop reason, terminal category, and trace
+  persistence are displayed independently. A trace-save notification cannot
+  overwrite a controller/game outcome. Worker failures close automated smoke
+  mode and return a nonzero status even when no trace exists.
+- The live panel reports the player-move cap, wall-clock cap, runner frame and
+  step caps, observed ALE frame horizon, opponent response timeout, and local
+  artifact cap. The current ALE profile reports 108,000 frames; the runner's
+  150,000-frame ceiling does not override it. ALE truncation is incomplete,
+  never a chess win/loss/draw.
+- A runner stop, ALE termination, ALE truncation, cancellation, incomplete
+  game, or controller warning is stated without inventing a result.
+- Each session gets an atomically-created unique artifact directory; existing
+  session records are never overwritten.
+- The responsive layout was checked at 1100×680 during real-ALE smoke and at
+  the 980×640 minimum with a long controller warning. The sidebar does not
+  cover the board; labels and the move scorecard stay within their pane. The
+  scorecard scrolls vertically when fewer rows fit.
 
 Verified demo smoke commands used by the Phase 2 executor:
 
@@ -65,7 +111,36 @@ DISPLAY=:1 PYTHONPATH=. .venv/bin/python -m videochess_rl.improvement.demo \
   --policy m4-a --auto-smoke
 ```
 
-`--auto-smoke` is a bounded two-player-move live ALE run. It automatically resizes the window, generates left/right replay key events, verifies two-sided moves and a reply, writes a local `demo-verification.json`, and exits. The actual local traces and captured frames are ignored artifacts and are not part of the PR.
+`--auto-smoke` is a bounded two-player-move live ALE run. It passes only when the authoritative trace records the exact `RUNNER_MAX_PLAYER_MOVES` stop after two RGB-verified player moves and two RGB-verified Atari replies; the GUI terminal event and displayed move counts agree with that trace; no move is pending; the worker completed and saved the trace; and resize/layout plus Left/Right replay checks pass. A worker that returned normally, a saved trace, or usable replay is not by itself a successful smoke.
+
+The verification record includes `SMOKE_PASS`, `SMOKE_INCOMPLETE`, or
+`SMOKE_RUNTIME_FAILURE`, the requested and verified counts, terminal category,
+stop reason, worker and trace status, replay/layout results, and failed
+acceptance conditions. `SMOKE_PASS` exits 0. An incomplete gameplay exercise
+exits 2; malformed/missing or internally inconsistent verification evidence
+exits 4. Preflight failures remain exit 3 and GUI initialization failures exit
+5. Controller uncertainty, timeout, ALE termination/truncation, cancellation,
+or any stop other than the expected two-move runner cap remains incomplete;
+the controller continues to fail closed without advancing an unverified move
+or retrying FIRE. When frames permit, an incomplete run still tests and retains
+replay. The private trace is cross-checked after GUI shutdown, so replay or a
+worker completion cannot override the episode result.
+
+PM25-F01 regression verification reproduced the former permissive predicate:
+one verified player/reply pair, a pending uncertain second action, a saved
+trace, successful replay/layout checks, and a GUI-side zero return would have
+passed the old CLI check. The corrected CLI returns nonzero and records
+`SMOKE_INCOMPLETE`. A deterministic two-pair runner-cap fixture returns 0.
+Bounded real-ALE runs at reset seed `123456` also passed for the selected Q-only
+Double DQN and M4-A policies, each with exactly two verified player moves and
+two replies. Neither observed a terminal chess result; these remain bounded
+smoke checks, not full games or scientific evaluation.
+
+On the verified environment, custom-reset-seed `123456` smoke runs succeeded
+for both the selected `double_dqn_250000` Q-only snapshot and M4-A. Each showed
+two RGB-verified player turns and two Atari replies, resizing, and successful
+Left/Right replay key stepping. These are bounded UI/integration checks, not
+full games or additional scientific evaluation attempts.
 
 The previous user-owned script in Downloads was not edited or required by the repository demo.
 

@@ -534,6 +534,17 @@ def run_episode(
         frames_dir = Path(artifact_dir)
         frames_dir.mkdir(parents=True, exist_ok=True)
 
+    terminal_event_emitted = False
+
+    def emit_episode_finished(frame: ALEFrame) -> None:
+        nonlocal terminal_event_emitted
+        if progress_callback is None or terminal_event_emitted:
+            return
+        terminal_event_emitted = True
+        progress_callback({"event": "episode_finished", "status": trace.get("status"),
+            "terminal": dict(trace["terminal"]), "failure": trace.get("failure"),
+            "frame_number": frame.frame_number, "rgb": frame.rgb})
+
     with env_factory(config) as env:
         vision = VideoChessVision()
         reset = env.reset(seed=seed)
@@ -559,6 +570,7 @@ def run_episode(
                     "wall_seconds": round(time.monotonic() - started_monotonic, 3),
                 }
             )
+            emit_episode_finished(last_frame)
             return trace
 
         initial_observation = vision.observe(reset.rgb)
@@ -969,6 +981,7 @@ def run_episode(
             })
             trace["status"] = "runner_stopped"
             trace["failure"] = stop_reason
+            emit_episode_finished(last_frame)
             return trace
         set_turn_state(0, TurnState.PLAYER_TURN, "stable reset RGB; white is the observed player side")
 
@@ -1741,8 +1754,5 @@ def run_episode(
         else:
             trace["status"] = "partial"
             trace["failure"] = "Episode stopped before a verified move cycle completed"
-        if progress_callback is not None:
-            progress_callback({"event": "episode_finished", "status": trace.get("status"),
-                "terminal": dict(trace["terminal"]), "failure": trace.get("failure"),
-                "frame_number": last_frame.frame_number, "rgb": last_frame.rgb})
+        emit_episode_finished(last_frame)
     return trace

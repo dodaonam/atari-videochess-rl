@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import queue
 import threading
-import time
+from dataclasses import dataclass
 import tkinter as tk
 from tkinter import ttk
 from pathlib import Path
@@ -11,6 +11,85 @@ from pathlib import Path
 import numpy as np
 
 from videochess_rl.environment import ALEConfig, VideoChessEnv
+
+
+@dataclass
+class DemoSessionState:
+    """Independent episode, trace-persistence, and worker lifecycle state."""
+    required_player_moves: int | None = None
+    episode_status: str | None = None
+    episode_terminal: dict | None = None
+    terminal_category: str | None = None
+    primary_reason: str | None = None
+    trace_status: str = "not saved"
+    trace_path: str | None = None
+    worker_status: str = "running"
+    worker_error_type: str | None = None
+    worker_error: str | None = None
+    replay_available: bool = False
+    verified_pairs_displayed: int = 0
+
+    def apply(self, event: dict) -> None:
+        kind = event.get("event")
+        if kind == "episode_finished":
+            self.episode_status = str(event.get("status") or "unknown")
+            terminal = event.get("terminal") or {}
+            self.episode_terminal = dict(terminal) if isinstance(terminal, dict) else None
+            self.terminal_category = terminal.get("runner_stop_category") if isinstance(terminal, dict) else None
+            terminal_reason = terminal.get("runner_stop_reason") if isinstance(terminal, dict) else None
+            self.primary_reason = (event.get("failure") or terminal_reason
+                                   or self.episode_status)
+        elif kind == "verified_turn":
+            self.verified_pairs_displayed += 1
+        elif kind == "trace_saved":
+            self.trace_status = "saved"
+            self.trace_path = event.get("path")
+        elif kind == "trace_save_error":
+            self.trace_status = "failed"
+            self.worker_error_type = event.get("error_type", "TracePersistenceError")
+            self.worker_error = event.get("error", "trace could not be saved")
+        elif kind == "worker_error":
+            self.worker_status = "failed"
+            self.worker_error_type = event.get("error_type", "Exception")
+            self.worker_error = event.get("error", "worker failed")
+        elif kind == "worker_finished":
+            self.worker_status = str(event.get("status") or "failed")
+            self.replay_available = bool(event.get("replay_available"))
+
+    @property
+    def display_status(self) -> str:
+        episode = self.episode_status or "episode status unavailable"
+        if self.terminal_category:
+            episode = f"{episode} [{self.terminal_category}]"
+        reason = f" — {self.primary_reason}" if self.primary_reason else ""
+        if self.worker_error:
+            return f"Session failure ({self.worker_error_type}): {self.worker_error}. Episode: {episode}{reason}"
+        return f"{episode}{reason} • trace {self.trace_status}"
+
+    @property
+    def smoke_ok(self) -> bool:
+        terminal = self.episode_terminal
+        required = self.required_player_moves
+        if (required is None or terminal is None or self.worker_status != "completed"
+                or self.episode_status != "runner_stopped" or self.trace_status != "saved"
+                or self.worker_error is not None):
+            return False
+        return (
+            terminal.get("runner_stop_category") == "RUNNER_MAX_PLAYER_MOVES"
+            and terminal.get("runner_stopped") is True
+            and terminal.get("observed") is False
+            and terminal.get("terminated") is False
+            and terminal.get("truncated") is False
+            and terminal.get("ale_terminated") is False
+            and terminal.get("ale_truncated") is False
+            and terminal.get("runner_stop_reason") ==
+                f"runner stopped after the configured {required} player-move limit"
+            and terminal.get("player_moves_attempted") == required
+            and terminal.get("verified_player_moves") == required
+            and terminal.get("verified_atari_replies") == required
+            and terminal.get("incomplete_final_move_count") == 0
+            and self.verified_pairs_displayed == required
+        )
 
 
 def demo_footer_text(demo_seed: int, training_seed: int | None, max_player_moves: int) -> str:
@@ -34,7 +113,8 @@ class LiveEnvironment(VideoChessEnv):
 
 class LiveDemoWindow:
     def __init__(self, *, policy_name: str, identity, artifact_dir: Path, max_player_moves: int,
-                 run_worker, demo_seed: int = 20261103, auto_smoke: bool = False):
+                 run_worker, demo_seed: int = 20261103, auto_smoke: bool = False,
+                 session_limits: dict | None = None):
         self.root = tk.Tk()
         self.root.title("Atari VideoChess — live policy demonstration")
         self.root.geometry("1120x700")
@@ -51,12 +131,21 @@ class LiveDemoWindow:
         self.max_player_moves = max_player_moves
         self.demo_seed = demo_seed
         self.auto_smoke = auto_smoke
+        self.session_limits = dict(session_limits or {})
         self.frames: list[dict] = []
+        self.move_rows: dict[int, dict[str, object]] = {}
         self.verified_turns = 0
         self.replay_test = None
+        self.gui_checks_ok = False
         self.trace_path = None
         self.finished_status = None
+        self.session_state = DemoSessionState(required_player_moves=max_player_moves if auto_smoke else None)
+        self.exit_code = 1 if auto_smoke else 0
+        self._smoke_started = False
+        self._worker_terminal_seen = False
+        self._worker_exit_grace = False
         self.smoke_resize_checked = False
+        self.layout_check = None
         self.replay_index = 0
         self.latest_rgb = None
         self.latest_frame_no = None
@@ -69,55 +158,105 @@ class LiveDemoWindow:
         self.root.after(40, self.poll)
 
     def _layout(self):
-        split = ttk.Panedwindow(self.root, orient=tk.HORIZONTAL)
-        split.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
-        video = ttk.Frame(split, padding=4)
-        panel = ttk.Frame(split, padding=8, width=330)
-        split.add(video, weight=4)
-        split.add(panel, weight=2)
+        self.root.configure(background="#101723")
+        self.root.geometry("1300x850")
+        self.root.minsize(980, 640)
+        header = ttk.Frame(self.root, padding=(16, 10, 16, 4))
+        header.pack(fill=tk.X)
+        header.grid_columnconfigure(0, weight=1)
+        ttk.Label(header, text="ATARI VIDEOCHESS  |  LIVE POLICY", font=("TkDefaultFont", 13, "bold")).grid(
+            row=0, column=0, sticky="w")
+        ttk.Label(header, text="Actual ALE RGB · moves shown after verification").grid(
+            row=1, column=0, sticky="w")
+        ttk.Button(header, text="Model / session details", command=self.show_details).grid(
+            row=0, column=1, rowspan=2, sticky="e", padx=(8, 0))
+
+        body = ttk.Frame(self.root, padding=(12, 4, 12, 6))
+        body.pack(fill=tk.BOTH, expand=True)
+        body.grid_columnconfigure(0, weight=1)
+        body.grid_columnconfigure(1, minsize=430, weight=0)
+        body.grid_rowconfigure(0, weight=1)
+        video = ttk.Frame(body, padding=4)
+        panel = ttk.Frame(body, padding=12, width=430)
+        self.side_panel = panel
+        panel.grid_propagate(False)
+        video.grid(row=0, column=0, sticky="nsew")
+        panel.grid(row=0, column=1, sticky="nsew", padx=(12, 0))
+        panel.grid_columnconfigure(0, weight=1, minsize=400)
+        panel.grid_rowconfigure(6, weight=1)
         self.canvas = tk.Canvas(video, background="#111111", highlightthickness=0)
         self.canvas.pack(fill=tk.BOTH, expand=True)
         self.canvas.bind("<Configure>", lambda _event: self.render_frame())
+        self.canvas.bind("<Left>", self.replay_back)
+        self.canvas.bind("<Right>", self.replay_forward)
 
-        heading = ttk.Label(panel, text="LIVE ATARI VIDEOCHESS", font=("TkDefaultFont", 13, "bold"))
-        heading.pack(anchor="w", pady=(0, 8))
-        self.policy_label = ttk.Label(panel, text=f"Policy: {self.policy_name}\nFamily: {self.identity.policy_type}",
-                                      justify=tk.LEFT, wraplength=310)
-        self.policy_label.pack(anchor="w", fill=tk.X, pady=3)
+        family_label = ("Double DQN · Q-only" if self.identity.policy_type == "double_dqn_q_only"
+                        else "M4-A · behavior cloning" if self.identity.policy_type == "behavior_cloning"
+                        else self.identity.policy_type)
+        policy_display = "Double DQN · Q-only" if self.identity.policy_type == "double_dqn_q_only" else family_label
+        self.policy_label = ttk.Label(panel, text=policy_display,
+                                      justify=tk.LEFT, wraplength=390, font=("TkDefaultFont", 8))
+        self.policy_label.grid(row=0, column=0, sticky="ew", pady=1)
+        checkpoint_sha = self.identity.checkpoint_sha256 or "not recorded"
+        display_sha = (f"{checkpoint_sha[:12]}…{checkpoint_sha[-8:]}" if len(checkpoint_sha) == 64
+                       else checkpoint_sha)
         self.checkpoint_label = ttk.Label(panel,
-            text=f"Checkpoint SHA-256\n{self.identity.checkpoint_sha256}\n"
-                 f"Training decisions: {self.identity.valid_decisions if self.identity.valid_decisions is not None else 'not applicable'}",
-            justify=tk.LEFT, wraplength=310, font=("TkFixedFont", 9))
-        self.checkpoint_label.pack(anchor="w", fill=tk.X, pady=3)
-        self.turn_label = ttk.Label(panel, text="Side to move: awaiting verified Atari reset", wraplength=310)
-        self.turn_label.pack(anchor="w", fill=tk.X, pady=3)
-        self.status = ttk.Label(panel, text="Initializing actual ALE/VideoChess-v5…", wraplength=310,
-                                justify=tk.LEFT)
-        self.status.pack(anchor="w", fill=tk.X, pady=6)
-        ttk.Label(panel, text="Verified move history", font=("TkDefaultFont", 11, "bold")).pack(anchor="w", pady=(8, 2))
-        history_box = ttk.Frame(panel)
-        history_box.pack(fill=tk.BOTH, expand=True)
-        self.history = tk.Text(history_box, width=38, height=18, wrap=tk.WORD, state=tk.DISABLED,
-                               font=("TkFixedFont", 10))
-        scrollbar = ttk.Scrollbar(history_box, orient=tk.VERTICAL, command=self.history.yview)
-        self.history.configure(yscrollcommand=scrollbar.set)
-        self.history.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+            text=f"SHA {display_sha} · seed {self.identity.training_seed if self.identity.training_seed is not None else '—'} · "
+                 f"{self.identity.valid_decisions if self.identity.valid_decisions is not None else '—'} decisions",
+            justify=tk.LEFT, wraplength=390, font=("TkDefaultFont", 8))
+        self.checkpoint_label.grid(row=1, column=0, sticky="ew", pady=1)
+        self.turn_label = ttk.Label(panel, text="White · awaiting verified reset", wraplength=390,
+                                    font=("TkDefaultFont", 8))
+        self.turn_label.grid(row=2, column=0, sticky="ew", pady=1)
+        self.status = ttk.Label(panel, text="Starting ALE…", wraplength=390,
+                                justify=tk.LEFT, font=("TkDefaultFont", 9))
+        self.status.grid(row=3, column=0, sticky="ew", pady=2)
+        if self.session_limits:
+            limit_text = (f"Cap {self.session_limits.get('max_player_moves')} moves · "
+                f"{self.session_limits.get('max_wall_seconds')} s · ALE {self.session_limits.get('ale_episode_frame_cap')} frames · "
+                "truncation incomplete")
+            self.limits_label = ttk.Label(panel, text=limit_text, wraplength=390, justify=tk.LEFT,
+                                          font=("TkDefaultFont", 8))
+            self.limits_label.grid(row=4, column=0, sticky="ew", pady=2)
+        ttk.Label(panel, text="RGB-VERIFIED MOVE HISTORY", font=("TkDefaultFont", 9, "bold")).grid(
+            row=5, column=0, sticky="w", pady=(3, 1))
+        scorecard = ttk.Frame(panel)
+        scorecard.grid(row=6, column=0, sticky="nsew")
+        scorecard.grid_columnconfigure(0, weight=1)
+        scorecard.grid_rowconfigure(0, weight=1)
+        self.move_table = ttk.Treeview(scorecard, columns=("number", "white", "black"), show="headings",
+                                       selectmode="none", height=7)
+        self.move_table.bind("<Left>", self.replay_back)
+        self.move_table.bind("<Right>", self.replay_forward)
+        for column, title, width, stretch in (("number", "#", 45, False),
+                ("white", "WHITE · AGENT", 145, True), ("black", "BLACK · ATARI", 145, True)):
+            self.move_table.heading(column, text=title)
+            self.move_table.column(column, width=width, minwidth=width, stretch=stretch, anchor=tk.CENTER)
+        self.move_table.tag_configure("even", background="#e9eef5")
+        self.move_table.tag_configure("odd", background="#f7f9fc")
+        self.move_table.tag_configure("pending", background="#fff0c2")
+        self.move_table.grid(row=0, column=0, sticky="nsew")
+        scrollbar = ttk.Scrollbar(scorecard, orient=tk.VERTICAL, command=self.move_table.yview)
+        scrollbar.grid(row=0, column=1, sticky="ns")
+        self.move_table.configure(yscrollcommand=scrollbar.set)
+        self.replay_label = ttk.Label(panel, text="Replay after stop · ←/→ or buttons", wraplength=200,
+                                      font=("TkDefaultFont", 8))
+        self.replay_label.grid(row=7, column=0, sticky="w", pady=(1, 2))
+        self.trace_status = ttk.Label(panel, text="Trace: pending", wraplength=200,
+                                      justify=tk.LEFT, font=("TkDefaultFont", 8))
+        self.trace_status.grid(row=7, column=0, sticky="e", pady=(1, 2))
         buttons = ttk.Frame(panel)
-        buttons.pack(fill=tk.X, pady=(8, 2))
-        self.back_button = ttk.Button(buttons, text="← Replay", command=self.step_back, state=tk.DISABLED)
-        self.forward_button = ttk.Button(buttons, text="Replay →", command=self.step_forward, state=tk.DISABLED)
+        buttons.grid(row=8, column=0, sticky="ew", pady=2)
+        self.back_button = ttk.Button(buttons, text="← Previous", command=self.step_back, state=tk.DISABLED)
+        self.forward_button = ttk.Button(buttons, text="Next →", command=self.step_forward, state=tk.DISABLED)
         self.back_button.pack(side=tk.LEFT, padx=(0, 5))
         self.forward_button.pack(side=tk.LEFT)
-        self.replay_label = ttk.Label(panel, text="Replay is available after the session stops.", wraplength=310)
-        self.replay_label.pack(anchor="w", fill=tk.X, pady=4)
         self.footer = ttk.Label(self.root,
-                                text=demo_footer_text(self.demo_seed, self.identity.training_seed,
-                                                      self.max_player_moves),
-                                anchor="w")
-        self.footer.pack(fill=tk.X, padx=12, pady=(0, 8))
-        self.root.update_idletasks()
-        split.sashpos(0, max(420, self.root.winfo_width() - 365))
+            text=demo_footer_text(self.demo_seed, self.identity.training_seed, self.max_player_moves),
+            anchor="w")
+        self.footer.pack(fill=tk.X, padx=14, pady=(0, 8))
+        self.root.bind_all("<F11>", self.toggle_fullscreen)
+        self.root.bind_all("<Escape>", self.leave_fullscreen)
 
     def publish(self, event):
         if event.get("event") == "frame":
@@ -127,11 +266,54 @@ class LiveDemoWindow:
         else:
             self.events.put(event)
 
-    def append_history(self, text):
-        self.history.configure(state=tk.NORMAL)
-        self.history.insert(tk.END, text + "\n")
-        self.history.see(tk.END)
-        self.history.configure(state=tk.DISABLED)
+    def refresh_move_table(self):
+        for item in self.move_table.get_children():
+            self.move_table.delete(item)
+        for number in sorted(self.move_rows):
+            row = self.move_rows[number]
+            pending = bool(row.get("pending"))
+            white = str(row.get("white") or "—") + (" ?" if pending else "")
+            black = str(row.get("black") or "—")
+            self.move_table.insert("", tk.END, values=(f"{number}.", white, black),
+                                   tags=("pending" if pending else ("even" if number % 2 == 0 else "odd"),))
+        children = self.move_table.get_children()
+        if children:
+            self.move_table.see(children[-1])
+
+    def show_details(self):
+        details = (
+            f"Policy: {self.policy_name}\n"
+            f"Family: {self.identity.policy_type}\n"
+            f"Checkpoint SHA-256: {self.identity.checkpoint_sha256}\n"
+            f"Model training seed: {self.identity.training_seed}\n"
+            f"Training decisions: {self.identity.valid_decisions}\n"
+            f"Atari reset seed: {self.demo_seed}\n\n"
+            f"Session limits: {self.session_limits}\n"
+            "ALE truncation is incomplete and is not a chess result."
+        )
+        dialog = tk.Toplevel(self.root)
+        dialog.title("Model and session identity")
+        dialog.geometry("620x360")
+        dialog.minsize(480, 280)
+        content = ttk.Frame(dialog, padding=12)
+        content.pack(fill=tk.BOTH, expand=True)
+        view = tk.Text(content, wrap=tk.WORD, height=14, state=tk.NORMAL)
+        view.insert(tk.END, details)
+        view.configure(state=tk.DISABLED)
+        scroll = ttk.Scrollbar(content, orient=tk.VERTICAL, command=view.yview)
+        view.configure(yscrollcommand=scroll.set)
+        view.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        scroll.pack(side=tk.RIGHT, fill=tk.Y)
+        ttk.Button(dialog, text="Close", command=dialog.destroy).pack(anchor="e", padx=12, pady=(0, 10))
+        return "break"
+
+    def toggle_fullscreen(self, _event=None):
+        self.root.attributes("-fullscreen", not bool(self.root.attributes("-fullscreen")))
+        return "break"
+
+    def leave_fullscreen(self, _event=None):
+        self.root.attributes("-fullscreen", False)
+        return "break"
 
     def record_replay(self, event):
         rgb = event.get("rgb")
@@ -154,44 +336,96 @@ class LiveDemoWindow:
             self.render_frame()
         elif kind == "reset_verified":
             self.record_replay(event)
-            self.turn_label.configure(text="Side to move: White (RGB-verified standard reset)")
-            self.status.configure(text=f"ALE reset verified at frame {event['frame_number']}; agent is ready.")
+            self.turn_label.configure(text="Turn: White · reset RGB verified")
+            self.status.configure(text=f"Ready · ALE frame {event['frame_number']}")
             self.render_frame(event["rgb"], event["frame_number"])
         elif kind == "move_selected":
-            self.turn_label.configure(text="Side to move: White • selected action awaiting Atari verification")
-            self.status.configure(text=f"Agent selected {event['san']} ({event['uci']}); Atari input and RGB confirmation in progress.")
+            self.turn_label.configure(text="Turn: White · action pending RGB confirmation")
+            self.status.configure(text=f"Agent selected {event['san']} ({event['uci']}); Atari confirmation pending.")
+            self.move_rows[int(event["turn"])] = {"white": event["san"], "black": "—", "pending": True}
+            self.refresh_move_table()
         elif kind == "verified_turn":
+            self.session_state.apply(event)
             self.record_replay(event)
             self.verified_turns += 1
-            self.append_history(f"{event['turn']:>2}. White  {event['player_san']} ({event['player_uci']})   ✓ RGB verified")
-            self.append_history(f"    Black  {event['opponent_san']} ({event['opponent_uci']})   ✓ RGB verified")
-            self.turn_label.configure(text="Side to move: White (verified opponent reply)")
-            self.status.configure(text=f"Turn {event['turn']} complete; both moves confirmed against actual Atari RGB.")
+            self.move_rows[int(event["turn"])] = {
+                "white": f"{event['player_san']} ✓", "black": f"{event['opponent_san']} ✓",
+                "pending": False,
+            }
+            self.refresh_move_table()
+            self.turn_label.configure(text="Turn: White · Atari reply verified")
+            self.status.configure(text=f"Turn {event['turn']} · both moves RGB verified")
             self.render_frame(event["rgb"], event["frame_number"])
         elif kind == "episode_finished":
+            self.session_state.apply(event)
             self.finished = True
             self.finished_status = event.get("status")
-            term = event.get("terminal", {})
-            result = "ALE game ended" if term.get("observed") else "Session incomplete; no terminal result observed"
-            detail = event.get("failure") or term.get("runner_stop_reason") or event.get("status")
-            self.status.configure(text=f"{result}. {detail or ''}")
-            self.turn_label.configure(text=f"Session status: {event.get('status')} • frame {event['frame_number']}")
+            term = event.get("terminal")
+            term = term if isinstance(term, dict) else {}
+            if term.get("ale_terminated"):
+                result = "ALE chess game terminated"
+            elif term.get("ale_truncated"):
+                result = "ALE episode truncated; chess result is incomplete"
+            else:
+                result = "Session incomplete; no ALE game result observed"
+            self.status.configure(text=f"{result}. {self.session_state.display_status}")
+            self.turn_label.configure(text=f"Session status: {event.get('status')} • frame {event.get('frame_number', 'unknown')}")
             self.back_button.configure(state=tk.NORMAL if len(self.frames) > 1 else tk.DISABLED)
             self.forward_button.configure(state=tk.NORMAL if len(self.frames) > 1 else tk.DISABLED)
-            self.replay_label.configure(text=f"Replay {len(self.frames)} captured states; ←/→ keys step verified states.")
+            self.replay_label.configure(text=f"Replay {len(self.frames)} ALE states · ←/→ or buttons")
             if event.get("rgb") is not None:
                 self.render_frame(event["rgb"], event.get("frame_number"))
         elif kind == "trace_saved":
+            self.session_state.apply(event)
             self.trace_path = event["path"]
-            self.status.configure(text=f"Trace saved locally: {event['path']}")
-            if self.auto_smoke:
-                self.root.geometry("900x560")
-                self.root.after(150, self._smoke_left)
+            self.trace_status.configure(text="Trace: saved")
+            self._maybe_start_smoke_replay()
+        elif kind == "trace_save_error":
+            self.session_state.apply(event)
+            self.trace_status.configure(text="Trace: write failed")
+            self.status.configure(text=self.session_state.display_status)
         elif kind == "worker_error":
+            self.session_state.apply(event)
             self.finished = True
-            self.status.configure(text=f"Session error: {event['error']}")
+            self.finished_status = "worker_failed"
+            self.exit_code = 1
+            self.status.configure(text=self.session_state.display_status)
             self.back_button.configure(state=tk.NORMAL if len(self.frames) > 1 else tk.DISABLED)
             self.forward_button.configure(state=tk.NORMAL if len(self.frames) > 1 else tk.DISABLED)
+            if self.auto_smoke:
+                self.closing = True
+        elif kind == "worker_finished":
+            self._worker_terminal_seen = True
+            self.session_state.apply(event)
+            if event.get("status") != "completed":
+                self.exit_code = 1
+                if not self.session_state.worker_error:
+                    self.session_state.worker_error_type = "WorkerLifecycleError"
+                    self.session_state.worker_error = event.get("reason") or (
+                        "worker execution did not complete"
+                    )
+                self.finished = True
+                self.status.configure(text=self.session_state.display_status)
+            elif self.auto_smoke and not self.session_state.smoke_ok:
+                # The worker can finish and persist a truthful incomplete trace.
+                # Keep episode status separate from worker lifecycle and still
+                # allow captured verified states to be replayed.
+                self.exit_code = 1
+                self.finished = True
+                self.status.configure(text=self.session_state.display_status)
+            self._maybe_start_smoke_replay()
+
+    def _maybe_start_smoke_replay(self):
+        if not self.auto_smoke or self._smoke_started or not self._worker_terminal_seen:
+            return
+        self._smoke_started = True
+        if len(self.frames) > 1:
+            self.closing = False
+            self.root.geometry("1100x680")
+            self.root.after(150, self._smoke_left)
+        else:
+            self.exit_code = 1
+            self.closing = True
 
     def render_frame(self, rgb=None, frame_no=None):
         if rgb is not None:
@@ -225,13 +459,28 @@ class LiveDemoWindow:
             latest_frame, self.latest_frame_event = self.latest_frame_event, None
         if latest_frame is not None:
             self.handle_event(latest_frame)
-        if self.worker and not self.worker.is_alive() and not self.finished:
+        if self.worker and not self.worker.is_alive() and not self._worker_terminal_seen:
+            if not self._worker_exit_grace:
+                # A worker may publish its final lifecycle events just after
+                # this poll drained the queue. Give that queue one final pass
+                # before classifying a silent thread exit as unexpected.
+                self._worker_exit_grace = True
+                self.root.after(10, self.poll)
+                return
+            self._worker_terminal_seen = True
             self.finished = True
-            self.status.configure(text="Session stopped; trace may be available under the local artifact directory.")
+            self.session_state.worker_status = "failed"
+            self.session_state.worker_error_type = "UnexpectedWorkerExit"
+            self.session_state.worker_error = "worker exited without a terminal lifecycle event"
+            self.finished_status = "worker_failed"
+            self.exit_code = 1
+            self.status.configure(text=self.session_state.display_status)
+            if self.auto_smoke:
+                self.closing = True
         if getattr(self, "closing", False) and (self.worker is None or not self.worker.is_alive()):
             if self.auto_smoke:
                 from .common import write
-                write(self.artifact_dir / "demo-verification.json", {
+                record = {
                     "window_created": True, "policy_name": self.policy_name,
                     "policy_type": self.identity.policy_type,
                     "demo_seed": self.demo_seed,
@@ -241,9 +490,25 @@ class LiveDemoWindow:
                     "checkpoint_sha256": self.identity.checkpoint_sha256,
                     "captured_verified_state_count": len(self.frames),
                     "verified_atari_turns_displayed": self.verified_turns,
-                    "replay_test": self.replay_test, "resized_900x560": self.smoke_resize_checked,
+                    "verified_player_moves_displayed": self.session_state.verified_pairs_displayed,
+                    "verified_atari_replies_displayed": self.session_state.verified_pairs_displayed,
+                    "pending_player_actions": sum(bool(row.get("pending")) for row in getattr(self, "move_rows", {}).values()),
+                    "requested_player_moves": self.max_player_moves,
+                    "episode_status": self.session_state.episode_status,
+                    "episode_terminal": self.session_state.episode_terminal,
+                    "replay_test": self.replay_test, "resized_1100x680": self.smoke_resize_checked,
+                    "layout_check": self.layout_check,
+                    "gui_checks_ok": getattr(self, "gui_checks_ok", False),
                     "finished_status": self.finished_status, "trace_path": self.trace_path,
-                })
+                    "replay_available": self.session_state.replay_available and len(self.frames) > 1,
+                    "session_state": vars(self.session_state), "exit_code": self.exit_code,
+                    "session_limits": self.session_limits,
+                }
+                try:
+                    write(self.artifact_dir / "demo-verification.json", record)
+                except Exception as exc:
+                    self.exit_code = 1
+                    print(f"Could not persist smoke verification: {type(exc).__name__}: {exc}")
             self.root.destroy()
             return
         self.root.after(40, self.poll)
@@ -281,12 +546,14 @@ class LiveDemoWindow:
 
     def _smoke_left(self):
         before = self.replay_index
-        self.root.event_generate("<Left>")
+        self.canvas.focus_force()
+        self.root.update_idletasks()
+        self.canvas.event_generate("<Left>", when="tail")
         self.root.after(100, lambda: self._smoke_right(before))
 
     def _smoke_right(self, before):
         left = self.replay_index
-        self.root.event_generate("<Right>")
+        self.canvas.event_generate("<Right>", when="tail")
         self.root.after(100, lambda: self._smoke_finish(before, left))
 
     def _smoke_finish(self, before, left):
@@ -294,7 +561,30 @@ class LiveDemoWindow:
                             "after_right": self.replay_index,
                             "left_moved_backward": left < before,
                             "right_moved_forward": self.replay_index > left}
-        self.smoke_resize_checked = self.root.winfo_width() == 900 and self.root.winfo_height() == 560
+        self.root.update_idletasks()
+        label_widgets = [self.policy_label, self.checkpoint_label, self.turn_label, self.status,
+                         self.replay_label, self.trace_status]
+        if hasattr(self, "limits_label"):
+            label_widgets.append(self.limits_label)
+        clipped = [widget.winfo_class() for widget in label_widgets
+                   if widget.winfo_height() + 1 < widget.winfo_reqheight()]
+        board_right = self.canvas.winfo_rootx() + self.canvas.winfo_width()
+        panel_left = self.side_panel.winfo_rootx()
+        table_clipped = self.move_table.winfo_width() + 1 < self.move_table.winfo_reqwidth()
+        self.layout_check = {"window_width": self.root.winfo_width(),
+            "window_height": self.root.winfo_height(), "board_area_width": self.canvas.winfo_width(),
+            "side_panel_width": self.side_panel.winfo_width(), "move_table_width": self.move_table.winfo_width(),
+            "side_panel_does_not_overlap_board": panel_left >= board_right,
+            "clipped_labels": clipped, "move_table_clipped": table_clipped}
+        self.layout_check["ok"] = (self.layout_check["side_panel_does_not_overlap_board"]
+                                    and not clipped and not table_clipped)
+        self.gui_checks_ok = (self.replay_test["left_moved_backward"]
+                              and self.replay_test["right_moved_forward"]
+                              and self.layout_check["ok"])
+        self.exit_code = 0 if self.session_state.smoke_ok and self.gui_checks_ok else 1
+        if self.exit_code:
+            self.status.configure(text=f"GUI smoke failed: replay={self.replay_test}; layout={self.layout_check}")
+        self.smoke_resize_checked = self.root.winfo_width() == 1100 and self.root.winfo_height() == 680
         self.closing = True
         self.stop_event.set()
         self.root.after(100, self.poll)
@@ -304,3 +594,4 @@ class LiveDemoWindow:
                                        name="videochess-live-episode")
         self.worker.start()
         self.root.mainloop()
+        return self.exit_code
