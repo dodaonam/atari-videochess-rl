@@ -16,6 +16,7 @@
 | `python3 scripts/agent_checkpoint.py` then `python3 scripts/agent_preflight.py` after checkpoint commit | `1780473` | Preflight PASS; clean workspace with expected portable commit/checkout transition; 1,446 ordinary files SHA-256 checked; artifact-manifest warning expected | canonical state and handoff |
 | Focused portable-checkout, context recovery, G5/M7 state tests | `1780473` | 6 passed | execution retained in session; clean-clone and governance invariants pass |
 | `.venv/bin/python -m unittest discover -s tests -v` | `1780473` | 550 tests: 545 passed, 4 skipped, 1 failed | `.agents/evidence/improvement/phase2-full-tests-final.json`; local raw log SHA-256 `d533f1db5d33c2589b4a1e8c196baf054b794a42c4bf2e8504ab5597830bd477` |
+| Focused clean-clone/context/G5 tests, Phase 2 accounting tests, syntax compilation, whitespace check, and fresh M5/demo/Atari-eval CLI help | `66603bc4dc7cf79475445cedcb6b38c4f1082dde` | All 7 command groups passed; clean-clone/context tests 6/6 passed | `.agents/evidence/improvement/phase2-focused-verification.json` |
 | `python3 -m py_compile videochess_rl/episode.py videochess_rl/improvement/{demo,live,policies,atari_eval}.py ...` and `git diff --check` | source worktree before final commit | Passed | commands were run before the implementation commit; `git diff --check` also passed for the staged commit |
 | `PYTHONPATH=. .venv/bin/python -m unittest tests.test_phase2_evaluation tests.test_phase2_atari_demo -v` | source worktree before final commit | 5 passed | targeted output retained in local execution history; committed tests are included in the full suite |
 | `PYTHONPATH=. .venv/bin/python scripts/improvement/phase2_evaluate.py --mode dev` | evaluator fix commit `de9692582a1fd387f775903bff6e5495868233a4` | 11/11 candidates stage 1; 3 finalists extended; selection completed in 265.98 s | local `.agents/evidence/improvement/phase2-simulator-development.log`; aggregate `phase2-simulator-development.json` |
@@ -25,7 +26,7 @@
 
 ## Full repository suite detail
 
-The exact full-suite command ran from the pushed source revision. One failure remains:
+The exact full-suite command ran from pushed revision `17804732a4bd8a11a5e63b17bbc18d8bad242c77`. The later revision `66603bc4dc7cf79475445cedcb6b38c4f1082dde` refreshes only canonical checkpoint/archive state; it changes no Python, test, configuration, or evaluation code. One failure remains:
 
 ```text
 test_stockfish_answers_uci_readiness_without_searching
