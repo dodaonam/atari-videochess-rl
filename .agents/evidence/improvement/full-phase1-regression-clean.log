@@ -636,7 +636,7 @@ test_verified_command_evidence_with_provenance_passes (test_agent_context.AgentC
 FAIL: test_m7_001_through_m7_005_engineering_done_and_g5_f02_resolved (test_agent_context.AgentContextRecoveryTests.test_m7_001_through_m7_005_engineering_done_and_g5_f02_resolved)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "/tmp/tmpnw3t6_cr/clean-clone/tests/test_agent_context.py", line 1396, in test_m7_001_through_m7_005_engineering_done_and_g5_f02_resolved
+  File "<temporary-directory>/clean-clone/tests/test_agent_context.py", line 1396, in test_m7_001_through_m7_005_engineering_done_and_g5_f02_resolved
     self.assertIn("no affirmative restricted-artifact release permission", state["governance"]["next_user_action"].lower())
 AssertionError: 'no affirmative restricted-artifact release permission' not found in 'no pending m0-m7 engineering or governance tasks. g5-f02 is resolved by the recorded independent pm acceptance; historical results and approvals remain unchanged. the separate owner-authorized phase 1 improvement campaign is in final verification; follow improvement_campaign for live status. no intermediate user action is required. the official 250k m5 run requires the separate phase 2 assignment; no merge or restricted-artifact publication is authorized.'
 

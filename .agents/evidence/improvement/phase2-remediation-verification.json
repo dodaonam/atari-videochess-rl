@@ -118,6 +118,37 @@
     "started_at_utc": "2026-11-03T11:50:02+00:00",
     "worktree_contains_remediation_changes": true
   },
+  "fresh_clean_checkout": {
+    "clone_worktree_clean": true,
+    "full_suite": {
+      "command": "PATH=\"$PROJECT_REPO/.venv/share/stockfish:$PATH\" PYTHONPATH=\"$CLEAN_CLONE\" \"$PROJECT_REPO/.venv/bin/python\" -m unittest discover -s tests -v",
+      "ended_at_utc": "2026-11-03T12:21:11+00:00",
+      "exit_code": 0,
+      "failed": 0,
+      "log_path": "artifacts/improvement/videochess-improvement-20261103-v1/private-logs/pm24-clean-clone-full-tests.log",
+      "log_sha256": "77deedc71b6e636c3af1cf71a126c17609ff825060e5dfbd8129546551b22727",
+      "passed": 552,
+      "skipped": 4,
+      "started_at_utc": "2026-11-03T12:17:02+00:00",
+      "test_revision": "2847aa7f306bc029bf8d73e5e35b4e24fd1cc7c3",
+      "test_tree": "2fa10b2e0af6a64eae6dd44fbb86419e9e114a14",
+      "tests_run": 556
+    },
+    "full_suite_failed": 0,
+    "full_suite_log_path": "artifacts/improvement/videochess-improvement-20261103-v1/private-logs/pm24-clean-clone-full-tests.log",
+    "full_suite_log_sha256": "77deedc71b6e636c3af1cf71a126c17609ff825060e5dfbd8129546551b22727",
+    "full_suite_passed": 552,
+    "full_suite_skipped": 4,
+    "full_suite_tests": 556,
+    "head": "2847aa7f306bc029bf8d73e5e35b4e24fd1cc7c3",
+    "preflight": "PASS_WITH_EXPECTED_ARTIFACT_MANIFEST_WARNING",
+    "private_artifacts_copied": false,
+    "repository": "https://github.com/dodaonam/atari-videochess-rl",
+    "same_four_private_artifact_skips": true,
+    "test_revision": "2847aa7f306bc029bf8d73e5e35b4e24fd1cc7c3",
+    "test_tree": "2fa10b2e0af6a64eae6dd44fbb86419e9e114a14",
+    "tree": "2fa10b2e0af6a64eae6dd44fbb86419e9e114a14"
+  },
   "full_suite_attempts": [
     {
       "exit_code": 1,
@@ -194,6 +225,7 @@
     "force_push_performed": false,
     "historical_path_commits": [
       "2d390fe7df862e998960e8fdc4cdef5f93f2bd5c",
+      "381749cf926806d0dd4b73c7f5ac3cfdaee45b11",
       "5014258afb28ffed045e9f285120c0ae6cce4f53",
       "964c241080b37951a6b10eb3d891ef227562f1c2",
       "0596698249d74da4dd9184a12975f83efd08bca3"
@@ -204,6 +236,19 @@
     "required": true,
     "sanitized_tip": "true",
     "squash_integration_avoids_importing_intermediate_feature_commits": true
+  },
+  "post_privacy_focused_test_run": {
+    "command": "PATH=\"$PWD/.venv/share/stockfish:$PATH\" PYTHONPATH=. .venv/bin/python -m unittest tests.test_pre_m7_contracts.PreM7ContractTests.test_private_assets_remain_local_and_sanitized_reports_are_portable tests.test_pre_m7_contracts.PreM7ContractTests.test_all_new_local_markdown_links_resolve tests.test_phase2_atari_demo tests.test_phase2_evaluation -v",
+    "ended_at_utc": "2026-11-03T12:41:49+00:00",
+    "exit_code": 0,
+    "failed": 0,
+    "log_path": "artifacts/improvement/videochess-improvement-20261103-v1/private-logs/pm24-post-privacy-focused-tests.log",
+    "log_sha256": "d73d6494e6bc174b8a4b4a1eeaaba3ff487238d1b51253b507f4197725f92533",
+    "passed": 13,
+    "skipped": 0,
+    "started_at_utc": "2026-11-03T12:41:47+00:00",
+    "tested_private_path_redactions_and_evidence_schema": true,
+    "tests_run": 13
   },
   "preflight": {
     "active_official_training_process": false,
@@ -235,24 +280,105 @@
       "old_test_logs": "<repo>",
       "repository_root": "${REPO_ROOT}"
     },
-    "allowed_compressed_files": "37 canonical checkpoint-history archive segments; manifest-backed state history only",
+    "absolute_tmp_paths_in_current_tip": false,
+    "allowed_compressed_files": "41 canonical checkpoint-history archive segments in this PR diff; all are manifest-backed state history, not project dataset/model/replay payloads.",
     "changed_paths_inspected": 176,
-    "changed_paths_inspected_final": 179,
+    "changed_paths_inspected_final": 181,
     "credential_patterns_found": 0,
+    "current_tip_path_redaction": "Home, repository-root, Downloads, and temporary-clone absolute paths replaced with portable variables/placeholders; hashes rebound.",
     "historical_absolute_path_commits": [
       "2d390fe7df862e998960e8fdc4cdef5f93f2bd5c",
       "5014258afb28ffed045e9f285120c0ae6cce4f53",
       "964c241080b37951a6b10eb3d891ef227562f1c2"
     ],
+    "historical_temp_path_commits": [
+      "381749cf926806d0dd4b73c7f5ac3cfdaee45b11",
+      "5014258afb28ffed045e9f285120c0ae6cce4f53"
+    ],
     "history_path_values_remain_reachable": true,
     "move_sequence_fields_in_public_atari_json": false,
     "move_sequences_in_public_evidence": false,
+    "post_redaction_focused_test_passed": true,
     "restricted_model_rom_rgb_replay_payloads_committed": false
   },
+  "private_artifact_verification": {
+    "artifact_inventory": {
+      "command": ".venv/bin/python - (stdin script SHA-256 checked every path and size in artifact-inventory.json)",
+      "ended_at_utc": "2026-11-03T12:28:28+00:00",
+      "entries": 4163,
+      "exact_stdin_script": "For each relative path/entry in artifact-inventory.json, stream the file through SHA-256 and compare byte count and digest; assert no missing or mismatched files.",
+      "exit_code": 0,
+      "log_path": "artifacts/improvement/videochess-improvement-20261103-v1/private-logs/pm24-artifact-inventory-verification.log",
+      "log_sha256": "caeb16bf954784a74e07e0682cb2c6a4aedf72b77cefd83109ce05b89c0b8cbe",
+      "mismatched": 0,
+      "missing": 0,
+      "started_at_utc": "2026-11-03T12:28:18+00:00"
+    },
+    "dataset_release": {
+      "command": ".venv/bin/python - (stdin script imported videochess_rl.improvement.data.verify_release and called it on dataset-v4)",
+      "ended_at_utc": "2026-11-03T12:31:34+00:00",
+      "exact_stdin_script": "from videochess_rl.improvement.data import verify_release; examples, manifest = verify_release('artifacts/improvement/videochess-improvement-20261103-v1/dataset-v4')",
+      "exit_code": 0,
+      "game_counts": {
+        "test": 500,
+        "train": 4000,
+        "validation": 500
+      },
+      "games": 5000,
+      "log_path": "artifacts/improvement/videochess-improvement-20261103-v1/private-logs/pm24-dataset-release-verification.log",
+      "log_sha256": "3cb1fbc6c90ee01ca49892e6f7b84e212d6cd650ceb67d29a1b42e843816feeb",
+      "m4_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+      "m4_sidecar_schema": "videochess-m4-checkpoint/1.0",
+      "position_counts": {
+        "test": 9234,
+        "train": 76606,
+        "validation": 8965
+      },
+      "positions": 94805,
+      "release_id": "f2b3b52724958ffa845894681013cdc40915da179bbec3ae011087fe8a8ce0cc",
+      "started_at_utc": "2026-11-03T12:29:13+00:00"
+    },
+    "initial_combined_check_diagnostic": {
+      "cause": "Dataset verification returned successfully; the follow-on summary formatter expected examples[\"games\"] rather than split-keyed example records and raised KeyError.",
+      "corrected_check_exit_code": 0,
+      "exit_code": 1,
+      "log_path": "artifacts/improvement/videochess-improvement-20261103-v1/private-logs/pm24-private-artifact-verification.log",
+      "log_sha256": "d23a2ec4534c402e3b42fcaf7b1b8b4e8924726d55e8973305ee149e441a4035",
+      "repeated_data_generation": false,
+      "verifier_result": "verify_release returned successfully and verified every release-manifest file before the summary formatter raised KeyError on an assumed examples[\"games\"] field; the corrected invocation completed with exit 0."
+    }
+  },
+  "pull_request_final_verification": {
+    "auto_merge": false,
+    "base": "main",
+    "base_sha": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+    "check": {
+      "name": "context",
+      "status": "SUCCESS",
+      "url": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/41634058724/job/125910632507",
+      "workflow": "Repository preflight"
+    },
+    "draft": false,
+    "main_unchanged": "7415d821acf11dd3e07e4990c2f5539cfdf31916",
+    "merge_authority": "Independent PM/Project Owner integration method decision still required due earlier reachable commits.",
+    "merge_performed": false,
+    "merge_state": "CLEAN",
+    "number": 24,
+    "remote_head_matches_local": true,
+    "review_decision": "",
+    "state": "OPEN",
+    "url": "https://github.com/dodaonam/atari-videochess-rl/pull/24",
+    "verification_scope_note": "This PR identity and check were observed on the tested pushed head before later verification/state metadata commits; the actual final remote head is reported from GitHub after those commits.",
+    "verified_head_before_final_metadata_commit": "2847aa7f306bc029bf8d73e5e35b4e24fd1cc7c3",
+    "verified_tree_before_final_metadata_commit": "2fa10b2e0af6a64eae6dd44fbb86419e9e114a14"
+  },
   "revision_identity": {
+    "clean_checkout_tested_pr_head": "2847aa7f306bc029bf8d73e5e35b4e24fd1cc7c3",
     "clean_full_suite_tested_commit": "ee6668b56fefd1678a9f16897fc83da9d9ce43f9",
     "clean_full_suite_tested_tree": "462145abefce566d53e893ddab2d2956b718ce2f",
     "initial_pm_review_head": "d35520a0301a7c5413c26f1792762b51d58a48df",
+    "latest_pushed_pr_head_before_final_metadata_commit": "2847aa7f306bc029bf8d73e5e35b4e24fd1cc7c3",
+    "latest_pushed_pr_tree_before_final_metadata_commit": "2fa10b2e0af6a64eae6dd44fbb86419e9e114a14",
     "note": "Official training-source identity and digests remain unchanged; final pushed PR head is recorded after push, distinct from this test revision.",
     "official_training_source_commit": "76c898ed0dd8a2e8bf0c76cbd8565f83077284e0",
     "official_training_source_tree": "b5877036a2e954c085e0da386c0bcb596ff21ab3",
@@ -262,10 +388,13 @@
     "tested_implementation_commit_tree": "d27718c8c5eb52dc2c6c526bcc5660df55b656b9",
     "tested_implementation_tree": "d27718c8c5eb52dc2c6c526bcc5660df55b656b9",
     "training_code_sha256": "cf329438880a82b7b39b05b8f1f3bc1af21e262edb4143e1035e494f891a5705",
-    "training_config_sha256": "2cfe2805edd3e05756fd3ef981a6e4441e3b4ad717649d5647085228e837aabd"
+    "training_config_sha256": "2cfe2805edd3e05756fd3ef981a6e4441e3b4ad717649d5647085228e837aabd",
+    "verification_record_commit": "6273f1c2c34e0a5870c742e757d35cb1a1c2c1aa",
+    "verification_record_provenance": "Head/tree fields are labeled by when observed; no self-referential final commit hash is claimed.",
+    "verification_record_tree": "4ae281832319fd818e4051414353bac1d897732b"
   },
   "schema": "videochess-pm24-remediation-verification/1",
-  "status": "complete_with_integration_history_decision_pending",
+  "status": "complete_pending_independent_pm_integration_decision",
   "stockfish": {
     "binary_path": ".venv/share/stockfish/stockfish",
     "search_or_labeling_run": false,

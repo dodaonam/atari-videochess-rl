@@ -14,7 +14,7 @@
   "git_revision": "964c241080b37951a6b10eb3d891ef227562f1c2",
   "log_path": ".agents/evidence/improvement/full-phase1-regression-clean.log",
   "log_sanitization": "Repository-root paths replaced by <repo>; trailing whitespace removed; substantive output preserved.",
-  "log_sha256": "0bbc94bf2204528375b95821cedb766e0b47db3e5ffaf677ec83db974c7ef3b4",
+  "log_sha256": "98935528ac5112297c8090dffcb8f6117622ba333f1936dbc6c1ef2b70f06044",
   "source_manifest_path": "artifacts/improvement/videochess-improvement-20261103-v1/source-evidence/full-phase1-regression-clean/manifest.json",
   "source_manifest_sha256": "b4e7ba411484d7e25ffcf40fb1034a14bde60d6a7af2c551f473a18ab653c26a",
   "source_worktree_dirty": false,

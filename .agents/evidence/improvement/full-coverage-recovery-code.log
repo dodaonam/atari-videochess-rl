@@ -615,7 +615,7 @@ test_verified_command_evidence_with_provenance_passes (test_agent_context.AgentC
 FAIL: test_m7_001_through_m7_005_engineering_done_and_g5_f02_resolved (test_agent_context.AgentContextRecoveryTests.test_m7_001_through_m7_005_engineering_done_and_g5_f02_resolved)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "/tmp/tmpjoozw6p3/clean-clone/tests/test_agent_context.py", line 1394, in test_m7_001_through_m7_005_engineering_done_and_g5_f02_resolved
+  File "<temporary-directory>/clean-clone/tests/test_agent_context.py", line 1394, in test_m7_001_through_m7_005_engineering_done_and_g5_f02_resolved
     self.assertIn("No pending M0-M7 engineering or governance tasks", state["governance"]["next_user_action"])
 AssertionError: 'No pending M0-M7 engineering or governance tasks' not found in 'No intermediate action is required for the owner-authorized independent Phase 1 improvement campaign. Follow improvement_campaign for its live status. Completed M0-M7 governance/results remain unchanged. The official 250k M5 run requires the separate Phase 2 assignment; no merge or restricted-artifact publication is authorized.'
 

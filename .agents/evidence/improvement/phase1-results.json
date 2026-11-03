@@ -642,7 +642,7 @@
     "branch": "feature/videochess-performance-improvement-20261103",
     "clean_status": true,
     "clean_worktree_head": "11a99b58ef36f9557be5a98a81dfbef7fae5b45c",
-    "clean_worktree_path": "/tmp/atari-videochess-phase1-clean-11a99b5",
+    "clean_worktree_path": "<temporary-clean-checkout>",
     "commands": [
       {
         "command": [

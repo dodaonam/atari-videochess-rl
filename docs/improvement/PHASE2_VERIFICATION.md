@@ -106,3 +106,10 @@ from the model training seed. Development checkpoint selection compares only
 the precommitted extended finalists; the existing 250k selection remains
 valid. Full finding evidence and limitations are in
 [`PM24_REMEDIATION.md`](PM24_REMEDIATION.md).
+
+After push, a fresh clone of the exact branch head passed repository preflight
+and the full Python suite (556 tests, 552 passed, four private-artifact skips,
+zero failures). Dataset release verification, the selected M4-A sidecar, and
+all 4,163 local artifact inventory entries also passed; raw artifacts remain
+private. The clean-clone test and artifact-check logs are retained locally and
+hashed in `phase2-remediation-verification.json`.

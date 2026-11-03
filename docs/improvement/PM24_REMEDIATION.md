@@ -52,9 +52,9 @@ the published feature branch and PR commit list. Removing the field at the tip
 does not erase that prior exposure, and no force-push or history rewrite was
 performed.
 
-The wider proposed PR diff also contained absolute workspace and Downloads
-paths in command records, old test logs, and optional legacy-GUI notes. The
-current tracked tip now represents repository-root command prefixes as
+The wider proposed PR diff also contained absolute workspace, Downloads, and
+temporary-directory paths in command records, old test logs, and optional
+legacy-GUI notes. The current tracked tip now represents repository-root command prefixes as
 `${REPO_ROOT}`, redacts the external GUI location while retaining its
 SHA-256/smoke result, and rebinds the affected log hashes. The optional GUI
 smoke helper now requires an explicit `--script` path and has no machine-local
@@ -68,7 +68,10 @@ The path-bearing records were introduced in reachable feature commits
 `964c241080b37951a6b10eb3d891ef227562f1c2`; the sanitizer is in
 `1540653b1d6a57a3ffb9b8c0afe7e4666418ea05`. The Atari move-sequence field was
 introduced separately in `0596698249d74da4dd9184a12975f83efd08bca3` and removed
-at the same sanitizer commit.
+at the same sanitizer commit. Temporary checkout paths also appeared in
+`381749cf926806d0dd4b73c7f5ac3cfdaee45b11` and
+`5014258afb28ffed045e9f285120c0ae6cce4f53` and are redacted from the current
+tip.
 
 A normal merge commit would retain the feature commits in `main` history. A
 squash integration of the sanitized final tree would put only the net sanitized
@@ -118,6 +121,15 @@ documented engineering limitation, not a fabricated terminal result.
   `462145abefce566d53e893ddab2d2956b718ce2f`: 556 tests, 552 passed, zero
   failed, four private-artifact tests skipped; exit code 0. The retained log is
   local at `artifacts/improvement/videochess-improvement-20261103-v1/private-logs/pm24-full-tests-clean-final.log`; its digest and timing are in the machine-readable verification record.
+- A fresh clone of pushed head `2847aa7f306bc029bf8d73e5e35b4e24fd1cc7c3`,
+  tree `2fa10b2e0af6a64eae6dd44fbb86419e9e114a14`, passed preflight and the
+  full repository suite: 556 tests, 552 passed, zero failed, four private
+  artifact skips; exit code 0. The clone had no private artifact payloads.
+- The accepted dataset verifier passed for release
+  `f2b3b52724958ffa845894681013cdc40915da179bbec3ae011087fe8a8ce0cc` with
+  5,000 games and 94,805 positions. The M4-A selection and sidecar hashes
+  matched, and all 4,163 entries in the local Phase 1 artifact inventory
+  matched. These checks did not regenerate or modify the artifacts.
 - Two earlier full-suite attempts are retained as failed diagnostics: one ran
   with a dirty tree and failed the Git-snapshot context assertion; the next
   exposed the temporary canonical governance-text regression. That text was
