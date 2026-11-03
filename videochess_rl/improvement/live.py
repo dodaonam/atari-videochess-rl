@@ -16,7 +16,9 @@ from videochess_rl.environment import ALEConfig, VideoChessEnv
 @dataclass
 class DemoSessionState:
     """Independent episode, trace-persistence, and worker lifecycle state."""
+    required_player_moves: int | None = None
     episode_status: str | None = None
+    episode_terminal: dict | None = None
     terminal_category: str | None = None
     primary_reason: str | None = None
     trace_status: str = "not saved"
@@ -25,15 +27,20 @@ class DemoSessionState:
     worker_error_type: str | None = None
     worker_error: str | None = None
     replay_available: bool = False
+    verified_pairs_displayed: int = 0
 
     def apply(self, event: dict) -> None:
         kind = event.get("event")
         if kind == "episode_finished":
             self.episode_status = str(event.get("status") or "unknown")
             terminal = event.get("terminal") or {}
-            self.terminal_category = terminal.get("runner_stop_category")
-            self.primary_reason = (event.get("failure") or terminal.get("runner_stop_reason")
+            self.episode_terminal = dict(terminal) if isinstance(terminal, dict) else None
+            self.terminal_category = terminal.get("runner_stop_category") if isinstance(terminal, dict) else None
+            terminal_reason = terminal.get("runner_stop_reason") if isinstance(terminal, dict) else None
+            self.primary_reason = (event.get("failure") or terminal_reason
                                    or self.episode_status)
+        elif kind == "verified_turn":
+            self.verified_pairs_displayed += 1
         elif kind == "trace_saved":
             self.trace_status = "saved"
             self.trace_path = event.get("path")
@@ -61,8 +68,28 @@ class DemoSessionState:
 
     @property
     def smoke_ok(self) -> bool:
-        return (self.worker_status == "completed" and self.episode_status is not None
-                and self.trace_status == "saved" and self.worker_error is None)
+        terminal = self.episode_terminal
+        required = self.required_player_moves
+        if (required is None or terminal is None or self.worker_status != "completed"
+                or self.episode_status != "runner_stopped" or self.trace_status != "saved"
+                or self.worker_error is not None):
+            return False
+        return (
+            terminal.get("runner_stop_category") == "RUNNER_MAX_PLAYER_MOVES"
+            and terminal.get("runner_stopped") is True
+            and terminal.get("observed") is False
+            and terminal.get("terminated") is False
+            and terminal.get("truncated") is False
+            and terminal.get("ale_terminated") is False
+            and terminal.get("ale_truncated") is False
+            and terminal.get("runner_stop_reason") ==
+                f"runner stopped after the configured {required} player-move limit"
+            and terminal.get("player_moves_attempted") == required
+            and terminal.get("verified_player_moves") == required
+            and terminal.get("verified_atari_replies") == required
+            and terminal.get("incomplete_final_move_count") == 0
+            and self.verified_pairs_displayed == required
+        )
 
 
 def demo_footer_text(demo_seed: int, training_seed: int | None, max_player_moves: int) -> str:
@@ -109,9 +136,10 @@ class LiveDemoWindow:
         self.move_rows: dict[int, dict[str, object]] = {}
         self.verified_turns = 0
         self.replay_test = None
+        self.gui_checks_ok = False
         self.trace_path = None
         self.finished_status = None
-        self.session_state = DemoSessionState()
+        self.session_state = DemoSessionState(required_player_moves=max_player_moves if auto_smoke else None)
         self.exit_code = 1 if auto_smoke else 0
         self._smoke_started = False
         self._worker_terminal_seen = False
@@ -317,6 +345,7 @@ class LiveDemoWindow:
             self.move_rows[int(event["turn"])] = {"white": event["san"], "black": "—", "pending": True}
             self.refresh_move_table()
         elif kind == "verified_turn":
+            self.session_state.apply(event)
             self.record_replay(event)
             self.verified_turns += 1
             self.move_rows[int(event["turn"])] = {
@@ -331,7 +360,8 @@ class LiveDemoWindow:
             self.session_state.apply(event)
             self.finished = True
             self.finished_status = event.get("status")
-            term = event.get("terminal", {})
+            term = event.get("terminal")
+            term = term if isinstance(term, dict) else {}
             if term.get("ale_terminated"):
                 result = "ALE chess game terminated"
             elif term.get("ale_truncated"):
@@ -367,25 +397,30 @@ class LiveDemoWindow:
         elif kind == "worker_finished":
             self._worker_terminal_seen = True
             self.session_state.apply(event)
-            if event.get("status") != "completed" or not self.session_state.smoke_ok:
+            if event.get("status") != "completed":
                 self.exit_code = 1
                 if not self.session_state.worker_error:
                     self.session_state.worker_error_type = "WorkerLifecycleError"
                     self.session_state.worker_error = event.get("reason") or (
-                        "worker ended without episode completion and persisted trace"
+                        "worker execution did not complete"
                     )
                 self.finished = True
                 self.status.configure(text=self.session_state.display_status)
-                if self.auto_smoke:
-                    self.closing = True
+            elif self.auto_smoke and not self.session_state.smoke_ok:
+                # The worker can finish and persist a truthful incomplete trace.
+                # Keep episode status separate from worker lifecycle and still
+                # allow captured verified states to be replayed.
+                self.exit_code = 1
+                self.finished = True
+                self.status.configure(text=self.session_state.display_status)
             self._maybe_start_smoke_replay()
 
     def _maybe_start_smoke_replay(self):
         if not self.auto_smoke or self._smoke_started or not self._worker_terminal_seen:
             return
         self._smoke_started = True
-        if self.session_state.smoke_ok and len(self.frames) > 1:
-            self.exit_code = 0
+        if len(self.frames) > 1:
+            self.closing = False
             self.root.geometry("1100x680")
             self.root.after(150, self._smoke_left)
         else:
@@ -455,9 +490,17 @@ class LiveDemoWindow:
                     "checkpoint_sha256": self.identity.checkpoint_sha256,
                     "captured_verified_state_count": len(self.frames),
                     "verified_atari_turns_displayed": self.verified_turns,
+                    "verified_player_moves_displayed": self.session_state.verified_pairs_displayed,
+                    "verified_atari_replies_displayed": self.session_state.verified_pairs_displayed,
+                    "pending_player_actions": sum(bool(row.get("pending")) for row in getattr(self, "move_rows", {}).values()),
+                    "requested_player_moves": self.max_player_moves,
+                    "episode_status": self.session_state.episode_status,
+                    "episode_terminal": self.session_state.episode_terminal,
                     "replay_test": self.replay_test, "resized_1100x680": self.smoke_resize_checked,
                     "layout_check": self.layout_check,
+                    "gui_checks_ok": getattr(self, "gui_checks_ok", False),
                     "finished_status": self.finished_status, "trace_path": self.trace_path,
+                    "replay_available": self.session_state.replay_available and len(self.frames) > 1,
                     "session_state": vars(self.session_state), "exit_code": self.exit_code,
                     "session_limits": self.session_limits,
                 }
@@ -535,9 +578,10 @@ class LiveDemoWindow:
             "clipped_labels": clipped, "move_table_clipped": table_clipped}
         self.layout_check["ok"] = (self.layout_check["side_panel_does_not_overlap_board"]
                                     and not clipped and not table_clipped)
-        self.exit_code = 0 if (self.replay_test["left_moved_backward"]
-                               and self.replay_test["right_moved_forward"]
-                               and self.layout_check["ok"]) else 1
+        self.gui_checks_ok = (self.replay_test["left_moved_backward"]
+                              and self.replay_test["right_moved_forward"]
+                              and self.layout_check["ok"])
+        self.exit_code = 0 if self.session_state.smoke_ok and self.gui_checks_ok else 1
         if self.exit_code:
             self.status.configure(text=f"GUI smoke failed: replay={self.replay_test}; layout={self.layout_check}")
         self.smoke_resize_checked = self.root.winfo_width() == 1100 and self.root.winfo_height() == 680

@@ -1,4 +1,122 @@
 {
+  "PM25-F01": {
+    "acceptance_contract": {
+      "controller_uncertainty_is_incomplete": true,
+      "requested_player_moves": 2,
+      "required_episode_status": "runner_stopped",
+      "required_terminal_category": "RUNNER_MAX_PLAYER_MOVES",
+      "required_verified_atari_replies": 2,
+      "required_verified_player_moves": 2,
+      "requires_GUI_trace_count_and_terminal_consistency": true,
+      "requires_no_ALE_termination_or_truncation": true,
+      "requires_no_pending_move": true,
+      "requires_resize_layout_and_left_right_replay": true,
+      "requires_trace_turn_counter_consistency": true,
+      "requires_worker_complete_and_trace_saved": true,
+      "verdicts": {
+        "incomplete_episode": "SMOKE_INCOMPLETE (exit 2)",
+        "malformed_or_inconsistent_evidence": "SMOKE_RUNTIME_FAILURE (exit 4)",
+        "success": "SMOKE_PASS (exit 0)"
+      }
+    },
+    "controller_safety": {
+      "DEMO_F04_changed": false,
+      "blind_FIRE_retry_added": false,
+      "shadow_advances_only_after_RGB_confirmation": true,
+      "uncertain_move_reclassified_as_verified": false
+    },
+    "deterministic_false_positive_reproduction": {
+      "corrected_exit_code": 2,
+      "corrected_verdict": "SMOKE_INCOMPLETE",
+      "fixture": "one verified player/reply pair; pending second action; CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN; worker completed; trace saved; replay/layout passed; mocked GUI exit 0",
+      "old_predicate_would_accept": true,
+      "test": "tests.test_demo_reliability.AutoSmokeAcceptanceTests.test_cli_exit_and_verification_artifact_reject_one_turn_controller_failure",
+      "trace_and_gui_data_are_synthetic_test_fixtures": true
+    },
+    "failed_test_fixture_diagnostic": {
+      "cause": "new malformed-stop-reason test fixture removed the same aliased dictionary key twice; product code was not implicated; fixture was corrected and the rerun passed.",
+      "command": "DISPLAY=:1 PYTHONPATH=. .venv/bin/python -m unittest tests.test_demo_reliability tests.test_phase2_atari_demo tests.test_m1_episode tests.test_m1_ale_integration tests.test_m6_adapter tests.test_phase2_evaluation -v",
+      "end_at_local": "2026-11-03T23:14:05.469756289+07:00",
+      "errors": 1,
+      "exit_code": 1,
+      "failed": 0,
+      "passed": 103,
+      "private_log_path": "artifacts/improvement/videochess-improvement-20261103-v1/private-logs/pm25-focused-tests-final-v2.log",
+      "private_log_sha256": "e8de0d88c91cb70af5d1c11ce2c2419f77ba56b8f74f058974418091c2f2dcb0",
+      "skipped": 0,
+      "start_at_local": "2026-11-03T23:13:48.014560265+07:00",
+      "total": 104
+    },
+    "finding": "The prior auto-smoke CLI accepted one displayed verified turn and one Atari reply despite a configured two-player-move smoke; worker completion and saved trace were insufficient evidence of exercise completion.",
+    "focused_tests_precommit": {
+      "command": "DISPLAY=:1 PYTHONPATH=. .venv/bin/python -m unittest tests.test_demo_reliability tests.test_phase2_atari_demo tests.test_m1_episode tests.test_m1_ale_integration tests.test_m6_adapter tests.test_phase2_evaluation -v",
+      "end_at_local": "2026-11-03T23:16:27.565742549+07:00",
+      "exit_code": 0,
+      "failed": 0,
+      "passed": 106,
+      "private_log_path": "artifacts/improvement/videochess-improvement-20261103-v1/private-logs/pm25-focused-tests-final-v5.log",
+      "private_log_sha256": "8dcc4d5115f139bbcc8d2226b25c64c3859c549582960c321b062835bdfcce37",
+      "revision_base": "f5e6c8a2090b072688e6e72c45dd1e5daf82b9b6",
+      "skipped": 0,
+      "start_at_local": "2026-11-03T23:16:05.685076676+07:00",
+      "total": 106,
+      "worktree_had_task_changes": true
+    },
+    "real_ALE_bounded_smokes": [
+      {
+        "checkpoint_sha256": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293",
+        "command": ".venv/bin/python -m videochess_rl.improvement.demo --policy double-dqn --checkpoint artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-250000.pt --checkpoint-sha256 48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293 --reset-seed 123456 --auto-smoke",
+        "end_at_local": "2026-11-03T23:11:22.101092352+07:00",
+        "environment": "real ALE/VideoChess-v5 mode 4; ALE-Py 0.11.2; Gymnasium 1.4.0; Tk 8.6",
+        "episode_status": "runner_stopped",
+        "exit_code": 0,
+        "layout_resize_passed": true,
+        "policy": "double_dqn_250000",
+        "policy_type": "double_dqn_q_only",
+        "private_log_relative_path": "artifacts/improvement/videochess-improvement-20261103-v1/private-logs/pm25-q-autosmoke-final.log",
+        "private_log_sha256": "b7eac7614d3addcc3ccccaa5445cd2455694aef8b08f0bf444a7c072ac619a3e",
+        "replay_left_right_passed": true,
+        "requested_player_moves": 2,
+        "reset_seed": 123456,
+        "start_at_local": "2026-11-03T23:11:11.728991564+07:00",
+        "stop_reason": "runner stopped after the configured 2 player-move limit",
+        "terminal_category": "RUNNER_MAX_PLAYER_MOVES",
+        "terminal_outcome_observed": false,
+        "verdict": "SMOKE_PASS",
+        "verification_artifact_relative_path": "artifacts/improvement/videochess-improvement-20261103-v1/live-demo/20261103T161113.337654Z-double-dqn-a8d87f96a8/demo-verification.json",
+        "verification_artifact_sha256": "159aaa443cf882af01ff453eabe24a60bf99ad9c63f9987ee11a9d6267b4111c",
+        "verified_atari_replies": 2,
+        "verified_player_moves": 2
+      },
+      {
+        "checkpoint_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+        "command": ".venv/bin/python -m videochess_rl.improvement.demo --policy m4-a --reset-seed 123456 --auto-smoke",
+        "end_at_local": "2026-11-03T23:11:38.687527803+07:00",
+        "environment": "real ALE/VideoChess-v5 mode 4; ALE-Py 0.11.2; Gymnasium 1.4.0; Tk 8.6",
+        "episode_status": "runner_stopped",
+        "exit_code": 0,
+        "layout_resize_passed": true,
+        "policy": "M4-A_behavior_cloning",
+        "policy_type": "behavior_cloning",
+        "private_log_relative_path": "artifacts/improvement/videochess-improvement-20261103-v1/private-logs/pm25-m4-autosmoke-final.log",
+        "private_log_sha256": "1c55c2539d82cb37ffd3bd9463207d35f10e79430f51dad489d63d7203fb75ce",
+        "replay_left_right_passed": true,
+        "requested_player_moves": 2,
+        "reset_seed": 123456,
+        "start_at_local": "2026-11-03T23:11:26.952849738+07:00",
+        "stop_reason": "runner stopped after the configured 2 player-move limit",
+        "terminal_category": "RUNNER_MAX_PLAYER_MOVES",
+        "terminal_outcome_observed": false,
+        "verdict": "SMOKE_PASS",
+        "verification_artifact_relative_path": "artifacts/improvement/videochess-improvement-20261103-v1/live-demo/20261103T161128.905962Z-m4-a-4d06ef7c67/demo-verification.json",
+        "verification_artifact_sha256": "abf9ec49ba0bf5c838936c0d200219aa8c80ef4b249de2ba648dd865a6fce3b0",
+        "verified_atari_replies": 2,
+        "verified_player_moves": 2
+      }
+    ],
+    "root_cause": "Final CLI predicate used >=1 for displayed turns/replies; DemoSessionState.smoke_ok checked worker/episode/trace lifecycle but not exact runner-cap terminal category and verified counts.",
+    "status": "implemented_and_verified"
+  },
   "artifact_integrity": {
     "M4_A_sha256": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
     "Q_250k_sha256": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293",
@@ -181,6 +299,12 @@
       "severity": "P2",
       "status": "resolved",
       "summary": "Atomic unique session directories use microsecond timestamps and collision-resistant suffixes."
+    },
+    {
+      "id": "PM25-F01",
+      "severity": "High",
+      "status": "resolved",
+      "summary": "Automated smoke requires exactly two trace-verified player moves and Atari replies, canonical runner move-cap stop, consistent GUI/trace counts and terminal data, successful layout/replay, and a completed worker with persisted trace. Incomplete and malformed evidence have distinct nonzero verdicts."
     }
   ],
   "github_read_only_checks": {

@@ -13,6 +13,229 @@ from .common import ARTIFACTS, write
 ROM_SHA256 = "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7"
 
 
+def verify_auto_smoke(trace: object, verification: object, *, requested_player_moves: int) -> dict:
+    """Validate the bounded smoke against the authoritative episode trace and GUI record.
+
+    A normal worker return or a persisted trace is not an episode success.  The
+    only successful automated smoke is the configured runner move-cap stop
+    after every requested player move and corresponding Atari reply was RGB
+    verified, with the GUI displaying the same pairs and passing its checks.
+    """
+    failures: list[dict[str, str]] = []
+    runtime_failure = False
+
+    def fail(code: str, message: str, *, runtime: bool = False) -> None:
+        nonlocal runtime_failure
+        failures.append({"code": code, "message": message})
+        runtime_failure = runtime_failure or runtime
+
+    if (not isinstance(requested_player_moves, int) or isinstance(requested_player_moves, bool)
+            or requested_player_moves != 2):
+        fail("invalid_requested_moves", "automated smoke contract requires exactly two player moves", runtime=True)
+        requested_player_moves = 0
+    if not isinstance(verification, dict):
+        fail("invalid_verification_record", "GUI verification record is missing or malformed", runtime=True)
+        verification = {}
+    if not isinstance(trace, dict):
+        fail("invalid_episode_trace", "episode trace is missing or malformed", runtime=True)
+        trace = {}
+
+    session = verification.get("session_state")
+    if not isinstance(session, dict):
+        fail("invalid_session_state", "GUI session lifecycle record is missing or malformed", runtime=True)
+        session = {}
+    worker_status = session.get("worker_status")
+    trace_status = session.get("trace_status")
+    if worker_status != "completed":
+        fail("worker_not_completed", f"worker status was {worker_status!r}, expected 'completed'", runtime=True)
+    if session.get("worker_error") is not None:
+        fail("worker_error", f"worker error was reported: {session.get('worker_error')}", runtime=True)
+    if trace_status != "saved":
+        fail("trace_not_saved", f"trace persistence status was {trace_status!r}, expected 'saved'", runtime=True)
+    if verification.get("trace_path") != "trace.json":
+        fail("trace_reference_invalid", "verification record does not reference the expected trace", runtime=True)
+    if session.get("trace_path") != "trace.json":
+        fail("session_trace_reference_invalid", "session lifecycle does not reference the persisted trace", runtime=True)
+    if (not isinstance(verification.get("exit_code"), int)
+            or isinstance(verification.get("exit_code"), bool)):
+        fail("gui_exit_code_missing", "GUI lifecycle exit code is missing or malformed", runtime=True)
+    if verification.get("window_created") is not True:
+        fail("window_not_created", "live GUI window was not verified", runtime=True)
+    if verification.get("resized_1100x680") is not True:
+        fail("resize_failed", "required GUI resize was not verified", runtime=True)
+    layout = verification.get("layout_check")
+    if not isinstance(layout, dict) or layout.get("ok") is not True:
+        fail("layout_failed", "required GUI layout check did not pass", runtime=True)
+    replay = verification.get("replay_test")
+    if (not isinstance(replay, dict) or replay.get("left_moved_backward") is not True
+            or replay.get("right_moved_forward") is not True):
+        fail("replay_failed", "replay backward and forward checks did not both pass", runtime=True)
+    if verification.get("replay_available") is not True:
+        fail("replay_unavailable", "verified replay states were not available", runtime=True)
+    if verification.get("gui_checks_ok") is not True:
+        fail("gui_smoke_failed", "GUI replay, resize, or layout checks did not pass", runtime=True)
+    captured_states = verification.get("captured_verified_state_count")
+    if (not isinstance(captured_states, int) or isinstance(captured_states, bool)
+            or captured_states < 2):
+        fail("insufficient_replay_states", f"GUI captured {captured_states!r} states; at least two are required for replay", runtime=True)
+
+    terminal = trace.get("terminal")
+    turns = trace.get("turns")
+    episode_budget = trace.get("episode_budget")
+    if not isinstance(terminal, dict):
+        fail("terminal_missing", "authoritative trace terminal record is missing or malformed", runtime=True)
+        terminal = {}
+    if not isinstance(turns, list):
+        fail("turns_missing", "authoritative trace turn list is missing or malformed", runtime=True)
+        turns = []
+    cap = episode_budget.get("max_player_moves") if isinstance(episode_budget, dict) else None
+    if (not isinstance(cap, int) or isinstance(cap, bool) or cap != requested_player_moves):
+        fail("trace_move_cap_mismatch", "trace episode budget does not record the requested two-player-move cap", runtime=True)
+
+    def count(container: dict, key: str, label: str) -> int | None:
+        value = container.get(key)
+        if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+            fail(f"invalid_{key}", f"{label} must be a non-negative integer; got {value!r}", runtime=True)
+            return None
+        return value
+
+    attempted = count(terminal, "player_moves_attempted", "attempted player moves")
+    trace_players = count(terminal, "verified_player_moves", "trace verified player moves")
+    trace_replies = count(terminal, "verified_atari_replies", "trace verified Atari replies")
+    incomplete = count(terminal, "incomplete_final_move_count", "incomplete final move count")
+    if "runner_stopped" not in terminal or not isinstance(terminal.get("runner_stopped"), bool):
+        fail("runner_stop_missing", "terminal runner_stopped flag is missing or malformed", runtime=True)
+    if "observed" not in terminal or not isinstance(terminal.get("observed"), bool):
+        fail("terminal_observed_missing", "terminal observed flag is missing or malformed", runtime=True)
+    if "ale_terminated" not in terminal or not isinstance(terminal.get("ale_terminated"), bool):
+        fail("ale_termination_missing", "terminal ALE termination flag is missing or malformed", runtime=True)
+    if "ale_truncated" not in terminal or not isinstance(terminal.get("ale_truncated"), bool):
+        fail("ale_truncation_missing", "terminal ALE truncation flag is missing or malformed", runtime=True)
+    if (not isinstance(terminal.get("terminated"), bool)
+            or not isinstance(terminal.get("truncated"), bool)):
+        fail("termination_aliases_missing", "terminal terminated/truncated fields are missing or malformed", runtime=True)
+    category = terminal.get("runner_stop_category")
+    reason = terminal.get("runner_stop_reason")
+    episode_status = trace.get("status")
+    if not isinstance(category, str) or not category:
+        fail("terminal_category_missing", "terminal stop category is missing or malformed", runtime=True)
+
+    turn_attempts = turn_players = turn_replies = complete_pairs = 0
+    for index, turn in enumerate(turns):
+        if not isinstance(turn, dict):
+            fail("malformed_turn", f"trace turn {index + 1} is malformed", runtime=True)
+            continue
+        player = turn.get("player_move")
+        reply = turn.get("opponent_reply")
+        if not isinstance(player, dict) or not isinstance(reply, dict):
+            fail("malformed_turn_moves", f"trace turn {index + 1} lacks player/reply records", runtime=True)
+            continue
+        if not isinstance(player.get("input_initiated"), bool):
+            fail("malformed_player_attempt", f"trace turn {index + 1} lacks an input_initiated flag", runtime=True)
+        turn_attempts += player.get("input_initiated") is True
+        if not isinstance(player.get("verified_from_rgb"), bool) or not isinstance(reply.get("verified_from_rgb"), bool):
+            fail("malformed_verification_flags", f"trace turn {index + 1} lacks Boolean RGB-verification flags", runtime=True)
+        player_verified = player.get("verified_from_rgb") is True
+        reply_verified = reply.get("verified_from_rgb") is True
+        if player_verified and (not isinstance(player.get("uci"), str) or not player.get("uci")):
+            fail("verified_player_move_missing_uci", f"verified player move in turn {index + 1} lacks UCI identity", runtime=True)
+        if reply_verified and (not isinstance(reply.get("uci"), str) or not reply.get("uci")):
+            fail("verified_reply_missing_uci", f"verified Atari reply in turn {index + 1} lacks UCI identity", runtime=True)
+        turn_players += player_verified
+        turn_replies += reply_verified
+        complete_pairs += player_verified and reply_verified
+
+    displayed_pairs = count(verification, "verified_atari_turns_displayed", "GUI displayed verified pairs")
+    displayed_players = count(verification, "verified_player_moves_displayed", "GUI displayed player moves")
+    displayed_replies = count(verification, "verified_atari_replies_displayed", "GUI displayed Atari replies")
+    pending_actions = count(verification, "pending_player_actions", "GUI pending player actions")
+    if trace_players is not None and turn_players != trace_players:
+        fail("trace_player_count_mismatch", f"trace terminal reports {trace_players} verified player moves but turn records contain {turn_players}", runtime=True)
+    if trace_replies is not None and turn_replies != trace_replies:
+        fail("trace_reply_count_mismatch", f"trace terminal reports {trace_replies} verified replies but turn records contain {turn_replies}", runtime=True)
+    if attempted is not None and turn_attempts != attempted:
+        fail("trace_attempt_count_mismatch", f"trace terminal reports {attempted} player attempts but turn records contain {turn_attempts}", runtime=True)
+    if trace_players != trace_replies:
+        fail("unpaired_trace_moves", f"trace has {trace_players} verified player moves and {trace_replies} verified replies")
+    if trace_players != requested_player_moves or trace_replies != requested_player_moves:
+        fail("required_move_count_not_met", f"requested {requested_player_moves} player moves and replies; trace verifies {trace_players} player moves and {trace_replies} replies")
+    if attempted != requested_player_moves:
+        fail("attempt_count_mismatch", f"requested {requested_player_moves} player moves; trace records {attempted} attempts")
+    if incomplete != 0:
+        fail("pending_move", f"trace records {incomplete} incomplete final player moves")
+    if len(turns) > requested_player_moves:
+        fail("extra_trace_turns", f"trace contains {len(turns)} turns for a {requested_player_moves}-move smoke", runtime=True)
+    if displayed_pairs != complete_pairs or displayed_players != turn_players or displayed_replies != turn_replies:
+        fail("gui_trace_count_mismatch", f"GUI displays {displayed_players} player moves, {displayed_replies} replies, and {displayed_pairs} verified pairs; authoritative trace contains {turn_players}, {turn_replies}, and {complete_pairs}", runtime=True)
+    if pending_actions != 0:
+        fail("gui_pending_action", f"GUI still shows {pending_actions} unconfirmed player actions")
+
+    # The bounded smoke must end at the configured runner cap.  ALE terminal,
+    # truncation, controller failure, cancellation, and time/resource limits
+    # remain truthful incomplete outcomes even if their worker and trace succeed.
+    if episode_status != "runner_stopped":
+        fail("unexpected_episode_status", f"episode status was {episode_status!r}, expected 'runner_stopped'")
+    if category != "RUNNER_MAX_PLAYER_MOVES" or terminal.get("runner_stopped") is not True:
+        fail("unexpected_stop_category", f"episode stop category was {category!r}, expected 'RUNNER_MAX_PLAYER_MOVES'")
+    if not isinstance(reason, str) or not reason.strip():
+        fail("stop_reason_missing", "authoritative runner stop reason is missing or malformed", runtime=True)
+    elif reason != f"runner stopped after the configured {requested_player_moves} player-move limit":
+        fail("stop_reason_mismatch", "authoritative stop reason does not identify the configured player-move cap")
+    if terminal.get("observed") is True:
+        fail("unexpected_terminal_observation", "ALE terminal state was observed before the configured runner stop")
+    if terminal.get("terminated") is not terminal.get("ale_terminated"):
+        fail("termination_field_mismatch", "terminated and ale_terminated fields disagree", runtime=True)
+    if terminal.get("truncated") is not terminal.get("ale_truncated"):
+        fail("truncation_field_mismatch", "truncated and ale_truncated fields disagree", runtime=True)
+    if terminal.get("ale_terminated") is True:
+        fail("ale_terminated_early", "ALE terminated before the configured bounded smoke stop")
+    if terminal.get("ale_truncated") is True:
+        fail("ale_truncated", "ALE truncated before the configured bounded smoke stop")
+    gui_requested = verification.get("requested_player_moves")
+    if (not isinstance(gui_requested, int) or isinstance(gui_requested, bool)
+            or gui_requested != requested_player_moves):
+        fail("requested_move_contract_mismatch", "GUI verification requested-move count does not match the CLI contract", runtime=True)
+    if (session.get("episode_status") != verification.get("episode_status")
+            or session.get("episode_terminal") != verification.get("episode_terminal")
+            or session.get("verified_pairs_displayed") != displayed_pairs
+            or session.get("required_player_moves") != requested_player_moves):
+        fail("session_record_mismatch", "GUI session lifecycle disagrees with its top-level verification record", runtime=True)
+    event_terminal = verification.get("episode_terminal")
+    if not isinstance(event_terminal, dict):
+        fail("gui_terminal_missing", "GUI did not record the episode terminal event", runtime=True)
+    elif (event_terminal.get("runner_stop_category") != category
+          or event_terminal.get("runner_stopped") != terminal.get("runner_stopped")
+          or event_terminal.get("ale_terminated") != terminal.get("ale_terminated")
+          or event_terminal.get("ale_truncated") != terminal.get("ale_truncated")
+          or event_terminal.get("terminated") != terminal.get("terminated")
+          or event_terminal.get("truncated") != terminal.get("truncated")
+          or event_terminal.get("observed") != terminal.get("observed")
+          or event_terminal.get("player_moves_attempted") != attempted
+          or event_terminal.get("verified_player_moves") != trace_players
+          or event_terminal.get("verified_atari_replies") != trace_replies
+          or event_terminal.get("incomplete_final_move_count") != incomplete
+          or event_terminal.get("runner_stop_reason") != reason
+          or verification.get("episode_status") != episode_status):
+        fail("gui_trace_terminal_mismatch", "GUI terminal event disagrees with the authoritative trace", runtime=True)
+
+    verdict = "SMOKE_PASS" if not failures else ("SMOKE_RUNTIME_FAILURE" if runtime_failure else "SMOKE_INCOMPLETE")
+    return {
+        "verdict": verdict,
+        "requested_player_moves": requested_player_moves,
+        "verified_player_moves": trace_players,
+        "verified_atari_replies": trace_replies,
+        "episode_status": episode_status,
+        "terminal_category": category,
+        "stop_reason": reason,
+        "worker_status": worker_status,
+        "trace_status": trace_status,
+        "replay_available": verification.get("replay_available"),
+        "replay_test": replay if isinstance(replay, dict) else None,
+        "layout_check": layout if isinstance(layout, dict) else None,
+        "failures": failures,
+    }
+
+
 def allocate_session_artifact_dir(root: Path, policy: str, *, now=None, token_factory=None) -> Path:
     """Atomically allocate a unique, auditable session directory; never overwrite."""
     now = now or datetime.now(timezone.utc)
@@ -129,27 +352,60 @@ def main(argv=None):
             run_worker=worker, demo_seed=args.reset_seed, auto_smoke=args.auto_smoke,
             session_limits=run_limits)
     except Exception as exc:
-        print(f"could not initialize the live Tk window: {type(exc).__name__}: {exc}", file=sys.stderr)
+        message = f"could not initialize the live Tk window: {type(exc).__name__}: {exc}"
+        if args.auto_smoke:
+            try:
+                write(artifact_dir / "demo-verification.json", {
+                    "smoke_verdict": "SMOKE_RUNTIME_FAILURE", "exit_code": 5,
+                    "smoke_failures": [{"code": "gui_initialization_failed", "message": message}]})
+            except OSError:
+                pass
+        print(message, file=sys.stderr)
         return 5
     exit_code = window.start()
     if args.auto_smoke:
         result_path = artifact_dir / "demo-verification.json"
         if not result_path.is_file():
-            print("automated smoke failed: verification record was not written", file=sys.stderr)
+            failure = {"smoke_verdict": "SMOKE_RUNTIME_FAILURE", "exit_code": 4,
+                "smoke_failures": [{"code": "verification_record_missing",
+                                    "message": "GUI verification record was not written"}]}
+            try:
+                write(result_path, failure)
+            except OSError:
+                pass
+            print(json.dumps(failure, sort_keys=True), file=sys.stderr)
             return 4
-        result = json.loads(result_path.read_text())
-        print(json.dumps(result, sort_keys=True))
         trace_path = artifact_dir / "trace.json"
-        trace = json.loads(trace_path.read_text()) if trace_path.is_file() else {}
-        terminal = trace.get("terminal", {})
-        smoke_valid = (result.get("window_created") and result.get("resized_1100x680")
-            and result.get("layout_check", {}).get("ok")
-            and result.get("replay_test", {}).get("left_moved_backward")
-            and result.get("replay_test", {}).get("right_moved_forward")
-            and result.get("verified_atari_turns_displayed", 0) >= 1
-            and terminal.get("verified_atari_replies", 0) >= 1
-            and result.get("session_state", {}).get("worker_status") == "completed")
-        return 0 if smoke_valid and exit_code == 0 else (exit_code or 2)
+        try:
+            result = json.loads(result_path.read_text())
+            trace = json.loads(trace_path.read_text()) if trace_path.is_file() else None
+            verdict = verify_auto_smoke(trace, result, requested_player_moves=args.max_player_moves)
+            if exit_code != 0 and verdict["verdict"] == "SMOKE_PASS":
+                verdict["verdict"] = "SMOKE_RUNTIME_FAILURE"
+                verdict["failures"].append({"code": "gui_exit_nonzero",
+                    "message": f"GUI returned nonzero exit code {exit_code}"})
+            result["authoritative_verification"] = verdict
+            result["smoke_verdict"] = verdict["verdict"]
+            result["smoke_failures"] = verdict["failures"]
+            result["exit_code"] = 0 if verdict["verdict"] == "SMOKE_PASS" else (4 if verdict["verdict"] == "SMOKE_RUNTIME_FAILURE" else 2)
+            write(result_path, result)
+        except (OSError, ValueError, TypeError, json.JSONDecodeError) as exc:
+            verdict = {"verdict": "SMOKE_RUNTIME_FAILURE", "failures": [
+                {"code": "verification_input_invalid", "message": f"could not validate smoke records: {type(exc).__name__}: {exc}"}]}
+            try:
+                write(result_path, verdict)
+            except OSError:
+                pass
+            print(json.dumps(verdict, sort_keys=True), file=sys.stderr)
+            return 4
+        console_summary = {
+            "policy": result.get("policy_name"),
+            "checkpoint_sha256": result.get("checkpoint_sha256"),
+            "verification_record": result_path.name,
+            **verdict,
+        }
+        print(json.dumps(console_summary, sort_keys=True))
+        return result["exit_code"]
     return exit_code
 
 

@@ -111,7 +111,30 @@ DISPLAY=:1 PYTHONPATH=. .venv/bin/python -m videochess_rl.improvement.demo \
   --policy m4-a --auto-smoke
 ```
 
-`--auto-smoke` is a bounded two-player-move live ALE run. It automatically resizes the window, generates left/right replay key events, verifies two-sided moves and a reply, writes a local `demo-verification.json`, and exits. The actual local traces and captured frames are ignored artifacts and are not part of the PR.
+`--auto-smoke` is a bounded two-player-move live ALE run. It passes only when the authoritative trace records the exact `RUNNER_MAX_PLAYER_MOVES` stop after two RGB-verified player moves and two RGB-verified Atari replies; the GUI terminal event and displayed move counts agree with that trace; no move is pending; the worker completed and saved the trace; and resize/layout plus Left/Right replay checks pass. A worker that returned normally, a saved trace, or usable replay is not by itself a successful smoke.
+
+The verification record includes `SMOKE_PASS`, `SMOKE_INCOMPLETE`, or
+`SMOKE_RUNTIME_FAILURE`, the requested and verified counts, terminal category,
+stop reason, worker and trace status, replay/layout results, and failed
+acceptance conditions. `SMOKE_PASS` exits 0. An incomplete gameplay exercise
+exits 2; malformed/missing or internally inconsistent verification evidence
+exits 4. Preflight failures remain exit 3 and GUI initialization failures exit
+5. Controller uncertainty, timeout, ALE termination/truncation, cancellation,
+or any stop other than the expected two-move runner cap remains incomplete;
+the controller continues to fail closed without advancing an unverified move
+or retrying FIRE. When frames permit, an incomplete run still tests and retains
+replay. The private trace is cross-checked after GUI shutdown, so replay or a
+worker completion cannot override the episode result.
+
+PM25-F01 regression verification reproduced the former permissive predicate:
+one verified player/reply pair, a pending uncertain second action, a saved
+trace, successful replay/layout checks, and a GUI-side zero return would have
+passed the old CLI check. The corrected CLI returns nonzero and records
+`SMOKE_INCOMPLETE`. A deterministic two-pair runner-cap fixture returns 0.
+Bounded real-ALE runs at reset seed `123456` also passed for the selected Q-only
+Double DQN and M4-A policies, each with exactly two verified player moves and
+two replies. Neither observed a terminal chess result; these remain bounded
+smoke checks, not full games or scientific evaluation.
 
 On the verified environment, custom-reset-seed `123456` smoke runs succeeded
 for both the selected `double_dqn_250000` Q-only snapshot and M4-A. Each showed

@@ -131,3 +131,51 @@ The Double DQN controller's occupied-target confirmation issue remains
 unresolved. The accepted actual-ALE campaign observed no terminal win, loss, or
 draw. The remediated GUI does not change those outcomes. The live demo is
 bounded, and no full-game capability is claimed.
+
+## PM25-F01 — two-move smoke acceptance
+
+The Independent PM identified that the old final CLI predicate accepted one
+displayed turn and one Atari reply even though `--auto-smoke` forces a
+two-player-move cap. Worker completion meant only that the worker function
+returned; trace persistence meant only that the trace was written. Neither
+established that the bounded Atari exercise completed.
+
+The regression test reconstructs the vulnerable sequence deterministically:
+one RGB-verified player move and reply, a pending second action stopped by
+`CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN`, normal worker return, saved trace,
+passing replay/layout checks, and a mocked GUI return of zero. That fixture
+satisfies the previous predicate. The final CLI now returns 2 and records
+`SMOKE_INCOMPLETE` with the controller category and the actual verified counts.
+The positive two-move fixture returns 0 and records `SMOKE_PASS`.
+
+The acceptance rule is cohesive in `demo.verify_auto_smoke` and independently
+uses the authoritative episode trace plus the GUI verification record. It
+requires the exact two-move trace budget; two attempted, RGB-verified player
+moves and two verified Atari replies in both terminal counters and turn
+records; zero incomplete moves and no pending GUI action; the canonical
+`RUNNER_MAX_PLAYER_MOVES` category and exact runner-cap stop reason; no ALE
+termination or truncation; consistent GUI terminal/count data; completed
+worker and persisted trace; and successful window, resize/layout, and replay
+checks. The live viewer's preliminary lifecycle predicate applies the same
+two-move and normal-stop requirements, while the CLI performs the final
+trace-to-GUI reconciliation after shutdown. Incomplete gameplay is distinct
+from malformed or inconsistent verification evidence in the final verdict.
+
+The deterministic regression matrix covers successful bounded completion;
+the original one-turn uncertainty; missing replies; pending actions; abnormal
+controller stops despite apparent counts; trace/GUI disagreement; missing
+terminal data; worker and trace failures; timeout and ALE truncation or
+termination; replay/layout failures; and a saved but incomplete trace. CLI
+integration tests assert both process exit status and the final
+`demo-verification.json` verdict. Existing seed, preflight, policy, normal
+interactive, replay, lifecycle, and controller tests remain in scope.
+
+After the acceptance fix, bounded real-ALE `--auto-smoke` runs were performed
+for the selected Q-only snapshot (`48dbbb…5c293`) and M4-A
+(`cf5e43…2feed`) at reset seed `123456`. Both verified exactly two player
+moves and two Atari replies, stopped at `RUNNER_MAX_PLAYER_MOVES`, passed
+resize/layout and replay checks, and exited 0. Neither observed an ALE terminal
+result. These are smoke verifications only. The previously unresolved
+occupied-target FIRE confirmation remains fail-closed: uncertain moves are
+not advanced or retried, and an interruption before the two verified pairs
+must now exit nonzero.
