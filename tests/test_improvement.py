@@ -77,6 +77,9 @@ class ImprovementTests(unittest.TestCase):
 
     def test_config_rejects_unhonored_values(self):
         self.assertEqual(validate_config(config_default())['training_seed'],20261103)
+        phase2=json.loads((Path(__file__).parents[1]/'configs/improvement/m5-phase2.json').read_text())
+        self.assertEqual(validate_config(phase2)['maximum_cumulative_wall_seconds'],36000)
+        self.assertLessEqual(phase2['maximum_cumulative_wall_seconds'],54000)
         for k,v in [('scratch_training',True),('training_seed',[1,2]),('loss','MSE'),('agent_decisions',250001),('batch_size',16),('gamma',float('nan')),('unbound',1),('threads',1.5),('gamma',True),('learning_rate','invalid')]:
             c=config_default();c[k]=v
             with self.assertRaises(ValueError):validate_config(c)

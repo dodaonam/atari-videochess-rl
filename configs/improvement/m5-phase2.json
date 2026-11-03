@@ -16,7 +16,7 @@
   "m4_guidance_end_decision": 75000,
   "m4_guidance_initial": 0.6,
   "maximum_agent_decisions_per_episode": 400,
-  "maximum_cumulative_wall_seconds": 72000,
+  "maximum_cumulative_wall_seconds": 36000,
   "maximum_process_rss_bytes": 12884901888,
   "minimum_available_ram_bytes": 2147483648,
   "minimum_free_disk_bytes": 5368709120,
