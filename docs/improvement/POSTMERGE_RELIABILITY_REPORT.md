@@ -192,7 +192,8 @@ The skips require the accepted private M4 initialization artifact, the M6
 private policy roster, and the two historical private M5 snapshots. The full
 suite log and digest are recorded in the PM25-F01 machine-readable evidence.
 
-At the later evidence-only head `64a44551c352f0767cfb78e42d6ff934368ce61f`,
+At the later evidence-only head `2679ffd93c84e00d8ca5ad4136ca8d541caa712e`,
 the repository context-recovery and pre-M7 documentation/privacy contract
 modules also passed: 66 tests, zero failures, zero skips. Python source and test
-files were unchanged from the clean full-suite-tested implementation.
+files were unchanged from the clean full-suite-tested implementation. The
+command log and digest are retained in the PM25-F01 machine evidence.
