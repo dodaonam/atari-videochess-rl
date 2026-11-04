@@ -16,6 +16,10 @@
     "origin_main_tree_at_start": "7bf93de99c791d4652a1ff1377c69e4a1cb5f67e",
     "initial_worktree_clean": true,
     "branch": "fix/demo-f04-live-diagnostics-20261104",
+    "tested_commit": "d1440e7b7aef38906a4a15c0f4befd00f3eba150",
+    "tested_tree": "de94f7c522fa4c73c944e8b7daacca25555040c2",
+    "main_branch_protection": "not present (read-only GitHub API returned HTTP 404)",
+    "repository_rulesets": [],
     "final_commit": null,
     "final_tree": null,
     "pull_request_url": null
@@ -97,7 +101,7 @@
     "created_at_utc": "2026-11-04T04:50:51Z",
     "execution": "locked uv environment; repository run_episode API; selected Q policy; reset seed 20261103; mode-4 RGB profile; 200 move and 1800 second bounds",
     "trace_sha256": "02432f4a2c6a66e90852fafddb4070f800a15eda890d7ed493cc4a1ebcca6234",
-    "local_integrity_manifest_sha256": "b6f993fc2ae69349ae3c96db58bc826ff10c26441fe0eb6f4307c444fadd5490",
+    "local_integrity_manifest_sha256": "ea814ddae70f48eacc495de986928ad23912cdd14ea3585c6b36dcc6c798e21a",
     "runner_stop_category": "CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN",
     "player_moves_attempted": 10,
     "verified_player_moves": 9,
@@ -128,7 +132,7 @@
     "trace_sha256": "4034ffc55aa18b61ac559c2d95113e4247e87d3b7b7966d6884a16483a5d686d",
     "live_summary_sha256": "c782608359723ecddb9e47ace5522e30f46629e39daedf01f82d17d904eeb9c0",
     "gui_verification_sha256": "3f7bc8f04d93dfb22f900a17665b58a069f5c0fc1636a54326616acacb39ca4b",
-    "local_integrity_manifest_sha256": "42797d22ba1b8f761a2f3f7842cca76bf67c710f61c3f5e2ba71d450e81e58",
+    "local_integrity_manifest_sha256": "bcfc4bc366eafab74049479e444a7e184ff187c5465bdf402b1ef9798106ea7e",
     "level": 1,
     "complete_game_demonstrated": false
   },
@@ -181,6 +185,28 @@
       "non_failing_warning": "ResourceWarning in existing videochess_rl/improvement/common.py:58 for an unclosed /proc/meminfo handle",
       "sanitized_log_path": "artifacts/demo/diagnostic-repeat-20261104-seed-20261103/verification_logs/full-suite-after-checkpoint.log",
       "sanitized_log_sha256": "7343cf6d845a2f1ec480c9fc704c1d43f29d85025c236e9c9248928b8fcb4f16"
+    },
+    "clean_commit_full_suite": {
+      "command": "uv run --locked --no-sync python -m unittest discover -s tests -v",
+      "started_at_utc": "2026-11-04T05:51:23.218474+00:00",
+      "ended_at_utc": "2026-11-04T05:55:07.175405+00:00",
+      "exit_code": 0,
+      "git_revision": "d1440e7b7aef38906a4a15c0f4befd00f3eba150",
+      "git_tree": "de94f7c522fa4c73c944e8b7daacca25555040c2",
+      "worktree_clean_before_run": true,
+      "test_count": 612,
+      "passed": 608,
+      "failed": 0,
+      "skipped": 4,
+      "duration_seconds": 221.413,
+      "skip_reasons": [
+        "accepted local M4 transfer artifact unavailable in this clone",
+        "private M4/M5 artifact roots not configured for M6 roster test",
+        "private M5 artifact root not configured for compatibility test",
+        "private M5 policy path not configured for compatibility test"
+      ],
+      "sanitized_log_path": "artifacts/demo/diagnostic-repeat-20261104-seed-20261103/verification_logs/full-suite-clean-head.log",
+      "sanitized_log_sha256": "41afaf7ebc9e5326906532126e75a04b00d31f50b1fe39dfbfc9be98f6aadfdb"
     },
     "focused_regressions": {
       "command": "uv run --locked --no-sync python -m unittest tests.test_demo_reliability tests.test_m1_episode tests.test_m1_vision tests.test_m1_shadow tests.test_phase2_atari_demo -v",

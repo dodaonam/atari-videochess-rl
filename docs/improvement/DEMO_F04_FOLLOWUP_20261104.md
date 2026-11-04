@@ -248,6 +248,12 @@ The suite emitted non-failing `ResourceWarning`s from the existing
 file handle. The successful full-suite log digest and all command provenance
 are in the companion evidence file.
 
+The complete suite was then rerun from a clean committed worktree at
+`d1440e7b7aef38906a4a15c0f4befd00f3eba150` (tree
+`de94f7c522fa4c73c944e8b7daacca25555040c2`): 612 tests, 608 passed, zero
+failed, four skipped, exit 0 in 221.413 seconds. The skip reasons were the same
+private artifact/configuration cases above.
+
 `python -m compileall -q videochess_rl tests`, `git diff --check`, and the
 changed-file privacy pattern scan passed. Preflight returned PASS with no
 errors; the only remaining warning is the repository-wide requirement for
@@ -290,3 +296,8 @@ Final branch, tested HEAD/tree, pull-request URL, CI status, and worktree state
 are recorded after push in the companion machine-readable evidence and final
 handoff. The PR remains open for independent PM review; it is not merged and no
 self-approval or release was performed.
+
+A read-only check of GitHub found no branch protection on `main` and no
+repository rulesets. No settings were changed. This is recorded as an
+integration risk; the PR must still receive independent PM review, and this
+work does not authorize a merge.
