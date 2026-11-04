@@ -15,6 +15,7 @@ from tests.test_m1_vision import BACKGROUND, BLUE, GOLD, paint, start_frame
 from videochess_rl.episode import (
     StopCategory,
     _selected_target_evidence,
+    _mark_terminal_ram_verification_methods,
     agent_reward_from_ale,
     choose_cooperative_loss_move,
     choose_diagnostic_move,
@@ -367,6 +368,25 @@ class EpisodeSafetyTests(unittest.TestCase):
         }
         parameters.update(kwargs)
         return run_episode(**parameters)
+
+    def test_terminal_ram_method_flags_and_counts_cover_both_player_proof_paths(self) -> None:
+        cases = (
+            (True, False, 0),
+            (False, True, 1),
+        )
+        for player_rgb_verified, expected_player_ram_flag, expected_player_ram_count in cases:
+            with self.subTest(player_rgb_verified=player_rgb_verified):
+                player = {"verified_from_rgb": player_rgb_verified}
+                reply = {"verified_from_rgb": False}
+
+                player_count, reply_count = _mark_terminal_ram_verification_methods(player, reply)
+
+                self.assertIs(player["verified_from_terminal_ram"], expected_player_ram_flag)
+                self.assertTrue(reply["verified_from_terminal_ram"])
+                self.assertEqual(player_count, expected_player_ram_count)
+                self.assertEqual(reply_count, 1)
+                self.assertEqual(int(player["verified_from_terminal_ram"]), player_count)
+                self.assertEqual(int(reply["verified_from_terminal_ram"]), reply_count)
 
     def test_failed_target_fire_stops_without_advancing_shadow(self) -> None:
         result = self.run_fake(FakeALE(fail_target_fire=True))

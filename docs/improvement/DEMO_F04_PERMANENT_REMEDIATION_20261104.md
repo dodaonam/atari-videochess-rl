@@ -131,6 +131,12 @@ The post-game summary, replay diagnostics, scorecard labels, and `--close-on-fin
 
 No raw frames, RAM arrays, complete move-level Atari traces, screenshots, ROMs, or checkpoints are included in Git. The new public report contains sanitized findings and artifact hashes only.
 
+### PM27-F01 final-move verification-method bookkeeping
+
+The player move's `verified_from_terminal_ram` flag now reflects whether terminal RAM had to verify that move. If RGB had already verified the player move, its terminal-RAM flag and count remain false/zero while the pending Atari reply is terminal-RAM verified. The summary therefore reports one terminal-RAM half-move, and replay keeps the RGB player move in its RGB count while applying only the missing Atari reply. If the player move had only a partial RGB candidate, both final player move and Atari reply are terminal-RAM verified; the summary reports two terminal-RAM half-moves and replay appends those two missing plies.
+
+GUI scorecard reporting follows the same counts: it preserves an already RGB-verified player row and labels only the terminal-RAM reply. Tests cover both method paths, summary counts, legal replay reconstruction without duplicate plies, and GUI row labels. This follow-up changes bookkeeping and presentation only; it does not change ALE actions, state-acceptance conditions, or terminal safeguards, so no additional full-game ALE run was needed. The updated GUI/replay auto-smoke passed.
+
 ## 9. Scientific preservation and limits
 
 - No training was started and no model, policy, reward, dataset, training seed, accepted M5/M6/M7 metric, prior evaluation record, or official checkpoint was modified.

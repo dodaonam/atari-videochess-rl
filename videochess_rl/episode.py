@@ -77,6 +77,22 @@ OPENING_PREFERENCES = (
 )
 
 
+def _mark_terminal_ram_verification_methods(
+    player_record: dict[str, object],
+    reply_record: dict[str, object],
+) -> tuple[int, int]:
+    """Record terminal RAM as a method only for moves it had to verify.
+
+    The final player move may already have been verified from RGB before ALE
+    terminates during its reply. In that case terminal RAM verifies only the
+    reply, so the per-move method flags must match the method counters.
+    """
+    player_verified_from_terminal_ram = player_record.get("verified_from_rgb") is not True
+    player_record["verified_from_terminal_ram"] = player_verified_from_terminal_ram
+    reply_record["verified_from_terminal_ram"] = True
+    return int(player_verified_from_terminal_ram), 1
+
+
 class TurnState(str, Enum):
     PLAYER_TURN = "player_turn"
     PLAYER_MOVE_EXECUTING = "player_move_executing"
@@ -794,7 +810,6 @@ def run_episode(
 
             sequence.append(reply_move.uci())
             last_rgb_verified_fen = shadow.board.fen(en_passant="fen")
-            original_player_was_rgb_verified = player_record.get("verified_from_rgb") is True
             try:
                 terminal_player_san = chess.Board(
                     pending_turn["board_before_fen"]
@@ -812,30 +827,41 @@ def run_episode(
             except (ValueError, DesynchronizationError) as exc:
                 return {"verified": False, "reason": str(exc)}
 
-            player_record["verified_from_terminal_ram"] = True
+            terminal_ram_player_move_count, terminal_ram_atari_reply_count = (
+                _mark_terminal_ram_verification_methods(player_record, reply_record)
+            )
             player_record["terminal_verification"] = (
-                "ALE target acknowledgement and RGB candidate, followed by a unique legal terminal sequence "
-                "whose exact full-board ROM RAM matched checkmate"
+                "terminal RAM sequence verified the acknowledged player move from its partial RGB candidate"
+                if terminal_ram_player_move_count
+                else "RGB-verified player move corroborated by the exact terminal RAM checkmate sequence"
             )
             player_record["shadow_fen_after"] = candidate_after_player.fen(en_passant="fen")
             reply_record.update(
                 {
                     "uci": reply_move.uci(),
-                    "verified_from_terminal_ram": True,
                     "verification": "unique legal Atari reply in exact ALE terminal RAM; resulting legal shadow is checkmate",
                     "shadow_fen_after": shadow.board.fen(en_passant="fen"),
                 }
             )
+            player_evidence_contract = (
+                "acknowledged player FIRE + partial RGB candidate"
+                if terminal_ram_player_move_count
+                else "RGB-verified player move"
+            )
             result = {
                 "verified": True,
-                "evidence_contract": "verified ROM identity + ALE terminated + acknowledged player FIRE + partial RGB candidate + exact terminal RAM board + unique legal Atari reply + matching checkmate reward",
+                "evidence_contract": (
+                    "verified ROM identity + ALE terminated + "
+                    f"{player_evidence_contract} + exact terminal RAM board + "
+                    "unique legal Atari reply + matching checkmate reward"
+                ),
                 "player_move": player_record.get("uci"),
                 "player_move_san": terminal_player_san,
                 "atari_reply": reply_move.uci(),
                 "atari_reply_san": terminal_reply_san,
                 "turn": pending_turn.get("turn"),
-                "terminal_ram_player_move_count": int(not original_player_was_rgb_verified),
-                "terminal_ram_atari_reply_count": 1,
+                "terminal_ram_player_move_count": terminal_ram_player_move_count,
+                "terminal_ram_atari_reply_count": terminal_ram_atari_reply_count,
                 "sequence": list(applied),
                 "terminal_fen": shadow.board.fen(en_passant="fen"),
                 "last_rgb_verified_fen": last_rgb_verified_fen,

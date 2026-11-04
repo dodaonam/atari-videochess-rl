@@ -496,16 +496,31 @@ class LiveDemoWindow:
             if isinstance(terminal_sequence, dict) and terminal_sequence.get("verified") is True:
                 turn = terminal_sequence.get("turn")
                 if isinstance(turn, int):
-                    self.move_rows[turn] = {
-                        "white": f"{terminal_sequence.get('player_move_san', 'Move')} ✓ · ALE terminal RAM",
-                        "black": f"{terminal_sequence.get('atari_reply_san', 'Reply')} ✓ · ALE terminal RAM",
+                    row = dict(self.move_rows.get(turn, {}))
+                    player_ram_verified = int(terminal_sequence.get("terminal_ram_player_move_count", 0)) > 0
+                    reply_ram_verified = int(terminal_sequence.get("terminal_ram_atari_reply_count", 0)) > 0
+                    player_san = terminal_sequence.get("player_move_san", "Move")
+                    reply_san = terminal_sequence.get("atari_reply_san", "Reply")
+                    row.update({
+                        "white": (
+                            f"{player_san} ✓ · ALE terminal RAM"
+                            if player_ram_verified
+                            else row.get("white") or f"{player_san} ✓ · RGB"
+                        ),
+                        "black": (
+                            f"{reply_san} ✓ · ALE terminal RAM"
+                            if reply_ram_verified
+                            else row.get("black") or f"{reply_san} ✓ · RGB"
+                        ),
                         "white_pending": False,
                         "black_pending": False,
-                        "white_verified": False,
-                        "black_verified": False,
-                        "terminal_ram_verified": True,
+                        "white_verified": not player_ram_verified,
+                        "black_verified": not reply_ram_verified,
+                        "white_terminal_ram_verified": player_ram_verified,
+                        "black_terminal_ram_verified": reply_ram_verified,
                         "pending": False,
-                    }
+                    })
+                    self.move_rows[turn] = row
                     self.refresh_move_table()
                 if event.get("rgb") is not None:
                     self.record_replay({
