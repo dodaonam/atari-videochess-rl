@@ -292,10 +292,22 @@ problematic occupied capture.
 
 ## J. Pull-request handoff
 
-Final branch, tested HEAD/tree, pull-request URL, CI status, and worktree state
-are recorded after push in the companion machine-readable evidence and final
-handoff. The PR remains open for independent PM review; it is not merged and no
-self-approval or release was performed.
+Pull request [#26](https://github.com/dodaonam/atari-videochess-rl/pull/26) is
+open against `main`, whose base at submission was
+`bdfb8a36dd98d8dc06dc6e4e05790c9bd4e1d0cf`. The feature branch is
+`fix/demo-f04-live-diagnostics-20261104`. The clean full-suite implementation
+commit was `d1440e7b7aef38906a4a15c0f4befd00f3eba150` (tree
+`de94f7c522fa4c73c944e8b7daacca25555040c2`); the PR opened at
+`4bf7efa772f22706bd1aa7e3116d968ad46b2a9d` after the evidence/checkpoint
+commit. The branch is mergeable; independent PM review is pending.
+
+At PR creation, GitHub Actions had started the `Repository preflight` workflow's
+`context` job. That job is a context check, not the full regression suite or a
+PyTorch correctness test. The full 612-test suite passed locally on the clean
+implementation commit. The companion evidence record contains the base,
+implementation commit, PR creation head, local test logs, and artifact
+identities. The PR remains open and unmerged; no auto-merge, self-approval,
+release, or repository-setting change was performed.
 
 A read-only check of GitHub found no branch protection on `main` and no
 repository rulesets. No settings were changed. This is recorded as an

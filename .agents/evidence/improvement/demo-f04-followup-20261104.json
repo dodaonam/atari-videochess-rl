@@ -18,6 +18,8 @@
     "branch": "fix/demo-f04-live-diagnostics-20261104",
     "tested_commit": "d1440e7b7aef38906a4a15c0f4befd00f3eba150",
     "tested_tree": "de94f7c522fa4c73c944e8b7daacca25555040c2",
+    "pr_creation_head": "4bf7efa772f22706bd1aa7e3116d968ad46b2a9d",
+    "pr_creation_tree": "ab4a25a41a02da333c21db71125b7ecd0b1eaef6",
     "main_branch_protection": "not present (read-only GitHub API returned HTTP 404)",
     "repository_rulesets": [],
     "final_commit": null,
@@ -229,11 +231,21 @@
     "privacy": "changed-path, private-artifact, credential-pattern, and home-path scan: PASS; no raw trace, RGB frame, ROM, or model artifact in Git"
   },
   "pull_request": {
-    "number": null,
-    "url": null,
+    "number": 26,
+    "url": "https://github.com/dodaonam/atari-videochess-rl/pull/26",
     "target": "main",
-    "open": false,
-    "ci_status": null,
+    "open": true,
+    "draft": false,
+    "head_at_creation": "4bf7efa772f22706bd1aa7e3116d968ad46b2a9d",
+    "base_at_creation": "bdfb8a36dd98d8dc06dc6e4e05790c9bd4e1d0cf",
+    "mergeable_at_creation": true,
+    "ci_status_at_creation": {
+      "status": "IN_PROGRESS",
+      "workflow": "Repository preflight",
+      "job": "context",
+      "scope": "context-only; not the full regression suite or a PyTorch correctness test"
+    },
+    "workflow_run_url_at_creation": "https://github.com/dodaonam/atari-videochess-rl/actions/runs/41782500985",
     "merge_performed": false
   }
 }
