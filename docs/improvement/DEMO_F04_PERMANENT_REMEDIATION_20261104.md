@@ -1,6 +1,6 @@
 # DEMO-F04 Root Cause and Permanent Remediation
 
-**Status:** Corrective implementation and real-ALE validation completed; final commit `c7ff6ab24b403592c81e7b0467f1437024e071c7` passes the full available suite and preflight. Pull request review is pending.
+**Status:** Corrective implementation and real-ALE validation completed. Code commit `c7ff6ab24b403592c81e7b0467f1437024e071c7` passes the full available suite; report/handoff commit `0a913abc6aa8bcb1729c5715217ba5549a505ad0` is also preflight-clean. Pull request review is pending.
 
 **Claim boundary:** The selected Double DQN now passes the historical capture and has completed multiple actual ALE games in this environment. This evidence supports the identified timing defect and the correction. It does not establish universal reliability over all games, ROM revisions, ALE profiles, or positions.
 
@@ -126,7 +126,7 @@ The post-game summary, replay diagnostics, scorecard labels, and `--close-on-fin
 - Full-suite log SHA-256 (local `/tmp` record): `5668331afc4dce981e380e17ab6ffeb24ec03c3e65faa664cb502fce0ef32593`.
 - `python3 -m compileall -q videochess_rl tests` — passed.
 - `git diff --check` — passed.
-- `python3 scripts/agent_preflight.py` on commit `c7ff6ab24b403592c81e7b0467f1437024e071c7` — **PASS**. It recognized the clean commit transition and matching portable snapshot; only the expected note remains that ignored artifacts need an independent manifest.
+- `python3 scripts/agent_preflight.py` on code commit `c7ff6ab24b403592c81e7b0467f1437024e071c7` and report commit `0a913abc6aa8bcb1729c5715217ba5549a505ad0` — **PASS**. It recognized each clean commit transition and matching portable snapshot; only the expected note remains that ignored artifacts need an independent manifest.
 - `python3 scripts/audit_final_consolidation.py --output /tmp/atari-videochess-f04-privacy-audit-20261104.json` — passed with zero high-confidence credential matches, zero unexpected opaque payloads, and the historical authorized archive unchanged. The final post-documentation commit is re-scanned before push.
 
 No raw frames, RAM arrays, complete move-level Atari traces, screenshots, ROMs, or checkpoints are included in Git. The new public report contains sanitized findings and artifact hashes only.
