@@ -327,6 +327,198 @@ class DemoLifecycleTests(unittest.TestCase):
             diagnostics = demo.diagnose_replay_artifacts(unverified, frames)
             self.assertIn("REPLAY_BOARD_ARTIFACT_INCONSISTENT", {item["code"] for item in diagnostics})
 
+    def test_terminal_ram_replay_sequence_must_reproduce_legal_checkmate(self):
+        import chess
+        from videochess_rl.atari_ram import VIDEO_CHESS_ROM_SHA256
+
+        board = chess.Board()
+        board.push_uci("f2f3")
+        board.push_uci("e7e5")
+        terminal = board.copy()
+        terminal.push_uci("g2g4")
+        terminal.push_uci("d8h4")
+        self.assertTrue(terminal.is_checkmate())
+        with TemporaryDirectory() as temp:
+            frames = Path(temp)
+            for name in ("reset", "turn-01-player-candidate", "turn-01-verified-board", "turn-02-player-candidate"):
+                (frames / f"{name}.png").write_bytes(name.encode())
+            trace = {
+                "frames": [{"name": name} for name in (
+                    "reset", "turn-01-player-candidate", "turn-01-verified-board",
+                    "turn-02-player-candidate",
+                )],
+                "turns": [
+                    {
+                        "turn": 1,
+                        "player_move": {"uci": "f2f3", "input_initiated": True, "verified_from_rgb": True},
+                        "opponent_reply": {"uci": "e7e5", "verified_from_rgb": True},
+                    },
+                    {
+                        "turn": 2,
+                        "board_before_fen": board.fen(en_passant="fen"),
+                        "player_move": {
+                            "uci": "g2g4", "input_initiated": True, "verified_from_rgb": False,
+                            "verified_from_terminal_ram": True,
+                            "candidate_fen": board.copy(stack=True).fen(en_passant="fen"),
+                        },
+                        "opponent_reply": {
+                            "uci": "d8h4", "verified_from_rgb": False,
+                            "verified_from_terminal_ram": True,
+                        },
+                    },
+                ],
+                "terminal": {
+                    "ale_terminated": True, "ale_truncated": False,
+                    "verified_player_moves": 2, "verified_atari_replies": 2,
+                    "verified_player_moves_rgb": 1, "verified_atari_replies_rgb": 1,
+                    "verified_player_moves_terminal_ram": 1,
+                    "verified_atari_replies_terminal_ram": 1,
+                },
+                "terminal_sequence_verification": {
+                    "verified": True,
+                    "rom_sha256": VIDEO_CHESS_ROM_SHA256,
+                    "sequence": ["g2g4", "d8h4"],
+                    "terminal_fen": terminal.fen(en_passant="fen"),
+                    "player_move": "g2g4",
+                    "atari_reply": "d8h4",
+                    "ale_reward": -1.0,
+                    "terminal_ram_player_move_count": 1,
+                    "terminal_ram_atari_reply_count": 1,
+                },
+            }
+            diagnostics = demo.diagnose_replay_artifacts(trace, frames)
+            self.assertNotIn("REPLAY_TERMINAL_RAM_SEQUENCE_INVALID", {item["code"] for item in diagnostics})
+            summary = demo.build_live_summary(trace, replay_diagnostics=diagnostics, replay_state_count=4)
+            self.assertEqual(summary["verified_player_moves_terminal_ram"], 1)
+            self.assertEqual(summary["verified_atari_replies_terminal_ram"], 1)
+            self.assertEqual(summary["terminal_ram_verified_half_moves"], 2)
+            self.assertEqual(summary["replay_verified_half_moves"], 2)
+            trace["terminal_sequence_verification"]["terminal_fen"] = chess.Board().fen()
+            diagnostics = demo.diagnose_replay_artifacts(trace, frames)
+        self.assertIn("REPLAY_TERMINAL_RAM_SEQUENCE_INVALID", {item["code"] for item in diagnostics})
+
+    def test_terminal_ram_replay_requires_explicit_final_player_and_atari_moves(self):
+        import chess
+        from videochess_rl.atari_ram import VIDEO_CHESS_ROM_SHA256
+
+        before = chess.Board()
+        before.push_uci("f2f3")
+        before.push_uci("e7e5")
+        candidate = before.copy()
+        candidate.push_uci("g2g4")
+        board = candidate.copy()
+        board.push_uci("d8h4")
+        with TemporaryDirectory() as temp:
+            frames = Path(temp)
+            for name in ("reset", "turn-01-player-candidate", "turn-01-verified-board", "turn-02-player-candidate"):
+                (frames / f"{name}.png").write_bytes(name.encode())
+            trace = {
+                "frames": [{"name": name} for name in (
+                    "reset", "turn-01-player-candidate", "turn-01-verified-board",
+                    "turn-02-player-candidate",
+                )],
+                "turns": [
+                    {
+                        "turn": 1,
+                        "player_move": {"uci": "f2f3", "input_initiated": True, "verified_from_rgb": True},
+                        "opponent_reply": {"uci": "e7e5", "verified_from_rgb": True},
+                    },
+                    {
+                        "turn": 2,
+                        "board_before_fen": before.fen(en_passant="fen"),
+                        "player_move": {
+                            "uci": "g2g4", "input_initiated": True, "verified_from_rgb": False,
+                            "candidate_fen": candidate.fen(en_passant="fen"),
+                        },
+                        "opponent_reply": {"uci": "d8h4", "verified_from_rgb": False},
+                    },
+                ],
+                "terminal": {"ale_terminated": True, "ale_truncated": False},
+                "terminal_sequence_verification": {
+                    "verified": True,
+                    "rom_sha256": VIDEO_CHESS_ROM_SHA256,
+                    "sequence": ["g2g4", "d8h4"],
+                    "terminal_fen": board.fen(en_passant="fen"),
+                    "ale_reward": -1.0,
+                },
+            }
+            diagnostics = demo.diagnose_replay_artifacts(trace, frames)
+
+        self.assertIn("REPLAY_TERMINAL_RAM_SEQUENCE_INVALID", {item["code"] for item in diagnostics})
+
+    def test_rgb_verified_final_player_move_is_not_double_counted_in_terminal_ram_summary_or_replay(self):
+        import chess
+        from videochess_rl.atari_ram import VIDEO_CHESS_ROM_SHA256
+
+        before_final_turn = chess.Board()
+        before_final_turn.push_uci("f2f3")
+        before_final_turn.push_uci("e7e5")
+        after_final_player = before_final_turn.copy()
+        after_final_player.push_uci("g2g4")
+        terminal_board = after_final_player.copy()
+        terminal_board.push_uci("d8h4")
+        self.assertTrue(terminal_board.is_checkmate())
+
+        with TemporaryDirectory() as temp:
+            frames = Path(temp)
+            frame_names = (
+                "reset", "turn-01-player-candidate", "turn-01-verified-board",
+                "turn-02-player-candidate",
+            )
+            for name in frame_names:
+                (frames / f"{name}.png").write_bytes(name.encode())
+            trace = {
+                "status": "ale_terminated",
+                "frames": [{"name": name} for name in frame_names],
+                "turns": [
+                    {
+                        "turn": 1,
+                        "player_move": {"uci": "f2f3", "input_initiated": True, "verified_from_rgb": True},
+                        "opponent_reply": {"uci": "e7e5", "verified_from_rgb": True},
+                    },
+                    {
+                        "turn": 2,
+                        "board_before_fen": before_final_turn.fen(en_passant="fen"),
+                        "player_move": {
+                            "uci": "g2g4", "input_initiated": True,
+                            "verified_from_rgb": True, "verified_from_terminal_ram": False,
+                            "candidate_fen": after_final_player.fen(en_passant="fen"),
+                        },
+                        "opponent_reply": {
+                            "uci": "d8h4", "verified_from_rgb": False,
+                            "verified_from_terminal_ram": True,
+                        },
+                    },
+                ],
+                "terminal": {
+                    "ale_terminated": True, "ale_truncated": False,
+                    "runner_stop_category": "ALE_TERMINATED",
+                    "player_moves_attempted": 2,
+                    "verified_player_moves": 2, "verified_atari_replies": 2,
+                    "verified_player_moves_rgb": 2, "verified_atari_replies_rgb": 1,
+                    "verified_player_moves_terminal_ram": 0,
+                    "verified_atari_replies_terminal_ram": 1,
+                    "white_result_from_reward": "white_loss",
+                },
+                "terminal_sequence_verification": {
+                    "verified": True, "rom_sha256": VIDEO_CHESS_ROM_SHA256,
+                    "sequence": ["d8h4"], "terminal_fen": terminal_board.fen(en_passant="fen"),
+                    "player_move": "g2g4", "atari_reply": "d8h4", "ale_reward": -1.0,
+                    "terminal_ram_player_move_count": 0,
+                    "terminal_ram_atari_reply_count": 1,
+                },
+            }
+
+            diagnostics = demo.diagnose_replay_artifacts(trace, frames)
+            summary = demo.build_live_summary(trace, replay_diagnostics=diagnostics, replay_state_count=4)
+
+        self.assertEqual(diagnostics, [])
+        self.assertEqual(summary["verified_player_moves_rgb"], 2)
+        self.assertEqual(summary["verified_player_moves_terminal_ram"], 0)
+        self.assertEqual(summary["verified_atari_replies_terminal_ram"], 1)
+        self.assertEqual(summary["terminal_ram_verified_half_moves"], 1)
+        self.assertEqual(summary["replay_verified_half_moves"], 3)
+
     def test_malformed_replay_metadata_is_an_error(self):
         with TemporaryDirectory() as temp:
             frames = Path(temp); (frames / "reset.png").write_bytes(b"reset")
@@ -419,6 +611,28 @@ class DemoLifecycleTests(unittest.TestCase):
         self.assertIn("ALEStartupError", state.display_status)
         self.assertIn("ROM load failed", state.display_status)
 
+    def test_terminal_ram_checkmate_is_labeled_separately_from_rgb_verified_history(self):
+        state = DemoSessionState()
+        state.apply({
+            "event": "episode_finished",
+            "status": "ale_terminated",
+            "terminal": {
+                "ale_terminated": True,
+                "ale_truncated": False,
+                "white_result_from_reward": "white_loss",
+                "runner_stop_category": "ALE_TERMINATED",
+            },
+            "terminal_sequence_verification": {
+                "verified": True,
+                "terminal_ram_player_move_count": 1,
+                "terminal_ram_atari_reply_count": 1,
+            },
+        })
+        self.assertEqual(state.terminal_ram_verified_player_moves_displayed, 1)
+        self.assertEqual(state.terminal_ram_verified_atari_replies_displayed, 1)
+        self.assertIn("White loss", state.display_status)
+        self.assertIn("checkmate verified from ALE RAM", state.display_status)
+
     def test_interactive_worker_completion_is_not_gated_by_smoke_contract(self):
         window = object.__new__(LiveDemoWindow)
         window.auto_smoke = False
@@ -432,6 +646,20 @@ class DemoLifecycleTests(unittest.TestCase):
         self.assertTrue(window._worker_terminal_seen)
         self.assertEqual(window.exit_code, 0)
         self.assertIsNone(window.session_state.episode_status)
+
+    def test_close_on_finish_waits_for_worker_completion(self):
+        window = object.__new__(LiveDemoWindow)
+        window.session_state = DemoSessionState()
+        window._worker_terminal_seen = False
+        window.exit_code = 0
+        window.finished = False
+        window.status = FakeWidget()
+        window.auto_smoke = False
+        window.close_on_finish = True
+        window._maybe_start_smoke_replay = lambda: None
+        window.handle_event({"event": "worker_finished", "status": "completed", "replay_available": True})
+        self.assertTrue(window._worker_terminal_seen)
+        self.assertTrue(window.closing)
 
     def test_successful_bounded_episode_has_trace_and_replay_lifecycle(self):
         state = DemoSessionState(required_player_moves=2)
@@ -506,6 +734,107 @@ class DemoLifecycleTests(unittest.TestCase):
         self.assertNotIn("pending", verified[1])
         self.assertEqual(window.session_state.verified_player_moves_displayed, 1)
         self.assertEqual(window.session_state.verified_atari_replies_displayed, 1)
+
+    def test_terminal_ram_checkmate_row_and_terminal_frame_are_labeled_without_a_board_snapshot(self):
+        window = object.__new__(LiveDemoWindow)
+        window.auto_smoke = False
+        window.session_state = DemoSessionState()
+        window.move_rows = {14: {"white": "Ke2-f1", "black": "Atari thinking…",
+                                 "white_pending": False, "black_pending": True}}
+        window.move_table = FakeTreeview()
+        window.frames = []
+        window.replay_index = 0
+        window.finished = False
+        window.finished_status = None
+        window.trace_path = None
+        window.status = FakeWidget()
+        window.turn_label = FakeWidget()
+        window.back_button = FakeWidget()
+        window.forward_button = FakeWidget()
+        window.replay_label = FakeWidget()
+        window.render_frame = lambda *_args, **_kwargs: None
+        terminal_sequence = {
+            "verified": True,
+            "turn": 14,
+            "player_move_san": "Kf1",
+            "atari_reply_san": "Qxf2#",
+            "terminal_fen": "checkmate-fen",
+            "terminal_ram_player_move_count": 1,
+            "terminal_ram_atari_reply_count": 1,
+            "ale_reward": -1.0,
+        }
+
+        window.handle_event({
+            "event": "episode_finished",
+            "status": "ale_terminated",
+            "terminal": {
+                "ale_terminated": True,
+                "ale_truncated": False,
+                "white_result_from_reward": "white_loss",
+                "runner_stop_category": "ALE_TERMINATED",
+            },
+            "terminal_sequence_verification": terminal_sequence,
+            "frame_number": 35342,
+            "rgb": np.zeros((210, 160, 3), dtype=np.uint8),
+        })
+
+        values = list(window.move_table.rows.values())[0][0]
+        self.assertIn("terminal RAM", values[1])
+        self.assertIn("terminal RAM", values[2])
+        self.assertEqual(window.frames[0]["label"], "ALE terminal · -1.0 · no board snapshot")
+        self.assertIsNone(window.frames[0].get("fen"))
+        self.assertIn("checkmate verified from terminal ALE RAM", window.status.options["text"])
+        self.assertEqual(window.session_state.terminal_ram_verified_player_moves_displayed, 1)
+        self.assertEqual(window.session_state.terminal_ram_verified_atari_replies_displayed, 1)
+
+    def test_terminal_reply_keeps_rgb_verified_player_row_labeled_as_rgb(self):
+        window = object.__new__(LiveDemoWindow)
+        window.auto_smoke = False
+        window.session_state = DemoSessionState()
+        window.move_rows = {14: {
+            "white": "Kf1 ✓", "black": "Atari thinking…",
+            "white_pending": False, "black_pending": True, "white_verified": True,
+        }}
+        window.move_table = FakeTreeview()
+        window.frames = []
+        window.replay_index = 0
+        window.finished = False
+        window.finished_status = None
+        window.trace_path = None
+        window.status = FakeWidget()
+        window.turn_label = FakeWidget()
+        window.back_button = FakeWidget()
+        window.forward_button = FakeWidget()
+        window.replay_label = FakeWidget()
+        window.render_frame = lambda *_args, **_kwargs: None
+
+        window.handle_event({
+            "event": "episode_finished",
+            "status": "ale_terminated",
+            "terminal": {
+                "ale_terminated": True, "ale_truncated": False,
+                "white_result_from_reward": "white_loss",
+                "runner_stop_category": "ALE_TERMINATED",
+            },
+            "terminal_sequence_verification": {
+                "verified": True,
+                "turn": 14,
+                "player_move_san": "Kf1",
+                "atari_reply_san": "Qf2#",
+                "terminal_ram_player_move_count": 0,
+                "terminal_ram_atari_reply_count": 1,
+            },
+            "frame_number": 35342,
+        })
+
+        row = window.move_rows[14]
+        self.assertEqual(row["white"], "Kf1 ✓")
+        self.assertTrue(row["white_verified"])
+        self.assertFalse(row["white_terminal_ram_verified"])
+        self.assertIn("ALE terminal RAM", row["black"])
+        self.assertFalse(row["black_verified"])
+        self.assertEqual(window.session_state.terminal_ram_verified_player_moves_displayed, 0)
+        self.assertEqual(window.session_state.terminal_ram_verified_atari_replies_displayed, 1)
 
     def test_verified_player_counter_is_not_double_counted_at_atari_reply(self):
         state = DemoSessionState()

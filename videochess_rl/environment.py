@@ -65,6 +65,7 @@ class ALEFrame:
     truncated: bool
     info: dict[str, object]
     frame_number: int
+    ram: np.ndarray | None = None
 
 
 class VideoChessEnv:
@@ -108,6 +109,7 @@ class VideoChessEnv:
             truncated=bool(truncated),
             info=dict(info),
             frame_number=int(self.env.unwrapped.ale.getEpisodeFrameNumber()),
+            ram=np.array(self.env.unwrapped.ale.getRAM(), dtype=np.uint8, copy=True),
         )
 
     def reset(self, *, seed: int | None = None) -> ALEFrame:

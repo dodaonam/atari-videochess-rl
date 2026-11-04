@@ -6,6 +6,7 @@ from dataclasses import dataclass, field
 
 import chess
 
+from .atari_ram import VideoChessRAMState
 from .vision import BoardObservation, BoardWindow
 
 
@@ -54,6 +55,47 @@ class ShadowBoard:
             raise DesynchronizationError(
                 f"RGB evidence does not show the requested move sequence {moves}; shadow state was not advanced"
             )
+        self.board = candidate
+        return tuple(parsed)
+
+    def apply_terminal_ram_verified_sequence(
+        self,
+        ucis: tuple[str, ...],
+        ram_state: VideoChessRAMState,
+        *,
+        ale_terminated: bool,
+        ale_reward: float,
+    ) -> tuple[str, ...]:
+        """Advance at a terminal only when exact ROM RAM proves a legal mate.
+
+        This path is reserved for the final transition when ALE terminates
+        during the Atari reply and no full RGB board frame exists. It requires
+        a legal sequence from the current shadow, exact full-board ROM RAM
+        agreement, checkmate in the resulting position, and a matching ALE
+        reward. It never treats policy intent or a preview as a move.
+        """
+        if not ale_terminated:
+            raise DesynchronizationError("Terminal RAM verification requires ALE terminated=True")
+        if not ucis:
+            raise ValueError("At least one move is required for terminal RAM verification")
+        candidate = self.board.copy()
+        parsed: list[str] = []
+        for uci in ucis:
+            try:
+                move = chess.Move.from_uci(uci)
+            except ValueError as exc:
+                raise ValueError(f"Invalid UCI move: {uci!r}") from exc
+            if move not in candidate.legal_moves:
+                raise ValueError(f"Move is not legal in the current shadow position: {uci}")
+            candidate.push(move)
+            parsed.append(uci)
+        if not candidate.is_checkmate():
+            raise DesynchronizationError("ALE terminal RAM sequence did not produce checkmate")
+        expected_reward = -1.0 if candidate.turn == chess.WHITE else 1.0
+        if float(ale_reward) != expected_reward:
+            raise DesynchronizationError("ALE terminal reward disagreed with the terminal checkmate winner")
+        if not ram_state.board_matches(candidate):
+            raise DesynchronizationError("ALE terminal RAM board did not match the legal terminal sequence")
         self.board = candidate
         return tuple(parsed)
 

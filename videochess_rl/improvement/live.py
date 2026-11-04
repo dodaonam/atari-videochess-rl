@@ -30,6 +30,9 @@ class DemoSessionState:
     verified_pairs_displayed: int = 0
     verified_player_moves_displayed: int = 0
     verified_atari_replies_displayed: int = 0
+    terminal_ram_verified_player_moves_displayed: int = 0
+    terminal_ram_verified_atari_replies_displayed: int = 0
+    terminal_sequence_verification: dict | None = None
     live_summary: dict | None = None
     replay_diagnostics: list[dict] | None = None
 
@@ -43,6 +46,16 @@ class DemoSessionState:
             terminal_reason = terminal.get("runner_stop_reason") if isinstance(terminal, dict) else None
             self.primary_reason = (event.get("failure") or terminal_reason
                                    or self.episode_status)
+            terminal_sequence = event.get("terminal_sequence_verification")
+            if isinstance(terminal_sequence, dict):
+                self.terminal_sequence_verification = dict(terminal_sequence)
+                if terminal_sequence.get("verified") is True:
+                    self.terminal_ram_verified_player_moves_displayed = int(
+                        terminal_sequence.get("terminal_ram_player_move_count", 0)
+                    )
+                    self.terminal_ram_verified_atari_replies_displayed = int(
+                        terminal_sequence.get("terminal_ram_atari_reply_count", 0)
+                    )
         elif kind == "verified_turn":
             self.verified_pairs_displayed += 1
             if event.get("player_move_verified_earlier") is not True:
@@ -87,7 +100,16 @@ class DemoSessionState:
         terminal = self.episode_terminal or {}
         category = self.terminal_category
         if terminal.get("ale_terminated") is True:
-            outcome = "ALE chess game terminated"
+            result = terminal.get("white_result_from_reward")
+            result_text = {
+                "white_win": "White win",
+                "white_loss": "White loss",
+                "draw": "draw",
+            }.get(result, "result unavailable")
+            if isinstance(self.terminal_sequence_verification, dict) and self.terminal_sequence_verification.get("verified") is True:
+                outcome = f"ALE game ended · {result_text}; terminal checkmate verified from ALE RAM"
+            else:
+                outcome = f"ALE chess game terminated · {result_text} from ALE reward"
         elif terminal.get("ale_truncated") is True:
             outcome = "ALE episode truncated; chess result is incomplete"
         elif category == "RUNNER_USER_CANCEL":
@@ -161,7 +183,7 @@ class LiveEnvironment(VideoChessEnv):
 class LiveDemoWindow:
     def __init__(self, *, policy_name: str, identity, artifact_dir: Path, max_player_moves: int,
                  run_worker, demo_seed: int = 20261103, auto_smoke: bool = False,
-                 session_limits: dict | None = None):
+                 session_limits: dict | None = None, close_on_finish: bool = False):
         self.root = tk.Tk()
         self.root.title("Atari VideoChess — live policy demonstration")
         self.root.geometry("1120x700")
@@ -178,6 +200,7 @@ class LiveDemoWindow:
         self.max_player_moves = max_player_moves
         self.demo_seed = demo_seed
         self.auto_smoke = auto_smoke
+        self.close_on_finish = close_on_finish
         self.session_limits = dict(session_limits or {})
         self.frames: list[dict] = []
         self.move_rows: dict[int, dict[str, object]] = {}
@@ -265,7 +288,7 @@ class LiveDemoWindow:
             self.limits_label = ttk.Label(panel, text=limit_text, wraplength=390, justify=tk.LEFT,
                                           font=("TkDefaultFont", 8))
             self.limits_label.grid(row=4, column=0, sticky="ew", pady=2)
-        ttk.Label(panel, text="RGB-VERIFIED MOVE HISTORY", font=("TkDefaultFont", 9, "bold")).grid(
+        ttk.Label(panel, text="VERIFIED MOVE HISTORY", font=("TkDefaultFont", 9, "bold")).grid(
             row=5, column=0, sticky="w", pady=(3, 1))
         scorecard = ttk.Frame(panel)
         scorecard.grid(row=6, column=0, sticky="nsew")
@@ -379,6 +402,12 @@ class LiveDemoWindow:
             label = f"White {event.get('player_san', 'move')} candidate · transition verified"
         elif kind == "verified_turn":
             label = f"Atari {event.get('opponent_san', 'reply')} verified"
+        elif kind == "ale_terminal":
+            terminal = event.get("terminal_sequence_verification")
+            if isinstance(terminal, dict) and terminal.get("verified") is True:
+                label = f"ALE terminal · {terminal.get('ale_reward', 'result')} · no board snapshot"
+            else:
+                label = "ALE terminal · no board snapshot"
         else:
             label = str(kind or "verified state")
         if self.frames and self.frames[-1]["frame_number"] == frame_no:
@@ -463,13 +492,53 @@ class LiveDemoWindow:
             self.render_frame(event["rgb"], event["frame_number"])
         elif kind == "episode_finished":
             self.session_state.apply(event)
+            terminal_sequence = event.get("terminal_sequence_verification")
+            if isinstance(terminal_sequence, dict) and terminal_sequence.get("verified") is True:
+                turn = terminal_sequence.get("turn")
+                if isinstance(turn, int):
+                    row = dict(self.move_rows.get(turn, {}))
+                    player_ram_verified = int(terminal_sequence.get("terminal_ram_player_move_count", 0)) > 0
+                    reply_ram_verified = int(terminal_sequence.get("terminal_ram_atari_reply_count", 0)) > 0
+                    player_san = terminal_sequence.get("player_move_san", "Move")
+                    reply_san = terminal_sequence.get("atari_reply_san", "Reply")
+                    row.update({
+                        "white": (
+                            f"{player_san} ✓ · ALE terminal RAM"
+                            if player_ram_verified
+                            else row.get("white") or f"{player_san} ✓ · RGB"
+                        ),
+                        "black": (
+                            f"{reply_san} ✓ · ALE terminal RAM"
+                            if reply_ram_verified
+                            else row.get("black") or f"{reply_san} ✓ · RGB"
+                        ),
+                        "white_pending": False,
+                        "black_pending": False,
+                        "white_verified": not player_ram_verified,
+                        "black_verified": not reply_ram_verified,
+                        "white_terminal_ram_verified": player_ram_verified,
+                        "black_terminal_ram_verified": reply_ram_verified,
+                        "pending": False,
+                    })
+                    self.move_rows[turn] = row
+                    self.refresh_move_table()
+                if event.get("rgb") is not None:
+                    self.record_replay({
+                        "event": "ale_terminal",
+                        "frame_number": event.get("frame_number"),
+                        "rgb": event.get("rgb"),
+                        "terminal_sequence_verification": terminal_sequence,
+                    })
             self.finalize_pending_rows()
             self.finished = True
             self.finished_status = event.get("status")
             term = event.get("terminal")
             term = term if isinstance(term, dict) else {}
             if term.get("ale_terminated"):
-                result = "ALE chess game terminated"
+                white_result = term.get("white_result_from_reward")
+                result = f"ALE result: {white_result or 'reward unavailable'}"
+                if isinstance(terminal_sequence, dict) and terminal_sequence.get("verified") is True:
+                    result += " · checkmate verified from terminal ALE RAM"
             elif term.get("ale_truncated"):
                 result = "ALE episode truncated; chess result is incomplete"
             else:
@@ -521,6 +590,8 @@ class LiveDemoWindow:
                     )
                 self.finished = True
                 self.status.configure(text=self.session_state.display_status)
+                if getattr(self, "close_on_finish", False):
+                    self.closing = True
             elif self.auto_smoke and not self.session_state.smoke_ok:
                 # The worker can finish and persist a truthful incomplete trace.
                 # Keep episode status separate from worker lifecycle and still
@@ -528,6 +599,8 @@ class LiveDemoWindow:
                 self.exit_code = 1
                 self.finished = True
                 self.status.configure(text=self.session_state.display_status)
+            elif getattr(self, "close_on_finish", False) and not self.auto_smoke:
+                self.closing = True
             self._maybe_start_smoke_replay()
 
     def _maybe_start_smoke_replay(self):
@@ -607,6 +680,8 @@ class LiveDemoWindow:
                     "verified_atari_turns_displayed": self.verified_turns,
                     "verified_player_moves_displayed": self.session_state.verified_player_moves_displayed,
                     "verified_atari_replies_displayed": self.session_state.verified_atari_replies_displayed,
+                    "terminal_ram_verified_player_moves_displayed": self.session_state.terminal_ram_verified_player_moves_displayed,
+                    "terminal_ram_verified_atari_replies_displayed": self.session_state.terminal_ram_verified_atari_replies_displayed,
                     "pending_player_actions": sum(
                         bool(row.get("white_pending", row.get("pending", False))
                              or row.get("white_unverified"))

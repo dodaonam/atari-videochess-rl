@@ -15,6 +15,7 @@ from tests.test_m1_vision import BACKGROUND, BLUE, GOLD, paint, start_frame
 from videochess_rl.episode import (
     StopCategory,
     _selected_target_evidence,
+    _mark_terminal_ram_verification_methods,
     agent_reward_from_ale,
     choose_cooperative_loss_move,
     choose_diagnostic_move,
@@ -368,6 +369,25 @@ class EpisodeSafetyTests(unittest.TestCase):
         parameters.update(kwargs)
         return run_episode(**parameters)
 
+    def test_terminal_ram_method_flags_and_counts_cover_both_player_proof_paths(self) -> None:
+        cases = (
+            (True, False, 0),
+            (False, True, 1),
+        )
+        for player_rgb_verified, expected_player_ram_flag, expected_player_ram_count in cases:
+            with self.subTest(player_rgb_verified=player_rgb_verified):
+                player = {"verified_from_rgb": player_rgb_verified}
+                reply = {"verified_from_rgb": False}
+
+                player_count, reply_count = _mark_terminal_ram_verification_methods(player, reply)
+
+                self.assertIs(player["verified_from_terminal_ram"], expected_player_ram_flag)
+                self.assertTrue(reply["verified_from_terminal_ram"])
+                self.assertEqual(player_count, expected_player_ram_count)
+                self.assertEqual(reply_count, 1)
+                self.assertEqual(int(player["verified_from_terminal_ram"]), player_count)
+                self.assertEqual(int(reply["verified_from_terminal_ram"]), reply_count)
+
     def test_failed_target_fire_stops_without_advancing_shadow(self) -> None:
         result = self.run_fake(FakeALE(fail_target_fire=True))
 
@@ -379,6 +399,17 @@ class EpisodeSafetyTests(unittest.TestCase):
         )
         self.assertFalse(result["turns"][0]["player_move"]["verified_from_rgb"])
         self.assertEqual(result["terminal"]["last_verified_fen"], chess.Board().fen())
+
+    def test_explicit_campaign_timing_is_preserved_instead_of_silently_rewritten(self) -> None:
+        result = self.run_fake(
+            FakeALE(fail_target_fire=True),
+            target_fire_press_frames=16,
+        )
+
+        target_fire = next(
+            action for action in result["actions"] if action["name"] == "select_target"
+        )
+        self.assertEqual(target_fire["requested_frames"], 16)
 
     def test_capture_preview_can_be_transient_but_only_stable_board_advances_shadow(self) -> None:
         before = chess.Board()

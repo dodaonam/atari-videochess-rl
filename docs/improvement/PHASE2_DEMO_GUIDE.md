@@ -22,8 +22,15 @@ uv run --locked --no-sync python -m videochess_rl.improvement.demo \
   --checkpoint-sha256 48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293 \
   --seed 20261103 \
   --max-player-moves 200 \
-  --max-seconds 1800
+  --max-seconds 1800 \
+  --close-on-finish
 ```
+
+`--close-on-finish` is useful for unattended full-game runs. It closes the
+window only after ALE ends and the trace and summary have been persisted. The
+default limits remain bounded. If the runner, time, or ALE frame limit stops
+the session first, the result is incomplete rather than a completed chess
+game.
 
 For a bounded live GUI check that also exercises resize and Left/Right replay,
 add `--auto-smoke`; that mode deliberately limits the session to two player
@@ -63,9 +70,13 @@ seed. The GUI displays both values separately. Both selected models were
 loaded and smoke-tested using reset seed `123456`; the unchanged model training
 seed shown in the GUI was `20261103`.
 
-## Recommended demonstration policy
+## M4-A fallback policy
 
-Use the selected Phase 1 M4-A behavior-cloning checkpoint as the fallback demonstration policy. It completed all 12 configured player turns in each of the three bounded Phase 2 Atari baseline attempts, with every player move and opponent reply verified from RGB. Those attempts were incomplete at the move cap and did not observe a terminal game result.
+Use the selected Q-only Double DQN checkpoint for the improved-policy demo.
+Its identity is checked against the required SHA-256 before loading. The
+earlier M4-A behavior-cloning checkpoint remains available as a separately
+labeled fallback; its historical bounded turns are not evidence for the
+Double DQN policy or for a complete game.
 
 ```bash
 PYTHONPATH=. .venv/bin/python -m videochess_rl.improvement.demo \
@@ -91,24 +102,31 @@ uv run --locked --no-sync python -m videochess_rl.improvement.demo \
   --max-seconds 1800
 ```
 
-The Q policy's three paired evaluation attempts each stopped after nine verified turns because Atari RGB did not confirm target FIRE. The runner stopped without retrying or claiming a move. The live demo can therefore end early with a visible control warning; this was observed and is a known limitation.
+The historical `h1h4` stop was reproduced and traced to target FIRE being held
+for 16 ALE frames when the ROM acknowledged that particular capture only on
+held frame 22. A RAM probe was validated against the exact bundled ROM and
+multiple RGB-verified positions. The controller now requires the source and
+target preview to be independently confirmed, holds one target FIRE press for
+up to 32 frames, and releases as soon as ALE reports the matching move-search
+state. It never retries FIRE. Acknowledgement alone does not advance the chess
+shadow: a complete RGB board transition and the Atari reply are still required.
 
-The historical target-confirmation issue was not “fixed” by accepting an
-unverified transition or retrying FIRE. An isolated diagnostic with a single
-one-frame target FIRE press reached four RGB-verified player moves, then also
-stopped on target-confirmation uncertainty at a different legal move. This
-does not establish that press duration caused the historical failure. The
-controller remains conservative: the shadow position advances only after RGB
-verification, and an uncertain capture is left pending with no retry. The
-private diagnostic trace and frames remain local.
+The pinned VideoChess ROM also exposes a terminal blue screen after some
+checkmates, with no usable final chessboard image. In that case, the final
+pending player move and Atari reply are recorded separately as terminal-RAM
+verified only when actual ALE termination, the exact full RAM board, one
+unique legal reply, checkmate, and matching ALE reward all agree. The terminal
+screen is kept as terminal evidence and is not rendered as a fabricated
+board snapshot. RGB and terminal-RAM move counts remain separate in the GUI,
+trace, and summary.
 
 ## Display and controls
 
 - The left pane shows actual ALE RGB frames.
 - The fixed-width right pane displays policy family, checkpoint SHA, training decision count where applicable, current verified side-to-move, active session limits, separate terminal/trace status, and a scrollable White/Black move scorecard. This layout follows the owner-provided local presentation reference; that script is not modified or required.
-- A policy selection is visibly pending until its Atari transition is verified. At session end, an unconfirmed selection is labeled unverified and receives no replay snapshot.
+- A policy selection is visibly pending until its Atari transition is verified. At session end, an unconfirmed selection is labeled unverified and receives no replay snapshot. Terminal-RAM verified moves are labeled separately and do not gain fabricated RGB snapshots.
 - Once a complete player/Atari transition is RGB-verified, **Left** and **Right** step through the captured White candidate and Atari reply frames. If the candidate was only cursor-masked at the time, the viewer labels it as a candidate whose transition was confirmed by the later full-board evidence. Buttons provide the same controls.
-- The GUI keeps White and Black move columns separate. An Atari reply is recorded only after RGB evidence identifies it; missing replies remain unverified.
+- The GUI keeps White and Black move columns separate. Ordinary Atari replies are recorded only after RGB evidence identifies them. A terminal reply without a usable final board frame is labeled terminal-RAM verified only under the strict checkmate contract above; missing replies remain unverified.
 - Session lifecycle status, primary stop reason, terminal category, and trace
   persistence are displayed independently. A trace-save notification cannot
   overwrite a controller/game outcome. Worker failures close automated smoke
@@ -127,7 +145,9 @@ private diagnostic trace and frames remain local.
   150,000-frame ceiling does not override it. ALE truncation is incomplete,
   never a chess win/loss/draw.
 - A runner stop, ALE termination, ALE truncation, cancellation, incomplete
-  game, or controller warning is stated without inventing a result.
+  game, or controller warning is stated without inventing a result. A terminal
+  reward by itself is not labeled checkmate; the terminal board must also
+  match a legal checkmating sequence.
 - Each session gets an atomically-created unique artifact directory; existing
   session records are never overwritten.
 - The responsive layout was checked at 1100×680 during real-ALE smoke and at

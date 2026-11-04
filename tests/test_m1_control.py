@@ -26,7 +26,7 @@ class AtariControlPlanTests(unittest.TestCase):
                 (2, 33),
                 (0, 1),
                 (0, 33),
-                (1, 16),
+                (1, 32),
                 (0, 1),
             ],
         )

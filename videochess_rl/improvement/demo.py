@@ -134,6 +134,35 @@ def diagnose_replay_artifacts(trace: object, artifact_dir: Path) -> list[dict[st
                 add("WARNING", "REPLAY_VERIFIED_REPLY_FRAME_MISSING", f"The RGB board image for verified Atari reply {number} is missing.", number)
             board.push(reply_move)
 
+    terminal_sequence = trace.get("terminal_sequence_verification")
+    if isinstance(terminal_sequence, dict) and terminal_sequence.get("verified") is True:
+        terminal = trace.get("terminal")
+        terminal = terminal if isinstance(terminal, dict) else {}
+        if terminal.get("ale_terminated") is not True or terminal.get("ale_truncated") is True:
+            add("ERROR", "REPLAY_TERMINAL_RAM_WITHOUT_ALE_TERMINATION",
+                "Terminal RAM move evidence is present without ALE terminated=True.")
+        if terminal_sequence.get("rom_sha256") != ROM_SHA256:
+            add("ERROR", "REPLAY_TERMINAL_RAM_ROM_MISMATCH",
+                "Terminal RAM move evidence is bound to a different VideoChess ROM.")
+        sequence = terminal_sequence.get("sequence")
+        sequence = sequence if isinstance(sequence, list) else []
+        try:
+            for uci in sequence:
+                move = chess.Move.from_uci(uci)
+                if move not in board.legal_moves:
+                    raise ValueError(f"illegal terminal sequence move {uci}")
+                board.push(move)
+            expected_fen = terminal_sequence.get("terminal_fen")
+            if board.fen(en_passant="fen") != expected_fen or not board.is_checkmate():
+                raise ValueError("terminal RAM sequence does not reproduce its checkmate FEN")
+            if float(terminal_sequence.get("ale_reward")) != (-1.0 if board.turn == chess.WHITE else 1.0):
+                raise ValueError("terminal reward does not match the verified checkmate winner")
+            if terminal_sequence.get("player_move") is None or terminal_sequence.get("atari_reply") is None:
+                raise ValueError("terminal sequence omitted the final player move or Atari reply")
+        except (ValueError, TypeError):
+            add("ERROR", "REPLAY_TERMINAL_RAM_SEQUENCE_INVALID",
+                "The terminal RAM sequence is illegal, incomplete, or inconsistent with checkmate/reward evidence.")
+
     return diagnostics
 
 
@@ -223,10 +252,20 @@ def build_live_summary(
         "ale_terminated": terminal.get("ale_terminated", False),
         "ale_truncated": terminal.get("ale_truncated", False),
         "white_result": terminal.get("white_result_from_reward") if terminal.get("ale_terminated") is True else None,
+        "terminal_sequence_verification": trace_data.get("terminal_sequence_verification"),
+        "last_rgb_verified_fen": terminal.get("last_rgb_verified_fen"),
         "ale_reward_total": terminal.get("ale_reward_total"),
         "player_moves_attempted": terminal.get("player_moves_attempted", 0),
         "verified_player_moves": terminal.get("verified_player_moves", 0),
         "verified_atari_replies": terminal.get("verified_atari_replies", 0),
+        "verified_player_moves_rgb": terminal.get("verified_player_moves_rgb", terminal.get("verified_player_moves", 0)),
+        "verified_atari_replies_rgb": terminal.get("verified_atari_replies_rgb", terminal.get("verified_atari_replies", 0)),
+        "verified_player_moves_terminal_ram": terminal.get("verified_player_moves_terminal_ram", 0),
+        "verified_atari_replies_terminal_ram": terminal.get("verified_atari_replies_terminal_ram", 0),
+        "terminal_ram_verified_half_moves": (
+            terminal.get("verified_player_moves_terminal_ram", 0)
+            + terminal.get("verified_atari_replies_terminal_ram", 0)
+        ),
         "last_verified_fen": terminal.get("last_verified_fen"),
         "worker_status": worker_status,
         "worker_error_type": worker_error_type,
@@ -561,6 +600,8 @@ def main(argv=None):
     parser.add_argument("--max-seconds", type=float, default=900.0)
     parser.add_argument("--auto-smoke", action="store_true",
                         help="Run a bounded two-move live ALE smoke, test resize/replay, and close")
+    parser.add_argument("--close-on-finish", action="store_true",
+                        help="Close the GUI after ALE and trace/session persistence finish; useful for unattended full-game runs")
     parser.add_argument("--preflight-only", action="store_true",
                         help="Check readiness without resetting or stepping Atari")
     args = parser.parse_args(argv)
@@ -627,7 +668,7 @@ def main(argv=None):
         window = LiveDemoWindow(policy_name=identity.policy_id, identity=identity,
             artifact_dir=artifact_dir, max_player_moves=args.max_player_moves,
             run_worker=worker, demo_seed=args.reset_seed, auto_smoke=args.auto_smoke,
-            session_limits=run_limits)
+            session_limits=run_limits, close_on_finish=args.close_on_finish)
     except Exception as exc:
         message = f"could not initialize the live Tk window: {type(exc).__name__}: {exc}"
         if args.auto_smoke:
