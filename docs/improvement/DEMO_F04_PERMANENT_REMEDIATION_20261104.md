@@ -1,6 +1,6 @@
 # DEMO-F04 Root Cause and Permanent Remediation
 
-**Status:** Corrective implementation and real-ALE validation completed; final repository checks and delivery review are in progress.
+**Status:** Corrective implementation and real-ALE validation completed; final commit `c7ff6ab24b403592c81e7b0467f1437024e071c7` passes the full available suite and preflight. Pull request review is pending.
 
 **Claim boundary:** The selected Double DQN now passes the historical capture and has completed multiple actual ALE games in this environment. This evidence supports the identified timing defect and the correction. It does not establish universal reliability over all games, ROM revisions, ALE profiles, or positions.
 
@@ -121,7 +121,15 @@ The post-game summary, replay diagnostics, scorecard labels, and `--close-on-fin
 
 ## 8. Automated verification and repository checks
 
-Focused and full-suite results, repository preflight, compilation, privacy checks, and diff checks are recorded here after the final run. Test results distinguish private-artifact skips from passes. No raw frames, RAM arrays, complete move-level traces, screenshots, ROMs, or checkpoints are included in Git.
+- Focused command: `.venv/bin/python -m unittest tests.test_atari_ram tests.test_m1_control tests.test_m1_shadow tests.test_m1_episode tests.test_m1_ale_integration tests.test_demo_reliability -v` — **116 passed**.
+- Full command: `PATH="$PWD/.venv/share/stockfish:$PATH" .venv/bin/python -m unittest discover -s tests -v` — **628 tests, OK, 4 skipped** (`211.188s`; 624 passed). The skips require unavailable private M4/M5 artifact roots/checkpoints: `test_accepted_m4_shared_transfer_and_fresh_paired_q_head`, `M6PrivatePolicyRosterTests`, and two frozen M5 policy-compatibility tests. The repository's existing Stockfish 19 executable was used from `.venv/share/stockfish`; no dependency was installed.
+- Full-suite log SHA-256 (local `/tmp` record): `5668331afc4dce981e380e17ab6ffeb24ec03c3e65faa664cb502fce0ef32593`.
+- `python3 -m compileall -q videochess_rl tests` — passed.
+- `git diff --check` — passed.
+- `python3 scripts/agent_preflight.py` on commit `c7ff6ab24b403592c81e7b0467f1437024e071c7` — **PASS**. It recognized the clean commit transition and matching portable snapshot; only the expected note remains that ignored artifacts need an independent manifest.
+- `python3 scripts/audit_final_consolidation.py --output /tmp/atari-videochess-f04-privacy-audit-20261104.json` — passed with zero high-confidence credential matches, zero unexpected opaque payloads, and the historical authorized archive unchanged. The final post-documentation commit is re-scanned before push.
+
+No raw frames, RAM arrays, complete move-level Atari traces, screenshots, ROMs, or checkpoints are included in Git. The new public report contains sanitized findings and artifact hashes only.
 
 ## 9. Scientific preservation and limits
 
