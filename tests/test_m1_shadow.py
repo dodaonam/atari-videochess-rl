@@ -5,8 +5,10 @@ from __future__ import annotations
 import unittest
 
 import chess
+import numpy as np
 
 from tests.test_m1_vision import after_c7c5, after_e2e3, start_frame
+from videochess_rl.atari_ram import VideoChessRAMState, ram_square_index
 from videochess_rl.shadow import DesynchronizationError, ShadowBoard
 from videochess_rl.vision import VideoChessVision
 
@@ -91,6 +93,56 @@ class ShadowBoardTests(unittest.TestCase):
         reply = self.shadow.infer_observed_reply(window, allow_cursor_masked_square=True)
 
         self.assertEqual(reply, "c7c5")
+        self.assertEqual(self.shadow.board.fen(), before)
+
+    def test_terminal_ram_sequence_requires_termination_reward_mate_and_exact_board(self) -> None:
+        moves = ("f2f3", "e7e5", "g2g4", "d8h4")
+        terminal = chess.Board()
+        for move in moves:
+            terminal.push_uci(move)
+        self.assertTrue(terminal.is_checkmate())
+        ram = np.zeros(128, dtype=np.uint8)
+        rom_codes = {
+            chess.KING: 1,
+            chess.QUEEN: 2,
+            chess.BISHOP: 3,
+            chess.KNIGHT: 4,
+            chess.ROOK: 5,
+            chess.PAWN: 6,
+        }
+        for square, piece in terminal.piece_map().items():
+            code = rom_codes[piece.piece_type] | (0x08 if piece.color else 0)
+            ram[ram_square_index(square)] = code
+        evidence = VideoChessRAMState.from_ram(ram)
+
+        applied = self.shadow.apply_terminal_ram_verified_sequence(
+            moves, evidence, ale_terminated=True, ale_reward=-1.0
+        )
+
+        self.assertEqual(applied, moves)
+        self.assertEqual(self.shadow.board.fen(), terminal.fen())
+
+    def test_terminal_ram_mismatch_or_nonterminal_cannot_advance_shadow(self) -> None:
+        before = self.shadow.board.fen()
+        terminal = chess.Board()
+        for move in ("f2f3", "e7e5", "g2g4", "d8h4"):
+            terminal.push_uci(move)
+        ram = np.zeros(128, dtype=np.uint8)
+        evidence = VideoChessRAMState.from_ram(ram)
+        with self.assertRaises(DesynchronizationError):
+            self.shadow.apply_terminal_ram_verified_sequence(
+                ("f2f3", "e7e5", "g2g4", "d8h4"),
+                evidence,
+                ale_terminated=True,
+                ale_reward=-1.0,
+            )
+        with self.assertRaises(DesynchronizationError):
+            self.shadow.apply_terminal_ram_verified_sequence(
+                ("f2f3", "e7e5", "g2g4", "d8h4"),
+                evidence,
+                ale_terminated=False,
+                ale_reward=-1.0,
+            )
         self.assertEqual(self.shadow.board.fen(), before)
 
 

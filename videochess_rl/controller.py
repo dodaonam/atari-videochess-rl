@@ -35,7 +35,7 @@ class ControllerTiming:
     direction_frames: int = DIRECTION_FRAMES
     fire_settle_frames: int = FIRE_SETTLE_FRAMES
     source_fire_press_frames: int = 1
-    target_fire_press_frames: int = 16
+    target_fire_press_frames: int = 32
     release_frames: int = 1
     source_selection_observation_frames: int = 33
     selected_target_observation_frames: int = 33
@@ -142,8 +142,9 @@ def plan_move(
     """Plan a legal move from the supplied verified position and observed cursor.
 
     Cursor directions use the measured hold duration. Source selection remains
-    a one-frame press, while target confirmation uses its separately calibrated
-    hold. Every phase is verified separately from RGB after execution.
+    a one-frame press. Target FIRE is a bounded maximum hold; the episode
+    runner releases it as soon as ALE acknowledges the move and fails closed
+    if acknowledgement does not arrive in time.
     """
     try:
         move = chess.Move.from_uci(uci)

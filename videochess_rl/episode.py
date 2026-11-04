@@ -22,6 +22,12 @@ from .controller import (
     plan_cursor_route,
     plan_move,
 )
+from .atari_ram import (
+    VideoChessRAMState,
+    VIDEO_CHESS_ROM_SHA256,
+    acknowledges_target_fire,
+    ram_square_index,
+)
 from .demo import _git_state, _utc_now, _write_png
 from .environment import ALEConfig, ALEFrame, VideoChessEnv
 from .shadow import DesynchronizationError, ShadowBoard
@@ -30,6 +36,7 @@ from .vision import BoardEvidenceSet, BoardObservation, BoardWindow, VideoChessV
 
 WINDOW_FRAMES = 33
 TARGET_FIRE_SETTLE_WINDOWS = 3
+TARGET_FIRE_ACK_TIMEOUT_FRAMES = 32
 MAX_CURSOR_ACTIONS_PER_MOVE = 64
 ACTION_NAMES = {
     0: "NOOP",
@@ -435,7 +442,7 @@ def run_episode(
     max_process_rss_bytes: int | None = None,
     stop_event: object | None = None,
     progress_callback: Callable[[dict[str, object]], None] | None = None,
-    target_fire_press_frames: int = 16,
+    target_fire_press_frames: int = TARGET_FIRE_ACK_TIMEOUT_FRAMES,
     artifact_dir: str | None = None,
     env_factory: Callable[[ALEConfig], VideoChessEnv] = VideoChessEnv,
 ) -> dict[str, object]:
@@ -482,7 +489,8 @@ def run_episode(
             "direction_frames": timing.direction_frames,
             "fire_settle_frames": timing.fire_settle_frames,
             "source_fire_press_frames": timing.source_fire_press_frames,
-            "target_fire_press_frames": timing.target_fire_press_frames,
+            "target_fire_press_frames_max": timing.target_fire_press_frames,
+            "target_fire_ack_contract": "ALE RAM F3 selected->computer-search transition; release immediately on acknowledgement",
             "release_frames": timing.release_frames,
             "source_selection_observation_frames": timing.source_selection_observation_frames,
             "selected_target_observation_frames": timing.selected_target_observation_frames,
@@ -543,6 +551,8 @@ def run_episode(
         terminal_event_emitted = True
         progress_callback({"event": "episode_finished", "status": trace.get("status"),
             "terminal": dict(trace["terminal"]), "failure": trace.get("failure"),
+            "terminal_sequence_verification": trace.get("terminal_sequence_verification"),
+            "final_position": trace.get("final_position"),
             "frame_number": frame.frame_number, "rgb": frame.rgb})
 
     with env_factory(config) as env:
@@ -576,6 +586,18 @@ def run_episode(
         initial_observation = vision.observe(reset.rgb)
         initial_window = vision.window((reset.rgb, reset.rgb, reset.rgb))
         trace["runtime"] = env.runtime_info()
+        runtime_info = trace["runtime"]
+        ram_contract_enabled = not (
+            isinstance(runtime_info, dict) and runtime_info.get("test_double") is True
+        )
+        trace["atari_ram_contract"] = {
+            "enabled": ram_contract_enabled,
+            "rom_sha256": runtime_info.get("rom_sha256") if isinstance(runtime_info, dict) else None,
+            "board_layout": "VideoChess RAM $80-$BF, row-major from rank 8 to rank 1; low nibble piece kind/color",
+            "interaction_state_address": "$F3",
+            "source_square_address": "$D9",
+            "target_square_address": "$DA",
+        }
         trace["reset"] = {
             "frame_number": reset.frame_number,
             "frame_counter_origin": "ALE episode-frame counter immediately after reset; includes reset-time ALE frames",
@@ -594,6 +616,20 @@ def run_episode(
         trace["ram_diagnostics_only"].append({"stage": "reset", **reset_ram})
         trace["reset"]["actual_mode_from_diagnostic_ram"] = reset_ram.get("0xEA")
         runtime = trace["runtime"]
+        if ram_contract_enabled:
+            if not isinstance(runtime, dict) or runtime.get("rom_sha256") != VIDEO_CHESS_ROM_SHA256:
+                return mark_blocked(
+                    "The VideoChess RAM interaction contract is not validated for the loaded ROM",
+                    StopCategory.ENVIRONMENT_PROFILE_MISMATCH,
+                )
+            if reset.ram is None:
+                return mark_blocked("ALE did not provide the RAM snapshot required by the validated interaction contract")
+            try:
+                reset_ram_state = VideoChessRAMState.from_ram(reset.ram)
+            except ValueError as exc:
+                return mark_blocked(f"ALE RAM snapshot was malformed: {exc}")
+            if not reset_ram_state.board_matches(chess.Board()):
+                return mark_blocked("Reset VideoChess RAM board did not match the standard RGB-verified chess position")
         if isinstance(runtime, dict):
             reported_config = runtime.get("config")
             if reported_config is not None and reported_config != config.as_dict():
@@ -655,6 +691,183 @@ def run_episode(
         active_turn_record: dict[str, object] | None = None
         control_execution_active = False
 
+        def ram_state(frame: ALEFrame | None = None) -> VideoChessRAMState | None:
+            frame = frame or last_frame
+            if not ram_contract_enabled:
+                return None
+            if frame.ram is None:
+                raise EpisodeStop("ALE omitted a RAM snapshot while the validated VideoChess interaction contract was active")
+            try:
+                return VideoChessRAMState.from_ram(frame.ram)
+            except ValueError as exc:
+                raise EpisodeStop(f"ALE returned malformed VideoChess RAM: {exc}") from exc
+
+        def ram_evidence(state: VideoChessRAMState) -> dict[str, object]:
+            return {
+                "interaction_state": state.interaction_state,
+                "source_square": state.source_square,
+                "target_square": state.target_square,
+                "move_valid": state.move_is_valid,
+                "half_move_count": state.half_move_count,
+                "board_piece_codes_sha256": hashlib.sha256(bytes(state.piece_codes)).hexdigest(),
+            }
+
+        def verify_terminal_sequence_from_ram() -> dict[str, object] | None:
+            """Resolve a terminal two-ply transition only from exact ROM RAM."""
+            if not terminal_observed or not last_frame.terminated or not ram_contract_enabled:
+                return None
+            turns = trace.get("turns")
+            if not isinstance(turns, list) or not turns or not isinstance(turns[-1], dict):
+                return None
+            pending_turn = turns[-1]
+            player_record = pending_turn.get("player_move")
+            reply_record = pending_turn.get("opponent_reply")
+            if not isinstance(player_record, dict) or not isinstance(reply_record, dict):
+                return None
+            try:
+                terminal_ram = ram_state(last_frame)
+            except EpisodeStop as exc:
+                return {"verified": False, "reason": str(exc)}
+            if terminal_ram is None:
+                return None
+
+            sequence: list[str] = []
+            candidate_after_player = shadow.board.copy()
+            if player_record.get("verified_from_rgb") is not True:
+                if player_record.get("target_fire_acknowledged_by_ale") is not True:
+                    return {
+                        "verified": False,
+                        "reason": "the final player target FIRE had no ALE acknowledgement",
+                    }
+                expected_before = pending_turn.get("board_before_fen")
+                if not isinstance(expected_before, str) or shadow.board.fen(en_passant="fen") != expected_before:
+                    return {
+                        "verified": False,
+                        "reason": "the shadow was not at the pending move's last verified pre-move position",
+                    }
+                uci = player_record.get("uci")
+                try:
+                    player_move = chess.Move.from_uci(uci)
+                except (ValueError, TypeError):
+                    return {"verified": False, "reason": "the pending player UCI was malformed"}
+                if player_move not in candidate_after_player.legal_moves:
+                    return {"verified": False, "reason": "the pending player move was illegal in the shadow"}
+                candidate_after_player.push(player_move)
+                candidate_fen = player_record.get("candidate_fen")
+                if (
+                    not isinstance(candidate_fen, str)
+                    or candidate_after_player.fen(en_passant="fen") != candidate_fen
+                ):
+                    return {"verified": False, "reason": "the candidate board did not match the legal player move"}
+                if not player_record.get("partial_cursor_masked_candidate"):
+                    return {"verified": False, "reason": "no RGB candidate evidence accompanied the pending player move"}
+                sequence.append(player_move.uci())
+
+            matching_replies: list[tuple[chess.Move, chess.Board]] = []
+            for reply_move in candidate_after_player.legal_moves:
+                final_candidate = candidate_after_player.copy()
+                final_candidate.push(reply_move)
+                if terminal_ram.board_matches(final_candidate):
+                    matching_replies.append((reply_move, final_candidate))
+            if len(matching_replies) != 1:
+                return {
+                    "verified": False,
+                    "reason": f"terminal ROM RAM matched {len(matching_replies)} legal Atari replies",
+                    "candidate_count": len(matching_replies),
+                }
+
+            reply_move, final_candidate = matching_replies[0]
+            if not final_candidate.is_checkmate():
+                return {
+                    "verified": False,
+                    "reason": "the unique terminal RAM reply did not produce checkmate in the legal shadow",
+                    "candidate_reply": reply_move.uci(),
+                }
+            expected_reward = -1.0 if final_candidate.turn == chess.WHITE else 1.0
+            if total_reward != expected_reward:
+                return {
+                    "verified": False,
+                    "reason": "ALE terminal reward disagreed with the RAM-matched checkmate winner",
+                    "expected_reward": expected_reward,
+                    "observed_reward": total_reward,
+                }
+
+            sequence.append(reply_move.uci())
+            last_rgb_verified_fen = shadow.board.fen(en_passant="fen")
+            original_player_was_rgb_verified = player_record.get("verified_from_rgb") is True
+            try:
+                terminal_player_san = chess.Board(
+                    pending_turn["board_before_fen"]
+                ).san(chess.Move.from_uci(player_record["uci"]))
+            except (KeyError, ValueError, TypeError):
+                terminal_player_san = None
+            terminal_reply_san = candidate_after_player.san(reply_move)
+            try:
+                applied = shadow.apply_terminal_ram_verified_sequence(
+                    tuple(sequence),
+                    terminal_ram,
+                    ale_terminated=True,
+                    ale_reward=total_reward,
+                )
+            except (ValueError, DesynchronizationError) as exc:
+                return {"verified": False, "reason": str(exc)}
+
+            player_record["verified_from_terminal_ram"] = True
+            player_record["terminal_verification"] = (
+                "ALE target acknowledgement and RGB candidate, followed by a unique legal terminal sequence "
+                "whose exact full-board ROM RAM matched checkmate"
+            )
+            player_record["shadow_fen_after"] = candidate_after_player.fen(en_passant="fen")
+            reply_record.update(
+                {
+                    "uci": reply_move.uci(),
+                    "verified_from_terminal_ram": True,
+                    "verification": "unique legal Atari reply in exact ALE terminal RAM; resulting legal shadow is checkmate",
+                    "shadow_fen_after": shadow.board.fen(en_passant="fen"),
+                }
+            )
+            result = {
+                "verified": True,
+                "evidence_contract": "verified ROM identity + ALE terminated + acknowledged player FIRE + partial RGB candidate + exact terminal RAM board + unique legal Atari reply + matching checkmate reward",
+                "player_move": player_record.get("uci"),
+                "player_move_san": terminal_player_san,
+                "atari_reply": reply_move.uci(),
+                "atari_reply_san": terminal_reply_san,
+                "turn": pending_turn.get("turn"),
+                "terminal_ram_player_move_count": int(not original_player_was_rgb_verified),
+                "terminal_ram_atari_reply_count": 1,
+                "sequence": list(applied),
+                "terminal_fen": shadow.board.fen(en_passant="fen"),
+                "last_rgb_verified_fen": last_rgb_verified_fen,
+                "checkmate": True,
+                "ale_reward": total_reward,
+                "ram_board_matches_terminal": terminal_ram.board_matches(shadow.board),
+                "rom_sha256": VIDEO_CHESS_ROM_SHA256,
+                **ram_evidence(terminal_ram),
+            }
+            pending_turn["terminal_ram_verification"] = result
+            pending_turn["board_after_fen"] = shadow.board.fen(en_passant="fen")
+            pending_turn["verified_terminal_progress"] = _game_progress(shadow.board)
+            trace["terminal_sequence_verification"] = result
+            trace["final_position"] = {
+                "matches_shadow_board": True,
+                "shadow_fen": shadow.board.fen(en_passant="fen"),
+                "verification_contract": "ALE terminal RAM hybrid checkmate verification; terminal RGB is retained as terminal evidence, not a board snapshot",
+            }
+            trace["terminal"]["last_rgb_verified_fen"] = last_rgb_verified_fen
+            trace.setdefault("verified_progress", []).append(
+                {"turn": pending_turn.get("turn"), "fen": shadow.board.fen(), **_game_progress(shadow.board)}
+            )
+            set_input_phase(
+                pending_turn,
+                "terminal_ram_sequence_verified",
+                "the exact ALE terminal RAM board uniquely matched the acknowledged player move and a legal Atari checkmating reply",
+                player_move=player_record.get("uci"),
+                opponent_reply=reply_move.uci(),
+                terminal_fen=shadow.board.fen(en_passant="fen"),
+            )
+            return result
+
         def set_stop(reason: str, category: StopCategory | None = None) -> None:
             nonlocal stop_reason, stop_category
             if stop_reason is None:
@@ -683,7 +896,13 @@ def run_episode(
                 }
             )
 
-        def execute(action: int, requested_frames: int, name: str) -> list[ALEFrame]:
+        def execute(
+            action: int,
+            requested_frames: int,
+            name: str,
+            *,
+            stop_when: Callable[[ALEFrame], bool] | None = None,
+        ) -> list[ALEFrame]:
             nonlocal last_frame, total_reward, episode_env_steps, terminal_observed, terminal_phase, pre_terminal_frame
             if terminal_observed or stop_reason:
                 return []
@@ -693,6 +912,7 @@ def run_episode(
             start_rgb = last_frame.rgb
             samples: list[ALEFrame] = []
             reward_sum = 0.0
+            stopped_early = False
             for _ in range(env_steps):
                 if stop_event is not None and bool(getattr(stop_event, "is_set", lambda: False)()):
                     set_stop("live session cancelled by the user", StopCategory.RUNNER_USER_CANCEL)
@@ -748,12 +968,16 @@ def run_episode(
                     )
                 if last_frame.terminated or last_frame.truncated:
                     break
+                if stop_when is not None and stop_when(last_frame):
+                    stopped_early = True
+                    break
             actions.append(
                 {
                     "name": name,
                     "action": ACTION_NAMES[action],
                     "action_index": action,
                     "requested_frames": requested_frames,
+                    "stopped_early_on_state_ack": stopped_early,
                     "frame_number_start": start_frame,
                     "frame_number_end": last_frame.frame_number,
                     "env_step_start": start_env_step,
@@ -1027,6 +1251,20 @@ def run_episode(
                     })
                     raise EpisodeStop("Player turn lacked a stable legal board and unique cursor observation")
 
+                decision_ram = ram_state(last_frame)
+                if decision_ram is not None and not decision_ram.board_matches(board_before):
+                    raise EpisodeStop(
+                        "VideoChess RAM piece identities disagreed with the last RGB-verified shadow before policy input"
+                    )
+                turn_ram_evidence = (
+                    {
+                        "board_matches_shadow": True,
+                        **ram_evidence(decision_ram),
+                    }
+                    if decision_ram is not None
+                    else None
+                )
+
                 history_uci = tuple(move.uci() for move in board_before.move_stack)
                 legal_moves_uci = tuple(sorted(move.uci() for move in board_before.legal_moves))
                 rgb_frame = np.array(last_frame.rgb, copy=True)
@@ -1045,6 +1283,7 @@ def run_episode(
                         "legal_candidates_uci": list(legal_moves_uci),
                         "stable_rgb_window": current_window.is_stable,
                         "rgb_evidence_matches_shadow": current_window.matches_board_except_cursor(board_before),
+                        "atari_ram": turn_ram_evidence,
                     },
                     "policy_decision": None,
                     "player_move": {"uci": None, "verified_from_rgb": False, "input_initiated": False},
@@ -1162,6 +1401,22 @@ def run_episode(
                             selection_samples[-1],
                             board_before,
                         )
+                        selection_ram = ram_state(selection_samples[-1])
+                        if selection_ram is not None:
+                            selection_ram_matches = (
+                                selection_ram.piece_selected
+                                and selection_ram.source_index == ram_square_index(move_source)
+                                and selection_ram.target_index == ram_square_index(move_source)
+                                and selection_ram.board_matches(board_before)
+                            )
+                            selection_evidence["atari_ram"] = {
+                                **ram_evidence(selection_ram),
+                                "source_and_target_match": selection_ram_matches,
+                                "board_matches_shadow": selection_ram.board_matches(board_before),
+                            }
+                            selection_evidence["verified"] = bool(
+                                selection_evidence["verified"] and selection_ram_matches
+                            )
                         turn["source_selection_evidence"] = selection_evidence
                         if not selection_evidence["verified"]:
                             set_input_phase(
@@ -1207,6 +1462,30 @@ def run_episode(
                             target_samples[-1],
                             board_before,
                         )
+                        target_ram = ram_state(target_samples[-1])
+                        if target_ram is not None:
+                            intended_target = event.selected_target_after or move_source
+                            target_ram_matches = (
+                                target_ram.piece_selected
+                                and target_ram.source_index == ram_square_index(move_source)
+                                and target_ram.target_index == ram_square_index(intended_target)
+                                and target_ram.board_matches_selected_preview(
+                                    board_before, move_source, intended_target
+                                )
+                                and (intended_target != move_target or target_ram.move_is_valid)
+                            )
+                            target_evidence["atari_ram"] = {
+                                **ram_evidence(target_ram),
+                                "intended_target": intended_target,
+                                "target_cursor_matches": target_ram.target_index == ram_square_index(intended_target),
+                                "board_matches_outside_selected_source_target": target_ram.board_matches_selected_preview(
+                                    board_before, move_source, intended_target
+                                ),
+                                "required_move_valid": intended_target != move_target or target_ram.move_is_valid,
+                            }
+                            target_evidence["verified"] = bool(
+                                target_evidence["verified"] and target_ram_matches
+                            )
                         turn["selected_target_observations"].append(target_evidence)
                         if not target_evidence["verified"]:
                             set_input_phase(
@@ -1230,17 +1509,67 @@ def run_episode(
                     elif event.phase == "select_target":
                         if not source_selection_verified or not target_position_verified:
                             raise EpisodeStop("Target FIRE was blocked because source or target position was unverified")
+                        before_fire_ram = ram_state(last_frame)
+                        if before_fire_ram is not None and not (
+                            before_fire_ram.piece_selected
+                            and before_fire_ram.source_index == ram_square_index(move_source)
+                            and before_fire_ram.target_index == ram_square_index(move_target)
+                            and before_fire_ram.move_is_valid
+                            and before_fire_ram.board_matches_selected_preview(
+                                board_before, move_source, move_target
+                            )
+                        ):
+                            raise EpisodeStop(
+                                "Target FIRE was blocked because ALE RAM no longer confirmed the selected source, target, legal move, and verified board"
+                            )
                         set_input_phase(
                             turn,
                             "target_confirmation_requested",
-                            f"held FIRE for {event.frames} ALE frames at verified target {move_target}",
+                            f"held FIRE for up to {event.frames} ALE frames at the RAM- and RGB-verified target {move_target}",
                             target_square=move_target,
-                            fire_press_frames=event.frames,
+                            fire_press_frames_max=event.frames,
+                            atari_ram=ram_evidence(before_fire_ram) if before_fire_ram is not None else None,
                         )
-                        execute(event.index, event.frames, event.phase)
+                        def target_fire_state_changed(frame: ALEFrame) -> bool:
+                            state = ram_state(frame)
+                            return state is not None and state.interaction_state != 0x01
+
+                        target_fire_samples = execute(
+                            event.index,
+                            event.frames,
+                            event.phase,
+                            stop_when=target_fire_state_changed if before_fire_ram is not None else None,
+                        )
+                        after_fire_ram = ram_state(target_fire_samples[-1]) if target_fire_samples else None
+                        ale_fire_acknowledged = (
+                            acknowledges_target_fire(after_fire_ram, move_source, move_target)
+                            if after_fire_ram is not None
+                            else None
+                        )
+                        turn["player_move"]["target_fire_acknowledged_by_ale"] = ale_fire_acknowledged
+                        turn["player_move"]["target_fire_ack_state"] = (
+                            ram_evidence(after_fire_ram) if after_fire_ram is not None else None
+                        )
+                        if ale_fire_acknowledged:
+                            set_input_phase(
+                                turn,
+                                "target_fire_accepted_by_ale",
+                                "ALE left selected-piece mode and entered computer-search mode; the single FIRE press will now be released",
+                                evidence=ram_evidence(after_fire_ram),
+                            )
+                        elif after_fire_ram is not None:
+                            set_input_phase(
+                                turn,
+                                "target_confirmation_uncertain",
+                                "ALE did not acknowledge target FIRE within the bounded hold; one release will be sent and FIRE will not be retried",
+                                evidence=ram_evidence(after_fire_ram),
+                                fire_press_frames=event.frames,
+                            )
                     elif event.phase == "release_target":
                         execute(event.index, event.frames, event.phase)
                         save_frame(f"turn-{turn_index:02d}-target-fire-released")
+                        if turn["player_move"].get("target_fire_acknowledged_by_ale") is False:
+                            raise EpisodeStop("Target FIRE was released without ALE acknowledgement; no retry was issued")
                     else:
                         execute(event.index, event.frames, event.phase)
 
@@ -1601,6 +1930,9 @@ def run_episode(
             )
 
         if terminal_observed:
+            terminal_sequence = verify_terminal_sequence_from_ram()
+            if terminal_sequence is not None:
+                trace["terminal_sequence_verification"] = terminal_sequence
             if pre_terminal_frame is not None:
                 try:
                     pre_terminal_record = save_frame("ale-pre-terminal", frame=pre_terminal_frame)
@@ -1660,11 +1992,25 @@ def run_episode(
                 "player_moves_attempted": sum(
                     1 for turn in trace["turns"] if turn.get("player_move", {}).get("input_initiated")
                 ),
+                "verified_player_moves_rgb": sum(
+                    1 for turn in trace["turns"] if turn.get("player_move", {}).get("verified_from_rgb")
+                ),
+                "verified_atari_replies_rgb": sum(
+                    1 for turn in trace["turns"] if turn.get("opponent_reply", {}).get("verified_from_rgb")
+                ),
+                "verified_player_moves_terminal_ram": sum(
+                    1 for turn in trace["turns"] if turn.get("player_move", {}).get("verified_from_terminal_ram")
+                ),
+                "verified_atari_replies_terminal_ram": sum(
+                    1 for turn in trace["turns"] if turn.get("opponent_reply", {}).get("verified_from_terminal_ram")
+                ),
                 "verified_player_moves": sum(
                     1 for turn in trace["turns"] if turn.get("player_move", {}).get("verified_from_rgb")
+                    or turn.get("player_move", {}).get("verified_from_terminal_ram")
                 ),
                 "verified_atari_replies": sum(
                     1 for turn in trace["turns"] if turn.get("opponent_reply", {}).get("verified_from_rgb")
+                    or turn.get("opponent_reply", {}).get("verified_from_terminal_ram")
                 ),
                 "failed_source_selections": sum(
                     1

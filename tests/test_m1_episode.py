@@ -380,6 +380,17 @@ class EpisodeSafetyTests(unittest.TestCase):
         self.assertFalse(result["turns"][0]["player_move"]["verified_from_rgb"])
         self.assertEqual(result["terminal"]["last_verified_fen"], chess.Board().fen())
 
+    def test_explicit_campaign_timing_is_preserved_instead_of_silently_rewritten(self) -> None:
+        result = self.run_fake(
+            FakeALE(fail_target_fire=True),
+            target_fire_press_frames=16,
+        )
+
+        target_fire = next(
+            action for action in result["actions"] if action["name"] == "select_target"
+        )
+        self.assertEqual(target_fire["requested_frames"], 16)
+
     def test_capture_preview_can_be_transient_but_only_stable_board_advances_shadow(self) -> None:
         before = chess.Board()
         before.push_uci("e2e4")
