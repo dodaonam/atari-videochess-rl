@@ -1053,6 +1053,8 @@ def run_episode(
                     "input_phases": [],
                     "selected_target_observations": [],
                 }
+                player_candidate_frame: ALEFrame | None = None
+                player_move_verified_event_emitted = False
                 decision_started = time.perf_counter()
                 trace["turns"].append(turn)
                 trace["player_move"] = turn["player_move"]
@@ -1351,6 +1353,7 @@ def run_episode(
                 )
                 turn["player_move"]["diagnostic_ram_only"] = env.diagnostic_ram((0xE1, 0xE4, 0xEA, 0xEE))
                 save_frame(f"turn-{turn_index:02d}-player-candidate")
+                player_candidate_frame = last_frame
                 if player_window is None:
                     raise EpisodeStop("RGB did not confirm the player move within the bounded observation windows")
                 if player_window.matches_board(expected_player_board):
@@ -1362,6 +1365,14 @@ def run_episode(
                             "shadow_fen_after": shadow.board.fen(),
                         }
                     )
+                    if progress_callback is not None:
+                        progress_callback({"event": "player_move_verified", "turn": turn_index,
+                            "player_uci": player_move,
+                            "player_san": board_before.san(chess.Move.from_uci(player_move)),
+                            "frame_number": last_frame.frame_number,
+                            "fen": shadow.board.fen(en_passant="fen"),
+                            "rgb": last_frame.rgb})
+                        player_move_verified_event_emitted = True
                 else:
                     turn["player_move"].update(
                         {
@@ -1540,7 +1551,13 @@ def run_episode(
                         "player_uci": player_move, "player_san": board_before.san(chess.Move.from_uci(player_move)),
                         "opponent_uci": candidate_reply, "opponent_san": expected_player_board.san(reply_move),
                         "frame_number": last_frame.frame_number, "fen": shadow.board.fen(en_passant="fen"),
-                        "rgb": last_frame.rgb})
+                        "rgb": last_frame.rgb,
+                        "player_candidate_frame_number": (player_candidate_frame.frame_number
+                                                           if player_candidate_frame else None),
+                        "player_candidate_fen": turn["player_move"].get("candidate_fen"),
+                        "player_candidate_rgb": (player_candidate_frame.rgb
+                                                  if player_candidate_frame else None),
+                        "player_move_verified_earlier": player_move_verified_event_emitted})
                 save_frame(f"turn-{turn_index:02d}-verified-board")
                 trace["ram_diagnostics_only"].append(
                     {"stage": f"turn-{turn_index}-verified-board", **env.diagnostic_ram((0xE1, 0xE4, 0xEA, 0xEE))}

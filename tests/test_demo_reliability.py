@@ -254,6 +254,163 @@ class DemoLifecycleTests(unittest.TestCase):
         self.assertIn("target confirmation uncertain", original)
         self.assertEqual(window.trace_status.options["text"], "Trace: saved")
 
+    def test_final_session_summary_keeps_exact_stop_after_all_worker_events(self):
+        window = object.__new__(LiveDemoWindow)
+        window.session_state = DemoSessionState()
+        window.status = FakeWidget(); window.turn_label = FakeWidget()
+        window.back_button = FakeWidget(); window.forward_button = FakeWidget()
+        window.replay_label = FakeWidget(); window.trace_status = FakeWidget()
+        window.frames = []; window.move_rows = {}; window.move_table = FakeTreeview()
+        window.finished = False; window.finished_status = None
+        window.auto_smoke = False; window.trace_path = None
+        window._worker_terminal_seen = False; window.render_frame = lambda *_args, **_kwargs: None
+        terminal = {"runner_stop_category": "CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN",
+            "runner_stop_reason": "Target FIRE remained uncertain after bounded settling",
+            "ale_terminated": False, "ale_truncated": False}
+        window.handle_event({"event": "episode_finished", "status": "partial",
+            "failure": terminal["runner_stop_reason"], "terminal": terminal, "frame_number": 100})
+        window.handle_event({"event": "trace_saved", "path": "trace.json"})
+        window.handle_event({"event": "session_summary", "summary": {
+            "outcome": "controller_uncertainty", "runner_stop_category": terminal["runner_stop_category"],
+            "runner_stop_reason": terminal["runner_stop_reason"], "replay_diagnostics": []}})
+        window.handle_event({"event": "worker_finished", "status": "completed", "replay_available": True})
+        text = window.status.options["text"]
+        self.assertIn("Controller stopped safely", text)
+        self.assertIn(terminal["runner_stop_category"], text)
+        self.assertIn(terminal["runner_stop_reason"], text)
+
+    def test_worker_summary_distinguishes_all_stop_classes(self):
+        cases = (
+            ({"runner_stop_category": "ALE_TERMINATED", "ale_terminated": True}, "ale_game_terminated", "completed"),
+            ({"runner_stop_category": "ALE_TRUNCATED", "ale_truncated": True}, "ale_truncated", "completed"),
+            ({"runner_stop_category": "RUNNER_MAX_WALL_CLOCK"}, "runner_limit", "completed"),
+            ({"runner_stop_category": "CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN"}, "controller_uncertainty", "completed"),
+            ({"runner_stop_category": "RUNNER_USER_CANCEL"}, "user_cancelled", "completed"),
+            ({"runner_stop_category": "RUNNER_MAX_PLAYER_MOVES"}, "worker_runtime_failure", "failed"),
+        )
+        for terminal, expected, worker_status in cases:
+            with self.subTest(expected=expected):
+                summary = demo.build_live_summary({"status": "partial", "terminal": terminal},
+                    worker_status=worker_status)
+                self.assertEqual(summary["outcome"], expected)
+
+    def test_replay_diagnostics_separate_optional_candidate_warning_and_inconsistency(self):
+        with TemporaryDirectory() as temp:
+            frames = Path(temp); (frames / "reset.png").write_bytes(b"reset")
+            unverified = {"turns": [{"turn": 1,
+                "player_move": {"uci": "e2e4", "input_initiated": True, "verified_from_rgb": False},
+                "opponent_reply": {"uci": None, "verified_from_rgb": False}}]}
+            diagnostics = demo.diagnose_replay_artifacts(unverified, frames)
+            self.assertEqual([(item["severity"], item["code"]) for item in diagnostics],
+                [("INFO", "REPLAY_UNVERIFIED_CANDIDATE_NOT_PRODUCED")])
+            self.assertFalse((frames / "turn-01-player-candidate.png").exists())
+
+            verified = {"turns": [{"turn": 1,
+                "player_move": {"uci": "e2e4", "input_initiated": True, "verified_from_rgb": True},
+                "opponent_reply": {"uci": "e7e5", "verified_from_rgb": True}}]}
+            diagnostics = demo.diagnose_replay_artifacts(verified, frames)
+            self.assertEqual({item["severity"] for item in diagnostics}, {"WARNING"})
+            self.assertEqual({item["code"] for item in diagnostics}, {
+                "REPLAY_PLAYER_FRAME_MISSING", "REPLAY_VERIFIED_REPLY_FRAME_MISSING"})
+            self.assertFalse((frames / "turn-01-player-candidate.png").exists())
+            self.assertFalse((frames / "turn-01-verified-board.png").exists())
+
+            reached_candidate = {"turns": [{"turn": 1,
+                "player_move": {"uci": "e2e4", "input_initiated": True,
+                                "verified_from_rgb": False, "candidate_fen": "candidate"},
+                "opponent_reply": {"uci": None, "verified_from_rgb": False}}]}
+            diagnostics = demo.diagnose_replay_artifacts(reached_candidate, frames)
+            self.assertEqual([(item["severity"], item["code"]) for item in diagnostics],
+                [("WARNING", "REPLAY_PLAYER_FRAME_MISSING")])
+
+            (frames / "turn-01-verified-board.png").write_bytes(b"unexpected")
+            diagnostics = demo.diagnose_replay_artifacts(unverified, frames)
+            self.assertIn("REPLAY_BOARD_ARTIFACT_INCONSISTENT", {item["code"] for item in diagnostics})
+
+    def test_malformed_replay_metadata_is_an_error(self):
+        with TemporaryDirectory() as temp:
+            frames = Path(temp); (frames / "reset.png").write_bytes(b"reset")
+            diagnostics = demo.diagnose_replay_artifacts({"turns": ["bad turn"]}, frames)
+        self.assertEqual(diagnostics[0]["severity"], "ERROR")
+        self.assertEqual(diagnostics[0]["code"], "REPLAY_TURN_INVALID")
+
+    def test_live_summary_file_is_concise_and_machine_readable(self):
+        class RecordingViewer:
+            frames = []
+            def __init__(self): self.events = []
+            def publish(self, event): self.events.append(event)
+        trace = {"status": "partial", "move_selector": "double-dqn", "seed": 7,
+            "turns": [], "terminal": {"runner_stop_category": "CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN",
+                "runner_stop_reason": "Target state remained uncertain", "ale_terminated": False,
+                "ale_truncated": False, "incomplete_final_move_count": 1,
+                "incomplete_final_move_category": "target_confirmation_uncertainty",
+                "player_moves_attempted": 1, "verified_player_moves": 0, "verified_atari_replies": 0}}
+        with TemporaryDirectory() as temp:
+            root = Path(temp); frames = root / "frames"; frames.mkdir()
+            (frames / "reset.png").write_bytes(b"reset")
+            viewer = RecordingViewer()
+            demo.run_demo_worker(viewer, episode_runner=lambda **_kwargs: trace, episode_kwargs={},
+                trace_path=root / "trace.json", summary_path=root / "live_summary.json",
+                replay_artifact_dir=frames,
+                summary_metadata={"policy_id": "double_dqn_250000", "checkpoint_sha256": "a" * 64,
+                    "model_training_seed": 20261103, "ale_seed": 7})
+            summary = json.loads((root / "live_summary.json").read_text())
+        self.assertEqual(summary["runner_stop_category"], "CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN")
+        self.assertEqual(summary["runner_stop_reason"], "Target state remained uncertain")
+        self.assertEqual(summary["incomplete_final_move_count"], 1)
+        self.assertEqual(summary["model_training_seed"], 20261103)
+        self.assertEqual(summary["ale_seed"], 7)
+        self.assertNotIn("turns", summary)
+        self.assertNotIn("actions", summary)
+        self.assertNotIn("rgb", summary)
+        self.assertIn("session_summary", [event["event"] for event in viewer.events])
+
+    def test_verified_turn_replays_white_candidate_then_atari_reply(self):
+        window = object.__new__(LiveDemoWindow)
+        window.session_state = DemoSessionState(); window.move_rows = {}
+        window.move_table = FakeTreeview(); window.turn_label = FakeWidget(); window.status = FakeWidget()
+        window.verified_turns = 0; window.frames = []; window.replay_index = 0
+        window.replay_label = FakeWidget(); window.finished = True
+        window.render_frame = lambda *_args, **_kwargs: None
+        window.record_replay({"event": "reset_verified", "frame_number": 1,
+            "fen": "start", "rgb": np.zeros((2, 2, 3), dtype=np.uint8)})
+        window.handle_event({"event": "verified_turn", "turn": 1, "player_san": "e4",
+            "player_uci": "e2e4", "opponent_san": "e5", "opponent_uci": "e7e5",
+            "player_candidate_frame_number": 10, "player_candidate_fen": "after e4",
+            "player_candidate_rgb": np.ones((2, 2, 3), dtype=np.uint8),
+            "player_move_verified_earlier": False,
+            "frame_number": 20, "fen": "after e5", "rgb": np.full((2, 2, 3), 2, dtype=np.uint8)})
+        self.assertEqual(len(window.frames), 3)
+        self.assertIn("White e4 candidate", window.frames[1]["label"])
+        self.assertIn("Atari e5 verified", window.frames[2]["label"])
+        window.replay_back()
+        self.assertEqual(window.replay_index, 1)
+        self.assertIn("White e4 candidate", window.replay_label.options["text"])
+        window.replay_forward()
+        self.assertEqual(window.replay_index, 2)
+        self.assertIn("Atari e5 verified", window.replay_label.options["text"])
+
+    def test_incomplete_selected_move_stays_unverified_and_never_enters_replay(self):
+        window = object.__new__(LiveDemoWindow)
+        window.session_state = DemoSessionState(); window.move_rows = {}
+        window.move_table = FakeTreeview(); window.turn_label = FakeWidget(); window.status = FakeWidget()
+        window.frames = []; window.finished = False; window.finished_status = None
+        window.back_button = FakeWidget(); window.forward_button = FakeWidget()
+        window.replay_label = FakeWidget(); window.trace_status = FakeWidget()
+        window.auto_smoke = False; window.trace_path = None
+        window.render_frame = lambda *_args, **_kwargs: None
+        window.handle_event({"event": "move_selected", "turn": 1, "san": "e4", "uci": "e2e4"})
+        window.handle_event({"event": "episode_finished", "status": "partial",
+            "failure": "Target confirmation uncertain", "terminal": {
+                "runner_stop_category": "CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN",
+                "runner_stop_reason": "Target confirmation uncertain", "ale_terminated": False,
+                "ale_truncated": False}, "frame_number": 10})
+        values = list(window.move_table.rows.values())[0][0]
+        self.assertIn("unverified", values[1])
+        self.assertNotIn("✓", values[1])
+        self.assertEqual(values[2], "—")
+        self.assertEqual(window.frames, [])
+
     def test_worker_error_is_terminal_even_without_episode_or_trace_event(self):
         state = DemoSessionState()
         state.apply({"event": "worker_error", "error_type": "ALEStartupError", "error": "ROM load failed"})
@@ -347,6 +504,16 @@ class DemoLifecycleTests(unittest.TestCase):
         verified = list(window.move_table.rows.values())[0]
         self.assertEqual(verified[0][1:], ("e4 ✓", "e5 ✓"))
         self.assertNotIn("pending", verified[1])
+        self.assertEqual(window.session_state.verified_player_moves_displayed, 1)
+        self.assertEqual(window.session_state.verified_atari_replies_displayed, 1)
+
+    def test_verified_player_counter_is_not_double_counted_at_atari_reply(self):
+        state = DemoSessionState()
+        state.apply({"event": "player_move_verified", "turn": 1})
+        state.apply({"event": "verified_turn", "turn": 1, "player_move_verified_earlier": True})
+        self.assertEqual(state.verified_player_moves_displayed, 1)
+        self.assertEqual(state.verified_atari_replies_displayed, 1)
+        self.assertEqual(state.verified_pairs_displayed, 1)
 
     def test_worker_failure_sets_automatic_close_without_waiting_for_trace(self):
         window = object.__new__(LiveDemoWindow)
@@ -559,6 +726,8 @@ def smoke_fixture(*, players=2, replies=2, category="RUNNER_MAX_PLAYER_MOVES",
                           "trace_path": "trace.json", "worker_error": None,
                           "episode_status": status, "episode_terminal": event_terminal,
                           "verified_pairs_displayed": min(gplayers, greplies),
+                          "verified_player_moves_displayed": gplayers,
+                          "verified_atari_replies_displayed": greplies,
                           "required_player_moves": 2}}
     return trace, verification
 
@@ -644,6 +813,13 @@ class AutoSmokeAcceptanceTests(unittest.TestCase):
         trace, verification = smoke_fixture()
         verification["layout_check"]["ok"] = False
         self.assert_verdict(trace, verification, "SMOKE_RUNTIME_FAILURE", "layout_failed")
+
+    def test_replay_metadata_error_prevents_smoke_acceptance(self):
+        trace, verification = smoke_fixture()
+        verification["session_state"]["replay_diagnostics"] = [{
+            "severity": "ERROR", "code": "REPLAY_BOARD_ARTIFACT_INCONSISTENT",
+            "message": "test fixture inconsistency"}]
+        self.assert_verdict(trace, verification, "SMOKE_RUNTIME_FAILURE", "replay_artifact_inconsistent")
 
     def test_k_saved_trace_and_replay_do_not_accept_incomplete_exercise(self):
         trace, verification = smoke_fixture(players=1, replies=1, category="RUNNER_MAX_WALL_CLOCK",

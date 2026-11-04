@@ -14,12 +14,15 @@ import numpy as np
 from tests.test_m1_vision import BACKGROUND, BLUE, GOLD, paint, start_frame
 from videochess_rl.episode import (
     StopCategory,
+    _selected_target_evidence,
     agent_reward_from_ale,
     choose_cooperative_loss_move,
     choose_diagnostic_move,
     run_episode,
 )
 from videochess_rl.environment import ALEConfig, ALEFrame
+from videochess_rl.shadow import DesynchronizationError, ShadowBoard
+from videochess_rl.vision import VideoChessVision
 
 
 PIECE_PIXELS = {
@@ -376,6 +379,42 @@ class EpisodeSafetyTests(unittest.TestCase):
         )
         self.assertFalse(result["turns"][0]["player_move"]["verified_from_rgb"])
         self.assertEqual(result["terminal"]["last_verified_fen"], chess.Board().fen())
+
+    def test_capture_preview_can_be_transient_but_only_stable_board_advances_shadow(self) -> None:
+        before = chess.Board()
+        before.push_uci("e2e4")
+        before.push_uci("d7d5")
+        capture = chess.Move.from_uci("e4d5")
+        self.assertIn(capture, before.legal_moves)
+        self.assertTrue(before.is_capture(capture))
+        after = before.copy()
+        after.push(capture)
+
+        mixed_frames = [
+            render_fake_board(before, "e4", selected_source="e4", selected_target="d5", frame_number=0),
+            render_fake_board(before, "e4", selected_source="e4", selected_target="d5", frame_number=1),
+        ]
+        for _ in range(7):
+            frame = render_fake_board(after, "e4")
+            frame[36 + 4 * 17:36 + 5 * 17, 44 + 4 * 8:44 + 5 * 8] = BACKGROUND
+            mixed_frames.append(frame)
+
+        vision = VideoChessVision()
+        mixed = vision.window(mixed_frames)
+        self.assertTrue(_selected_target_evidence(mixed, before, "e4", "d5")["verified"])
+        self.assertFalse(mixed.is_stable)
+        self.assertFalse(mixed.matches_board(after))
+
+        shadow = ShadowBoard(board=before.copy())
+        with self.assertRaises(DesynchronizationError):
+            shadow.apply_observed_move(capture.uci(), mixed)
+        self.assertEqual(shadow.board.fen(), before.fen())
+
+        stable_candidate = vision.window([mixed_frames[-1]] * 9)
+        self.assertFalse(_selected_target_evidence(stable_candidate, before, "e4", "d5")["verified"])
+        self.assertTrue(stable_candidate.matches_board(after))
+        shadow.apply_observed_move(capture.uci(), stable_candidate)
+        self.assertEqual(shadow.board.fen(), after.fen())
 
     def test_target_fire_settling_wait_accepts_a_delayed_rgb_transition_without_retry(self) -> None:
         fake = FakeALE(target_fire_delay_noops=55)

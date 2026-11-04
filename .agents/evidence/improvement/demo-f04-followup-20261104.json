@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "task_id": "DEMO-F04",
+  "verdict": "DEMO_F04_UNRESOLVED_FAIL_CLOSED_DIAGNOSTICS_IMPROVED",
+  "authorization": {
+    "source": "direct user assignment",
+    "scope": "Independent diagnosis, safe live-demo diagnostics/replay remediation, verification, commit, push, and open PR. No training or scientific-result changes.",
+    "controller_timing_or_retry_changed": false
+  },
+  "repository": {
+    "url": "https://github.com/dodaonam/atari-videochess-rl",
+    "base_ref": "main",
+    "base_commit": "bdfb8a36dd98d8dc06dc6e4e05790c9bd4e1d0cf",
+    "base_tree": "7bf93de99c791d4652a1ff1377c69e4a1cb5f67e",
+    "origin_main_at_start": "bdfb8a36dd98d8dc06dc6e4e05790c9bd4e1d0cf",
+    "origin_main_tree_at_start": "7bf93de99c791d4652a1ff1377c69e4a1cb5f67e",
+    "initial_worktree_clean": true,
+    "branch": "fix/demo-f04-live-diagnostics-20261104",
+    "final_commit": null,
+    "final_tree": null,
+    "pull_request_url": null
+  },
+  "runtime": {
+    "python": "3.12.3",
+    "uv": "0.9.26",
+    "ale_py": "0.11.2",
+    "gymnasium": "1.4.0",
+    "python_chess": "1.11.2",
+    "torch": "2.14.1+cpu",
+    "tk": "8.6",
+    "environment": {
+      "env_id": "ALE/VideoChess-v5",
+      "rom_sha256": "d44f2a115393b0a6cbcd5398d62369e652f3670a9ee585883d183e740edad0f7",
+      "mode": 4,
+      "difficulty": 0,
+      "frameskip": 1,
+      "repeat_action_probability": 0.0,
+      "observation": "RGB uint8 (210, 160, 3)"
+    }
+  },
+  "model_identities": {
+    "selected_double_dqn_sha256": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293",
+    "double_dqn_training_seed": 20261103,
+    "m4_a_sha256_verified_but_not_used": "cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c612d62feed",
+    "training_or_model_artifact_modified": false
+  },
+  "original_session": {
+    "created_at_utc": "2026-11-03T17:13:00Z",
+    "git_commit": "bdfb8a36dd98d8dc06dc6e4e05790c9bd4e1d0cf",
+    "seed": 20261103,
+    "status": "partial",
+    "runner_stop_category": "CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN",
+    "runner_stop_reason": "Target FIRE did not produce a board transition after bounded passive settling; selected-piece preview remained visible, so no retry was issued",
+    "incomplete_final_move_count": 1,
+    "incomplete_final_move_category": "target_confirmation_uncertainty",
+    "player_moves_attempted": 10,
+    "verified_player_moves": 9,
+    "verified_atari_replies": 9,
+    "ale_terminated": false,
+    "ale_truncated": false,
+    "wall_seconds": 49.371,
+    "environment_steps": 22066,
+    "frame_number": 22070,
+    "trace_sha256": "26abcfe12fdf3a77cff6ef4f4e15588cad00946505b1c6a4aa908a5a3b594433",
+    "live_summary_sha256": "09e31f5eaf7c8f280a36ed5c41893461273d795fa1750e0c2d5a82ef17e1e830",
+    "user_local_viewer_sha256": "057c886eeda16c50acfad9012e26dac527cd84df5859e579c44f63d5da014df7",
+    "python_chess_validation": "supplied FEN is valid; selected move is legal and captures an occupied target"
+  },
+  "replay_classifier_on_original_trace": {
+    "exit_code": 0,
+    "diagnostic_count": 1,
+    "severity": "INFO",
+    "code": "REPLAY_UNVERIFIED_CANDIDATE_NOT_PRODUCED",
+    "turn": 10,
+    "warnings": 0,
+    "errors": 0,
+    "original_artifacts_modified": false
+  },
+  "historical_comparison": {
+    "matched_selected_q_trace_count": 3,
+    "all_three_match_attempted_position_move_destination_final_rgb_and_stop_category": true,
+    "trace_sha256": [
+      "813e51a293cd0afa479968090f07c17ca7a19154c7ff10879ad104353c9738cc",
+      "a70c1e1ac9d311a9b2733aaac3006c83c7304cee50aea698d7e786bccd1caadf",
+      "2ef10284c9fb7e0bfde263a3cf73860f1db3b82307aacf775e94aa12e9989ad6"
+    ],
+    "one_frame_target_fire_diagnostic": {
+      "different_position_and_attempted_move": true,
+      "target_fire_frames": 1,
+      "verified_player_moves": 4,
+      "verified_atari_replies": 4,
+      "stop_category": "CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN",
+      "supports_fire_duration_as_cause": false
+    }
+  },
+  "independent_real_ale_reproduction": {
+    "created_at_utc": "2026-11-04T04:50:51Z",
+    "execution": "locked uv environment; repository run_episode API; selected Q policy; reset seed 20261103; mode-4 RGB profile; 200 move and 1800 second bounds",
+    "trace_sha256": "02432f4a2c6a66e90852fafddb4070f800a15eda890d7ed493cc4a1ebcca6234",
+    "local_integrity_manifest_sha256": "b6f993fc2ae69349ae3c96db58bc826ff10c26441fe0eb6f4307c444fadd5490",
+    "runner_stop_category": "CONTROLLER_TARGET_CONFIRMATION_UNCERTAIN",
+    "player_moves_attempted": 10,
+    "verified_player_moves": 9,
+    "verified_atari_replies": 9,
+    "ale_terminated": false,
+    "ale_truncated": false,
+    "shadow_retained_pre_attempt_verified_state": true,
+    "outcome": "reproduced; underlying Atari input acceptance versus RGB recognition remains unresolved"
+  },
+  "canonical_gui_real_ale_smoke": {
+    "created_at_utc": "2026-11-04T05:11:38Z",
+    "command": "uv run --locked --no-sync python -m videochess_rl.improvement.demo --policy double-dqn --checkpoint artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-250000.pt --checkpoint-sha256 48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293 --seed 20261103 --auto-smoke",
+    "checkpoint_sha256": "48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293",
+    "model_training_seed": 20261103,
+    "ale_reset_seed": 20261103,
+    "status": "runner_stopped",
+    "runner_stop_category": "RUNNER_MAX_PLAYER_MOVES",
+    "runner_stop_reason": "runner stopped after the configured 2 player-move limit",
+    "player_moves_attempted": 2,
+    "verified_player_moves": 2,
+    "verified_atari_replies": 2,
+    "ale_terminated": false,
+    "ale_truncated": false,
+    "smoke_verdict": "SMOKE_PASS",
+    "exit_code": 0,
+    "layout": "1100x680; board/sidebar did not overlap; no clipped labels",
+    "replay": "Left moved from state 4 to 3; Right moved back to 4",
+    "trace_sha256": "4034ffc55aa18b61ac559c2d95113e4247e87d3b7b7966d6884a16483a5d686d",
+    "live_summary_sha256": "c782608359723ecddb9e47ace5522e30f46629e39daedf01f82d17d904eeb9c0",
+    "gui_verification_sha256": "3f7bc8f04d93dfb22f900a17665b58a069f5c0fc1636a54326616acacb39ca4b",
+    "local_integrity_manifest_sha256": "42797d22ba1b8f761a2f3f7842cca76bf67c710f61c3f5e2ba71d450e81e58",
+    "level": 1,
+    "complete_game_demonstrated": false
+  },
+  "controller_safety": {
+    "target_fire_duration_changed": false,
+    "blind_retry_added": false,
+    "shadow_advance_without_full_rgb": false,
+    "player_or_atari_moves_fabricated": false,
+    "stop_classification": "fail closed; same controller uncertainty remains"
+  },
+  "changes": [
+    "videochess_rl/improvement/demo.py: write live_summary.json and print exact stop diagnostics; classify replay artifact INFO/WARNING/ERROR; reject replay metadata ERROR in auto-smoke",
+    "videochess_rl/improvement/live.py: retain stop category/reason, show pending/unverified White/Black states, count each side independently, and replay verified White candidate plus Atari reply frames",
+    "videochess_rl/episode.py: publish in-memory candidate RGB to the GUI only after full transition verification, or after strict player-board verification; controller actions and trace payload are unchanged",
+    "tests/test_demo_reliability.py and tests/test_m1_episode.py: add lifecycle, replay, stop-classification, capture-preview, and no-shadow-advance regressions",
+    "docs/improvement/PHASE2_DEMO_GUIDE.md and docs/improvement/DEMO_F04_FOLLOWUP_20261104.md: designate the canonical entrypoint and record the independent diagnosis"
+  ],
+  "verification": {
+    "initial_full_suite_attempt": {
+      "command": "uv run --locked --no-sync python -m unittest discover -s tests",
+      "started_at_utc": "2026-11-04T05:19:57.100744+00:00",
+      "ended_at_utc": "2026-11-04T05:23:18.548684+00:00",
+      "exit_code": 1,
+      "test_count": 612,
+      "passed": 607,
+      "failed": 1,
+      "skipped": 4,
+      "failure": "test_project_context_can_be_recovered_without_chat_history; its snapshot assertion ran against the stale pre-branch checkpoint",
+      "sanitized_log_path": "artifacts/demo/diagnostic-repeat-20261104-seed-20261103/verification_logs/full-suite-initial-failure.log",
+      "sanitized_log_sha256": "9d53ebbe02d71c63caa293994856accb7aaacb329d1adf0d5b4ebce30bf2b849"
+    },
+    "full_suite_after_checkpoint_refresh": {
+      "command": "uv run --locked --no-sync python -m unittest discover -s tests -v",
+      "started_at_utc": "2026-11-04T05:32:09.020194+00:00",
+      "ended_at_utc": "2026-11-04T05:35:35.947555+00:00",
+      "exit_code": 0,
+      "git_revision": "bdfb8a36dd98d8dc06dc6e4e05790c9bd4e1d0cf",
+      "staged_diff_sha256": "45b0da5c32a27e3bce7ed6623fb0589c3a322bffbd69b9b793b63b61029f93a6",
+      "test_count": 612,
+      "passed": 608,
+      "failed": 0,
+      "skipped": 4,
+      "duration_seconds": 204.305,
+      "skip_reasons": [
+        "accepted local M4 transfer artifact unavailable in this clone",
+        "private M4/M5 artifact roots not configured for M6 roster test",
+        "private M5 artifact root not configured for compatibility test",
+        "private M5 policy path not configured for compatibility test"
+      ],
+      "non_failing_warning": "ResourceWarning in existing videochess_rl/improvement/common.py:58 for an unclosed /proc/meminfo handle",
+      "sanitized_log_path": "artifacts/demo/diagnostic-repeat-20261104-seed-20261103/verification_logs/full-suite-after-checkpoint.log",
+      "sanitized_log_sha256": "7343cf6d845a2f1ec480c9fc704c1d43f29d85025c236e9c9248928b8fcb4f16"
+    },
+    "focused_regressions": {
+      "command": "uv run --locked --no-sync python -m unittest tests.test_demo_reliability tests.test_m1_episode tests.test_m1_vision tests.test_m1_shadow tests.test_phase2_atari_demo -v",
+      "started_at_utc": "2026-11-04T05:36:56.186925+00:00",
+      "ended_at_utc": "2026-11-04T05:37:03.710137+00:00",
+      "exit_code": 0,
+      "test_count": 110,
+      "failed": 0,
+      "skipped": 0,
+      "sanitized_log_path": "artifacts/demo/diagnostic-repeat-20261104-seed-20261103/verification_logs/focused-regressions-final.log",
+      "sanitized_log_sha256": "3a29568967f8cb32045afcf10ed4136fab7886e4a08b2e356d36fa299c3b7534"
+    },
+    "preflight": {
+      "command": "python3 scripts/agent_checkpoint.py; python3 scripts/agent_preflight.py",
+      "test_checkpoint_id": "cp-bdfb8a36-20261104T053119930393Z",
+      "post_checkpoint_preflight": "PASS; zero errors; workspace and Git snapshots match; ARTIFACT_MANIFEST_REQUIRED warning remains for ignored artifacts/"
+    },
+    "compile": "uv run --locked --no-sync python -m compileall -q videochess_rl tests: PASS",
+    "diff_check": "git diff --check and git diff --cached --check: PASS",
+    "privacy": "changed-path, private-artifact, credential-pattern, and home-path scan: PASS; no raw trace, RGB frame, ROM, or model artifact in Git"
+  },
+  "pull_request": {
+    "number": null,
+    "url": null,
+    "target": "main",
+    "open": false,
+    "ci_status": null,
+    "merge_performed": false
+  }
+}
