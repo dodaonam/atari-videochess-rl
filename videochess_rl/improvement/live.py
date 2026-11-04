@@ -28,6 +28,10 @@ class DemoSessionState:
     worker_error: str | None = None
     replay_available: bool = False
     verified_pairs_displayed: int = 0
+    verified_player_moves_displayed: int = 0
+    verified_atari_replies_displayed: int = 0
+    live_summary: dict | None = None
+    replay_diagnostics: list[dict] | None = None
 
     def apply(self, event: dict) -> None:
         kind = event.get("event")
@@ -41,6 +45,11 @@ class DemoSessionState:
                                    or self.episode_status)
         elif kind == "verified_turn":
             self.verified_pairs_displayed += 1
+            if event.get("player_move_verified_earlier") is not True:
+                self.verified_player_moves_displayed += 1
+            self.verified_atari_replies_displayed += 1
+        elif kind == "player_move_verified":
+            self.verified_player_moves_displayed += 1
         elif kind == "trace_saved":
             self.trace_status = "saved"
             self.trace_path = event.get("path")
@@ -55,16 +64,52 @@ class DemoSessionState:
         elif kind == "worker_finished":
             self.worker_status = str(event.get("status") or "failed")
             self.replay_available = bool(event.get("replay_available"))
+        elif kind == "session_summary":
+            summary = event.get("summary")
+            if isinstance(summary, dict):
+                self.live_summary = dict(summary)
+                diagnostics = summary.get("replay_diagnostics")
+                self.replay_diagnostics = (
+                    [dict(item) for item in diagnostics if isinstance(item, dict)]
+                    if isinstance(diagnostics, list) else []
+                )
 
     @property
     def display_status(self) -> str:
-        episode = self.episode_status or "episode status unavailable"
-        if self.terminal_category:
-            episode = f"{episode} [{self.terminal_category}]"
-        reason = f" — {self.primary_reason}" if self.primary_reason else ""
         if self.worker_error:
-            return f"Session failure ({self.worker_error_type}): {self.worker_error}. Episode: {episode}{reason}"
-        return f"{episode}{reason} • trace {self.trace_status}"
+            episode = self.episode_status or "status unavailable"
+            if self.terminal_category:
+                episode = f"{episode} [{self.terminal_category}]"
+            if self.primary_reason:
+                episode = f"{episode} — {self.primary_reason}"
+            return (f"Worker/runtime failure ({self.worker_error_type}): {self.worker_error}. "
+                    f"Episode: {episode}")
+        terminal = self.episode_terminal or {}
+        category = self.terminal_category
+        if terminal.get("ale_terminated") is True:
+            outcome = "ALE chess game terminated"
+        elif terminal.get("ale_truncated") is True:
+            outcome = "ALE episode truncated; chess result is incomplete"
+        elif category == "RUNNER_USER_CANCEL":
+            outcome = "Session cancelled by user"
+        elif category and (category.startswith("RUNNER_MAX_") or category in {
+                "RUNNER_ARTIFACT_LIMIT", "RUNNER_RESOURCE_LIMIT"}):
+            outcome = "Expected runner limit reached"
+        elif category and category.startswith("CONTROLLER_"):
+            outcome = "Controller stopped safely on uncertain state"
+        elif category == "OPPONENT_RESPONSE_TIMEOUT":
+            outcome = "Atari reply timeout; game state is incomplete"
+        elif category:
+            outcome = "Session stopped before a verified game result"
+        else:
+            outcome = self.episode_status or "Episode status unavailable"
+        suffix = f" [{category}]" if category else ""
+        reason = f" — {self.primary_reason}" if self.primary_reason else ""
+        diagnostics = self.replay_diagnostics or []
+        errors = sum(item.get("severity") == "ERROR" for item in diagnostics)
+        warnings = sum(item.get("severity") == "WARNING" for item in diagnostics)
+        replay = f" • replay evidence: {errors} errors, {warnings} warnings" if self.live_summary else ""
+        return f"{outcome}{suffix}{reason}{replay} • trace {self.trace_status}"
 
     @property
     def smoke_ok(self) -> bool:
@@ -89,6 +134,8 @@ class DemoSessionState:
             and terminal.get("verified_atari_replies") == required
             and terminal.get("incomplete_final_move_count") == 0
             and self.verified_pairs_displayed == required
+            and self.verified_player_moves_displayed == required
+            and self.verified_atari_replies_displayed == required
         )
 
 
@@ -271,9 +318,12 @@ class LiveDemoWindow:
             self.move_table.delete(item)
         for number in sorted(self.move_rows):
             row = self.move_rows[number]
-            pending = bool(row.get("pending"))
-            white = str(row.get("white") or "—") + (" ?" if pending else "")
+            white_pending = bool(row.get("white_pending", row.get("pending", False)))
+            black_pending = bool(row.get("black_pending", False))
+            white = str(row.get("white") or "—") + (" ?" if white_pending else "")
             black = str(row.get("black") or "—")
+            pending = (white_pending or black_pending or bool(row.get("white_unverified"))
+                       or bool(row.get("black_unverified")))
             self.move_table.insert("", tk.END, values=(f"{number}.", white, black),
                                    tags=("pending" if pending else ("even" if number % 2 == 0 else "odd"),))
         children = self.move_table.get_children()
@@ -320,13 +370,45 @@ class LiveDemoWindow:
         if rgb is None:
             return
         frame_no = event.get("frame_number")
+        kind = event.get("event")
+        if kind == "reset_verified":
+            label = "Reset verified"
+        elif kind == "player_move_verified":
+            label = f"White {event.get('player_san', 'move')} verified"
+        elif kind == "player_candidate_verified":
+            label = f"White {event.get('player_san', 'move')} candidate · transition verified"
+        elif kind == "verified_turn":
+            label = f"Atari {event.get('opponent_san', 'reply')} verified"
+        else:
+            label = str(kind or "verified state")
         if self.frames and self.frames[-1]["frame_number"] == frame_no:
             self.frames[-1] = {"frame_number": frame_no, "rgb": np.array(rgb, copy=True),
-                               "fen": event.get("fen"), "label": event.get("event")}
+                               "fen": event.get("fen"), "label": label}
         else:
             self.frames.append({"frame_number": frame_no, "rgb": np.array(rgb, copy=True),
-                                "fen": event.get("fen"), "label": event.get("event")})
+                                "fen": event.get("fen"), "label": label})
         self.replay_index = len(self.frames) - 1
+
+    def finalize_pending_rows(self):
+        """Label actions that never received RGB confirmation before session end."""
+        rows = getattr(self, "move_rows", None)
+        if not isinstance(rows, dict):
+            return
+        changed = False
+        for row in rows.values():
+            if row.get("white_pending", row.get("pending", False)):
+                row["white"] = f"{row.get('white') or 'Move'} (unverified)"
+                row["white_pending"] = False
+                row["white_unverified"] = True
+                row["pending"] = False
+                changed = True
+            if row.get("black_pending"):
+                row["black"] = "unverified"
+                row["black_pending"] = False
+                row["black_unverified"] = True
+                changed = True
+        if changed and hasattr(self, "move_table"):
+            self.refresh_move_table()
 
     def handle_event(self, event):
         kind = event.get("event")
@@ -342,15 +424,38 @@ class LiveDemoWindow:
         elif kind == "move_selected":
             self.turn_label.configure(text="Turn: White · action pending RGB confirmation")
             self.status.configure(text=f"Agent selected {event['san']} ({event['uci']}); Atari confirmation pending.")
-            self.move_rows[int(event["turn"])] = {"white": event["san"], "black": "—", "pending": True}
+            self.move_rows[int(event["turn"])] = {
+                "white": event["san"], "black": "—", "white_pending": True,
+                "black_pending": False, "white_verified": False,
+            }
             self.refresh_move_table()
+        elif kind == "player_move_verified":
+            self.record_replay(event)
+            turn = int(event["turn"])
+            row = self.move_rows.setdefault(turn, {"white": event["player_san"], "black": "—"})
+            row.update({"white": f"{event['player_san']} ✓", "black": "Atari thinking…",
+                        "white_pending": False, "black_pending": True, "white_verified": True,
+                        "pending": False})
+            self.refresh_move_table()
+            self.turn_label.configure(text=f"Turn {turn} · White move verified; Atari reply pending")
+            self.status.configure(text=f"White {event['player_san']} verified from RGB; waiting for Atari.")
         elif kind == "verified_turn":
             self.session_state.apply(event)
+            if (not event.get("player_move_verified_earlier")
+                    and event.get("player_candidate_rgb") is not None):
+                self.record_replay({
+                    "event": "player_candidate_verified",
+                    "player_san": event.get("player_san"),
+                    "frame_number": event.get("player_candidate_frame_number"),
+                    "fen": event.get("player_candidate_fen"),
+                    "rgb": event.get("player_candidate_rgb"),
+                })
             self.record_replay(event)
             self.verified_turns += 1
             self.move_rows[int(event["turn"])] = {
                 "white": f"{event['player_san']} ✓", "black": f"{event['opponent_san']} ✓",
-                "pending": False,
+                "white_pending": False, "black_pending": False, "white_verified": True,
+                "black_verified": True, "pending": False,
             }
             self.refresh_move_table()
             self.turn_label.configure(text="Turn: White · Atari reply verified")
@@ -358,6 +463,7 @@ class LiveDemoWindow:
             self.render_frame(event["rgb"], event["frame_number"])
         elif kind == "episode_finished":
             self.session_state.apply(event)
+            self.finalize_pending_rows()
             self.finished = True
             self.finished_status = event.get("status")
             term = event.get("terminal")
@@ -380,12 +486,21 @@ class LiveDemoWindow:
             self.trace_path = event["path"]
             self.trace_status.configure(text="Trace: saved")
             self._maybe_start_smoke_replay()
+        elif kind == "session_summary":
+            self.session_state.apply(event)
+            self.status.configure(text=self.session_state.display_status)
+        elif kind == "session_summary_error":
+            self.trace_status.configure(text="Summary: write failed")
+            self.status.configure(
+                text=f"{self.session_state.display_status} • summary write failed ({event.get('error_type')})"
+            )
         elif kind == "trace_save_error":
             self.session_state.apply(event)
             self.trace_status.configure(text="Trace: write failed")
             self.status.configure(text=self.session_state.display_status)
         elif kind == "worker_error":
             self.session_state.apply(event)
+            self.finalize_pending_rows()
             self.finished = True
             self.finished_status = "worker_failed"
             self.exit_code = 1
@@ -490,9 +605,12 @@ class LiveDemoWindow:
                     "checkpoint_sha256": self.identity.checkpoint_sha256,
                     "captured_verified_state_count": len(self.frames),
                     "verified_atari_turns_displayed": self.verified_turns,
-                    "verified_player_moves_displayed": self.session_state.verified_pairs_displayed,
-                    "verified_atari_replies_displayed": self.session_state.verified_pairs_displayed,
-                    "pending_player_actions": sum(bool(row.get("pending")) for row in getattr(self, "move_rows", {}).values()),
+                    "verified_player_moves_displayed": self.session_state.verified_player_moves_displayed,
+                    "verified_atari_replies_displayed": self.session_state.verified_atari_replies_displayed,
+                    "pending_player_actions": sum(
+                        bool(row.get("white_pending", row.get("pending", False))
+                             or row.get("white_unverified"))
+                        for row in getattr(self, "move_rows", {}).values()),
                     "requested_player_moves": self.max_player_moves,
                     "episode_status": self.session_state.episode_status,
                     "episode_terminal": self.session_state.episode_terminal,
@@ -528,7 +646,7 @@ class LiveDemoWindow:
         self.render_frame(item["rgb"], item["frame_number"])
         self.replay_label.configure(text=f"Replay {self.replay_index + 1}/{len(self.frames)} • {item['label']} • frame {item['frame_number']}")
         if item.get("fen"):
-            self.turn_label.configure(text=f"Replay state (verified): {item['fen']}")
+            self.turn_label.configure(text=f"Replay RGB-verified state · {item['label']} · {item['fen']}")
 
     def replay_back(self, _event=None):
         self.step_back(); return "break"

@@ -2,6 +2,33 @@
 
 This demo runs the actual local ALE VideoChess environment and renders live RGB frames. It does not use a prerecorded video or substitute the Python chess simulator for Atari.
 
+## Canonical entrypoint
+
+Use the repository module for live sessions. It shares the audited episode runner
+and checkpoint loader, retains the stop category and reason through worker
+completion, writes a concise `live_summary.json`, and replays only RGB snapshots
+associated with verified progress. The separate user-local viewer is preserved
+for reference, but it is not the supported launch path: its final `done` event
+replaced the more detailed `episode_finished` footer, and its replay builder
+warned about an optional candidate frame before checking whether the move had
+reached RGB confirmation.
+
+The regular Double DQN command is:
+
+```bash
+uv run --locked --no-sync python -m videochess_rl.improvement.demo \
+  --policy double-dqn \
+  --checkpoint artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-250000.pt \
+  --checkpoint-sha256 48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293 \
+  --seed 20261103 \
+  --max-player-moves 200 \
+  --max-seconds 1800
+```
+
+For a bounded live GUI check that also exercises resize and Left/Right replay,
+add `--auto-smoke`; that mode deliberately limits the session to two player
+moves and two Atari replies. It is a GUI integration smoke, not a full-game run.
+
 ## Prerequisites
 
 - Repository checkout and virtual environment at project root.
@@ -55,13 +82,13 @@ M4-A checkpoint SHA-256: `cf5e437ff4e2d6a8e85739df751dec33f16b7bc4c92268f996ec4c
 To demonstrate the selected Q-only snapshot, provide its exact local path and digest. The GUI labels it `double_dqn_250000` and explicitly identifies it as Double DQN.
 
 ```bash
-PYTHONPATH=. .venv/bin/python -m videochess_rl.improvement.demo \
+uv run --locked --no-sync python -m videochess_rl.improvement.demo \
   --policy double-dqn \
   --checkpoint artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-250000.pt \
   --checkpoint-sha256 48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293 \
   --seed 20261103 \
-  --max-player-moves 24 \
-  --max-seconds 900
+  --max-player-moves 200 \
+  --max-seconds 1800
 ```
 
 The Q policy's three paired evaluation attempts each stopped after nine verified turns because Atari RGB did not confirm target FIRE. The runner stopped without retrying or claiming a move. The live demo can therefore end early with a visible control warning; this was observed and is a known limitation.
@@ -79,13 +106,21 @@ private diagnostic trace and frames remain local.
 
 - The left pane shows actual ALE RGB frames.
 - The fixed-width right pane displays policy family, checkpoint SHA, training decision count where applicable, current verified side-to-move, active session limits, separate terminal/trace status, and a scrollable White/Black move scorecard. This layout follows the owner-provided local presentation reference; that script is not modified or required.
-- SAN and UCI are shown only after the Atari controller and RGB state verifier confirm the move.
-- A selected move remains marked as pending until verified. Unverified opponent responses are never fabricated.
-- After the session stops, **Left** steps backward and **Right** steps forward through the captured reset and RGB-verified board states. Buttons provide the same controls.
+- A policy selection is visibly pending until its Atari transition is verified. At session end, an unconfirmed selection is labeled unverified and receives no replay snapshot.
+- Once a complete player/Atari transition is RGB-verified, **Left** and **Right** step through the captured White candidate and Atari reply frames. If the candidate was only cursor-masked at the time, the viewer labels it as a candidate whose transition was confirmed by the later full-board evidence. Buttons provide the same controls.
+- The GUI keeps White and Black move columns separate. An Atari reply is recorded only after RGB evidence identifies it; missing replies remain unverified.
 - Session lifecycle status, primary stop reason, terminal category, and trace
   persistence are displayed independently. A trace-save notification cannot
   overwrite a controller/game outcome. Worker failures close automated smoke
   mode and return a nonzero status even when no trace exists.
+- The console and `live_summary.json` retain the outcome class, exact runner
+  stop category and reason, incomplete-move fields, ALE terminal/truncation
+  flags, attempted and verified counts, checkpoint hash, model training seed,
+  and ALE reset seed. The summary contains no frame arrays or move-level trace.
+- Replay artifact diagnostics classify an absent optional candidate for an
+  unverified move as `INFO`, a missing image for a verified move as `WARNING`,
+  and a conflict between trace verification and artifacts as `ERROR`. No
+  synthetic verified snapshot is created; replay errors also fail auto-smoke.
 - The live panel reports the player-move cap, wall-clock cap, runner frame and
   step caps, observed ALE frame horizon, opponent response timeout, and local
   artifact cap. The current ALE profile reports 108,000 frames; the runner's
@@ -105,7 +140,8 @@ Verified demo smoke commands used by the Phase 2 executor:
 ```bash
 DISPLAY=:1 PYTHONPATH=. .venv/bin/python -m videochess_rl.improvement.demo \
   --policy double-dqn --checkpoint artifacts/improvement/videochess-improvement-20261103-v1/official/attempt-0000/snapshot-250000.pt \
-  --checkpoint-sha256 48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293 --auto-smoke
+  --checkpoint-sha256 48dbbb860c8f997105b7bd30863892294e68ef489185ac6172fb7b459df5c293 \
+  --seed 20261103 --auto-smoke
 
 DISPLAY=:1 PYTHONPATH=. .venv/bin/python -m videochess_rl.improvement.demo \
   --policy m4-a --auto-smoke
