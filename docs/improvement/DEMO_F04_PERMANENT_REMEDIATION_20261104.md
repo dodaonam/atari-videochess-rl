@@ -126,8 +126,8 @@ The post-game summary, replay diagnostics, scorecard labels, and `--close-on-fin
 - Follow-up full-suite log SHA-256 (local `/tmp` record): `9023d412e160a7d20b37a13633224d48bed40dd300754638bfe1a640e9384229`.
 - `python3 -m compileall -q videochess_rl tests` — passed.
 - `git diff --check` — passed.
-- `python3 scripts/agent_preflight.py` on code commit `b0890ea` — **PASS**. It recognized the clean commit transition and matching portable snapshot; only the expected note remains that ignored artifacts need an independent manifest.
-- `python3 scripts/audit_final_consolidation.py --output /tmp/atari-videochess-f04-privacy-audit-20261104.json` — passed with zero high-confidence credential matches, zero unexpected opaque payloads, and the historical authorized archive unchanged. The final post-documentation commit is re-scanned before push.
+- `python3 scripts/agent_preflight.py` on code commit `b0890ea` and report commit `64ee346` — **PASS**. It recognized both clean commit transitions and matching portable snapshots; only the expected note remains that ignored artifacts need an independent manifest.
+- `python3 scripts/audit_final_consolidation.py --output /tmp/atari-videochess-f04-pm27f01-privacy-head.json` on HEAD `64ee346` — passed with zero high-confidence credential matches, zero unexpected opaque payloads, and the historical authorized archive unchanged.
 
 No raw frames, RAM arrays, complete move-level Atari traces, screenshots, ROMs, or checkpoints are included in Git. The new public report contains sanitized findings and artifact hashes only.
 
